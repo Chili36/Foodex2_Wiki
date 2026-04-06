@@ -10,13 +10,14 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from .librarian import AnthropicWikiLibrarian
+from .librarian import AnthropicWikiLibrarian, AnthropicWikiPageSelector
 from .wiki_store import WikiStore
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 store = WikiStore(REPO_ROOT)
 librarian_runner: AnthropicWikiLibrarian | Any | None = None
+selector_runner: AnthropicWikiPageSelector | Any | None = None
 logger = logging.getLogger("wiki_api")
 if not logging.getLogger().handlers:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
@@ -27,6 +28,13 @@ def get_librarian_runner() -> AnthropicWikiLibrarian | Any:
     if librarian_runner is None:
         librarian_runner = AnthropicWikiLibrarian(store=store)
     return librarian_runner
+
+
+def get_selector_runner() -> AnthropicWikiPageSelector | Any:
+    global selector_runner
+    if selector_runner is None:
+        selector_runner = AnthropicWikiPageSelector(store=store)
+    return selector_runner
 
 
 class PolicyPackRequest(BaseModel):
@@ -75,6 +83,12 @@ class PolicyPackResponse(BaseModel):
     query_classification: QueryClassification
     candidate_focus: CandidateFocus
     policy_pack: PolicyPackBody
+    trace: dict[str, Any]
+
+
+class ContextPackResponse(BaseModel):
+    pages_used: list[str]
+    pages: list[PageSummary]
     trace: dict[str, Any]
 
 
@@ -211,6 +225,78 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
                 "candidate_focus": response.candidate_focus.model_dump(),
                 "policy_pack": response.policy_pack.model_dump(),
                 "token_summary": librarian_result.token_summary,
+                "timing_summary": response.trace["timing_summary"],
+            },
+            ensure_ascii=False,
+        ),
+    )
+    return response
+
+
+@app.post("/wiki/context-pack", response_model=ContextPackResponse)
+def create_context_pack(request: PolicyPackRequest) -> ContextPackResponse:
+    request_started = time.perf_counter()
+    logger.info(
+        "context_pack_request %s",
+        json.dumps(
+            {
+                "search_term": request.search_term,
+                "deconstructed_query": request.deconstructed_query,
+                "candidate_count": len(request.candidates),
+                "context": request.context,
+                "max_pages": request.max_pages,
+            },
+            ensure_ascii=False,
+        ),
+    )
+    runner = get_selector_runner()
+    if request.max_pages != runner.max_pages:
+        runner.max_pages = request.max_pages
+    payload = {
+        "search_term": request.search_term,
+        "deconstructed_query": request.deconstructed_query,
+        "candidates": request.candidates,
+        "context": request.context,
+    }
+    try:
+        selection_result = runner.run(payload)
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    pages = [
+        PageSummary(
+            page_name=page.name,
+            title=page.title,
+            summary=page.summary,
+            sources=page.sources,
+            related=page.related,
+            content=page.content if request.include_page_content else None,
+        )
+        for page in [store.read_page(page_name) for page_name in selection_result.pages_used]
+    ]
+    response = ContextPackResponse(
+        pages_used=selection_result.pages_used,
+        pages=pages,
+        trace={
+            "index_used": True,
+            "max_pages": request.max_pages,
+            "selection_method": "service-owned llm page selector",
+            "tool_trace": selection_result.tool_trace,
+            "token_summary": selection_result.token_summary,
+            "timing_summary": {
+                **selection_result.timing_summary,
+                "request_wall_time_ms": int((time.perf_counter() - request_started) * 1000),
+            },
+            "model": runner.model,
+        },
+    )
+    logger.info(
+        "context_pack_response %s",
+        json.dumps(
+            {
+                "search_term": request.search_term,
+                "pages_used": response.pages_used,
+                "token_summary": selection_result.token_summary,
                 "timing_summary": response.trace["timing_summary"],
             },
             ensure_ascii=False,

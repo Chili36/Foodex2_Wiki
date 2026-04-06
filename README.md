@@ -115,8 +115,8 @@ Run it locally with:
 uvicorn wiki_api.app:app --reload
 ```
 
-The policy-pack endpoint is LLM-driven and currently uses Anthropic internally. The wiki API loads `ANTHROPIC_API_KEY` and `WIKI_LIBRARIAN_MODEL` automatically from `.env`.
-The service injects `index.md` into the first librarian prompt so the model can choose and batch follow-up wiki page reads without spending a separate LLM turn just to fetch the catalog.
+The wiki retrieval endpoints are LLM-driven and currently use Anthropic internally. The wiki API loads `ANTHROPIC_API_KEY` and `WIKI_LIBRARIAN_MODEL` automatically from `.env`.
+The service injects `index.md` into the first prompt so the model can choose and batch follow-up wiki page reads without spending a separate LLM turn just to fetch the catalog.
 
 Main endpoints:
 
@@ -124,7 +124,8 @@ Main endpoints:
 - `GET /wiki/index`: raw `index.md`
 - `GET /wiki/pages`: page catalog with titles and summaries
 - `GET /wiki/pages/{page_name}`: one wiki page
-- `POST /wiki/policy-pack`: runs the internal wiki librarian, returns selected pages plus a compact policy pack for a coding case
+- `POST /wiki/policy-pack`: runs the internal wiki librarian, returns selected pages plus a synthesized policy pack for a coding case
+- `POST /wiki/context-pack`: runs the internal wiki page selector and returns only the selected wiki pages plus trace metadata
 
 Example `POST /wiki/policy-pack` body:
 
@@ -150,7 +151,7 @@ Example `POST /wiki/policy-pack` body:
 }
 ```
 
-The response includes:
+`POST /wiki/policy-pack` response includes:
 
 - `pages_used`: selected wiki pages
 - `pages`: selected page metadata plus optional markdown content
@@ -158,6 +159,15 @@ The response includes:
 - `candidate_focus`: promising codes and rejected patterns
 - `policy_pack`: compact rules grouped into base-term, facet, validation, domain, and construction buckets
 - `trace`: retrieval metadata including the internal page-read trace, token summary, and timing summary
+
+`POST /wiki/context-pack` response includes:
+
+- `pages_used`: selected wiki pages
+- `pages`: selected page metadata plus optional markdown content
+- `trace`: retrieval metadata including the internal page-read trace, token summary, and timing summary
+
+Use `policy-pack` when you want the wiki service to act as a solver-style knowledge synthesizer.
+Use `context-pack` when you want pure context delivery and will do the reasoning in a downstream model.
 
 Run tests with:
 

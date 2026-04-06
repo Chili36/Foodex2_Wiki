@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from wiki_api.librarian import AnthropicWikiLibrarian
+from wiki_api.librarian import AnthropicWikiLibrarian, AnthropicWikiPageSelector
 from wiki_api.wiki_store import WikiStore
 
 
@@ -193,3 +193,84 @@ def test_librarian_respects_total_page_cap_with_preloaded_index() -> None:
             "limit": 2,
         }
     ]
+
+
+def test_page_selector_returns_pages_without_policy_synthesis_turn() -> None:
+    client = FakeAnthropicClient(
+        [
+            _response(
+                stop_reason="tool_use",
+                content=[
+                    {
+                        "type": "tool_use",
+                        "id": "tool_1",
+                        "name": "read_wiki_pages",
+                        "input": {
+                            "page_names": [
+                                "base-term-selection.md",
+                                "packaging-facets.md",
+                            ]
+                        },
+                    }
+                ],
+                input_tokens=100,
+                output_tokens=25,
+            )
+        ]
+    )
+
+    selector = AnthropicWikiPageSelector(store=_store(), client=client, model="fake-model", max_pages=6)
+    result = selector.run(
+        {
+            "search_term": "Tomato basil and garlic sauce in a glass jar",
+            "deconstructed_query": {},
+            "candidates": [],
+            "context": {},
+        }
+    )
+
+    assert result.pages_used == [
+        "index.md",
+        "base-term-selection.md",
+        "packaging-facets.md",
+    ]
+    assert len(result.tool_trace) == 2
+    assert result.token_summary["calls"] == 1
+    assert len(client.messages.calls) == 1
+
+
+def test_page_selector_accepts_direct_json_page_names_without_tool() -> None:
+    client = FakeAnthropicClient(
+        [
+            _response(
+                stop_reason="end_turn",
+                content=[
+                    {
+                        "type": "text",
+                        "text": json.dumps(
+                            {"page_names": ["base-term-selection.md", "packaging-facets.md"]}
+                        ),
+                    }
+                ],
+                input_tokens=100,
+                output_tokens=25,
+            )
+        ]
+    )
+
+    selector = AnthropicWikiPageSelector(store=_store(), client=client, model="fake-model", max_pages=6)
+    result = selector.run(
+        {
+            "search_term": "test",
+            "deconstructed_query": {},
+            "candidates": [],
+            "context": {},
+        }
+    )
+
+    assert result.pages_used == [
+        "index.md",
+        "base-term-selection.md",
+        "packaging-facets.md",
+    ]
+    assert result.token_summary["calls"] == 1
