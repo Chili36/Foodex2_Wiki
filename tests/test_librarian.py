@@ -1,0 +1,195 @@
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from wiki_api.librarian import AnthropicWikiLibrarian
+from wiki_api.wiki_store import WikiStore
+
+
+def _response(*, stop_reason: str, content: list[dict[str, object]], input_tokens: int, output_tokens: int):
+    return {
+        "stop_reason": stop_reason,
+        "content": content,
+        "usage": {
+            "input_tokens": input_tokens,
+            "output_tokens": output_tokens,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+        },
+    }
+
+
+class FakeMessages:
+    def __init__(self, responses: list[dict[str, object]]) -> None:
+        self._responses = responses
+        self.calls: list[dict[str, object]] = []
+
+    def create(self, **kwargs: object) -> dict[str, object]:
+        self.calls.append(kwargs)
+        return self._responses[len(self.calls) - 1]
+
+
+class FakeAnthropicClient:
+    def __init__(self, responses: list[dict[str, object]]) -> None:
+        self.messages = FakeMessages(responses)
+
+
+def _store() -> WikiStore:
+    return WikiStore(Path("/Users/davidfoster/Dev/LLM Knowledge Base"))
+
+
+def test_librarian_batches_page_reads() -> None:
+    final_payload = {
+        "pages_used": ["ignored-by-wrapper"],
+        "query_classification": {
+            "food_type": "composite",
+            "domain": "general_food",
+            "signals": ["packaging"],
+        },
+        "candidate_focus": {"promising_codes": ["A044C"], "rejected_patterns": []},
+        "policy_pack": {
+            "base_term_rules": ["Use a composite base term."],
+            "facet_rules": ["Use packaging facets when explicit."],
+            "validation_rules": [],
+            "domain_rules": [],
+            "construction_rules": [],
+            "open_questions": [],
+            "wiki_gaps": [],
+        },
+    }
+    client = FakeAnthropicClient(
+        [
+            _response(
+                stop_reason="tool_use",
+                content=[
+                    {
+                        "type": "tool_use",
+                        "id": "tool_1",
+                        "name": "read_wiki_pages",
+                        "input": {
+                            "page_names": [
+                                "base-term-selection.md",
+                                "packaging-facets.md",
+                            ]
+                        },
+                    }
+                ],
+                input_tokens=100,
+                output_tokens=25,
+            ),
+            _response(
+                stop_reason="end_turn",
+                content=[{"type": "text", "text": json.dumps(final_payload)}],
+                input_tokens=150,
+                output_tokens=75,
+            ),
+        ]
+    )
+
+    librarian = AnthropicWikiLibrarian(store=_store(), client=client, model="fake-model", max_pages=6)
+    result = librarian.run(
+        {
+            "search_term": "Tomato basil and garlic sauce in a glass jar",
+            "deconstructed_query": {},
+            "candidates": [],
+            "context": {},
+        }
+    )
+
+    assert result.data["pages_used"] == [
+        "index.md",
+        "base-term-selection.md",
+        "packaging-facets.md",
+    ]
+    assert len(result.tool_trace) == 2
+    assert result.token_summary["calls"] == 2
+
+    first_call_content = client.messages.calls[0]["messages"][0]["content"]
+    assert isinstance(first_call_content, str)
+    first_call_payload = json.loads(first_call_content)
+    assert "wiki_index" in first_call_payload
+    assert "case" in first_call_payload
+
+    second_call_tool_result = client.messages.calls[1]["messages"][-1]["content"][0]["content"]
+    tool_result_payload = json.loads(second_call_tool_result)
+    assert [page["page_name"] for page in tool_result_payload["pages"]] == [
+        "base-term-selection.md",
+        "packaging-facets.md",
+    ]
+    assert tool_result_payload["skipped"] == []
+    assert tool_result_payload["errors"] == []
+
+
+def test_librarian_respects_total_page_cap_with_preloaded_index() -> None:
+    final_payload = {
+        "pages_used": [],
+        "query_classification": {
+            "food_type": "composite",
+            "domain": "general_food",
+            "signals": [],
+        },
+        "candidate_focus": {"promising_codes": [], "rejected_patterns": []},
+        "policy_pack": {
+            "base_term_rules": [],
+            "facet_rules": [],
+            "validation_rules": [],
+            "domain_rules": [],
+            "construction_rules": [],
+            "open_questions": [],
+            "wiki_gaps": [],
+        },
+    }
+    client = FakeAnthropicClient(
+        [
+            _response(
+                stop_reason="tool_use",
+                content=[
+                    {
+                        "type": "tool_use",
+                        "id": "tool_1",
+                        "name": "read_wiki_pages",
+                        "input": {
+                            "page_names": [
+                                "base-term-selection.md",
+                                "packaging-facets.md",
+                            ]
+                        },
+                    }
+                ],
+                input_tokens=100,
+                output_tokens=25,
+            ),
+            _response(
+                stop_reason="end_turn",
+                content=[{"type": "text", "text": json.dumps(final_payload)}],
+                input_tokens=150,
+                output_tokens=75,
+            ),
+        ]
+    )
+
+    librarian = AnthropicWikiLibrarian(store=_store(), client=client, model="fake-model", max_pages=2)
+    result = librarian.run(
+        {
+            "search_term": "test",
+            "deconstructed_query": {},
+            "candidates": [],
+            "context": {},
+        }
+    )
+
+    assert result.data["pages_used"] == ["index.md", "base-term-selection.md"]
+
+    second_call_tool_result = client.messages.calls[1]["messages"][-1]["content"][0]["content"]
+    tool_result_payload = json.loads(second_call_tool_result)
+    assert [page["page_name"] for page in tool_result_payload["pages"]] == [
+        "base-term-selection.md"
+    ]
+    assert tool_result_payload["skipped"] == [
+        {
+            "page_name": "packaging-facets.md",
+            "reason": "page_limit_exceeded",
+            "limit": 2,
+        }
+    ]
