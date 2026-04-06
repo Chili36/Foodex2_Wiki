@@ -4,12 +4,13 @@ sources:
   - "BUSINESS-RULES.md"
   - "BUSINESS-RULES-COMPACT.json"
   - "docs/VALIDATION_RULES_SUMMARY.md"
+  - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
 related:
   - "[[base-term-selection]]"
   - "[[facet-coding-rules]]"
   - "[[validation-rules]]"
   - "[[process-validation-rules]]"
-last_updated: "2026-04-05"
+last_updated: "2026-04-06"
 ---
 
 # Term Type And Facet Constraints
@@ -20,17 +21,17 @@ last_updated: "2026-04-05"
 | Term type | Use as base term | Typical explicit facets | Main restrictions |
 | --- | --- | --- | --- |
 | `r` raw commodity | Yes | `F27`, `F28` | No `F01`, `F03`, `F04`; `F27` must refine the base (`BR01`); some processes are forbidden (`BR19`) |
-| `d` derivative | Yes | `F01`, `F27`, `F28`, `F03` | `F01` only with exactly one `F27` (`BR06-BR07`); `F27` must be more specific than implicit (`BR05`) |
+| `d` derivative | Yes | `F01`, `F27`, `F28`, `F03` | `F01` only with exactly one `F27` (`BR06-BR07`); `F27` must be more specific than implicit (`BR05`) and should describe the constitutive source commodity, not later-added ingredients |
 | `c` / `s` composite | Yes | `F04`, `F28` | No `F01` or `F27` (`BR03-BR04`) |
 | `h` / `g` hierarchy or group | Avoid | None by default | Discouraged or invalid as reporting bases (`BR23-BR24`) |
 | `f` facet term | No | None | Cannot be a base term (`BR17`) |
 | `n` non-specific | Avoid | Case-specific | Discouraged because precision is too low (`BR10`) |
 
-<!-- Source: BUSINESS-RULES.md BR01, BR03, BR04, BR05, BR06, BR07, BR12, BR13, BR17, BR23, BR24 -->
+<!-- Source: BUSINESS-RULES.md BR01, BR03, BR04, BR05, BR06, BR07, BR12, BR13, BR17, BR23, BR24; EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p19-20, p56 -->
 ## Practical Reading
 
 - Raw terms are anchored on the commodity itself. `F03 physical state` is blocked because it creates a derivative (`BR13`). (Business Rules `BR01`, `BR13`)
-- Derivatives use the source-commodity model. If `F01 source` is needed, the derivative must already resolve to exactly one `F27`. (Business Rules `BR05-BR07`)
+- Derivatives use the source-commodity model. Read `F27` as "from what primary commodity was this derivative obtained?" If `F01 source` is needed, the derivative must already resolve to exactly one `F27`. Later-added flavouring or characterising ingredients belong in `F04`, not `F27`. (EFSA guidance p19-20, p56; Business Rules `BR05-BR07`)
 - Composites use ingredient logic, not source logic. Reach for `F04`, not `F01` or `F27`. (Business Rules `BR03-BR04`, `BR12`)
 - Facet terms and most hierarchy/group terms may appear in search results, but they should not win base-term selection. (Business Rules `BR17`, `BR23-BR24`)
 

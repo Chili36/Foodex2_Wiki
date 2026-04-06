@@ -7,7 +7,7 @@ related:
   - "[[foodex2-overview]]"
   - "[[facet-coding-rules]]"
   - "[[base-term-selection]]"
-last_updated: "2026-04-05"
+last_updated: "2026-04-06"
 ---
 
 # Implicit vs Explicit Facets
@@ -18,6 +18,7 @@ last_updated: "2026-04-05"
 - Detailed FoodEx2 base terms already inherit key facets. EFSA generally advises coders not to report implicit facets in datasets because they can be recovered later. (EFSA guidance p39-40)
 - The building order is `part-nature -> source/source-commodities/ingredient -> process`. That order explains why some information is already encoded in the base term itself. (EFSA guidance p20)
 - Use the direct origin for the food type: raw commodities take `source`, derivatives take `source-commodities`, composites take `ingredient`. Do not jump one level higher in the chain. (EFSA guidance p19-20)
+- For derivatives, read `F27 Source-commodities` as "from what primary commodity was this derivative obtained?" not "what was added later?" Later-added flavouring, coating, or characterising ingredients belong in `F04 Ingredient`, not `F27`. (EFSA guidance p19-20, p56)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p54-56; EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf p33 -->
 ## When To Add An Explicit Facet
@@ -25,7 +26,7 @@ last_updated: "2026-04-05"
 | Food type | Usually implicit | Add explicitly when... |
 | --- | --- | --- |
 | Raw commodity | `F01 Source` | the detailed term is missing or a narrower source is known |
-| Derivative | `F27 Source-commodities` | the detailed derivative is missing, a narrower source raw commodity is known, or a same-nature mix must be described |
+| Derivative | `F27 Source-commodities` | the detailed derivative is missing, a narrower source raw commodity is known, or a same-nature mix must be described; do not use it for later-added characterising ingredients |
 | Composite | `F04 Ingredient` | characterising ingredients must be stated or a mixed-nature product is coded as composite |
 
 - In VMPR workflows, explicit facets can override the implicit categorisation if they are reported, so unnecessary explicit repetition is not neutral. (ChemMon 2026 p33)

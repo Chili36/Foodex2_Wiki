@@ -61,3 +61,8 @@ last_updated: "2026-04-06"
 
 - Added a compact `Guiding Principles` section to `index.md` so the high-level FoodEx2 worldview is always available without consuming a separate page slot.
 - Captured the key framing ideas that FoodEx2 is a scientific reporting language, is modeled top-down rather than bottom-up, prefers modular facets over term proliferation, and separates detailed input coding from downstream analytical aggregation.
+
+## [2026-04-06] maintenance | Clarify derivative source vs added-ingredient logic
+
+- Updated the facet and term-type pages to state the underlying origin-modeling rule explicitly: `F27` on a derivative answers what primary commodity the derivative was obtained from, while later-added characterising ingredients belong in `F04`.
+- Kept the update generic and ontology-level, without adding a case-specific worked example.
