@@ -78,6 +78,7 @@ class PolicyPackBody(BaseModel):
 
 
 class PolicyPackResponse(BaseModel):
+    guiding_principles: list[str]
     pages_used: list[str]
     pages: list[PageSummary]
     query_classification: QueryClassification
@@ -87,6 +88,7 @@ class PolicyPackResponse(BaseModel):
 
 
 class ContextPackResponse(BaseModel):
+    guiding_principles: list[str]
     pages_used: list[str]
     pages: list[PageSummary]
     trace: dict[str, Any]
@@ -197,6 +199,7 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
         for page in [store.read_page(page_name) for page_name in librarian_result.data["pages_used"]]
     ]
     response = PolicyPackResponse(
+        guiding_principles=store.guiding_principles(),
         pages_used=librarian_result.data["pages_used"],
         pages=pages,
         query_classification=QueryClassification(**librarian_result.data["query_classification"]),
@@ -220,6 +223,7 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
         json.dumps(
             {
                 "search_term": request.search_term,
+                "guiding_principles_count": len(response.guiding_principles),
                 "pages_used": response.pages_used,
                 "query_classification": response.query_classification.model_dump(),
                 "candidate_focus": response.candidate_focus.model_dump(),
@@ -275,6 +279,7 @@ def create_context_pack(request: PolicyPackRequest) -> ContextPackResponse:
         for page in [store.read_page(page_name) for page_name in selection_result.pages_used]
     ]
     response = ContextPackResponse(
+        guiding_principles=store.guiding_principles(),
         pages_used=selection_result.pages_used,
         pages=pages,
         trace={
@@ -295,6 +300,7 @@ def create_context_pack(request: PolicyPackRequest) -> ContextPackResponse:
         json.dumps(
             {
                 "search_term": request.search_term,
+                "guiding_principles_count": len(response.guiding_principles),
                 "pages_used": response.pages_used,
                 "token_summary": selection_result.token_summary,
                 "timing_summary": response.trace["timing_summary"],

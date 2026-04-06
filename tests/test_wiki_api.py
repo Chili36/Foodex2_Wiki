@@ -202,6 +202,8 @@ def test_policy_pack_uses_librarian_response() -> None:
     )
     assert response.status_code == 200
     payload = response.json()
+    assert len(payload["guiding_principles"]) >= 4
+    assert payload["guiding_principles"][1].startswith("FoodEx2 is built top-down.")
     assert payload["pages_used"] == [
         "index.md",
         "base-term-selection.md",
@@ -235,6 +237,8 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     )
     assert response.status_code == 200
     payload = response.json()
+    assert len(payload["guiding_principles"]) >= 4
+    assert payload["guiding_principles"][2].startswith("FoodEx2 prefers modular description")
     assert payload["pages_used"] == [
         "index.md",
         "base-term-selection.md",

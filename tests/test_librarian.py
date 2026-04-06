@@ -294,3 +294,10 @@ def test_selector_falls_back_to_shared_model_env(monkeypatch) -> None:
     selector = AnthropicWikiPageSelector(store=_store(), client=client)
 
     assert selector.model == "shared-model"
+
+
+def test_store_extracts_guiding_principles_from_index() -> None:
+    principles = _store().guiding_principles()
+
+    assert len(principles) >= 4
+    assert any("top-down" in principle for principle in principles)

@@ -10,6 +10,7 @@ import yaml
 
 
 INDEX_ENTRY_RE = re.compile(r"^- \[[^\]]+\]\(([^)]+)\):\s*(.+)$")
+GUIDING_PRINCIPLES_HEADER = "## Guiding Principles"
 
 
 @dataclass(frozen=True)
@@ -64,6 +65,22 @@ class WikiStore:
         summaries["log.md"] = "Chronological record of wiki ingests and changes."
         return summaries
 
+    @cached_property
+    def _guiding_principles(self) -> list[str]:
+        raw = self.index_path.read_text(encoding="utf-8")
+        lines = raw.splitlines()
+        in_section = False
+        principles: list[str] = []
+        for line in lines:
+            if line.strip() == GUIDING_PRINCIPLES_HEADER:
+                in_section = True
+                continue
+            if in_section and line.startswith("## "):
+                break
+            if in_section and line.startswith("- "):
+                principles.append(line[2:].strip())
+        return principles
+
     def list_pages(self) -> list[str]:
         names = [page.name for page in self.guidance_dir.glob("*.md")]
         return sorted(names)
@@ -115,3 +132,6 @@ class WikiStore:
 
     def catalog(self) -> list[WikiPage]:
         return [self.read_page(name) for name in self.list_pages()]
+
+    def guiding_principles(self) -> list[str]:
+        return list(self._guiding_principles)

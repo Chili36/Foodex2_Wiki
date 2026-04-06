@@ -162,6 +162,7 @@ Example `POST /wiki/policy-pack` body:
 
 `POST /wiki/policy-pack` response includes:
 
+- `guiding_principles`: the high-level FoodEx2 worldview from `index.md`
 - `pages_used`: selected wiki pages
 - `pages`: selected page metadata plus optional markdown content
 - `query_classification`: inferred food type, domain, and signals
@@ -171,6 +172,7 @@ Example `POST /wiki/policy-pack` body:
 
 `POST /wiki/context-pack` response includes:
 
+- `guiding_principles`: the high-level FoodEx2 worldview from `index.md`
 - `pages_used`: selected wiki pages
 - `pages`: selected page metadata plus optional markdown content
 - `trace`: retrieval metadata including the internal page-read trace, token summary, and timing summary
