@@ -39,5 +39,4 @@ last_updated: "2026-04-05"
 
 - Before: `kangaroo fresh fat tissue`. After: `A0F3G#F01.A0F2G$F26.A07XE`. Generic raw base term plus `F01` because the detailed commodity is missing but the source exists. (EFSA guidance p48)
 - Before: `quinoa flour`. After: `A04KS#F26.A07XE$F27.A000R`. Generic derivative base term plus `F27` because the detailed derivative is missing but the source raw commodity exists. (EFSA guidance p48; Training p6)
-- Before: `dried chili pepper`. After: `A019K#F27.A00JB`. Use the derivative base `Peppers, dried` rather than raw `chili peppers` plus `F28 drying`; the processed state is already captured by the derivative base and the explicit refinement is the source commodity. (EFSA guidance p44, p48-49)
 - Before: `mixed vegetable salad` with balanced different-nature ingredients. After: `A042D#F04.A00QH$F04.A015L$F04.A00KV$F04.A00LN$F04.A00LB$F04.A00LG`. Because no single nature dominates, the starting point becomes a composite salad term. (EFSA guidance p50)

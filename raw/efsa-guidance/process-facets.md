@@ -52,4 +52,3 @@ last_updated: "2026-04-05"
 - Before: `fresh sage`. After: `A00YH#F28.A0C0S`. Fresh spices can use `unprocessed` because dried is often default. (EFSA guidance p42)
 - Before: `candied citrus peel, chocolate-coated`. After: `A01PS#F04.A034G$F27.A01QE$F28.A07HP`. Add `F28.A07HP` for the coating. (EFSA guidance p56)
 - Before: `dried kangaroo meat`. After: `A04MP#F01.A0F2G$F26.A07XE`. Drying is implicit in `A04MP`, so no `F28.A07KG` is added. (EFSA guidance p49)
-- Before: `dried chili pepper`. After: `A019K#F27.A00JB`. Drying is already implicit in `A019K Peppers, dried`, so do not restate `F28.A07KG`; use `F27` to refine the source commodity instead. (EFSA guidance p44, p48-49)
