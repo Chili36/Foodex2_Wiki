@@ -66,3 +66,8 @@ last_updated: "2026-04-06"
 
 - Updated the facet and term-type pages to state the underlying origin-modeling rule explicitly: `F27` on a derivative answers what primary commodity the derivative was obtained from, while later-added characterising ingredients belong in `F04`.
 - Kept the update generic and ontology-level, without adding a case-specific worked example.
+
+## [2026-04-06] maintenance | Clarify derivative-base examples are illustrative
+
+- Tightened the base-term selection wording so the list of nature-changing processes is explicitly illustrative rather than exhaustive.
+- Added a note that the processed-base precedence rule should not be overridden just because a more specific raw commodity term exists.

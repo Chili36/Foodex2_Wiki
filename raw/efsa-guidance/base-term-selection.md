@@ -24,13 +24,13 @@ last_updated: "2026-04-05"
 ## Choose The Base-Term Class
 
 - Use a raw-commodity base term for primary plant or animal products. Add only treatments that do not create a new nature. (EFSA guidance p42-44)
-- Use a derivative base term when a nature-changing process already defines a standard group, such as milling, drying, curing, fermentation, canning/jarring or smoking. Do not rebuild these from a raw term plus `F28` if the derivative group exists. (EFSA guidance p15-17, p44, p58)
+- Use a derivative base term when a nature-changing process already defines a standard group. The process list here is illustrative, not exhaustive: this includes cases such as milling, drying, curing, fermentation, pickling/marinating, canning/jarring or smoking whenever FoodEx2 already has the processed group. Do not rebuild these from a raw term plus `F28` if the derivative group exists. (EFSA guidance p15-17, p44, p58)
 - Use a composite base term for foods made by combining ingredients in a recipe. For mixtures of the same nature, stay on a generic raw/derivative base term and add multiple `F27`; for balanced mixed natures, move to a composite base term. (EFSA guidance p45, p49-50; Training p6)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p18-19, p47-49 -->
 ## Tie-Break Rules
 
-- If several preservation processes apply, choose the processed base term top-down: puree/textured, then marinated/pickled/fermented, then in vinegar/brine, in alcohol, salted, candied/sugar-preserved, dried, canned/jarred, smoked. (EFSA guidance p18)
+- If several preservation processes apply, choose the processed base term top-down: puree/textured, then marinated/pickled/fermented, then in vinegar/brine, in alcohol, salted, candied/sugar-preserved, dried, canned/jarred, smoked. Read this as a precedence rule among processed-base options, not as permission to fall back to a raw base just because the more specific raw commodity exists. (EFSA guidance p18)
 - If a composite has no clear dominant ingredient, use this priority: meat, fish, cheese/dairy, egg, legume, potato, cereal, fruit, vegetable. (EFSA guidance p18-19)
 - If the exact term is missing, choose the nearest generic non-hierarchy base term, add the correct origin facet, and add `F26.A07XE` (`other`). If even the origin term is missing, keep the generic base term and record the detail in text. (EFSA guidance p47-49)
 
