@@ -618,7 +618,6 @@ class AnthropicFoodEx2Solver:
         self.client = client or build_anthropic_client()
         self.model = model or _resolve_model(
             "WIKI_SOLVER_MODEL",
-            "WIKI_POLICY_MODEL",
             "WIKI_LIBRARIAN_MODEL",
             default="claude-3-7-sonnet-latest",
         )

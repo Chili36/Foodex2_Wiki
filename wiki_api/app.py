@@ -261,7 +261,7 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
     }
     try:
         librarian_result = runner.run(payload)
-    except RuntimeError as exc:
+    except (RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
 
     pages = [
@@ -341,7 +341,7 @@ def create_context_pack(request: PolicyPackRequest) -> ContextPackResponse:
     }
     try:
         selection_result = runner.run(payload)
-    except RuntimeError as exc:
+    except (RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
 
     pages = [
@@ -442,7 +442,7 @@ def solve_foodex2(request: PolicyPackRequest) -> SolveResponse:
             ],
         }
         solver_result = solver.run(solver_payload)
-    except RuntimeError as exc:
+    except (RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
 
     pages = [

@@ -326,3 +326,14 @@ def test_solver_prefers_solver_model_env(monkeypatch) -> None:
     solver = AnthropicFoodEx2Solver(client=client)
 
     assert solver.model == "solver-model"
+
+
+def test_solver_does_not_inherit_policy_model_env(monkeypatch) -> None:
+    monkeypatch.setenv("WIKI_LIBRARIAN_MODEL", "shared-model")
+    monkeypatch.setenv("WIKI_POLICY_MODEL", "policy-model")
+    monkeypatch.delenv("WIKI_SOLVER_MODEL", raising=False)
+    client = FakeAnthropicClient([])
+
+    solver = AnthropicFoodEx2Solver(client=client)
+
+    assert solver.model == "shared-model"

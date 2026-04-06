@@ -222,6 +222,14 @@ class FakeSolver:
         )
 
 
+class FakeBadSolver:
+    def __init__(self) -> None:
+        self.model = "fake-claude-solver"
+
+    def run(self, payload: dict[str, object]) -> SolverResult:
+        raise ValueError("Could not extract JSON object from solver response")
+
+
 def setup_function() -> None:
     app_module.librarian_runner = FakeLibrarian()
     app_module.selector_runner = FakeSelector()
@@ -389,3 +397,25 @@ def test_solve_requires_candidates() -> None:
     )
     assert response.status_code == 400
     assert response.json()["detail"] == "solve requires a non-empty candidates list"
+
+
+def test_solve_returns_503_for_malformed_solver_output() -> None:
+    app_module.solver_runner = FakeBadSolver()
+
+    response = request(
+        "POST",
+        "/wiki/solve",
+        json={
+            "search_term": "Tomato basil and garlic sauce in a glass jar",
+            "deconstructed_query": {
+                "raw_query": "Tomato basil and garlic sauce in a glass jar",
+            },
+            "candidates": [
+                {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"},
+            ],
+            "context": {},
+        },
+    )
+
+    assert response.status_code == 503
+    assert response.json()["detail"] == "Could not extract JSON object from solver response"
