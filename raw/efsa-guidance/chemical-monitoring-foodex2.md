@@ -1,8 +1,8 @@
 ---
 title: "FoodEx2 In Chemical Monitoring"
 sources:
-  - "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf"
-  - "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
+  - "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance 2025 data collection.pdf"
+  - "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance 2026 data collection.pdf"
 related:
   - "[[foodex2-overview]]"
   - "[[facet-coding-rules]]"
@@ -13,11 +13,11 @@ last_updated: "2026-04-05"
 
 # FoodEx2 In Chemical Monitoring
 
-<!-- Source: EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf p33-36; EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf p33-36 -->
+<!-- Source: EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance 2025 data collection.pdf p33-36; EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance 2026 data collection.pdf p33-36 -->
 ## Scope
 
-- ChemMon does not redefine FoodEx2. It adds reporting constraints for EFSA chemical-monitoring workflows. Use this page as a domain-specific overlay, not as the core coding model. (ChemMon 2025 p33-36; ChemMon 2026 p33-36)
-- Samples are coded from the MTX reporting hierarchy, and EFSA expects the lowest useful level of detail. (ChemMon 2025 p33)
+- ChemMon does not redefine FoodEx2. It adds reporting constraints for chemical-monitoring workflows. Use this page as a domain-specific overlay, not as the core coding model. (ChemMon 2025 p33-36; ChemMon 2026 p33-36)
+- Samples are coded from the MTX reporting hierarchy at the lowest useful level of detail. (ChemMon 2025 p33)
 
 ## General Rules
 
@@ -32,7 +32,7 @@ last_updated: "2026-04-05"
 - Wild-animal VMPR samples require `F21.A07RY` (`Wild, gathered or hunted`). (ChemMon 2025 p34; ChemMon 2026 p33)
 - Feed and water VMPR coding depends on `F23 Target-consumer`; conflicting explicit `F23` values can force classification to `Other`. (ChemMon 2025 p34-36; ChemMon 2026 p33-36)
 - Non-food animal matrices use the generic base term `A0C60` plus explicit `F02` and `F01`. (ChemMon 2025 p36; ChemMon 2026 p36)
-- Recent ChemMon rules also make `F33 Legislative-classes` important for VMPR processed products and for additives/flavourings workflows. (ChemMon 2025 search hits around CHEMON91-93 and F33 sections; ChemMon 2026 search hits around CHEMON91-93 and F33 sections)
+- `F33 Legislative-classes` is also important for VMPR processed products and for additives/flavourings workflows. (ChemMon 2025 CHEMON91-93; ChemMon 2026 CHEMON91-93)
 
 ## Worked Examples
 

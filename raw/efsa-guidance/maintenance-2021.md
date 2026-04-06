@@ -1,7 +1,7 @@
 ---
 title: "FoodEx2 Maintenance 2021"
 sources:
-  - "EFSA Supporting Publications - 2022 -  - FoodEx2 maintenance 2021.pdf"
+  - "EFSA Supporting Publications - 2022 - FoodEx2 maintenance 2021.pdf"
 related:
   - "[[maintenance-history]]"
   - "[[maintenance-2020]]"
@@ -11,7 +11,7 @@ last_updated: "2026-04-05"
 
 # Maintenance 2021
 
-<!-- Source: EFSA Supporting Publications - 2022 -  - FoodEx2 maintenance 2021.pdf p3, p6-12 -->
+<!-- Source: EFSA Supporting Publications - 2022 - FoodEx2 maintenance 2021.pdf p3, p6-12 -->
 ## Summary
 
 - EFSA added 91 new terms in 2021. Key additions served Avian Influenza, WGS, ASF, FAO/WHO GIFT, and smaller user requests. (2021 maintenance p3)

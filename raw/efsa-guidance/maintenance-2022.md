@@ -1,7 +1,7 @@
 ---
 title: "FoodEx2 Maintenance 2022"
 sources:
-  - "EFSA Supporting Publications - 2023 -  - FoodEx2 maintenance 2022.pdf"
+  - "EFSA Supporting Publications - 2023 - FoodEx2 maintenance 2022.pdf"
 related:
   - "[[maintenance-history]]"
   - "[[maintenance-2021]]"
@@ -11,7 +11,7 @@ last_updated: "2026-04-05"
 
 # Maintenance 2022
 
-<!-- Source: EFSA Supporting Publications - 2023 -  - FoodEx2 maintenance 2022.pdf p3, p11-16 -->
+<!-- Source: EFSA Supporting Publications - 2023 - FoodEx2 maintenance 2022.pdf p3, p11-16 -->
 ## Summary
 
 - The biggest structural change was the addition of the PRIMo hierarchy with 1901 assigned terms. (2022 maintenance p3, p11)

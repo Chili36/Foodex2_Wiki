@@ -1,7 +1,7 @@
 ---
 title: "FoodEx2 Maintenance 2019"
 sources:
-  - "EFSA Supporting Publications - 2020 -  - FoodEx2 maintenance 2019.pdf"
+  - "EFSA Supporting Publications - 2020 - FoodEx2 maintenance 2019.pdf"
 related:
   - "[[maintenance-history]]"
   - "[[maintenance-2016-2018]]"
@@ -11,7 +11,7 @@ last_updated: "2026-04-05"
 
 # Maintenance 2019
 
-<!-- Source: EFSA Supporting Publications - 2020 -  - FoodEx2 maintenance 2019.pdf p3, p6-16 -->
+<!-- Source: EFSA Supporting Publications - 2020 - FoodEx2 maintenance 2019.pdf p3, p6-16 -->
 ## Summary
 
 - EFSA added 587 new terms in 2019, many of them for avian-influenza bird species. (2019 maintenance p3)

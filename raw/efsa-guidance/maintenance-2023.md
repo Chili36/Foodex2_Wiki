@@ -1,7 +1,7 @@
 ---
 title: "FoodEx2 Maintenance 2023"
 sources:
-  - "EFSA Supporting Publications - 2024 -  - FoodEx2 maintenance 2023.pdf"
+  - "EFSA Supporting Publications - 2024 - FoodEx2 maintenance 2023.pdf"
 related:
   - "[[maintenance-history]]"
   - "[[maintenance-2022]]"
@@ -11,7 +11,7 @@ last_updated: "2026-04-05"
 
 # Maintenance 2023
 
-<!-- Source: EFSA Supporting Publications - 2024 -  - FoodEx2 maintenance 2023.pdf p3-4, p13-19 -->
+<!-- Source: EFSA Supporting Publications - 2024 - FoodEx2 maintenance 2023.pdf p3-4, p13-19 -->
 ## Summary
 
 - EFSA added 306 new terms in 2023 for One Health surveillance, avian influenza, chemical monitoring, botanicals, additives/flavourings, and FAO/WHO GIFT requests. (2023 maintenance p3-4)

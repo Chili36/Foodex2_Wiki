@@ -44,4 +44,4 @@ last_updated: "2026-04-05"
 
 - Before: `A0B9Z#F28.A07JS$F28.A07JS`. After: invalid; duplicate facet instance detected in structural validation. (VBA Structural Rules Summary)
 - Before: `A0B9Z#F28`. After: invalid; the facet is incomplete and fails code-structure checks. (`BR29`)
-- Before: `base term with an explicit facet already inherited by the term`. After: the validator removes the redundant facet and keeps the cleaned code, with a warning. (VBA Structural Rules Summary)
+- Before: a code where an explicit facet duplicates one already implicit in the base term. After: the validator removes the redundant facet, keeps the cleaned code, and emits a warning. (VBA Structural Rules Summary)

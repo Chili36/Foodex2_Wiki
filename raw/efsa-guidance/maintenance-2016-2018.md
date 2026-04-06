@@ -1,7 +1,7 @@
 ---
 title: "FoodEx2 Maintenance 2016-2018"
 sources:
-  - "EFSA Supporting Publications - 2019 -  - FoodEx2 maintenance 2016‐2018.pdf"
+  - "EFSA Supporting Publications - 2019 - FoodEx2 maintenance 2016‐2018.pdf"
 related:
   - "[[maintenance-history]]"
   - "[[maintenance-2015]]"
@@ -11,7 +11,7 @@ last_updated: "2026-04-05"
 
 # Maintenance 2016-2018
 
-<!-- Source: EFSA Supporting Publications - 2019 -  - FoodEx2 maintenance 2016‐2018.pdf p3, p6-20 -->
+<!-- Source: EFSA Supporting Publications - 2019 - FoodEx2 maintenance 2016‐2018.pdf p3, p6-20 -->
 ## Summary
 
 - EFSA added 680 new terms and significantly expanded botanicals, insects, and avian-influenza bird coverage. (2016-2018 maintenance p3)
@@ -26,4 +26,4 @@ last_updated: "2026-04-05"
 
 ## Why It Matters
 
-- This is the first maintenance wave that materially broadened FoodEx2 beyond the 2015 guide: better taxonomies, better mappings, and explicit support for more downstream systems.
+- First maintenance wave to materially broaden FoodEx2 beyond the 2015 guide: improved taxonomies, improved mappings, and explicit support for downstream systems such as FoodEx legacy and LanguaL.

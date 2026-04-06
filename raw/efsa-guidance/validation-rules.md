@@ -18,8 +18,8 @@ last_updated: "2026-04-05"
 <!-- Source: docs/VALIDATION_RULES_SUMMARY.md Overview, Validation Layers; BUSINESS-RULES.md Overview -->
 ## Two Validation Layers
 
-- The validator runs structural checks first, then applies business rules. Structural checks cover syntax, facet parsing, descriptor lookup, implicit-facet cleanup, and duplicate/cardinality issues. Business rules then apply `BR01-BR31` to term type, hierarchy, process, and lifecycle constraints. (Validation Rules Summary; Business Rules Overview)
-- A code can therefore be syntactically clean but still fail policy rules such as `BR03`, `BR17`, or `BR20`. See [[structural-validation]] and [[term-type-facet-constraints]]. (Validation Rules Summary)
+- The validator runs structural checks first, then business rules. Structural checks cover syntax, facet parsing, descriptor lookup, implicit-facet cleanup, and duplicate/cardinality issues. Business rules then apply `BR01-BR31` to term type, hierarchy, process, and lifecycle constraints. (Validation Rules Summary; Business Rules Overview)
+- A code can be syntactically clean but still fail policy rules such as `BR03`, `BR17`, or `BR20`. See [[structural-validation]] and [[term-type-facet-constraints]]. (Validation Rules Summary)
 
 <!-- Source: BUSINESS-RULES.md Severity Classification Overview; BUSINESS-RULES-COMPACT.json ruleSeverities -->
 ## Severity Model

@@ -1,8 +1,8 @@
 ---
 title: "Ingredient Facets"
 sources:
-  - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
-  - "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
+  - "EFSA Supporting Publications - 2015 - The food classification and description system FoodEx 2 revision 2.pdf"
+  - "EFSA Supporting Publications - 2018 - Training on FoodEx2.pdf"
 related:
   - "[[facet-coding-rules]]"
   - "[[base-term-selection]]"
@@ -12,15 +12,15 @@ last_updated: "2026-04-06"
 
 # Ingredient Facets
 
-<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p19-20, p45, p56; EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf p5-6 -->
+<!-- Source: EFSA Supporting Publications - 2015 - The food classification and description system FoodEx 2 revision 2.pdf p19-20, p45, p56; EFSA Supporting Publications - 2018 - Training on FoodEx2.pdf p5-6 -->
 ## Core Rule
 
 - `F04 Ingredient` is the origin facet for composite foods. Use it to name the characterising ingredient or ingredients that distinguish one composite product from another. (EFSA guidance p19-20, p56; Training p5)
-- It is not a full recipe field. EFSA expects only one or a few ingredient descriptors, not every component. Recipes belong in an external database if needed. (EFSA guidance p56)
-- When the ingredient is used mainly for flavour identity, EFSA recommends coding the ingredient as the raw commodity term for consistency. (EFSA guidance p56)
-- On derivative base terms, use `F04` for minor added ingredients that characterise or flavour the product, not for the constitutive source of the derivative itself. Ask whether the food was obtained from that commodity or whether the commodity was added later. (EFSA guidance p19-20, p56)
+- It is not a full recipe field. Only one or a few ingredient descriptors are expected, not every component. Recipes belong in an external database if needed. (EFSA guidance p56)
+- When the ingredient is used mainly for flavour identity, code it as the raw commodity term for consistency. (EFSA guidance p56)
+- On derivative base terms, use `F04` for minor added ingredients that characterise or flavour the product, not for the constitutive source of the derivative itself. Ask: was the food obtained from that commodity, or was the commodity added later? (EFSA guidance p19-20, p56)
 
-<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p45, p49-50, p56; EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf p6 -->
+<!-- Source: EFSA Supporting Publications - 2015 - The food classification and description system FoodEx 2 revision 2.pdf p45, p49-50, p56; EFSA Supporting Publications - 2018 - Training on FoodEx2.pdf p6 -->
 ## Common Combinations
 
 | Situation | Base term | Added facets |
@@ -32,7 +32,7 @@ last_updated: "2026-04-06"
 
 - `F04` can also be used outside composites for minor ingredients such as flavourings or coatings on an otherwise raw or derivative product. In those cases `F27` still answers what the derivative was obtained from, while `F04` records what was added to characterise it. (EFSA guidance p56)
 
-<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p50, p56 -->
+<!-- Source: EFSA Supporting Publications - 2015 - The food classification and description system FoodEx 2 revision 2.pdf p50, p56 -->
 ## Worked Examples
 
 - Before: `asparagus risotto`. After: `A041F#F04.A00RT`. A composite base term plus one characterising ingredient. (EFSA guidance p56)

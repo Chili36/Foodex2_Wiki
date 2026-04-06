@@ -4,7 +4,7 @@ sources:
   - "BUSINESS-RULES.md"
   - "BUSINESS-RULES-COMPACT.json"
   - "docs/VALIDATION_RULES_SUMMARY.md"
-  - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+  - "EFSA Supporting Publications - 2015 - The food classification and description system FoodEx 2 revision 2.pdf"
 related:
   - "[[base-term-selection]]"
   - "[[facet-coding-rules]]"
@@ -27,7 +27,7 @@ last_updated: "2026-04-06"
 | `f` facet term | No | None | Cannot be a base term (`BR17`) |
 | `n` non-specific | Avoid | Case-specific | Discouraged because precision is too low (`BR10`) |
 
-<!-- Source: BUSINESS-RULES.md BR01, BR03, BR04, BR05, BR06, BR07, BR12, BR13, BR17, BR23, BR24; EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p19-20, p56 -->
+<!-- Source: BUSINESS-RULES.md BR01, BR03, BR04, BR05, BR06, BR07, BR12, BR13, BR17, BR23, BR24; EFSA Supporting Publications - 2015 - The food classification and description system FoodEx 2 revision 2.pdf p19-20, p56 -->
 ## Practical Reading
 
 - Raw terms are anchored on the commodity itself. `F03 physical state` is blocked because it creates a derivative (`BR13`). (Business Rules `BR01`, `BR13`)

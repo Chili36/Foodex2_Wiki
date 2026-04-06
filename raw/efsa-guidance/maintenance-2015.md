@@ -1,7 +1,7 @@
 ---
 title: "FoodEx2 Maintenance 2015"
 sources:
-  - "EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf"
+  - "EFSA Supporting Publications - 2016 - FoodEx2 annual maintenance 2015.pdf"
 related:
   - "[[maintenance-history]]"
   - "[[foodex2-overview]]"
@@ -10,7 +10,7 @@ last_updated: "2026-04-05"
 
 # Maintenance 2015
 
-<!-- Source: EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf p3, p7-20 -->
+<!-- Source: EFSA Supporting Publications - 2016 - FoodEx2 annual maintenance 2015.pdf p3, p7-20 -->
 ## Summary
 
 - First post-revision-2 maintenance cycle. EFSA added 271 new terms across hierarchies and facets. (2015 maintenance p3)
@@ -19,8 +19,8 @@ last_updated: "2026-04-05"
 
 ## Why It Matters
 
-- This report shows that FoodEx2 logic stayed stable after revision 2, but term inventory and placement changed almost immediately.
-- It also confirms that some apparent “base terms” were considered inconsistent with system logic and should be replaced by raw term + process facet patterns instead. (2015 maintenance p17-18)
+- Term inventory and placement changed almost immediately after revision 2, even though the underlying logic stayed stable.
+- Some apparent base terms were found inconsistent with system logic and should be replaced by a raw term plus process facet pattern. (2015 maintenance p17-18)
 
 ## Release Context
 

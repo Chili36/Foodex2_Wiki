@@ -16,8 +16,8 @@ last_updated: "2026-04-05"
 <!-- Source: docs/DOMAIN_SPECIFIC_RULES.md VMPR Domain, Food Additives Domain, Contaminants Domain; BUSINESS-RULES-COMPACT.json domainSpecificRules -->
 ## These Rules Are Contextual
 
-- These checks are not universal FoodEx2 syntax rules. They activate when the reporting domain or analysis context is known. (Domain Specific Rules; Compact JSON)
-- In practice, they matter most for VMPR, additives, acrylamide, and non-food animal matrices. See [[chemical-monitoring-foodex2]]. (Domain Specific Rules)
+- These checks are not universal FoodEx2 syntax rules. They activate only when the reporting domain or analysis context is known. (Domain Specific Rules; Compact JSON)
+- They matter most for VMPR, additives, acrylamide, and non-food animal matrices. See [[chemical-monitoring-foodex2]]. (Domain Specific Rules)
 
 <!-- Source: docs/DOMAIN_SPECIFIC_RULES.md Implementation Matrix; docs/CONTEXT_SPECIFIC_RULES.md -->
 ## Common Mandatory Or Recommended Facets
