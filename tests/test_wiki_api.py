@@ -469,3 +469,11 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     assert "candidates_trimmed" in policy_props
     assert "candidate_hints" not in policy_props
     assert "candidates" in solve_props
+
+    context_description = payload["paths"]["/wiki/context-pack"]["post"]["description"]
+    policy_description = payload["paths"]["/wiki/policy-pack"]["post"]["description"]
+    solve_description = payload["paths"]["/wiki/solve"]["post"]["description"]
+
+    assert "`candidate_hints`" in context_description
+    assert "`candidates_trimmed`" in policy_description
+    assert "`candidates`" in solve_description

@@ -315,16 +315,18 @@ def _normalize_solver_data(data: dict[str, Any]) -> dict[str, Any]:
 def _effective_context_candidates(request: ContextPackRequest) -> tuple[list[dict[str, Any]], str]:
     if request.candidate_hints:
         return _plain_models(request.candidate_hints), "candidate_hints"
-    if request.candidates:
-        return _to_candidate_hints(request.candidates), "candidates->candidate_hints"
+    legacy_candidates = request.__dict__.get("candidates", [])
+    if legacy_candidates:
+        return _to_candidate_hints(legacy_candidates), "candidates->candidate_hints"
     return [], "none"
 
 
 def _effective_policy_candidates(request: PolicyPackRequest) -> tuple[list[dict[str, Any]], str]:
     if request.candidates_trimmed:
         return _plain_models(request.candidates_trimmed), "candidates_trimmed"
-    if request.candidates:
-        return _to_candidates_trimmed(request.candidates), "candidates->candidates_trimmed"
+    legacy_candidates = request.__dict__.get("candidates", [])
+    if legacy_candidates:
+        return _to_candidates_trimmed(legacy_candidates), "candidates->candidates_trimmed"
     return [], "none"
 
 
@@ -394,6 +396,13 @@ def get_page(page_name: str, include_content: bool = Query(default=True)) -> dic
     "/wiki/policy-pack",
     response_model=PolicyPackResponse,
     summary="Return selected wiki pages plus a synthesized policy pack",
+    description=(
+        "Use this when the wiki service should retrieve pages and synthesize a reasoning pack, "
+        "but should not return the final FoodEx2 code. Preferred request field: "
+        "`candidates_trimmed`. Include only `code`, `name`, `termType`, optional `scopeNote`, "
+        "and optional `implicitFacets`. Legacy full `candidates` input is still accepted, but "
+        "the service reduces it internally before the librarian LLM call."
+    ),
 )
 def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
     request_started = time.perf_counter()
@@ -482,6 +491,12 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
     "/wiki/context-pack",
     response_model=ContextPackResponse,
     summary="Return selected wiki pages as raw context without synthesized rules",
+    description=(
+        "Use this when the wiki service should only choose and return context pages. Preferred "
+        "request field: `candidate_hints`. Keep it minimal with only `code`, `name`, and "
+        "`termType`. Legacy full `candidates` input is still accepted, but the service reduces "
+        "it internally to candidate hints before the selector LLM call."
+    ),
 )
 def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
     request_started = time.perf_counter()
@@ -563,6 +578,11 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
     "/wiki/solve",
     response_model=SolveResponse,
     summary="Return the final FoodEx2 coding result plus wiki context and trace",
+    description=(
+        "Use this when the wiki service should make the final FoodEx2 coding decision. This "
+        "endpoint expects the full external candidate universe in the `candidates` field, "
+        "because the solver chooses among candidates and constructs the final code."
+    ),
 )
 def solve_foodex2(request: SolveRequest) -> SolveResponse:
     if not request.candidates:
