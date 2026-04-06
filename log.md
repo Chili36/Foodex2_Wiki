@@ -1,6 +1,6 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-04-05"
+last_updated: "2026-04-06"
 ---
 
 # Log
@@ -56,3 +56,8 @@ last_updated: "2026-04-05"
 - Replaced the deterministic page selector inside the API path with an internal Anthropic-powered wiki librarian.
 - Kept the API surface stable for clients, but changed `/wiki/policy-pack` so the wiki repo now performs an actual LLM-guided read of the wiki before returning context.
 - Added mocked tests for the LLM-owned policy-pack flow and included tool traces in the response metadata.
+
+## [2026-04-06] maintenance | Add guiding principles to the wiki index
+
+- Added a compact `Guiding Principles` section to `index.md` so the high-level FoodEx2 worldview is always available without consuming a separate page slot.
+- Captured the key framing ideas that FoodEx2 is a scientific reporting language, is modeled top-down rather than bottom-up, prefers modular facets over term proliferation, and separates detailed input coding from downstream analytical aggregation.
