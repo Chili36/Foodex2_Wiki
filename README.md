@@ -138,6 +138,41 @@ Main endpoints:
 - `POST /wiki/context-pack`: runs the internal wiki page selector and returns only the selected wiki pages plus trace metadata
 - `POST /wiki/solve`: runs the internal wiki librarian and a final coding solver, then returns a complete FoodEx2 coding result plus the underlying context and trace
 
+Endpoint-specific request guidance:
+
+- `POST /wiki/context-pack`: prefer `candidate_hints` with only `code`, `name`, and `termType`
+- `POST /wiki/policy-pack`: prefer `candidates_trimmed` with `code`, `name`, `termType`, optional `scopeNote`, and optional `implicitFacets`
+- `POST /wiki/solve`: send the full `candidates` list because this endpoint makes the final coding decision
+
+Legacy compatibility:
+
+- `context-pack` and `policy-pack` still accept a full `candidates` list, but the service now reduces that payload internally before calling the LLM
+- the canonical machine-readable contract is published at `GET /openapi.json`
+
+Example `POST /wiki/context-pack` body:
+
+```json
+{
+  "search_term": "Tomato basil and garlic sauce in a glass jar",
+  "deconstructed_query": {
+    "raw_query": "Tomato basil and garlic sauce in a glass jar",
+    "base_term": "tomato basil and garlic sauce",
+    "components": [
+      {"text": "sauce", "kind": "PROCESS"},
+      {"text": "glass jar", "kind": "PACKAGING"}
+    ]
+  },
+  "candidate_hints": [
+    {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"},
+    {"code": "A07NN", "name": "Jar", "termType": "f"},
+    {"code": "A07PF", "name": "Glass", "termType": "f"}
+  ],
+  "context": {},
+  "max_pages": 6,
+  "include_page_content": true
+}
+```
+
 Example `POST /wiki/policy-pack` body:
 
 ```json
@@ -151,8 +186,16 @@ Example `POST /wiki/policy-pack` body:
       {"text": "glass jar", "kind": "PACKAGING"}
     ]
   },
-  "candidates": [
-    {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"},
+  "candidates_trimmed": [
+    {
+      "code": "A044C",
+      "name": "Tomato-containing cooked sauces",
+      "termType": "s",
+      "scopeNote": "...",
+      "implicitFacets": [
+        {"facetType": "F04", "facetCode": "A0DMX", "facetMeaning": "Tomatoes"}
+      ]
+    },
     {"code": "A07NN", "name": "Jar", "termType": "f"},
     {"code": "A07PF", "name": "Glass", "termType": "f"}
   ],

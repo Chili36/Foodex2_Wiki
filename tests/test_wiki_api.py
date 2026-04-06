@@ -270,8 +270,20 @@ def test_policy_pack_uses_librarian_response() -> None:
                 ],
             },
             "candidates": [
-                {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"},
-                {"code": "A07NN", "name": "Jar", "termType": "f"},
+                {
+                    "code": "A044C",
+                    "name": "Tomato-containing cooked sauces",
+                    "termType": "s",
+                    "scopeNote": "noisy legacy field that should be reduced",
+                    "implicitFacets": [{"facetType": "F04", "facetCode": "A0DMX", "facetMeaning": "Tomatoes"}],
+                    "monitoringFlags": {"reportFlag": True},
+                },
+                {
+                    "code": "A07NN",
+                    "name": "Jar",
+                    "termType": "f",
+                    "additionalMetadata": {"score": 0.91},
+                },
                 {"code": "A07PF", "name": "Glass", "termType": "f"},
             ],
             "context": {},
@@ -289,12 +301,24 @@ def test_policy_pack_uses_librarian_response() -> None:
     ]
     assert payload["trace"]["selection_method"] == "service-owned llm librarian"
     assert payload["trace"]["model"] == "fake-claude"
+    assert payload["trace"]["candidate_input_mode"] == "candidates->candidates_trimmed"
     assert payload["trace"]["token_summary"]["total_tracked_tokens"] == 200
     assert payload["trace"]["timing_summary"]["llm_time_ms"] == 1420
     assert payload["trace"]["timing_summary"]["librarian_wall_time_ms"] == 1600
     assert payload["trace"]["timing_summary"]["request_wall_time_ms"] >= 0
     assert payload["query_classification"]["food_type"] == "composite"
     assert payload["pages"][2]["page_name"] == "packaging-facets.md"
+    assert app_module.librarian_runner.calls[0]["candidates"] == [
+        {
+            "code": "A044C",
+            "name": "Tomato-containing cooked sauces",
+            "termType": "s",
+            "scopeNote": "noisy legacy field that should be reduced",
+            "implicitFacets": [{"facetType": "F04", "facetCode": "A0DMX", "facetMeaning": "Tomatoes"}],
+        },
+        {"code": "A07NN", "name": "Jar", "termType": "f"},
+        {"code": "A07PF", "name": "Glass", "termType": "f"},
+    ]
 
 
 def test_context_pack_returns_only_pages_and_trace() -> None:
@@ -307,7 +331,13 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
                 "raw_query": "Tomato basil and garlic sauce in a glass jar",
             },
             "candidates": [
-                {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"},
+                {
+                    "code": "A044C",
+                    "name": "Tomato-containing cooked sauces",
+                    "termType": "s",
+                    "scopeNote": "legacy field should not reach selector",
+                    "implicitFacets": [{"facetType": "F04", "facetCode": "A0DMX"}],
+                },
             ],
             "context": {},
         },
@@ -325,11 +355,15 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert "policy_pack" not in payload
     assert "query_classification" not in payload
     assert payload["trace"]["selection_method"] == "service-owned llm page selector"
+    assert payload["trace"]["candidate_input_mode"] == "candidates->candidate_hints"
     assert payload["trace"]["token_summary"]["calls"] == 1
     assert payload["trace"]["timing_summary"]["llm_time_ms"] == 640
     assert payload["trace"]["timing_summary"]["selector_wall_time_ms"] == 700
     assert payload["trace"]["timing_summary"]["request_wall_time_ms"] >= 0
     assert payload["pages"][0]["page_name"] == "index.md"
+    assert app_module.selector_runner.calls[0]["candidates"] == [
+        {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"}
+    ]
 
 
 def test_policy_pack_page_content_is_model_cleaned() -> None:
@@ -419,3 +453,19 @@ def test_solve_returns_503_for_malformed_solver_output() -> None:
 
     assert response.status_code == 503
     assert response.json()["detail"] == "Could not extract JSON object from solver response"
+
+
+def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
+    response = request("GET", "/openapi.json")
+    assert response.status_code == 200
+    payload = response.json()
+
+    context_props = payload["components"]["schemas"]["ContextPackRequest"]["properties"]
+    policy_props = payload["components"]["schemas"]["PolicyPackRequest"]["properties"]
+    solve_props = payload["components"]["schemas"]["SolveRequest"]["properties"]
+
+    assert "candidate_hints" in context_props
+    assert "candidates_trimmed" not in context_props
+    assert "candidates_trimmed" in policy_props
+    assert "candidate_hints" not in policy_props
+    assert "candidates" in solve_props
