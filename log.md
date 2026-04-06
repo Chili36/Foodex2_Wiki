@@ -71,3 +71,8 @@ last_updated: "2026-04-06"
 
 - Tightened the base-term selection wording so the list of nature-changing processes is explicitly illustrative rather than exhaustive.
 - Added a note that the processed-base precedence rule should not be overridden just because a more specific raw commodity term exists.
+
+## [2026-04-07] maintenance | Add dried chili pepper worked example
+
+- Added `dried chili pepper` as a worked example in the base-term selection and process-facet pages.
+- The example reinforces an existing rule: when a drying-derived base term already exists, use that derivative base and refine it with `F27` rather than rebuilding the food from a raw commodity plus explicit `F28 drying`.
