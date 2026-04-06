@@ -149,6 +149,28 @@ class SolveResponse(BaseModel):
     trace: dict[str, Any]
 
 
+def _normalize_confidence(value: Any) -> int:
+    if isinstance(value, str):
+        try:
+            value = float(value)
+        except ValueError:
+            return 1
+    if isinstance(value, bool):
+        return 1
+    if isinstance(value, (int, float)):
+        numeric = float(value)
+        if 0.0 <= numeric <= 1.0:
+            return max(1, min(5, round(1 + numeric * 4)))
+        return max(1, min(5, round(numeric)))
+    return 1
+
+
+def _normalize_solver_data(data: dict[str, Any]) -> dict[str, Any]:
+    normalized = dict(data)
+    normalized["confidence"] = _normalize_confidence(normalized.get("confidence"))
+    return normalized
+
+
 app = FastAPI(
     title="FoodEx2 Wiki API",
     version="0.1.0",
@@ -442,7 +464,7 @@ def solve_foodex2(request: PolicyPackRequest) -> SolveResponse:
         query_classification=QueryClassification(**librarian_result.data["query_classification"]),
         candidate_focus=CandidateFocus(**librarian_result.data["candidate_focus"]),
         policy_pack=PolicyPackBody(**librarian_result.data["policy_pack"]),
-        solution=SolveResultBody(**solver_result.data),
+        solution=SolveResultBody(**_normalize_solver_data(solver_result.data)),
         trace={
             "index_used": True,
             "max_pages": request.max_pages,

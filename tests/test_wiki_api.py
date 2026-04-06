@@ -189,7 +189,7 @@ class FakeSolver:
                         "reason": "Tomato sauce family fit, but weaker than cooked sauces.",
                     }
                 ],
-                "confidence": 4,
+                "confidence": 0.95,
                 "regulatoryNotes": "Carry the base-term monitoring flags unchanged.",
             },
             token_summary={
@@ -347,6 +347,7 @@ def test_solve_returns_final_code_and_stage_traces() -> None:
     payload = response.json()
     assert payload["solution"]["constructedCode"] == "A044C#F04.A00VV$F04.A00GZ$F18.A07NN$F19.A07PF"
     assert payload["solution"]["validationCheck"]["passes"] is True
+    assert payload["solution"]["confidence"] == 5
     assert payload["trace"]["selection_method"] == "service-owned llm librarian + solver"
     assert payload["trace"]["retrieval"]["model"] == "fake-claude"
     assert payload["trace"]["solver"]["model"] == "fake-claude-solver"
