@@ -324,6 +324,26 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert payload["pages"][0]["page_name"] == "index.md"
 
 
+def test_policy_pack_page_content_is_model_cleaned() -> None:
+    response = request(
+        "POST",
+        "/wiki/policy-pack",
+        json={
+            "search_term": "Tomato basil and garlic sauce in a glass jar",
+            "deconstructed_query": {},
+            "candidates": [{"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"}],
+            "context": {},
+            "include_page_content": True,
+        },
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    content = payload["pages"][1]["content"]
+    assert content is not None
+    assert "<!-- Source:" not in content
+    assert not content.startswith("---")
+
+
 def test_solve_returns_final_code_and_stage_traces() -> None:
     response = request(
         "POST",

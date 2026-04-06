@@ -271,7 +271,7 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
             summary=page.summary,
             sources=page.sources,
             related=page.related,
-            content=page.content if request.include_page_content else None,
+            content=store.clean_content_for_model(page) if request.include_page_content else None,
         )
         for page in [store.read_page(page_name) for page_name in librarian_result.data["pages_used"]]
     ]
@@ -351,7 +351,7 @@ def create_context_pack(request: PolicyPackRequest) -> ContextPackResponse:
             summary=page.summary,
             sources=page.sources,
             related=page.related,
-            content=page.content if request.include_page_content else None,
+            content=store.clean_content_for_model(page) if request.include_page_content else None,
         )
         for page in [store.read_page(page_name) for page_name in selection_result.pages_used]
     ]
@@ -452,7 +452,7 @@ def solve_foodex2(request: PolicyPackRequest) -> SolveResponse:
             summary=page.summary,
             sources=page.sources,
             related=page.related,
-            content=page.content if request.include_page_content else None,
+            content=store.clean_content_for_model(page) if request.include_page_content else None,
         )
         for page in pages_raw
     ]

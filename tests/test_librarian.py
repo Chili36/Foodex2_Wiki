@@ -307,6 +307,16 @@ def test_store_extracts_guiding_principles_from_index() -> None:
     assert any("top-down" in principle for principle in principles)
 
 
+def test_store_cleans_page_content_for_model() -> None:
+    store = _store()
+    page = store.read_page("base-term-selection.md")
+    cleaned = store.clean_content_for_model(page)
+
+    assert cleaned.startswith("# Base Term Selection")
+    assert "<!-- Source:" not in cleaned
+    assert "(EFSA guidance p42; Training p5)" not in cleaned
+
+
 def test_solver_prefers_solver_model_env(monkeypatch) -> None:
     monkeypatch.setenv("WIKI_LIBRARIAN_MODEL", "shared-model")
     monkeypatch.setenv("WIKI_POLICY_MODEL", "policy-model")
