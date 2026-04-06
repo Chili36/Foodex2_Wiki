@@ -113,6 +113,7 @@ Optional overrides:
 ```bash
 WIKI_POLICY_MODEL=claude-3-7-sonnet-latest
 WIKI_CONTEXT_MODEL=claude-3-7-sonnet-latest
+WIKI_SOLVER_MODEL=claude-3-7-sonnet-latest
 ```
 
 If the endpoint-specific variables are unset, both endpoints fall back to `WIKI_LIBRARIAN_MODEL`.
@@ -135,6 +136,7 @@ Main endpoints:
 - `GET /wiki/pages/{page_name}`: one wiki page
 - `POST /wiki/policy-pack`: runs the internal wiki librarian, returns selected pages plus a synthesized policy pack for a coding case
 - `POST /wiki/context-pack`: runs the internal wiki page selector and returns only the selected wiki pages plus trace metadata
+- `POST /wiki/solve`: runs the internal wiki librarian and a final coding solver, then returns a complete FoodEx2 coding result plus the underlying context and trace
 
 Example `POST /wiki/policy-pack` body:
 
@@ -177,8 +179,20 @@ Example `POST /wiki/policy-pack` body:
 - `pages`: selected page metadata plus optional markdown content
 - `trace`: retrieval metadata including the internal page-read trace, token summary, and timing summary
 
+`POST /wiki/solve` response includes:
+
+- `guiding_principles`: the high-level FoodEx2 worldview from `index.md`
+- `pages_used`: selected wiki pages
+- `pages`: selected page metadata plus optional markdown content
+- `query_classification`: inferred case framing from the retrieval stage
+- `candidate_focus`: the retrieval stage's candidate preferences and rejected patterns
+- `policy_pack`: the synthesized wiki-derived rule pack used by the solver
+- `solution`: final FoodEx2 coding result including selected base term, constructed code, validation check, alternatives, and confidence
+- `trace`: split process metadata for retrieval, solver, and totals including models, tokens, calls, and timing
+
 Use `policy-pack` when you want the wiki service to act as a solver-style knowledge synthesizer.
 Use `context-pack` when you want pure context delivery and will do the reasoning in a downstream model.
+Use `solve` when you want the wiki service to return the final FoodEx2 coding decision itself, still grounded in the selected wiki context and external candidate list.
 
 Run tests with:
 

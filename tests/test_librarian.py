@@ -3,7 +3,11 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from wiki_api.librarian import AnthropicWikiLibrarian, AnthropicWikiPageSelector
+from wiki_api.librarian import (
+    AnthropicFoodEx2Solver,
+    AnthropicWikiLibrarian,
+    AnthropicWikiPageSelector,
+)
 from wiki_api.wiki_store import WikiStore
 
 
@@ -301,3 +305,14 @@ def test_store_extracts_guiding_principles_from_index() -> None:
 
     assert len(principles) >= 4
     assert any("top-down" in principle for principle in principles)
+
+
+def test_solver_prefers_solver_model_env(monkeypatch) -> None:
+    monkeypatch.setenv("WIKI_LIBRARIAN_MODEL", "shared-model")
+    monkeypatch.setenv("WIKI_POLICY_MODEL", "policy-model")
+    monkeypatch.setenv("WIKI_SOLVER_MODEL", "solver-model")
+    client = FakeAnthropicClient([])
+
+    solver = AnthropicFoodEx2Solver(client=client)
+
+    assert solver.model == "solver-model"

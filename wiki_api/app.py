@@ -10,7 +10,11 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
-from .librarian import AnthropicWikiLibrarian, AnthropicWikiPageSelector
+from .librarian import (
+    AnthropicFoodEx2Solver,
+    AnthropicWikiLibrarian,
+    AnthropicWikiPageSelector,
+)
 from .wiki_store import WikiStore
 
 
@@ -18,6 +22,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 store = WikiStore(REPO_ROOT)
 librarian_runner: AnthropicWikiLibrarian | Any | None = None
 selector_runner: AnthropicWikiPageSelector | Any | None = None
+solver_runner: AnthropicFoodEx2Solver | Any | None = None
 logger = logging.getLogger("wiki_api")
 if not logging.getLogger().handlers:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
@@ -35,6 +40,13 @@ def get_selector_runner() -> AnthropicWikiPageSelector | Any:
     if selector_runner is None:
         selector_runner = AnthropicWikiPageSelector(store=store)
     return selector_runner
+
+
+def get_solver_runner() -> AnthropicFoodEx2Solver | Any:
+    global solver_runner
+    if solver_runner is None:
+        solver_runner = AnthropicFoodEx2Solver()
+    return solver_runner
 
 
 class PolicyPackRequest(BaseModel):
@@ -91,6 +103,49 @@ class ContextPackResponse(BaseModel):
     guiding_principles: list[str]
     pages_used: list[str]
     pages: list[PageSummary]
+    trace: dict[str, Any]
+
+
+class FacetSelection(BaseModel):
+    facetType: str
+    facetCode: str
+    facetMeaning: str
+
+
+class ValidationCheck(BaseModel):
+    passes: bool
+    rulesConsulted: list[str] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)
+
+
+class AlternativeCode(BaseModel):
+    code: str
+    name: str
+    reason: str
+
+
+class SolveResultBody(BaseModel):
+    selectedCode: str
+    selectedName: str
+    selectedTermType: str
+    constructedCode: str
+    reasoning: str
+    implicitFacets: list[FacetSelection] = Field(default_factory=list)
+    suggestedExplicitFacets: list[FacetSelection] = Field(default_factory=list)
+    validationCheck: ValidationCheck
+    alternativeCodes: list[AlternativeCode] = Field(default_factory=list)
+    confidence: int = Field(ge=1, le=5)
+    regulatoryNotes: str = ""
+
+
+class SolveResponse(BaseModel):
+    guiding_principles: list[str]
+    pages_used: list[str]
+    pages: list[PageSummary]
+    query_classification: QueryClassification
+    candidate_focus: CandidateFocus
+    policy_pack: PolicyPackBody
+    solution: SolveResultBody
     trace: dict[str, Any]
 
 
@@ -304,6 +359,129 @@ def create_context_pack(request: PolicyPackRequest) -> ContextPackResponse:
                 "pages_used": response.pages_used,
                 "token_summary": selection_result.token_summary,
                 "timing_summary": response.trace["timing_summary"],
+            },
+            ensure_ascii=False,
+        ),
+    )
+    return response
+
+
+@app.post("/wiki/solve", response_model=SolveResponse)
+def solve_foodex2(request: PolicyPackRequest) -> SolveResponse:
+    if not request.candidates:
+        raise HTTPException(status_code=400, detail="solve requires a non-empty candidates list")
+
+    request_started = time.perf_counter()
+    logger.info(
+        "solve_request %s",
+        json.dumps(
+            {
+                "search_term": request.search_term,
+                "deconstructed_query": request.deconstructed_query,
+                "candidate_count": len(request.candidates),
+                "context": request.context,
+                "max_pages": request.max_pages,
+            },
+            ensure_ascii=False,
+        ),
+    )
+
+    librarian = get_librarian_runner()
+    if request.max_pages != librarian.max_pages:
+        librarian.max_pages = request.max_pages
+    solver = get_solver_runner()
+    payload = {
+        "search_term": request.search_term,
+        "deconstructed_query": request.deconstructed_query,
+        "candidates": request.candidates,
+        "context": request.context,
+    }
+    try:
+        librarian_result = librarian.run(payload)
+        pages_raw = [store.read_page(page_name) for page_name in librarian_result.data["pages_used"]]
+        solver_payload = {
+            "search_term": request.search_term,
+            "deconstructed_query": request.deconstructed_query,
+            "candidates": request.candidates,
+            "context": request.context,
+            "guiding_principles": store.guiding_principles(),
+            "query_classification": librarian_result.data["query_classification"],
+            "candidate_focus": librarian_result.data["candidate_focus"],
+            "policy_pack": librarian_result.data["policy_pack"],
+            "pages_used": librarian_result.data["pages_used"],
+            "pages": [
+                {
+                    "page_name": page.name,
+                    "title": page.title,
+                    "summary": page.summary,
+                    "content": page.content,
+                }
+                for page in pages_raw
+            ],
+        }
+        solver_result = solver.run(solver_payload)
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+
+    pages = [
+        PageSummary(
+            page_name=page.name,
+            title=page.title,
+            summary=page.summary,
+            sources=page.sources,
+            related=page.related,
+            content=page.content if request.include_page_content else None,
+        )
+        for page in pages_raw
+    ]
+
+    response = SolveResponse(
+        guiding_principles=store.guiding_principles(),
+        pages_used=librarian_result.data["pages_used"],
+        pages=pages,
+        query_classification=QueryClassification(**librarian_result.data["query_classification"]),
+        candidate_focus=CandidateFocus(**librarian_result.data["candidate_focus"]),
+        policy_pack=PolicyPackBody(**librarian_result.data["policy_pack"]),
+        solution=SolveResultBody(**solver_result.data),
+        trace={
+            "index_used": True,
+            "max_pages": request.max_pages,
+            "selection_method": "service-owned llm librarian + solver",
+            "retrieval": {
+                "model": librarian.model,
+                "tool_trace": librarian_result.tool_trace,
+                "token_summary": librarian_result.token_summary,
+                "timing_summary": librarian_result.timing_summary,
+            },
+            "solver": {
+                "model": solver.model,
+                "token_summary": solver_result.token_summary,
+                "timing_summary": solver_result.timing_summary,
+            },
+            "total": {
+                "request_wall_time_ms": int((time.perf_counter() - request_started) * 1000),
+                "total_llm_calls": (
+                    int(librarian_result.token_summary["calls"])
+                    + int(solver_result.token_summary["calls"])
+                ),
+                "total_tracked_tokens": (
+                    int(librarian_result.token_summary["total_tracked_tokens"])
+                    + int(solver_result.token_summary["total_tracked_tokens"])
+                ),
+            },
+        },
+    )
+    logger.info(
+        "solve_response %s",
+        json.dumps(
+            {
+                "search_term": request.search_term,
+                "guiding_principles_count": len(response.guiding_principles),
+                "pages_used": response.pages_used,
+                "constructed_code": response.solution.constructedCode,
+                "retrieval_token_summary": librarian_result.token_summary,
+                "solver_token_summary": solver_result.token_summary,
+                "total_trace": response.trace["total"],
             },
             ensure_ascii=False,
         ),

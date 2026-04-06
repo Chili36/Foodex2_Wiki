@@ -102,6 +102,59 @@ Return JSON only with this structure:
 }
 """
 
+SOLVER_SYSTEM_PROMPT = """You are the FoodEx2 coding solver.
+
+Your job is to choose the best FoodEx2 base term from the provided candidate list and construct the final valid FoodEx2 code.
+
+Rules:
+- Use the provided guiding principles, selected wiki pages, and policy pack as the primary knowledge source.
+- Treat the provided candidate list as the allowed candidate universe for base-term and explicit facet selection unless the case explicitly says otherwise.
+- Prefer the most specific valid reportable base term.
+- Do not use hierarchy/group/facet terms as base terms.
+- Respect implicit facets and do not duplicate them explicitly.
+- Add only explicit facets justified by the wiki context and candidate data.
+- Follow the validation rules in the policy pack.
+- If an explicit detail is mentioned in the query but the needed candidate code is missing, say so in the reasoning or warnings rather than inventing a code.
+- Return JSON only.
+
+Return this structure:
+{
+  "selectedCode": "...",
+  "selectedName": "...",
+  "selectedTermType": "...",
+  "constructedCode": "...",
+  "reasoning": "...",
+  "implicitFacets": [
+    {
+      "facetType": "Fxx",
+      "facetCode": "...",
+      "facetMeaning": "..."
+    }
+  ],
+  "suggestedExplicitFacets": [
+    {
+      "facetType": "Fxx",
+      "facetCode": "...",
+      "facetMeaning": "..."
+    }
+  ],
+  "validationCheck": {
+    "passes": true,
+    "rulesConsulted": ["..."],
+    "warnings": ["..."]
+  },
+  "alternativeCodes": [
+    {
+      "code": "...",
+      "name": "...",
+      "reason": "..."
+    }
+  ],
+  "confidence": 1,
+  "regulatoryNotes": "..."
+}
+"""
+
 
 class AnthropicMessagesClient(Protocol):
     def create(self, **kwargs: Any) -> Any: ...
@@ -124,6 +177,13 @@ class LibrarianResult:
 class PageSelectionResult:
     pages_used: list[str]
     tool_trace: list[dict[str, Any]]
+    token_summary: dict[str, Any]
+    timing_summary: dict[str, Any]
+
+
+@dataclass(frozen=True)
+class SolverResult:
+    data: dict[str, Any]
     token_summary: dict[str, Any]
     timing_summary: dict[str, Any]
 
@@ -543,5 +603,62 @@ class AnthropicWikiPageSelector:
             timing_summary={
                 **_aggregate_timing(timing_trace),
                 "selector_wall_time_ms": int((time.perf_counter() - selector_started) * 1000),
+            },
+        )
+
+
+class AnthropicFoodEx2Solver:
+    def __init__(
+        self,
+        *,
+        client: AnthropicClientProtocol | None = None,
+        model: str | None = None,
+        max_tokens: int = 2500,
+    ):
+        self.client = client or build_anthropic_client()
+        self.model = model or _resolve_model(
+            "WIKI_SOLVER_MODEL",
+            "WIKI_POLICY_MODEL",
+            "WIKI_LIBRARIAN_MODEL",
+            default="claude-3-7-sonnet-latest",
+        )
+        self.max_tokens = max_tokens
+
+    def run(self, payload: dict[str, Any]) -> SolverResult:
+        solver_started = time.perf_counter()
+        llm_started = time.perf_counter()
+        response = self.client.messages.create(
+            model=self.model,
+            max_tokens=self.max_tokens,
+            system=SOLVER_SYSTEM_PROMPT,
+            messages=[
+                {
+                    "role": "user",
+                    "content": json.dumps(payload, ensure_ascii=False),
+                }
+            ],
+        )
+        llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
+        timing_trace = [
+            {
+                "call_number": 1,
+                "duration_ms": llm_duration_ms,
+                "stop_reason": _get_block_value(response, "stop_reason"),
+            }
+        ]
+        usage_trace = [
+            _usage_dict(
+                _get_block_value(response, "usage"),
+                stop_reason=_get_block_value(response, "stop_reason"),
+            )
+        ]
+        final_text = _response_text(_get_block_value(response, "content", []))
+        data = _extract_json_payload(final_text)
+        return SolverResult(
+            data=data,
+            token_summary=_aggregate_usage(usage_trace, self.model),
+            timing_summary={
+                **_aggregate_timing(timing_trace),
+                "solver_wall_time_ms": int((time.perf_counter() - solver_started) * 1000),
             },
         )

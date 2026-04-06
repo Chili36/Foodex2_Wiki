@@ -5,7 +5,7 @@ import asyncio
 import httpx
 
 import wiki_api.app as app_module
-from wiki_api.librarian import LibrarianResult, PageSelectionResult
+from wiki_api.librarian import LibrarianResult, PageSelectionResult, SolverResult
 
 
 async def _request(method: str, path: str, **kwargs: object) -> httpx.Response:
@@ -154,9 +154,78 @@ class FakeSelector:
         )
 
 
+class FakeSolver:
+    def __init__(self) -> None:
+        self.model = "fake-claude-solver"
+        self.calls: list[dict[str, object]] = []
+
+    def run(self, payload: dict[str, object]) -> SolverResult:
+        self.calls.append(payload)
+        return SolverResult(
+            data={
+                "selectedCode": "A044C",
+                "selectedName": "Tomato-containing cooked sauces",
+                "selectedTermType": "s",
+                "constructedCode": "A044C#F04.A00VV$F04.A00GZ$F18.A07NN$F19.A07PF",
+                "reasoning": "Selected the composite tomato sauce term and added basil, garlic, jar, and glass as explicit refinements.",
+                "implicitFacets": [
+                    {"facetType": "F04", "facetCode": "A0DMX", "facetMeaning": "Tomatoes"}
+                ],
+                "suggestedExplicitFacets": [
+                    {"facetType": "F04", "facetCode": "A00VV", "facetMeaning": "Basil"},
+                    {"facetType": "F04", "facetCode": "A00GZ", "facetMeaning": "Garlic"},
+                    {"facetType": "F18", "facetCode": "A07NN", "facetMeaning": "Jar"},
+                    {"facetType": "F19", "facetCode": "A07PF", "facetMeaning": "Glass"},
+                ],
+                "validationCheck": {
+                    "passes": True,
+                    "rulesConsulted": ["BR03", "BR04"],
+                    "warnings": [],
+                },
+                "alternativeCodes": [
+                    {
+                        "code": "A044P",
+                        "name": "Tomato ketchup and related sauces",
+                        "reason": "Tomato sauce family fit, but weaker than cooked sauces.",
+                    }
+                ],
+                "confidence": 4,
+                "regulatoryNotes": "Carry the base-term monitoring flags unchanged.",
+            },
+            token_summary={
+                "model": "fake-claude-solver",
+                "calls": 1,
+                "input_tokens": 300,
+                "output_tokens": 120,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 420,
+                "per_call": [
+                    {
+                        "stop_reason": "end_turn",
+                        "input_tokens": 300,
+                        "output_tokens": 120,
+                        "cache_creation_input_tokens": 0,
+                        "cache_read_input_tokens": 0,
+                        "total_tracked_tokens": 420,
+                    }
+                ],
+            },
+            timing_summary={
+                "calls": 1,
+                "llm_time_ms": 910,
+                "solver_wall_time_ms": 950,
+                "per_call": [
+                    {"call_number": 1, "duration_ms": 910, "stop_reason": "end_turn"},
+                ],
+            },
+        )
+
+
 def setup_function() -> None:
     app_module.librarian_runner = FakeLibrarian()
     app_module.selector_runner = FakeSelector()
+    app_module.solver_runner = FakeSolver()
 
 
 def test_health() -> None:
@@ -253,3 +322,49 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert payload["trace"]["timing_summary"]["selector_wall_time_ms"] == 700
     assert payload["trace"]["timing_summary"]["request_wall_time_ms"] >= 0
     assert payload["pages"][0]["page_name"] == "index.md"
+
+
+def test_solve_returns_final_code_and_stage_traces() -> None:
+    response = request(
+        "POST",
+        "/wiki/solve",
+        json={
+            "search_term": "Tomato basil and garlic sauce in a glass jar",
+            "deconstructed_query": {
+                "raw_query": "Tomato basil and garlic sauce in a glass jar",
+            },
+            "candidates": [
+                {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"},
+                {"code": "A00VV", "name": "Basil", "termType": "r"},
+                {"code": "A00GZ", "name": "Garlic", "termType": "r"},
+                {"code": "A07NN", "name": "Jar", "termType": "f"},
+                {"code": "A07PF", "name": "Glass", "termType": "f"},
+            ],
+            "context": {},
+        },
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["solution"]["constructedCode"] == "A044C#F04.A00VV$F04.A00GZ$F18.A07NN$F19.A07PF"
+    assert payload["solution"]["validationCheck"]["passes"] is True
+    assert payload["trace"]["selection_method"] == "service-owned llm librarian + solver"
+    assert payload["trace"]["retrieval"]["model"] == "fake-claude"
+    assert payload["trace"]["solver"]["model"] == "fake-claude-solver"
+    assert payload["trace"]["total"]["total_llm_calls"] == 3
+    assert payload["trace"]["total"]["total_tracked_tokens"] == 620
+    assert len(payload["guiding_principles"]) >= 4
+
+
+def test_solve_requires_candidates() -> None:
+    response = request(
+        "POST",
+        "/wiki/solve",
+        json={
+            "search_term": "orange nectar",
+            "deconstructed_query": {},
+            "candidates": [],
+            "context": {},
+        },
+    )
+    assert response.status_code == 400
+    assert response.json()["detail"] == "solve requires a non-empty candidates list"
