@@ -274,3 +274,23 @@ def test_page_selector_accepts_direct_json_page_names_without_tool() -> None:
         "packaging-facets.md",
     ]
     assert result.token_summary["calls"] == 1
+
+
+def test_librarian_prefers_policy_model_env(monkeypatch) -> None:
+    monkeypatch.setenv("WIKI_LIBRARIAN_MODEL", "shared-model")
+    monkeypatch.setenv("WIKI_POLICY_MODEL", "policy-model")
+    client = FakeAnthropicClient([])
+
+    librarian = AnthropicWikiLibrarian(store=_store(), client=client)
+
+    assert librarian.model == "policy-model"
+
+
+def test_selector_falls_back_to_shared_model_env(monkeypatch) -> None:
+    monkeypatch.delenv("WIKI_CONTEXT_MODEL", raising=False)
+    monkeypatch.setenv("WIKI_LIBRARIAN_MODEL", "shared-model")
+    client = FakeAnthropicClient([])
+
+    selector = AnthropicWikiPageSelector(store=_store(), client=client)
+
+    assert selector.model == "shared-model"

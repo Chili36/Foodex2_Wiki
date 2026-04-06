@@ -333,6 +333,14 @@ def build_anthropic_client() -> AnthropicClientProtocol:
     return Anthropic(api_key=api_key)
 
 
+def _resolve_model(*env_keys: str, default: str) -> str:
+    for key in env_keys:
+        value = os.getenv(key)
+        if value:
+            return value
+    return default
+
+
 class AnthropicWikiLibrarian:
     def __init__(
         self,
@@ -345,7 +353,11 @@ class AnthropicWikiLibrarian:
     ):
         self.store = store
         self.client = client or build_anthropic_client()
-        self.model = model or os.getenv("WIKI_LIBRARIAN_MODEL", "claude-3-7-sonnet-latest")
+        self.model = model or _resolve_model(
+            "WIKI_POLICY_MODEL",
+            "WIKI_LIBRARIAN_MODEL",
+            default="claude-3-7-sonnet-latest",
+        )
         self.max_pages = max_pages
         self.max_tokens = max_tokens
 
@@ -469,7 +481,11 @@ class AnthropicWikiPageSelector:
     ):
         self.store = store
         self.client = client or build_anthropic_client()
-        self.model = model or os.getenv("WIKI_LIBRARIAN_MODEL", "claude-3-7-sonnet-latest")
+        self.model = model or _resolve_model(
+            "WIKI_CONTEXT_MODEL",
+            "WIKI_LIBRARIAN_MODEL",
+            default="claude-3-7-sonnet-latest",
+        )
         self.max_pages = max_pages
         self.max_tokens = max_tokens
 

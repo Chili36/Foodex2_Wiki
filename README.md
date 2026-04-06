@@ -108,6 +108,15 @@ ANTHROPIC_API_KEY=...
 WIKI_LIBRARIAN_MODEL=claude-3-7-sonnet-latest
 ```
 
+Optional overrides:
+
+```bash
+WIKI_POLICY_MODEL=claude-3-7-sonnet-latest
+WIKI_CONTEXT_MODEL=claude-3-7-sonnet-latest
+```
+
+If the endpoint-specific variables are unset, both endpoints fall back to `WIKI_LIBRARIAN_MODEL`.
+
 Run it locally with:
 
 ```bash
@@ -115,7 +124,7 @@ Run it locally with:
 uvicorn wiki_api.app:app --reload
 ```
 
-The wiki retrieval endpoints are LLM-driven and currently use Anthropic internally. The wiki API loads `ANTHROPIC_API_KEY` and `WIKI_LIBRARIAN_MODEL` automatically from `.env`.
+The wiki retrieval endpoints are LLM-driven and currently use Anthropic internally. The wiki API loads `ANTHROPIC_API_KEY`, `WIKI_LIBRARIAN_MODEL`, and the optional endpoint-specific overrides from `.env`.
 The service injects `index.md` into the first prompt so the model can choose and batch follow-up wiki page reads without spending a separate LLM turn just to fetch the catalog.
 
 Main endpoints:
