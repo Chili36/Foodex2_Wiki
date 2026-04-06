@@ -108,6 +108,16 @@ ANTHROPIC_API_KEY=...
 WIKI_LIBRARIAN_MODEL=claude-3-7-sonnet-latest
 ```
 
+Optional overrides:
+
+```bash
+WIKI_POLICY_MODEL=claude-3-7-sonnet-latest
+WIKI_CONTEXT_MODEL=claude-3-7-sonnet-latest
+WIKI_SOLVER_MODEL=claude-3-7-sonnet-latest
+```
+
+If the endpoint-specific variables are unset, both endpoints fall back to `WIKI_LIBRARIAN_MODEL`.
+
 Run it locally with:
 
 ```bash
@@ -115,8 +125,8 @@ Run it locally with:
 uvicorn wiki_api.app:app --reload
 ```
 
-The policy-pack endpoint is LLM-driven and currently uses Anthropic internally. The wiki API loads `ANTHROPIC_API_KEY` and `WIKI_LIBRARIAN_MODEL` automatically from `.env`.
-The service injects `index.md` into the first librarian prompt so the model can choose and batch follow-up wiki page reads without spending a separate LLM turn just to fetch the catalog.
+The wiki retrieval endpoints are LLM-driven and currently use Anthropic internally. The wiki API loads `ANTHROPIC_API_KEY`, `WIKI_LIBRARIAN_MODEL`, and the optional endpoint-specific overrides from `.env`.
+The service injects `index.md` into the first prompt so the model can choose and batch follow-up wiki page reads without spending a separate LLM turn just to fetch the catalog.
 
 Main endpoints:
 
@@ -124,7 +134,9 @@ Main endpoints:
 - `GET /wiki/index`: raw `index.md`
 - `GET /wiki/pages`: page catalog with titles and summaries
 - `GET /wiki/pages/{page_name}`: one wiki page
-- `POST /wiki/policy-pack`: runs the internal wiki librarian, returns selected pages plus a compact policy pack for a coding case
+- `POST /wiki/policy-pack`: runs the internal wiki librarian, returns selected pages plus a synthesized policy pack for a coding case
+- `POST /wiki/context-pack`: runs the internal wiki page selector and returns only the selected wiki pages plus trace metadata
+- `POST /wiki/solve`: runs the internal wiki librarian and a final coding solver, then returns a complete FoodEx2 coding result plus the underlying context and trace
 
 Example `POST /wiki/policy-pack` body:
 
@@ -150,14 +162,37 @@ Example `POST /wiki/policy-pack` body:
 }
 ```
 
-The response includes:
+`POST /wiki/policy-pack` response includes:
 
+- `guiding_principles`: the high-level FoodEx2 worldview from `index.md`
 - `pages_used`: selected wiki pages
 - `pages`: selected page metadata plus optional markdown content
 - `query_classification`: inferred food type, domain, and signals
 - `candidate_focus`: promising codes and rejected patterns
 - `policy_pack`: compact rules grouped into base-term, facet, validation, domain, and construction buckets
 - `trace`: retrieval metadata including the internal page-read trace, token summary, and timing summary
+
+`POST /wiki/context-pack` response includes:
+
+- `guiding_principles`: the high-level FoodEx2 worldview from `index.md`
+- `pages_used`: selected wiki pages
+- `pages`: selected page metadata plus optional markdown content
+- `trace`: retrieval metadata including the internal page-read trace, token summary, and timing summary
+
+`POST /wiki/solve` response includes:
+
+- `guiding_principles`: the high-level FoodEx2 worldview from `index.md`
+- `pages_used`: selected wiki pages
+- `pages`: selected page metadata plus optional markdown content
+- `query_classification`: inferred case framing from the retrieval stage
+- `candidate_focus`: the retrieval stage's candidate preferences and rejected patterns
+- `policy_pack`: the synthesized wiki-derived rule pack used by the solver
+- `solution`: final FoodEx2 coding result including selected base term, constructed code, validation check, alternatives, and confidence
+- `trace`: split process metadata for retrieval, solver, and totals including models, tokens, calls, and timing
+
+Use `policy-pack` when you want the wiki service to act as a solver-style knowledge synthesizer.
+Use `context-pack` when you want pure context delivery and will do the reasoning in a downstream model.
+Use `solve` when you want the wiki service to return the final FoodEx2 coding decision itself, still grounded in the selected wiki context and external candidate list.
 
 Run tests with:
 

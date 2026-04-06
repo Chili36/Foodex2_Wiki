@@ -10,6 +10,16 @@ import yaml
 
 
 INDEX_ENTRY_RE = re.compile(r"^- \[[^\]]+\]\(([^)]+)\):\s*(.+)$")
+GUIDING_PRINCIPLES_HEADER = "## Guiding Principles"
+HTML_COMMENT_RE = re.compile(r"<!--.*?-->", re.DOTALL)
+TRAILING_SOURCE_CITATION_RE = re.compile(
+    r"\s*\((?:EFSA guidance|Training|ChemMon|VMPR|"
+    r"\d{4} maintenance|docs/[^)]+|BUSINESS-RULES[^)]*|"
+    r"VALIDATION_RULES_SUMMARY[^)]*)[^)]*\)\s*$"
+)
+SOURCE_ONLY_LINE_RE = re.compile(
+    r"^\s*\((?:EFSA guidance|Training|ChemMon|VMPR|\d{4} maintenance)[^)]*\)\s*$"
+)
 
 
 @dataclass(frozen=True)
@@ -64,6 +74,22 @@ class WikiStore:
         summaries["log.md"] = "Chronological record of wiki ingests and changes."
         return summaries
 
+    @cached_property
+    def _guiding_principles(self) -> list[str]:
+        raw = self.index_path.read_text(encoding="utf-8")
+        lines = raw.splitlines()
+        in_section = False
+        principles: list[str] = []
+        for line in lines:
+            if line.strip() == GUIDING_PRINCIPLES_HEADER:
+                in_section = True
+                continue
+            if in_section and line.startswith("## "):
+                break
+            if in_section and line.startswith("- "):
+                principles.append(line[2:].strip())
+        return principles
+
     def list_pages(self) -> list[str]:
         names = [page.name for page in self.guidance_dir.glob("*.md")]
         return sorted(names)
@@ -115,3 +141,28 @@ class WikiStore:
 
     def catalog(self) -> list[WikiPage]:
         return [self.read_page(name) for name in self.list_pages()]
+
+    def guiding_principles(self) -> list[str]:
+        return list(self._guiding_principles)
+
+    def clean_content_for_model(self, page: WikiPage) -> str:
+        cleaned = HTML_COMMENT_RE.sub("", page.body)
+        cleaned_lines: list[str] = []
+        for raw_line in cleaned.splitlines():
+            line = raw_line.rstrip()
+            if SOURCE_ONLY_LINE_RE.match(line):
+                continue
+            line = TRAILING_SOURCE_CITATION_RE.sub("", line)
+            cleaned_lines.append(line.rstrip())
+
+        collapsed: list[str] = []
+        blank_run = 0
+        for line in cleaned_lines:
+            if line.strip():
+                blank_run = 0
+                collapsed.append(line)
+            else:
+                blank_run += 1
+                if blank_run <= 1:
+                    collapsed.append("")
+        return "\n".join(collapsed).strip()

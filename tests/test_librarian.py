@@ -3,7 +3,11 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from wiki_api.librarian import AnthropicWikiLibrarian
+from wiki_api.librarian import (
+    AnthropicFoodEx2Solver,
+    AnthropicWikiLibrarian,
+    AnthropicWikiPageSelector,
+)
 from wiki_api.wiki_store import WikiStore
 
 
@@ -193,3 +197,132 @@ def test_librarian_respects_total_page_cap_with_preloaded_index() -> None:
             "limit": 2,
         }
     ]
+
+
+def test_page_selector_returns_pages_without_policy_synthesis_turn() -> None:
+    client = FakeAnthropicClient(
+        [
+            _response(
+                stop_reason="tool_use",
+                content=[
+                    {
+                        "type": "tool_use",
+                        "id": "tool_1",
+                        "name": "read_wiki_pages",
+                        "input": {
+                            "page_names": [
+                                "base-term-selection.md",
+                                "packaging-facets.md",
+                            ]
+                        },
+                    }
+                ],
+                input_tokens=100,
+                output_tokens=25,
+            )
+        ]
+    )
+
+    selector = AnthropicWikiPageSelector(store=_store(), client=client, model="fake-model", max_pages=6)
+    result = selector.run(
+        {
+            "search_term": "Tomato basil and garlic sauce in a glass jar",
+            "deconstructed_query": {},
+            "candidates": [],
+            "context": {},
+        }
+    )
+
+    assert result.pages_used == [
+        "index.md",
+        "base-term-selection.md",
+        "packaging-facets.md",
+    ]
+    assert len(result.tool_trace) == 2
+    assert result.token_summary["calls"] == 1
+    assert len(client.messages.calls) == 1
+
+
+def test_page_selector_accepts_direct_json_page_names_without_tool() -> None:
+    client = FakeAnthropicClient(
+        [
+            _response(
+                stop_reason="end_turn",
+                content=[
+                    {
+                        "type": "text",
+                        "text": json.dumps(
+                            {"page_names": ["base-term-selection.md", "packaging-facets.md"]}
+                        ),
+                    }
+                ],
+                input_tokens=100,
+                output_tokens=25,
+            )
+        ]
+    )
+
+    selector = AnthropicWikiPageSelector(store=_store(), client=client, model="fake-model", max_pages=6)
+    result = selector.run(
+        {
+            "search_term": "test",
+            "deconstructed_query": {},
+            "candidates": [],
+            "context": {},
+        }
+    )
+
+    assert result.pages_used == [
+        "index.md",
+        "base-term-selection.md",
+        "packaging-facets.md",
+    ]
+    assert result.token_summary["calls"] == 1
+
+
+def test_librarian_prefers_policy_model_env(monkeypatch) -> None:
+    monkeypatch.setenv("WIKI_LIBRARIAN_MODEL", "shared-model")
+    monkeypatch.setenv("WIKI_POLICY_MODEL", "policy-model")
+    client = FakeAnthropicClient([])
+
+    librarian = AnthropicWikiLibrarian(store=_store(), client=client)
+
+    assert librarian.model == "policy-model"
+
+
+def test_selector_falls_back_to_shared_model_env(monkeypatch) -> None:
+    monkeypatch.delenv("WIKI_CONTEXT_MODEL", raising=False)
+    monkeypatch.setenv("WIKI_LIBRARIAN_MODEL", "shared-model")
+    client = FakeAnthropicClient([])
+
+    selector = AnthropicWikiPageSelector(store=_store(), client=client)
+
+    assert selector.model == "shared-model"
+
+
+def test_store_extracts_guiding_principles_from_index() -> None:
+    principles = _store().guiding_principles()
+
+    assert len(principles) >= 4
+    assert any("top-down" in principle for principle in principles)
+
+
+def test_store_cleans_page_content_for_model() -> None:
+    store = _store()
+    page = store.read_page("base-term-selection.md")
+    cleaned = store.clean_content_for_model(page)
+
+    assert cleaned.startswith("# Base Term Selection")
+    assert "<!-- Source:" not in cleaned
+    assert "(EFSA guidance p42; Training p5)" not in cleaned
+
+
+def test_solver_prefers_solver_model_env(monkeypatch) -> None:
+    monkeypatch.setenv("WIKI_LIBRARIAN_MODEL", "shared-model")
+    monkeypatch.setenv("WIKI_POLICY_MODEL", "policy-model")
+    monkeypatch.setenv("WIKI_SOLVER_MODEL", "solver-model")
+    client = FakeAnthropicClient([])
+
+    solver = AnthropicFoodEx2Solver(client=client)
+
+    assert solver.model == "solver-model"
