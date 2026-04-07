@@ -71,3 +71,9 @@ last_updated: "2026-04-06"
 
 - Tightened the base-term selection wording so the list of nature-changing processes is explicitly illustrative rather than exhaustive.
 - Added a note that the processed-base precedence rule should not be overridden just because a more specific raw commodity term exists.
+
+## [2026-04-07] service | Add small compiled policy layer
+
+- Added a small always-on policy contract to the API responses for `policy-pack` and `solve`.
+- The contract includes a constitution, ordered decision procedure, binding rules, tie-break rules, and one explicit anti-pattern for raw-plus-`F28` reconstruction of standard derivative groups.
+- Updated the solver so it treats this contract as the authoritative control layer and the wiki prose as supporting knowledge.

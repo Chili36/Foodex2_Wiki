@@ -292,6 +292,9 @@ def test_policy_pack_uses_librarian_response() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
+    assert payload["policy_contract"]["policy_version"] == "2026-04-07-v0.2"
+    assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
+    assert payload["policy_contract"]["anti_patterns"][0]["id"] == "AP-001"
     assert payload["guiding_principles"][1].startswith("FoodEx2 is built top-down.")
     assert payload["pages_used"] == [
         "index.md",
@@ -407,6 +410,7 @@ def test_solve_returns_final_code_and_stage_traces() -> None:
     )
     assert response.status_code == 200
     payload = response.json()
+    assert payload["policy_contract"]["policy_version"] == "2026-04-07-v0.2"
     assert payload["solution"]["constructedCode"] == "A044C#F04.A00VV$F04.A00GZ$F18.A07NN$F19.A07PF"
     assert payload["solution"]["validationCheck"]["passes"] is True
     assert payload["solution"]["confidence"] == 5
@@ -416,6 +420,8 @@ def test_solve_returns_final_code_and_stage_traces() -> None:
     assert payload["trace"]["total"]["total_llm_calls"] == 3
     assert payload["trace"]["total"]["total_tracked_tokens"] == 620
     assert len(payload["guiding_principles"]) >= 4
+    assert app_module.solver_runner.calls[0]["policy_contract"]["constitution"][0]["id"] == "C01"
+    assert app_module.solver_runner.calls[0]["policy_contract"]["binding_rules"][0]["id"] == "R-DERIV-001"
 
 
 def test_solve_requires_candidates() -> None:
@@ -469,6 +475,8 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     assert "candidates_trimmed" in policy_props
     assert "candidate_hints" not in policy_props
     assert "candidates" in solve_props
+    assert "policy_contract" in payload["components"]["schemas"]["PolicyPackResponse"]["properties"]
+    assert "policy_contract" in payload["components"]["schemas"]["SolveResponse"]["properties"]
 
     context_description = payload["paths"]["/wiki/context-pack"]["post"]["description"]
     policy_description = payload["paths"]["/wiki/policy-pack"]["post"]["description"]

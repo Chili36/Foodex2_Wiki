@@ -15,6 +15,7 @@ from .librarian import (
     AnthropicWikiLibrarian,
     AnthropicWikiPageSelector,
 )
+from .policy import build_policy_contract
 from .wiki_store import WikiStore
 
 
@@ -190,8 +191,49 @@ class PolicyPackBody(BaseModel):
     wiki_gaps: list[str] = Field(default_factory=list)
 
 
+class ConstitutionRule(BaseModel):
+    id: str
+    text: str
+    priority: int
+
+
+class DecisionProcedureStep(BaseModel):
+    step: int
+    name: str
+    instruction: str
+
+
+class BindingRule(BaseModel):
+    id: str
+    when: str
+    must: str | None = None
+    must_not: str | None = None
+
+
+class TieBreakRule(BaseModel):
+    id: str
+    when: str
+    prefer: str
+
+
+class AntiPattern(BaseModel):
+    id: str
+    pattern: str
+    reject: bool = True
+
+
+class PolicyContract(BaseModel):
+    policy_version: str
+    constitution: list[ConstitutionRule] = Field(default_factory=list)
+    decision_procedure: list[DecisionProcedureStep] = Field(default_factory=list)
+    binding_rules: list[BindingRule] = Field(default_factory=list)
+    tie_break_rules: list[TieBreakRule] = Field(default_factory=list)
+    anti_patterns: list[AntiPattern] = Field(default_factory=list)
+
+
 class PolicyPackResponse(BaseModel):
     guiding_principles: list[str]
+    policy_contract: PolicyContract
     pages_used: list[str]
     pages: list[PageSummary]
     query_classification: QueryClassification
@@ -241,6 +283,7 @@ class SolveResultBody(BaseModel):
 
 class SolveResponse(BaseModel):
     guiding_principles: list[str]
+    policy_contract: PolicyContract
     pages_used: list[str]
     pages: list[PageSummary]
     query_classification: QueryClassification
@@ -332,7 +375,7 @@ def _effective_policy_candidates(request: PolicyPackRequest) -> tuple[list[dict[
 
 app = FastAPI(
     title="FoodEx2 Wiki API",
-    version="0.1.0",
+    version="0.2.0",
     description="Wiki-owned retrieval API for FoodEx2 guidance and validation knowledge.",
 )
 
@@ -407,6 +450,7 @@ def get_page(page_name: str, include_content: bool = Query(default=True)) -> dic
 def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
     request_started = time.perf_counter()
     effective_candidates, candidate_input_mode = _effective_policy_candidates(request)
+    policy_contract = PolicyContract(**build_policy_contract())
     logger.info(
         "policy_pack_request %s",
         json.dumps(
@@ -449,6 +493,7 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
     ]
     response = PolicyPackResponse(
         guiding_principles=store.guiding_principles(),
+        policy_contract=policy_contract,
         pages_used=librarian_result.data["pages_used"],
         pages=pages,
         query_classification=QueryClassification(**librarian_result.data["query_classification"]),
@@ -474,6 +519,7 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
             {
                 "search_term": request.search_term,
                 "guiding_principles_count": len(response.guiding_principles),
+                "policy_version": response.policy_contract.policy_version,
                 "pages_used": response.pages_used,
                 "query_classification": response.query_classification.model_dump(),
                 "candidate_focus": response.candidate_focus.model_dump(),
@@ -589,6 +635,7 @@ def solve_foodex2(request: SolveRequest) -> SolveResponse:
         raise HTTPException(status_code=400, detail="solve requires a non-empty candidates list")
 
     request_started = time.perf_counter()
+    policy_contract = PolicyContract(**build_policy_contract())
     logger.info(
         "solve_request %s",
         json.dumps(
@@ -623,6 +670,7 @@ def solve_foodex2(request: SolveRequest) -> SolveResponse:
             "candidates": request.candidates,
             "context": request.context,
             "guiding_principles": store.guiding_principles(),
+            "policy_contract": policy_contract.model_dump(),
             "query_classification": librarian_result.data["query_classification"],
             "candidate_focus": librarian_result.data["candidate_focus"],
             "policy_pack": librarian_result.data["policy_pack"],
@@ -655,6 +703,7 @@ def solve_foodex2(request: SolveRequest) -> SolveResponse:
 
     response = SolveResponse(
         guiding_principles=store.guiding_principles(),
+        policy_contract=policy_contract,
         pages_used=librarian_result.data["pages_used"],
         pages=pages,
         query_classification=QueryClassification(**librarian_result.data["query_classification"]),
@@ -696,6 +745,7 @@ def solve_foodex2(request: SolveRequest) -> SolveResponse:
             {
                 "search_term": request.search_term,
                 "guiding_principles_count": len(response.guiding_principles),
+                "policy_version": response.policy_contract.policy_version,
                 "pages_used": response.pages_used,
                 "constructed_code": response.solution.constructedCode,
                 "retrieval_token_summary": librarian_result.token_summary,
