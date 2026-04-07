@@ -77,3 +77,9 @@ last_updated: "2026-04-06"
 - Added a small always-on policy contract to the API responses for `policy-pack` and `solve`.
 - The contract includes a constitution, ordered decision procedure, binding rules, tie-break rules, and one explicit anti-pattern for raw-plus-`F28` reconstruction of standard derivative groups.
 - Updated the solver so it treats this contract as the authoritative control layer and the wiki prose as supporting knowledge.
+
+## [2026-04-07] maintenance | Move policy source into markdown
+
+- Added `raw/efsa-guidance/policy-contract.md` as the source-of-truth policy page for the schema/control layer.
+- Updated the API so it loads the policy contract from markdown frontmatter instead of defining it in service code.
+- Linked the policy page from `index.md` so the schema layer is visible as part of the knowledge base.

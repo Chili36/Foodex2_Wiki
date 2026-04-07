@@ -241,6 +241,7 @@ Use `context-pack` when you want pure context delivery plus the small always-on 
 Use `solve` when you want the wiki service to return the final FoodEx2 coding decision itself, still grounded in the selected wiki context and external candidate list.
 
 The current policy layer is intentionally small. It exists to make decision order explicit without moving back to a giant monolithic prompt.
+The source of truth for that policy is the markdown page [policy-contract.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/policy-contract.md); the API reads and exposes it, but does not author it in service code.
 
 Run tests with:
 

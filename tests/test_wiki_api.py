@@ -6,6 +6,7 @@ import httpx
 
 import wiki_api.app as app_module
 from wiki_api.librarian import LibrarianResult, PageSelectionResult, SolverResult
+from wiki_api.policy import build_policy_contract
 
 
 async def _request(method: str, path: str, **kwargs: object) -> httpx.Response:
@@ -488,3 +489,11 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     assert "`candidate_hints`" in context_description
     assert "`candidates_trimmed`" in policy_description
     assert "`candidates`" in solve_description
+
+
+def test_policy_contract_is_loaded_from_markdown_source() -> None:
+    contract = build_policy_contract()
+    assert contract["policy_version"] == "2026-04-07-v0.2"
+    assert contract["constitution"][0]["id"] == "C01"
+    assert contract["decision_procedure"][0]["name"] == "determine_food_type"
+    assert contract["anti_patterns"][0]["id"] == "AP-001"
