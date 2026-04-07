@@ -1,8 +1,8 @@
 ---
 title: "FoodEx2 In Chemical Monitoring"
 sources:
-  - "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance 2025 data collection.pdf"
-  - "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance 2026 data collection.pdf"
+  - "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf"
+  - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
 related:
   - "[[foodex2-overview]]"
   - "[[facet-coding-rules]]"
@@ -13,7 +13,7 @@ last_updated: "2026-04-05"
 
 # FoodEx2 In Chemical Monitoring
 
-<!-- Source: EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance 2025 data collection.pdf p33-36; EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance 2026 data collection.pdf p33-36 -->
+<!-- Source: EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf p33-36; EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p33-36 -->
 ## Scope
 
 - ChemMon does not redefine FoodEx2. It adds reporting constraints for chemical-monitoring workflows. Use this page as a domain-specific overlay, not as the core coding model. (ChemMon 2025 p33-36; ChemMon 2026 p33-36)

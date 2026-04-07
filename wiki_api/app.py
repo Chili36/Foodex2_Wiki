@@ -668,10 +668,11 @@ def solve_foodex2(request: SolveRequest) -> SolveResponse:
     if request.max_pages != librarian.max_pages:
         librarian.max_pages = request.max_pages
     solver = get_solver_runner()
+    plain_candidates = _plain_models(request.candidates)
     payload = {
         "search_term": request.search_term,
         "deconstructed_query": request.deconstructed_query,
-        "candidates": request.candidates,
+        "candidates": plain_candidates,
         "context": request.context,
     }
     try:
@@ -680,7 +681,7 @@ def solve_foodex2(request: SolveRequest) -> SolveResponse:
         solver_payload = {
             "search_term": request.search_term,
             "deconstructed_query": request.deconstructed_query,
-            "candidates": request.candidates,
+            "candidates": plain_candidates,
             "context": request.context,
             "guiding_principles": store.guiding_principles(),
             "policy_contract": policy_contract.model_dump(),

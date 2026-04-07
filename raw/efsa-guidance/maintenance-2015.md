@@ -1,7 +1,7 @@
 ---
 title: "FoodEx2 Maintenance 2015"
 sources:
-  - "EFSA Supporting Publications - 2016 - FoodEx2 annual maintenance 2015.pdf"
+  - "EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf"
 related:
   - "[[maintenance-history]]"
   - "[[foodex2-overview]]"
@@ -10,7 +10,7 @@ last_updated: "2026-04-05"
 
 # Maintenance 2015
 
-<!-- Source: EFSA Supporting Publications - 2016 - FoodEx2 annual maintenance 2015.pdf p3, p7-20 -->
+<!-- Source: EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf p3, p7-20 -->
 ## Summary
 
 - First post-revision-2 maintenance cycle. EFSA added 271 new terms across hierarchies and facets. (2015 maintenance p3)

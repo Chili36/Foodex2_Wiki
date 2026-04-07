@@ -1,7 +1,7 @@
 ---
 title: "Process Facets"
 sources:
-  - "EFSA Supporting Publications - 2015 - The food classification and description system FoodEx 2 revision 2.pdf"
+  - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
 related:
   - "[[facet-coding-rules]]"
   - "[[base-term-selection]]"
@@ -11,13 +11,13 @@ last_updated: "2026-04-05"
 
 # Process Facets
 
-<!-- Source: EFSA Supporting Publications - 2015 - The food classification and description system FoodEx 2 revision 2.pdf p20, p44, p46-47, p58, p78-83 -->
+<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p20, p44, p46-47, p58, p78-83 -->
 ## Rule Of Use
 
 - Add `F28` only when the treatment makes the difference. If the derivative base term already implies the process, do not restate it. (EFSA guidance p44, p46-47, p58)
 - `F13-F16` are largely deprecated; use `F28`. (EFSA guidance p46-47)
 
-<!-- Source: EFSA Supporting Publications - 2015 - The food classification and description system FoodEx 2 revision 2.pdf p78-83 -->
+<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p78-83 -->
 ## Appendix A2 Codes
 
 - Generic: `A07HS raw`, `A0C0S unprocessed`, `A0C0R processed`, `A0CHR batch`, `A0CHS continuous`, `A0CHV preserved`, `A066E semi-preserved`.
@@ -46,7 +46,7 @@ last_updated: "2026-04-05"
   - Mixing and coating: `A0CRJ blending`, `A0CRL mixing`, `A07MA filling`, `A07HK breading`, `A07HL battering`, `A07HM glazing/icing`, `A07HN sugar coating`, `A07HP chocolate coating`, `A07HQ nuts coating`
   - Whole production: `A0C00 winemaking`, `A0C01 beer production`, `A0C6E cheesemaking`, `A0C02/A0C06/A0C08/A0C07` oil production, `A0C03/A0C09/A0C0A` grain milling, `A0C0B starch production`, `A0C04 sugar production`, `A0C05 fodder production`, `A0CRB ensiling`, `A0C0E rumen protection`
 
-<!-- Source: EFSA Supporting Publications - 2015 - The food classification and description system FoodEx 2 revision 2.pdf p42, p56 -->
+<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p42, p56 -->
 ## Worked Examples
 
 - Before: `fresh sage`. After: `A00YH#F28.A0C0S`. Fresh spices can use `unprocessed` because dried is often default. (EFSA guidance p42)

@@ -1,7 +1,7 @@
 ---
 title: "FoodEx2 Code String Format"
 sources:
-  - "EFSA Supporting Publications - 2015 - The food classification and description system FoodEx 2 revision 2.pdf"
+  - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
 related:
   - "[[foodex2-overview]]"
   - "[[facet-coding-rules]]"
@@ -11,7 +11,7 @@ last_updated: "2026-04-05"
 
 # Code String Format
 
-<!-- Source: EFSA Supporting Publications - 2015 - The food classification and description system FoodEx 2 revision 2.pdf p39-40 -->
+<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p39-40 -->
 ## Syntax
 
 ```text
@@ -25,7 +25,7 @@ last_updated: "2026-04-05"
 - Spaces are not allowed. Only one FoodEx2 code should be stored in the field. (EFSA guidance p40)
 - Facet order is not fixed, but EFSA recommends increasing alphabetical order by facet header. (EFSA guidance p40)
 
-<!-- Source: EFSA Supporting Publications - 2015 - The food classification and description system FoodEx 2 revision 2.pdf p39-40 -->
+<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p39-40 -->
 ## Worked Examples
 
 - Before: `orange nectar`. After: `A03BG`. Valid because the base term stands alone. (EFSA guidance p40)

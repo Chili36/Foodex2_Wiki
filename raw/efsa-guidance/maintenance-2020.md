@@ -1,7 +1,7 @@
 ---
 title: "FoodEx2 Maintenance 2020"
 sources:
-  - "EFSA Supporting Publications - 2021 - FoodEx2 maintenance 2020.pdf"
+  - "EFSA Supporting Publications - 2021 -  - FoodEx2 maintenance 2020.pdf"
 related:
   - "[[maintenance-history]]"
   - "[[maintenance-2019]]"
@@ -11,7 +11,7 @@ last_updated: "2026-04-05"
 
 # Maintenance 2020
 
-<!-- Source: EFSA Supporting Publications - 2021 - FoodEx2 maintenance 2020.pdf p3, p6-16 -->
+<!-- Source: EFSA Supporting Publications - 2021 -  - FoodEx2 maintenance 2020.pdf p3, p6-16 -->
 ## Summary
 
 - EFSA added 108 new terms in 2020. Major additions served MUST-B honey bees, avian-influenza birds, SIGMA age classes, scallop-part coding, botanicals, and OpenFoodTox. (2020 maintenance p3)

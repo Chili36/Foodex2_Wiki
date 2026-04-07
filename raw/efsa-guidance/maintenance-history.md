@@ -1,14 +1,14 @@
 ---
 title: "FoodEx2 Maintenance History"
 sources:
-  - "EFSA Supporting Publications - 2016 - FoodEx2 annual maintenance 2015.pdf"
-  - "EFSA Supporting Publications - 2019 - FoodEx2 maintenance 2016‐2018.pdf"
-  - "EFSA Supporting Publications - 2020 - FoodEx2 maintenance 2019.pdf"
-  - "EFSA Supporting Publications - 2021 - FoodEx2 maintenance 2020.pdf"
-  - "EFSA Supporting Publications - 2022 - FoodEx2 maintenance 2021.pdf"
-  - "EFSA Supporting Publications - 2023 - FoodEx2 maintenance 2022.pdf"
-  - "EFSA Supporting Publications - 2024 - FoodEx2 maintenance 2023.pdf"
-  - "EFSA Supporting Publications - 2025 - FoodEx2 maintenance 2024.pdf"
+  - "EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf"
+  - "EFSA Supporting Publications - 2019 -  - FoodEx2 maintenance 2016‐2018.pdf"
+  - "EFSA Supporting Publications - 2020 -  - FoodEx2 maintenance 2019.pdf"
+  - "EFSA Supporting Publications - 2021 -  - FoodEx2 maintenance 2020.pdf"
+  - "EFSA Supporting Publications - 2022 -  - FoodEx2 maintenance 2021.pdf"
+  - "EFSA Supporting Publications - 2023 -  - FoodEx2 maintenance 2022.pdf"
+  - "EFSA Supporting Publications - 2024 -  - FoodEx2 maintenance 2023.pdf"
+  - "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf"
 related:
   - "[[foodex2-overview]]"
   - "[[maintenance-2015]]"

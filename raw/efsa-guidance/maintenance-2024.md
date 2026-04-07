@@ -1,7 +1,7 @@
 ---
 title: "FoodEx2 Maintenance 2024"
 sources:
-  - "EFSA Supporting Publications - 2025 - FoodEx2 maintenance 2024.pdf"
+  - "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf"
 related:
   - "[[maintenance-history]]"
   - "[[maintenance-2023]]"
@@ -11,7 +11,7 @@ last_updated: "2026-04-05"
 
 # Maintenance 2024
 
-<!-- Source: EFSA Supporting Publications - 2025 - FoodEx2 maintenance 2024.pdf p3-5, p15-20 -->
+<!-- Source: EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf p3-5, p15-20 -->
 ## Summary
 
 - EFSA added 1094 new terms in 2024, largely for One Health surveillance, avian influenza, chemical monitoring, and FAO/WHO GIFT requests. (2024 maintenance p3-4)
