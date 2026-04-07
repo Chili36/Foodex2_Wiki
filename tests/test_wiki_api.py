@@ -348,6 +348,8 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
+    assert payload["policy_contract"]["policy_version"] == "2026-04-07-v0.2"
+    assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["guiding_principles"][2].startswith("FoodEx2 prefers modular description")
     assert payload["pages_used"] == [
         "index.md",
@@ -475,6 +477,7 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     assert "candidates_trimmed" in policy_props
     assert "candidate_hints" not in policy_props
     assert "candidates" in solve_props
+    assert "policy_contract" in payload["components"]["schemas"]["ContextPackResponse"]["properties"]
     assert "policy_contract" in payload["components"]["schemas"]["PolicyPackResponse"]["properties"]
     assert "policy_contract" in payload["components"]["schemas"]["SolveResponse"]["properties"]
 

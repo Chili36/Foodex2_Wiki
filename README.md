@@ -219,6 +219,7 @@ Example `POST /wiki/policy-pack` body:
 `POST /wiki/context-pack` response includes:
 
 - `guiding_principles`: the high-level FoodEx2 worldview from `index.md`
+- `policy_contract`: the small always-on control layer with constitution, decision procedure, binding rules, tie-break rules, and anti-patterns
 - `pages_used`: selected wiki pages
 - `pages`: selected page metadata plus optional markdown content
 - `trace`: retrieval metadata including the internal page-read trace, token summary, and timing summary
@@ -236,7 +237,7 @@ Example `POST /wiki/policy-pack` body:
 - `trace`: split process metadata for retrieval, solver, and totals including models, tokens, calls, and timing
 
 Use `policy-pack` when you want the wiki service to act as a solver-style knowledge synthesizer.
-Use `context-pack` when you want pure context delivery and will do the reasoning in a downstream model.
+Use `context-pack` when you want pure context delivery plus the small always-on policy layer, and will do the main reasoning in a downstream model.
 Use `solve` when you want the wiki service to return the final FoodEx2 coding decision itself, still grounded in the selected wiki context and external candidate list.
 
 The current policy layer is intentionally small. It exists to make decision order explicit without moving back to a giant monolithic prompt.

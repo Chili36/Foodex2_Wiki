@@ -244,6 +244,7 @@ class PolicyPackResponse(BaseModel):
 
 class ContextPackResponse(BaseModel):
     guiding_principles: list[str]
+    policy_contract: PolicyContract
     pages_used: list[str]
     pages: list[PageSummary]
     trace: dict[str, Any]
@@ -547,6 +548,7 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
 def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
     request_started = time.perf_counter()
     effective_candidates, candidate_input_mode = _effective_context_candidates(request)
+    policy_contract = PolicyContract(**build_policy_contract())
     logger.info(
         "context_pack_request %s",
         json.dumps(
@@ -588,6 +590,7 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
     ]
     response = ContextPackResponse(
         guiding_principles=store.guiding_principles(),
+        policy_contract=policy_contract,
         pages_used=selection_result.pages_used,
         pages=pages,
         trace={
@@ -610,6 +613,7 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
             {
                 "search_term": request.search_term,
                 "guiding_principles_count": len(response.guiding_principles),
+                "policy_version": response.policy_contract.policy_version,
                 "pages_used": response.pages_used,
                 "token_summary": selection_result.token_summary,
                 "timing_summary": response.trace["timing_summary"],
