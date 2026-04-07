@@ -249,11 +249,22 @@ def test_list_pages_includes_packaging() -> None:
     payload = response.json()
     names = {page["page_name"] for page in payload["pages"]}
     assert "packaging-facets.md" in names
+    assert "README.md" in names
+    assert "PROJECT_CONTEXT.md" in names
 
 
 def test_get_unknown_page_returns_404() -> None:
     response = request("GET", "/wiki/pages/not-a-real-page.md")
     assert response.status_code == 404
+
+
+def test_get_project_context_page_returns_200() -> None:
+    response = request("GET", "/wiki/pages/PROJECT_CONTEXT.md")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["page_name"] == "PROJECT_CONTEXT.md"
+    assert payload["title"] == "Project Context"
+    assert "What We Are Building" in payload["content"]
 
 
 def test_policy_pack_uses_librarian_response() -> None:
