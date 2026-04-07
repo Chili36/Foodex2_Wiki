@@ -8,6 +8,7 @@ from typing import Any
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, ConfigDict, Field
 
 from .librarian import (
@@ -387,6 +388,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+STATIC_DIR = Path(__file__).resolve().parent / "static"
+
+
+@app.get("/wiki/view", include_in_schema=False)
+def wiki_viewer():
+    return FileResponse(STATIC_DIR / "viewer.html", media_type="text/html")
 
 
 @app.get("/health")
