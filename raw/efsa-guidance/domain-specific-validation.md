@@ -29,7 +29,7 @@ last_updated: "2026-04-05"
 | Base term `A0C60` non-food animal matrices | `F01` and `F02` mandatory |
 | VMPR Plan 3 processed imports | one `F33` mandatory |
 | Food additives monitoring | `F33` mandatory, `F03` highly recommended |
-| Acrylamide monitoring | `F33` mandatory |
+| Acrylamide monitoring (paramCode `RF-00000410-ORG`) | `F33` mandatory per CHEMMON12, even if the base term already carries an implicit `F33`. Legal basis: Commission Regulation (EU) 2017/2158 and Recommendation (EU) 2019/1888 |
 | Furans or acrylamide heat-treatment reporting | `F17` should be present |
 | Bisphenol or phthalates analysis | `F19` packaging should be present |
 | Fat-weight expression | `F07` should be present |
@@ -41,3 +41,4 @@ last_updated: "2026-04-05"
 - Before: `A0C60#F02.A0C63` in VMPR non-food context. After: incomplete; add explicit `F01` because `A0C60` requires both `F01` and `F02`. (Domain Specific Rules; Context Specific Rules)
 - Before: processed VMPR sample with no explicit `F01`. After: invalid in that domain, even if the animal source feels inferable. (Domain Specific Rules VMPR-RPC)
 - Before: food additive sample with no `F33`. After: invalid for additives monitoring; the legislative category is mandatory. (Domain Specific Rules Additives)
+- Before: acrylamide result on french fries (`A0BYV`) with no `F33`. After: `A0BYV#F33.A169H`. CHEMMON12 requires the acrylamide legislative class even though `A0BYV` may carry an implicit `F33`. (ChemMon 2026; CHEMMON12)

@@ -30,6 +30,7 @@ last_updated: "2026-04-06"
 | Composite | `F04 Ingredient` | characterising ingredients must be stated or a mixed-nature product is coded as composite |
 
 - In VMPR workflows, explicit facets can override the implicit categorisation if they are reported, so unnecessary explicit repetition is not neutral. (ChemMon 2026 p33)
+- Exception: for acrylamide monitoring, explicit `F33` is mandatory even if the base term already carries an implicit `F33`. CHEMMON12 enforces this regardless of implicit state. (ChemMon 2026; CHEMMON12)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p54-56 -->
 ## Worked Examples

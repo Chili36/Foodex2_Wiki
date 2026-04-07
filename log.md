@@ -83,3 +83,10 @@ last_updated: "2026-04-06"
 - Added `raw/efsa-guidance/policy-contract.md` as the source-of-truth policy page for the schema/control layer.
 - Updated the API so it loads the policy contract from markdown frontmatter instead of defining it in service code.
 - Linked the policy page from `index.md` so the schema layer is visible as part of the knowledge base.
+
+## [2026-04-07] ingest | Add CHEMMON12 acrylamide F33 rule from EFSA clarification
+
+- Added CHEMMON12 business rule detail to `domain-specific-validation.md`: paramCode trigger (`RF-00000410-ORG`), legal basis (Commission Regulation (EU) 2017/2158, Recommendation (EU) 2019/1888), and the implicit-override requirement.
+- Added the implicit-facet exception to `implicit-vs-explicit-facets.md`: explicit `F33` is mandatory for acrylamide even when the base term already carries an implicit `F33`.
+- Added a worked example to `chemical-monitoring-foodex2.md`: french fries `A0BYV#F33.A169H` with legislative class mapping.
+- Source: EFSA official clarification on the ChemMon reporting channel, referencing CHEMMON12 and ChemMon 2026 guidance.

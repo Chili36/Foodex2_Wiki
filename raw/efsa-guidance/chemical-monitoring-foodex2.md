@@ -39,3 +39,4 @@ last_updated: "2026-04-05"
 - Before: feed for pigs. After: `A0BBB#F23.A07VC`. This keeps the feed sample out of the generic `Other` bucket. (ChemMon 2025 p34-35; ChemMon 2026 p34-35)
 - Before: cow hair sample. After: `A0C60#F02.A0ESP$F01.A057E`. ChemMon expects explicit source and part-nature for this non-food case. (ChemMon 2025 p36; ChemMon 2026 p36)
 - Before: wild deer fresh meat in VMPR. After: `A01SA#F21.A07RY`. The wild-production method must be added explicitly. (ChemMon 2026 lines around sample examples)
+- Before: acrylamide result on french fries with no legislative class. After: `A0BYV#F33.A169H`. CHEMMON12 requires explicit `F33` for acrylamide (paramCode `RF-00000410-ORG`) even when the base term already carries an implicit `F33`. The acrylamide legislative class `A169H` maps to "AC-1.1 French fries from fresh potatoes" under Commission Regulation (EU) 2017/2158. (ChemMon 2026; CHEMMON12)
