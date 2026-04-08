@@ -6,6 +6,7 @@ import httpx
 
 import wiki_api.app as app_module
 from wiki_api.librarian import LibrarianResult, PageSelectionResult, SolverResult
+from wiki_api.policy import build_policy_contract
 
 
 async def _request(method: str, path: str, **kwargs: object) -> httpx.Response:
@@ -222,6 +223,14 @@ class FakeSolver:
         )
 
 
+class FakeBadSolver:
+    def __init__(self) -> None:
+        self.model = "fake-claude-solver"
+
+    def run(self, payload: dict[str, object]) -> SolverResult:
+        raise ValueError("Could not extract JSON object from solver response")
+
+
 def setup_function() -> None:
     app_module.librarian_runner = FakeLibrarian()
     app_module.selector_runner = FakeSelector()
@@ -240,11 +249,22 @@ def test_list_pages_includes_packaging() -> None:
     payload = response.json()
     names = {page["page_name"] for page in payload["pages"]}
     assert "packaging-facets.md" in names
+    assert "README.md" in names
+    assert "PROJECT_CONTEXT.md" in names
 
 
 def test_get_unknown_page_returns_404() -> None:
     response = request("GET", "/wiki/pages/not-a-real-page.md")
     assert response.status_code == 404
+
+
+def test_get_project_context_page_returns_200() -> None:
+    response = request("GET", "/wiki/pages/PROJECT_CONTEXT.md")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["page_name"] == "PROJECT_CONTEXT.md"
+    assert payload["title"] == "Project Context"
+    assert "What We Are Building" in payload["content"]
 
 
 def test_policy_pack_uses_librarian_response() -> None:
@@ -262,8 +282,20 @@ def test_policy_pack_uses_librarian_response() -> None:
                 ],
             },
             "candidates": [
-                {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"},
-                {"code": "A07NN", "name": "Jar", "termType": "f"},
+                {
+                    "code": "A044C",
+                    "name": "Tomato-containing cooked sauces",
+                    "termType": "s",
+                    "scopeNote": "noisy legacy field that should be reduced",
+                    "implicitFacets": [{"facetType": "F04", "facetCode": "A0DMX", "facetMeaning": "Tomatoes"}],
+                    "monitoringFlags": {"reportFlag": True},
+                },
+                {
+                    "code": "A07NN",
+                    "name": "Jar",
+                    "termType": "f",
+                    "additionalMetadata": {"score": 0.91},
+                },
                 {"code": "A07PF", "name": "Glass", "termType": "f"},
             ],
             "context": {},
@@ -272,21 +304,37 @@ def test_policy_pack_uses_librarian_response() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
+    assert payload["policy_contract"]["policy_version"] == "2026-04-07-v0.2"
+    assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
+    assert payload["policy_contract"]["anti_patterns"][0]["id"] == "AP-001"
     assert payload["guiding_principles"][1].startswith("FoodEx2 is built top-down.")
     assert payload["pages_used"] == [
         "index.md",
         "base-term-selection.md",
         "packaging-facets.md",
         "ingredient-facets.md",
+        "policy-contract.md",
     ]
     assert payload["trace"]["selection_method"] == "service-owned llm librarian"
     assert payload["trace"]["model"] == "fake-claude"
+    assert payload["trace"]["candidate_input_mode"] == "candidates->candidates_trimmed"
     assert payload["trace"]["token_summary"]["total_tracked_tokens"] == 200
     assert payload["trace"]["timing_summary"]["llm_time_ms"] == 1420
     assert payload["trace"]["timing_summary"]["librarian_wall_time_ms"] == 1600
     assert payload["trace"]["timing_summary"]["request_wall_time_ms"] >= 0
     assert payload["query_classification"]["food_type"] == "composite"
     assert payload["pages"][2]["page_name"] == "packaging-facets.md"
+    assert app_module.librarian_runner.calls[0]["candidates"] == [
+        {
+            "code": "A044C",
+            "name": "Tomato-containing cooked sauces",
+            "termType": "s",
+            "scopeNote": "noisy legacy field that should be reduced",
+            "implicitFacets": [{"facetType": "F04", "facetCode": "A0DMX", "facetMeaning": "Tomatoes"}],
+        },
+        {"code": "A07NN", "name": "Jar", "termType": "f"},
+        {"code": "A07PF", "name": "Glass", "termType": "f"},
+    ]
 
 
 def test_context_pack_returns_only_pages_and_trace() -> None:
@@ -299,7 +347,13 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
                 "raw_query": "Tomato basil and garlic sauce in a glass jar",
             },
             "candidates": [
-                {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"},
+                {
+                    "code": "A044C",
+                    "name": "Tomato-containing cooked sauces",
+                    "termType": "s",
+                    "scopeNote": "legacy field should not reach selector",
+                    "implicitFacets": [{"facetType": "F04", "facetCode": "A0DMX"}],
+                },
             ],
             "context": {},
         },
@@ -307,21 +361,28 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
+    assert payload["policy_contract"]["policy_version"] == "2026-04-07-v0.2"
+    assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["guiding_principles"][2].startswith("FoodEx2 prefers modular description")
     assert payload["pages_used"] == [
         "index.md",
         "base-term-selection.md",
         "packaging-facets.md",
         "ingredient-facets.md",
+        "policy-contract.md",
     ]
     assert "policy_pack" not in payload
     assert "query_classification" not in payload
     assert payload["trace"]["selection_method"] == "service-owned llm page selector"
+    assert payload["trace"]["candidate_input_mode"] == "candidates->candidate_hints"
     assert payload["trace"]["token_summary"]["calls"] == 1
     assert payload["trace"]["timing_summary"]["llm_time_ms"] == 640
     assert payload["trace"]["timing_summary"]["selector_wall_time_ms"] == 700
     assert payload["trace"]["timing_summary"]["request_wall_time_ms"] >= 0
     assert payload["pages"][0]["page_name"] == "index.md"
+    assert app_module.selector_runner.calls[0]["candidates"] == [
+        {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"}
+    ]
 
 
 def test_policy_pack_page_content_is_model_cleaned() -> None:
@@ -365,6 +426,7 @@ def test_solve_returns_final_code_and_stage_traces() -> None:
     )
     assert response.status_code == 200
     payload = response.json()
+    assert payload["policy_contract"]["policy_version"] == "2026-04-07-v0.2"
     assert payload["solution"]["constructedCode"] == "A044C#F04.A00VV$F04.A00GZ$F18.A07NN$F19.A07PF"
     assert payload["solution"]["validationCheck"]["passes"] is True
     assert payload["solution"]["confidence"] == 5
@@ -374,6 +436,8 @@ def test_solve_returns_final_code_and_stage_traces() -> None:
     assert payload["trace"]["total"]["total_llm_calls"] == 3
     assert payload["trace"]["total"]["total_tracked_tokens"] == 620
     assert len(payload["guiding_principles"]) >= 4
+    assert app_module.solver_runner.calls[0]["policy_contract"]["constitution"][0]["id"] == "C01"
+    assert app_module.solver_runner.calls[0]["policy_contract"]["binding_rules"][0]["id"] == "R-DERIV-001"
 
 
 def test_solve_requires_candidates() -> None:
@@ -389,3 +453,60 @@ def test_solve_requires_candidates() -> None:
     )
     assert response.status_code == 400
     assert response.json()["detail"] == "solve requires a non-empty candidates list"
+
+
+def test_solve_returns_503_for_malformed_solver_output() -> None:
+    app_module.solver_runner = FakeBadSolver()
+
+    response = request(
+        "POST",
+        "/wiki/solve",
+        json={
+            "search_term": "Tomato basil and garlic sauce in a glass jar",
+            "deconstructed_query": {
+                "raw_query": "Tomato basil and garlic sauce in a glass jar",
+            },
+            "candidates": [
+                {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"},
+            ],
+            "context": {},
+        },
+    )
+
+    assert response.status_code == 503
+    assert response.json()["detail"] == "Could not extract JSON object from solver response"
+
+
+def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
+    response = request("GET", "/openapi.json")
+    assert response.status_code == 200
+    payload = response.json()
+
+    context_props = payload["components"]["schemas"]["ContextPackRequest"]["properties"]
+    policy_props = payload["components"]["schemas"]["PolicyPackRequest"]["properties"]
+    solve_props = payload["components"]["schemas"]["SolveRequest"]["properties"]
+
+    assert "candidate_hints" in context_props
+    assert "candidates_trimmed" not in context_props
+    assert "candidates_trimmed" in policy_props
+    assert "candidate_hints" not in policy_props
+    assert "candidates" in solve_props
+    assert "policy_contract" in payload["components"]["schemas"]["ContextPackResponse"]["properties"]
+    assert "policy_contract" in payload["components"]["schemas"]["PolicyPackResponse"]["properties"]
+    assert "policy_contract" in payload["components"]["schemas"]["SolveResponse"]["properties"]
+
+    context_description = payload["paths"]["/wiki/context-pack"]["post"]["description"]
+    policy_description = payload["paths"]["/wiki/policy-pack"]["post"]["description"]
+    solve_description = payload["paths"]["/wiki/solve"]["post"]["description"]
+
+    assert "`candidate_hints`" in context_description
+    assert "`candidates_trimmed`" in policy_description
+    assert "`candidates`" in solve_description
+
+
+def test_policy_contract_is_loaded_from_markdown_source() -> None:
+    contract = build_policy_contract()
+    assert contract["policy_version"] == "2026-04-07-v0.2"
+    assert contract["constitution"][0]["id"] == "C01"
+    assert contract["decision_procedure"][0]["name"] == "determine_food_type"
+    assert contract["anti_patterns"][0]["id"] == "AP-001"

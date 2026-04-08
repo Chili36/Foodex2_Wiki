@@ -21,8 +21,8 @@ last_updated: "2026-04-05"
 <!-- Source: annual maintenance reports 2015-2024, summary sections -->
 ## Why It Matters
 
-- FoodEx2 did not freeze in 2015. EFSA has maintained it every year since revision 2, with changes to terms, hierarchies, implicit facets, reportability, and regulatory mappings. (Maintenance reports 2015-2024 summaries)
-- The maintenance reports are therefore part of the coding knowledge base, not peripheral documentation. They explain how the catalogue evolved between MTX releases. (Maintenance reports 2015-2024 summaries)
+- FoodEx2 did not freeze in 2015. It has been maintained every year since revision 2, with changes to terms, hierarchies, implicit facets, reportability, and regulatory mappings. (Maintenance reports 2015-2024 summaries)
+- The maintenance reports are part of the coding knowledge base, not peripheral documentation. They explain how the catalogue evolved between MTX releases. (Maintenance reports 2015-2024 summaries)
 
 ## Timeline
 

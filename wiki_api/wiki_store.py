@@ -58,6 +58,10 @@ class WikiStore:
         self.guidance_dir = self.root / "raw" / "efsa-guidance"
         self.index_path = self.root / "index.md"
         self.log_path = self.root / "log.md"
+        self.root_docs: dict[str, Path] = {
+            "README.md": self.root / "README.md",
+            "PROJECT_CONTEXT.md": self.root / "PROJECT_CONTEXT.md",
+        }
 
     @cached_property
     def _summaries(self) -> dict[str, str]:
@@ -72,6 +76,10 @@ class WikiStore:
             summaries[name] = summary.strip()
         summaries["index.md"] = "Top-level catalog for the FoodEx2 wiki layer."
         summaries["log.md"] = "Chronological record of wiki ingests and changes."
+        summaries["README.md"] = "Repo overview, current status, directory layout, and working conventions."
+        summaries["PROJECT_CONTEXT.md"] = (
+            "What this wiki is for, why it exists, and the LLM-wiki operating model behind it."
+        )
         return summaries
 
     @cached_property
@@ -91,7 +99,7 @@ class WikiStore:
         return principles
 
     def list_pages(self) -> list[str]:
-        names = [page.name for page in self.guidance_dir.glob("*.md")]
+        names = [*self.root_docs.keys(), *(page.name for page in self.guidance_dir.glob("*.md"))]
         return sorted(names)
 
     def allowed_page_names(self) -> set[str]:
@@ -99,7 +107,7 @@ class WikiStore:
 
     def normalize_page_name(self, page_name: str) -> str:
         cleaned = page_name.strip().replace("\\", "/")
-        if cleaned in {"index.md", "log.md"}:
+        if cleaned in {"index.md", "log.md", *self.root_docs.keys()}:
             return cleaned
         if cleaned.startswith("./"):
             cleaned = cleaned[2:]
@@ -117,6 +125,8 @@ class WikiStore:
             path = self.index_path
         elif normalized_name == "log.md":
             path = self.log_path
+        elif normalized_name in self.root_docs:
+            path = self.root_docs[normalized_name]
         else:
             path = self.guidance_dir / normalized_name
         raw = path.read_text(encoding="utf-8")

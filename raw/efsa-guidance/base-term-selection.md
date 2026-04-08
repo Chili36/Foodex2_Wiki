@@ -8,7 +8,7 @@ related:
   - "[[implicit-vs-explicit-facets]]"
   - "[[ingredient-facets]]"
   - "[[process-facets]]"
-last_updated: "2026-04-05"
+last_updated: "2026-04-08"
 ---
 
 # Base Term Selection
@@ -16,23 +16,23 @@ last_updated: "2026-04-05"
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p41-46; EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf p5-6 -->
 ## Start With Food Type
 
-- First ask: `What type of food is this?` Choose among raw commodity, derivative, or composite. The base-term decision is the main coding decision; often the base term alone is enough. (EFSA guidance p42; Training p5)
-- Never start from a hierarchy term if a reportable non-hierarchy term exists. If poor source data makes that unavoidable, EFSA prefers an exposure-hierarchy term. (EFSA guidance p41, p47)
-- Know the reporting or exposure hierarchy before coding; stopping at the first search hit can lead to the wrong branch. (EFSA guidance p42)
+- First ask: `What type of food is this?` Choose among raw commodity, derivative, or composite. The base-term decision is the main coding decision; often the base term alone is enough. For the top-down mental model behind this step, start with [[foodex2-overview]]. (EFSA guidance p42; Training p5)
+- Never start from a hierarchy term if a reportable non-hierarchy term exists. If poor source data makes that unavoidable, prefer an exposure-hierarchy term. (EFSA guidance p41, p47)
+- Know the reporting or exposure hierarchy before coding. Stopping at the first search hit can lead to the wrong branch. (EFSA guidance p42)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p14-20, p42-46, p58 -->
 ## Choose The Base-Term Class
 
-- Use a raw-commodity base term for primary plant or animal products. Add only treatments that do not create a new nature. (EFSA guidance p42-44)
-- Use a derivative base term when a nature-changing process already defines a standard group, such as milling, drying, curing, fermentation, canning/jarring or smoking. Do not rebuild these from a raw term plus `F28` if the derivative group exists. (EFSA guidance p15-17, p44, p58)
-- Use a composite base term for foods made by combining ingredients in a recipe. For mixtures of the same nature, stay on a generic raw/derivative base term and add multiple `F27`; for balanced mixed natures, move to a composite base term. (EFSA guidance p45, p49-50; Training p6)
+- Use a raw-commodity base term for primary plant or animal products. Add only treatments that do not create a new nature; if the treatment question becomes ambiguous, read this together with [[process-facets]] and [[process-validation-rules]]. (EFSA guidance p42-44)
+- Use a derivative base term when a nature-changing process already defines a standard group. The process list here is illustrative, not exhaustive: this includes cases such as milling, drying, curing, fermentation, pickling/marinating, canning/jarring or smoking whenever FoodEx2 already has the processed group. Do not rebuild these from a raw term plus `F28` if the derivative group exists. The origin chain that follows from that choice is explained in [[implicit-vs-explicit-facets]]. (EFSA guidance p15-17, p44, p58)
+- Use a composite base term for foods made by combining ingredients in a recipe. For same-nature mixtures, stay on a generic raw/derivative base term and add multiple `F27`. For balanced mixed natures, move to a composite base term, then describe the characterising recipe components with [[ingredient-facets]]. (EFSA guidance p45, p49-50; Training p6)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p18-19, p47-49 -->
 ## Tie-Break Rules
 
-- If several preservation processes apply, choose the processed base term top-down: puree/textured, then marinated/pickled/fermented, then in vinegar/brine, in alcohol, salted, candied/sugar-preserved, dried, canned/jarred, smoked. (EFSA guidance p18)
+- If several preservation processes apply, choose the processed base term top-down: puree/textured, then marinated/pickled/fermented, then in vinegar/brine, in alcohol, salted, candied/sugar-preserved, dried, canned/jarred, smoked. Read this as a precedence rule among processed-base options, not as permission to fall back to a raw base just because the more specific raw commodity exists. (EFSA guidance p18)
 - If a composite has no clear dominant ingredient, use this priority: meat, fish, cheese/dairy, egg, legume, potato, cereal, fruit, vegetable. (EFSA guidance p18-19)
-- If the exact term is missing, choose the nearest generic non-hierarchy base term, add the correct origin facet, and add `F26.A07XE` (`other`). If even the origin term is missing, keep the generic base term and record the detail in text. (EFSA guidance p47-49)
+- If the exact term is missing, choose the nearest generic non-hierarchy base term, add the correct origin facet, and add `F26.A07XE` (`other`). If even the origin term is missing, keep the generic base term and record the detail in text. Use [[implicit-vs-explicit-facets]] and [[term-type-facet-constraints]] to pick the correct origin facet for the chosen term type. (EFSA guidance p47-49)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p48-50; EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf p6 -->
 ## Worked Examples

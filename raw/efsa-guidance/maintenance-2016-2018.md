@@ -26,4 +26,4 @@ last_updated: "2026-04-05"
 
 ## Why It Matters
 
-- This is the first maintenance wave that materially broadened FoodEx2 beyond the 2015 guide: better taxonomies, better mappings, and explicit support for more downstream systems.
+- First maintenance wave to materially broaden FoodEx2 beyond the 2015 guide: improved taxonomies, improved mappings, and explicit support for downstream systems such as FoodEx legacy and LanguaL.

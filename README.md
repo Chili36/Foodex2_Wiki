@@ -44,9 +44,9 @@ The current wiki pages include:
 - [maintenance-2023.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/maintenance-2023.md)
 - [maintenance-2024.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/maintenance-2024.md)
 
-Still not added:
+Added since initial bootstrap:
 
-- A formal ingest workflow document
+- A formal ingest workflow document in [INGEST_WORKFLOW.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/INGEST_WORKFLOW.md)
 
 ## Directory Layout
 
@@ -82,6 +82,8 @@ Each wiki page should:
 3. Update or create topic pages under `raw/efsa-guidance/`.
 4. Keep the markdown layer as the default working surface for future FoodEx2 coding questions.
 5. Use the PDFs and validator sources as the source of truth whenever a claim needs verification.
+
+For the concrete ingest method, use [INGEST_WORKFLOW.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/INGEST_WORKFLOW.md).
 
 ## Wiki API
 
@@ -138,6 +140,41 @@ Main endpoints:
 - `POST /wiki/context-pack`: runs the internal wiki page selector and returns only the selected wiki pages plus trace metadata
 - `POST /wiki/solve`: runs the internal wiki librarian and a final coding solver, then returns a complete FoodEx2 coding result plus the underlying context and trace
 
+Endpoint-specific request guidance:
+
+- `POST /wiki/context-pack`: prefer `candidate_hints` with only `code`, `name`, and `termType`
+- `POST /wiki/policy-pack`: prefer `candidates_trimmed` with `code`, `name`, `termType`, optional `scopeNote`, and optional `implicitFacets`
+- `POST /wiki/solve`: send the full `candidates` list because this endpoint makes the final coding decision
+
+Legacy compatibility:
+
+- `context-pack` and `policy-pack` still accept a full `candidates` list, but the service now reduces that payload internally before calling the LLM
+- the canonical machine-readable contract is published at `GET /openapi.json`
+
+Example `POST /wiki/context-pack` body:
+
+```json
+{
+  "search_term": "Tomato basil and garlic sauce in a glass jar",
+  "deconstructed_query": {
+    "raw_query": "Tomato basil and garlic sauce in a glass jar",
+    "base_term": "tomato basil and garlic sauce",
+    "components": [
+      {"text": "sauce", "kind": "PROCESS"},
+      {"text": "glass jar", "kind": "PACKAGING"}
+    ]
+  },
+  "candidate_hints": [
+    {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"},
+    {"code": "A07NN", "name": "Jar", "termType": "f"},
+    {"code": "A07PF", "name": "Glass", "termType": "f"}
+  ],
+  "context": {},
+  "max_pages": 6,
+  "include_page_content": true
+}
+```
+
 Example `POST /wiki/policy-pack` body:
 
 ```json
@@ -151,8 +188,16 @@ Example `POST /wiki/policy-pack` body:
       {"text": "glass jar", "kind": "PACKAGING"}
     ]
   },
-  "candidates": [
-    {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"},
+  "candidates_trimmed": [
+    {
+      "code": "A044C",
+      "name": "Tomato-containing cooked sauces",
+      "termType": "s",
+      "scopeNote": "...",
+      "implicitFacets": [
+        {"facetType": "F04", "facetCode": "A0DMX", "facetMeaning": "Tomatoes"}
+      ]
+    },
     {"code": "A07NN", "name": "Jar", "termType": "f"},
     {"code": "A07PF", "name": "Glass", "termType": "f"}
   ],
@@ -165,6 +210,7 @@ Example `POST /wiki/policy-pack` body:
 `POST /wiki/policy-pack` response includes:
 
 - `guiding_principles`: the high-level FoodEx2 worldview from `index.md`
+- `policy_contract`: the small always-on control layer with constitution, decision procedure, binding rules, tie-break rules, and anti-patterns
 - `pages_used`: selected wiki pages
 - `pages`: selected page metadata plus optional markdown content
 - `query_classification`: inferred food type, domain, and signals
@@ -175,6 +221,7 @@ Example `POST /wiki/policy-pack` body:
 `POST /wiki/context-pack` response includes:
 
 - `guiding_principles`: the high-level FoodEx2 worldview from `index.md`
+- `policy_contract`: the small always-on control layer with constitution, decision procedure, binding rules, tie-break rules, and anti-patterns
 - `pages_used`: selected wiki pages
 - `pages`: selected page metadata plus optional markdown content
 - `trace`: retrieval metadata including the internal page-read trace, token summary, and timing summary
@@ -182,6 +229,7 @@ Example `POST /wiki/policy-pack` body:
 `POST /wiki/solve` response includes:
 
 - `guiding_principles`: the high-level FoodEx2 worldview from `index.md`
+- `policy_contract`: the small always-on control layer the solver must obey before consulting examples or local specificity
 - `pages_used`: selected wiki pages
 - `pages`: selected page metadata plus optional markdown content
 - `query_classification`: inferred case framing from the retrieval stage
@@ -191,8 +239,11 @@ Example `POST /wiki/policy-pack` body:
 - `trace`: split process metadata for retrieval, solver, and totals including models, tokens, calls, and timing
 
 Use `policy-pack` when you want the wiki service to act as a solver-style knowledge synthesizer.
-Use `context-pack` when you want pure context delivery and will do the reasoning in a downstream model.
+Use `context-pack` when you want pure context delivery plus the small always-on policy layer, and will do the main reasoning in a downstream model.
 Use `solve` when you want the wiki service to return the final FoodEx2 coding decision itself, still grounded in the selected wiki context and external candidate list.
+
+The current policy layer is intentionally small. It exists to make decision order explicit without moving back to a giant monolithic prompt.
+The source of truth for that policy is the markdown page [policy-contract.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/policy-contract.md); the API reads and exposes it, but does not author it in service code.
 
 Run tests with:
 

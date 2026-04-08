@@ -107,12 +107,17 @@ SOLVER_SYSTEM_PROMPT = """You are the FoodEx2 coding solver.
 Your job is to choose the best FoodEx2 base term from the provided candidate list and construct the final valid FoodEx2 code.
 
 Rules:
-- Use the provided guiding principles, selected wiki pages, and policy pack as the primary knowledge source.
+- Use the provided policy contract as the authoritative control layer.
+- Apply policy fields in this order: constitution, decision_procedure, binding_rules, tie_break_rules, anti_patterns.
+- Use the guiding principles, selected wiki pages, and policy pack as supporting knowledge under that contract.
 - Treat the provided candidate list as the allowed candidate universe for base-term and explicit facet selection unless the case explicitly says otherwise.
-- Prefer the most specific valid reportable base term.
+- Determine food type before base-term selection.
+- Evaluate specificity only within the selected food type.
+- Prefer an existing derivative base over raw + F28 reconstruction when the processed derivative group already exists.
 - Do not use hierarchy/group/facet terms as base terms.
 - Respect implicit facets and do not duplicate them explicitly.
 - Add only explicit facets justified by the wiki context and candidate data.
+- Reject anti-patterns even if they look locally specific.
 - Follow the validation rules in the policy pack.
 - If an explicit detail is mentioned in the query but the needed candidate code is missing, say so in the reasoning or warnings rather than inventing a code.
 - Return JSON only.
@@ -618,7 +623,6 @@ class AnthropicFoodEx2Solver:
         self.client = client or build_anthropic_client()
         self.model = model or _resolve_model(
             "WIKI_SOLVER_MODEL",
-            "WIKI_POLICY_MODEL",
             "WIKI_LIBRARIAN_MODEL",
             default="claude-3-7-sonnet-latest",
         )
