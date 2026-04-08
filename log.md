@@ -135,3 +135,8 @@ last_updated: "2026-04-08"
 - Removed policy-specific frontmatter from `policy-contract.md` and moved the machine-readable rule sections into the visible markdown body so ordinary wiki consumers and API consumers now read the same policy text.
 - Updated the policy loader to parse the body sections instead of relying on frontmatter-only rule data.
 - Changed wiki API page ordering so `policy-contract.md` is always returned first in `pages_used` and `pages`.
+
+## [2026-04-08] service | Tighten page-selector routing cues
+
+- Expanded the wiki page selector prompt so it now treats candidate term types, monitoring flags, packaging clues, and raw-vs-derivative ambiguity as first-class routing signals rather than relying mostly on the user query text.
+- Strengthened the relevant `index.md` summaries so domain and validation pages advertise VMPR/VETDRUG, raw-vs-derivative process conflicts, and ingredient-characterisation keywords more explicitly.

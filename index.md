@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-04-06"
+last_updated: "2026-04-08"
 ---
 
 # Index
@@ -31,17 +31,17 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 - [implicit-vs-explicit-facets.md](raw/efsa-guidance/implicit-vs-explicit-facets.md): Distinguishes inherited facet information from coder-supplied facet detail.
 - [code-string-format.md](raw/efsa-guidance/code-string-format.md): Exact FoodEx2 code syntax, separators, and ordering conventions.
 - [process-facets.md](raw/efsa-guidance/process-facets.md): Compact reference for Appendix A2 process facet codes and when to use them.
-- [ingredient-facets.md](raw/efsa-guidance/ingredient-facets.md): Rules for characterising ingredients, mixed foods, and minor ingredient use.
+- [ingredient-facets.md](raw/efsa-guidance/ingredient-facets.md): Rules for characterising ingredients, mixed foods, composite coding, and minor flavouring/added-ingredient use on derivatives.
 - [packaging-facets.md](raw/efsa-guidance/packaging-facets.md): When to use `F18` packaging-format and `F19` packaging-material, and how they differ from `F28` process.
-- [chemical-monitoring-foodex2.md](raw/efsa-guidance/chemical-monitoring-foodex2.md): Small domain-specific overlay for how FoodEx2 is used in EFSA chemical-monitoring workflows.
+- [chemical-monitoring-foodex2.md](raw/efsa-guidance/chemical-monitoring-foodex2.md): Domain-specific overlay for chemical monitoring, including VMPR/VETDRUG reporting, explicit F01/F02/F33 exceptions, and legislative-monitoring context.
 
 ## Validation Layer
 
 - [validation-rules.md](raw/efsa-guidance/validation-rules.md): Overview of the validator's two-layer model, severities, and the most important blocking rules.
 - [structural-validation.md](raw/efsa-guidance/structural-validation.md): Syntax, descriptor existence, implicit-facet cleanup, duplicates, and single-cardinality checks.
 - [term-type-facet-constraints.md](raw/efsa-guidance/term-type-facet-constraints.md): Allowed and forbidden facets by FoodEx2 term type.
-- [process-validation-rules.md](raw/efsa-guidance/process-validation-rules.md): Ordinal-group process conflicts and the main `F28` business rules.
-- [domain-specific-validation.md](raw/efsa-guidance/domain-specific-validation.md): VMPR, additives, acrylamide, packaging, infant, and related context rules.
+- [process-validation-rules.md](raw/efsa-guidance/process-validation-rules.md): Ordinal-group process conflicts, raw-vs-derivative process boundaries, and the main `F28` business rules.
+- [domain-specific-validation.md](raw/efsa-guidance/domain-specific-validation.md): VMPR/VETDRUG, additives, acrylamide, packaging, infant, and other domain-specific validation and reporting constraints.
 
 ## Maintenance History
 

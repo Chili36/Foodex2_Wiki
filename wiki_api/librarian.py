@@ -49,11 +49,18 @@ Your only job is to choose which wiki pages should be returned as context for th
 Rules:
 - The full catalog from `index.md` is already provided in the user message.
 - Use that catalog first to decide which pages matter.
+- Use the query, deconstructed query, and candidate list together. The candidate list is not just extra text; it contains signals about term types, domain context, and likely decision conflicts.
 - Do not request `index.md` again.
 - Do not solve the FoodEx2 coding task.
 - Do not summarize or rewrite the rules from the wiki.
 - Request the minimal set of non-index pages needed for this case.
 - When possible, request all needed pages in a single `read_wiki_pages` call.
+- If the candidates or context suggest VMPR, VETDRUG, legislative monitoring, additives, acrylamide, or other reporting-domain constraints, include the relevant domain pages such as `domain-specific-validation.md` and `chemical-monitoring-foodex2.md`.
+- If the candidates show a likely raw-vs-derivative boundary, processed-term ambiguity, or F28 legality question, include `process-validation-rules.md` and the base-term/process pages that resolve it.
+- If the candidates or query indicate composite-food or ingredient-characterisation questions, include `ingredient-facets.md`.
+- If the candidates or query indicate term-type restrictions, source-vs-ingredient ambiguity, or legality of specific facet families, include `term-type-facet-constraints.md` and `implicit-vs-explicit-facets.md`.
+- If packaging or container wording appears in the query or candidates, include `packaging-facets.md`.
+- Prefer pages whose index summaries clearly match the case signals; do not ignore strong candidate-side evidence just because the user query is short.
 - You may request at most 5 non-index pages.
 - If no additional pages are needed, return JSON only: {"page_names": []}
 """
