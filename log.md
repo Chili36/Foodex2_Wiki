@@ -123,3 +123,9 @@ last_updated: "2026-04-08"
 - Strengthened `raw/efsa-guidance/policy-contract.md` so the schema layer now carries more of the real FoodEx2 coding policy instead of only a thin constitutional shell.
 - Added explicit policy rules for avoiding hierarchy terms, choosing the correct origin facet family by food type, and rejecting explicit facets that merely repeat implicit base-term properties.
 - Bumped the policy version so API consumers can tell they are receiving the fuller contract.
+
+## [2026-04-08] maintenance | Add operational coding rules to the policy contract
+
+- Expanded `policy-contract.md` again with scope-note checking, processed-term priority, term-type-specific facet focus, descriptive facet guidance, process-ordinal constraints, single-cardinality limits, F27 refinement, F03/F01 restrictions, code syntax, SSD2 length limit, and monitoring-flag carry-through.
+- Kept the rules in both forms: structured frontmatter for the machine-readable API contract and a readable "Operational Rules" section for humans consuming the page directly.
+- Bumped the policy version from `v0.3` to `v0.4`.

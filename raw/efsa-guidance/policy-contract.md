@@ -9,7 +9,7 @@ related:
   - "[[process-facets]]"
   - "[[implicit-vs-explicit-facets]]"
 last_updated: "2026-04-08"
-policy_version: "2026-04-08-v0.3"
+policy_version: "2026-04-08-v0.4"
 constitution:
   - id: "C01"
     text: "Determine food type before choosing the base term."
@@ -35,13 +35,16 @@ constitution:
   - id: "C08"
     text: "Add only explicit facets that contribute information not already implicit in the chosen base term."
     priority: 90
+  - id: "C09"
+    text: "Read the candidate scope note before finalising the base term and reject terms whose scope does not truly cover the product."
+    priority: 94
 decision_procedure:
   - step: 1
     name: "determine_food_type"
     instruction: "Classify the food as raw commodity, derivative, composite, or unclear."
   - step: 2
-    name: "select_candidates_within_type"
-    instruction: "Compare candidates primarily within the selected food type and prefer the most detailed reportable non-hierarchy term within that type."
+    name: "read_scope_notes_and_select_candidates_within_type"
+    instruction: "Read scope notes, then compare candidates primarily within the selected food type and prefer the most detailed reportable non-hierarchy term within that type."
   - step: 3
     name: "apply_origin_and_tie_break_rules"
     instruction: "Use derivative-base priority, correct origin-facet family, and anti-pattern rejection before local specificity."
@@ -73,6 +76,39 @@ binding_rules:
   - id: "R-FACET-001"
     when: "an explicit facet only repeats an implicit property of the chosen base"
     must_not: "keep that explicit facet in the final code"
+  - id: "R-SCOPE-001"
+    when: "a candidate scope note excludes the described product or narrows it away from the query"
+    must_not: "select that candidate as the base term"
+  - id: "R-DESC-001"
+    when: "F10 or F21 information is present and not already implicit in a reportable base term"
+    may: "add the descriptive facet explicitly"
+  - id: "R-PROC-001"
+    when: "multiple explicit F28 processes are added"
+    must: "keep at most one process per ordinal group"
+  - id: "R-PROC-002"
+    when: "the chosen base already implies a process"
+    must: "ensure any remaining explicit F28 is at least as specific as the implicit process"
+  - id: "R-CARD-001"
+    when: "using F03, F11, F17, F20, F22, F23, F24, or F26"
+    must: "keep only one value for that facet family"
+  - id: "R-F27-001"
+    when: "an explicit F27 is used"
+    must: "make the F27 refine or equal the implicit or source commodity chain"
+  - id: "R-F03-001"
+    when: "food_type=raw_primary_commodity"
+    must_not: "add F03 unless the described processing is only physical division or dimension reduction"
+  - id: "R-F01-004"
+    when: "food_type=derivative and explicit F01 is present"
+    must: "use F01 only when the derivative rules permit it, including the single-F27 dependency"
+  - id: "R-SYNTAX-001"
+    when: "composing the final code"
+    must: "use the syntax base#facetType.code($facetType2.code2...)"
+  - id: "R-LENGTH-001"
+    when: "composing the facet string"
+    must: "keep the full facet string at or below 256 characters"
+  - id: "R-MONITOR-001"
+    when: "returning the final coded result"
+    must: "carry the monitoring flags from the base term unchanged"
 tie_break_rules:
   - id: "TB-001"
     when: "candidate_A is a derivative base and candidate_B is raw+F28 for the same described food"
@@ -123,3 +159,24 @@ These are the practical ground rules the solver should always keep in view:
 2. Avoid hierarchy terms as coding bases when a reportable non-hierarchy term exists.
 3. Specify origin precisely with the facet family that matches the chosen food type.
 4. Add only explicit facets that contribute information not already implicit in the base term.
+
+## Operational Rules
+
+- Read the scope note first and verify that the candidate truly covers the product before selecting it as the base term.
+- Select the most specific existing reportable code within the chosen food type. Use groups only when explicitly asked or when no reportable non-hierarchy term exists.
+- Processed term priority is binding: if a derivative or composite term already captures the processed state, use that term instead of reconstructing the product from a raw commodity plus `F28`.
+- Apply term-type-specific facet focus:
+  - `r`: focus on the most specific raw base term and only simple allowed treatments.
+  - `d`: focus on constitutive source with `F27` and on new treatments not already implicit.
+  - `c` / `s`: focus on characterising recipe ingredients with `F04` and relevant treatments.
+  - `h` / `g`: do not use as coding base terms when a reportable term exists.
+- `F10 qualitative-info` and `F21 production-method` are descriptive facets and may be used on reportable base terms when the information is present and not already implicit.
+- Implicit facets are already present. Never duplicate them explicitly.
+- For `F28`, keep one process per ordinal group and do not add a process that is broader than the one already implicit in the base term.
+- Single-cardinality facet families allow only one value: `F03`, `F11`, `F17`, `F20`, `F22`, `F23`, `F24`, and `F26`.
+- `F27` must refine or equal the implicit/source commodity chain.
+- Do not use `F03` on raw commodities except when the only described processing is physical division or dimension reduction.
+- Do not use `F01` on raw commodities. On derivatives, use `F01` only when the derivative rules permit it.
+- Code syntax is `base#facetType.code($facetType2.code2...)`.
+- The full facet string must stay within the SSD2 limit of 256 characters.
+- Carry monitoring flags from the base term unchanged.
