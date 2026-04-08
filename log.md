@@ -112,3 +112,8 @@ last_updated: "2026-04-08"
 
 - Added a general rule to `implicit-vs-explicit-facets.md`: when a derivative base term carries a broad implicit F27, narrow it with an explicit F27 to the specific source commodity instead of abandoning the derivative and reconstructing from raw + F28.
 - Added a corresponding row to the "When To Add An Explicit Facet" table for the broad-group derivative case.
+
+## [2026-04-08] maintenance | Add related project links to README
+
+- Added direct GitHub links in `README.md` to the sibling FoodEx2 validator project, the ChemMon wiki, and DMT.
+- Made the repo-level orientation clearer for readers arriving without the surrounding project context.

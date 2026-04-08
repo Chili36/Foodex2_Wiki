@@ -6,6 +6,12 @@ It follows the "LLM wiki" pattern: raw source documents stay immutable, while an
 
 See [PROJECT_CONTEXT.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/PROJECT_CONTEXT.md) for the project rationale and the connection to Andrej Karpathy's `llm-wiki` gist.
 
+## Related Projects
+
+- [automatic-couscous](https://github.com/Chili36/automatic-couscous): the FoodEx2 validator project that supplies the operational rule layer reflected in parts of this wiki.
+- [Chemmon_Wiki](https://github.com/Chili36/Chemmon_Wiki): the companion wiki focused on Chemical Monitoring guidance and reporting-specific interpretation.
+- [DMT](https://github.com/Chili36/DMT): the downstream application that consumes this wiki API for context, policy, and solving workflows.
+
 ## Current Status
 
 Yes: the wiki layer has been created.
