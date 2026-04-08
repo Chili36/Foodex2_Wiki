@@ -313,6 +313,7 @@ def test_policy_pack_uses_librarian_response() -> None:
         "base-term-selection.md",
         "packaging-facets.md",
         "ingredient-facets.md",
+        "policy-contract.md",
     ]
     assert payload["trace"]["selection_method"] == "service-owned llm librarian"
     assert payload["trace"]["model"] == "fake-claude"
@@ -368,6 +369,7 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
         "base-term-selection.md",
         "packaging-facets.md",
         "ingredient-facets.md",
+        "policy-contract.md",
     ]
     assert "policy_pack" not in payload
     assert "query_classification" not in payload

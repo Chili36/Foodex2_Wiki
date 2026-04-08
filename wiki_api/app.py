@@ -357,6 +357,34 @@ def _normalize_solver_data(data: dict[str, Any]) -> dict[str, Any]:
     return normalized
 
 
+POLICY_PAGE_NAME = "policy-contract.md"
+
+
+def _ensure_policy_page(
+    pages_used: list[str],
+    pages: list["PageSummary"],
+    *,
+    include_content: bool,
+) -> tuple[list[str], list["PageSummary"]]:
+    """Ensure policy-contract.md is always included in pages_used and pages."""
+    if POLICY_PAGE_NAME not in pages_used:
+        pages_used = list(dict.fromkeys([*pages_used, POLICY_PAGE_NAME]))
+    if not any(p.page_name == POLICY_PAGE_NAME for p in pages):
+        page = store.read_page(POLICY_PAGE_NAME)
+        pages = [
+            *pages,
+            PageSummary(
+                page_name=page.name,
+                title=page.title,
+                summary=page.summary,
+                sources=page.sources,
+                related=page.related,
+                content=store.clean_content_for_model(page) if include_content else None,
+            ),
+        ]
+    return pages_used, pages
+
+
 def _effective_context_candidates(request: ContextPackRequest) -> tuple[list[dict[str, Any]], str]:
     if request.candidate_hints:
         return _plain_models(request.candidate_hints), "candidate_hints"
@@ -501,10 +529,13 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
         )
         for page in [store.read_page(page_name) for page_name in librarian_result.data["pages_used"]]
     ]
+    final_pages_used, pages = _ensure_policy_page(
+        librarian_result.data["pages_used"], pages, include_content=request.include_page_content,
+    )
     response = PolicyPackResponse(
         guiding_principles=store.guiding_principles(),
         policy_contract=policy_contract,
-        pages_used=librarian_result.data["pages_used"],
+        pages_used=final_pages_used,
         pages=pages,
         query_classification=QueryClassification(**librarian_result.data["query_classification"]),
         candidate_focus=CandidateFocus(**librarian_result.data["candidate_focus"]),
@@ -597,10 +628,13 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
         )
         for page in [store.read_page(page_name) for page_name in selection_result.pages_used]
     ]
+    final_pages_used, pages = _ensure_policy_page(
+        selection_result.pages_used, pages, include_content=request.include_page_content,
+    )
     response = ContextPackResponse(
         guiding_principles=store.guiding_principles(),
         policy_contract=policy_contract,
-        pages_used=selection_result.pages_used,
+        pages_used=final_pages_used,
         pages=pages,
         trace={
             "index_used": True,
@@ -678,6 +712,8 @@ def solve_foodex2(request: SolveRequest) -> SolveResponse:
     try:
         librarian_result = librarian.run(payload)
         pages_raw = [store.read_page(page_name) for page_name in librarian_result.data["pages_used"]]
+        if not any(p.name == POLICY_PAGE_NAME for p in pages_raw):
+            pages_raw.append(store.read_page(POLICY_PAGE_NAME))
         solver_payload = {
             "search_term": request.search_term,
             "deconstructed_query": request.deconstructed_query,
@@ -688,7 +724,7 @@ def solve_foodex2(request: SolveRequest) -> SolveResponse:
             "query_classification": librarian_result.data["query_classification"],
             "candidate_focus": librarian_result.data["candidate_focus"],
             "policy_pack": librarian_result.data["policy_pack"],
-            "pages_used": librarian_result.data["pages_used"],
+            "pages_used": list(dict.fromkeys([*librarian_result.data["pages_used"], POLICY_PAGE_NAME])),
             "pages": [
                 {
                     "page_name": page.name,
@@ -714,11 +750,14 @@ def solve_foodex2(request: SolveRequest) -> SolveResponse:
         )
         for page in pages_raw
     ]
+    final_pages_used, pages = _ensure_policy_page(
+        librarian_result.data["pages_used"], pages, include_content=request.include_page_content,
+    )
 
     response = SolveResponse(
         guiding_principles=store.guiding_principles(),
         policy_contract=policy_contract,
-        pages_used=librarian_result.data["pages_used"],
+        pages_used=final_pages_used,
         pages=pages,
         query_classification=QueryClassification(**librarian_result.data["query_classification"]),
         candidate_focus=CandidateFocus(**librarian_result.data["candidate_focus"]),

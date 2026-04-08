@@ -1,6 +1,6 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-04-06"
+last_updated: "2026-04-08"
 ---
 
 # Log
@@ -96,3 +96,19 @@ last_updated: "2026-04-06"
 - Added `INGEST_WORKFLOW.md` as the concrete playbook for future document ingest.
 - Captured the actual working method used in this repo: structure scan first, topic-map updates second, durable-rule extraction third, and gap-patching later.
 - Linked the workflow from `README.md` and `index.md` so future maintenance work has an explicit reference process.
+
+## [2026-04-08] maintenance | Strengthen inline cross-linking on core guidance pages
+
+- Added body-level `[[...]]` cross-links to the main rule hubs so the model-facing API sees the same knowledge graph that humans infer from frontmatter and the viewer.
+- Focused the pass on `base-term-selection.md`, `process-facets.md`, `ingredient-facets.md`, `implicit-vs-explicit-facets.md`, `term-type-facet-constraints.md`, `facet-coding-rules.md`, `process-validation-rules.md`, and `chemical-monitoring-foodex2.md`.
+- Kept the links procedural rather than decorative: decision pages now point directly to adjacent rule pages for term type, origin-chain, process, validation, and ChemMon exceptions.
+
+## [2026-04-08] service | Always include policy-contract.md in API page content
+
+- Updated all three wiki API endpoints (context-pack, policy-pack, solve) to always include `policy-contract.md` in the `pages_used` list and `pages` content.
+- The policy contract was already returned as structured data but its page content was not included unless the page selector happened to pick it. Now the constitution, binding rules, tie-break rules, and anti-patterns are always visible to the consuming model.
+
+## [2026-04-08] maintenance | Add F27 narrowing rule for broad derivative groups
+
+- Added a general rule to `implicit-vs-explicit-facets.md`: when a derivative base term carries a broad implicit F27, narrow it with an explicit F27 to the specific source commodity instead of abandoning the derivative and reconstructing from raw + F28.
+- Added a corresponding row to the "When To Add An Explicit Facet" table for the broad-group derivative case.
