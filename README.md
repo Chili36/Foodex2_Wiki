@@ -44,9 +44,9 @@ The current wiki pages include:
 - [maintenance-2023.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/maintenance-2023.md)
 - [maintenance-2024.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/maintenance-2024.md)
 
-Still not added:
+Added since initial bootstrap:
 
-- A formal ingest workflow document
+- A formal ingest workflow document in [INGEST_WORKFLOW.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/INGEST_WORKFLOW.md)
 
 ## Directory Layout
 
@@ -82,6 +82,8 @@ Each wiki page should:
 3. Update or create topic pages under `raw/efsa-guidance/`.
 4. Keep the markdown layer as the default working surface for future FoodEx2 coding questions.
 5. Use the PDFs and validator sources as the source of truth whenever a claim needs verification.
+
+For the concrete ingest method, use [INGEST_WORKFLOW.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/INGEST_WORKFLOW.md).
 
 ## Wiki API
 

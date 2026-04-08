@@ -90,3 +90,9 @@ last_updated: "2026-04-06"
 - Added the implicit-facet exception to `implicit-vs-explicit-facets.md`: explicit `F33` is mandatory for acrylamide even when the base term already carries an implicit `F33`.
 - Added a worked example to `chemical-monitoring-foodex2.md`: french fries `A0BYV#F33.A169H` with legislative class mapping.
 - Source: EFSA official clarification on the ChemMon reporting channel, referencing CHEMMON12 and ChemMon 2026 guidance.
+
+## [2026-04-08] maintenance | Add formal ingest workflow playbook
+
+- Added `INGEST_WORKFLOW.md` as the concrete playbook for future document ingest.
+- Captured the actual working method used in this repo: structure scan first, topic-map updates second, durable-rule extraction third, and gap-patching later.
+- Linked the workflow from `README.md` and `index.md` so future maintenance work has an explicit reference process.
