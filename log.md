@@ -117,3 +117,9 @@ last_updated: "2026-04-08"
 
 - Added direct GitHub links in `README.md` to the sibling FoodEx2 validator project, the ChemMon wiki, and DMT.
 - Made the repo-level orientation clearer for readers arriving without the surrounding project context.
+
+## [2026-04-08] maintenance | Expand the policy contract with core coding ground rules
+
+- Strengthened `raw/efsa-guidance/policy-contract.md` so the schema layer now carries more of the real FoodEx2 coding policy instead of only a thin constitutional shell.
+- Added explicit policy rules for avoiding hierarchy terms, choosing the correct origin facet family by food type, and rejecting explicit facets that merely repeat implicit base-term properties.
+- Bumped the policy version so API consumers can tell they are receiving the fuller contract.
