@@ -304,16 +304,16 @@ def test_policy_pack_uses_librarian_response() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
-    assert payload["policy_contract"]["policy_version"] == "2026-04-07-v0.2"
+    assert payload["policy_contract"]["policy_version"] == "2026-04-08-v0.4"
     assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["policy_contract"]["anti_patterns"][0]["id"] == "AP-001"
     assert payload["guiding_principles"][1].startswith("FoodEx2 is built top-down.")
     assert payload["pages_used"] == [
+        "policy-contract.md",
         "index.md",
         "base-term-selection.md",
         "packaging-facets.md",
         "ingredient-facets.md",
-        "policy-contract.md",
     ]
     assert payload["trace"]["selection_method"] == "service-owned llm librarian"
     assert payload["trace"]["model"] == "fake-claude"
@@ -323,7 +323,8 @@ def test_policy_pack_uses_librarian_response() -> None:
     assert payload["trace"]["timing_summary"]["librarian_wall_time_ms"] == 1600
     assert payload["trace"]["timing_summary"]["request_wall_time_ms"] >= 0
     assert payload["query_classification"]["food_type"] == "composite"
-    assert payload["pages"][2]["page_name"] == "packaging-facets.md"
+    assert payload["pages"][0]["page_name"] == "policy-contract.md"
+    assert payload["pages"][3]["page_name"] == "packaging-facets.md"
     assert app_module.librarian_runner.calls[0]["candidates"] == [
         {
             "code": "A044C",
@@ -361,15 +362,15 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
-    assert payload["policy_contract"]["policy_version"] == "2026-04-07-v0.2"
+    assert payload["policy_contract"]["policy_version"] == "2026-04-08-v0.4"
     assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["guiding_principles"][2].startswith("FoodEx2 prefers modular description")
     assert payload["pages_used"] == [
+        "policy-contract.md",
         "index.md",
         "base-term-selection.md",
         "packaging-facets.md",
         "ingredient-facets.md",
-        "policy-contract.md",
     ]
     assert "policy_pack" not in payload
     assert "query_classification" not in payload
@@ -379,7 +380,7 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert payload["trace"]["timing_summary"]["llm_time_ms"] == 640
     assert payload["trace"]["timing_summary"]["selector_wall_time_ms"] == 700
     assert payload["trace"]["timing_summary"]["request_wall_time_ms"] >= 0
-    assert payload["pages"][0]["page_name"] == "index.md"
+    assert payload["pages"][0]["page_name"] == "policy-contract.md"
     assert app_module.selector_runner.calls[0]["candidates"] == [
         {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"}
     ]
@@ -399,7 +400,7 @@ def test_policy_pack_page_content_is_model_cleaned() -> None:
     )
     assert response.status_code == 200
     payload = response.json()
-    content = payload["pages"][1]["content"]
+    content = payload["pages"][0]["content"]
     assert content is not None
     assert "<!-- Source:" not in content
     assert not content.startswith("---")
@@ -426,7 +427,7 @@ def test_solve_returns_final_code_and_stage_traces() -> None:
     )
     assert response.status_code == 200
     payload = response.json()
-    assert payload["policy_contract"]["policy_version"] == "2026-04-07-v0.2"
+    assert payload["policy_contract"]["policy_version"] == "2026-04-08-v0.4"
     assert payload["solution"]["constructedCode"] == "A044C#F04.A00VV$F04.A00GZ$F18.A07NN$F19.A07PF"
     assert payload["solution"]["validationCheck"]["passes"] is True
     assert payload["solution"]["confidence"] == 5
@@ -506,7 +507,9 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
 
 def test_policy_contract_is_loaded_from_markdown_source() -> None:
     contract = build_policy_contract()
-    assert contract["policy_version"] == "2026-04-07-v0.2"
+    assert contract["policy_version"] == "2026-04-08-v0.4"
     assert contract["constitution"][0]["id"] == "C01"
     assert contract["decision_procedure"][0]["name"] == "determine_food_type"
     assert contract["anti_patterns"][0]["id"] == "AP-001"
+    assert contract["binding_rules"][0]["id"] == "R-DERIV-001"
+    assert contract["binding_rules"][8]["id"] == "R-DESC-001"

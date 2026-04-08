@@ -129,3 +129,9 @@ last_updated: "2026-04-08"
 - Expanded `policy-contract.md` again with scope-note checking, processed-term priority, term-type-specific facet focus, descriptive facet guidance, process-ordinal constraints, single-cardinality limits, F27 refinement, F03/F01 restrictions, code syntax, SSD2 length limit, and monitoring-flag carry-through.
 - Kept the rules in both forms: structured frontmatter for the machine-readable API contract and a readable "Operational Rules" section for humans consuming the page directly.
 - Bumped the policy version from `v0.3` to `v0.4`.
+
+## [2026-04-08] maintenance | Make the policy page body canonical and return it first
+
+- Removed policy-specific frontmatter from `policy-contract.md` and moved the machine-readable rule sections into the visible markdown body so ordinary wiki consumers and API consumers now read the same policy text.
+- Updated the policy loader to parse the body sections instead of relying on frontmatter-only rule data.
+- Changed wiki API page ordering so `policy-contract.md` is always returned first in `pages_used` and `pages`.

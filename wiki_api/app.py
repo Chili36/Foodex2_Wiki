@@ -209,6 +209,7 @@ class BindingRule(BaseModel):
     when: str
     must: str | None = None
     must_not: str | None = None
+    may: str | None = None
 
 
 class TieBreakRule(BaseModel):
@@ -366,23 +367,24 @@ def _ensure_policy_page(
     *,
     include_content: bool,
 ) -> tuple[list[str], list["PageSummary"]]:
-    """Ensure policy-contract.md is always included in pages_used and pages."""
-    if POLICY_PAGE_NAME not in pages_used:
-        pages_used = list(dict.fromkeys([*pages_used, POLICY_PAGE_NAME]))
-    if not any(p.page_name == POLICY_PAGE_NAME for p in pages):
+    """Ensure policy-contract.md is always included first in pages_used and pages."""
+    pages_used = [POLICY_PAGE_NAME, *[name for name in pages_used if name != POLICY_PAGE_NAME]]
+
+    pages_by_name = {page.page_name: page for page in pages}
+    if POLICY_PAGE_NAME not in pages_by_name:
         page = store.read_page(POLICY_PAGE_NAME)
-        pages = [
-            *pages,
-            PageSummary(
-                page_name=page.name,
-                title=page.title,
-                summary=page.summary,
-                sources=page.sources,
-                related=page.related,
-                content=store.clean_content_for_model(page) if include_content else None,
-            ),
-        ]
-    return pages_used, pages
+        pages_by_name[POLICY_PAGE_NAME] = PageSummary(
+            page_name=page.name,
+            title=page.title,
+            summary=page.summary,
+            sources=page.sources,
+            related=page.related,
+            content=store.clean_content_for_model(page) if include_content else None,
+        )
+
+    ordered_pages: list[PageSummary] = [pages_by_name[POLICY_PAGE_NAME]]
+    ordered_pages.extend(page for page in pages if page.page_name != POLICY_PAGE_NAME)
+    return pages_used, ordered_pages
 
 
 def _effective_context_candidates(request: ContextPackRequest) -> tuple[list[dict[str, Any]], str]:
@@ -711,9 +713,8 @@ def solve_foodex2(request: SolveRequest) -> SolveResponse:
     }
     try:
         librarian_result = librarian.run(payload)
-        pages_raw = [store.read_page(page_name) for page_name in librarian_result.data["pages_used"]]
-        if not any(p.name == POLICY_PAGE_NAME for p in pages_raw):
-            pages_raw.append(store.read_page(POLICY_PAGE_NAME))
+        raw_page_names = [POLICY_PAGE_NAME, *[name for name in librarian_result.data["pages_used"] if name != POLICY_PAGE_NAME]]
+        pages_raw = [store.read_page(page_name) for page_name in raw_page_names]
         solver_payload = {
             "search_term": request.search_term,
             "deconstructed_query": request.deconstructed_query,
@@ -724,7 +725,7 @@ def solve_foodex2(request: SolveRequest) -> SolveResponse:
             "query_classification": librarian_result.data["query_classification"],
             "candidate_focus": librarian_result.data["candidate_focus"],
             "policy_pack": librarian_result.data["policy_pack"],
-            "pages_used": list(dict.fromkeys([*librarian_result.data["pages_used"], POLICY_PAGE_NAME])),
+            "pages_used": raw_page_names,
             "pages": [
                 {
                     "page_name": page.name,
