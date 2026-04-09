@@ -140,3 +140,8 @@ last_updated: "2026-04-08"
 
 - Expanded the wiki page selector prompt so it now treats candidate term types, monitoring flags, packaging clues, and raw-vs-derivative ambiguity as first-class routing signals rather than relying mostly on the user query text.
 - Strengthened the relevant `index.md` summaries so domain and validation pages advertise VMPR/VETDRUG, raw-vs-derivative process conflicts, and ingredient-characterisation keywords more explicitly.
+
+## [2026-04-09] ingest | Add cleaned validator business-rules source markdown
+
+- Added `foodex2_docs/business_rules.md` as a cleaned source-layer markdown version of the validator's `BR01-BR31` rule set.
+- Kept the content source-oriented and comprehensive, but stripped repeated severity boilerplate and formatting noise so future wiki ingests can work from a denser validator-policy artifact.
