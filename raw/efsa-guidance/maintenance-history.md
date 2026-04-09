@@ -41,3 +41,13 @@ last_updated: "2026-04-05"
 
 - [[foodex2-overview]] for the stable logic of revision 2.
 - The year pages below for changes that may affect real coding, reporting, or mapping behavior after 2015.
+
+## Relevant Policy
+
+- [[policy-contract]] `C05` applies directly: maintenance pages provide historical context, but historical states do not override current higher-priority policy rules.
+- [[policy-contract]] `C09` matters here as well: use the maintenance trail to understand current scope, reportability, and catalogue fit before selecting a candidate.
+
+## Relevant Business Rules
+
+- No single `BRxx` rule governs this historical overview page by itself.
+- Use [[business-rules]] when a maintenance change affects reportability, deprecation, dismissal, hierarchy use, or facet applicability, especially `BR08`, `BR20`, `BR21`, `BR23`, and `BR24`.

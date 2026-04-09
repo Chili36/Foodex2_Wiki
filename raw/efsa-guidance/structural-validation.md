@@ -45,3 +45,13 @@ last_updated: "2026-04-05"
 - Before: `A0B9Z#F28.A07JS$F28.A07JS`. After: invalid; duplicate facet instance detected in structural validation. (VBA Structural Rules Summary)
 - Before: `A0B9Z#F28`. After: invalid; the facet is incomplete and fails code-structure checks. (`BR29`)
 - Before: a code where an explicit facet duplicates one already implicit in the base term. After: the validator removes the redundant facet, keeps the cleaned code, and emits a warning. (VBA Structural Rules Summary)
+
+## Relevant Policy
+
+- [[policy-contract]] Decision Procedure step 5 and `R-SYNTAX-001` / `R-LENGTH-001` govern this page directly: structural validation is the final gate before a composed code is accepted.
+- [[policy-contract]] `R-FACET-001` explains why duplicate implicit detail should be removed before the final code is treated as clean.
+
+## Relevant Business Rules
+
+- `BR25`: single-cardinality facet families allow only one value. See [[business-rules]].
+- `BR29`, `BR30`, and `BR31`: structure, facet-category validity, and descriptor-membership checks. See [[business-rules]].

@@ -43,3 +43,13 @@ last_updated: "2026-04-05"
 - Before: `pizza taken in a takeaway shop, packed in a laminated pizza box`. After: `A03ZN#F18.A07NL$F19.A07PN`. Packaging alone can be enough when the marketed pack matters. (ChemMon 2026 p54)
 - Before: `infant formula based on milk, heated in the microwave inside a plastic feeding bottle`. After: `A03QF#F28.A07HB$F18.A07NM$F19.A16RX`. Process and packaging can coexist, but they are separate descriptors. (ChemMon 2026 p55)
 - Before: `preserved cucumbers in a glass jar`. Pattern (no single code given in source): start from the preserved-vegetable base term and add the `jarring` process facet via `F28`. If the marketed pack detail matters, add `F18`/`F19` packaging facets separately. This example illustrates that process and packaging are independent decisions. (EFSA guidance p17-18)
+
+## Relevant Policy
+
+- [[policy-contract]] `C08` and Decision Procedure step 4 govern this page: packaging facets are optional explicit descriptors and should only be added when the packaging detail matters for the coding purpose.
+- [[policy-contract]] `R-FACET-001` still applies. Do not add packaging facets that merely restate unsupported or already implicit information.
+
+## Relevant Business Rules
+
+- No packaging-specific `BRxx` rule governs this page by itself.
+- If packaging facets are added incorrectly, the general validator checks in [[business-rules]] still apply, especially `BR29-BR31` for structure, facet-category validity, and descriptor membership.

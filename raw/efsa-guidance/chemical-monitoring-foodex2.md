@@ -40,3 +40,14 @@ last_updated: "2026-04-08"
 - Before: cow hair sample. After: `A0C60#F02.A0ESP$F01.A057E`. ChemMon expects explicit source and part-nature for this non-food case, even though the generic-base strategy still follows [[facet-coding-rules]]. (ChemMon 2025 p36; ChemMon 2026 p36)
 - Before: wild deer fresh meat in VMPR. After: `A01SA#F21.A07RY`. The wild-production method must be added explicitly. (ChemMon 2026 lines around sample examples)
 - Before: acrylamide result on french fries with no legislative class. After: `A0BYV#F33.A169H`. CHEMMON12 requires explicit `F33` for acrylamide (paramCode `RF-00000410-ORG`) even when the base term already carries an implicit `F33`. The acrylamide legislative class `A169H` maps to "AC-1.1 French fries from fresh potatoes" under Commission Regulation (EU) 2017/2158; this is one of the explicit exceptions noted in [[implicit-vs-explicit-facets]]. (ChemMon 2026; CHEMMON12)
+
+## Relevant Policy
+
+- [[policy-contract]] `C01`, `C07`, and `C08` still govern the coding core here: choose the right food type and facet family first, then add only the domain-mandated explicit descriptors.
+- [[policy-contract]] Decision Procedure step 5 is the main handoff point for this page. Use it as a domain overlay after ordinary FoodEx2 coding structure is in place, not instead of it.
+
+## Relevant Business Rules
+
+- `BR14` and `BR15`: contextual validation paths activate only in the relevant reporting workflows. See [[business-rules]].
+- `BR25`: domain-mandated explicit facets still have to respect single-cardinality limits. See [[business-rules]].
+- `BR20` and `BR21`: deprecated or dismissed terms remain invalid even in ChemMon workflows. See [[business-rules]].

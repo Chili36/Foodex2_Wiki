@@ -42,6 +42,11 @@ last_updated: "2026-04-05"
 - `BR20` and `BR21`: deprecated and dismissed terms are always invalid, even if the code string is well formed. (Business Rules `BR20-BR21`)
 - `BR29-BR31`: the code must use valid syntax, a real facet category, and a descriptor that belongs to that category. See [[structural-validation]]. (Business Rules `BR29-BR31`)
 
+## Relevant Policy
+
+- [[policy-contract]] Decision Procedure step 5 is the direct policy hook for this page: validation happens after food type, base term, and facet logic have already been resolved.
+- [[policy-contract]] `R-SYNTAX-001`, `R-LENGTH-001`, and `R-FACET-001` explain the core policy expectations that the validator then checks structurally or through `BRxx` rules.
+
 ## Relevant Business Rules
 
 - `BR03` and `BR04`: composites cannot use `F01` or `F27`. See [[business-rules]].

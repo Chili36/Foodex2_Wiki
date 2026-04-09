@@ -44,6 +44,11 @@ last_updated: "2026-04-05"
 - Before: food additive sample with no `F33`. After: invalid for additives monitoring; the legislative category is mandatory. (Domain Specific Rules Additives)
 - Before: acrylamide result on french fries (`A0BYV`) with no `F33`. After: `A0BYV#F33.A169H`. CHEMMON12 requires the acrylamide legislative class even though `A0BYV` may carry an implicit `F33`. (ChemMon 2026; CHEMMON12)
 
+## Relevant Policy
+
+- [[policy-contract]] `C07` and `C08` still govern domain overlays: even when a workflow requires explicit facets, the facet family and duplication logic must stay consistent with the chosen food type.
+- [[policy-contract]] Decision Procedure step 5 is the main hook for this page. Apply these checks as a final domain overlay after ordinary FoodEx2 coding decisions have already been made.
+
 ## Relevant Business Rules
 
 - `BR14` and `BR15`: context-specific validation paths such as ICT / DCF. See [[business-rules]].

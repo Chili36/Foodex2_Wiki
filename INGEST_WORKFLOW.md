@@ -109,21 +109,41 @@ Preferred page shape:
 
 If a page starts becoming a second document dump, split it.
 
-## 6. Always Check Relevant Business Rules
+## 6. Always Check Relevant Policy And Business Rules
 
-For every operational page, explicitly ask:
+For every page touched during ingest or maintenance, explicitly ask:
+
+- Which policy rules from `[[policy-contract]]` govern this topic?
+- Which `BRxx` rules from `[[business-rules]]` materially constrain this topic?
+
+This applies even when the truthful answer is:
+
+- no single `BRxx` rule governs this page directly
+- this page is mainly historical or conceptual
+
+For operational pages, explicitly ask:
 
 - Which `BRxx` rules govern this topic?
 - Which of those rules are central enough to deserve a backlink from this page?
 
-This is mandatory for ingest and maintenance passes touching:
+This is mandatory for ingest and maintenance passes, with the strongest expectation on:
 
 - base-term pages
 - facet pages
 - validation pages
 - domain overlay pages
+- maintenance and history pages that affect current reportability or scope interpretation
 
 Preferred pattern inside the page:
+
+```md
+## Relevant Policy
+
+- [[policy-contract]] `C01`: determine food type before choosing the base term
+- [[policy-contract]] `C08`: add only explicit facets that are not already implicit
+```
+
+And, where applicable:
 
 ```md
 ## Relevant Business Rules
@@ -135,7 +155,7 @@ Preferred pattern inside the page:
 
 Those rule references should link back to [[business-rules]] as the canonical wiki target for validator rules.
 
-Do not force irrelevant rules onto a page. The point is not to maximize tags; the point is to make the governing constraints explicit.
+Do not force irrelevant rules onto a page. The point is not to maximize tags; the point is to make the governing constraints explicit and to say clearly when a page is policy-driven rather than validator-driven.
 
 # Page Writing Heuristics
 

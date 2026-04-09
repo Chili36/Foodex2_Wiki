@@ -40,3 +40,15 @@ last_updated: "2026-04-08"
 - Before: `Adriatic sturgeon meat` when only `sturgeon [meat]` exists. After: `A029E#F01.A0884$F26.A07XE`. `F01` restricts the implicit generic sturgeon source to a more specific child. (EFSA guidance p54-55)
 - Before: `glutinous rice flour`. After: `A003F#F26.A07XE$F27.A0F6M`. `F27` restricts the implicit generic rice grain source to a more specific raw commodity. (EFSA guidance p55)
 - Before: `risotto with asparagus`. After: `A041F#F04.A00RT`. `F04` states the characterising ingredient of a composite base term. (EFSA guidance p56)
+
+## Relevant Policy
+
+- [[policy-contract]] `C04` and `C08` govern this page directly: do not restate what the base already implies, and add only explicit facets that contribute new information.
+- [[policy-contract]] `R-IMPLICIT-001`, `R-FACET-001`, and `AP-001` cover the main failure mode here: do not rebuild a standard derivative from a raw base plus `F28`, and do not keep explicit facets that merely duplicate implicit properties.
+- [[policy-contract]] `R-ORIGIN-001` to `R-ORIGIN-003` explain why raw, derivative, and composite terms use different origin-facet families.
+
+## Relevant Business Rules
+
+- `BR05`, `BR06`, and `BR07`: derivative source-chain limits and derivative use of `F01`. See [[business-rules]].
+- `BR12`: `F04` on raw or derivative terms remains minor-ingredient only. See [[business-rules]].
+- `BR16`: explicit process detail cannot be broader than what is already implicit. See [[business-rules]].

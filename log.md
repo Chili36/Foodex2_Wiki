@@ -152,3 +152,9 @@ last_updated: "2026-04-08"
 - Updated `index.md` so the validation layer now exposes that page directly.
 - Updated `INGEST_WORKFLOW.md` to make business-rule backlinking mandatory for operational pages during ingest.
 - Seeded `Relevant Business Rules` sections on the main validation pages so the pattern exists in the wiki itself, not just in process docs.
+
+## [2026-04-09] maintenance | Backfill policy and business-rule traceability across all pages
+
+- Added `Relevant Policy` sections across the full `raw/efsa-guidance/` set so every page now states which parts of `policy-contract.md` actually govern its use.
+- Expanded `Relevant Business Rules` coverage across the full page set, including explicit "no single BRxx governs this page" language on conceptual and historical pages where that is the honest answer.
+- Updated `INGEST_WORKFLOW.md` so future ingests must backfill both policy and business-rule relevance, not just validator-rule backlinks on operational pages.

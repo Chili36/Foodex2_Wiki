@@ -43,6 +43,11 @@ last_updated: "2026-04-08"
 - Before: `A0EZJ#F03.A0BZS`. After: invalid, `BR13`. Raw commodities cannot take `F03 physical state`. (Business Rules `BR13`)
 - Before: `A02LS#F27.A0EZJ`. After: invalid, `BR04`. A composite such as pizza must use `F04 ingredient` instead. (Business Rules `BR04`)
 
+## Relevant Policy
+
+- [[policy-contract]] `C01`, `C07`, and `C08` govern this page directly: determine the food type first, choose the matching origin-facet family, and avoid redundant explicit facets.
+- [[policy-contract]] Decision Procedure steps 1 and 3 are the main operational fit: classify the food type, then apply origin and tie-break rules before final code composition.
+
 ## Relevant Business Rules
 
 - `BR01`: raw-term `F27` must refine the source chain. See [[business-rules]].

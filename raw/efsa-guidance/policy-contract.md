@@ -123,3 +123,13 @@ These are the practical ground rules the solver should always keep in view:
 - Code syntax is `base#facetType.code($facetType2.code2...)`.
 - The full facet string must stay within the SSD2 limit of 256 characters.
 - Carry monitoring flags from the base term unchanged.
+
+## Relevant Policy
+
+- This page is itself the policy layer. Apply it before the ordinary guidance pages whenever a solver or coder needs decision order rather than only background knowledge.
+- Read it in the order already defined here: constitution, decision procedure, binding rules, tie-break rules, then anti-patterns.
+
+## Relevant Business Rules
+
+- [[business-rules]] remains a narrower validator layer. It does not replace this page; it checks whether the chosen construction violates `BRxx` constraints after the policy has been applied.
+- The most common handoff points are reportability and hierarchy issues (`BR08`, `BR23`, `BR24`), facet/cardinality checks (`BR25`), and structural validity (`BR29-BR31`).

@@ -54,3 +54,15 @@ last_updated: "2026-04-08"
 - Before: `fresh sage`. After: `A00YH#F28.A0C0S`. Fresh spices can use `unprocessed` because dried is often default; this is the same "only add what is not implicit" rule described in [[implicit-vs-explicit-facets]]. (EFSA guidance p42)
 - Before: `candied citrus peel, chocolate-coated`. After: `A01PS#F04.A034G$F27.A01QE$F28.A07HP`. Add `F28.A07HP` for the coating. (EFSA guidance p56)
 - Before: `dried kangaroo meat`. After: `A04MP#F01.A0F2G$F26.A07XE`. Drying is implicit in `A04MP`, so no `F28.A07KG` is added; the derivative-base choice comes from [[base-term-selection]]. (EFSA guidance p49)
+
+## Relevant Policy
+
+- [[policy-contract]] `C03`, `C04`, and `C08` govern this page directly: prefer derivative bases when a standard processed group exists, do not restate implicit processes, and add only process detail that contributes new information.
+- [[policy-contract]] `R-DERIV-001`, `R-PROC-001`, `R-PROC-002`, `TB-001`, and `AP-001` cover the main decision pattern here: raw plus `F28` is not an acceptable reconstruction when the derivative base already exists, and explicit processes must respect implicit/detail ordering.
+
+## Relevant Business Rules
+
+- `BR11`: generic process descriptors are weak and should be replaced with more specific process terms when possible. See [[business-rules]].
+- `BR16`: explicit processes cannot be broader than implicit ones. See [[business-rules]].
+- `BR19`: derivative-creating processes are not allowed on raw bases. See [[business-rules]].
+- `BR26`, `BR27`, and `BR28`: process ordinal conflicts and reconstitution restrictions. See [[business-rules]].

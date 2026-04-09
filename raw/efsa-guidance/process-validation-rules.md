@@ -42,6 +42,11 @@ last_updated: "2026-04-08"
 - Before: cereal grains + flaking process on a raw base. After: invalid, `BR19`; use the flaked cereal derivative. (Business Rules `BR19`)
 - Before: one derivative with two `F28` codes from the same ordinal family. After: invalid, `BR26` or `BR27`, depending on whether the conflict is integer-level or decimal-level. (Business Rules `BR26-BR27`)
 
+## Relevant Policy
+
+- [[policy-contract]] `C03`, `C04`, and `C08` explain the policy side of these checks: do not rebuild derivative foods from raw plus `F28`, do not repeat implicit process, and keep only justified explicit process detail.
+- [[policy-contract]] `R-PROC-001`, `R-PROC-002`, and `AP-001` are the nearest policy rules: process choices must respect ordinal grouping, implicit specificity, and the ban on raw-plus-`F28` reconstruction of standard derivatives.
+
 ## Relevant Business Rules
 
 - `BR16`: explicit process detail cannot be broader than the implicit process. See [[business-rules]].

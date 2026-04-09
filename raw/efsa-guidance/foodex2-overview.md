@@ -51,3 +51,13 @@ last_updated: "2026-04-05"
 - Before: `orange nectar`. After: `A03BG`. A valid FoodEx2 code can be only the base term when no extra detail is needed. (EFSA guidance p40)
 - Before: `orange nectar, calcium-fortified, sugar free, organic`. After: `A03BG#F09.A0EXH$F10.A077L$F21.A07SE`. The same base term becomes more specific through added facets. (EFSA guidance p40)
 - Before: `quinoa flour` when no dedicated term exists. After: `A04KS#F27.A000R$F26.A07XE`. Use the nearest generic base term plus facets to recover the missing specificity. See [[base-term-selection]]. (Training p6)
+
+## Relevant Policy
+
+- [[policy-contract]] `C01`, `C02`, and `C06` provide the worldview behind this page: determine food type first, evaluate specificity within that type, and avoid hierarchy terms as coding bases.
+- [[policy-contract]] `C05` matters here as well: the examples in this overview orient the reader, but the binding decision order still comes from the policy layer and the more specific operational pages.
+
+## Relevant Business Rules
+
+- No single `BRxx` rule governs this overview page.
+- When this overview leads to a concrete coding or validation question, continue with [[business-rules]] and the more specific operational pages rather than treating the overview itself as a validator rule source.

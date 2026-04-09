@@ -31,3 +31,14 @@ last_updated: "2026-04-05"
 - Before: `orange nectar`. After: `A03BG`. Valid because the base term stands alone. (EFSA guidance p40)
 - Before: `orange nectar, calcium-fortified, sugar free, organic`. After: `A03BG#F09.A0EXH$F10.A077L$F21.A07SE`. `A03BG` is the base term; each facet segment starts with `Fxx.` and is separated by `$`. (EFSA guidance p40)
 - Before: `candied citrus peel, chocolate-coated`. After: `A01PS#F04.A034G$F27.A01QE$F28.A07HP`. This shows a base term plus three distinct facet descriptors. (EFSA guidance p56)
+
+## Relevant Policy
+
+- [[policy-contract]] `R-SYNTAX-001` and `R-LENGTH-001` govern this page directly: final codes must use the canonical `base#facetType.code($facetType2.code2...)` syntax and stay within the SSD2 length limit.
+- [[policy-contract]] Decision Procedure step 5 is where this page applies. Syntax is checked after the coding choice has been made but before the result is accepted as complete.
+
+## Relevant Business Rules
+
+- `BR29`: code structure must be valid. See [[business-rules]].
+- `BR30`: facet category must exist. See [[business-rules]].
+- `BR31`: descriptor must belong to the chosen facet hierarchy. See [[business-rules]].

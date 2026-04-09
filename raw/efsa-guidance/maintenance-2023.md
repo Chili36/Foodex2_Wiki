@@ -27,3 +27,13 @@ last_updated: "2026-04-05"
 ## Release Context
 
 - Covers MTX 14.1, 14.2, 14.3, 14.4 and the January 2024 major release MTX 15.0. (2023 maintenance p4)
+
+## Relevant Policy
+
+- [[policy-contract]] `C05` applies directly: historical examples and older catalogue states do not override higher-priority current policy rules.
+- [[policy-contract]] `C09` matters here as well: maintenance pages help explain current scope notes, term placement, and catalogue fit before a candidate is selected.
+
+## Relevant Business Rules
+
+- No single `BRxx` rule governs this historical page by itself.
+- Use [[business-rules]] when a maintenance change affects reportability, deprecation, dismissal, hierarchy use, or facet applicability, especially `BR08`, `BR20`, `BR21`, `BR23`, and `BR24`.

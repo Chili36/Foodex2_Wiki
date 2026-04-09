@@ -40,3 +40,14 @@ last_updated: "2026-04-08"
 - Before: `orange nectar`. After: `A03BG`. No extra facets are needed when the base term already captures the intended level of detail. (EFSA guidance p40)
 - Before: `orange nectar, calcium-fortified, sugar free, organic`. After: `A03BG#F09.A0EXH$F10.A077L$F21.A07SE`. Add only the extra descriptors that are not implicit in `A03BG`. (EFSA guidance p40)
 - Before: `cow hair sample` in VMPR. After: `A0C60#F02.A0ESP$F01.A057E`. In this special domain case, explicit `F02` and `F01` are required because the base term is intentionally generic. (ChemMon 2026 p36)
+
+## Relevant Policy
+
+- [[policy-contract]] `C07` and `C08` are the main policy layer for this page: pick the facet family that matches the chosen food type and add only information that is not already implicit in the base term.
+- [[policy-contract]] `R-FACET-001` and `R-DESC-001` explain the main coding discipline here: remove redundant explicit detail, but keep descriptive facets such as `F10` and `F21` when they add real information.
+
+## Relevant Business Rules
+
+- `BR12`: `F04` on raw or derivative terms is limited to minor added ingredients. See [[business-rules]].
+- `BR25`: single-cardinality facet families can only appear once. See [[business-rules]].
+- `BR30` and `BR31`: every explicit facet must use a valid category and a descriptor that belongs to that category. See [[business-rules]].

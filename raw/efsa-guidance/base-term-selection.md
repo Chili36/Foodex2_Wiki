@@ -40,3 +40,15 @@ last_updated: "2026-04-08"
 - Before: `kangaroo fresh fat tissue`. After: `A0F3G#F01.A0F2G$F26.A07XE`. Generic raw base term plus `F01` because the detailed commodity is missing but the source exists. (EFSA guidance p48)
 - Before: `quinoa flour`. After: `A04KS#F26.A07XE$F27.A000R`. Generic derivative base term plus `F27` because the detailed derivative is missing but the source raw commodity exists. (EFSA guidance p48; Training p6)
 - Before: `mixed vegetable salad` with balanced different-nature ingredients. After: `A042D#F04.A00QH$F04.A015L$F04.A00KV$F04.A00LN$F04.A00LB$F04.A00LG`. Because no single nature dominates, the starting point becomes a composite salad term. (EFSA guidance p50)
+
+## Relevant Policy
+
+- [[policy-contract]] `C01`, `C02`, `C03`, `C06`, and `C09` govern this page directly: determine food type first, read scope notes, prefer reportable non-hierarchy terms, and apply specificity only within the selected food type.
+- [[policy-contract]] Decision Procedure steps 1 to 3 are the operative order here: classify the food, compare candidates within that type, then resolve origin and tie-break questions before composing facets.
+
+## Relevant Business Rules
+
+- `BR08`: the selected base term must be reportable. See [[business-rules]].
+- `BR10`: non-specific base terms are only weak fallbacks when a more precise reportable term exists. See [[business-rules]].
+- `BR19`: derivative-creating processes on raw bases are not an acceptable fallback when the derivative group exists. See [[business-rules]].
+- `BR23` and `BR24`: hierarchy terms are discouraged or invalid as coding bases, depending on hierarchy/reporting status. See [[business-rules]].

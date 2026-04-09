@@ -208,3 +208,13 @@ Use it for two jobs:
 - Add a short `Relevant Business Rules` section to that page.
 - Link each referenced rule back to this page.
 - Do not add rules just because they are nearby; link the rules that materially constrain the page's decisions.
+
+## Relevant Policy
+
+- [[policy-contract]] supplies decision order; use the policy layer first to determine food type, base-term class, and facet strategy before treating a case as a validator question.
+- Keep the authority split explicit: policy tells the solver how to decide, while this page states which constructions are blocked, invalid, or merely advisory once that decision is expressed as a code.
+
+## Relevant Business Rules
+
+- This page is the canonical wiki index for `BR01-BR31`.
+- Other pages should backlink only the `BRxx` rules that materially constrain their topic; do not treat every page as governed by every business rule.

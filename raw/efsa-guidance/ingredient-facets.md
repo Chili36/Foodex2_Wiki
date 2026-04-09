@@ -38,3 +38,14 @@ last_updated: "2026-04-08"
 - Before: `asparagus risotto`. After: `A041F#F04.A00RT`. A composite base term plus one characterising ingredient. (EFSA guidance p56)
 - Before: `mixed leaf salad` with small amounts of carrots and sunflower seeds. After: `A00KR#F04.A00QH$F04.A015L$F27.A00KV$F27.A00LN$F27.A00LB$F27.A00LG`. Same-nature leafy components use `F27`; minor foreign components use `F04`. (EFSA guidance p50)
 - Before: `candied citrus peel, chocolate-coated`. After: `A01PS#F04.A034G$F27.A01QE$F28.A07HP`. `F04` records the minor ingredient `chocolate`; `F27` keeps the citrus-peel source commodity. (EFSA guidance p56)
+
+## Relevant Policy
+
+- [[policy-contract]] `C07` is the main policy hook for this page: composites use `F04` for characterising ingredients, while derivatives use `F27` for constitutive source and may use `F04` only for later-added minor ingredients.
+- [[policy-contract]] `R-ORIGIN-001` and `R-ORIGIN-002` keep derivative source logic and composite ingredient logic separate.
+- [[policy-contract]] `C08` still applies: add ingredient facets only when they materially improve the description.
+
+## Relevant Business Rules
+
+- `BR03` and `BR04`: composites cannot use `F01` or `F27`. See [[business-rules]].
+- `BR12`: `F04` on raw or derivative terms is limited to minor added ingredients. See [[business-rules]].
