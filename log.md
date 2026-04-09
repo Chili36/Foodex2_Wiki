@@ -145,3 +145,10 @@ last_updated: "2026-04-08"
 
 - Added `foodex2_docs/business_rules.md` as a cleaned source-layer markdown version of the validator's `BR01-BR31` rule set.
 - Kept the content source-oriented and comprehensive, but stripped repeated severity boilerplate and formatting noise so future wiki ingests can work from a denser validator-policy artifact.
+
+## [2026-04-09] maintenance | Add canonical business-rules wiki page and BR backlink workflow
+
+- Added `raw/efsa-guidance/business-rules.md` as the canonical wiki target for `BR01`-`BR31`.
+- Updated `index.md` so the validation layer now exposes that page directly.
+- Updated `INGEST_WORKFLOW.md` to make business-rule backlinking mandatory for operational pages during ingest.
+- Seeded `Relevant Business Rules` sections on the main validation pages so the pattern exists in the wiki itself, not just in process docs.

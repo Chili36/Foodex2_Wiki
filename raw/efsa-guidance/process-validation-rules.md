@@ -5,6 +5,7 @@ sources:
   - "BUSINESS-RULES-COMPACT.json"
   - "docs/VALIDATION_RULES_SUMMARY.md"
 related:
+  - "[[business-rules]]"
   - "[[process-facets]]"
   - "[[term-type-facet-constraints]]"
   - "[[validation-rules]]"
@@ -40,3 +41,10 @@ last_updated: "2026-04-08"
 - Before: dried fruit base + a broader preserving facet. After: invalid, `BR16`, because the explicit process is less detailed than the implicit one. (Business Rules `BR16`)
 - Before: cereal grains + flaking process on a raw base. After: invalid, `BR19`; use the flaked cereal derivative. (Business Rules `BR19`)
 - Before: one derivative with two `F28` codes from the same ordinal family. After: invalid, `BR26` or `BR27`, depending on whether the conflict is integer-level or decimal-level. (Business Rules `BR26-BR27`)
+
+## Relevant Business Rules
+
+- `BR16`: explicit process detail cannot be broader than the implicit process. See [[business-rules]].
+- `BR19`: forbidden derivative-creating processes on raw commodities. See [[business-rules]].
+- `BR26` and `BR27`: process ordinal conflicts. See [[business-rules]].
+- `BR28`: reconstitution restrictions on dried, powdered, or concentrated products. See [[business-rules]].

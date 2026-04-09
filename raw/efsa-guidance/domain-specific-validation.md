@@ -5,6 +5,7 @@ sources:
   - "docs/CONTEXT_SPECIFIC_RULES.md"
   - "BUSINESS-RULES-COMPACT.json"
 related:
+  - "[[business-rules]]"
   - "[[chemical-monitoring-foodex2]]"
   - "[[facet-coding-rules]]"
   - "[[validation-rules]]"
@@ -42,3 +43,8 @@ last_updated: "2026-04-05"
 - Before: processed VMPR sample with no explicit `F01`. After: invalid in that domain, even if the animal source feels inferable. (Domain Specific Rules VMPR-RPC)
 - Before: food additive sample with no `F33`. After: invalid for additives monitoring; the legislative category is mandatory. (Domain Specific Rules Additives)
 - Before: acrylamide result on french fries (`A0BYV`) with no `F33`. After: `A0BYV#F33.A169H`. CHEMMON12 requires the acrylamide legislative class even though `A0BYV` may carry an implicit `F33`. (ChemMon 2026; CHEMMON12)
+
+## Relevant Business Rules
+
+- `BR14` and `BR15`: context-specific validation paths such as ICT / DCF. See [[business-rules]].
+- Domain overlays here should still be read alongside the core `BRxx` validator rules. Use [[business-rules]] as the canonical rule index when a domain case activates validation constraints.

@@ -37,6 +37,7 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 
 ## Validation Layer
 
+- [business-rules.md](raw/efsa-guidance/business-rules.md): Canonical wiki target for `BR01`-`BR31`, used for page-level business-rule backlinks during ingest and retrieval.
 - [validation-rules.md](raw/efsa-guidance/validation-rules.md): Overview of the validator's two-layer model, severities, and the most important blocking rules.
 - [structural-validation.md](raw/efsa-guidance/structural-validation.md): Syntax, descriptor existence, implicit-facet cleanup, duplicates, and single-cardinality checks.
 - [term-type-facet-constraints.md](raw/efsa-guidance/term-type-facet-constraints.md): Allowed and forbidden facets by FoodEx2 term type.

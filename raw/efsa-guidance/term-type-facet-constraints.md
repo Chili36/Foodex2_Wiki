@@ -7,6 +7,7 @@ sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
 related:
   - "[[base-term-selection]]"
+  - "[[business-rules]]"
   - "[[facet-coding-rules]]"
   - "[[validation-rules]]"
   - "[[process-validation-rules]]"
@@ -41,3 +42,12 @@ last_updated: "2026-04-08"
 - Before: raw commodity + `F28.A07KQ` freezing. After: valid when the process is allowed for that raw term. (Compact JSON validation examples; `BR19`)
 - Before: `A0EZJ#F03.A0BZS`. After: invalid, `BR13`. Raw commodities cannot take `F03 physical state`. (Business Rules `BR13`)
 - Before: `A02LS#F27.A0EZJ`. After: invalid, `BR04`. A composite such as pizza must use `F04 ingredient` instead. (Business Rules `BR04`)
+
+## Relevant Business Rules
+
+- `BR01`: raw-term `F27` must refine the source chain. See [[business-rules]].
+- `BR03` and `BR04`: composites cannot use `F01` or `F27`. See [[business-rules]].
+- `BR05`, `BR06`, and `BR07`: derivative source and `F01` restrictions. See [[business-rules]].
+- `BR12`: `F04` on raw or derivative terms is minor-ingredient only. See [[business-rules]].
+- `BR13`: `F03` creates derivatives and is not allowed on raw commodities. See [[business-rules]].
+- `BR17`, `BR23`, and `BR24`: facet terms and hierarchy terms should not win as base terms. See [[business-rules]].

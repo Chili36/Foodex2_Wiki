@@ -5,6 +5,7 @@ sources:
   - "BUSINESS-RULES-COMPACT.json"
   - "docs/VALIDATION_RULES_SUMMARY.md"
 related:
+  - "[[business-rules]]"
   - "[[structural-validation]]"
   - "[[term-type-facet-constraints]]"
   - "[[process-validation-rules]]"
@@ -40,6 +41,13 @@ last_updated: "2026-04-05"
 - `BR17`: a facet term can never be the base term. (Business Rules `BR17`)
 - `BR20` and `BR21`: deprecated and dismissed terms are always invalid, even if the code string is well formed. (Business Rules `BR20-BR21`)
 - `BR29-BR31`: the code must use valid syntax, a real facet category, and a descriptor that belongs to that category. See [[structural-validation]]. (Business Rules `BR29-BR31`)
+
+## Relevant Business Rules
+
+- `BR03` and `BR04`: composites cannot use `F01` or `F27`. See [[business-rules]].
+- `BR17`: facet terms cannot be coding bases. See [[business-rules]].
+- `BR20` and `BR21`: deprecated or dismissed terms are invalid. See [[business-rules]].
+- `BR29`, `BR30`, and `BR31`: syntax, facet-category, and descriptor-membership checks. See [[business-rules]].
 
 <!-- Source: docs/VALIDATION_RULES_SUMMARY.md Quick Reference Table; BUSINESS-RULES.md Validation Examples -->
 ## Worked Examples

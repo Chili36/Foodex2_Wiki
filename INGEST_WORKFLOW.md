@@ -109,6 +109,34 @@ Preferred page shape:
 
 If a page starts becoming a second document dump, split it.
 
+## 6. Always Check Relevant Business Rules
+
+For every operational page, explicitly ask:
+
+- Which `BRxx` rules govern this topic?
+- Which of those rules are central enough to deserve a backlink from this page?
+
+This is mandatory for ingest and maintenance passes touching:
+
+- base-term pages
+- facet pages
+- validation pages
+- domain overlay pages
+
+Preferred pattern inside the page:
+
+```md
+## Relevant Business Rules
+
+- `BR03`: composites cannot use `F01`
+- `BR04`: composites cannot use `F27`
+- `BR12`: `F04` on raw/derivative terms is minor-ingredient only
+```
+
+Those rule references should link back to [[business-rules]] as the canonical wiki target for validator rules.
+
+Do not force irrelevant rules onto a page. The point is not to maximize tags; the point is to make the governing constraints explicit.
+
 # Page Writing Heuristics
 
 ## Write For Reuse
@@ -216,6 +244,7 @@ The log should capture:
 - what changed
 - why it changed
 - what source triggered it
+- which business rules became newly relevant, if that was part of the pass
 
 # How To Know An Ingest Is "Good Enough"
 
