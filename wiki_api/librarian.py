@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import logging
 import os
 from dataclasses import dataclass
 from pathlib import Path
@@ -16,6 +17,7 @@ from .wiki_store import WikiStore
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(REPO_ROOT / ".env")
+logger = logging.getLogger("wiki_api.prompts")
 
 
 READ_WIKI_PAGES_TOOL = {
@@ -44,24 +46,17 @@ TOOLS = [READ_WIKI_PAGES_TOOL]
 
 SELECTION_SYSTEM_PROMPT = """You are the FoodEx2 wiki page selector.
 
-Your only job is to choose which wiki pages should be returned as context for the current coding case.
+Your only job is to choose which wiki pages should be returned as context for the current coding case so another model can create the correct FoodEx2 code.
 
 Rules:
 - The full catalog from `index.md` is already provided in the user message.
-- Use that catalog first to decide which pages matter.
-- Use the query, deconstructed query, and candidate list together. The candidate list is not just extra text; it contains signals about term types, domain context, and likely decision conflicts.
+- Use the query, deconstructed query, candidate list, and index together.
+- Return only the pages needed for this case.
+- Prefer pages that resolve food type, process, facet legality, domain rules, ingredients, or packaging when those signals appear.
 - Do not request `index.md` again.
 - Do not solve the FoodEx2 coding task.
-- Do not summarize or rewrite the rules from the wiki.
-- Request the minimal set of non-index pages needed for this case.
-- When possible, request all needed pages in a single `read_wiki_pages` call.
-- If the candidates or context suggest VMPR, VETDRUG, legislative monitoring, additives, acrylamide, or other reporting-domain constraints, include the relevant domain pages such as `domain-specific-validation.md` and `chemical-monitoring-foodex2.md`.
-- If the candidates show a likely raw-vs-derivative boundary, processed-term ambiguity, or F28 legality question, include `process-validation-rules.md` and the base-term/process pages that resolve it.
-- If the candidates or query indicate composite-food or ingredient-characterisation questions, include `ingredient-facets.md`.
-- If the candidates or query indicate term-type restrictions, source-vs-ingredient ambiguity, or legality of specific facet families, include `term-type-facet-constraints.md` and `implicit-vs-explicit-facets.md`.
-- If packaging or container wording appears in the query or candidates, include `packaging-facets.md`.
-- Prefer pages whose index summaries clearly match the case signals; do not ignore strong candidate-side evidence just because the user query is short.
-- You may request at most 5 non-index pages.
+- Do not summarize or rewrite the wiki.
+- Request at most 5 non-index pages.
 - If no additional pages are needed, return JSON only: {"page_names": []}
 """
 
@@ -302,6 +297,29 @@ def _aggregate_timing(timings: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
+def _log_prompt(
+    kind: str,
+    *,
+    model: str,
+    system: str,
+    messages: list[dict[str, Any]],
+    max_tokens: int,
+) -> None:
+    logger.info(
+        "%s_prompt %s",
+        kind,
+        json.dumps(
+            {
+                "model": model,
+                "max_tokens": max_tokens,
+                "system": system,
+                "messages": messages,
+            },
+            ensure_ascii=False,
+        ),
+    )
+
+
 def _read_pages_payload(
     *,
     store: WikiStore,
@@ -473,6 +491,13 @@ class AnthropicWikiLibrarian:
 
         while True:
             llm_started = time.perf_counter()
+            _log_prompt(
+                "policy_pack",
+                model=self.model,
+                system=POLICY_PACK_SYSTEM_PROMPT,
+                messages=messages,
+                max_tokens=self.max_tokens,
+            )
             response = self.client.messages.create(
                 model=self.model,
                 max_tokens=self.max_tokens,
@@ -564,24 +589,32 @@ class AnthropicWikiPageSelector:
     def run(self, payload: dict[str, Any]) -> PageSelectionResult:
         selector_started = time.perf_counter()
         index_content = self.store.read_page("index.md").content
+        messages = [
+            {
+                "role": "user",
+                "content": json.dumps(
+                    {
+                        "case": payload,
+                        "wiki_index": index_content,
+                    },
+                    ensure_ascii=False,
+                ),
+            }
+        ]
         llm_started = time.perf_counter()
+        _log_prompt(
+            "context_pack",
+            model=self.model,
+            system=SELECTION_SYSTEM_PROMPT,
+            messages=messages,
+            max_tokens=self.max_tokens,
+        )
         response = self.client.messages.create(
             model=self.model,
             max_tokens=self.max_tokens,
             system=SELECTION_SYSTEM_PROMPT,
             tools=TOOLS,
-            messages=[
-                {
-                    "role": "user",
-                    "content": json.dumps(
-                        {
-                            "case": payload,
-                            "wiki_index": index_content,
-                        },
-                        ensure_ascii=False,
-                    ),
-                }
-            ],
+            messages=messages,
         )
         llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
         timing_trace = [
@@ -638,16 +671,24 @@ class AnthropicFoodEx2Solver:
     def run(self, payload: dict[str, Any]) -> SolverResult:
         solver_started = time.perf_counter()
         llm_started = time.perf_counter()
+        messages = [
+            {
+                "role": "user",
+                "content": json.dumps(payload, ensure_ascii=False),
+            }
+        ]
+        _log_prompt(
+            "solve",
+            model=self.model,
+            system=SOLVER_SYSTEM_PROMPT,
+            messages=messages,
+            max_tokens=self.max_tokens,
+        )
         response = self.client.messages.create(
             model=self.model,
             max_tokens=self.max_tokens,
             system=SOLVER_SYSTEM_PROMPT,
-            messages=[
-                {
-                    "role": "user",
-                    "content": json.dumps(payload, ensure_ascii=False),
-                }
-            ],
+            messages=messages,
         )
         llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
         timing_trace = [
