@@ -8,29 +8,18 @@ related:
   - "[[base-term-selection]]"
   - "[[process-facets]]"
   - "[[implicit-vs-explicit-facets]]"
-last_updated: "2026-04-08"
+last_updated: "2026-04-09"
 ---
 
 # Policy Contract
 
-This page is the small always-on policy layer for the FoodEx2 wiki service.
+Apply this page before the other wiki pages.
 
-It is intentionally separate from the ordinary guidance pages:
+Use it to decide:
 
-- the guidance pages explain FoodEx2
-- this page states the decision order that the solver must follow
-
-The API reads this page and exposes its rule sections as the machine-readable `policy_contract`, but the visible markdown body is the canonical source of truth.
-
-## What This Is For
-
-- Make rule priority explicit.
-- Prevent the solver from treating all retrieved guidance as a flat bag of considerations.
-- Preserve a thin solver prompt by keeping the policy source in the knowledge base rather than in service code.
-
-## Policy Version
-
-`2026-04-08-v0.4`
+- the order in which rules should be applied
+- which rules are binding
+- which tie-breaks win when multiple candidates look plausible
 
 ## Reading Order
 
@@ -42,7 +31,11 @@ Apply this page in the following order:
 4. Tie-break rules
 5. Anti-patterns
 
-The ordinary wiki pages remain the supporting knowledge layer under this policy.
+Use the ordinary wiki pages as supporting evidence under this policy.
+
+## Policy Version
+
+`2026-04-08-v0.4`
 
 ## Constitution
 

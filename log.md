@@ -158,3 +158,8 @@ last_updated: "2026-04-08"
 - Added `Relevant Policy` sections across the full `raw/efsa-guidance/` set so every page now states which parts of `policy-contract.md` actually govern its use.
 - Expanded `Relevant Business Rules` coverage across the full page set, including explicit "no single BRxx governs this page" language on conceptual and historical pages where that is the honest answer.
 - Updated `INGEST_WORKFLOW.md` so future ingests must backfill both policy and business-rule relevance, not just validator-rule backlinks on operational pages.
+
+## [2026-04-09] maintenance | Make the policy page prompt-first
+
+- Removed service-layer and machine-readable framing from the top of `raw/efsa-guidance/policy-contract.md` so the first tokens seen by a downstream model are operational instructions rather than implementation notes.
+- Kept the parseable policy sections intact so the API can still extract the policy contract while the visible markdown stays cleaner and more prompt-efficient.
