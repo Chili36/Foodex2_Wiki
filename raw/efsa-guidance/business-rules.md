@@ -211,8 +211,8 @@ Use it for two jobs:
 
 ## Relevant Policy
 
-- [[policy-contract]] supplies decision order; use the policy layer first to determine food type, base-term class, and facet strategy before treating a case as a validator question.
-- Keep the authority split explicit: policy tells the solver how to decide, while this page states which constructions are blocked, invalid, or merely advisory once that decision is expressed as a code.
+- [[policy-contract]] is not an independent rulebook. It is the solver-facing execution order distilled from this page plus the ordinary guidance pages.
+- When a policy item cites a `BRxx` rule from this page, treat the `BRxx` rule as the controlling authority and the policy item as an application-order shortcut for the solver.
 
 ## Relevant Business Rules
 

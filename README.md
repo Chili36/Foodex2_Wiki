@@ -149,7 +149,7 @@ Main endpoints:
 Endpoint-specific request guidance:
 
 - `POST /wiki/context-pack`: prefer `candidate_hints` with only `code`, `name`, and `termType`
-- `POST /wiki/policy-pack`: prefer `candidates_trimmed` with `code`, `name`, `termType`, optional `scopeNote`, and optional `implicitFacets`
+- `POST /wiki/policy-pack`: prefer `candidates_trimmed` with `code`, `name`, `termType`, optional `coverageText`, and optional `implicitFacets`
 - `POST /wiki/solve`: send the full `candidates` list because this endpoint makes the final coding decision
 
 Legacy compatibility:
@@ -199,7 +199,7 @@ Example `POST /wiki/policy-pack` body:
       "code": "A044C",
       "name": "Tomato-containing cooked sauces",
       "termType": "s",
-      "scopeNote": "...",
+      "coverageText": "...",
       "implicitFacets": [
         {"facetType": "F04", "facetCode": "A0DMX", "facetMeaning": "Tomatoes"}
       ]

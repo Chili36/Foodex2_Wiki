@@ -21,7 +21,7 @@ last_updated: "2026-04-05"
 ## Structural Changes
 
 - Mapped FoodEx2 to legacy FoodEx via the implicit attribute `foodexOldCode`. (2016-2018 maintenance p3, p17)
-- Performed a major revision of implicit facets and scope notes. (2016-2018 maintenance p3, p17-19)
+- Performed a major revision of implicit facets and candidate-coverage notes. (2016-2018 maintenance p3, p17-19)
 - Added LanguaL mappings to facet terms and created the non-reportable `FeedAddExpo` hierarchy to support feed-additive exposure work. (2016-2018 maintenance p3, p19)
 
 ## Why It Matters
@@ -31,7 +31,7 @@ last_updated: "2026-04-05"
 ## Relevant Policy
 
 - [[policy-contract]] `C05` applies directly: historical examples and older catalogue states do not override higher-priority current policy rules.
-- [[policy-contract]] `C09` matters here as well: maintenance pages help explain current scope notes, term placement, and catalogue fit before a candidate is selected.
+- [[policy-contract]] `C09` matters here as well: maintenance pages help explain current candidate coverage, term placement, and catalogue fit before a candidate is selected.
 
 ## Relevant Business Rules
 

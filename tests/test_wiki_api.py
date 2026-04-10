@@ -304,9 +304,10 @@ def test_policy_pack_uses_librarian_response() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
-    assert payload["policy_contract"]["policy_version"] == "2026-04-08-v0.4"
+    assert payload["policy_contract"]["policy_version"] == "2026-04-09-v0.5"
     assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["policy_contract"]["anti_patterns"][0]["id"] == "AP-001"
+    assert "business-rules.md BR19" in payload["policy_contract"]["binding_rules"][0]["derived_from"]
     assert payload["guiding_principles"][1].startswith("FoodEx2 is built top-down.")
     assert payload["pages_used"] == [
         "policy-contract.md",
@@ -330,7 +331,7 @@ def test_policy_pack_uses_librarian_response() -> None:
             "code": "A044C",
             "name": "Tomato-containing cooked sauces",
             "termType": "s",
-            "scopeNote": "noisy legacy field that should be reduced",
+            "coverageText": "noisy legacy field that should be reduced",
             "implicitFacets": [{"facetType": "F04", "facetCode": "A0DMX", "facetMeaning": "Tomatoes"}],
         },
         {"code": "A07NN", "name": "Jar", "termType": "f"},
@@ -362,7 +363,7 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
-    assert payload["policy_contract"]["policy_version"] == "2026-04-08-v0.4"
+    assert payload["policy_contract"]["policy_version"] == "2026-04-09-v0.5"
     assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["guiding_principles"][2].startswith("FoodEx2 prefers modular description")
     assert payload["pages_used"] == [
@@ -383,6 +384,36 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert payload["pages"][0]["page_name"] == "policy-contract.md"
     assert app_module.selector_runner.calls[0]["candidates"] == [
         {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"}
+    ]
+
+
+def test_policy_pack_accepts_legacy_scope_note_but_normalizes_to_coverage_text() -> None:
+    response = request(
+        "POST",
+        "/wiki/policy-pack",
+        json={
+            "search_term": "Tomato basil and garlic sauce in a glass jar",
+            "deconstructed_query": {},
+            "candidates_trimmed": [
+                {
+                    "code": "A044C",
+                    "name": "Tomato-containing cooked sauces",
+                    "termType": "s",
+                    "scopeNote": "legacy candidate scope note",
+                }
+            ],
+            "context": {},
+        },
+    )
+    assert response.status_code == 200
+    assert app_module.librarian_runner.calls[0]["candidates"] == [
+        {
+            "code": "A044C",
+            "name": "Tomato-containing cooked sauces",
+            "termType": "s",
+            "coverageText": "legacy candidate scope note",
+            "implicitFacets": [],
+        }
     ]
 
 
@@ -427,7 +458,7 @@ def test_solve_returns_final_code_and_stage_traces() -> None:
     )
     assert response.status_code == 200
     payload = response.json()
-    assert payload["policy_contract"]["policy_version"] == "2026-04-08-v0.4"
+    assert payload["policy_contract"]["policy_version"] == "2026-04-09-v0.5"
     assert payload["solution"]["constructedCode"] == "A044C#F04.A00VV$F04.A00GZ$F18.A07NN$F19.A07PF"
     assert payload["solution"]["validationCheck"]["passes"] is True
     assert payload["solution"]["confidence"] == 5
@@ -486,12 +517,18 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     context_props = payload["components"]["schemas"]["ContextPackRequest"]["properties"]
     policy_props = payload["components"]["schemas"]["PolicyPackRequest"]["properties"]
     solve_props = payload["components"]["schemas"]["SolveRequest"]["properties"]
+    trimmed_props = payload["components"]["schemas"]["CandidateTrimmed"]["properties"]
+    solve_candidate_props = payload["components"]["schemas"]["SolveCandidate"]["properties"]
 
     assert "candidate_hints" in context_props
     assert "candidates_trimmed" not in context_props
     assert "candidates_trimmed" in policy_props
     assert "candidate_hints" not in policy_props
     assert "candidates" in solve_props
+    assert "coverageText" in trimmed_props
+    assert "scopeNote" not in trimmed_props
+    assert "coverageText" in solve_candidate_props
+    assert "scopeNote" not in solve_candidate_props
     assert "policy_contract" in payload["components"]["schemas"]["ContextPackResponse"]["properties"]
     assert "policy_contract" in payload["components"]["schemas"]["PolicyPackResponse"]["properties"]
     assert "policy_contract" in payload["components"]["schemas"]["SolveResponse"]["properties"]
@@ -502,14 +539,19 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
 
     assert "`candidate_hints`" in context_description
     assert "`candidates_trimmed`" in policy_description
+    assert "`coverageText`" in policy_description
+    assert "`scopeNote`" not in policy_description
     assert "`candidates`" in solve_description
 
 
 def test_policy_contract_is_loaded_from_markdown_source() -> None:
     contract = build_policy_contract()
-    assert contract["policy_version"] == "2026-04-08-v0.4"
+    assert contract["policy_version"] == "2026-04-09-v0.5"
     assert contract["constitution"][0]["id"] == "C01"
     assert contract["decision_procedure"][0]["name"] == "determine_food_type"
     assert contract["anti_patterns"][0]["id"] == "AP-001"
     assert contract["binding_rules"][0]["id"] == "R-DERIV-001"
     assert contract["binding_rules"][8]["id"] == "R-DESC-001"
+    assert "business-rules.md BR19" in contract["constitution"][2]["derived_from"]
+    assert "execution-layer" in contract["constitution"][4]["derived_from"]
+    assert "business-rules.md BR25" in contract["binding_rules"][11]["derived_from"]
