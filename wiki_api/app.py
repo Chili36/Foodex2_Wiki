@@ -14,8 +14,8 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 from .librarian import (
     AnthropicFoodEx2Solver,
     AnthropicWikiLibrarian,
-    AnthropicWikiPageSelector,
 )
+from .context_selector import DeterministicContextSelector, RUNTIME_RULES_PAGE_NAME
 from .policy import build_policy_contract
 from .wiki_store import WikiStore
 
@@ -23,7 +23,7 @@ from .wiki_store import WikiStore
 REPO_ROOT = Path(__file__).resolve().parent.parent
 store = WikiStore(REPO_ROOT)
 librarian_runner: AnthropicWikiLibrarian | Any | None = None
-selector_runner: AnthropicWikiPageSelector | Any | None = None
+selector_runner: Any | None = None
 solver_runner: AnthropicFoodEx2Solver | Any | None = None
 logger = logging.getLogger("wiki_api")
 if not logging.getLogger().handlers:
@@ -37,10 +37,10 @@ def get_librarian_runner() -> AnthropicWikiLibrarian | Any:
     return librarian_runner
 
 
-def get_selector_runner() -> AnthropicWikiPageSelector | Any:
+def get_selector_runner() -> Any:
     global selector_runner
     if selector_runner is None:
-        selector_runner = AnthropicWikiPageSelector(store=store)
+        selector_runner = DeterministicContextSelector()
     return selector_runner
 
 
@@ -149,7 +149,7 @@ class ContextPackRequest(CommonRequestFields):
         default_factory=list,
         description=(
             "Legacy compatibility input. If provided, the service will internally reduce it to "
-            "candidate hints before calling the LLM selector."
+            "candidate hints before deterministic page selection."
         ),
         deprecated=True,
     )
@@ -389,19 +389,20 @@ def _normalize_solver_data(data: dict[str, Any]) -> dict[str, Any]:
 POLICY_PAGE_NAME = "policy-contract.md"
 
 
-def _ensure_policy_page(
+def _ensure_front_page(
+    front_page_name: str,
     pages_used: list[str],
     pages: list["PageSummary"],
     *,
     include_content: bool,
 ) -> tuple[list[str], list["PageSummary"]]:
-    """Ensure policy-contract.md is always included first in pages_used and pages."""
-    pages_used = [POLICY_PAGE_NAME, *[name for name in pages_used if name != POLICY_PAGE_NAME]]
+    """Ensure a given page is always included first in pages_used and pages."""
+    pages_used = [front_page_name, *[name for name in pages_used if name != front_page_name]]
 
     pages_by_name = {page.page_name: page for page in pages}
-    if POLICY_PAGE_NAME not in pages_by_name:
-        page = store.read_page(POLICY_PAGE_NAME)
-        pages_by_name[POLICY_PAGE_NAME] = PageSummary(
+    if front_page_name not in pages_by_name:
+        page = store.read_page(front_page_name)
+        pages_by_name[front_page_name] = PageSummary(
             page_name=page.name,
             title=page.title,
             summary=page.summary,
@@ -410,8 +411,8 @@ def _ensure_policy_page(
             content=store.clean_content_for_model(page) if include_content else None,
         )
 
-    ordered_pages: list[PageSummary] = [pages_by_name[POLICY_PAGE_NAME]]
-    ordered_pages.extend(page for page in pages if page.page_name != POLICY_PAGE_NAME)
+    ordered_pages: list[PageSummary] = [pages_by_name[front_page_name]]
+    ordered_pages.extend(page for page in pages if page.page_name != front_page_name)
     return pages_used, ordered_pages
 
 
@@ -559,7 +560,8 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
         )
         for page in [store.read_page(page_name) for page_name in librarian_result.data["pages_used"]]
     ]
-    final_pages_used, pages = _ensure_policy_page(
+    final_pages_used, pages = _ensure_front_page(
+        POLICY_PAGE_NAME,
         librarian_result.data["pages_used"], pages, include_content=request.include_page_content,
     )
     response = PolicyPackResponse(
@@ -609,10 +611,10 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
     response_model=ContextPackResponse,
     summary="Return selected wiki pages as raw context without synthesized rules",
     description=(
-        "Use this when the wiki service should only choose and return context pages. Preferred "
-        "request field: `candidate_hints`. Keep it minimal with only `code`, `name`, and "
-        "`termType`. Legacy full `candidates` input is still accepted, but the service reduces "
-        "it internally to candidate hints before the selector LLM call."
+        "Use this when the wiki service should deterministically choose and return prompt-ready "
+        "context pages. Preferred request field: `candidate_hints`. Keep it minimal with only "
+        "`code`, `name`, and `termType`. Legacy full `candidates` input is still accepted, but "
+        "the service reduces it internally to candidate hints before deterministic page selection."
     ),
 )
 def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
@@ -658,8 +660,11 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
         )
         for page in [store.read_page(page_name) for page_name in selection_result.pages_used]
     ]
-    final_pages_used, pages = _ensure_policy_page(
-        selection_result.pages_used, pages, include_content=request.include_page_content,
+    final_pages_used, pages = _ensure_front_page(
+        RUNTIME_RULES_PAGE_NAME,
+        selection_result.pages_used,
+        pages,
+        include_content=request.include_page_content,
     )
     response = ContextPackResponse(
         guiding_principles=store.guiding_principles(),
@@ -667,9 +672,9 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
         pages_used=final_pages_used,
         pages=pages,
         trace={
-            "index_used": True,
+            "index_used": False,
             "max_pages": request.max_pages,
-            "selection_method": "service-owned llm page selector",
+            "selection_method": "service-owned deterministic selector",
             "candidate_input_mode": candidate_input_mode,
             "tool_trace": selection_result.tool_trace,
             "token_summary": selection_result.token_summary,
@@ -779,7 +784,8 @@ def solve_foodex2(request: SolveRequest) -> SolveResponse:
         )
         for page in pages_raw
     ]
-    final_pages_used, pages = _ensure_policy_page(
+    final_pages_used, pages = _ensure_front_page(
+        POLICY_PAGE_NAME,
         librarian_result.data["pages_used"], pages, include_content=request.include_page_content,
     )
 

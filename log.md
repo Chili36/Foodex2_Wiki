@@ -1,6 +1,6 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-04-08"
+last_updated: "2026-04-10"
 ---
 
 # Log
@@ -163,3 +163,15 @@ last_updated: "2026-04-08"
 
 - Removed service-layer and machine-readable framing from the top of `raw/efsa-guidance/policy-contract.md` so the first tokens seen by a downstream model are operational instructions rather than implementation notes.
 - Kept the parseable policy sections intact so the API can still extract the policy contract while the visible markdown stays cleaner and more prompt-efficient.
+
+## [2026-04-10] maintenance | Add runtime and schema layer documents
+
+- Added `RUNTIME_RULES.md` as the compact prompt-facing rules file attached by `context-pack`.
+- Added `SCHEMA.md` to define page types, frontmatter fields, section conventions, and the practical layer model for the repo.
+- Updated `index.md` and `README.md` so the runtime layer and schema layer are visible as first-class parts of the knowledge base.
+
+## [2026-04-10] service | Make context-pack deterministic and runtime-first
+
+- Replaced the LLM-owned `context-pack` selector with a deterministic rules-based selector driven by query decomposition, candidate term types, and domain keywords.
+- Changed `context-pack` page ordering so `RUNTIME_RULES.md` is returned first instead of `policy-contract.md`.
+- Kept `policy-pack` and `solve` on the richer LLM-driven path, while adding retrieval tests for the deterministic alpha `context-pack` flow.

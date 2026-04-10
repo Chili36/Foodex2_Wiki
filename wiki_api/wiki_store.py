@@ -61,6 +61,9 @@ class WikiStore:
         self.root_docs: dict[str, Path] = {
             "README.md": self.root / "README.md",
             "PROJECT_CONTEXT.md": self.root / "PROJECT_CONTEXT.md",
+            "INGEST_WORKFLOW.md": self.root / "INGEST_WORKFLOW.md",
+            "SCHEMA.md": self.root / "SCHEMA.md",
+            "RUNTIME_RULES.md": self.root / "RUNTIME_RULES.md",
         }
 
     @cached_property
@@ -79,6 +82,15 @@ class WikiStore:
         summaries["README.md"] = "Repo overview, current status, directory layout, and working conventions."
         summaries["PROJECT_CONTEXT.md"] = (
             "What this wiki is for, why it exists, and the LLM-wiki operating model behind it."
+        )
+        summaries["INGEST_WORKFLOW.md"] = (
+            "Practical playbook for turning raw PDFs into stable topic pages."
+        )
+        summaries["SCHEMA.md"] = (
+            "Page types, frontmatter fields, section conventions, and ingest schema for the FoodEx2 wiki."
+        )
+        summaries["RUNTIME_RULES.md"] = (
+            "Compact prompt-facing rules file attached by context-pack before supporting guidance pages."
         )
         return summaries
 

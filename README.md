@@ -21,8 +21,8 @@ This project is now at an early alpha stage.
 The main thing that is considered stable enough to try is the simple `context-pack` flow:
 
 1. a caller sends a query, optional deconstructed query, and lightweight candidate hints
-2. the wiki API selects a small set of relevant pages
-3. the API returns those pages as text, with the policy page first
+2. the wiki API deterministically selects a small set of relevant pages
+3. the API returns those pages as text, with the runtime rules page first
 4. the caller packs that text into its own downstream prompt
 
 The current focus is not "wiki-owned solving". The current focus is prompt context delivery.
@@ -64,6 +64,8 @@ The current wiki pages include:
 Added since initial bootstrap:
 
 - A formal ingest workflow document in [INGEST_WORKFLOW.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/INGEST_WORKFLOW.md)
+- A schema document in [SCHEMA.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/SCHEMA.md)
+- A compact runtime rules file in [RUNTIME_RULES.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/RUNTIME_RULES.md)
 
 ## Alpha Architecture
 
@@ -79,8 +81,8 @@ At the moment, the simplest and most important runtime path is:
 ```mermaid
 flowchart LR
     A["Caller (for example DMT)"] --> B["POST /wiki/context-pack"]
-    B --> C["Wiki page selector"]
-    C --> D["index.md + policy-contract.md + selected pages"]
+    B --> C["Deterministic selector"]
+    C --> D["RUNTIME_RULES.md + selected support pages"]
     D --> A
     A --> E["Downstream model prompt"]
     E --> F["FoodEx2 coding answer"]
@@ -94,10 +96,14 @@ flowchart LR
     B["Validator rules and summaries"] --> D
     C["Maintenance notes and updates"] --> D
     D --> E["Topic markdown pages"]
+    D --> J["RUNTIME_RULES.md"]
+    D --> K["SCHEMA.md"]
     D --> F["index.md"]
     D --> G["policy-contract.md"]
     D --> H["log.md"]
     E --> I["Wiki API"]
+    J --> I
+    K --> I
     F --> I
     G --> I
 ```
@@ -114,7 +120,7 @@ raw/efsa-guidance/
 
 wiki_api/
   FastAPI service exposing the wiki catalog, raw page reads, and
-  LLM-driven retrieval endpoints for external clients such as DMT
+  deterministic and LLM-driven retrieval endpoints for external clients such as DMT
 ```
 
 ## Page Conventions
@@ -167,14 +173,16 @@ The knowledge base is intentionally not flat even though it is stored as markdow
 
 It has a few recurring page types:
 
+- orientation and schema pages such as [SCHEMA.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/SCHEMA.md)
+- compact runtime pages such as [RUNTIME_RULES.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/RUNTIME_RULES.md)
 - orientation pages such as [foodex2-overview.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/foodex2-overview.md)
 - operational guidance pages such as [base-term-selection.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/base-term-selection.md) and [implicit-vs-explicit-facets.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/implicit-vs-explicit-facets.md)
 - validator-facing rule pages such as [business-rules.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/business-rules.md) and [process-validation-rules.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/process-validation-rules.md)
 - domain overlays such as [domain-specific-validation.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/domain-specific-validation.md)
 - maintenance pages that explain yearly changes
-- one always-on policy page: [policy-contract.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/policy-contract.md)
+- one richer control-layer page: [policy-contract.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/policy-contract.md)
 
-The policy page is still markdown in the wiki. It is not a secret service-side prompt. The API reads it from the repo and returns it as page text.
+The runtime rules page and the policy page are both still markdown in the repo. They are not secret service-side prompts. The API reads them from the repo and exposes them as normal wiki content.
 
 ## What Context-Pack Does
 
@@ -183,7 +191,7 @@ The policy page is still markdown in the wiki. It is not a secret service-side p
 Its purpose is narrow:
 
 - take a coding case
-- choose a small set of wiki pages
+- choose a small set of wiki pages using deterministic rules
 - return those pages so the caller can pack them into its own prompt
 
 The intended caller pattern is:
@@ -198,19 +206,19 @@ That means this repo currently behaves more like a context service than a full a
 
 ## What We Always Attach
 
-For the simple `context-pack` path, the API always attaches the small control layer before the ordinary guidance pages.
+For the simple `context-pack` path, the API always attaches the compact runtime layer before the ordinary guidance pages.
 
 In practice, the caller receives:
 
 - `guiding_principles` derived from [index.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/index.md)
 - `policy_contract` parsed from [policy-contract.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/policy-contract.md)
 - `pages_used`
-- `pages`, with `policy-contract.md` forced to the top
+- `pages`, with [RUNTIME_RULES.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/RUNTIME_RULES.md) forced to the top
 - `trace` metadata
 
-The important design decision is that the policy layer is still markdown-backed. The JSON `policy_contract` field is a convenience view for callers that want structure, but the canonical source of truth remains the wiki page itself.
+The important design decision is that the runtime and policy layers are still markdown-backed. The JSON `policy_contract` field is a convenience view for callers that want structure, but the canonical source of truth remains the markdown pages themselves.
 
-Business rules are not blindly attached on every request. Instead, the knowledge pages are expected to backlink the `BRxx` rules that materially constrain them, and the selector should return the right pages for the case at hand.
+Business rules are not blindly attached on every request. Instead, the knowledge pages are expected to backlink the `BRxx` rules that materially constrain them, and the deterministic selector should return the right support pages for the case at hand.
 
 ## Wiki API
 
@@ -241,9 +249,10 @@ Optional overrides:
 
 ```bash
 WIKI_POLICY_MODEL=claude-3-7-sonnet-latest
-WIKI_CONTEXT_MODEL=claude-3-7-sonnet-latest
 WIKI_SOLVER_MODEL=claude-3-7-sonnet-latest
 ```
+
+`WIKI_CONTEXT_MODEL` is currently unused because `context-pack` is deterministic.
 
 If the endpoint-specific variables are unset, both endpoints fall back to `WIKI_LIBRARIAN_MODEL`.
 
@@ -254,8 +263,9 @@ Run it locally with:
 uvicorn wiki_api.app:app --reload
 ```
 
-The wiki retrieval endpoints are LLM-driven and currently use Anthropic internally. The wiki API loads `ANTHROPIC_API_KEY`, `WIKI_LIBRARIAN_MODEL`, and the optional endpoint-specific overrides from `.env`.
-The service injects `index.md` into the first prompt so the model can choose and batch follow-up wiki page reads without spending a separate LLM turn just to fetch the catalog.
+`context-pack` is deterministic and does not use the LLM selector path.
+`policy-pack` and `solve` are still LLM-driven and currently use Anthropic internally. The wiki API loads `ANTHROPIC_API_KEY`, `WIKI_LIBRARIAN_MODEL`, and the optional endpoint-specific overrides from `.env`.
+For the LLM-driven paths, the service injects `index.md` into the first prompt so the model can choose and batch follow-up wiki page reads without spending a separate LLM turn just to fetch the catalog.
 
 For alpha usage, start with `context-pack`.
 
@@ -265,7 +275,7 @@ Main endpoints:
 - `GET /wiki/index`: raw `index.md`
 - `GET /wiki/pages`: page catalog with titles and summaries
 - `GET /wiki/pages/{page_name}`: one wiki page
-- `POST /wiki/context-pack`: the main alpha endpoint; returns selected wiki pages plus trace metadata so a caller can build its own prompt
+- `POST /wiki/context-pack`: the main alpha endpoint; deterministically returns selected wiki pages plus trace metadata so a caller can build its own prompt
 - `POST /wiki/policy-pack`: runs the internal wiki librarian, returns selected pages plus a synthesized policy pack for a coding case
 - `POST /wiki/solve`: runs the internal wiki librarian and a final coding solver, then returns a complete FoodEx2 coding result plus the underlying context and trace
 
@@ -277,7 +287,7 @@ Endpoint-specific request guidance:
 
 Legacy compatibility:
 
-- `context-pack` and `policy-pack` still accept a full `candidates` list, but the service now reduces that payload internally before calling the LLM
+- `context-pack` and `policy-pack` still accept a full `candidates` list, but the service reduces that payload internally before selection or LLM retrieval
 - the canonical machine-readable contract is published at `GET /openapi.json`
 
 Example `POST /wiki/context-pack` body:
@@ -352,8 +362,8 @@ Example `POST /wiki/policy-pack` body:
 - `guiding_principles`: the high-level FoodEx2 worldview from `index.md`
 - `policy_contract`: the small always-on control layer with constitution, decision procedure, binding rules, tie-break rules, and anti-patterns
 - `pages_used`: selected wiki pages
-- `pages`: selected page metadata plus optional markdown content, with `policy-contract.md` returned first
-- `trace`: retrieval metadata including the internal page-read trace, token summary, and timing summary
+- `pages`: selected page metadata plus optional markdown content, with `RUNTIME_RULES.md` returned first
+- `trace`: retrieval metadata including deterministic selection trace, token summary, and timing summary
 
 `POST /wiki/solve` response includes:
 
@@ -367,12 +377,11 @@ Example `POST /wiki/policy-pack` body:
 - `solution`: final FoodEx2 coding result including selected base term, constructed code, validation check, alternatives, and confidence
 - `trace`: split process metadata for retrieval, solver, and totals including models, tokens, calls, and timing
 
-Use `context-pack` when you want pure context delivery plus the small always-on policy layer, and will do the main reasoning in a downstream model. This is the primary alpha path.
+Use `context-pack` when you want pure context delivery plus the compact runtime rules layer, and will do the main reasoning in a downstream model. This is the primary alpha path.
 Use `policy-pack` when you want the wiki service to act as a solver-style knowledge synthesizer.
 Use `solve` when you want the wiki service to return the final FoodEx2 coding decision itself, still grounded in the selected wiki context and external candidate list.
 
-The current policy layer is markdown-backed and retrieval-visible. Its job is to make decision order explicit without moving authority into service code.
-The source of truth for that policy is the markdown page [policy-contract.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/policy-contract.md); the API reads and exposes it, but does not author it in service code.
+The current runtime layer is [RUNTIME_RULES.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/RUNTIME_RULES.md), and the richer control layer is [policy-contract.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/policy-contract.md). Both are markdown-backed and retrieval-visible; the API reads and exposes them, but does not author them in service code.
 
 Run tests with:
 

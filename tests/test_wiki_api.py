@@ -5,6 +5,7 @@ import asyncio
 import httpx
 
 import wiki_api.app as app_module
+from wiki_api.context_selector import RUNTIME_RULES_PAGE_NAME
 from wiki_api.librarian import LibrarianResult, PageSelectionResult, SolverResult
 from wiki_api.policy import build_policy_contract
 
@@ -105,56 +106,6 @@ class FakeLibrarian:
         )
 
 
-class FakeSelector:
-    def __init__(self) -> None:
-        self.max_pages = 6
-        self.model = "fake-claude"
-        self.calls: list[dict[str, object]] = []
-
-    def run(self, payload: dict[str, object]) -> PageSelectionResult:
-        self.calls.append(payload)
-        return PageSelectionResult(
-            pages_used=[
-                "index.md",
-                "base-term-selection.md",
-                "packaging-facets.md",
-                "ingredient-facets.md",
-            ],
-            tool_trace=[
-                {"page_name": "base-term-selection.md", "order": 1, "chars": 100, "synthetic": False},
-                {"page_name": "packaging-facets.md", "order": 2, "chars": 100, "synthetic": False},
-                {"page_name": "ingredient-facets.md", "order": 3, "chars": 100, "synthetic": False},
-            ],
-            token_summary={
-                "model": "fake-claude",
-                "calls": 1,
-                "input_tokens": 90,
-                "output_tokens": 20,
-                "cache_creation_input_tokens": 0,
-                "cache_read_input_tokens": 0,
-                "total_tracked_tokens": 110,
-                "per_call": [
-                    {
-                        "stop_reason": "tool_use",
-                        "input_tokens": 90,
-                        "output_tokens": 20,
-                        "cache_creation_input_tokens": 0,
-                        "cache_read_input_tokens": 0,
-                        "total_tracked_tokens": 110,
-                    }
-                ],
-            },
-            timing_summary={
-                "calls": 1,
-                "llm_time_ms": 640,
-                "selector_wall_time_ms": 700,
-                "per_call": [
-                    {"call_number": 1, "duration_ms": 640, "stop_reason": "tool_use"},
-                ],
-            },
-        )
-
-
 class FakeSolver:
     def __init__(self) -> None:
         self.model = "fake-claude-solver"
@@ -233,7 +184,7 @@ class FakeBadSolver:
 
 def setup_function() -> None:
     app_module.librarian_runner = FakeLibrarian()
-    app_module.selector_runner = FakeSelector()
+    app_module.selector_runner = None
     app_module.solver_runner = FakeSolver()
 
 
@@ -251,6 +202,9 @@ def test_list_pages_includes_packaging() -> None:
     assert "packaging-facets.md" in names
     assert "README.md" in names
     assert "PROJECT_CONTEXT.md" in names
+    assert "INGEST_WORKFLOW.md" in names
+    assert "SCHEMA.md" in names
+    assert "RUNTIME_RULES.md" in names
 
 
 def test_get_unknown_page_returns_404() -> None:
@@ -367,24 +321,57 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["guiding_principles"][2].startswith("FoodEx2 prefers modular description")
     assert payload["pages_used"] == [
-        "policy-contract.md",
-        "index.md",
+        "RUNTIME_RULES.md",
         "base-term-selection.md",
-        "packaging-facets.md",
         "ingredient-facets.md",
+        "packaging-facets.md",
+        "term-type-facet-constraints.md",
+        "implicit-vs-explicit-facets.md",
     ]
     assert "policy_pack" not in payload
     assert "query_classification" not in payload
-    assert payload["trace"]["selection_method"] == "service-owned llm page selector"
+    assert payload["trace"]["selection_method"] == "service-owned deterministic selector"
     assert payload["trace"]["candidate_input_mode"] == "candidates->candidate_hints"
-    assert payload["trace"]["token_summary"]["calls"] == 1
-    assert payload["trace"]["timing_summary"]["llm_time_ms"] == 640
-    assert payload["trace"]["timing_summary"]["selector_wall_time_ms"] == 700
+    assert payload["trace"]["index_used"] is False
+    assert payload["trace"]["token_summary"]["calls"] == 0
+    assert payload["trace"]["timing_summary"]["llm_time_ms"] == 0
+    assert payload["trace"]["model"] == "deterministic-context-selector"
     assert payload["trace"]["timing_summary"]["request_wall_time_ms"] >= 0
-    assert payload["pages"][0]["page_name"] == "policy-contract.md"
-    assert app_module.selector_runner.calls[0]["candidates"] == [
-        {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"}
+    assert payload["pages"][0]["page_name"] == "RUNTIME_RULES.md"
+    assert payload["trace"]["tool_trace"][0]["page_name"] == "RUNTIME_RULES.md"
+    assert payload["trace"]["tool_trace"][0]["rule_id"] == "ALWAYS"
+
+
+def test_context_pack_selects_process_validation_for_raw_vs_derivative_case() -> None:
+    response = request(
+        "POST",
+        "/wiki/context-pack",
+        json={
+            "search_term": "pickled pearl onion",
+            "deconstructed_query": {
+                "raw_query": "pickled pearl onion",
+                "components": [{"text": "pickled", "kind": "PROCESS"}],
+            },
+            "candidate_hints": [
+                {"code": "A00HA", "name": "Pearl onion", "termType": "r"},
+                {"code": "A00ZJ", "name": "Pickled / marinated vegetables", "termType": "d"},
+            ],
+            "context": {},
+            "max_pages": 6,
+        },
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["pages_used"] == [
+        "RUNTIME_RULES.md",
+        "base-term-selection.md",
+        "process-facets.md",
+        "process-validation-rules.md",
+        "term-type-facet-constraints.md",
+        "implicit-vs-explicit-facets.md",
     ]
+    assert payload["trace"]["selection_method"] == "service-owned deterministic selector"
+    assert payload["trace"]["token_summary"]["total_tracked_tokens"] == 0
 
 
 def test_policy_pack_accepts_legacy_scope_note_but_normalizes_to_coverage_text() -> None:
@@ -538,6 +525,7 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     solve_description = payload["paths"]["/wiki/solve"]["post"]["description"]
 
     assert "`candidate_hints`" in context_description
+    assert "deterministically choose and return prompt-ready context pages" in context_description
     assert "`candidates_trimmed`" in policy_description
     assert "`coverageText`" in policy_description
     assert "`scopeNote`" not in policy_description
