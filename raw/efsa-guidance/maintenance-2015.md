@@ -30,7 +30,7 @@ last_updated: "2026-04-05"
 ## Relevant Policy
 
 - [[policy-contract]] `C05` applies directly: historical examples and older catalogue states do not override higher-priority current policy rules.
-- [[policy-contract]] `C09` matters here as well: maintenance pages help explain current scope notes, term placement, and catalogue fit before a candidate is selected.
+- [[policy-contract]] `C09` matters here as well: maintenance pages help explain current candidate coverage, term placement, and catalogue fit before a candidate is selected.
 
 ## Relevant Business Rules
 

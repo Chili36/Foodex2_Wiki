@@ -29,9 +29,10 @@ TIE_BREAK_RE = re.compile(
     re.MULTILINE,
 )
 ANTI_PATTERN_RE = re.compile(
-    r"^- `(?P<id>[^`]+)`: (?P<pattern>.+?)(?: Reject\.)?$",
+    r"^- `(?P<id>[^`]+)`: (?P<pattern>.+)$",
     re.MULTILINE,
 )
+DERIVED_FROM_RE = re.compile(r"\s+\{derived_from:\s*(?P<items>[^}]+)\}\s*$")
 
 
 def _section_map(body: str) -> dict[str, str]:
@@ -42,6 +43,15 @@ def _section_map(body: str) -> dict[str, str]:
         end = matches[idx + 1].start() if idx + 1 < len(matches) else len(body)
         sections[match.group("title").strip()] = body[start:end].strip()
     return sections
+
+
+def _split_derived_from(text: str) -> tuple[str, list[str]]:
+    cleaned = text.strip()
+    match = DERIVED_FROM_RE.search(cleaned)
+    if match is None:
+        return cleaned, []
+    derived_from = [item.strip() for item in match.group("items").split(";") if item.strip()]
+    return cleaned[: match.start()].rstrip(), derived_from
 
 
 def build_policy_contract() -> dict[str, Any]:
@@ -60,53 +70,71 @@ def build_policy_contract() -> dict[str, Any]:
     if version_match is None:
         raise ValueError("policy-contract.md is missing a parseable 'Policy Version' section")
 
-    constitution = [
-        {
-            "id": match.group("id"),
-            "text": match.group("text").strip(),
-            "priority": int(match.group("priority")),
-        }
-        for match in CONSTITUTION_RE.finditer(sections.get("Constitution", ""))
-    ]
-    decision_procedure = [
-        {
-            "step": int(match.group("step")),
-            "name": match.group("name"),
-            "instruction": match.group("instruction").strip(),
-        }
-        for match in DECISION_STEP_RE.finditer(sections.get("Decision Procedure", ""))
-    ]
+    constitution = []
+    for match in CONSTITUTION_RE.finditer(sections.get("Constitution", "")):
+        text, derived_from = _split_derived_from(match.group("text"))
+        constitution.append(
+            {
+                "id": match.group("id"),
+                "text": text,
+                "priority": int(match.group("priority")),
+                "derived_from": derived_from,
+            }
+        )
+
+    decision_procedure = []
+    for match in DECISION_STEP_RE.finditer(sections.get("Decision Procedure", "")):
+        instruction, derived_from = _split_derived_from(match.group("instruction"))
+        decision_procedure.append(
+            {
+                "step": int(match.group("step")),
+                "name": match.group("name"),
+                "instruction": instruction,
+                "derived_from": derived_from,
+            }
+        )
     binding_rules: list[dict[str, Any]] = []
     for match in BINDING_RULE_RE.finditer(sections.get("Binding Rules", "")):
+        text, derived_from = _split_derived_from(match.group("text"))
         rule: dict[str, Any] = {
             "id": match.group("id"),
             "when": match.group("when"),
+            "derived_from": derived_from,
         }
         kind = match.group("kind")
         if kind == "must":
-            rule["must"] = match.group("text").strip()
+            rule["must"] = text
         elif kind == "must not":
-            rule["must_not"] = match.group("text").strip()
+            rule["must_not"] = text
         elif kind == "may":
-            rule["may"] = match.group("text").strip()
+            rule["may"] = text
         binding_rules.append(rule)
 
-    tie_break_rules = [
-        {
-            "id": match.group("id"),
-            "when": match.group("when"),
-            "prefer": match.group("prefer").strip(),
-        }
-        for match in TIE_BREAK_RE.finditer(sections.get("Tie-Break Rules", ""))
-    ]
-    anti_patterns = [
-        {
-            "id": match.group("id"),
-            "pattern": match.group("pattern").strip(),
-            "reject": True,
-        }
-        for match in ANTI_PATTERN_RE.finditer(sections.get("Anti-Patterns", ""))
-    ]
+    tie_break_rules = []
+    for match in TIE_BREAK_RE.finditer(sections.get("Tie-Break Rules", "")):
+        prefer, derived_from = _split_derived_from(match.group("prefer"))
+        tie_break_rules.append(
+            {
+                "id": match.group("id"),
+                "when": match.group("when"),
+                "prefer": prefer,
+                "derived_from": derived_from,
+            }
+        )
+
+    anti_patterns = []
+    for match in ANTI_PATTERN_RE.finditer(sections.get("Anti-Patterns", "")):
+        pattern, derived_from = _split_derived_from(match.group("pattern"))
+        if pattern.endswith(" Reject."):
+            pattern = pattern[: -len(" Reject.")].rstrip()
+        anti_patterns.append(
+            {
+                "id": match.group("id"),
+                "pattern": pattern,
+                "reject": True,
+                "derived_from": derived_from,
+            }
+        )
 
     return {
         "policy_version": version_match.group("version"),

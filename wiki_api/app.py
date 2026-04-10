@@ -9,7 +9,7 @@ from typing import Any
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from .librarian import (
     AnthropicFoodEx2Solver,
@@ -73,14 +73,25 @@ class CandidateTrimmed(BaseModel):
     code: str = Field(description="FoodEx2 code.")
     name: str = Field(description="FoodEx2 display name.")
     termType: str = Field(description="FoodEx2 term type such as r, d, c, s, h, g, or f.")
-    scopeNote: str | None = Field(
+    coverageText: str | None = Field(
         default=None,
-        description="Optional scope note used for base-term and facet reasoning.",
+        description="Optional candidate coverage text used for base-term and facet reasoning.",
     )
     implicitFacets: list[CandidateFacet] = Field(
         default_factory=list,
         description="Optional implicit facets already carried by the candidate term.",
     )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _upgrade_legacy_scope_note(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            normalized = dict(data)
+            legacy = normalized.pop("scopeNote", None)
+            if normalized.get("coverageText") is None and legacy is not None:
+                normalized["coverageText"] = legacy
+            return normalized
+        return data
 
 
 class SolveCandidate(BaseModel):
@@ -89,9 +100,9 @@ class SolveCandidate(BaseModel):
     code: str = Field(description="FoodEx2 code.")
     name: str = Field(description="FoodEx2 display name.")
     termType: str = Field(description="FoodEx2 term type such as r, d, c, s, h, g, or f.")
-    scopeNote: str | None = Field(
+    coverageText: str | None = Field(
         default=None,
-        description="Optional scope note from candidate retrieval.",
+        description="Optional candidate coverage text from retrieval.",
     )
     implicitFacets: list[CandidateFacet] = Field(
         default_factory=list,
@@ -105,6 +116,17 @@ class SolveCandidate(BaseModel):
         default_factory=dict,
         description="Optional extra candidate metadata preserved for the solver.",
     )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _upgrade_legacy_scope_note(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            normalized = dict(data)
+            legacy = normalized.pop("scopeNote", None)
+            if normalized.get("coverageText") is None and legacy is not None:
+                normalized["coverageText"] = legacy
+            return normalized
+        return data
 
 
 class CommonRequestFields(BaseModel):
@@ -138,7 +160,7 @@ class PolicyPackRequest(CommonRequestFields):
         default_factory=list,
         description=(
             "Preferred candidate input for /wiki/policy-pack. Include only fields needed for "
-            "reasoning: code, name, termType, optional scopeNote, and optional implicitFacets."
+            "reasoning: code, name, termType, optional coverageText, and optional implicitFacets."
         ),
     )
     candidates: list[SolveCandidate] = Field(
@@ -196,12 +218,14 @@ class ConstitutionRule(BaseModel):
     id: str
     text: str
     priority: int
+    derived_from: list[str] = Field(default_factory=list)
 
 
 class DecisionProcedureStep(BaseModel):
     step: int
     name: str
     instruction: str
+    derived_from: list[str] = Field(default_factory=list)
 
 
 class BindingRule(BaseModel):
@@ -210,18 +234,21 @@ class BindingRule(BaseModel):
     must: str | None = None
     must_not: str | None = None
     may: str | None = None
+    derived_from: list[str] = Field(default_factory=list)
 
 
 class TieBreakRule(BaseModel):
     id: str
     when: str
     prefer: str
+    derived_from: list[str] = Field(default_factory=list)
 
 
 class AntiPattern(BaseModel):
     id: str
     pattern: str
     reject: bool = True
+    derived_from: list[str] = Field(default_factory=list)
 
 
 class PolicyContract(BaseModel):
@@ -327,8 +354,9 @@ def _to_candidates_trimmed(items: list[BaseModel | dict[str, Any]]) -> list[dict
             "name": item.get("name", ""),
             "termType": item.get("termType", ""),
         }
-        if item.get("scopeNote"):
-            candidate["scopeNote"] = item["scopeNote"]
+        coverage_text = item.get("coverageText") or item.get("scopeNote")
+        if coverage_text:
+            candidate["coverageText"] = coverage_text
         implicit_facets = item.get("implicitFacets") or []
         if implicit_facets:
             candidate["implicitFacets"] = implicit_facets
@@ -482,7 +510,7 @@ def get_page(page_name: str, include_content: bool = Query(default=True)) -> dic
     description=(
         "Use this when the wiki service should retrieve pages and synthesize a reasoning pack, "
         "but should not return the final FoodEx2 code. Preferred request field: "
-        "`candidates_trimmed`. Include only `code`, `name`, `termType`, optional `scopeNote`, "
+        "`candidates_trimmed`. Include only `code`, `name`, `termType`, optional `coverageText`, "
         "and optional `implicitFacets`. Legacy full `candidates` input is still accepted, but "
         "the service reduces it internally before the librarian LLM call."
     ),

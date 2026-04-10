@@ -43,7 +43,7 @@ last_updated: "2026-04-08"
 
 ## Relevant Policy
 
-- [[policy-contract]] `C01`, `C02`, `C03`, `C06`, and `C09` govern this page directly: determine food type first, read scope notes, prefer reportable non-hierarchy terms, and apply specificity only within the selected food type.
+- [[policy-contract]] `C01`, `C02`, `C03`, `C06`, and `C09` govern this page directly: determine food type first, read candidate wording and any available coverage text, prefer reportable non-hierarchy terms, and apply specificity only within the selected food type.
 - [[policy-contract]] Decision Procedure steps 1 to 3 are the operative order here: classify the food, compare candidates within that type, then resolve origin and tie-break questions before composing facets.
 
 ## Relevant Business Rules
