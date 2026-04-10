@@ -21,7 +21,7 @@ This project is now at an early alpha stage.
 The main thing that is considered stable enough to try is the simple `context-pack` flow:
 
 1. a caller sends a query, optional deconstructed query, and lightweight candidate hints
-2. the wiki API deterministically selects a small set of relevant pages
+2. the wiki API uses its internal page selector to choose a small set of relevant pages
 3. the API returns those pages as text, with the runtime rules page first
 4. the caller packs that text into its own downstream prompt
 
@@ -81,7 +81,7 @@ At the moment, the simplest and most important runtime path is:
 ```mermaid
 flowchart LR
     A["Caller (for example DMT)"] --> B["POST /wiki/context-pack"]
-    B --> C["Deterministic selector"]
+    B --> C["LLM page selector"]
     C --> D["RUNTIME_RULES.md + selected support pages"]
     D --> A
     A --> E["Downstream model prompt"]
@@ -120,7 +120,7 @@ raw/efsa-guidance/
 
 wiki_api/
   FastAPI service exposing the wiki catalog, raw page reads, and
-  deterministic and LLM-driven retrieval endpoints for external clients such as DMT
+  adaptive retrieval and solver endpoints for external clients such as DMT
 ```
 
 ## Page Conventions
@@ -191,7 +191,7 @@ The runtime rules page and the policy page are both still markdown in the repo. 
 Its purpose is narrow:
 
 - take a coding case
-- choose a small set of wiki pages using deterministic rules
+- choose a small set of wiki pages with the internal page selector
 - return those pages so the caller can pack them into its own prompt
 
 The intended caller pattern is:
@@ -218,7 +218,7 @@ In practice, the caller receives:
 
 The important design decision is that the runtime and policy layers are still markdown-backed. The JSON `policy_contract` field is a convenience view for callers that want structure, but the canonical source of truth remains the markdown pages themselves.
 
-Business rules are not blindly attached on every request. Instead, the knowledge pages are expected to backlink the `BRxx` rules that materially constrain them, and the deterministic selector should return the right support pages for the case at hand.
+Business rules are not blindly attached on every request. Instead, the knowledge pages are expected to backlink the `BRxx` rules that materially constrain them, and the selector should return the right support pages for the case at hand.
 
 ## Wiki API
 
@@ -248,13 +248,12 @@ WIKI_LIBRARIAN_MODEL=claude-3-7-sonnet-latest
 Optional overrides:
 
 ```bash
+WIKI_CONTEXT_MODEL=claude-3-7-sonnet-latest
 WIKI_POLICY_MODEL=claude-3-7-sonnet-latest
 WIKI_SOLVER_MODEL=claude-3-7-sonnet-latest
 ```
 
-`WIKI_CONTEXT_MODEL` is currently unused because `context-pack` is deterministic.
-
-If the endpoint-specific variables are unset, both endpoints fall back to `WIKI_LIBRARIAN_MODEL`.
+If the endpoint-specific variables are unset, the service falls back to `WIKI_LIBRARIAN_MODEL`.
 
 Run it locally with:
 
@@ -263,8 +262,7 @@ Run it locally with:
 uvicorn wiki_api.app:app --reload
 ```
 
-`context-pack` is deterministic and does not use the LLM selector path.
-`policy-pack` and `solve` are still LLM-driven and currently use Anthropic internally. The wiki API loads `ANTHROPIC_API_KEY`, `WIKI_LIBRARIAN_MODEL`, and the optional endpoint-specific overrides from `.env`.
+`context-pack`, `policy-pack`, and `solve` currently use Anthropic internally. `context-pack` uses the lighter page-selector path, while `policy-pack` and `solve` use the richer librarian and solver flow. The wiki API loads `ANTHROPIC_API_KEY`, `WIKI_LIBRARIAN_MODEL`, and the optional endpoint-specific overrides from `.env`.
 For the LLM-driven paths, the service injects `index.md` into the first prompt so the model can choose and batch follow-up wiki page reads without spending a separate LLM turn just to fetch the catalog.
 
 For alpha usage, start with `context-pack`.
@@ -275,7 +273,7 @@ Main endpoints:
 - `GET /wiki/index`: raw `index.md`
 - `GET /wiki/pages`: page catalog with titles and summaries
 - `GET /wiki/pages/{page_name}`: one wiki page
-- `POST /wiki/context-pack`: the main alpha endpoint; deterministically returns selected wiki pages plus trace metadata so a caller can build its own prompt
+- `POST /wiki/context-pack`: the main alpha endpoint; returns selected wiki pages plus trace metadata so a caller can build its own prompt
 - `POST /wiki/policy-pack`: runs the internal wiki librarian, returns selected pages plus a synthesized policy pack for a coding case
 - `POST /wiki/solve`: runs the internal wiki librarian and a final coding solver, then returns a complete FoodEx2 coding result plus the underlying context and trace
 
@@ -363,7 +361,7 @@ Example `POST /wiki/policy-pack` body:
 - `policy_contract`: the small always-on control layer with constitution, decision procedure, binding rules, tie-break rules, and anti-patterns
 - `pages_used`: selected wiki pages
 - `pages`: selected page metadata plus optional markdown content, with `RUNTIME_RULES.md` returned first
-- `trace`: retrieval metadata including deterministic selection trace, token summary, and timing summary
+- `trace`: retrieval metadata including page-selection trace, token summary, and timing summary
 
 `POST /wiki/solve` response includes:
 

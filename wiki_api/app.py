@@ -14,8 +14,8 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 from .librarian import (
     AnthropicFoodEx2Solver,
     AnthropicWikiLibrarian,
+    AnthropicWikiPageSelector,
 )
-from .context_selector import DeterministicContextSelector, RUNTIME_RULES_PAGE_NAME
 from .policy import build_policy_contract
 from .wiki_store import WikiStore
 
@@ -40,7 +40,7 @@ def get_librarian_runner() -> AnthropicWikiLibrarian | Any:
 def get_selector_runner() -> Any:
     global selector_runner
     if selector_runner is None:
-        selector_runner = DeterministicContextSelector()
+        selector_runner = AnthropicWikiPageSelector(store=store)
     return selector_runner
 
 
@@ -149,7 +149,7 @@ class ContextPackRequest(CommonRequestFields):
         default_factory=list,
         description=(
             "Legacy compatibility input. If provided, the service will internally reduce it to "
-            "candidate hints before deterministic page selection."
+            "candidate hints before page selection."
         ),
         deprecated=True,
     )
@@ -387,6 +387,7 @@ def _normalize_solver_data(data: dict[str, Any]) -> dict[str, Any]:
 
 
 POLICY_PAGE_NAME = "policy-contract.md"
+RUNTIME_RULES_PAGE_NAME = "RUNTIME_RULES.md"
 
 
 def _ensure_front_page(
@@ -611,10 +612,11 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
     response_model=ContextPackResponse,
     summary="Return selected wiki pages as raw context without synthesized rules",
     description=(
-        "Use this when the wiki service should deterministically choose and return prompt-ready "
-        "context pages. Preferred request field: `candidate_hints`. Keep it minimal with only "
-        "`code`, `name`, and `termType`. Legacy full `candidates` input is still accepted, but "
-        "the service reduces it internally to candidate hints before deterministic page selection."
+        "Use this when the wiki service should choose and return prompt-ready context pages "
+        "without synthesizing a policy pack or final code. Preferred request field: "
+        "`candidate_hints`. Keep it minimal with only `code`, `name`, and `termType`. Legacy "
+        "full `candidates` input is still accepted, but the service reduces it internally to "
+        "candidate hints before page selection."
     ),
 )
 def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
@@ -672,9 +674,9 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
         pages_used=final_pages_used,
         pages=pages,
         trace={
-            "index_used": False,
+            "index_used": True,
             "max_pages": request.max_pages,
-            "selection_method": "service-owned deterministic selector",
+            "selection_method": "service-owned llm page selector",
             "candidate_input_mode": candidate_input_mode,
             "tool_trace": selection_result.tool_trace,
             "token_summary": selection_result.token_summary,

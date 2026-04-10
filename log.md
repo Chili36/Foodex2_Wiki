@@ -170,8 +170,8 @@ last_updated: "2026-04-10"
 - Added `SCHEMA.md` to define page types, frontmatter fields, section conventions, and the practical layer model for the repo.
 - Updated `index.md` and `README.md` so the runtime layer and schema layer are visible as first-class parts of the knowledge base.
 
-## [2026-04-10] service | Make context-pack deterministic and runtime-first
+## [2026-04-10] service | Make context-pack runtime-first
 
-- Replaced the LLM-owned `context-pack` selector with a deterministic rules-based selector driven by query decomposition, candidate term types, and domain keywords.
 - Changed `context-pack` page ordering so `RUNTIME_RULES.md` is returned first instead of `policy-contract.md`.
-- Kept `policy-pack` and `solve` on the richer LLM-driven path, while adding retrieval tests for the deterministic alpha `context-pack` flow.
+- Kept `context-pack` on the adaptive LLM page-selector path because page choice still needs to vary by case.
+- Kept `policy-pack` and `solve` on the richer LLM-driven path, while updating retrieval tests for the runtime-first alpha `context-pack` flow.
