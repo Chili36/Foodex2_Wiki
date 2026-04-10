@@ -307,7 +307,7 @@ Example `POST /wiki/context-pack` body:
     {"code": "A07PF", "name": "Glass", "termType": "f"}
   ],
   "context": {},
-  "max_pages": 6,
+  "max_pages": 7,
   "include_page_content": true
 }
 ```

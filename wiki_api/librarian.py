@@ -44,7 +44,8 @@ READ_WIKI_PAGES_TOOL = {
 
 TOOLS = [READ_WIKI_PAGES_TOOL]
 
-SELECTION_SYSTEM_PROMPT = """You are the FoodEx2 wiki page selector.
+def build_selection_system_prompt(*, additional_page_limit: int) -> str:
+    return f"""You are the FoodEx2 wiki page selector.
 
 Your only job is to choose which wiki pages should be returned as context for the current coding case so another model can create the correct FoodEx2 code.
 
@@ -56,8 +57,9 @@ Rules:
 - Do not request `index.md` again.
 - Do not solve the FoodEx2 coding task.
 - Do not summarize or rewrite the wiki.
-- Request at most 5 non-index pages.
-- If no additional pages are needed, return JSON only: {"page_names": []}
+- Request only the additional wiki pages you need after reviewing the provided index.
+- Request at most {additional_page_limit} additional wiki pages.
+- If no additional pages are needed, return JSON only: {{"page_names": []}}
 """
 
 POLICY_PACK_SYSTEM_PROMPT = """You are the FoodEx2 wiki librarian.
@@ -573,7 +575,7 @@ class AnthropicWikiPageSelector:
         store: WikiStore,
         client: AnthropicClientProtocol | None = None,
         model: str | None = None,
-        max_pages: int = 6,
+        max_pages: int = 7,
         max_tokens: int = 1500,
     ):
         self.store = store
@@ -589,6 +591,9 @@ class AnthropicWikiPageSelector:
     def run(self, payload: dict[str, Any]) -> PageSelectionResult:
         selector_started = time.perf_counter()
         index_content = self.store.read_page("index.md").content
+        selection_system_prompt = build_selection_system_prompt(
+            additional_page_limit=max(self.max_pages - 1, 0)
+        )
         messages = [
             {
                 "role": "user",
@@ -605,14 +610,14 @@ class AnthropicWikiPageSelector:
         _log_prompt(
             "context_pack",
             model=self.model,
-            system=SELECTION_SYSTEM_PROMPT,
+            system=selection_system_prompt,
             messages=messages,
             max_tokens=self.max_tokens,
         )
         response = self.client.messages.create(
             model=self.model,
             max_tokens=self.max_tokens,
-            system=SELECTION_SYSTEM_PROMPT,
+            system=selection_system_prompt,
             tools=TOOLS,
             messages=messages,
         )

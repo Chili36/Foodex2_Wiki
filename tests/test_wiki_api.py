@@ -186,7 +186,7 @@ class FakeBadSolver:
 
 class FakeSelector:
     def __init__(self) -> None:
-        self.max_pages = 6
+        self.max_pages = 7
         self.model = "fake-claude-context"
         self.calls: list[dict[str, object]] = []
 

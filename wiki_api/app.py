@@ -138,6 +138,7 @@ class CommonRequestFields(BaseModel):
 
 
 class ContextPackRequest(CommonRequestFields):
+    max_pages: int = Field(default=7, ge=1, le=10)
     candidate_hints: list[CandidateHint] = Field(
         default_factory=list,
         description=(

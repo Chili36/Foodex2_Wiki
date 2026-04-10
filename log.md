@@ -175,3 +175,9 @@ last_updated: "2026-04-10"
 - Changed `context-pack` page ordering so `RUNTIME_RULES.md` is returned first instead of `policy-contract.md`.
 - Kept `context-pack` on the adaptive LLM page-selector path because page choice still needs to vary by case.
 - Kept `policy-pack` and `solve` on the richer LLM-driven path, while updating retrieval tests for the runtime-first alpha `context-pack` flow.
+
+## [2026-04-10] service | Clarify context-pack selector budget wording
+
+- Replaced the opaque selector prompt wording about `non-index pages` with direct wording: the index is already provided, so the selector should request only the additional wiki pages it needs.
+- Changed the default `context-pack` selector budget from 5 additional pages to 6 additional pages, which yields the intended default of up to 8 returned pages once `index.md` and `RUNTIME_RULES.md` are included.
+- Kept the page budget request-scoped through `max_pages`, so it can be tuned later if runtime or cost proves worse than expected.
