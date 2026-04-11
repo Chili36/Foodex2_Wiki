@@ -193,6 +193,59 @@ class PageSummary(BaseModel):
     content: str | None = None
 
 
+class GraphEdge(BaseModel):
+    source: str
+    target: str
+    type: str
+    section: str | None = None
+    label: str | None = None
+
+
+class GraphNode(BaseModel):
+    page_name: str
+    title: str
+    summary: str
+    incoming_count: int
+    outgoing_count: int
+
+
+class GraphHub(BaseModel):
+    page_name: str
+    title: str
+    incoming_count: int
+    outgoing_count: int
+    total_links: int
+
+
+class GraphSummary(BaseModel):
+    page_count: int
+    edge_count: int
+    orphan_pages: list[str] = Field(default_factory=list)
+    hub_pages: list[GraphHub] = Field(default_factory=list)
+
+
+class WikiGraphResponse(BaseModel):
+    nodes: list[GraphNode] = Field(default_factory=list)
+    edges: list[GraphEdge] = Field(default_factory=list)
+    summary: GraphSummary
+
+
+class BacklinkEntry(BaseModel):
+    source: str
+    source_title: str
+    type: str
+    section: str | None = None
+    label: str | None = None
+
+
+class BacklinksResponse(BaseModel):
+    page_name: str
+    title: str
+    summary: str
+    backlinks: list[BacklinkEntry] = Field(default_factory=list)
+    backlink_count: int
+
+
 class QueryClassification(BaseModel):
     food_type: str
     domain: str
@@ -504,6 +557,39 @@ def get_page(page_name: str, include_content: bool = Query(default=True)) -> dic
         "related": page.related,
         "content": page.content if include_content else None,
     }
+
+
+@app.get(
+    "/wiki/graph",
+    response_model=WikiGraphResponse,
+    summary="Return the generated wiki adjacency map",
+)
+def get_wiki_graph() -> WikiGraphResponse:
+    graph = store.graph_data()
+    return WikiGraphResponse(
+        nodes=[GraphNode(**node) for node in graph["nodes"]],
+        edges=[GraphEdge(**edge) for edge in graph["edges"]],
+        summary=GraphSummary(**graph["summary"]),
+    )
+
+
+@app.get(
+    "/wiki/pages/{page_name}/backlinks",
+    response_model=BacklinksResponse,
+    summary="Return backlinks for one wiki page",
+)
+def get_page_backlinks(page_name: str) -> BacklinksResponse:
+    try:
+        backlinks = store.page_backlinks(page_name)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    return BacklinksResponse(
+        page_name=backlinks["page_name"],
+        title=backlinks["title"],
+        summary=backlinks["summary"],
+        backlinks=[BacklinkEntry(**entry) for entry in backlinks["backlinks"]],
+        backlink_count=backlinks["backlink_count"],
+    )
 
 
 @app.post(

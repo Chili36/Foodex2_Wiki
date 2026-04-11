@@ -287,6 +287,36 @@ def test_get_project_context_page_returns_200() -> None:
     assert "What We Are Building" in payload["content"]
 
 
+def test_wiki_graph_exposes_index_hub_edges() -> None:
+    response = request("GET", "/wiki/graph")
+    assert response.status_code == 200
+    payload = response.json()
+
+    assert payload["summary"]["page_count"] >= 30
+    assert payload["summary"]["edge_count"] > 0
+    assert any(node["page_name"] == "index.md" for node in payload["nodes"])
+    assert any(
+        edge["source"] == "index.md"
+        and edge["target"] == "SCHEMA.md"
+        and edge["type"] == "index_reference"
+        for edge in payload["edges"]
+    )
+
+
+def test_page_backlinks_returns_incoming_relationships() -> None:
+    response = request("GET", "/wiki/pages/SCHEMA.md/backlinks")
+    assert response.status_code == 200
+    payload = response.json()
+
+    assert payload["page_name"] == "SCHEMA.md"
+    assert payload["backlink_count"] >= 1
+    assert any(
+        entry["source"] == "index.md" and entry["type"] == "index_reference"
+        for entry in payload["backlinks"]
+    )
+    assert any(entry["source"] == "README.md" for entry in payload["backlinks"])
+
+
 def test_policy_pack_uses_librarian_response() -> None:
     response = request(
         "POST",
@@ -561,6 +591,8 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     assert "policy_contract" in payload["components"]["schemas"]["ContextPackResponse"]["properties"]
     assert "policy_contract" in payload["components"]["schemas"]["PolicyPackResponse"]["properties"]
     assert "policy_contract" in payload["components"]["schemas"]["SolveResponse"]["properties"]
+    assert "/wiki/graph" in payload["paths"]
+    assert "/wiki/pages/{page_name}/backlinks" in payload["paths"]
 
     context_description = payload["paths"]["/wiki/context-pack"]["post"]["description"]
     policy_description = payload["paths"]["/wiki/policy-pack"]["post"]["description"]

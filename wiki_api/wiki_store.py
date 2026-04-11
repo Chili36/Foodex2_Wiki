@@ -12,6 +12,9 @@ import yaml
 INDEX_ENTRY_RE = re.compile(r"^- \[[^\]]+\]\(([^)]+)\):\s*(.+)$")
 GUIDING_PRINCIPLES_HEADER = "## Guiding Principles"
 HTML_COMMENT_RE = re.compile(r"<!--.*?-->", re.DOTALL)
+WIKILINK_RE = re.compile(r"\[\[([^\]]+)\]\]")
+MARKDOWN_LINK_RE = re.compile(r"(?<!!)\[([^\]]+)\]\(([^)]+)\)")
+HEADING_RE = re.compile(r"^#{1,6}\s+(.+?)\s*$")
 TRAILING_SOURCE_CITATION_RE = re.compile(
     r"\s*\((?:EFSA guidance|Training|ChemMon|VMPR|"
     r"\d{4} maintenance|docs/[^)]+|BUSINESS-RULES[^)]*|"
@@ -31,6 +34,15 @@ class WikiPage:
     related: list[str]
     content: str
     body: str
+
+
+@dataclass(frozen=True)
+class WikiEdge:
+    source: str
+    target: str
+    edge_type: str
+    section: str | None = None
+    label: str | None = None
 
 
 def split_frontmatter(raw: str) -> tuple[dict[str, Any], str]:
@@ -129,6 +141,26 @@ class WikiStore:
             cleaned = Path(cleaned).name
         return cleaned
 
+    def resolve_page_reference(self, reference: str) -> str | None:
+        raw = reference.strip()
+        if not raw:
+            return None
+        if raw.startswith("[[") and raw.endswith("]]"):
+            raw = raw[2:-2]
+        raw = raw.split("|", 1)[0].split("#", 1)[0].strip()
+        if not raw:
+            return None
+
+        normalized = self.normalize_page_name(raw)
+        if normalized in self.allowed_page_names():
+            return normalized
+
+        if not Path(raw).suffix:
+            normalized_with_md = self.normalize_page_name(f"{raw}.md")
+            if normalized_with_md in self.allowed_page_names():
+                return normalized_with_md
+        return None
+
     def read_page(self, page_name: str) -> WikiPage:
         normalized_name = self.normalize_page_name(page_name)
         if normalized_name not in self.allowed_page_names():
@@ -166,6 +198,198 @@ class WikiStore:
 
     def guiding_principles(self) -> list[str]:
         return list(self._guiding_principles)
+
+    def _classify_body_edge_type(self, *, source: str, section: str | None) -> str:
+        if section == "Relevant Policy":
+            return "policy_reference"
+        if section == "Relevant Business Rules":
+            return "business_rule_reference"
+        if source == "index.md":
+            return "index_reference"
+        return "inline_link"
+
+    def _extract_body_edges(self, page: WikiPage) -> list[WikiEdge]:
+        edges: list[WikiEdge] = []
+        current_section: str | None = None
+
+        for line in page.body.splitlines():
+            heading_match = HEADING_RE.match(line.strip())
+            if heading_match:
+                current_section = heading_match.group(1).strip()
+
+            for match in WIKILINK_RE.finditer(line):
+                raw_target = match.group(1)
+                label = raw_target.split("|", 1)[1].strip() if "|" in raw_target else None
+                target = self.resolve_page_reference(raw_target)
+                if target is None or target == page.name:
+                    continue
+                edges.append(
+                    WikiEdge(
+                        source=page.name,
+                        target=target,
+                        edge_type=self._classify_body_edge_type(
+                            source=page.name,
+                            section=current_section,
+                        ),
+                        section=current_section,
+                        label=label,
+                    )
+                )
+
+            for match in MARKDOWN_LINK_RE.finditer(line):
+                label = match.group(1).strip() or None
+                target = self.resolve_page_reference(match.group(2))
+                if target is None or target == page.name:
+                    continue
+                edges.append(
+                    WikiEdge(
+                        source=page.name,
+                        target=target,
+                        edge_type=self._classify_body_edge_type(
+                            source=page.name,
+                            section=current_section,
+                        ),
+                        section=current_section,
+                        label=label,
+                    )
+                )
+        return edges
+
+    def _extract_page_edges(self, page: WikiPage) -> list[WikiEdge]:
+        edges: list[WikiEdge] = []
+        for reference in page.related:
+            target = self.resolve_page_reference(reference)
+            if target is None or target == page.name:
+                continue
+            edges.append(
+                WikiEdge(
+                    source=page.name,
+                    target=target,
+                    edge_type="related",
+                    section="frontmatter",
+                )
+            )
+        edges.extend(self._extract_body_edges(page))
+
+        deduped: list[WikiEdge] = []
+        seen: set[tuple[str, str, str, str | None, str | None]] = set()
+        for edge in edges:
+            key = (edge.source, edge.target, edge.edge_type, edge.section, edge.label)
+            if key in seen:
+                continue
+            seen.add(key)
+            deduped.append(edge)
+        return deduped
+
+    @cached_property
+    def _graph(self) -> dict[str, Any]:
+        pages = {
+            name: self.read_page(name)
+            for name in sorted(self.allowed_page_names())
+        }
+        edges: list[WikiEdge] = []
+        for page in pages.values():
+            edges.extend(self._extract_page_edges(page))
+
+        outgoing: dict[str, list[WikiEdge]] = {name: [] for name in pages}
+        incoming: dict[str, list[WikiEdge]] = {name: [] for name in pages}
+        for edge in edges:
+            outgoing.setdefault(edge.source, []).append(edge)
+            incoming.setdefault(edge.target, []).append(edge)
+
+        nodes = []
+        for name, page in sorted(pages.items()):
+            nodes.append(
+                {
+                    "page_name": name,
+                    "title": page.title,
+                    "summary": page.summary,
+                    "incoming_count": len(incoming.get(name, [])),
+                    "outgoing_count": len(outgoing.get(name, [])),
+                }
+            )
+
+        hubs = sorted(
+            (
+                {
+                    "page_name": name,
+                    "title": pages[name].title,
+                    "incoming_count": len(incoming.get(name, [])),
+                    "outgoing_count": len(outgoing.get(name, [])),
+                    "total_links": len(incoming.get(name, [])) + len(outgoing.get(name, [])),
+                }
+                for name in pages
+            ),
+            key=lambda item: (-int(item["total_links"]), item["page_name"]),
+        )[:10]
+
+        orphans = sorted(
+            name
+            for name in pages
+            if not incoming.get(name) and not outgoing.get(name)
+        )
+
+        return {
+            "nodes": nodes,
+            "edges": [
+                {
+                    "source": edge.source,
+                    "target": edge.target,
+                    "type": edge.edge_type,
+                    "section": edge.section,
+                    "label": edge.label,
+                }
+                for edge in sorted(
+                    edges,
+                    key=lambda item: (
+                        item.source,
+                        item.target,
+                        item.edge_type,
+                        item.section or "",
+                        item.label or "",
+                    ),
+                )
+            ],
+            "outgoing": outgoing,
+            "incoming": incoming,
+            "summary": {
+                "page_count": len(pages),
+                "edge_count": len(edges),
+                "orphan_pages": orphans,
+                "hub_pages": hubs,
+            },
+        }
+
+    def graph_data(self) -> dict[str, Any]:
+        return {
+            "nodes": list(self._graph["nodes"]),
+            "edges": list(self._graph["edges"]),
+            "summary": dict(self._graph["summary"]),
+        }
+
+    def page_backlinks(self, page_name: str) -> dict[str, Any]:
+        page = self.read_page(page_name)
+        incoming_edges = self._graph["incoming"].get(page.name, [])
+        backlinks = [
+            {
+                "source": edge.source,
+                "source_title": self.read_page(edge.source).title,
+                "type": edge.edge_type,
+                "section": edge.section,
+                "label": edge.label,
+            }
+            for edge in sorted(
+                incoming_edges,
+                key=lambda item: (item.source, item.edge_type, item.section or "", item.label or ""),
+            )
+        ]
+        return {
+            "page_name": page.name,
+            "title": page.title,
+            "summary": page.summary,
+            "backlinks": backlinks,
+            "backlink_count": len(backlinks),
+        }
 
     def clean_content_for_model(self, page: WikiPage) -> str:
         cleaned = HTML_COMMENT_RE.sub("", page.body)

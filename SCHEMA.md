@@ -202,6 +202,7 @@ What this means in practice:
 - The relationship model is authored in markdown, not in service code.
 - The API reads and exposes the `related` frontmatter field directly.
 - The selector also benefits from the inline links and section conventions because they make neighboring concepts legible inside retrieved page text.
+- Generated graph views can be built from the same markdown without introducing a separate authoring format.
 - Backlinks, adjacency maps, or graph traversal can be added later without changing how pages are authored.
 
 ## Runtime Serving Rules

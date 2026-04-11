@@ -187,3 +187,9 @@ last_updated: "2026-04-10"
 - Added an explicit relationship-model section to `SCHEMA.md` so the wiki now documents how pages relate to each other without pretending there is a separate graph database.
 - Recorded the current edge types as `related` frontmatter, inline `[[...]]` links, `Relevant Policy`, `Relevant Business Rules`, and `index.md` as the hub node.
 - Added a short README note so outside readers can understand that the wiki is graph-like even though it is still authored as markdown pages.
+
+## [2026-04-11] service | Add generated graph and backlink views
+
+- Added wiki graph extraction in `wiki_store.py`, derived from frontmatter `related`, inline links, policy references, business-rule references, and `index.md` catalog links.
+- Added `GET /wiki/graph` for a generated adjacency map and `GET /wiki/pages/{page_name}/backlinks` for per-page incoming links.
+- Kept the markdown files as the source of truth; the graph views are generated artifacts rather than a new manual layer.
