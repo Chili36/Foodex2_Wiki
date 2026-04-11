@@ -181,3 +181,9 @@ last_updated: "2026-04-10"
 - Replaced the opaque selector prompt wording about `non-index pages` with direct wording: the index is already provided, so the selector should request only the additional wiki pages it needs.
 - Changed the default `context-pack` selector budget from 5 additional pages to 6 additional pages, which yields the intended default of up to 8 returned pages once `index.md` and `RUNTIME_RULES.md` are included.
 - Kept the page budget request-scoped through `max_pages`, so it can be tuned later if runtime or cost proves worse than expected.
+
+## [2026-04-11] maintenance | Document the wiki relationship model
+
+- Added an explicit relationship-model section to `SCHEMA.md` so the wiki now documents how pages relate to each other without pretending there is a separate graph database.
+- Recorded the current edge types as `related` frontmatter, inline `[[...]]` links, `Relevant Policy`, `Relevant Business Rules`, and `index.md` as the hub node.
+- Added a short README note so outside readers can understand that the wiki is graph-like even though it is still authored as markdown pages.

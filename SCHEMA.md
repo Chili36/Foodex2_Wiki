@@ -183,6 +183,27 @@ Recommended sections by page type:
 - Add `Relevant Policy` when runtime decision order matters for the page.
 - Avoid backlink spam. The purpose is navigation, not exhaustiveness.
 
+## Relationship Model
+
+The wiki has a lightweight markdown-native relationship model.
+
+It is graph-like, but it is not a separate graph database or a formal graph engine.
+
+Today the main edge types are:
+
+- `related` in frontmatter: explicit near-neighbor edges between pages.
+- Inline `[[page]]` links in the body: conceptual dependency edges used inside explanations, examples, and rule references.
+- `Relevant Policy`: control-layer edges from an operational page to `policy-contract.md`.
+- `Relevant Business Rules`: validator-layer edges from an operational page to `business-rules.md` and specific `BRxx` constraints.
+- `index.md`: catalog and hub node that helps selectors and humans discover the first hop into the graph.
+
+What this means in practice:
+
+- The relationship model is authored in markdown, not in service code.
+- The API reads and exposes the `related` frontmatter field directly.
+- The selector also benefits from the inline links and section conventions because they make neighboring concepts legible inside retrieved page text.
+- Backlinks, adjacency maps, or graph traversal can be added later without changing how pages are authored.
+
 ## Runtime Serving Rules
 
 - `RUNTIME_RULES.md` is the compact always-on prompt-facing page for `context-pack`.

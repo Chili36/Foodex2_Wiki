@@ -184,6 +184,8 @@ It has a few recurring page types:
 
 The runtime rules page and the policy page are both still markdown in the repo. They are not secret service-side prompts. The API reads them from the repo and exposes them as normal wiki content.
 
+The repo also has a lightweight relationship model rather than a flat pile of pages: frontmatter `related` links, inline `[[...]]` cross-links, `Relevant Policy` sections, `Relevant Business Rules` sections, and `index.md` as the main hub. The details are documented in [SCHEMA.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/SCHEMA.md).
+
 ## What Context-Pack Does
 
 `POST /wiki/context-pack` is the alpha endpoint to understand first.
