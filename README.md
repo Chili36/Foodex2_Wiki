@@ -276,6 +276,7 @@ Main endpoints:
 - `GET /wiki/pages`: page catalog with titles and summaries
 - `GET /wiki/pages/{page_name}`: one wiki page
 - `GET /wiki/graph`: generated adjacency map built from markdown links and frontmatter
+- `GET /wiki/graph/compact`: compact graph payload intended for browser visualization
 - `GET /wiki/pages/{page_name}/backlinks`: generated incoming-link view for one page
 - `POST /wiki/context-pack`: the main alpha endpoint; returns selected wiki pages plus trace metadata so a caller can build its own prompt
 - `POST /wiki/policy-pack`: runs the internal wiki librarian, returns selected pages plus a synthesized policy pack for a coding case
@@ -385,7 +386,7 @@ Use `solve` when you want the wiki service to return the final FoodEx2 coding de
 
 The current runtime layer is [RUNTIME_RULES.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/RUNTIME_RULES.md), and the richer control layer is [policy-contract.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/policy-contract.md). Both are markdown-backed and retrieval-visible; the API reads and exposes them, but does not author them in service code.
 
-The graph and backlink endpoints are also derived artifacts. They are generated from the same markdown relationship model rather than maintained as separate handwritten pages.
+The graph and backlink endpoints are also derived artifacts. They are generated from the same markdown relationship model rather than maintained as separate handwritten pages. Use `/wiki/graph/compact` when you want to render the wiki in a browser graph view without pulling the full edge metadata.
 
 Run tests with:
 

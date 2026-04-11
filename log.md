@@ -193,3 +193,9 @@ last_updated: "2026-04-10"
 - Added wiki graph extraction in `wiki_store.py`, derived from frontmatter `related`, inline links, policy references, business-rule references, and `index.md` catalog links.
 - Added `GET /wiki/graph` for a generated adjacency map and `GET /wiki/pages/{page_name}/backlinks` for per-page incoming links.
 - Kept the markdown files as the source of truth; the graph views are generated artifacts rather than a new manual layer.
+
+## [2026-04-11] service | Add compact graph endpoint for visualization
+
+- Added `GET /wiki/graph/compact` as a frontend-friendly graph view with node id, label, category, and link counts plus stripped-down edges.
+- Derived compact node categories from the existing page families so browser clients can color and group the wiki without extra hard-coded logic.
+- Kept the compact endpoint generated from the same markdown graph model as the full adjacency map.

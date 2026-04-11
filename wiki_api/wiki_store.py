@@ -77,6 +77,40 @@ class WikiStore:
             "SCHEMA.md": self.root / "SCHEMA.md",
             "RUNTIME_RULES.md": self.root / "RUNTIME_RULES.md",
         }
+        self.page_categories: dict[str, str] = {
+            "README.md": "orientation",
+            "PROJECT_CONTEXT.md": "orientation",
+            "INGEST_WORKFLOW.md": "orientation",
+            "SCHEMA.md": "orientation",
+            "RUNTIME_RULES.md": "runtime",
+            "index.md": "orientation",
+            "log.md": "maintenance",
+            "policy-contract.md": "runtime",
+            "foodex2-overview.md": "guidance",
+            "base-term-selection.md": "guidance",
+            "facet-coding-rules.md": "guidance",
+            "implicit-vs-explicit-facets.md": "guidance",
+            "code-string-format.md": "guidance",
+            "process-facets.md": "guidance",
+            "ingredient-facets.md": "guidance",
+            "packaging-facets.md": "guidance",
+            "chemical-monitoring-foodex2.md": "domain_overlay",
+            "business-rules.md": "validation",
+            "validation-rules.md": "validation",
+            "structural-validation.md": "validation",
+            "term-type-facet-constraints.md": "validation",
+            "process-validation-rules.md": "validation",
+            "domain-specific-validation.md": "domain_overlay",
+            "maintenance-history.md": "maintenance",
+            "maintenance-2015.md": "maintenance",
+            "maintenance-2016-2018.md": "maintenance",
+            "maintenance-2019.md": "maintenance",
+            "maintenance-2020.md": "maintenance",
+            "maintenance-2021.md": "maintenance",
+            "maintenance-2022.md": "maintenance",
+            "maintenance-2023.md": "maintenance",
+            "maintenance-2024.md": "maintenance",
+        }
 
     @cached_property
     def _summaries(self) -> dict[str, str]:
@@ -365,6 +399,37 @@ class WikiStore:
             "nodes": list(self._graph["nodes"]),
             "edges": list(self._graph["edges"]),
             "summary": dict(self._graph["summary"]),
+        }
+
+    def page_category(self, page_name: str) -> str:
+        normalized = self.normalize_page_name(page_name)
+        return self.page_categories.get(normalized, "unknown")
+
+    def compact_graph_data(self) -> dict[str, Any]:
+        graph = self._graph
+        nodes = [
+            {
+                "id": node["page_name"],
+                "label": node["title"],
+                "category": self.page_category(node["page_name"]),
+                "incoming_count": node["incoming_count"],
+                "outgoing_count": node["outgoing_count"],
+                "total_links": node["incoming_count"] + node["outgoing_count"],
+            }
+            for node in graph["nodes"]
+        ]
+        edges = [
+            {
+                "source": edge["source"],
+                "target": edge["target"],
+                "type": edge["type"],
+            }
+            for edge in graph["edges"]
+        ]
+        return {
+            "nodes": nodes,
+            "edges": edges,
+            "summary": dict(graph["summary"]),
         }
 
     def page_backlinks(self, page_name: str) -> dict[str, Any]:

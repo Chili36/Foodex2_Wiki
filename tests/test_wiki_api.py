@@ -303,6 +303,23 @@ def test_wiki_graph_exposes_index_hub_edges() -> None:
     )
 
 
+def test_compact_wiki_graph_is_frontend_friendly() -> None:
+    response = request("GET", "/wiki/graph/compact")
+    assert response.status_code == 200
+    payload = response.json()
+
+    schema_node = next(node for node in payload["nodes"] if node["id"] == "SCHEMA.md")
+    assert schema_node["label"] == "Wiki Schema"
+    assert schema_node["category"] == "orientation"
+    assert schema_node["total_links"] == schema_node["incoming_count"] + schema_node["outgoing_count"]
+    assert any(
+        edge["source"] == "index.md"
+        and edge["target"] == "SCHEMA.md"
+        and edge["type"] == "index_reference"
+        for edge in payload["edges"]
+    )
+
+
 def test_page_backlinks_returns_incoming_relationships() -> None:
     response = request("GET", "/wiki/pages/SCHEMA.md/backlinks")
     assert response.status_code == 200
@@ -592,6 +609,7 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     assert "policy_contract" in payload["components"]["schemas"]["PolicyPackResponse"]["properties"]
     assert "policy_contract" in payload["components"]["schemas"]["SolveResponse"]["properties"]
     assert "/wiki/graph" in payload["paths"]
+    assert "/wiki/graph/compact" in payload["paths"]
     assert "/wiki/pages/{page_name}/backlinks" in payload["paths"]
 
     context_description = payload["paths"]["/wiki/context-pack"]["post"]["description"]

@@ -230,6 +230,27 @@ class WikiGraphResponse(BaseModel):
     summary: GraphSummary
 
 
+class CompactGraphNode(BaseModel):
+    id: str
+    label: str
+    category: str
+    incoming_count: int
+    outgoing_count: int
+    total_links: int
+
+
+class CompactGraphEdge(BaseModel):
+    source: str
+    target: str
+    type: str
+
+
+class CompactWikiGraphResponse(BaseModel):
+    nodes: list[CompactGraphNode] = Field(default_factory=list)
+    edges: list[CompactGraphEdge] = Field(default_factory=list)
+    summary: GraphSummary
+
+
 class BacklinkEntry(BaseModel):
     source: str
     source_title: str
@@ -569,6 +590,20 @@ def get_wiki_graph() -> WikiGraphResponse:
     return WikiGraphResponse(
         nodes=[GraphNode(**node) for node in graph["nodes"]],
         edges=[GraphEdge(**edge) for edge in graph["edges"]],
+        summary=GraphSummary(**graph["summary"]),
+    )
+
+
+@app.get(
+    "/wiki/graph/compact",
+    response_model=CompactWikiGraphResponse,
+    summary="Return a frontend-friendly compact wiki graph",
+)
+def get_compact_wiki_graph() -> CompactWikiGraphResponse:
+    graph = store.compact_graph_data()
+    return CompactWikiGraphResponse(
+        nodes=[CompactGraphNode(**node) for node in graph["nodes"]],
+        edges=[CompactGraphEdge(**edge) for edge in graph["edges"]],
         summary=GraphSummary(**graph["summary"]),
     )
 
