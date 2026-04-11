@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-04-08"
+last_updated: "2026-04-10"
 ---
 
 # Index
@@ -12,8 +12,10 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 - [README.md](README.md): Repo overview, current status, directory layout, and working conventions.
 - [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md): What this wiki is for, why it exists, and the LLM-wiki operating model behind it.
 - [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md): Practical playbook for turning raw PDFs into stable topic pages without collapsing into one-shot summarization.
+- [SCHEMA.md](SCHEMA.md): Page types, frontmatter fields, section conventions, and ingest schema for the FoodEx2 wiki.
+- [RUNTIME_RULES.md](RUNTIME_RULES.md): Compact prompt-facing rules file always attached by `context-pack` before supporting guidance pages.
 - [log.md](log.md): Chronological record of ingests and maintenance work.
-- [policy-contract.md](raw/efsa-guidance/policy-contract.md): Small always-on policy layer defining decision order, binding rules, tie-breaks, and anti-patterns for the solver.
+- [policy-contract.md](raw/efsa-guidance/policy-contract.md): Richer control-layer page defining decision order, binding rules, tie-breaks, and anti-patterns for structured and solver-oriented flows.
 
 ## Guiding Principles
 

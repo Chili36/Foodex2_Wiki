@@ -9,6 +9,9 @@ from wiki_api.librarian import LibrarianResult, PageSelectionResult, SolverResul
 from wiki_api.policy import build_policy_contract
 
 
+RUNTIME_RULES_PAGE_NAME = "RUNTIME_RULES.md"
+
+
 async def _request(method: str, path: str, **kwargs: object) -> httpx.Response:
     transport = httpx.ASGITransport(app=app_module.app)
     async with httpx.AsyncClient(
@@ -105,56 +108,6 @@ class FakeLibrarian:
         )
 
 
-class FakeSelector:
-    def __init__(self) -> None:
-        self.max_pages = 6
-        self.model = "fake-claude"
-        self.calls: list[dict[str, object]] = []
-
-    def run(self, payload: dict[str, object]) -> PageSelectionResult:
-        self.calls.append(payload)
-        return PageSelectionResult(
-            pages_used=[
-                "index.md",
-                "base-term-selection.md",
-                "packaging-facets.md",
-                "ingredient-facets.md",
-            ],
-            tool_trace=[
-                {"page_name": "base-term-selection.md", "order": 1, "chars": 100, "synthetic": False},
-                {"page_name": "packaging-facets.md", "order": 2, "chars": 100, "synthetic": False},
-                {"page_name": "ingredient-facets.md", "order": 3, "chars": 100, "synthetic": False},
-            ],
-            token_summary={
-                "model": "fake-claude",
-                "calls": 1,
-                "input_tokens": 90,
-                "output_tokens": 20,
-                "cache_creation_input_tokens": 0,
-                "cache_read_input_tokens": 0,
-                "total_tracked_tokens": 110,
-                "per_call": [
-                    {
-                        "stop_reason": "tool_use",
-                        "input_tokens": 90,
-                        "output_tokens": 20,
-                        "cache_creation_input_tokens": 0,
-                        "cache_read_input_tokens": 0,
-                        "total_tracked_tokens": 110,
-                    }
-                ],
-            },
-            timing_summary={
-                "calls": 1,
-                "llm_time_ms": 640,
-                "selector_wall_time_ms": 700,
-                "per_call": [
-                    {"call_number": 1, "duration_ms": 640, "stop_reason": "tool_use"},
-                ],
-            },
-        )
-
-
 class FakeSolver:
     def __init__(self) -> None:
         self.model = "fake-claude-solver"
@@ -231,6 +184,70 @@ class FakeBadSolver:
         raise ValueError("Could not extract JSON object from solver response")
 
 
+class FakeSelector:
+    def __init__(self) -> None:
+        self.max_pages = 7
+        self.model = "fake-claude-context"
+        self.calls: list[dict[str, object]] = []
+
+    def run(self, payload: dict[str, object]) -> PageSelectionResult:
+        self.calls.append(payload)
+        return PageSelectionResult(
+            pages_used=[
+                "index.md",
+                "base-term-selection.md",
+                "ingredient-facets.md",
+                "packaging-facets.md",
+                "term-type-facet-constraints.md",
+                "implicit-vs-explicit-facets.md",
+            ],
+            tool_trace=[
+                {"page_name": "base-term-selection.md", "order": 1, "chars": 100, "synthetic": False},
+                {"page_name": "ingredient-facets.md", "order": 2, "chars": 100, "synthetic": False},
+                {"page_name": "packaging-facets.md", "order": 3, "chars": 100, "synthetic": False},
+                {
+                    "page_name": "term-type-facet-constraints.md",
+                    "order": 4,
+                    "chars": 100,
+                    "synthetic": False,
+                },
+                {
+                    "page_name": "implicit-vs-explicit-facets.md",
+                    "order": 5,
+                    "chars": 100,
+                    "synthetic": False,
+                },
+            ],
+            token_summary={
+                "model": self.model,
+                "calls": 1,
+                "input_tokens": 90,
+                "output_tokens": 25,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 115,
+                "per_call": [
+                    {
+                        "stop_reason": "end_turn",
+                        "input_tokens": 90,
+                        "output_tokens": 25,
+                        "cache_creation_input_tokens": 0,
+                        "cache_read_input_tokens": 0,
+                        "total_tracked_tokens": 115,
+                    }
+                ],
+            },
+            timing_summary={
+                "calls": 1,
+                "llm_time_ms": 480,
+                "selector_wall_time_ms": 520,
+                "per_call": [
+                    {"call_number": 1, "duration_ms": 480, "stop_reason": "end_turn"},
+                ],
+            },
+        )
+
+
 def setup_function() -> None:
     app_module.librarian_runner = FakeLibrarian()
     app_module.selector_runner = FakeSelector()
@@ -251,6 +268,9 @@ def test_list_pages_includes_packaging() -> None:
     assert "packaging-facets.md" in names
     assert "README.md" in names
     assert "PROJECT_CONTEXT.md" in names
+    assert "INGEST_WORKFLOW.md" in names
+    assert "SCHEMA.md" in names
+    assert "RUNTIME_RULES.md" in names
 
 
 def test_get_unknown_page_returns_404() -> None:
@@ -265,6 +285,53 @@ def test_get_project_context_page_returns_200() -> None:
     assert payload["page_name"] == "PROJECT_CONTEXT.md"
     assert payload["title"] == "Project Context"
     assert "What We Are Building" in payload["content"]
+
+
+def test_wiki_graph_exposes_index_hub_edges() -> None:
+    response = request("GET", "/wiki/graph")
+    assert response.status_code == 200
+    payload = response.json()
+
+    assert payload["summary"]["page_count"] >= 30
+    assert payload["summary"]["edge_count"] > 0
+    assert any(node["page_name"] == "index.md" for node in payload["nodes"])
+    assert any(
+        edge["source"] == "index.md"
+        and edge["target"] == "SCHEMA.md"
+        and edge["type"] == "index_reference"
+        for edge in payload["edges"]
+    )
+
+
+def test_compact_wiki_graph_is_frontend_friendly() -> None:
+    response = request("GET", "/wiki/graph/compact")
+    assert response.status_code == 200
+    payload = response.json()
+
+    schema_node = next(node for node in payload["nodes"] if node["id"] == "SCHEMA.md")
+    assert schema_node["label"] == "Wiki Schema"
+    assert schema_node["category"] == "orientation"
+    assert schema_node["total_links"] == schema_node["incoming_count"] + schema_node["outgoing_count"]
+    assert any(
+        edge["source"] == "index.md"
+        and edge["target"] == "SCHEMA.md"
+        and edge["type"] == "index_reference"
+        for edge in payload["edges"]
+    )
+
+
+def test_page_backlinks_returns_incoming_relationships() -> None:
+    response = request("GET", "/wiki/pages/SCHEMA.md/backlinks")
+    assert response.status_code == 200
+    payload = response.json()
+
+    assert payload["page_name"] == "SCHEMA.md"
+    assert payload["backlink_count"] >= 1
+    assert any(
+        entry["source"] == "index.md" and entry["type"] == "index_reference"
+        for entry in payload["backlinks"]
+    )
+    assert any(entry["source"] == "README.md" for entry in payload["backlinks"])
 
 
 def test_policy_pack_uses_librarian_response() -> None:
@@ -367,23 +434,32 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["guiding_principles"][2].startswith("FoodEx2 prefers modular description")
     assert payload["pages_used"] == [
-        "policy-contract.md",
+        "RUNTIME_RULES.md",
         "index.md",
         "base-term-selection.md",
-        "packaging-facets.md",
         "ingredient-facets.md",
+        "packaging-facets.md",
+        "term-type-facet-constraints.md",
+        "implicit-vs-explicit-facets.md",
     ]
     assert "policy_pack" not in payload
     assert "query_classification" not in payload
     assert payload["trace"]["selection_method"] == "service-owned llm page selector"
     assert payload["trace"]["candidate_input_mode"] == "candidates->candidate_hints"
+    assert payload["trace"]["index_used"] is True
     assert payload["trace"]["token_summary"]["calls"] == 1
-    assert payload["trace"]["timing_summary"]["llm_time_ms"] == 640
-    assert payload["trace"]["timing_summary"]["selector_wall_time_ms"] == 700
+    assert payload["trace"]["token_summary"]["total_tracked_tokens"] == 115
+    assert payload["trace"]["timing_summary"]["llm_time_ms"] == 480
+    assert payload["trace"]["model"] == "fake-claude-context"
     assert payload["trace"]["timing_summary"]["request_wall_time_ms"] >= 0
-    assert payload["pages"][0]["page_name"] == "policy-contract.md"
+    assert payload["pages"][0]["page_name"] == "RUNTIME_RULES.md"
+    assert payload["trace"]["tool_trace"][0]["page_name"] == "base-term-selection.md"
     assert app_module.selector_runner.calls[0]["candidates"] == [
-        {"code": "A044C", "name": "Tomato-containing cooked sauces", "termType": "s"}
+        {
+            "code": "A044C",
+            "name": "Tomato-containing cooked sauces",
+            "termType": "s",
+        }
     ]
 
 
@@ -532,12 +608,17 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     assert "policy_contract" in payload["components"]["schemas"]["ContextPackResponse"]["properties"]
     assert "policy_contract" in payload["components"]["schemas"]["PolicyPackResponse"]["properties"]
     assert "policy_contract" in payload["components"]["schemas"]["SolveResponse"]["properties"]
+    assert "/wiki/graph" in payload["paths"]
+    assert "/wiki/graph/compact" in payload["paths"]
+    assert "/wiki/pages/{page_name}/backlinks" in payload["paths"]
 
     context_description = payload["paths"]["/wiki/context-pack"]["post"]["description"]
     policy_description = payload["paths"]["/wiki/policy-pack"]["post"]["description"]
     solve_description = payload["paths"]["/wiki/solve"]["post"]["description"]
 
     assert "`candidate_hints`" in context_description
+    assert "choose and return prompt-ready context pages" in context_description
+    assert "deterministically" not in context_description
     assert "`candidates_trimmed`" in policy_description
     assert "`coverageText`" in policy_description
     assert "`scopeNote`" not in policy_description

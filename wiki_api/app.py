@@ -23,7 +23,7 @@ from .wiki_store import WikiStore
 REPO_ROOT = Path(__file__).resolve().parent.parent
 store = WikiStore(REPO_ROOT)
 librarian_runner: AnthropicWikiLibrarian | Any | None = None
-selector_runner: AnthropicWikiPageSelector | Any | None = None
+selector_runner: Any | None = None
 solver_runner: AnthropicFoodEx2Solver | Any | None = None
 logger = logging.getLogger("wiki_api")
 if not logging.getLogger().handlers:
@@ -37,7 +37,7 @@ def get_librarian_runner() -> AnthropicWikiLibrarian | Any:
     return librarian_runner
 
 
-def get_selector_runner() -> AnthropicWikiPageSelector | Any:
+def get_selector_runner() -> Any:
     global selector_runner
     if selector_runner is None:
         selector_runner = AnthropicWikiPageSelector(store=store)
@@ -138,6 +138,7 @@ class CommonRequestFields(BaseModel):
 
 
 class ContextPackRequest(CommonRequestFields):
+    max_pages: int = Field(default=7, ge=1, le=10)
     candidate_hints: list[CandidateHint] = Field(
         default_factory=list,
         description=(
@@ -149,7 +150,7 @@ class ContextPackRequest(CommonRequestFields):
         default_factory=list,
         description=(
             "Legacy compatibility input. If provided, the service will internally reduce it to "
-            "candidate hints before calling the LLM selector."
+            "candidate hints before page selection."
         ),
         deprecated=True,
     )
@@ -190,6 +191,80 @@ class PageSummary(BaseModel):
     sources: list[str] = Field(default_factory=list)
     related: list[str] = Field(default_factory=list)
     content: str | None = None
+
+
+class GraphEdge(BaseModel):
+    source: str
+    target: str
+    type: str
+    section: str | None = None
+    label: str | None = None
+
+
+class GraphNode(BaseModel):
+    page_name: str
+    title: str
+    summary: str
+    incoming_count: int
+    outgoing_count: int
+
+
+class GraphHub(BaseModel):
+    page_name: str
+    title: str
+    incoming_count: int
+    outgoing_count: int
+    total_links: int
+
+
+class GraphSummary(BaseModel):
+    page_count: int
+    edge_count: int
+    orphan_pages: list[str] = Field(default_factory=list)
+    hub_pages: list[GraphHub] = Field(default_factory=list)
+
+
+class WikiGraphResponse(BaseModel):
+    nodes: list[GraphNode] = Field(default_factory=list)
+    edges: list[GraphEdge] = Field(default_factory=list)
+    summary: GraphSummary
+
+
+class CompactGraphNode(BaseModel):
+    id: str
+    label: str
+    category: str
+    incoming_count: int
+    outgoing_count: int
+    total_links: int
+
+
+class CompactGraphEdge(BaseModel):
+    source: str
+    target: str
+    type: str
+
+
+class CompactWikiGraphResponse(BaseModel):
+    nodes: list[CompactGraphNode] = Field(default_factory=list)
+    edges: list[CompactGraphEdge] = Field(default_factory=list)
+    summary: GraphSummary
+
+
+class BacklinkEntry(BaseModel):
+    source: str
+    source_title: str
+    type: str
+    section: str | None = None
+    label: str | None = None
+
+
+class BacklinksResponse(BaseModel):
+    page_name: str
+    title: str
+    summary: str
+    backlinks: list[BacklinkEntry] = Field(default_factory=list)
+    backlink_count: int
 
 
 class QueryClassification(BaseModel):
@@ -387,21 +462,23 @@ def _normalize_solver_data(data: dict[str, Any]) -> dict[str, Any]:
 
 
 POLICY_PAGE_NAME = "policy-contract.md"
+RUNTIME_RULES_PAGE_NAME = "RUNTIME_RULES.md"
 
 
-def _ensure_policy_page(
+def _ensure_front_page(
+    front_page_name: str,
     pages_used: list[str],
     pages: list["PageSummary"],
     *,
     include_content: bool,
 ) -> tuple[list[str], list["PageSummary"]]:
-    """Ensure policy-contract.md is always included first in pages_used and pages."""
-    pages_used = [POLICY_PAGE_NAME, *[name for name in pages_used if name != POLICY_PAGE_NAME]]
+    """Ensure a given page is always included first in pages_used and pages."""
+    pages_used = [front_page_name, *[name for name in pages_used if name != front_page_name]]
 
     pages_by_name = {page.page_name: page for page in pages}
-    if POLICY_PAGE_NAME not in pages_by_name:
-        page = store.read_page(POLICY_PAGE_NAME)
-        pages_by_name[POLICY_PAGE_NAME] = PageSummary(
+    if front_page_name not in pages_by_name:
+        page = store.read_page(front_page_name)
+        pages_by_name[front_page_name] = PageSummary(
             page_name=page.name,
             title=page.title,
             summary=page.summary,
@@ -410,8 +487,8 @@ def _ensure_policy_page(
             content=store.clean_content_for_model(page) if include_content else None,
         )
 
-    ordered_pages: list[PageSummary] = [pages_by_name[POLICY_PAGE_NAME]]
-    ordered_pages.extend(page for page in pages if page.page_name != POLICY_PAGE_NAME)
+    ordered_pages: list[PageSummary] = [pages_by_name[front_page_name]]
+    ordered_pages.extend(page for page in pages if page.page_name != front_page_name)
     return pages_used, ordered_pages
 
 
@@ -503,6 +580,53 @@ def get_page(page_name: str, include_content: bool = Query(default=True)) -> dic
     }
 
 
+@app.get(
+    "/wiki/graph",
+    response_model=WikiGraphResponse,
+    summary="Return the generated wiki adjacency map",
+)
+def get_wiki_graph() -> WikiGraphResponse:
+    graph = store.graph_data()
+    return WikiGraphResponse(
+        nodes=[GraphNode(**node) for node in graph["nodes"]],
+        edges=[GraphEdge(**edge) for edge in graph["edges"]],
+        summary=GraphSummary(**graph["summary"]),
+    )
+
+
+@app.get(
+    "/wiki/graph/compact",
+    response_model=CompactWikiGraphResponse,
+    summary="Return a frontend-friendly compact wiki graph",
+)
+def get_compact_wiki_graph() -> CompactWikiGraphResponse:
+    graph = store.compact_graph_data()
+    return CompactWikiGraphResponse(
+        nodes=[CompactGraphNode(**node) for node in graph["nodes"]],
+        edges=[CompactGraphEdge(**edge) for edge in graph["edges"]],
+        summary=GraphSummary(**graph["summary"]),
+    )
+
+
+@app.get(
+    "/wiki/pages/{page_name}/backlinks",
+    response_model=BacklinksResponse,
+    summary="Return backlinks for one wiki page",
+)
+def get_page_backlinks(page_name: str) -> BacklinksResponse:
+    try:
+        backlinks = store.page_backlinks(page_name)
+    except FileNotFoundError as exc:
+        raise HTTPException(status_code=404, detail=str(exc)) from exc
+    return BacklinksResponse(
+        page_name=backlinks["page_name"],
+        title=backlinks["title"],
+        summary=backlinks["summary"],
+        backlinks=[BacklinkEntry(**entry) for entry in backlinks["backlinks"]],
+        backlink_count=backlinks["backlink_count"],
+    )
+
+
 @app.post(
     "/wiki/policy-pack",
     response_model=PolicyPackResponse,
@@ -559,7 +683,8 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
         )
         for page in [store.read_page(page_name) for page_name in librarian_result.data["pages_used"]]
     ]
-    final_pages_used, pages = _ensure_policy_page(
+    final_pages_used, pages = _ensure_front_page(
+        POLICY_PAGE_NAME,
         librarian_result.data["pages_used"], pages, include_content=request.include_page_content,
     )
     response = PolicyPackResponse(
@@ -609,10 +734,11 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
     response_model=ContextPackResponse,
     summary="Return selected wiki pages as raw context without synthesized rules",
     description=(
-        "Use this when the wiki service should only choose and return context pages. Preferred "
-        "request field: `candidate_hints`. Keep it minimal with only `code`, `name`, and "
-        "`termType`. Legacy full `candidates` input is still accepted, but the service reduces "
-        "it internally to candidate hints before the selector LLM call."
+        "Use this when the wiki service should choose and return prompt-ready context pages "
+        "without synthesizing a policy pack or final code. Preferred request field: "
+        "`candidate_hints`. Keep it minimal with only `code`, `name`, and `termType`. Legacy "
+        "full `candidates` input is still accepted, but the service reduces it internally to "
+        "candidate hints before page selection."
     ),
 )
 def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
@@ -658,8 +784,11 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
         )
         for page in [store.read_page(page_name) for page_name in selection_result.pages_used]
     ]
-    final_pages_used, pages = _ensure_policy_page(
-        selection_result.pages_used, pages, include_content=request.include_page_content,
+    final_pages_used, pages = _ensure_front_page(
+        RUNTIME_RULES_PAGE_NAME,
+        selection_result.pages_used,
+        pages,
+        include_content=request.include_page_content,
     )
     response = ContextPackResponse(
         guiding_principles=store.guiding_principles(),
@@ -779,7 +908,8 @@ def solve_foodex2(request: SolveRequest) -> SolveResponse:
         )
         for page in pages_raw
     ]
-    final_pages_used, pages = _ensure_policy_page(
+    final_pages_used, pages = _ensure_front_page(
+        POLICY_PAGE_NAME,
         librarian_result.data["pages_used"], pages, include_content=request.include_page_content,
     )
 

@@ -1,6 +1,6 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-04-08"
+last_updated: "2026-04-10"
 ---
 
 # Log
@@ -163,3 +163,39 @@ last_updated: "2026-04-08"
 
 - Removed service-layer and machine-readable framing from the top of `raw/efsa-guidance/policy-contract.md` so the first tokens seen by a downstream model are operational instructions rather than implementation notes.
 - Kept the parseable policy sections intact so the API can still extract the policy contract while the visible markdown stays cleaner and more prompt-efficient.
+
+## [2026-04-10] maintenance | Add runtime and schema layer documents
+
+- Added `RUNTIME_RULES.md` as the compact prompt-facing rules file attached by `context-pack`.
+- Added `SCHEMA.md` to define page types, frontmatter fields, section conventions, and the practical layer model for the repo.
+- Updated `index.md` and `README.md` so the runtime layer and schema layer are visible as first-class parts of the knowledge base.
+
+## [2026-04-10] service | Make context-pack runtime-first
+
+- Changed `context-pack` page ordering so `RUNTIME_RULES.md` is returned first instead of `policy-contract.md`.
+- Kept `context-pack` on the adaptive LLM page-selector path because page choice still needs to vary by case.
+- Kept `policy-pack` and `solve` on the richer LLM-driven path, while updating retrieval tests for the runtime-first alpha `context-pack` flow.
+
+## [2026-04-10] service | Clarify context-pack selector budget wording
+
+- Replaced the opaque selector prompt wording about `non-index pages` with direct wording: the index is already provided, so the selector should request only the additional wiki pages it needs.
+- Changed the default `context-pack` selector budget from 5 additional pages to 6 additional pages, which yields the intended default of up to 8 returned pages once `index.md` and `RUNTIME_RULES.md` are included.
+- Kept the page budget request-scoped through `max_pages`, so it can be tuned later if runtime or cost proves worse than expected.
+
+## [2026-04-11] maintenance | Document the wiki relationship model
+
+- Added an explicit relationship-model section to `SCHEMA.md` so the wiki now documents how pages relate to each other without pretending there is a separate graph database.
+- Recorded the current edge types as `related` frontmatter, inline `[[...]]` links, `Relevant Policy`, `Relevant Business Rules`, and `index.md` as the hub node.
+- Added a short README note so outside readers can understand that the wiki is graph-like even though it is still authored as markdown pages.
+
+## [2026-04-11] service | Add generated graph and backlink views
+
+- Added wiki graph extraction in `wiki_store.py`, derived from frontmatter `related`, inline links, policy references, business-rule references, and `index.md` catalog links.
+- Added `GET /wiki/graph` for a generated adjacency map and `GET /wiki/pages/{page_name}/backlinks` for per-page incoming links.
+- Kept the markdown files as the source of truth; the graph views are generated artifacts rather than a new manual layer.
+
+## [2026-04-11] service | Add compact graph endpoint for visualization
+
+- Added `GET /wiki/graph/compact` as a frontend-friendly graph view with node id, label, category, and link counts plus stripped-down edges.
+- Derived compact node categories from the existing page families so browser clients can color and group the wiki without extra hard-coded logic.
+- Kept the compact endpoint generated from the same markdown graph model as the full adjacency map.
