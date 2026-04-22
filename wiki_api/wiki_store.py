@@ -95,6 +95,7 @@ class WikiStore:
             "ingredient-facets.md": "guidance",
             "packaging-facets.md": "guidance",
             "chemical-monitoring-foodex2.md": "domain_overlay",
+            "vmpr-legislative-mapping.md": "domain_overlay",
             "business-rules.md": "validation",
             "validation-rules.md": "validation",
             "structural-validation.md": "validation",
@@ -403,7 +404,11 @@ class WikiStore:
 
     def page_category(self, page_name: str) -> str:
         normalized = self.normalize_page_name(page_name)
-        return self.page_categories.get(normalized, "unknown")
+        if normalized in self.page_categories:
+            return self.page_categories[normalized]
+        if (self.guidance_dir / normalized).exists():
+            return "guidance"
+        return "unknown"
 
     def compact_graph_data(self) -> dict[str, Any]:
         graph = self._graph
