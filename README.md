@@ -264,6 +264,27 @@ Run it locally with:
 uvicorn wiki_api.app:app --reload
 ```
 
+Run it as a persistent macOS user service with the versioned LaunchAgent template in [deploy/launchd/com.chili36.foodex2-wiki.plist](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/deploy/launchd/com.chili36.foodex2-wiki.plist). Install it to `~/Library/LaunchAgents/com.chili36.foodex2-wiki.plist`, then reload it with:
+
+```bash
+launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.chili36.foodex2-wiki.plist
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.chili36.foodex2-wiki.plist
+launchctl kickstart -k gui/$(id -u)/com.chili36.foodex2-wiki
+```
+
+Check service health with:
+
+```bash
+curl -s http://127.0.0.1:8010/health
+```
+
+Inspect service logs with:
+
+```bash
+tail -f /tmp/foodex2_wiki_8010.out.log
+tail -f /tmp/foodex2_wiki_8010.err.log
+```
+
 `context-pack`, `policy-pack`, and `solve` currently use Anthropic internally. `context-pack` uses the lighter page-selector path, while `policy-pack` and `solve` use the richer librarian and solver flow. The wiki API loads `ANTHROPIC_API_KEY`, `WIKI_LIBRARIAN_MODEL`, and the optional endpoint-specific overrides from `.env`.
 For the LLM-driven paths, the service injects `index.md` into the first prompt so the model can choose and batch follow-up wiki page reads without spending a separate LLM turn just to fetch the catalog.
 

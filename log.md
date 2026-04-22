@@ -1,6 +1,6 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-04-10"
+last_updated: "2026-04-22"
 ---
 
 # Log
@@ -199,3 +199,9 @@ last_updated: "2026-04-10"
 - Added `GET /wiki/graph/compact` as a frontend-friendly graph view with node id, label, category, and link counts plus stripped-down edges.
 - Derived compact node categories from the existing page families so browser clients can color and group the wiki without extra hard-coded logic.
 - Kept the compact endpoint generated from the same markdown graph model as the full adjacency map.
+
+## [2026-04-22] service | Add macOS LaunchAgent template for persistent wiki API
+
+- Added `deploy/launchd/com.chili36.foodex2-wiki.plist` so the wiki API can run under `launchd` instead of a transient foreground Codex process.
+- Documented the install, reload, health-check, and log-inspection commands in `README.md`.
+- This is intended to keep `127.0.0.1:8010` alive independently of interactive Codex sessions.
