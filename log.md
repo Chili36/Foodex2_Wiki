@@ -206,3 +206,9 @@ last_updated: "2026-04-22"
 - Patched `chemical-monitoring-foodex2.md` and `domain-specific-validation.md` so the existing VMPR overlay pages now explain why `F21`, `F23`, `F20`, and `F33` matter for downstream legislative classification, not only for validation.
 - Updated `index.md` so the new VMPR mapping page is visible to selectors and human readers as a first-class domain-overlay page.
 - Updated the compact graph category mapping so the new VMPR page is emitted as `domain_overlay`, with uncategorized guidance pages now falling back to `guidance` instead of `unknown`.
+
+## [2026-04-22] service | Add macOS LaunchAgent template for persistent wiki API
+
+- Added `deploy/launchd/com.chili36.foodex2-wiki.plist` so the wiki API can run under `launchd` instead of a transient foreground Codex process.
+- Documented the install, reload, health-check, and log-inspection commands in `README.md`.
+- This is intended to keep `127.0.0.1:8010` alive independently of interactive Codex sessions.
