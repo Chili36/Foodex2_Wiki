@@ -1,6 +1,6 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-04-10"
+last_updated: "2026-04-22"
 ---
 
 # Log
@@ -199,3 +199,10 @@ last_updated: "2026-04-10"
 - Added `GET /wiki/graph/compact` as a frontend-friendly graph view with node id, label, category, and link counts plus stripped-down edges.
 - Derived compact node categories from the existing page families so browser clients can color and group the wiki without extra hard-coded logic.
 - Kept the compact endpoint generated from the same markdown graph model as the full adjacency map.
+
+## [2026-04-22] ingest | Add VMPR legislative mapping overlay
+
+- Added `raw/efsa-guidance/vmpr-legislative-mapping.md` from the new EFSA VMPR guidance PDF to capture the downstream ETL / LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and `FoodClassVMPR_report`.
+- Patched `chemical-monitoring-foodex2.md` and `domain-specific-validation.md` so the existing VMPR overlay pages now explain why `F21`, `F23`, `F20`, and `F33` matter for downstream legislative classification, not only for validation.
+- Updated `index.md` so the new VMPR mapping page is visible to selectors and human readers as a first-class domain-overlay page.
+- Updated the compact graph category mapping so the new VMPR page is emitted as `domain_overlay`, with uncategorized guidance pages now falling back to `guidance` instead of `unknown`.

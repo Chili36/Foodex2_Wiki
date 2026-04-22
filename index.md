@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-04-10"
+last_updated: "2026-04-22"
 ---
 
 # Index
@@ -36,6 +36,7 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 - [ingredient-facets.md](raw/efsa-guidance/ingredient-facets.md): Rules for characterising ingredients, mixed foods, composite coding, and minor flavouring/added-ingredient use on derivatives.
 - [packaging-facets.md](raw/efsa-guidance/packaging-facets.md): When to use `F18` packaging-format and `F19` packaging-material, and how they differ from `F28` process.
 - [chemical-monitoring-foodex2.md](raw/efsa-guidance/chemical-monitoring-foodex2.md): Domain-specific overlay for chemical monitoring, including VMPR/VETDRUG reporting, explicit F01/F02/F33 exceptions, and legislative-monitoring context.
+- [vmpr-legislative-mapping.md](raw/efsa-guidance/vmpr-legislative-mapping.md): Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.
 
 ## Validation Layer
 

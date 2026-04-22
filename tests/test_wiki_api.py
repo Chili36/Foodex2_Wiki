@@ -312,6 +312,8 @@ def test_compact_wiki_graph_is_frontend_friendly() -> None:
     assert schema_node["label"] == "Wiki Schema"
     assert schema_node["category"] == "orientation"
     assert schema_node["total_links"] == schema_node["incoming_count"] + schema_node["outgoing_count"]
+    vmpr_node = next(node for node in payload["nodes"] if node["id"] == "vmpr-legislative-mapping.md")
+    assert vmpr_node["category"] == "domain_overlay"
     assert any(
         edge["source"] == "index.md"
         and edge["target"] == "SCHEMA.md"
