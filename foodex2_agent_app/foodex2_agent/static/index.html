@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FoodEx2 Agent</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #f5f6f8;
+    --panel: #ffffff;
+    --line: #d8dde4;
+    --text: #1f2730;
+    --muted: #65707c;
+    --accent: #2f6f88;
+    --danger: #b4232f;
+    --code: #f0f3f6;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  main {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  section {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px;
+  }
+
+  h1 {
+    grid-column: 1 / -1;
+    margin: 0;
+    font-size: 24px;
+    letter-spacing: 0;
+  }
+
+  h2 {
+    margin: 0 0 12px;
+    font-size: 15px;
+  }
+
+  label {
+    display: block;
+    margin: 12px 0 6px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  textarea, input, select {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px;
+    font: inherit;
+    background: #fff;
+  }
+
+  textarea { min-height: 126px; resize: vertical; }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  button {
+    margin-top: 14px;
+    border: 0;
+    border-radius: 6px;
+    background: var(--accent);
+    color: white;
+    padding: 10px 12px;
+    font: inherit;
+    cursor: pointer;
+  }
+
+  button:disabled { opacity: 0.55; cursor: wait; }
+
+  pre {
+    background: var(--code);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 12px;
+    overflow: auto;
+    min-height: 220px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .status {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 10px;
+  }
+
+  .error { color: var(--danger); }
+
+  .token-panel {
+    margin-top: 14px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #fafbfc;
+    padding: 12px;
+  }
+
+  .token-panel h2 {
+    margin-bottom: 10px;
+  }
+
+  .metric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .metric {
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #fff;
+    padding: 8px;
+  }
+
+  .metric-label {
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0;
+  }
+
+  .metric-value {
+    margin-top: 2px;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .model-list {
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .model-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    border-top: 1px solid var(--line);
+    padding-top: 7px;
+    margin-top: 7px;
+  }
+
+  .meta {
+    grid-column: 1 / -1;
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: -10px;
+  }
+
+  .stack {
+    display: grid;
+    gap: 12px;
+  }
+
+  @media (max-width: 860px) {
+    main { grid-template-columns: 1fr; padding: 18px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>FoodEx2 Agent</h1>
+  <div id="build" class="meta">Checking backend...</div>
+  <section>
+    <h2>Case</h2>
+    <label for="term">Food/feed description</label>
+    <textarea id="term">Fresh cheese made from milk, using rennet and rennet substitute, with a minimum of 20% fat content.</textarea>
+    <div class="row">
+      <div>
+        <label for="language">Language hint</label>
+        <input id="language" placeholder="optional">
+      </div>
+      <div>
+        <label for="domain">Domain</label>
+        <input id="domain" placeholder="optional">
+      </div>
+    </div>
+    <div class="row">
+      <div>
+        <label for="agentModel">Coding model</label>
+        <select id="agentModel"></select>
+      </div>
+      <div>
+        <label for="evalModel">Eval model</label>
+        <select id="evalModel"></select>
+      </div>
+    </div>
+    <label for="humanReference">Human/reference coding for post-run comparison</label>
+    <textarea id="humanReference" placeholder="Optional. Paste the human code, confidence, and breakdown. The coding agent will not see this; the evaluator uses it after the run."></textarea>
+    <button id="run">Run Agent</button>
+    <div id="status" class="status">Uses Qdrant semantic recall, catalogue, wiki, and validator tools.</div>
+    <div class="token-panel" aria-live="polite">
+      <h2>Token Use</h2>
+      <div class="metric-grid">
+        <div class="metric">
+          <div class="metric-label">Total</div>
+          <div id="tokensTotal" class="metric-value">-</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Calls</div>
+          <div id="tokensCalls" class="metric-value">-</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Input</div>
+          <div id="tokensInput" class="metric-value">-</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Output</div>
+          <div id="tokensOutput" class="metric-value">-</div>
+        </div>
+      </div>
+      <ul id="tokensByModel" class="model-list">
+        <li><span>No run yet</span><span>-</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="stack">
+    <div>
+      <h2>Live Run</h2>
+      <pre id="progress">No run yet.</pre>
+    </div>
+    <div>
+      <h2>Final Result</h2>
+      <pre id="output">No result yet.</pre>
+    </div>
+  </section>
+</main>
+
+<script>
+const run = document.getElementById("run");
+const output = document.getElementById("output");
+const progress = document.getElementById("progress");
+const statusEl = document.getElementById("status");
+const buildEl = document.getElementById("build");
+const agentModelEl = document.getElementById("agentModel");
+const evalModelEl = document.getElementById("evalModel");
+const tokensTotal = document.getElementById("tokensTotal");
+const tokensCalls = document.getElementById("tokensCalls");
+const tokensInput = document.getElementById("tokensInput");
+const tokensOutput = document.getElementById("tokensOutput");
+const tokensByModel = document.getElementById("tokensByModel");
+
+loadHealth();
+
+async function loadHealth() {
+  try {
+    const response = await fetch("/health", {cache: "no-store"});
+    const health = await response.json();
+    buildEl.textContent = `Backend ${health.build || "unknown"} | coder ${health.model} | eval ${health.selfEvaluationModel || "not configured"} | semantic ${health.semanticCollection || "not configured"}`;
+    populateModelSelect(agentModelEl, health.modelOptions || [health.model], health.model);
+    populateModelSelect(evalModelEl, health.modelOptions || [health.selfEvaluationModel], health.selfEvaluationModel);
+  } catch (error) {
+    buildEl.textContent = "Backend health check failed.";
+    buildEl.classList.add("error");
+  }
+}
+
+function populateModelSelect(select, options, selected) {
+  const unique = Array.from(new Set((options || []).filter(Boolean)));
+  if (selected && !unique.includes(selected)) unique.unshift(selected);
+  select.innerHTML = unique.map((model) => {
+    const isSelected = model === selected ? " selected" : "";
+    return `<option value="${model}"${isSelected}>${model}</option>`;
+  }).join("");
+}
+
+function appendProgress(line) {
+  const stamp = new Date().toLocaleTimeString();
+  progress.textContent += `[${stamp}] ${line}\n`;
+  progress.scrollTop = progress.scrollHeight;
+}
+
+function formatToolCall(event) {
+  const args = event.arguments || {};
+  const why = args.why;
+  const visibleArgs = { ...args };
+  delete visibleArgs.why;
+  let line = `Tool ${event.name} -> ${JSON.stringify(visibleArgs)}`;
+  if (typeof why === "string" && why.trim()) {
+    line += ` | why: ${why}`;
+  }
+  return line;
+}
+
+function eventLine(event) {
+  switch (event.event) {
+    case "run_start":
+      return `Run ${event.runId} started. Log: ${event.logFile}`;
+    case "model_request":
+      return `Calling model, round ${event.round}.`;
+    case "model_response":
+      return `Model responded, round ${event.round}; tool calls: ${event.toolCalls}.`;
+    case "tool_call_start":
+      return formatToolCall(event);
+    case "tool_call_result": {
+      const count = event.resultCount == null ? "result" : `${event.resultCount} result(s)`;
+      const preview = event.preview && event.preview.length ? ` | ${event.preview.join("; ")}` : "";
+      return `Tool ${event.name} returned ${count}${event.truncated ? " (truncated)" : ""}${preview}`;
+    }
+    case "post_validation_tool_call":
+      return `Post-validation tool call: ${event.name} after valid code ${event.acceptedCode}.`;
+    case "post_validation_tool_calls_blocked":
+      return `Blocked post-validation tool call(s) after valid code ${event.acceptedCode}; forcing final answer.`;
+    case "pending_tool_calls":
+      return `Max rounds reached with pending tool calls: ${event.calls.map((call) => call.name).join(", ")}.`;
+    case "completed":
+      return "Completed.";
+    case "self_evaluation_start":
+      return `Self-evaluating run with ${event.model}.`;
+    case "self_evaluation_completed":
+      return `Self-evaluation completed: ${event.verdict || "unknown"}${event.score ? ` (${event.score}/5)` : ""}.`;
+    case "self_evaluation_failed":
+      return `Self-evaluation failed with ${event.model}: ${event.error}`;
+    case "run_learning_start":
+      return `Analyzing completed run with ${event.model}.`;
+    case "run_learning_written":
+      return `Run learning written: ${event.learningLogFile}`;
+    case "failure_analysis_start":
+      return `Analyzing failed run with ${event.model}.`;
+    case "failure_analysis_written":
+      return `Failure learning written: ${event.learningLogFile}${event.analysisStatus ? ` (${event.analysisStatus})` : ""}`;
+    case "failed":
+      return `Failed: ${event.response && event.response.error ? event.response.error : "unknown error"}`;
+    case "final":
+      return `Final response received: ${event.response.status}.`;
+    case "fatal_error":
+      return `Fatal stream error: ${event.error}`;
+    default:
+      return `${event.event}: ${JSON.stringify(event)}`;
+  }
+}
+
+function tokenSummary(usage) {
+  const totals = usage && usage.totals ? usage.totals : {};
+  return {
+    calls: totals.calls || 0,
+    inputTokens: totals.input_tokens || 0,
+    outputTokens: totals.output_tokens || 0,
+    cacheCreationInputTokens: totals.cache_creation_input_tokens || 0,
+    cacheReadInputTokens: totals.cache_read_input_tokens || 0,
+    totalTrackedTokens: totals.total_tracked_tokens || 0,
+    byModel: usage && usage.by_model ? usage.by_model : [],
+    bySource: usage && usage.by_source ? usage.by_source : []
+  };
+}
+
+function formatNumber(value) {
+  return Number(value || 0).toLocaleString();
+}
+
+function renderTokenSummary(usage) {
+  const summary = tokenSummary(usage);
+  tokensTotal.textContent = formatNumber(summary.totalTrackedTokens);
+  tokensCalls.textContent = formatNumber(summary.calls);
+  tokensInput.textContent = formatNumber(summary.inputTokens);
+  tokensOutput.textContent = formatNumber(summary.outputTokens);
+
+  if (!summary.byModel.length) {
+    tokensByModel.innerHTML = `<li><span>No token data</span><span>-</span></li>`;
+    return;
+  }
+
+  tokensByModel.innerHTML = summary.byModel.map((item) => {
+    const model = item.model || "unknown";
+    const total = item.total_tracked_tokens || 0;
+    const calls = item.calls || 0;
+    return `<li><span>${model}</span><span>${formatNumber(total)} tok / ${formatNumber(calls)} calls</span></li>`;
+  }).join("");
+}
+
+function resetTokenSummary() {
+  tokensTotal.textContent = "-";
+  tokensCalls.textContent = "-";
+  tokensInput.textContent = "-";
+  tokensOutput.textContent = "-";
+  tokensByModel.innerHTML = `<li><span>Running...</span><span>-</span></li>`;
+}
+
+function finalPayload(response) {
+  if (!response) return null;
+  if (response.status === "completed") {
+    return {
+      status: response.status,
+      runId: response.runId,
+      logFile: response.logFile,
+      tokenCount: tokenSummary(response.usage),
+      usage: response.usage,
+      selfEvaluation: response.selfEvaluation,
+      result: response.result
+    };
+  }
+  return {
+    status: response.status,
+    runId: response.runId,
+    logFile: response.logFile,
+    tokenCount: tokenSummary(response.usage),
+    usage: response.usage,
+    failureAnalysis: response.failureAnalysis,
+    error: response.error,
+    traceSummary: (response.trace || []).map((item) => ({
+      name: item.name,
+      arguments: item.arguments,
+      resultCount: item.resultCount,
+      truncated: item.truncated,
+      logRef: item.logRef
+    }))
+  };
+}
+
+run.addEventListener("click", async () => {
+  run.disabled = true;
+  statusEl.textContent = "Running agent...";
+  statusEl.classList.remove("error");
+  progress.textContent = "";
+  output.textContent = "Waiting for final result...";
+  resetTokenSummary();
+
+  const payload = {
+    search_term: document.getElementById("term").value.trim(),
+    language_hint: document.getElementById("language").value.trim() || null,
+    domain: document.getElementById("domain").value.trim() || null,
+    human_reference: document.getElementById("humanReference").value.trim() || null,
+    agent_model: agentModelEl.value || null,
+    self_evaluation_model: evalModelEl.value || null,
+    audit_mode: true
+  };
+
+  try {
+    appendProgress("Submitting streamed agent run.");
+    const response = await fetch("/agent/code/stream", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(payload)
+    });
+    if (!response.ok || !response.body) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    let finalResponse = null;
+
+    while (true) {
+      const {done, value} = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, {stream: true});
+      const lines = buffer.split("\n");
+      buffer = lines.pop() || "";
+      for (const line of lines) {
+        if (!line.trim()) continue;
+        const event = JSON.parse(line);
+        appendProgress(eventLine(event));
+        if (event.event === "final") {
+          finalResponse = event.response;
+          renderTokenSummary(finalResponse.usage);
+          output.textContent = JSON.stringify(finalPayload(finalResponse), null, 2);
+        }
+      }
+    }
+
+    if (finalResponse) {
+      statusEl.textContent = finalResponse.status === "completed" ? "Completed." : "Failed.";
+      if (finalResponse.status !== "completed") statusEl.classList.add("error");
+    } else {
+      statusEl.textContent = "Stream ended without final response.";
+      statusEl.classList.add("error");
+    }
+  } catch (error) {
+    statusEl.textContent = "Request failed.";
+    statusEl.classList.add("error");
+    output.textContent = String(error);
+  } finally {
+    run.disabled = false;
+  }
+});
+</script>
+</body>
+</html>
