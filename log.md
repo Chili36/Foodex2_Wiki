@@ -212,3 +212,9 @@ last_updated: "2026-04-22"
 - Added `deploy/launchd/com.chili36.foodex2-wiki.plist` so the wiki API can run under `launchd` instead of a transient foreground Codex process.
 - Documented the install, reload, health-check, and log-inspection commands in `README.md`.
 - This is intended to keep `127.0.0.1:8010` alive independently of interactive Codex sessions.
+
+## [2026-05-09] maintenance | Split chemical-monitoring reporting-domain overlays
+
+- Added conditional domain pages for pesticide residues, contaminants, VMPR, and additives/flavourings so domain-specific FoodEx2 rules are retrieved only when the reporting context or candidate set activates them.
+- Updated the chemical-monitoring entry page to route to those domain pages and state that default FoodEx2 coding remains all-domain when no reporting domain is known.
+- Registered the new pages in the wiki index, schema, viewer quick links, and API page categories as `domain_overlay`.

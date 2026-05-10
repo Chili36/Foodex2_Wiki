@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FoodEx2 Wiki Graph</title>
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --panel: #ffffff;
+    --line: #d7dce2;
+    --text: #1e252d;
+    --muted: #68717c;
+    --link: #1f6feb;
+    --domain: #c2414b;
+    --guidance: #2b6f88;
+    --validation: #8f6a00;
+    --runtime: #3c4552;
+    --maintenance: #6c6f2d;
+    --orientation: #626a76;
+    --unknown: #8b8f97;
+    --edge: #9aa6b2;
+    --edge-strong: #465260;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 320px minmax(0, 1fr);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    overflow: hidden;
+  }
+
+  aside {
+    background: var(--panel);
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  header {
+    padding: 18px 18px 14px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.2;
+    letter-spacing: 0;
+  }
+
+  header p {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .controls, .details {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .details {
+    flex: 1;
+    overflow: auto;
+    border-bottom: 0;
+  }
+
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  input[type="checkbox"] { width: 15px; height: 15px; }
+
+  .swatch {
+    width: 11px;
+    height: 11px;
+    border-radius: 999px;
+    display: inline-block;
+    flex: 0 0 auto;
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  button, .page-link {
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--text);
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+  }
+
+  button:hover, .page-link:hover { border-color: #a9b3bf; }
+
+  .page-link {
+    display: block;
+    margin-top: 12px;
+    color: var(--link);
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 12px 0;
+  }
+
+  .stat {
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 8px;
+    background: #fbfcfd;
+  }
+
+  .stat strong {
+    display: block;
+    font-size: 18px;
+  }
+
+  .stat span {
+    color: var(--muted);
+    font-size: 11px;
+  }
+
+  .node-title {
+    margin: 0 0 6px;
+    font-size: 17px;
+    line-height: 1.3;
+  }
+
+  .node-meta {
+    color: var(--muted);
+    font-size: 13px;
+    overflow-wrap: anywhere;
+  }
+
+  .neighbor-list {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 16px;
+  }
+
+  .neighbor-list li {
+    margin: 6px 0;
+    font-size: 13px;
+  }
+
+  .neighbor-list button {
+    width: 100%;
+    text-align: left;
+    padding: 7px 8px;
+  }
+
+  main {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .toolbar {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    right: 14px;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    pointer-events: none;
+  }
+
+  .badge {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 8px 10px;
+    color: var(--muted);
+    font-size: 13px;
+    pointer-events: auto;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background:
+      linear-gradient(to right, rgba(215, 220, 226, 0.4) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(215, 220, 226, 0.4) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+
+  .edge {
+    stroke: var(--edge);
+    stroke-width: 1.1;
+    stroke-opacity: 0.38;
+  }
+
+  .edge.highlight {
+    stroke: var(--edge-strong);
+    stroke-width: 2.1;
+    stroke-opacity: 0.9;
+  }
+
+  .node {
+    cursor: pointer;
+    stroke: #fff;
+    stroke-width: 2.2;
+  }
+
+  .node.dim, .edge.dim, .label.dim {
+    opacity: 0.14;
+  }
+
+  .node.selected {
+    stroke: #111827;
+    stroke-width: 3;
+  }
+
+  .label {
+    font-size: 11px;
+    paint-order: stroke;
+    stroke: rgba(255, 255, 255, 0.92);
+    stroke-width: 4px;
+    stroke-linejoin: round;
+    fill: #1f2933;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+
+  .label.domain { font-size: 12px; font-weight: 700; }
+
+  .empty {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 860px) {
+    body { grid-template-columns: 1fr; grid-template-rows: minmax(240px, 34vh) minmax(0, 1fr); }
+    aside { max-height: 44vh; border-right: 0; border-bottom: 1px solid var(--line); }
+    header { padding: 14px 16px 10px; }
+    header p { display: none; }
+    .controls { padding: 12px 16px; }
+    .details { max-height: 18vh; }
+  }
+</style>
+</head>
+<body>
+<aside>
+  <header>
+    <h1>FoodEx2 Wiki Graph</h1>
+    <p>Domain overlays are highlighted so their links to core guidance and validation pages are easy to inspect.</p>
+  </header>
+
+  <section class="controls">
+    <p class="section-title">Categories</p>
+    <div id="categoryFilters"></div>
+    <div class="actions">
+      <button id="domainFocus" type="button">Show All</button>
+      <button id="resetView" type="button">Reset</button>
+    </div>
+  </section>
+
+  <section class="details" id="details">
+    <p class="section-title">Selected Node</p>
+    <p class="empty">Click a node to see direct connections. Domain nodes are larger and start highlighted.</p>
+  </section>
+</aside>
+
+<main>
+  <div class="toolbar">
+    <div class="badge" id="summary">Loading graph...</div>
+    <div class="badge">Drag nodes. Click labels or nodes to inspect.</div>
+  </div>
+  <svg id="graph" role="img" aria-label="FoodEx2 wiki page graph"></svg>
+</main>
+
+<script>
+const categoryColors = {
+  domain_overlay: getCss("--domain"),
+  guidance: getCss("--guidance"),
+  validation: getCss("--validation"),
+  runtime: getCss("--runtime"),
+  maintenance: getCss("--maintenance"),
+  orientation: getCss("--orientation"),
+  unknown: getCss("--unknown")
+};
+
+const categoryLabels = {
+  domain_overlay: "Domain overlays",
+  guidance: "FoodEx2 guidance",
+  validation: "Validation",
+  runtime: "Runtime",
+  maintenance: "Maintenance",
+  orientation: "Orientation",
+  unknown: "Unknown"
+};
+
+const preferredOrder = [
+  "domain_overlay",
+  "guidance",
+  "validation",
+  "runtime",
+  "orientation",
+  "maintenance",
+  "unknown"
+];
+
+const svg = document.getElementById("graph");
+const summaryEl = document.getElementById("summary");
+const filtersEl = document.getElementById("categoryFilters");
+const detailsEl = document.getElementById("details");
+let graph = null;
+let nodes = [];
+let edges = [];
+let nodeById = new Map();
+let selectedId = null;
+let activeCategories = new Set(preferredOrder);
+let showDomainFocus = true;
+let dragging = null;
+let animation = null;
+
+function getCss(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+function svgEl(name, attrs = {}) {
+  const el = document.createElementNS("http://www.w3.org/2000/svg", name);
+  for (const [key, value] of Object.entries(attrs)) el.setAttribute(key, value);
+  return el;
+}
+
+function categoryRank(category) {
+  const idx = preferredOrder.indexOf(category);
+  return idx === -1 ? preferredOrder.length : idx;
+}
+
+function radiusFor(node) {
+  if (node.category === "domain_overlay") return 11;
+  if (node.category === "runtime") return 9;
+  if (node.category === "validation") return 8;
+  return 7;
+}
+
+function centerFor(category, width, height) {
+  const cx = width / 2;
+  const cy = height / 2;
+  const spreadX = Math.max(120, width * 0.26);
+  const spreadY = Math.max(86, height * 0.24);
+  const targets = {
+    domain_overlay: [cx, cy],
+    guidance: [cx - spreadX, cy + spreadY * 0.18],
+    validation: [cx + spreadX, cy + spreadY * 0.18],
+    runtime: [cx, cy - spreadY],
+    orientation: [cx - spreadX * 0.85, cy - spreadY],
+    maintenance: [cx + spreadX * 0.85, cy - spreadY],
+    unknown: [cx, cy + spreadY]
+  };
+  return targets[category] || targets.unknown;
+}
+
+function visibleNode(node) {
+  if (!activeCategories.has(node.category)) return false;
+  if (!showDomainFocus) return true;
+  return ["domain_overlay", "guidance", "validation", "runtime"].includes(node.category);
+}
+
+function edgeVisible(edge) {
+  return visibleNode(edge.sourceNode) && visibleNode(edge.targetNode);
+}
+
+function edgeConnectedToSelected(edge) {
+  return selectedId && (edge.source === selectedId || edge.target === selectedId);
+}
+
+function nodeConnectedToSelected(node) {
+  if (!selectedId) return false;
+  if (node.id === selectedId) return true;
+  return edges.some(edge => edgeVisible(edge) && edgeConnectedToSelected(edge) && (edge.source === node.id || edge.target === node.id));
+}
+
+async function loadGraph() {
+  const response = await fetch("/wiki/graph/compact");
+  if (!response.ok) throw new Error(`Graph request failed: ${response.status}`);
+  graph = await response.json();
+  prepareGraph();
+  buildFilters();
+  layoutNodes();
+  render();
+  renderDetails();
+  startSimulation();
+}
+
+function prepareGraph() {
+  const { width, height } = svg.getBoundingClientRect();
+  nodes = graph.nodes.map((node, index) => {
+    const [tx, ty] = centerFor(node.category, width || 900, height || 700);
+    const angle = (index * 137.5 * Math.PI) / 180;
+    return {
+      ...node,
+      x: tx + Math.cos(angle) * 80,
+      y: ty + Math.sin(angle) * 80,
+      vx: 0,
+      vy: 0,
+      tx,
+      ty,
+      r: radiusFor(node)
+    };
+  });
+  nodeById = new Map(nodes.map(node => [node.id, node]));
+  edges = graph.edges
+    .filter(edge => nodeById.has(edge.source) && nodeById.has(edge.target))
+    .map(edge => ({ ...edge, sourceNode: nodeById.get(edge.source), targetNode: nodeById.get(edge.target) }));
+  summaryEl.textContent = `${graph.summary.page_count} pages, ${graph.summary.edge_count} links`;
+}
+
+function layoutNodes() {
+  const rect = svg.getBoundingClientRect();
+  const width = rect.width || 900;
+  const height = rect.height || 700;
+  const groups = new Map();
+  for (const node of nodes.filter(visibleNode)) {
+    if (!groups.has(node.category)) groups.set(node.category, []);
+    groups.get(node.category).push(node);
+  }
+
+  for (const [category, group] of groups.entries()) {
+    group.sort((a, b) => b.total_links - a.total_links || a.label.localeCompare(b.label));
+    const [cx, cy] = centerFor(category, width, height);
+    const baseRadius = category === "domain_overlay" ? 86 : 46;
+    const radius = Math.min(Math.max(baseRadius, group.length * 8), Math.min(width, height) * 0.22);
+    const offset = category === "domain_overlay" ? -Math.PI / 2 : Math.PI / 6;
+    group.forEach((node, index) => {
+      if (node.pinned) return;
+      const angle = group.length === 1 ? 0 : offset + (index / group.length) * Math.PI * 2;
+      const r = group.length === 1 ? 0 : radius;
+      node.x = clamp(cx + Math.cos(angle) * r, 74, width - 74);
+      node.y = clamp(cy + Math.sin(angle) * r, 66, height - 44);
+      node.vx = 0;
+      node.vy = 0;
+    });
+  }
+}
+
+function buildFilters() {
+  const categories = [...new Set(nodes.map(node => node.category))]
+    .sort((a, b) => categoryRank(a) - categoryRank(b));
+  filtersEl.textContent = "";
+  for (const category of categories) {
+    const label = document.createElement("label");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = activeCategories.has(category);
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) activeCategories.add(category);
+      else activeCategories.delete(category);
+      layoutNodes();
+      updateVisibility();
+      renderDetails();
+      startSimulation();
+    });
+    const swatch = document.createElement("span");
+    swatch.className = "swatch";
+    swatch.style.background = categoryColors[category] || categoryColors.unknown;
+    const text = document.createElement("span");
+    text.textContent = categoryLabels[category] || category;
+    label.append(checkbox, swatch, text);
+    filtersEl.appendChild(label);
+  }
+}
+
+function render() {
+  svg.textContent = "";
+  const edgeGroup = svgEl("g", { class: "edges" });
+  const nodeGroup = svgEl("g", { class: "nodes" });
+  const labelGroup = svgEl("g", { class: "labels" });
+  svg.append(edgeGroup, nodeGroup, labelGroup);
+
+  for (const edge of edges) {
+    edge.el = svgEl("line", { class: `edge edge-type-${edge.type}` });
+    edgeGroup.appendChild(edge.el);
+  }
+
+  for (const node of nodes) {
+    node.el = svgEl("circle", {
+      class: "node",
+      r: node.r,
+      fill: categoryColors[node.category] || categoryColors.unknown,
+      tabindex: "0",
+      role: "button",
+      "aria-label": node.label
+    });
+    node.el.addEventListener("click", () => selectNode(node.id));
+    node.el.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") selectNode(node.id);
+    });
+    node.el.addEventListener("pointerdown", event => startDrag(event, node));
+    nodeGroup.appendChild(node.el);
+
+    node.labelEl = svgEl("text", {
+      class: node.category === "domain_overlay" ? "label domain" : "label",
+      "text-anchor": "middle"
+    });
+    node.labelEl.textContent = shortLabel(node);
+    node.labelEl.addEventListener("click", () => selectNode(node.id));
+    labelGroup.appendChild(node.labelEl);
+  }
+
+  svg.addEventListener("pointermove", dragMove);
+  svg.addEventListener("pointerup", endDrag);
+  svg.addEventListener("pointerleave", endDrag);
+  updatePositions();
+  updateVisibility();
+}
+
+function shortLabel(node) {
+  const labels = {
+    "chemical-monitoring-foodex2.md": "ChemMon",
+    "pesticides-foodex2.md": "Pesticides",
+    "contaminants-foodex2.md": "Contaminants",
+    "vmpr-foodex2.md": "VMPR",
+    "additives-flavourings-foodex2.md": "Additives/Flavourings",
+    "domain-specific-validation.md": "Domain Validation"
+  };
+  if (labels[node.id]) return labels[node.id];
+  return node.label
+    .replace(/^FoodEx2 In /, "")
+    .replace(" Monitoring", "")
+    .replace(" Rules", "")
+    .replace(" Overview", "");
+}
+
+function selectNode(id) {
+  selectedId = id;
+  updateVisibility();
+  renderDetails();
+}
+
+function renderDetails() {
+  const node = nodeById.get(selectedId);
+  detailsEl.textContent = "";
+  const title = document.createElement("p");
+  title.className = "section-title";
+  title.textContent = "Selected Node";
+  detailsEl.appendChild(title);
+
+  if (!node) {
+    const empty = document.createElement("p");
+    empty.className = "empty";
+    empty.textContent = "Click a node to see direct connections.";
+    detailsEl.appendChild(empty);
+    return;
+  }
+
+  const h2 = document.createElement("h2");
+  h2.className = "node-title";
+  h2.textContent = node.label;
+  detailsEl.appendChild(h2);
+
+  const meta = document.createElement("div");
+  meta.className = "node-meta";
+  meta.textContent = `${node.id} · ${categoryLabels[node.category] || node.category}`;
+  detailsEl.appendChild(meta);
+
+  const stats = document.createElement("div");
+  stats.className = "stat-grid";
+  stats.append(stat(node.incoming_count, "incoming"), stat(node.outgoing_count, "outgoing"));
+  detailsEl.appendChild(stats);
+
+  const pageLink = document.createElement("a");
+  pageLink.className = "page-link";
+  pageLink.href = `/wiki/view#${node.id}`;
+  pageLink.textContent = "Open Wiki Page";
+  detailsEl.appendChild(pageLink);
+
+  const outgoing = uniqueNodes(edges
+    .filter(edge => edge.source === node.id && visibleNode(edge.targetNode))
+    .map(edge => edge.targetNode))
+    .sort((a, b) => categoryRank(a.category) - categoryRank(b.category) || a.label.localeCompare(b.label));
+  const incoming = uniqueNodes(edges
+    .filter(edge => edge.target === node.id && visibleNode(edge.sourceNode))
+    .map(edge => edge.sourceNode))
+    .sort((a, b) => categoryRank(a.category) - categoryRank(b.category) || a.label.localeCompare(b.label));
+
+  detailsEl.append(neighborSection("Links Out", outgoing), neighborSection("Links In", incoming));
+}
+
+function uniqueNodes(items) {
+  const seen = new Set();
+  const unique = [];
+  for (const item of items) {
+    if (seen.has(item.id)) continue;
+    seen.add(item.id);
+    unique.push(item);
+  }
+  return unique;
+}
+
+function stat(value, label) {
+  const box = document.createElement("div");
+  box.className = "stat";
+  const strong = document.createElement("strong");
+  strong.textContent = value;
+  const span = document.createElement("span");
+  span.textContent = label;
+  box.append(strong, span);
+  return box;
+}
+
+function neighborSection(titleText, items) {
+  const fragment = document.createDocumentFragment();
+  const title = document.createElement("p");
+  title.className = "section-title";
+  title.textContent = titleText;
+  fragment.appendChild(title);
+
+  if (!items.length) {
+    const empty = document.createElement("p");
+    empty.className = "empty";
+    empty.textContent = "No visible direct links.";
+    fragment.appendChild(empty);
+    return fragment;
+  }
+
+  const list = document.createElement("ul");
+  list.className = "neighbor-list";
+  for (const item of items) {
+    const li = document.createElement("li");
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = item.label;
+    button.addEventListener("click", () => selectNode(item.id));
+    li.appendChild(button);
+    list.appendChild(li);
+  }
+  fragment.appendChild(list);
+  return fragment;
+}
+
+function updateVisibility() {
+  for (const edge of edges) {
+    const connected = edgeConnectedToSelected(edge);
+    const visible = edgeVisible(edge);
+    edge.el.classList.toggle("highlight", connected);
+    edge.el.classList.toggle("dim", selectedId ? !connected : showDomainFocus && !isDomainBridge(edge));
+    edge.el.style.display = visible ? "" : "none";
+  }
+
+  for (const node of nodes) {
+    const visible = visibleNode(node);
+    const connected = nodeConnectedToSelected(node);
+    const focusDim = showDomainFocus && !selectedId && node.category !== "domain_overlay" && !touchesDomain(node);
+    node.el.classList.toggle("selected", node.id === selectedId);
+    node.el.classList.toggle("dim", selectedId ? !connected : focusDim);
+    node.labelEl.classList.toggle("dim", selectedId ? !connected : focusDim);
+    node.el.style.display = visible ? "" : "none";
+    node.labelEl.style.display = visible && shouldShowLabel(node) ? "" : "none";
+  }
+}
+
+function shouldShowLabel(node) {
+  if (node.category === "domain_overlay") return true;
+  if (node.id === selectedId) return true;
+  if (nodeConnectedToSelected(node)) return true;
+  return !selectedId && !showDomainFocus && (node.total_links >= 20 || node.category === "runtime");
+}
+
+function touchesDomain(node) {
+  return edges.some(edge => {
+    if (edge.source !== node.id && edge.target !== node.id) return false;
+    return edge.sourceNode.category === "domain_overlay" || edge.targetNode.category === "domain_overlay";
+  });
+}
+
+function isDomainBridge(edge) {
+  return edge.sourceNode.category === "domain_overlay" || edge.targetNode.category === "domain_overlay";
+}
+
+function startSimulation() {
+  if (animation) cancelAnimationFrame(animation);
+  updatePositions();
+}
+
+function settleGraph(count) {
+  for (let i = 0; i < count; i += 1) tick();
+}
+
+function tick() {
+  const rect = svg.getBoundingClientRect();
+  const width = rect.width || 900;
+  const height = rect.height || 700;
+  const simNodes = nodes.filter(visibleNode);
+  const simEdges = edges.filter(edgeVisible);
+
+  for (const node of simNodes) {
+    const [tx, ty] = centerFor(node.category, width, height);
+    node.tx = tx;
+    node.ty = ty;
+    node.vx += (tx - node.x) * 0.002;
+    node.vy += (ty - node.y) * 0.002;
+  }
+
+  for (const edge of simEdges) {
+    const source = edge.sourceNode;
+    const target = edge.targetNode;
+    const dx = target.x - source.x;
+    const dy = target.y - source.y;
+    const distance = Math.max(1, Math.hypot(dx, dy));
+    const preferred = source.category === "domain_overlay" || target.category === "domain_overlay" ? 110 : 140;
+    const force = (distance - preferred) * 0.0009;
+    const fx = dx * force;
+    const fy = dy * force;
+    source.vx += fx;
+    source.vy += fy;
+    target.vx -= fx;
+    target.vy -= fy;
+  }
+
+  for (let i = 0; i < simNodes.length; i += 1) {
+    for (let j = i + 1; j < simNodes.length; j += 1) {
+      const a = simNodes[i];
+      const b = simNodes[j];
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const distanceSq = Math.max(64, dx * dx + dy * dy);
+      const force = 42 / distanceSq;
+      a.vx -= dx * force;
+      a.vy -= dy * force;
+      b.vx += dx * force;
+      b.vy += dy * force;
+    }
+  }
+
+  const marginX = Math.min(80, Math.max(34, width * 0.12));
+  const marginTop = Math.min(90, Math.max(54, height * 0.14));
+  const marginBottom = Math.min(70, Math.max(34, height * 0.1));
+  for (const node of simNodes) {
+    if (node.pinned) continue;
+    node.vx *= 0.82;
+    node.vy *= 0.82;
+    node.x = clamp(node.x + node.vx, marginX, width - marginX);
+    node.y = clamp(node.y + node.vy, marginTop, height - marginBottom);
+  }
+}
+
+function updatePositions() {
+  for (const edge of edges) {
+    edge.el.setAttribute("x1", edge.sourceNode.x);
+    edge.el.setAttribute("y1", edge.sourceNode.y);
+    edge.el.setAttribute("x2", edge.targetNode.x);
+    edge.el.setAttribute("y2", edge.targetNode.y);
+  }
+  for (const node of nodes) {
+    node.el.setAttribute("cx", node.x);
+    node.el.setAttribute("cy", node.y);
+    node.labelEl.setAttribute("x", node.x);
+    node.labelEl.setAttribute("y", node.y - node.r - 6);
+  }
+}
+
+function startDrag(event, node) {
+  dragging = node;
+  node.pinned = true;
+  node.el.setPointerCapture(event.pointerId);
+}
+
+function dragMove(event) {
+  if (!dragging) return;
+  const point = pointerPoint(event);
+  dragging.x = point.x;
+  dragging.y = point.y;
+  dragging.vx = 0;
+  dragging.vy = 0;
+  updatePositions();
+}
+
+function endDrag() {
+  dragging = null;
+}
+
+function pointerPoint(event) {
+  const rect = svg.getBoundingClientRect();
+  return {
+    x: event.clientX - rect.left,
+    y: event.clientY - rect.top
+  };
+}
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+document.getElementById("domainFocus").addEventListener("click", () => {
+  showDomainFocus = !showDomainFocus;
+  document.getElementById("domainFocus").textContent = showDomainFocus ? "Show All" : "Domain Focus";
+  if (!showDomainFocus) selectedId = null;
+  layoutNodes();
+  updateVisibility();
+  renderDetails();
+  startSimulation();
+});
+
+document.getElementById("resetView").addEventListener("click", () => {
+  selectedId = null;
+  showDomainFocus = true;
+  document.getElementById("domainFocus").textContent = "Show All";
+  for (const node of nodes) {
+    node.pinned = false;
+    node.vx = 0;
+    node.vy = 0;
+  }
+  layoutNodes();
+  startSimulation();
+  updateVisibility();
+  renderDetails();
+});
+
+window.addEventListener("resize", () => {
+  if (!graph) return;
+  layoutNodes();
+  startSimulation();
+});
+
+loadGraph().catch(error => {
+  summaryEl.textContent = "Graph failed to load";
+  detailsEl.textContent = "";
+  const message = document.createElement("p");
+  message.className = "empty";
+  message.textContent = error.message;
+  detailsEl.appendChild(message);
+});
+</script>
+</body>
+</html>

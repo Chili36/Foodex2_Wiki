@@ -8,10 +8,14 @@ related:
   - "[[foodex2-overview]]"
   - "[[facet-coding-rules]]"
   - "[[implicit-vs-explicit-facets]]"
+  - "[[pesticides-foodex2]]"
+  - "[[contaminants-foodex2]]"
+  - "[[vmpr-foodex2]]"
+  - "[[additives-flavourings-foodex2]]"
   - "[[maintenance-2024]]"
   - "[[domain-specific-validation]]"
   - "[[vmpr-legislative-mapping]]"
-last_updated: "2026-04-22"
+last_updated: "2026-05-14"
 ---
 
 # FoodEx2 In Chemical Monitoring
@@ -21,6 +25,15 @@ last_updated: "2026-04-22"
 
 - ChemMon does not redefine FoodEx2. It adds reporting constraints for chemical-monitoring workflows. Use this page as a domain-specific overlay, not as the core coding model described in [[foodex2-overview]]. (ChemMon 2025 p33-36; ChemMon 2026 p33-36)
 - Samples are coded from the MTX reporting hierarchy at the lowest useful level of detail. (ChemMon 2025 p33)
+- Domain overlays are conditional. Apply pesticide, contaminants, VMPR, additives, or flavourings rules only when the reporting domain is explicit, the parameter/legal context identifies it, or the candidate universe has already been filtered to that domain. (ChemMon 2026 FoodEx2 mapping and reporting flags sections)
+
+## Domain Pages
+
+- Use [[pesticides-foodex2]] for pesticide residue monitoring, Regulation (EC) No 396/2005, `PEST`, `pestParam`, or `MATRIX` contexts.
+- Use [[contaminants-foodex2]] for contaminants or occurrence monitoring, `OCC`, `chemAnalysis`, acrylamide, pyrrolizidine alkaloids, metals, packaging migrants, and similar contaminant contexts.
+- Use [[vmpr-foodex2]] for veterinary medicinal product residues, `VMPR`, `VETDRUG`, `vmprParam`, `vmprCls`, VetDrugRes, and Plan 3 contexts.
+- Use [[additives-flavourings-foodex2]] for additive and flavouring monitoring, `ADD`, `FLAV`, `addAnalysis`, `flavAnalysis`, and Regulation (EC) No 1333/2008 contexts.
+- If no reporting domain is known, stay with all-domain FoodEx2 pages and the returned candidate list. Do not guess a domain from the food name alone.
 
 ## General Rules
 

@@ -164,6 +164,31 @@ Return this structure:
 }
 """
 
+ANSWERER_SYSTEM_PROMPT = """You are the FoodEx2 wiki assistant.
+
+Your job is to answer questions about FoodEx2 coding using only the provided wiki pages.
+
+Rules:
+- Answer based solely on the provided wiki page content.
+- Cite which page each claim comes from using the page filename.
+- If the provided pages do not contain enough information, say that clearly.
+- Do not invent FoodEx2 codes or facet descriptors that are not supported by the provided pages.
+- When the user asks how to code a food, explain the decision path: food type, base-term choice, implicit facets, explicit facets, domain overlays, and validation checks as far as the provided pages support them.
+- Be direct and concise. Prefer 4-6 short bullets unless the user asks for details. Do not use a title, heading, table, long intro, or markdown-heavy structure. Do not solve beyond the evidence in the pages.
+
+Return JSON only with this structure:
+{
+  "answer": "Your grounded answer here.",
+  "citations": ["page-name.md", "other-page.md"]
+}
+
+If you cannot answer from the provided pages, return:
+{
+  "answer": "The FoodEx2 wiki pages provided do not cover this topic.",
+  "citations": []
+}
+"""
+
 
 class AnthropicMessagesClient(Protocol):
     def create(self, **kwargs: Any) -> Any: ...
@@ -193,6 +218,14 @@ class PageSelectionResult:
 @dataclass(frozen=True)
 class SolverResult:
     data: dict[str, Any]
+    token_summary: dict[str, Any]
+    timing_summary: dict[str, Any]
+
+
+@dataclass(frozen=True)
+class AnswerResult:
+    answer: str
+    citations: list[str]
     token_summary: dict[str, Any]
     timing_summary: dict[str, Any]
 
@@ -717,5 +750,78 @@ class AnthropicFoodEx2Solver:
             timing_summary={
                 **_aggregate_timing(timing_trace),
                 "solver_wall_time_ms": int((time.perf_counter() - solver_started) * 1000),
+            },
+        )
+
+
+class AnthropicFoodEx2Answerer:
+    def __init__(
+        self,
+        *,
+        client: AnthropicClientProtocol | None = None,
+        model: str | None = None,
+        max_tokens: int = 2500,
+    ):
+        self.client = client or build_anthropic_client()
+        self.model = model or _resolve_model(
+            "WIKI_ANSWERER_MODEL",
+            "WIKI_LIBRARIAN_MODEL",
+            default="claude-3-7-sonnet-latest",
+        )
+        self.max_tokens = max_tokens
+
+    def run(self, *, question: str, pages: list[dict[str, Any]]) -> AnswerResult:
+        answerer_started = time.perf_counter()
+        llm_started = time.perf_counter()
+        messages = [
+            {
+                "role": "user",
+                "content": json.dumps(
+                    {
+                        "question": question,
+                        "pages": pages,
+                    },
+                    ensure_ascii=False,
+                ),
+            }
+        ]
+        _log_prompt(
+            "ask",
+            model=self.model,
+            system=ANSWERER_SYSTEM_PROMPT,
+            messages=messages,
+            max_tokens=self.max_tokens,
+        )
+        response = self.client.messages.create(
+            model=self.model,
+            max_tokens=self.max_tokens,
+            system=ANSWERER_SYSTEM_PROMPT,
+            messages=messages,
+        )
+        llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
+        usage = _usage_dict(
+            _get_block_value(response, "usage"),
+            stop_reason=_get_block_value(response, "stop_reason"),
+        )
+        final_text = _response_text(_get_block_value(response, "content", []))
+        data = _extract_json_payload(final_text)
+        citations = data.get("citations", [])
+        if not isinstance(citations, list):
+            citations = []
+        return AnswerResult(
+            answer=str(data.get("answer", "")).strip(),
+            citations=[str(citation) for citation in citations],
+            token_summary=_aggregate_usage([usage], self.model),
+            timing_summary={
+                **_aggregate_timing(
+                    [
+                        {
+                            "call_number": 1,
+                            "duration_ms": llm_duration_ms,
+                            "stop_reason": _get_block_value(response, "stop_reason"),
+                        }
+                    ]
+                ),
+                "answerer_wall_time_ms": int((time.perf_counter() - answerer_started) * 1000),
             },
         )

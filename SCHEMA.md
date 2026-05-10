@@ -100,15 +100,19 @@ Use for:
 Examples:
 
 - `chemical-monitoring-foodex2.md`
+- `pesticides-foodex2.md`
+- `contaminants-foodex2.md`
+- `vmpr-foodex2.md`
+- `additives-flavourings-foodex2.md`
 - `domain-specific-validation.md`
 
 Use for:
 
-- domain-specific reporting overlays
-- VMPR/VETDRUG
-- additives
-- acrylamide
-- infant/baby reporting edge cases
+- conditional reporting overlays
+- pesticide residue, contaminants, VMPR/VETDRUG, additives, and flavourings domains
+- legislative matrix or class mapping
+- domain-mandated explicit facets
+- substance-specific contaminant rules and infant/baby reporting edge cases
 
 ### Maintenance
 

@@ -3,8 +3,9 @@ from __future__ import annotations
 import json
 import logging
 from pathlib import Path
+import re
 import time
-from typing import Any
+from typing import Any, Callable
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -12,19 +13,22 @@ from fastapi.responses import FileResponse
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from .librarian import (
+    AnthropicFoodEx2Answerer,
     AnthropicFoodEx2Solver,
     AnthropicWikiLibrarian,
     AnthropicWikiPageSelector,
 )
 from .policy import build_policy_contract
-from .wiki_store import WikiStore
+from .wiki_store import WikiPage, WikiStore
 
 
+_WIKI_LINK_RE = re.compile(r"\[\[([a-zA-Z0-9_\-]+)(?:\|[^\]]+)?\]\]")
 REPO_ROOT = Path(__file__).resolve().parent.parent
 store = WikiStore(REPO_ROOT)
 librarian_runner: AnthropicWikiLibrarian | Any | None = None
 selector_runner: Any | None = None
 solver_runner: AnthropicFoodEx2Solver | Any | None = None
+answerer_runner: AnthropicFoodEx2Answerer | Any | None = None
 logger = logging.getLogger("wiki_api")
 if not logging.getLogger().handlers:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
@@ -49,6 +53,13 @@ def get_solver_runner() -> AnthropicFoodEx2Solver | Any:
     if solver_runner is None:
         solver_runner = AnthropicFoodEx2Solver()
     return solver_runner
+
+
+def get_answerer_runner() -> AnthropicFoodEx2Answerer | Any:
+    global answerer_runner
+    if answerer_runner is None:
+        answerer_runner = AnthropicFoodEx2Answerer()
+    return answerer_runner
 
 
 class CandidateHint(BaseModel):
@@ -191,6 +202,27 @@ class PageSummary(BaseModel):
     sources: list[str] = Field(default_factory=list)
     related: list[str] = Field(default_factory=list)
     content: str | None = None
+
+
+class AskRequest(BaseModel):
+    question: str = Field(min_length=1, description="The user's FoodEx2 coding question.")
+    max_pages: int = Field(default=7, ge=1, le=10)
+    include_page_content: bool = True
+    use_graph_expansion: bool = Field(
+        default=True,
+        description=(
+            "If true, add summary-only context for curated related pages adjacent to the "
+            "selected pages."
+        ),
+    )
+
+
+class AskResponse(BaseModel):
+    answer: str
+    citations: list[str] = Field(default_factory=list)
+    pages_used: list[str] = Field(default_factory=list)
+    pages: list[PageSummary] = Field(default_factory=list)
+    trace: dict[str, Any]
 
 
 class GraphEdge(BaseModel):
@@ -471,8 +503,11 @@ def _ensure_front_page(
     pages: list["PageSummary"],
     *,
     include_content: bool,
+    content_for_page: Callable[[WikiPage], str | None] | None = None,
 ) -> tuple[list[str], list["PageSummary"]]:
     """Ensure a given page is always included first in pages_used and pages."""
+    if content_for_page is None:
+        content_for_page = store.clean_content_for_model
     pages_used = [front_page_name, *[name for name in pages_used if name != front_page_name]]
 
     pages_by_name = {page.page_name: page for page in pages}
@@ -484,12 +519,77 @@ def _ensure_front_page(
             summary=page.summary,
             sources=page.sources,
             related=page.related,
-            content=store.clean_content_for_model(page) if include_content else None,
+            content=content_for_page(page) if include_content else None,
         )
 
     ordered_pages: list[PageSummary] = [pages_by_name[front_page_name]]
     ordered_pages.extend(page for page in pages if page.page_name != front_page_name)
     return pages_used, ordered_pages
+
+
+def _expand_related_summaries(
+    selected_page_names: list[str],
+    *,
+    max_neighbors: int,
+    max_total_chars: int,
+) -> list[dict[str, Any]]:
+    """Return short context blocks for curated related neighbors of selected pages."""
+    already_selected = set(selected_page_names)
+    allowed = store.allowed_page_names()
+    candidates: list[str] = []
+    seen_candidates: set[str] = set()
+
+    for page_name in selected_page_names:
+        try:
+            page = store.read_page(page_name)
+        except FileNotFoundError:
+            continue
+        for ref in page.related:
+            match = _WIKI_LINK_RE.search(ref)
+            if not match:
+                continue
+            target = f"{match.group(1)}.md"
+            if target in already_selected or target in seen_candidates or target not in allowed:
+                continue
+            seen_candidates.add(target)
+            candidates.append(target)
+
+    blocks: list[dict[str, Any]] = []
+    total_chars = 0
+    for candidate in candidates:
+        if len(blocks) >= max_neighbors:
+            break
+        try:
+            neighbor = store.read_page(candidate)
+        except FileNotFoundError:
+            continue
+        summary_text = neighbor.summary or "(no summary available; see full page for details)"
+        content = (
+            "[RELATED CONTEXT - summary-only neighbor page.]\n"
+            f"Title: {neighbor.title}\n"
+            f"{summary_text}"
+        )
+        if total_chars + len(content) > max_total_chars and blocks:
+            break
+        blocks.append({"page_name": neighbor.name, "content": content, "expansion": True})
+        total_chars += len(content)
+    return blocks
+
+
+def _normalize_ask_citations(raw_citations: list[Any], allowed_pages: set[str]) -> list[str]:
+    citations: list[str] = []
+    for raw_citation in raw_citations:
+        if not isinstance(raw_citation, str):
+            continue
+        citation = raw_citation.strip()
+        if not citation:
+            continue
+        if not citation.endswith(".md"):
+            citation = f"{citation}.md"
+        citation = store.normalize_page_name(citation)
+        if citation in allowed_pages:
+            citations.append(citation)
+    return list(dict.fromkeys(citations))
 
 
 def _effective_context_candidates(request: ContextPackRequest) -> tuple[list[dict[str, Any]], str]:
@@ -531,6 +631,11 @@ STATIC_DIR = Path(__file__).resolve().parent / "static"
 @app.get("/wiki/view", include_in_schema=False)
 def wiki_viewer():
     return FileResponse(STATIC_DIR / "viewer.html", media_type="text/html")
+
+
+@app.get("/wiki/graph-view", include_in_schema=False)
+def wiki_graph_viewer():
+    return FileResponse(STATIC_DIR / "graph.html", media_type="text/html")
 
 
 @app.get("/health")
@@ -578,6 +683,169 @@ def get_page(page_name: str, include_content: bool = Query(default=True)) -> dic
         "related": page.related,
         "content": page.content if include_content else None,
     }
+
+
+@app.post(
+    "/wiki/ask",
+    response_model=AskResponse,
+    summary="Ask a FoodEx2 guidance question",
+    description=(
+        "Send a natural language FoodEx2 coding question. The service selects relevant wiki "
+        "pages, answers from those pages, and returns citations plus a trace."
+    ),
+)
+def ask_question(request: AskRequest) -> AskResponse:
+    request_started = time.perf_counter()
+    logger.info(
+        "ask_request %s",
+        json.dumps(
+            {
+                "question": request.question,
+                "max_pages": request.max_pages,
+                "use_graph_expansion": request.use_graph_expansion,
+            },
+            ensure_ascii=False,
+        ),
+    )
+
+    selector_start = time.perf_counter()
+    selector = get_selector_runner()
+    if request.max_pages != selector.max_pages:
+        selector.max_pages = request.max_pages
+    selector_payload = {
+        "search_term": request.question,
+        "deconstructed_query": {"question": request.question},
+        "candidates": [],
+        "context": {"endpoint": "wiki.ask"},
+    }
+    try:
+        selection_result = selector.run(selector_payload)
+    except (RuntimeError, ValueError) as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    selector_total_ms = int((time.perf_counter() - selector_start) * 1000)
+
+    page_read_start = time.perf_counter()
+    selected_pages_raw = [store.read_page(page_name) for page_name in selection_result.pages_used]
+    selected_page_contents = [
+        {
+            "page_name": page.name,
+            "content": store.clean_content_for_model(page),
+        }
+        for page in selected_pages_raw
+    ]
+    page_read_ms = int((time.perf_counter() - page_read_start) * 1000)
+
+    graph_expansion_start = time.perf_counter()
+    expansion_blocks: list[dict[str, Any]] = []
+    if request.use_graph_expansion:
+        expansion_blocks = _expand_related_summaries(
+            selection_result.pages_used,
+            max_neighbors=8,
+            max_total_chars=8000,
+        )
+    graph_expansion_ms = int((time.perf_counter() - graph_expansion_start) * 1000)
+
+    expanded_page_names = [block["page_name"] for block in expansion_blocks]
+    pages_used = list(dict.fromkeys([*selection_result.pages_used, *expanded_page_names]))
+    answerer_input_pages = selected_page_contents + expansion_blocks
+
+    expansion_content_by_page = {block["page_name"]: block["content"] for block in expansion_blocks}
+    pages: list[PageSummary] = [
+        PageSummary(
+            page_name=page.name,
+            title=page.title,
+            summary=page.summary,
+            sources=page.sources,
+            related=page.related,
+            content=store.clean_content_for_model(page) if request.include_page_content else None,
+        )
+        for page in selected_pages_raw
+    ]
+    for page_name in expanded_page_names:
+        try:
+            page = store.read_page(page_name)
+        except FileNotFoundError:
+            continue
+        pages.append(
+            PageSummary(
+                page_name=page.name,
+                title=page.title,
+                summary=page.summary,
+                sources=page.sources,
+                related=page.related,
+                content=expansion_content_by_page.get(page.name)
+                if request.include_page_content
+                else None,
+            )
+        )
+
+    answerer = get_answerer_runner()
+    answerer_start = time.perf_counter()
+    try:
+        answer_result = answerer.run(question=request.question, pages=answerer_input_pages)
+    except (RuntimeError, ValueError) as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    answerer_total_ms = int((time.perf_counter() - answerer_start) * 1000)
+
+    request_wall_time_ms = int((time.perf_counter() - request_started) * 1000)
+    response = AskResponse(
+        answer=answer_result.answer,
+        citations=_normalize_ask_citations(answer_result.citations, set(pages_used)),
+        pages_used=pages_used,
+        pages=pages,
+        trace={
+            "index_used": True,
+            "max_pages": request.max_pages,
+            "selection_method": "service-owned llm page selector + answerer",
+            "retrieval": {
+                "model": selector.model,
+                "tool_trace": selection_result.tool_trace,
+                "token_summary": selection_result.token_summary,
+                "timing_summary": selection_result.timing_summary,
+            },
+            "graph_expansion": {
+                "enabled": request.use_graph_expansion,
+                "neighbors_added": expanded_page_names,
+                "neighbors_count": len(expansion_blocks),
+            },
+            "answerer": {
+                "model": answerer.model,
+                "token_summary": answer_result.token_summary,
+                "timing_summary": answer_result.timing_summary,
+            },
+            "total": {
+                "request_wall_time_ms": request_wall_time_ms,
+                "total_llm_calls": (
+                    int(selection_result.token_summary["calls"])
+                    + int(answer_result.token_summary["calls"])
+                ),
+                "total_tracked_tokens": (
+                    int(selection_result.token_summary["total_tracked_tokens"])
+                    + int(answer_result.token_summary["total_tracked_tokens"])
+                ),
+            },
+            "phase_timings_ms": {
+                "selector_total": selector_total_ms,
+                "page_read": page_read_ms,
+                "graph_expansion": graph_expansion_ms,
+                "answerer_total": answerer_total_ms,
+            },
+        },
+    )
+    logger.info(
+        "ask_response %s",
+        json.dumps(
+            {
+                "question": request.question,
+                "answer_length": len(response.answer),
+                "citations": response.citations,
+                "pages_used": response.pages_used,
+                "total_trace": response.trace["total"],
+            },
+            ensure_ascii=False,
+        ),
+    )
+    return response
 
 
 @app.get(
@@ -732,13 +1000,13 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
 @app.post(
     "/wiki/context-pack",
     response_model=ContextPackResponse,
-    summary="Return selected wiki pages as raw context without synthesized rules",
+    summary="Return selected wiki pages as prompt-facing context without synthesized rules",
     description=(
         "Use this when the wiki service should choose and return prompt-ready context pages "
-        "without synthesizing a policy pack or final code. Preferred request field: "
-        "`candidate_hints`. Keep it minimal with only `code`, `name`, and `termType`. Legacy "
-        "full `candidates` input is still accepted, but the service reduces it internally to "
-        "candidate hints before page selection."
+        "without synthesizing a policy pack or final code. Page metadata is returned for "
+        "traceability, while `content` is projected for runtime prompts and excludes "
+        "orientation, maintenance, and navigation-only sections. Preferred request field: "
+        "`candidate_hints`. Keep it minimal with only `code`, `name`, and `termType`."
     ),
 )
 def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
@@ -780,7 +1048,7 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
             summary=page.summary,
             sources=page.sources,
             related=page.related,
-            content=store.clean_content_for_model(page) if request.include_page_content else None,
+            content=store.prompt_content_for_context_pack(page) if request.include_page_content else None,
         )
         for page in [store.read_page(page_name) for page_name in selection_result.pages_used]
     ]
@@ -789,6 +1057,7 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
         selection_result.pages_used,
         pages,
         include_content=request.include_page_content,
+        content_for_page=store.prompt_content_for_context_pack,
     )
     response = ContextPackResponse(
         guiding_principles=store.guiding_principles(),
@@ -801,6 +1070,21 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
             "selection_method": "service-owned llm page selector",
             "candidate_input_mode": candidate_input_mode,
             "tool_trace": selection_result.tool_trace,
+            "prompt_projection": {
+                "content_mode": "classification_prompt",
+                "omitted_page_categories": ["maintenance", "orientation"],
+                "omitted_page_scaffolding": ["page titles", "page preambles"],
+                "omitted_sections": [
+                    "Appendix A2 Codes",
+                    "Authority",
+                    "How To Use This Page During Ingest",
+                    "Orientation",
+                    "Relevant Business Rules",
+                    "Relevant Policy",
+                    "Supporting Pages By Signal",
+                    "Worked Examples",
+                ],
+            },
             "token_summary": selection_result.token_summary,
             "timing_summary": {
                 **selection_result.timing_summary,

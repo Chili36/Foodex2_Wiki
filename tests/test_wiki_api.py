@@ -5,7 +5,7 @@ import asyncio
 import httpx
 
 import wiki_api.app as app_module
-from wiki_api.librarian import LibrarianResult, PageSelectionResult, SolverResult
+from wiki_api.librarian import AnswerResult, LibrarianResult, PageSelectionResult, SolverResult
 from wiki_api.policy import build_policy_contract
 
 
@@ -176,6 +176,56 @@ class FakeSolver:
         )
 
 
+class FakeAnswerer:
+    def __init__(self) -> None:
+        self.model = "fake-claude-answerer"
+        self.calls: list[dict[str, object]] = []
+
+    def run(self, *, question: str, pages: list[dict[str, object]]) -> AnswerResult:
+        self.calls.append({"question": question, "pages": pages})
+        return AnswerResult(
+            answer=(
+                "Start by classifying the item as a derivative, then choose the most specific "
+                "reportable cheese base term before considering explicit facets."
+            ),
+            citations=["base-term-selection.md", "implicit-vs-explicit-facets.md"],
+            token_summary={
+                "model": self.model,
+                "calls": 1,
+                "input_tokens": 210,
+                "output_tokens": 80,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 290,
+                "per_call": [
+                    {
+                        "stop_reason": "end_turn",
+                        "input_tokens": 210,
+                        "output_tokens": 80,
+                        "cache_creation_input_tokens": 0,
+                        "cache_read_input_tokens": 0,
+                        "total_tracked_tokens": 290,
+                    }
+                ],
+            },
+            timing_summary={
+                "calls": 1,
+                "llm_time_ms": 700,
+                "answerer_wall_time_ms": 760,
+                "per_call": [
+                    {"call_number": 1, "duration_ms": 700, "stop_reason": "end_turn"},
+                ],
+            },
+        )
+
+
+class FakeBadAnswerer:
+    model = "fake-claude-answerer"
+
+    def run(self, *, question: str, pages: list[dict[str, object]]) -> AnswerResult:
+        raise ValueError("Could not extract JSON object from answerer response")
+
+
 class FakeBadSolver:
     def __init__(self) -> None:
         self.model = "fake-claude-solver"
@@ -252,6 +302,7 @@ def setup_function() -> None:
     app_module.librarian_runner = FakeLibrarian()
     app_module.selector_runner = FakeSelector()
     app_module.solver_runner = FakeSolver()
+    app_module.answerer_runner = FakeAnswerer()
 
 
 def test_health() -> None:
@@ -271,6 +322,10 @@ def test_list_pages_includes_packaging() -> None:
     assert "INGEST_WORKFLOW.md" in names
     assert "SCHEMA.md" in names
     assert "RUNTIME_RULES.md" in names
+    assert "pesticides-foodex2.md" in names
+    assert "contaminants-foodex2.md" in names
+    assert "vmpr-foodex2.md" in names
+    assert "additives-flavourings-foodex2.md" in names
 
 
 def test_get_unknown_page_returns_404() -> None:
@@ -285,6 +340,14 @@ def test_get_project_context_page_returns_200() -> None:
     assert payload["page_name"] == "PROJECT_CONTEXT.md"
     assert payload["title"] == "Project Context"
     assert "What We Are Building" in payload["content"]
+
+
+def test_graph_view_route_returns_html() -> None:
+    response = request("GET", "/wiki/graph-view")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "FoodEx2 Wiki Graph" in response.text
+    assert "/wiki/graph/compact" in response.text
 
 
 def test_wiki_graph_exposes_index_hub_edges() -> None:
@@ -314,9 +377,11 @@ def test_compact_wiki_graph_is_frontend_friendly() -> None:
     assert schema_node["total_links"] == schema_node["incoming_count"] + schema_node["outgoing_count"]
     vmpr_node = next(node for node in payload["nodes"] if node["id"] == "vmpr-legislative-mapping.md")
     assert vmpr_node["category"] == "domain_overlay"
+    pesticide_node = next(node for node in payload["nodes"] if node["id"] == "pesticides-foodex2.md")
+    assert pesticide_node["category"] == "domain_overlay"
     assert any(
         edge["source"] == "index.md"
-        and edge["target"] == "SCHEMA.md"
+        and edge["target"] == "pesticides-foodex2.md"
         and edge["type"] == "index_reference"
         for edge in payload["edges"]
     )
@@ -334,6 +399,60 @@ def test_page_backlinks_returns_incoming_relationships() -> None:
         for entry in payload["backlinks"]
     )
     assert any(entry["source"] == "README.md" for entry in payload["backlinks"])
+
+
+def test_ask_returns_answer_with_citations_and_trace() -> None:
+    response = request(
+        "POST",
+        "/wiki/ask",
+        json={
+            "question": "How should I think about coding fresh cheese made from milk?",
+            "max_pages": 7,
+            "use_graph_expansion": False,
+        },
+    )
+    assert response.status_code == 200
+    payload = response.json()
+
+    assert "classifying the item as a derivative" in payload["answer"]
+    assert payload["citations"] == ["base-term-selection.md", "implicit-vs-explicit-facets.md"]
+    assert payload["pages_used"] == [
+        "index.md",
+        "base-term-selection.md",
+        "ingredient-facets.md",
+        "packaging-facets.md",
+        "term-type-facet-constraints.md",
+        "implicit-vs-explicit-facets.md",
+    ]
+    assert payload["trace"]["selection_method"] == "service-owned llm page selector + answerer"
+    assert payload["trace"]["retrieval"]["model"] == "fake-claude-context"
+    assert payload["trace"]["answerer"]["model"] == "fake-claude-answerer"
+    assert payload["trace"]["total"]["total_llm_calls"] == 2
+    assert payload["trace"]["total"]["total_tracked_tokens"] == 405
+    assert app_module.answerer_runner.calls[0]["question"] == (
+        "How should I think about coding fresh cheese made from milk?"
+    )
+    first_page = app_module.answerer_runner.calls[0]["pages"][0]
+    assert first_page["page_name"] == "index.md"
+    assert "content" in first_page
+
+
+def test_ask_requires_question() -> None:
+    response = request("POST", "/wiki/ask", json={"question": ""})
+    assert response.status_code == 422
+
+
+def test_ask_returns_503_for_bad_answerer_output() -> None:
+    app_module.answerer_runner = FakeBadAnswerer()
+
+    response = request(
+        "POST",
+        "/wiki/ask",
+        json={"question": "How should I think about coding fresh cheese?"},
+    )
+
+    assert response.status_code == 503
+    assert response.json()["detail"] == "Could not extract JSON object from answerer response"
 
 
 def test_policy_pack_uses_librarian_response() -> None:
@@ -456,6 +575,27 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert payload["trace"]["timing_summary"]["request_wall_time_ms"] >= 0
     assert payload["pages"][0]["page_name"] == "RUNTIME_RULES.md"
     assert payload["trace"]["tool_trace"][0]["page_name"] == "base-term-selection.md"
+    assert payload["trace"]["prompt_projection"]["content_mode"] == "classification_prompt"
+    pages_by_name = {page["page_name"]: page for page in payload["pages"]}
+    assert pages_by_name["index.md"]["content"] is None
+    runtime_content = pages_by_name["RUNTIME_RULES.md"]["content"]
+    assert runtime_content is not None
+    assert not runtime_content.startswith("# Runtime Rules")
+    assert "compact prompt-facing rules file" not in runtime_content
+    assert "Use it as the always-on runtime layer" not in runtime_content
+    assert "## Core Decision Order" in runtime_content
+    assert "Treat reporting-domain overlays as opt-in" in runtime_content
+    assert "## Supporting Pages By Signal" not in runtime_content
+    assert "Worked Examples" not in runtime_content
+    base_content = pages_by_name["base-term-selection.md"]["content"]
+    assert base_content is not None
+    assert not base_content.startswith("# Base Term Selection")
+    assert "## Start With Food Type" in base_content
+    assert "## Worked Examples" not in base_content
+    assert "kangaroo fresh fat tissue" not in base_content
+    assert "## Relevant Policy" not in base_content
+    assert "## Relevant Business Rules" not in base_content
+    assert "[[" not in base_content
     assert app_module.selector_runner.calls[0]["candidates"] == [
         {
             "code": "A044C",
@@ -610,6 +750,7 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     assert "policy_contract" in payload["components"]["schemas"]["ContextPackResponse"]["properties"]
     assert "policy_contract" in payload["components"]["schemas"]["PolicyPackResponse"]["properties"]
     assert "policy_contract" in payload["components"]["schemas"]["SolveResponse"]["properties"]
+    assert "/wiki/ask" in payload["paths"]
     assert "/wiki/graph" in payload["paths"]
     assert "/wiki/graph/compact" in payload["paths"]
     assert "/wiki/pages/{page_name}/backlinks" in payload["paths"]

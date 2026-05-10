@@ -30,9 +30,9 @@ last_updated: "2026-04-08"
 | Derivative (broad group) | `F27 Source-commodities` (broad) | the derivative group covers multiple source commodities and the specific one is known; add explicit F27 to narrow, do not fall back to raw + F28 |
 | Composite | `F04 Ingredient` | characterising ingredients must be stated or a mixed-nature product is coded as composite |
 
-- In VMPR workflows, explicit facets can override the implicit categorisation if they are reported, so unnecessary explicit repetition is not neutral. See [[chemical-monitoring-foodex2]] for the domain-specific overlay. (ChemMon 2026 p33)
+- In VMPR workflows, explicit facets can override the implicit categorisation if they are reported, so unnecessary explicit repetition is not neutral. See [[vmpr-foodex2]] for the domain-specific overlay. (ChemMon 2026 p33)
 - When a derivative base term carries a broad implicit F27, narrow it with an explicit F27 pointing to the specific source commodity. Do not abandon the derivative base term and reconstruct the food from the raw commodity plus F28 — that violates [[policy-contract|AP-001]] and loses the derivative classification. The explicit F27 refines the implicit one; it does not replace the base term.
-- Exception: for acrylamide monitoring, explicit `F33` is mandatory even if the base term already carries an implicit `F33`. CHEMMON12 enforces this regardless of implicit state; the reporting context is in [[chemical-monitoring-foodex2]]. (ChemMon 2026; CHEMMON12)
+- Exception: for acrylamide monitoring, explicit `F33` is mandatory even if the base term already carries an implicit `F33`. CHEMMON12 enforces this regardless of implicit state; the reporting context is in [[contaminants-foodex2]]. (ChemMon 2026; CHEMMON12)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p54-56 -->
 ## Worked Examples

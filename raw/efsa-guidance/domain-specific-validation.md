@@ -8,10 +8,14 @@ sources:
 related:
   - "[[business-rules]]"
   - "[[chemical-monitoring-foodex2]]"
+  - "[[pesticides-foodex2]]"
+  - "[[contaminants-foodex2]]"
+  - "[[vmpr-foodex2]]"
+  - "[[additives-flavourings-foodex2]]"
   - "[[facet-coding-rules]]"
   - "[[validation-rules]]"
   - "[[vmpr-legislative-mapping]]"
-last_updated: "2026-04-22"
+last_updated: "2026-05-14"
 ---
 
 # Domain-Specific Validation
@@ -20,8 +24,9 @@ last_updated: "2026-04-22"
 ## These Rules Are Contextual
 
 - These checks are not universal FoodEx2 syntax rules. They activate only when the reporting domain or analysis context is known. (Domain Specific Rules; Compact JSON)
-- They matter most for VMPR, additives, acrylamide, and non-food animal matrices. See [[chemical-monitoring-foodex2]]. (Domain Specific Rules)
-- In VMPR, some of these explicit descriptors also control EFSA's downstream legislative mapping, not only pass/fail validation. See [[vmpr-legislative-mapping]]. (Guidance VMPR mapping p3-6)
+- They matter most for VMPR, additives/flavourings, contaminants substance rules such as acrylamide, and non-food animal matrices. Start from [[chemical-monitoring-foodex2]], then use the relevant domain page. (Domain Specific Rules)
+- If the context is all-domain FoodEx2 and no domain-filtered candidate set is active, do not apply these validation overlays by default.
+- In VMPR, some explicit descriptors also control EFSA's downstream legislative mapping, not only pass/fail validation. See [[vmpr-legislative-mapping]]. (VMPR mapping p3-6)
 
 <!-- Source: docs/DOMAIN_SPECIFIC_RULES.md Implementation Matrix; docs/CONTEXT_SPECIFIC_RULES.md -->
 ## Common Mandatory Or Recommended Facets

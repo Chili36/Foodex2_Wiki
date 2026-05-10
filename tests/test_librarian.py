@@ -317,6 +317,37 @@ def test_store_cleans_page_content_for_model() -> None:
     assert "(EFSA guidance p42; Training p5)" not in cleaned
 
 
+def test_store_projects_context_pack_content_for_runtime_prompts() -> None:
+    store = _store()
+    page = store.read_page("RUNTIME_RULES.md")
+    projected = store.prompt_content_for_context_pack(page)
+
+    assert projected is not None
+    assert projected.startswith("## Core Decision Order")
+    assert "# Runtime Rules" not in projected
+    assert "compact prompt-facing rules file" not in projected
+    assert "Use it as the always-on runtime layer" not in projected
+    assert "## Supporting Pages By Signal" not in projected
+
+
+def test_context_pack_projection_omits_examples_and_large_reference_catalogs() -> None:
+    store = _store()
+    process_page = store.read_page("process-facets.md")
+    projected_process = store.prompt_content_for_context_pack(process_page)
+
+    assert projected_process is not None
+    assert "## Rule Of Use" in projected_process
+    assert "## Appendix A2 Codes" not in projected_process
+    assert "A07KT portioning" not in projected_process
+    assert "## Worked Examples" not in projected_process
+
+    base_page = store.read_page("base-term-selection.md")
+    projected_base = store.prompt_content_for_context_pack(base_page)
+    assert projected_base is not None
+    assert "## Worked Examples" not in projected_base
+    assert "kangaroo fresh fat tissue" not in projected_base
+
+
 def test_solver_prefers_solver_model_env(monkeypatch) -> None:
     monkeypatch.setenv("WIKI_LIBRARIAN_MODEL", "shared-model")
     monkeypatch.setenv("WIKI_POLICY_MODEL", "policy-model")
