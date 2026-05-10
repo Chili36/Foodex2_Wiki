@@ -35,7 +35,7 @@ If a domain is supplied, use the relevant domain guidance and domain-valid candi
 3. Decide the food type first: raw commodity, derivative, or composite.
 4. Search for candidate base terms only after the food-type hypothesis is clear.
 5. Inspect promising base terms with catalogue details before selecting one.
-6. Check implicit facets for the chosen base term.
+6. Check implicit facets BOTH for positive coverage of source facts AND for qualifiers that exclude source content; an exclusionary implicit (e.g. "unflavoured", "plain", "without X") alongside contradictory source content means the base is too generic — revisit candidates before validating.
 7. Validate a base draft before adding optional facets.
 8. Classify each remaining source fact as:
    - `implicit_in_base`
