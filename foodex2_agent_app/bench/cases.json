@@ -1,0 +1,56 @@
+{
+  "bench_token_budget": 350000,
+  "loop_token_ceiling": 2500000,
+  "cases": [
+    {
+      "id": "fresh_cheese_rennet_20pct",
+      "search_term": "Fresh cheese made from milk, using rennet and rennet substitute, with a minimum of 20% fat content.",
+      "language_hint": null,
+      "domain": null,
+      "human_reference": null,
+      "expected_code": null,
+      "token_budget": 60000,
+      "notes": "Canonical regression case mirrored from tests/test_agent_app.py. Expected derivative base A02QF (Fresh uncured cheese) with implicit cheesemaking facets. Validator should accept the base; 20% fat may be carried by F10 if catalogue supports it."
+    },
+    {
+      "id": "brined_onion",
+      "search_term": "Pickled onion",
+      "language_hint": null,
+      "domain": null,
+      "human_reference": null,
+      "expected_code": null,
+      "token_budget": 60000,
+      "notes": "Recent failure run 20260510T195935Z-da296aa1: post-validation oversearch. Validator returned valid=true twice on A00ZJ#F27.A00HC but the agent kept inspecting alternative bases and children. Pass criterion this case proves: agent stops after first clean validation when ledger is settled."
+    },
+    {
+      "id": "sliceable_hard_cheese_45pct",
+      "search_term": "Sliceable hard cheese made from raw milk, featuring round holes and at least 45% fat content.",
+      "language_hint": null,
+      "domain": null,
+      "human_reference": null,
+      "expected_code": null,
+      "token_budget": 60000,
+      "notes": "Recent failure run 20260510T143437Z-c3a054ae: same post-validation oversearch pattern as brined_onion, on a hard cheese with 45% fat. Soft warnings did not gate finalisation per AGENT.md but the agent treated them as work to do."
+    },
+    {
+      "id": "tzatziki_yogurt_cucumber_garlic",
+      "search_term": "Fermented, ready-to-eat yogurt product containing milk, yogurt, cucumber, and garlic.",
+      "language_hint": null,
+      "domain": null,
+      "human_reference": null,
+      "expected_code": null,
+      "token_budget": 60000,
+      "notes": "Positive regression: passed cleanly per run 20260510T163445Z-7bb2dd43 (good_pattern). Composite reasoning with F04 characterising ingredients. Must remain passing across all AGENT.md edits."
+    },
+    {
+      "id": "swedish_hot_dog",
+      "search_term": "kokt korv med bröd",
+      "language_hint": "swedish",
+      "domain": null,
+      "human_reference": null,
+      "expected_code": null,
+      "token_budget": 60000,
+      "notes": "Positive regression with multilingual hint: passed cleanly per run 20260510T160643Z-d0fa291b (good_pattern). Multilingual semantic expansion. Must remain passing across all AGENT.md edits."
+    }
+  ]
+}

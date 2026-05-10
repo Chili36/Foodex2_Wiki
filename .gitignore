@@ -5,3 +5,6 @@
 __pycache__/
 *.pyc
 foodex2_agent_app/logs/
+.claude/settings.local.json
+.claude/ralph-loop*.json
+.claude/ralph-loop.local.md
