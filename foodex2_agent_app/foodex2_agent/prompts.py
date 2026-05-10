@@ -51,8 +51,41 @@ Every tool call includes a required `why` string in this debug run. Keep it unde
 """
 
 
+SHORT_INSTRUCTIONS = (
+    "You are a FoodEx2 coding analyst. The developer-role message at the start "
+    "of this conversation contains your full strategy (AGENT.md and the runtime "
+    "tool/output contract); it stays in scope across every tool round, so do not "
+    "re-derive it. Always emit a `tool_rationale` per the schema on every tool "
+    "call. Return the final JSON only after calling validator_validate_code at "
+    "least once; `confidence` must be an integer from 1 to 5."
+)
+
+
 def load_agent_markdown(path: Path = AGENT_MD_PATH) -> str:
     return path.read_text(encoding="utf-8").strip()
+
+
+def build_short_instructions() -> str:
+    """Stable, tiny system-prompt preamble passed via the API `instructions` slot.
+
+    The full AGENT.md + runtime contract lives in the conversation history as a
+    developer-role message (see `build_developer_preamble`) so it is paid for
+    once per agent run rather than re-sent on every tool-round continuation.
+    """
+    return SHORT_INSTRUCTIONS
+
+
+def build_developer_preamble(
+    path: Path = AGENT_MD_PATH,
+    *,
+    include_debug_tool_why: bool = False,
+) -> str:
+    """Full AGENT.md + runtime contract, sent once as the round-0 developer message."""
+    agent_markdown = load_agent_markdown(path)
+    parts = [agent_markdown, RUNTIME_CONTRACT.strip()]
+    if include_debug_tool_why:
+        parts.append(DEBUG_TOOL_WHY_CONTRACT.strip())
+    return "\n\n".join(parts) + "\n"
 
 
 def build_agent_instructions(
@@ -60,11 +93,13 @@ def build_agent_instructions(
     *,
     include_debug_tool_why: bool = False,
 ) -> str:
-    agent_markdown = load_agent_markdown(path)
-    parts = [agent_markdown, RUNTIME_CONTRACT.strip()]
-    if include_debug_tool_why:
-        parts.append(DEBUG_TOOL_WHY_CONTRACT.strip())
-    return "\n\n".join(parts) + "\n"
+    """Deprecated combined builder, kept for back-compat with older callers/tests.
+
+    New code should call `build_short_instructions()` (for the API `instructions`
+    slot) and `build_developer_preamble()` (for the first developer message)
+    separately.
+    """
+    return build_developer_preamble(path, include_debug_tool_why=include_debug_tool_why)
 
 
 def build_user_task(search_term: str, *, language_hint: str | None, domain: str | None) -> str:

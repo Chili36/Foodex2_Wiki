@@ -9,7 +9,12 @@ from typing import Any
 
 from .failure_learning import analyze_and_log_completed_run, analyze_and_log_failure
 from .models import AgentResult, CodeRequest, CodeResponse, ToolCallRecord
-from .prompts import AGENT_MD_PATH, build_agent_instructions, build_user_task
+from .prompts import (
+    AGENT_MD_PATH,
+    build_developer_preamble,
+    build_short_instructions,
+    build_user_task,
+)
 from .settings import APP_DIR, Settings
 from .tools import FoodEx2Toolbox, build_tool_definitions
 from .trace import RunLogger, compact_for_model, make_trace_record, new_run_id
@@ -548,7 +553,8 @@ class FoodEx2Agent:
             language_hint=request.language_hint,
             domain=request.domain,
         )
-        agent_instructions = build_agent_instructions(
+        short_instructions = build_short_instructions()
+        developer_preamble = build_developer_preamble(
             include_debug_tool_why=self.settings.tool_reason_debug
         )
         tool_definitions = build_tool_definitions(
@@ -563,7 +569,8 @@ class FoodEx2Agent:
                 "model": agent_model,
                 "selfEvaluationModel": self_evaluation_model,
                 "agentInstructionsPath": str(AGENT_MD_PATH),
-                "agentInstructionsChars": len(agent_instructions),
+                "shortInstructionsChars": len(short_instructions),
+                "developerPreambleChars": len(developer_preamble),
                 "toolReasonDebug": self.settings.tool_reason_debug,
                 "postValidationToolBudget": self.settings.post_validation_tool_budget,
                 "request": request_dump,
@@ -645,8 +652,11 @@ class FoodEx2Agent:
             await _emit(event_sink, {"event": "model_request", "round": 0})
             response = await self._create_response(
                 model=agent_model,
-                instructions=agent_instructions,
-                input=user_task,
+                instructions=short_instructions,
+                input=[
+                    {"role": "developer", "content": developer_preamble},
+                    {"role": "user", "content": user_task},
+                ],
                 tools=tool_definitions,
                 parallel_tool_calls=False,
             )
@@ -728,7 +738,6 @@ class FoodEx2Agent:
                         )
                         response = await self._create_response(
                             model=agent_model,
-                            instructions=agent_instructions,
                             previous_response_id=_get_attr(response, "id"),
                             input=blocked_outputs,
                             tools=[],
@@ -845,7 +854,6 @@ class FoodEx2Agent:
                 await _emit(event_sink, {"event": "model_request", "round": _round + 1})
                 response = await self._create_response(
                     model=agent_model,
-                    instructions=agent_instructions,
                     previous_response_id=_get_attr(response, "id"),
                     input=tool_outputs,
                     tools=tool_definitions,
