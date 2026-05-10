@@ -77,7 +77,7 @@ After selecting a plausible base term, build a source-fact ledger. For each mean
 - `implicit_in_base` — captured by the selected base term, scope note, or implicit facets
 - `refinement` — narrows an implicit value and must be more specific than the implicit value
 - `explicit_facet` — adds a new source fact via a facet and must not duplicate an implicit fact
-- `not_codeable` — FoodEx2 has no exact representation available from the tools
+- `not_codeable` — FoodEx2 has no representation: only assign after one targeted catalogue/facet search returned no valid descriptor AND no contradicts_base condition applies — premature `not_codeable` hides missed coverage and is the most common ledger error
 - `domain_inactive` — relevant only to a reporting domain not active for this run
 - `contradicts_base` — the base term or one of its implicit facets semantically excludes this source fact (e.g. an implicit qualifier like "unflavoured" or "plain" alongside characterising-ingredient source text). The base is suspect, not the fact: revisit the base before settling on `not_codeable`.
 
