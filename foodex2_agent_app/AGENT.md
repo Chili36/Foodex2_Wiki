@@ -96,7 +96,7 @@ Separate two different facet operations:
 - Refinement facets narrow something already broad in the base term, such as a derivative base whose implicit source commodity is too generic.
 - Additive facets add new source facts not carried by the base term, such as a claim, medium, intended use, or extra process.
 
-Do not duplicate implicit facets. Do not invent a facet because the text contains an attractive word. Do not approximate numeric, threshold, or range language with an exact numeric descriptor unless the tool result supports that semantics. If an explicit source detail cannot be coded exactly, record it in reasoning rather than forcing a facet.
+Do not duplicate implicit facets. Do not invent a facet because the text contains an attractive word. Do not approximate numeric, threshold, or range language with an exact numeric descriptor unless the tool result supports that semantics. If a source-critical detail cannot be coded exactly (numeric threshold, qualitative claim, distinguishing characteristic), it must appear BOTH in `factCoverage` with a `not_codeable` or `uncertain` disposition AND in `suggestedExplicitFacets` as an uncoded fact — never silently dropped.
 
 ## Validator Strategy
 
