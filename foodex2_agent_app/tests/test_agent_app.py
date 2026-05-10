@@ -725,11 +725,78 @@ def test_tool_definitions_are_strict_openai_schemas():
 
 
 def test_agent_instructions_are_loaded_from_markdown():
+    # build_agent_instructions is kept as a back-compat shim that delegates to
+    # build_developer_preamble; it still returns the full AGENT.md content.
     instructions = build_agent_instructions()
 
     assert "# FoodEx2 Coding Agent" in instructions
     assert "Facet Construction Protocol" in instructions
     assert "Runtime Tool And Output Contract" in instructions
+
+
+def test_short_instructions_is_a_short_stable_preamble():
+    from foodex2_agent.prompts import build_short_instructions
+
+    short = build_short_instructions()
+
+    assert "FoodEx2 coding analyst" in short
+    assert "Facet Construction Protocol" not in short
+    assert "Runtime Tool And Output Contract" not in short
+    # Sanity-check the short preamble actually stays short (Phase 0 invariant).
+    assert len(short) < 1000
+
+
+def test_round_0_sends_agent_md_via_developer_message_and_continuations_omit_instructions(tmp_path):
+    """Phase 0 invariant: AGENT.md rides in the conversation history, not in
+    the API instructions slot. The model pays for it once per case, not once
+    per tool round."""
+    client = FakeOpenAIClient()
+    settings = Settings(
+        openai_model="fake-agent",
+        max_tool_rounds=2,  # one continuation call is enough to assert the shape
+        run_log_dir=str(tmp_path / "runs"),
+        failure_learning_log=str(tmp_path / "learning" / "failure_learning.jsonl"),
+        run_learning_log=str(tmp_path / "learning" / "run_learning.jsonl"),
+    )
+    toolbox = FoodEx2Toolbox(
+        catalog=FakeCatalog(),
+        semantic=FakeSemantic(),
+        wiki=FakeWiki(),
+        validator=FakeValidator(),
+    )
+    agent = FoodEx2Agent(settings=settings, toolbox=toolbox, client=client)
+
+    # Drive the agent; FakeResponses returns tool calls every turn so we will
+    # exhaust max_tool_rounds. We don't care about the verdict — we care about
+    # the request shape of each call.
+    asyncio.run(agent.run(CodeRequest(search_term="Fresh cheese", audit_mode=False)))
+
+    agent_calls = [call for call in client.responses.calls if call.get("tools")]
+    assert agent_calls, "expected at least one agent tool-calling request"
+
+    # Round 0: instructions is the short preamble; AGENT.md content lives in
+    # input as a developer-role message at position 0.
+    round_0 = agent_calls[0]
+    assert "FoodEx2 coding analyst" in round_0["instructions"]
+    assert "Facet Construction Protocol" not in round_0["instructions"]
+    assert isinstance(round_0["input"], list)
+    developer_msg = next(
+        item for item in round_0["input"]
+        if isinstance(item, dict) and item.get("role") == "developer"
+    )
+    assert "Authority Model" in developer_msg["content"]
+    assert "Facet Construction Protocol" in developer_msg["content"]
+
+    # Continuation calls: previous_response_id is set, and instructions must be
+    # absent (otherwise we are paying for AGENT.md again every round, which is
+    # the bug Phase 0 fixes).
+    continuation_calls = [call for call in agent_calls if call.get("previous_response_id")]
+    assert continuation_calls, "expected at least one continuation call"
+    for call in continuation_calls:
+        assert "instructions" not in call, (
+            "continuation call must not pass `instructions`: that re-bills AGENT.md "
+            "every tool round and defeats the Phase 0 fix"
+        )
 
 
 def test_compact_value_truncates_large_catalog_results():
@@ -916,8 +983,17 @@ def test_completed_agent_run_writes_run_learning_log(tmp_path):
     assert response.usage["totals"]["total_tracked_tokens"] == 165
     assert any(call["model"] == "fake-cheap-agent" for call in client.responses.calls)
     agent_call = next(call for call in client.responses.calls if call.get("tools"))
-    assert "Facet Construction Protocol" in agent_call["instructions"]
-    assert "Runtime Tool And Output Contract" in agent_call["instructions"]
+    # Phase 0: AGENT.md + RUNTIME_CONTRACT now ride in the conversation as a
+    # developer-role message, NOT in the API `instructions` slot. The
+    # instructions slot holds only a short stable preamble.
+    assert "FoodEx2 coding analyst" in agent_call["instructions"]
+    assert "Facet Construction Protocol" not in agent_call["instructions"]
+    developer_msg = next(
+        item for item in agent_call["input"]
+        if isinstance(item, dict) and item.get("role") == "developer"
+    )
+    assert "Facet Construction Protocol" in developer_msg["content"]
+    assert "Runtime Tool And Output Contract" in developer_msg["content"]
     learning_path = tmp_path / "learning" / "run_learning.jsonl"
     records = [json.loads(line) for line in learning_path.read_text(encoding="utf-8").splitlines()]
     assert len(records) == 1
