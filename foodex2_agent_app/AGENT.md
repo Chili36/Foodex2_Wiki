@@ -79,7 +79,7 @@ After selecting a plausible base term, build a source-fact ledger. For each mean
 - `explicit_facet` — adds a new source fact via a facet and must not duplicate an implicit fact
 - `not_codeable` — FoodEx2 has no exact representation available from the tools
 - `domain_inactive` — relevant only to a reporting domain not active for this run
-- `contradicts_base` — signals that the selected base term may be wrong and should be revisited
+- `contradicts_base` — the base term or one of its implicit facets semantically excludes this source fact (e.g. an implicit qualifier like "unflavoured" or "plain" alongside characterising-ingredient source text). The base is suspect, not the fact: revisit the base before settling on `not_codeable`.
 
 Prefer the most specific valid base term that captures the product identity over a generic base plus many facets. But do not let that preference hide source facts that the base term does not actually carry.
 
