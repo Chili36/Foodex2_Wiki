@@ -49,6 +49,17 @@ class FakeSemantic:
 
 
 
+class FakeWiki:
+    async def ask(self, **kwargs):
+        return {
+            "answer": "Use F21 for organic, F10 for sugar-free claims. F04 for characterising ingredients.",
+            "trace": {
+                "retrieval": {"token_summary": {"model": "fake-wiki", "calls": 1, "input_tokens": 10, "output_tokens": 3, "total_tracked_tokens": 13}},
+                "answerer": {"token_summary": {"model": "fake-wiki", "calls": 1, "input_tokens": 20, "output_tokens": 7, "total_tracked_tokens": 27}},
+            },
+        }
+
+
 class FakeValidator:
     async def validate_code(self, **kwargs):
         return {"passes": True, "warnings": [], "code": kwargs["code"]}
@@ -422,6 +433,7 @@ def test_toolbox_dispatches_validator():
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
         validator=FakeValidator(),
+        wiki=FakeWiki(),
     )
     record = asyncio.run(
         toolbox.call(
@@ -441,6 +453,7 @@ def test_toolbox_warns_on_repeated_search_after_accepted_validation():
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
         validator=FakeValidator(),
+        wiki=FakeWiki(),
     )
 
     first = asyncio.run(
@@ -451,14 +464,14 @@ def test_toolbox_warns_on_repeated_search_after_accepted_validation():
     )
     second = asyncio.run(
         toolbox.execute(
-            "catalog_search_facets",
-            {"query": "raw milk", "facet_type": None, "limit": 10},
+            "semantic_search_candidates",
+            {"query": "raw milk", "limit": 10},
         )
     )
     third = asyncio.run(
         toolbox.execute(
-            "catalog_search_facets",
-            {"query": "unpasteurised milk", "facet_type": None, "limit": 10},
+            "semantic_search_candidates",
+            {"query": "unpasteurised milk", "limit": 10},
         )
     )
 
@@ -474,6 +487,7 @@ def test_toolbox_dispatches_semantic_search():
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
         validator=FakeValidator(),
+        wiki=FakeWiki(),
     )
     record = asyncio.run(
         toolbox.call("semantic_search_candidates", {"query": "fresh cheese", "limit": 10})
@@ -527,15 +541,17 @@ def test_normalize_agent_result_payload_accepts_fact_ledger_aliases():
 
 
 def test_tool_definitions_are_the_trimmed_four():
-    # The agent's tool surface was trimmed from 13 to 4 — see commit message
-    # "tighten: drop 9 tools, run on 4-tool surface". This test pins the
-    # surface so accidental re-additions show up immediately.
+    # The agent's tool surface is 4 tools. Qdrant handles all fuzzy recall
+    # (base candidates AND facet descriptors). The catalogue is for lookup
+    # by known code (catalog_get_term), not search. Validation is the gate
+    # (validator_validate_code). Per-case strategic guidance comes from the
+    # wiki (wiki_ask_guidance).
     names = {tool["name"] for tool in TOOL_DEFINITIONS}
 
     assert names == {
         "semantic_search_candidates",
+        "wiki_ask_guidance",
         "catalog_get_term",
-        "catalog_search_facets",
         "validator_validate_code",
     }
 
@@ -600,6 +616,7 @@ def test_round_0_sends_agent_md_via_developer_message_and_continuations_omit_ins
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
         validator=FakeValidator(),
+        wiki=FakeWiki(),
     )
     agent = FoodEx2Agent(settings=settings, toolbox=toolbox, client=client)
 
@@ -678,6 +695,7 @@ def test_failed_agent_run_writes_learning_log(tmp_path):
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
         validator=FakeValidator(),
+        wiki=FakeWiki(),
     )
     agent = FoodEx2Agent(settings=settings, toolbox=toolbox, client=client)
 
@@ -719,6 +737,7 @@ def test_post_validation_tool_calls_are_logged(tmp_path):
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
         validator=FakeValidator(),
+        wiki=FakeWiki(),
     )
     agent = FoodEx2Agent(settings=settings, toolbox=toolbox, client=client)
 
@@ -753,6 +772,7 @@ def test_post_validation_budget_blocks_extra_retrieval_and_forces_final(tmp_path
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
         validator=FakeValidator(),
+        wiki=FakeWiki(),
     )
     agent = FoodEx2Agent(settings=settings, toolbox=toolbox, client=client)
 
@@ -794,6 +814,7 @@ def test_completed_agent_run_writes_run_learning_log(tmp_path):
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
         validator=FakeValidator(),
+        wiki=FakeWiki(),
     )
     agent = FoodEx2Agent(settings=settings, toolbox=toolbox, client=client)
 

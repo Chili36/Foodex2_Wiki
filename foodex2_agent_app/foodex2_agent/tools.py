@@ -4,23 +4,25 @@ from copy import deepcopy
 import json
 from typing import Any, Awaitable, Callable
 
-from .clients import CatalogClient, SemanticSearchClient, ValidatorClient
+from .clients import CatalogClient, SemanticSearchClient, ValidatorClient, WikiClient
 from .models import ToolCallRecord
 
 
 ToolHandler = Callable[[dict[str, Any]], Awaitable[Any]]
 
 
-# The trimmed 4-tool surface. Each tool maps to a clear ledger-advancing
-# operation. Earlier versions exposed 13 tools mirroring the underlying
-# wiki/catalogue/validator API surface; that turned every round into a 13-way
-# decision and led to "stuck in tool calling" — see commit history on
-# ralph/agent-md-self-improve for the run logs.
+# The 5-tool surface. Each tool maps to a clear ledger-advancing operation.
+# Earlier versions exposed 13 tools mirroring the underlying wiki/catalogue/
+# validator API surface; that turned every round into a 13-way decision and
+# led to "stuck in tool calling". This trimmed surface keeps the production
+# Stage-1 deconstructed search + the per-case wiki guidance ("how to code
+# this") + the catalogue inspection + the validator gate + the targeted
+# facet search.
 TOOL_DEFINITIONS: list[dict[str, Any]] = [
     {
         "type": "function",
         "name": "semantic_search_candidates",
-        "description": "Vector search (Qdrant) for likely FoodEx2 candidate codes. The primary recall tool: call this first for candidate base terms; refine the query and call again if the first pass misses the right candidate.",
+        "description": "Deconstructed vector search (Qdrant): splits the query into base term + components, runs parallel searches, merges results with highest-score-wins per code. The primary recall tool — call first. If the right candidate still seems missing after inspection, refine the query and call once more.",
         "parameters": {
             "type": "object",
             "additionalProperties": False,
@@ -34,6 +36,20 @@ TOOL_DEFINITIONS: list[dict[str, Any]] = [
     },
     {
         "type": "function",
+        "name": "wiki_ask_guidance",
+        "description": "Ask the FoodEx2 wiki for case-specific coding guidance. Use after the first semantic search, BEFORE inspecting candidates: ask 'how should I code <verbatim source text>? which facet families apply to <listed source phrases>?'. The wiki returns prose advice naming the relevant facet families (F10, F21, F27, F28, F04 etc.) and any business rules that apply. This is per-case guidance — call it once, with the source text and the top 2-3 candidate codes you got back.",
+        "parameters": {
+            "type": "object",
+            "additionalProperties": False,
+            "properties": {
+                "question": {"type": "string"},
+            },
+            "required": ["question"],
+        },
+        "strict": True,
+    },
+    {
+        "type": "function",
         "name": "catalog_get_term",
         "description": "Authoritative term details for a FoodEx2 code: name, term type, scope note, hierarchies (parents), implicit facets, monitoring flags. Use this to inspect a candidate before committing to it as the base.",
         "parameters": {
@@ -41,22 +57,6 @@ TOOL_DEFINITIONS: list[dict[str, Any]] = [
             "additionalProperties": False,
             "properties": {"code": {"type": "string"}},
             "required": ["code"],
-        },
-        "strict": True,
-    },
-    {
-        "type": "function",
-        "name": "catalog_search_facets",
-        "description": "Search FoodEx2 facet descriptors (e.g. F27 source commodity, F28 process, F04 ingredients). Use only for source-critical explicit facets not already covered by the chosen base's implicit facets.",
-        "parameters": {
-            "type": "object",
-            "additionalProperties": False,
-            "properties": {
-                "query": {"type": "string"},
-                "facet_type": {"type": ["string", "null"]},
-                "limit": {"type": "integer"},
-            },
-            "required": ["query", "facet_type", "limit"],
         },
         "strict": True,
     },
@@ -119,10 +119,12 @@ class FoodEx2Toolbox:
         catalog: CatalogClient,
         semantic: SemanticSearchClient,
         validator: ValidatorClient,
+        wiki: WikiClient,
     ):
         self.catalog = catalog
         self.semantic = semantic
         self.validator = validator
+        self.wiki = wiki
         self._usage_events: list[dict[str, Any]] = []
         self._accepted_validation: dict[str, Any] | None = None
         self._post_validation_search_count = 0
@@ -151,8 +153,8 @@ class FoodEx2Toolbox:
     async def execute(self, name: str, arguments: dict[str, Any]) -> Any:
         handlers: dict[str, ToolHandler] = {
             "semantic_search_candidates": self._semantic_search_candidates,
+            "wiki_ask_guidance": self._wiki_ask_guidance,
             "catalog_get_term": self._catalog_get_term,
-            "catalog_search_facets": self._catalog_search_facets,
             "validator_validate_code": self._validator_validate_code,
         }
         if name not in handlers:
@@ -166,6 +168,46 @@ class FoodEx2Toolbox:
     def serialize_result(result: Any) -> str:
         return json.dumps(result, ensure_ascii=False, default=str)
 
+    async def _wiki_ask_guidance(self, args: dict[str, Any]) -> Any:
+        response = await self.wiki.ask(
+            question=args["question"],
+            max_pages=7,
+            include_page_content=False,
+        )
+        if not isinstance(response, dict):
+            return response
+        self._capture_wiki_usage(response, tool_name="wiki_ask_guidance")
+        return {
+            "answer": response.get("answer", ""),
+            "note": "Per-case guidance from the FoodEx2 wiki. Use the named facet families and rules; do not duplicate implicit facets already on the chosen base.",
+        }
+
+    def _capture_wiki_usage(self, response: dict[str, Any], *, tool_name: str) -> None:
+        trace = response.get("trace")
+        if not isinstance(trace, dict):
+            return
+        for stage_name in ("retrieval", "answerer"):
+            stage = trace.get(stage_name)
+            if not isinstance(stage, dict):
+                continue
+            summary = stage.get("token_summary")
+            if not isinstance(summary, dict):
+                continue
+            self._usage_events.append(
+                {
+                    "source": f"{tool_name}.{stage_name}",
+                    "model": summary.get("model") or stage.get("model"),
+                    "calls": int(summary.get("calls") or 0),
+                    "input_tokens": int(summary.get("input_tokens") or 0),
+                    "output_tokens": int(summary.get("output_tokens") or 0),
+                    "cache_creation_input_tokens": int(
+                        summary.get("cache_creation_input_tokens") or 0
+                    ),
+                    "cache_read_input_tokens": int(summary.get("cache_read_input_tokens") or 0),
+                    "total_tracked_tokens": int(summary.get("total_tracked_tokens") or 0),
+                }
+            )
+
     async def _semantic_search_candidates(self, args: dict[str, Any]) -> Any:
         limit = min(max(int(args.get("limit", 10)), 1), 25)
         result = await self.semantic.search_candidates(query=args["query"], limit=limit)
@@ -176,18 +218,6 @@ class FoodEx2Toolbox:
 
     async def _catalog_get_term(self, args: dict[str, Any]) -> Any:
         return await self.catalog.get_term(args["code"])
-
-    async def _catalog_search_facets(self, args: dict[str, Any]) -> Any:
-        limit = min(max(int(args.get("limit", 25)), 1), 100)
-        result = await self.catalog.search_facets(
-            query=args["query"],
-            facet_type=args.get("facet_type"),
-            limit=limit,
-        )
-        return self._annotate_post_validation_search_result(
-            result,
-            query=args["query"],
-        )
 
     async def _validator_validate_code(self, args: dict[str, Any]) -> Any:
         result = await self.validator.validate_code(
@@ -204,11 +234,23 @@ class FoodEx2Toolbox:
                 or result.get("name"),
             }
             annotated = dict(result)
-            annotated["agentHint"] = (
-                "This code validates with no hard warnings. Validation is the gate: "
-                "finalize the JSON now unless a source-critical fact is still uncovered "
-                "by a known facet family. Do not broaden the search."
-            )
+            has_facets = "#" in str(args["code"])
+            if has_facets:
+                annotated["agentHint"] = (
+                    "Full constructed code (with explicit facets) validates with no hard "
+                    "warnings. This is the finalize gate — return the JSON now. Do not "
+                    "broaden the search."
+                )
+            else:
+                annotated["agentHint"] = (
+                    "BASE term validates with no hard warnings — this is NOT the finalize "
+                    "gate yet. You still owe an explicit_facet (or a not_codeable disposition) "
+                    "for every source modifier not covered by the base's implicit facets. "
+                    "Now: for each uncovered modifier, use the wiki-named descriptor code "
+                    "directly if one was given, otherwise check semantic_search results for "
+                    "a termType='f' candidate matching it. Construct the full code, then "
+                    "validate again before returning."
+                )
             return annotated
         return result
 
@@ -234,10 +276,14 @@ class FoodEx2Toolbox:
         count = self._result_item_count(result)
         if count == 0:
             hint = (
-                f"Post-validation search {self._post_validation_search_count}: no exact "
-                f"descriptor was found for '{query}'. The draft code already validates; "
-                "classify this source fact as unsupported/not coded unless another tool "
-                "result already proves an exact descriptor."
+                f"Post-validation search {self._post_validation_search_count}: the catalogue "
+                f"label search for '{query}' returned no exact match. NOTE: the catalogue "
+                "search is literal/label-based and often misses facet descriptors named "
+                "differently than the query (e.g., 'organic' vs 'Organically produced'). "
+                "If a prior wiki_ask_guidance response named a specific facet descriptor "
+                "code for this concept (e.g., F10.A077L), use that code directly as an "
+                "explicit_facet — the wiki is authoritative. Only classify as not_codeable "
+                "if neither the wiki nor any earlier tool result names a descriptor."
             )
         else:
             hint = (

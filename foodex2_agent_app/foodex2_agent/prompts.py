@@ -10,19 +10,20 @@ AGENT_MD_PATH = APP_DIR / "AGENT.md"
 
 RUNTIME_CONTRACT = """## Runtime Tool And Output Contract
 
-You have FOUR tools. Use them in this order:
+You have FOUR tools.
 
-1. `semantic_search_candidates(query, limit)` — call first to get candidate base codes from Qdrant. If the first pass misses, refine the query (synonyms, food-type words, language-translated form) and call once more.
-2. `catalog_get_term(code)` — inspect the best 1-2 candidates. Returns name, term type, scope note, hierarchies, and implicit facets in one call. Do not re-fetch the same code.
-3. `validator_validate_code(code, domain, context)` — validate a draft as soon as you have a plausible base. Clean validation is the gate to finalize. Hard warnings drive ONE targeted repair. Soft warnings are advisory — do not chase them.
-4. `catalog_search_facets(query, facet_type, limit)` — only for a source-critical explicit facet not already covered by the chosen base's implicit facets. One targeted call per missing fact. Empty result means classify the fact as not_codeable and move on.
+- `semantic_search_candidates(query, limit)` — Qdrant fuzzy/deconstructed recall. Returns both base candidates and facet descriptors (`termType="f"`). Call once with the verbatim source text. Call again with a single modifier as the query when you need a specific facet descriptor.
+- `wiki_ask_guidance(question)` — per-case strategic guidance. Ask which facet families apply to each modifier and which business rules constrain your construction. Call once per case, naming the source text, the top candidate codes, and every modifier you listed.
+- `catalog_get_term(code)` — lookup by known code. Returns name, term type, scope note, hierarchies, implicit facets, monitoring flags. Not a search; do not call with a free-text query.
+- `validator_validate_code(code, domain, context)` — validate a constructed code. Clean validation is the finalize gate. Hard warnings drive one targeted repair; soft warnings are advisory.
 
 Discipline:
 
 - Use only the provided tools. Do not use FoodEx2 facts from memory.
 - Every tool call requires a `tool_rationale` audit object stating the source fact, expected answer, whether it can change the code, and the fallback if no useful result.
-- Return final JSON only after the validator has been called at least once and accepted the constructed code, or the validator has produced a hard warning you have already addressed once.
-- After validation accepts the code, only call further tools to resolve a SPECIFIC named source fact that is still uncovered. Do not re-validate the same code or re-search the same concept.
+- One concept per recall query. Do not combine multiple modifiers in a single `semantic_search_candidates` query when searching for facet descriptors.
+- Return final JSON only after the validator has been called on the full constructed code (not just a bare base) and accepted it, or has produced a hard warning you have already addressed once.
+- BEFORE finalizing: every modifier from the source text must have a disposition in `factCoverage` — covered by the base (`implicit_in_base`), attached as an `explicit_facet`, or recorded as `not_codeable` only after recall surfaced no descriptor.
 - `confidence` must be an integer from 1 to 5. Never return a decimal probability such as 0.9 or a percentage such as 90.
 
 Final JSON shape:

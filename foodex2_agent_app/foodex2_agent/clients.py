@@ -306,11 +306,17 @@ class SemanticSearchClient:
 
     async def search_candidates(self, *, query: str, limit: int = 10) -> Any:
         limit = min(max(limit, 1), self.settings.tool_model_max_items)
+        # Use the production Stage-1 path: deconstruct the query into base +
+        # components and run parallel Qdrant searches, merging with highest-
+        # score-wins per code. This is what the DMT production pipeline does
+        # (see Chili36/DMT wiki: FoodEx2-Architecture).
         raw = await self.http.post_json(
             {
                 "query": query,
                 "collection": self.settings.semantic_collection,
                 "limit": limit,
+                "use_deconstructed_search": True,
+                "deconstructor_method": "stored_prompt",
             }
         )
         results = []
@@ -331,14 +337,22 @@ class SemanticSearchClient:
                     "source": "qdrant",
                 }
             )
+        deconstruction = (
+            raw.get("deconstruction")
+            or raw.get("deconstructed_query")
+            or raw.get("query_components")
+            if isinstance(raw, dict)
+            else None
+        )
         return {
             "query": raw.get("query", query) if isinstance(raw, dict) else query,
             "collection": raw.get("collection", self.settings.semantic_collection)
             if isinstance(raw, dict)
             else self.settings.semantic_collection,
             "found": raw.get("found", len(results)) if isinstance(raw, dict) else len(results),
+            "deconstruction": deconstruction,
             "results": results,
-            "note": "Semantic search is a candidate recall tool only. Verify any candidate with catalogue_get_term and validator_validate_code.",
+            "note": "Deconstructed Qdrant recall (base term + components, parallel search). Verify any candidate with catalog_get_term and validator_validate_code.",
         }
 
 

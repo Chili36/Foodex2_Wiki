@@ -48,7 +48,7 @@ class Settings:
         "gpt-5.5,gpt-5.4,gpt-5.4-mini,gpt-5.3-codex-spark",
     )
     max_tool_rounds: int = _env_int("AGENT_MAX_TOOL_ROUNDS", 12)
-    post_validation_tool_budget: int = _env_int("AGENT_POST_VALIDATION_TOOL_BUDGET", 1)
+    post_validation_tool_budget: int = _env_int("AGENT_POST_VALIDATION_TOOL_BUDGET", 4)
     tool_reason_debug: bool = _env_bool("AGENT_TOOL_REASON_DEBUG", False)
     tool_trace_max_items: int = _env_int("AGENT_TOOL_TRACE_MAX_ITEMS", 8)
     tool_model_max_items: int = _env_int("AGENT_TOOL_MODEL_MAX_ITEMS", 12)

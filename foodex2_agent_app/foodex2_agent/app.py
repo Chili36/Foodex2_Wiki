@@ -9,14 +9,14 @@ from fastapi import FastAPI
 from fastapi.responses import FileResponse, StreamingResponse
 
 from .agent import FoodEx2Agent
-from .clients import CatalogClient, SemanticSearchClient, ValidatorClient
+from .clients import CatalogClient, SemanticSearchClient, ValidatorClient, WikiClient
 from .models import CodeRequest, CodeResponse
 from .settings import settings
 from .tools import FoodEx2Toolbox
 
 
 STATIC_DIR = Path(__file__).resolve().parent / "static"
-APP_BUILD = "tight-4tool-v1"
+APP_BUILD = "tight-5tool-v1"
 
 
 def build_toolbox() -> FoodEx2Toolbox:
@@ -24,6 +24,7 @@ def build_toolbox() -> FoodEx2Toolbox:
         catalog=CatalogClient(settings),
         semantic=SemanticSearchClient(settings),
         validator=ValidatorClient(settings),
+        wiki=WikiClient(settings),
     )
 
 
