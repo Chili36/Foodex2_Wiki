@@ -10,14 +10,19 @@ AGENT_MD_PATH = APP_DIR / "AGENT.md"
 
 RUNTIME_CONTRACT = """## Runtime Tool And Output Contract
 
+You have FOUR tools. Use them in this order:
+
+1. `semantic_search_candidates(query, limit)` — call first to get candidate base codes from Qdrant. If the first pass misses, refine the query (synonyms, food-type words, language-translated form) and call once more.
+2. `catalog_get_term(code)` — inspect the best 1-2 candidates. Returns name, term type, scope note, hierarchies, and implicit facets in one call. Do not re-fetch the same code.
+3. `validator_validate_code(code, domain, context)` — validate a draft as soon as you have a plausible base. Clean validation is the gate to finalize. Hard warnings drive ONE targeted repair. Soft warnings are advisory — do not chase them.
+4. `catalog_search_facets(query, facet_type, limit)` — only for a source-critical explicit facet not already covered by the chosen base's implicit facets. One targeted call per missing fact. Empty result means classify the fact as not_codeable and move on.
+
+Discipline:
+
 - Use only the provided tools. Do not use FoodEx2 facts from memory.
-- First call `plan_foodex2_coding_strategy`, then call `wiki_ask_guidance` with a broad "what should I think about?" version of the task. Ask the wiki to keep the answer very to the point.
-- Do not search for building blocks until you have both a food-type/base-code hypothesis and wiki guidance.
-- Treat `wiki_ask_guidance` as the FoodEx2 guide. Use `wiki_policy_pack`, `wiki_context`, or `wiki_read_page` only when additional page-level guidance is needed.
-- Use `semantic_search_candidates` for recall only; verify plausible semantic candidates with `catalog_get_term` before selecting them.
-- Use catalogue/database tools for term types, scope notes, hierarchy, facet families, and implicit facets.
-- Use `validator_validate_code` on every constructed code before the final answer.
-- Return final JSON only when you have called the validator at least once.
+- Every tool call requires a `tool_rationale` audit object stating the source fact, expected answer, whether it can change the code, and the fallback if no useful result.
+- Return final JSON only after the validator has been called at least once and accepted the constructed code, or the validator has produced a hard warning you have already addressed once.
+- After validation accepts the code, only call further tools to resolve a SPECIFIC named source fact that is still uncovered. Do not re-validate the same code or re-search the same concept.
 - `confidence` must be an integer from 1 to 5. Never return a decimal probability such as 0.9 or a percentage such as 90.
 
 Final JSON shape:

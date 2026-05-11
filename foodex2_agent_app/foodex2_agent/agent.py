@@ -541,6 +541,10 @@ class FoodEx2Agent:
             return record, None
 
     async def run(self, request: CodeRequest, event_sink: EventSink | None = None) -> CodeResponse:
+        # Toolbox is shared across runs; clear per-request state so a prior
+        # run's accepted_validation does not leak into this one as a stale
+        # `validatedDraft` agentHint (see iter-1 run_learning analysis).
+        self.toolbox.reset_request_state()
         trace: list[ToolCallRecord] = []
         usage_events: list[dict[str, Any]] = []
         run_id = new_run_id()

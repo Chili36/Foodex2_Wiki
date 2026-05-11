@@ -4,47 +4,23 @@ from copy import deepcopy
 import json
 from typing import Any, Awaitable, Callable
 
-from .clients import CatalogClient, SemanticSearchClient, ValidatorClient, WikiClient
+from .clients import CatalogClient, SemanticSearchClient, ValidatorClient
 from .models import ToolCallRecord
-from .planning import plan_source_text
 
 
 ToolHandler = Callable[[dict[str, Any]], Awaitable[Any]]
 
 
+# The trimmed 4-tool surface. Each tool maps to a clear ledger-advancing
+# operation. Earlier versions exposed 13 tools mirroring the underlying
+# wiki/catalogue/validator API surface; that turned every round into a 13-way
+# decision and led to "stuck in tool calling" — see commit history on
+# ralph/agent-md-self-improve for the run logs.
 TOOL_DEFINITIONS: list[dict[str, Any]] = [
     {
         "type": "function",
-        "name": "plan_foodex2_coding_strategy",
-        "description": "Create a mission-first FoodEx2 coding strategy from the source text before searching for building blocks.",
-        "parameters": {
-            "type": "object",
-            "additionalProperties": False,
-            "properties": {
-                "source_text": {"type": "string"},
-            },
-            "required": ["source_text"],
-        },
-        "strict": True,
-    },
-    {
-        "type": "function",
-        "name": "wiki_ask_guidance",
-        "description": "Ask the FoodEx2 wiki /wiki/ask endpoint for a grounded human-style guidance answer before searching for building blocks.",
-        "parameters": {
-            "type": "object",
-            "additionalProperties": False,
-            "properties": {
-                "question": {"type": "string"},
-            },
-            "required": ["question"],
-        },
-        "strict": True,
-    },
-    {
-        "type": "function",
         "name": "semantic_search_candidates",
-        "description": "Search the Qdrant-backed FoodEx2 vector index for likely candidate codes. Use for recall only; verify candidates with catalogue and validator tools.",
+        "description": "Vector search (Qdrant) for likely FoodEx2 candidate codes. The primary recall tool: call this first for candidate base terms; refine the query and call again if the first pass misses the right candidate.",
         "parameters": {
             "type": "object",
             "additionalProperties": False,
@@ -58,68 +34,8 @@ TOOL_DEFINITIONS: list[dict[str, Any]] = [
     },
     {
         "type": "function",
-        "name": "catalog_search_terms",
-        "description": "Search the authoritative FoodEx2 catalogue/database for matrix terms.",
-        "parameters": {
-            "type": "object",
-            "additionalProperties": False,
-            "properties": {
-                "query": {"type": "string"},
-                "term_types": {
-                    "type": "array",
-                    "items": {"type": "string"},
-                    "description": "Optional term types such as r, d, c, s, h, g, f, n.",
-                },
-                "domain": {"type": ["string", "null"]},
-                "limit": {"type": "integer"},
-            },
-            "required": ["query", "term_types", "domain", "limit"],
-        },
-        "strict": True,
-    },
-    {
-        "type": "function",
         "name": "catalog_get_term",
-        "description": "Get authoritative FoodEx2 term details by code.",
-        "parameters": {
-            "type": "object",
-            "additionalProperties": False,
-            "properties": {"code": {"type": "string"}},
-            "required": ["code"],
-        },
-        "strict": True,
-    },
-    {
-        "type": "function",
-        "name": "catalog_get_parents",
-        "description": "Get parent hierarchy terms for a FoodEx2 code.",
-        "parameters": {
-            "type": "object",
-            "additionalProperties": False,
-            "properties": {"code": {"type": "string"}},
-            "required": ["code"],
-        },
-        "strict": True,
-    },
-    {
-        "type": "function",
-        "name": "catalog_get_children",
-        "description": "Get child terms for a FoodEx2 code.",
-        "parameters": {
-            "type": "object",
-            "additionalProperties": False,
-            "properties": {
-                "code": {"type": "string"},
-                "limit": {"type": "integer"},
-            },
-            "required": ["code", "limit"],
-        },
-        "strict": True,
-    },
-    {
-        "type": "function",
-        "name": "catalog_get_implicit_facets",
-        "description": "Get implicit facets carried by a FoodEx2 base term.",
+        "description": "Authoritative term details for a FoodEx2 code: name, term type, scope note, hierarchies (parents), implicit facets, monitoring flags. Use this to inspect a candidate before committing to it as the base.",
         "parameters": {
             "type": "object",
             "additionalProperties": False,
@@ -131,7 +47,7 @@ TOOL_DEFINITIONS: list[dict[str, Any]] = [
     {
         "type": "function",
         "name": "catalog_search_facets",
-        "description": "Search authoritative FoodEx2 facet descriptors and facet families.",
+        "description": "Search FoodEx2 facet descriptors (e.g. F27 source commodity, F28 process, F04 ingredients). Use only for source-critical explicit facets not already covered by the chosen base's implicit facets.",
         "parameters": {
             "type": "object",
             "additionalProperties": False,
@@ -146,108 +62,8 @@ TOOL_DEFINITIONS: list[dict[str, Any]] = [
     },
     {
         "type": "function",
-        "name": "wiki_context",
-        "description": "Ask the FoodEx2 wiki API for prompt-ready rules relevant to the current case.",
-        "parameters": {
-            "type": "object",
-            "additionalProperties": False,
-            "properties": {
-                "search_term": {"type": "string"},
-                "candidate_hints": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "additionalProperties": False,
-                        "properties": {
-                            "code": {"type": "string"},
-                            "name": {"type": ["string", "null"]},
-                            "termType": {"type": ["string", "null"]},
-                            "type": {"type": ["string", "null"]},
-                            "scopeNote": {"type": ["string", "null"]},
-                            "coverageText": {"type": ["string", "null"]},
-                        },
-                        "required": [
-                            "code",
-                            "name",
-                            "termType",
-                            "type",
-                            "scopeNote",
-                            "coverageText",
-                        ],
-                    },
-                },
-                "domain": {"type": ["string", "null"]},
-                "max_pages": {"type": "integer"},
-            },
-            "required": ["search_term", "candidate_hints", "domain", "max_pages"],
-        },
-        "strict": True,
-    },
-    {
-        "type": "function",
-        "name": "wiki_policy_pack",
-        "description": "Ask the FoodEx2 wiki to synthesize a mission-level policy guide from the source text and a small verified candidate set. This is guidance, not the final code.",
-        "parameters": {
-            "type": "object",
-            "additionalProperties": False,
-            "properties": {
-                "search_term": {"type": "string"},
-                "candidates_trimmed": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "additionalProperties": False,
-                        "properties": {
-                            "code": {"type": "string"},
-                            "name": {"type": "string"},
-                            "termType": {"type": "string"},
-                            "coverageText": {"type": ["string", "null"]},
-                            "implicitFacets": {
-                                "type": "array",
-                                "items": {
-                                    "type": "object",
-                                    "additionalProperties": False,
-                                    "properties": {
-                                        "facetType": {"type": "string"},
-                                        "facetCode": {"type": "string"},
-                                        "facetMeaning": {"type": ["string", "null"]},
-                                    },
-                                    "required": ["facetType", "facetCode", "facetMeaning"],
-                                },
-                            },
-                        },
-                        "required": [
-                            "code",
-                            "name",
-                            "termType",
-                            "coverageText",
-                            "implicitFacets",
-                        ],
-                    },
-                },
-                "domain": {"type": ["string", "null"]},
-                "max_pages": {"type": "integer"},
-            },
-            "required": ["search_term", "candidates_trimmed", "domain", "max_pages"],
-        },
-        "strict": True,
-    },
-    {
-        "type": "function",
-        "name": "wiki_read_page",
-        "description": "Read a specific FoodEx2 wiki page by filename.",
-        "parameters": {
-            "type": "object",
-            "additionalProperties": False,
-            "properties": {"page_name": {"type": "string"}},
-            "required": ["page_name"],
-        },
-        "strict": True,
-    },
-    {
-        "type": "function",
         "name": "validator_validate_code",
-        "description": "Validate a constructed FoodEx2 code with the FoodEx2 validator API.",
+        "description": "Validate a constructed FoodEx2 code against the validator. Clean validation is the gate to finalize; hard warnings drive one targeted repair attempt; soft warnings are advisory.",
         "parameters": {
             "type": "object",
             "additionalProperties": False,
@@ -302,16 +118,26 @@ class FoodEx2Toolbox:
         *,
         catalog: CatalogClient,
         semantic: SemanticSearchClient,
-        wiki: WikiClient,
         validator: ValidatorClient,
     ):
         self.catalog = catalog
         self.semantic = semantic
-        self.wiki = wiki
         self.validator = validator
         self._usage_events: list[dict[str, Any]] = []
         self._accepted_validation: dict[str, Any] | None = None
         self._post_validation_search_count = 0
+
+    def reset_request_state(self) -> None:
+        """Clear per-request state so a shared toolbox doesn't leak between agent runs.
+
+        The earlier loop had a real bug where `agentHint` carried a stale
+        `validatedDraft` from a prior case into a new one (see iter-1
+        run_learning analysis). Callers should invoke this at the top of each
+        `agent.run()`.
+        """
+        self._accepted_validation = None
+        self._post_validation_search_count = 0
+        self._usage_events = []
 
     def pop_usage_events(self) -> list[dict[str, Any]]:
         events = self._usage_events
@@ -324,18 +150,9 @@ class FoodEx2Toolbox:
 
     async def execute(self, name: str, arguments: dict[str, Any]) -> Any:
         handlers: dict[str, ToolHandler] = {
-            "plan_foodex2_coding_strategy": self._plan_foodex2_coding_strategy,
-            "wiki_ask_guidance": self._wiki_ask_guidance,
             "semantic_search_candidates": self._semantic_search_candidates,
-            "catalog_search_terms": self._catalog_search_terms,
             "catalog_get_term": self._catalog_get_term,
-            "catalog_get_parents": self._catalog_get_parents,
-            "catalog_get_children": self._catalog_get_children,
-            "catalog_get_implicit_facets": self._catalog_get_implicit_facets,
             "catalog_search_facets": self._catalog_search_facets,
-            "wiki_context": self._wiki_context,
-            "wiki_policy_pack": self._wiki_policy_pack,
-            "wiki_read_page": self._wiki_read_page,
             "validator_validate_code": self._validator_validate_code,
         }
         if name not in handlers:
@@ -349,49 +166,6 @@ class FoodEx2Toolbox:
     def serialize_result(result: Any) -> str:
         return json.dumps(result, ensure_ascii=False, default=str)
 
-    async def _plan_foodex2_coding_strategy(self, args: dict[str, Any]) -> Any:
-        return plan_source_text(args["source_text"])
-
-    async def _wiki_ask_guidance(self, args: dict[str, Any]) -> Any:
-        response = await self.wiki.ask(
-            question=args["question"],
-            max_pages=7,
-            include_page_content=False,
-        )
-        if not isinstance(response, dict):
-            return response
-        self._capture_wiki_usage(response, tool_name="wiki_ask_guidance")
-        return {
-            "answer": response.get("answer", ""),
-            "note": "Guidance answer from FoodEx2 wiki RAG. Source page metadata is omitted from agent-facing output.",
-        }
-
-    def _capture_wiki_usage(self, response: dict[str, Any], *, tool_name: str) -> None:
-        trace = response.get("trace")
-        if not isinstance(trace, dict):
-            return
-        for stage_name in ("retrieval", "answerer"):
-            stage = trace.get(stage_name)
-            if not isinstance(stage, dict):
-                continue
-            summary = stage.get("token_summary")
-            if not isinstance(summary, dict):
-                continue
-            self._usage_events.append(
-                {
-                    "source": f"{tool_name}.{stage_name}",
-                    "model": summary.get("model") or stage.get("model"),
-                    "calls": int(summary.get("calls") or 0),
-                    "input_tokens": int(summary.get("input_tokens") or 0),
-                    "output_tokens": int(summary.get("output_tokens") or 0),
-                    "cache_creation_input_tokens": int(
-                        summary.get("cache_creation_input_tokens") or 0
-                    ),
-                    "cache_read_input_tokens": int(summary.get("cache_read_input_tokens") or 0),
-                    "total_tracked_tokens": int(summary.get("total_tracked_tokens") or 0),
-                }
-            )
-
     async def _semantic_search_candidates(self, args: dict[str, Any]) -> Any:
         limit = min(max(int(args.get("limit", 10)), 1), 25)
         result = await self.semantic.search_candidates(query=args["query"], limit=limit)
@@ -400,31 +174,8 @@ class FoodEx2Toolbox:
             query=args["query"],
         )
 
-    async def _catalog_search_terms(self, args: dict[str, Any]) -> Any:
-        limit = min(max(int(args.get("limit", 25)), 1), 100)
-        result = await self.catalog.search_terms(
-            query=args["query"],
-            term_types=args.get("term_types") or None,
-            domain=args.get("domain"),
-            limit=limit,
-        )
-        return self._annotate_post_validation_search_result(
-            result,
-            query=args["query"],
-        )
-
     async def _catalog_get_term(self, args: dict[str, Any]) -> Any:
         return await self.catalog.get_term(args["code"])
-
-    async def _catalog_get_parents(self, args: dict[str, Any]) -> Any:
-        return await self.catalog.get_parents(args["code"])
-
-    async def _catalog_get_children(self, args: dict[str, Any]) -> Any:
-        limit = min(max(int(args.get("limit", 50)), 1), 100)
-        return await self.catalog.get_children(args["code"], limit=limit)
-
-    async def _catalog_get_implicit_facets(self, args: dict[str, Any]) -> Any:
-        return await self.catalog.get_implicit_facets(args["code"])
 
     async def _catalog_search_facets(self, args: dict[str, Any]) -> Any:
         limit = min(max(int(args.get("limit", 25)), 1), 100)
@@ -437,35 +188,6 @@ class FoodEx2Toolbox:
             result,
             query=args["query"],
         )
-
-    async def _wiki_context(self, args: dict[str, Any]) -> Any:
-        max_pages = min(max(int(args.get("max_pages", 10)), 1), 15)
-        result = await self.wiki.context_pack(
-            search_term=args["search_term"],
-            candidate_hints=args.get("candidate_hints") or [],
-            domain=args.get("domain"),
-            max_pages=max_pages,
-        )
-        return self._annotate_post_validation_search_result(
-            result,
-            query=args["search_term"],
-        )
-
-    async def _wiki_policy_pack(self, args: dict[str, Any]) -> Any:
-        max_pages = min(max(int(args.get("max_pages", 6)), 1), 10)
-        result = await self.wiki.policy_pack(
-            search_term=args["search_term"],
-            candidates_trimmed=args.get("candidates_trimmed") or [],
-            domain=args.get("domain"),
-            max_pages=max_pages,
-        )
-        return self._annotate_post_validation_search_result(
-            result,
-            query=args["search_term"],
-        )
-
-    async def _wiki_read_page(self, args: dict[str, Any]) -> Any:
-        return await self.wiki.read_page(args["page_name"])
 
     async def _validator_validate_code(self, args: dict[str, Any]) -> Any:
         result = await self.validator.validate_code(
@@ -483,10 +205,9 @@ class FoodEx2Toolbox:
             }
             annotated = dict(result)
             annotated["agentHint"] = (
-                "This code validates with no hard warnings. Validation is evidence, not "
-                "permission to forget source facts. Build the best complete code now, "
-                "classifying remaining facts as implicit, explicitly coded, unsupported, "
-                "or not codeable rather than doing broad follow-up searches."
+                "This code validates with no hard warnings. Validation is the gate: "
+                "finalize the JSON now unless a source-critical fact is still uncovered "
+                "by a known facet family. Do not broaden the search."
             )
             return annotated
         return result

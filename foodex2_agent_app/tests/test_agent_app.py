@@ -48,55 +48,6 @@ class FakeSemantic:
         }
 
 
-class FakeWiki:
-    async def ask(self, **kwargs):
-        return {
-            "answer": "Classify as derivative, find the fresh cheese base, then consider only non-implicit exact facets.",
-            "citations": ["base-term-selection.md"],
-            "pages_used": ["base-term-selection.md"],
-            "trace": {
-                "selection_method": "service-owned llm page selector + answerer",
-                "retrieval": {
-                    "token_summary": {
-                        "model": "fake-wiki",
-                        "calls": 1,
-                        "input_tokens": 10,
-                        "output_tokens": 3,
-                        "cache_creation_input_tokens": 0,
-                        "cache_read_input_tokens": 0,
-                        "total_tracked_tokens": 13,
-                    }
-                },
-                "answerer": {
-                    "token_summary": {
-                        "model": "fake-wiki",
-                        "calls": 1,
-                        "input_tokens": 20,
-                        "output_tokens": 7,
-                        "cache_creation_input_tokens": 0,
-                        "cache_read_input_tokens": 0,
-                        "total_tracked_tokens": 27,
-                    }
-                },
-            },
-        }
-
-    async def context_pack(self, **kwargs):
-        return {"pages_used": ["RUNTIME_RULES.md"], "pages": []}
-
-    async def policy_pack(self, **kwargs):
-        return {
-            "query_classification": {"food_type": "derivative", "domain": "all"},
-            "candidate_focus": {"promising_codes": ["A02QF"], "rejected_patterns": []},
-            "policy_pack": {
-                "base_term_rules": ["Use a derivative cheese base."],
-                "facet_rules": ["Do not duplicate implicit cheesemaking facets."],
-            },
-        }
-
-    async def read_page(self, page_name):
-        return {"page_name": page_name, "content": "rules"}
-
 
 class FakeValidator:
     async def validate_code(self, **kwargs):
@@ -160,8 +111,8 @@ class FakeResponses:
                 {
                     "type": "function_call",
                     "call_id": f"call-{len(self.calls)}",
-                    "name": "plan_foodex2_coding_strategy",
-                    "arguments": json.dumps({"source_text": "Fresh cheese"}),
+                    "name": "semantic_search_candidates",
+                    "arguments": json.dumps({"query": "Fresh cheese", "limit": 10}),
                 }
             ],
         }
@@ -444,7 +395,7 @@ class FakePostValidationLoopResponses:
                 "validator_validate_code",
                 {"code": "A00ZJ#F27.A00HC", "domain": None, "context": {"validatorContext": None}},
             ),
-            4: ("redundant-inspect", "catalog_get_implicit_facets", {"code": "A00ZJ"}),
+            4: ("redundant-inspect", "catalog_get_term", {"code": "A00ZJ"}),
         }
         call_id, name, arguments = calls_by_round[tool_round]
         return {
@@ -466,30 +417,10 @@ class FakePostValidationLoopOpenAIClient:
         self.responses = FakePostValidationLoopResponses()
 
 
-def test_toolbox_dispatches_catalog_search_terms():
-    toolbox = FoodEx2Toolbox(
-        catalog=FakeCatalog(),
-        semantic=FakeSemantic(),
-        wiki=FakeWiki(),
-        validator=FakeValidator(),
-    )
-    record = asyncio.run(
-        toolbox.call(
-            "catalog_search_terms",
-            {"query": "fresh cheese", "term_types": ["d"], "domain": None, "limit": 10},
-        )
-    )
-
-    assert isinstance(record, ToolCallRecord)
-    assert record.name == "catalog_search_terms"
-    assert record.result["terms"][0]["code"] == "A02QF"
-
-
 def test_toolbox_dispatches_validator():
     toolbox = FoodEx2Toolbox(
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
-        wiki=FakeWiki(),
         validator=FakeValidator(),
     )
     record = asyncio.run(
@@ -509,7 +440,6 @@ def test_toolbox_warns_on_repeated_search_after_accepted_validation():
     toolbox = FoodEx2Toolbox(
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
-        wiki=FakeWiki(),
         validator=FakeValidator(),
     )
 
@@ -521,19 +451,18 @@ def test_toolbox_warns_on_repeated_search_after_accepted_validation():
     )
     second = asyncio.run(
         toolbox.execute(
-            "catalog_search_terms",
-            {"query": "raw milk", "term_types": [], "domain": None, "limit": 10},
+            "catalog_search_facets",
+            {"query": "raw milk", "facet_type": None, "limit": 10},
         )
     )
     third = asyncio.run(
         toolbox.execute(
-            "catalog_search_terms",
-            {"query": "unpasteurised milk", "term_types": [], "domain": None, "limit": 10},
+            "catalog_search_facets",
+            {"query": "unpasteurised milk", "facet_type": None, "limit": 10},
         )
     )
 
     assert first["passes"] is True
-    assert second["terms"][0]["code"] == "A02QF"
     assert "agentHint" in second
     assert "agentHint" in third
     assert third["postValidationSearchCount"] == 2
@@ -544,7 +473,6 @@ def test_toolbox_dispatches_semantic_search():
     toolbox = FoodEx2Toolbox(
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
-        wiki=FakeWiki(),
         validator=FakeValidator(),
     )
     record = asyncio.run(
@@ -554,101 +482,9 @@ def test_toolbox_dispatches_semantic_search():
     assert record.result["results"][0]["code"] == "A02QF"
 
 
-def test_toolbox_dispatches_strategy_plan():
-    toolbox = FoodEx2Toolbox(
-        catalog=FakeCatalog(),
-        semantic=FakeSemantic(),
-        wiki=FakeWiki(),
-        validator=FakeValidator(),
-    )
-    record = asyncio.run(
-        toolbox.call(
-            "plan_foodex2_coding_strategy",
-            {
-                "source_text": "Fresh cheese made from milk, using rennet and rennet substitute, with a minimum of 20% fat content."
-            },
-        )
-    )
-
-    assert record.result["foodTypeHypothesis"] == "derivative"
-    assert record.result["baseConceptQuery"] == "fresh uncured cheese"
-    assert "20 % fat" in record.result["targetedFacetQueries"]
-    assert record.result["probablyImplicitOrNonCoding"]
-
-
-def test_toolbox_dispatches_wiki_ask_guidance():
-    toolbox = FoodEx2Toolbox(
-        catalog=FakeCatalog(),
-        semantic=FakeSemantic(),
-        wiki=FakeWiki(),
-        validator=FakeValidator(),
-    )
-    record = asyncio.run(
-        toolbox.call(
-            "wiki_ask_guidance",
-            {
-                "question": "What should I think about when coding fresh cheese?",
-            },
-        )
-    )
-
-    assert "fresh cheese base" in record.result["answer"]
-    assert "pages" not in record.result
-    assert "citations" not in record.result
-    assert "pages_used" not in record.result
-
-
-def test_toolbox_captures_wiki_ask_usage_side_channel():
-    toolbox = FoodEx2Toolbox(
-        catalog=FakeCatalog(),
-        semantic=FakeSemantic(),
-        wiki=FakeWiki(),
-        validator=FakeValidator(),
-    )
-    result = asyncio.run(
-        toolbox.execute(
-            "wiki_ask_guidance",
-            {"question": "What should I think about when coding fresh cheese?"},
-        )
-    )
-    usage_events = toolbox.pop_usage_events()
-
-    assert "answer" in result
-    assert sum(event["total_tracked_tokens"] for event in usage_events) == 40
-    assert {event["source"] for event in usage_events} == {
-        "wiki_ask_guidance.retrieval",
-        "wiki_ask_guidance.answerer",
-    }
-
-
-def test_toolbox_dispatches_wiki_policy_pack():
-    toolbox = FoodEx2Toolbox(
-        catalog=FakeCatalog(),
-        semantic=FakeSemantic(),
-        wiki=FakeWiki(),
-        validator=FakeValidator(),
-    )
-    record = asyncio.run(
-        toolbox.call(
-            "wiki_policy_pack",
-            {
-                "search_term": "fresh cheese",
-                "candidates_trimmed": [
-                    {
-                        "code": "A02QF",
-                        "name": "Fresh uncured cheese",
-                        "termType": "d",
-                        "coverageText": "fresh cheese",
-                        "implicitFacets": [],
-                    }
-                ],
-                "domain": None,
-                "max_pages": 5,
-            },
-        )
-    )
-
-    assert record.result["candidate_focus"]["promising_codes"] == ["A02QF"]
+# Tests for plan_foodex2_coding_strategy and wiki_* tools removed when the
+# tool surface was trimmed from 13 to 4. planning.plan_source_text is still
+# exercised directly by test_strategy_plan_is_mission_first_for_cheese_case.
 
 
 def test_extract_json_object_accepts_fenced_json():
@@ -690,16 +526,18 @@ def test_normalize_agent_result_payload_accepts_fact_ledger_aliases():
     assert normalized["factCoverage"][0]["disposition"] == "implicit_in_base"
 
 
-def test_tool_definitions_include_required_tools():
+def test_tool_definitions_are_the_trimmed_four():
+    # The agent's tool surface was trimmed from 13 to 4 — see commit message
+    # "tighten: drop 9 tools, run on 4-tool surface". This test pins the
+    # surface so accidental re-additions show up immediately.
     names = {tool["name"] for tool in TOOL_DEFINITIONS}
 
-    assert "plan_foodex2_coding_strategy" in names
-    assert "wiki_ask_guidance" in names
-    assert "catalog_search_terms" in names
-    assert "semantic_search_candidates" in names
-    assert "wiki_context" in names
-    assert "wiki_policy_pack" in names
-    assert "validator_validate_code" in names
+    assert names == {
+        "semantic_search_candidates",
+        "catalog_get_term",
+        "catalog_search_facets",
+        "validator_validate_code",
+    }
 
 
 def test_base_tool_definitions_do_not_include_debug_why_by_default():
@@ -761,7 +599,6 @@ def test_round_0_sends_agent_md_via_developer_message_and_continuations_omit_ins
     toolbox = FoodEx2Toolbox(
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
-        wiki=FakeWiki(),
         validator=FakeValidator(),
     )
     agent = FoodEx2Agent(settings=settings, toolbox=toolbox, client=client)
@@ -840,7 +677,6 @@ def test_failed_agent_run_writes_learning_log(tmp_path):
     toolbox = FoodEx2Toolbox(
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
-        wiki=FakeWiki(),
         validator=FakeValidator(),
     )
     agent = FoodEx2Agent(settings=settings, toolbox=toolbox, client=client)
@@ -867,7 +703,7 @@ def test_failed_agent_run_writes_learning_log(tmp_path):
     ]
     pending = [record for record in run_records if record["event"] == "pending_tool_calls_at_max_rounds"]
     assert pending
-    assert pending[0]["calls"][0]["name"] == "plan_foodex2_coding_strategy"
+    assert pending[0]["calls"][0]["name"] == "semantic_search_candidates"
 
 
 def test_post_validation_tool_calls_are_logged(tmp_path):
@@ -882,7 +718,6 @@ def test_post_validation_tool_calls_are_logged(tmp_path):
     toolbox = FoodEx2Toolbox(
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
-        wiki=FakeWiki(),
         validator=FakeValidator(),
     )
     agent = FoodEx2Agent(settings=settings, toolbox=toolbox, client=client)
@@ -917,7 +752,6 @@ def test_post_validation_budget_blocks_extra_retrieval_and_forces_final(tmp_path
     toolbox = FoodEx2Toolbox(
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
-        wiki=FakeWiki(),
         validator=FakeValidator(),
     )
     agent = FoodEx2Agent(settings=settings, toolbox=toolbox, client=client)
@@ -929,7 +763,10 @@ def test_post_validation_budget_blocks_extra_retrieval_and_forces_final(tmp_path
     assert response.status == "completed"
     assert response.result is not None
     assert response.result.constructedCode == "A00ZJ#F27.A00HC"
-    assert all(record.name != "catalog_get_implicit_facets" for record in response.trace)
+    # The 4th fake-LLM round attempts a redundant catalog_get_term, which the
+    # post-validation budget blocks (the validated draft already contains
+    # implicit facets). Earlier code used catalog_get_implicit_facets here —
+    # that tool was dropped when the surface was trimmed.
     run_records = [
         json.loads(line)
         for line in Path(response.logFile).read_text(encoding="utf-8").splitlines()
@@ -938,7 +775,7 @@ def test_post_validation_budget_blocks_extra_retrieval_and_forces_final(tmp_path
         record for record in run_records if record["event"] == "post_validation_tool_calls_blocked"
     ]
     assert blocked
-    assert blocked[0]["blockedCalls"][0]["name"] == "catalog_get_implicit_facets"
+    assert blocked[0]["blockedCalls"][0]["name"] == "catalog_get_term"
     forced_call = next(call for call in client.responses.calls if call.get("tools") == [])
     assert "blocked" in forced_call["input"][0]["output"]
 
@@ -956,7 +793,6 @@ def test_completed_agent_run_writes_run_learning_log(tmp_path):
     toolbox = FoodEx2Toolbox(
         catalog=FakeCatalog(),
         semantic=FakeSemantic(),
-        wiki=FakeWiki(),
         validator=FakeValidator(),
     )
     agent = FoodEx2Agent(settings=settings, toolbox=toolbox, client=client)
