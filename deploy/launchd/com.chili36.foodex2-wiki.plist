@@ -6,11 +6,11 @@
   <string>com.chili36.foodex2-wiki</string>
 
   <key>WorkingDirectory</key>
-  <string>/Users/davidfoster/Dev/LLM Knowledge Base</string>
+  <string>__REPO_ROOT__</string>
 
   <key>ProgramArguments</key>
   <array>
-    <string>/Users/davidfoster/Dev/LLM Knowledge Base/.venv/bin/python</string>
+    <string>__PYTHON_BIN__</string>
     <string>-m</string>
     <string>uvicorn</string>
     <string>wiki_api.app:app</string>

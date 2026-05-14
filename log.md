@@ -1,6 +1,6 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-04-22"
+last_updated: "2026-05-14"
 ---
 
 # Log
@@ -218,3 +218,10 @@ last_updated: "2026-04-22"
 - Added conditional domain pages for pesticide residues, contaminants, VMPR, and additives/flavourings so domain-specific FoodEx2 rules are retrieved only when the reporting context or candidate set activates them.
 - Updated the chemical-monitoring entry page to route to those domain pages and state that default FoodEx2 coding remains all-domain when no reporting domain is known.
 - Registered the new pages in the wiki index, schema, viewer quick links, and API page categories as `domain_overlay`.
+
+## [2026-05-14] maintenance | Consolidate GitHub cleanup branch
+
+- Consolidated the stale VMPR legislative-mapping PR, LaunchAgent PR, and local chemical-monitoring overlay commit onto a fresh branch from `main`.
+- Replaced hard-coded local LaunchAgent paths with a rendered template installer so the service definition works across checkout locations.
+- Added minimal GitHub Actions coverage for the Python test suite and ignored local Codex/Claude experiment artifacts that should not be committed.
+- Normalized VMPR mapping inline citation prefixes so model-facing page cleaning strips source boilerplate correctly.

@@ -269,13 +269,16 @@ Run it locally with:
 uvicorn wiki_api.app:app --reload
 ```
 
-Run it as a persistent macOS user service with the versioned LaunchAgent template in [deploy/launchd/com.chili36.foodex2-wiki.plist](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/deploy/launchd/com.chili36.foodex2-wiki.plist). Install it to `~/Library/LaunchAgents/com.chili36.foodex2-wiki.plist`, then reload it with:
+Run it as a persistent macOS user service with the versioned LaunchAgent template in [deploy/launchd/com.chili36.foodex2-wiki.plist](deploy/launchd/com.chili36.foodex2-wiki.plist). Render the template for the current checkout path, then reload it with:
 
 ```bash
-launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.chili36.foodex2-wiki.plist
+./deploy/launchd/install-foodex2-wiki-launchagent.sh
+launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.chili36.foodex2-wiki.plist 2>/dev/null || true
 launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.chili36.foodex2-wiki.plist
 launchctl kickstart -k gui/$(id -u)/com.chili36.foodex2-wiki
 ```
+
+The installer uses `.venv/bin/python` by default. Set `FOODEX2_WIKI_PYTHON=/path/to/python` before running it if the service should use another interpreter.
 
 Check service health with:
 

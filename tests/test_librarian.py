@@ -316,6 +316,11 @@ def test_store_cleans_page_content_for_model() -> None:
     assert "<!-- Source:" not in cleaned
     assert "(EFSA guidance p42; Training p5)" not in cleaned
 
+    vmpr_page = store.read_page("vmpr-legislative-mapping.md")
+    vmpr_cleaned = store.clean_content_for_model(vmpr_page)
+    assert "(VMPR mapping p3-6)" not in vmpr_cleaned
+    assert "(VMPR mapping p4)" not in vmpr_cleaned
+
 
 def test_store_projects_context_pack_content_for_runtime_prompts() -> None:
     store = _store()

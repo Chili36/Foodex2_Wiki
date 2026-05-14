@@ -50,7 +50,7 @@ last_updated: "2026-05-14"
 
 - Before: `A0C60#F02.A0C63` in VMPR non-food context. After: incomplete; add explicit `F01` because `A0C60` requires both `F01` and `F02`. (Domain Specific Rules; Context Specific Rules)
 - Before: processed VMPR sample with no explicit `F01`. After: invalid in that domain, even if the animal source feels inferable. (Domain Specific Rules VMPR-RPC)
-- Before: a hunted or wild VMPR sample with no explicit `F21.A07RY`. After: the downstream mapping cannot create `Wild=1`, so the sample will stay on the ordinary game or parent-commodity route instead of the wild-game route. See [[vmpr-legislative-mapping]]. (Guidance VMPR mapping p5-6)
+- Before: a hunted or wild VMPR sample with no explicit `F21.A07RY`. After: the downstream mapping cannot create `Wild=1`, so the sample will stay on the ordinary game or parent-commodity route instead of the wild-game route. See [[vmpr-legislative-mapping]]. (VMPR mapping p5-6)
 - Before: food additive sample with no `F33`. After: invalid for additives monitoring; the legislative category is mandatory. (Domain Specific Rules Additives)
 - Before: acrylamide result on french fries (`A0BYV`) with no `F33`. After: `A0BYV#F33.A169H`. CHEMMON12 requires the acrylamide legislative class even though `A0BYV` may carry an implicit `F33`. (ChemMon 2026; CHEMMON12)
 
