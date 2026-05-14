@@ -10,6 +10,8 @@ from wiki_api.librarian import (
 )
 from wiki_api.wiki_store import WikiStore
 
+REPO_ROOT = Path(__file__).resolve().parent.parent
+
 
 def _response(*, stop_reason: str, content: list[dict[str, object]], input_tokens: int, output_tokens: int):
     return {
@@ -40,7 +42,7 @@ class FakeAnthropicClient:
 
 
 def _store() -> WikiStore:
-    return WikiStore(Path("/Users/davidfoster/Dev/LLM Knowledge Base"))
+    return WikiStore(REPO_ROOT)
 
 
 def test_librarian_batches_page_reads() -> None:
