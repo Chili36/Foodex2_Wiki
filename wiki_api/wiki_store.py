@@ -91,6 +91,7 @@ class WikiStore:
         self.root_docs: dict[str, Path] = {
             "README.md": self.root / "README.md",
             "PROJECT_CONTEXT.md": self.root / "PROJECT_CONTEXT.md",
+            "KNOWLEDGE_ARCHITECTURE.md": self.root / "KNOWLEDGE_ARCHITECTURE.md",
             "INGEST_WORKFLOW.md": self.root / "INGEST_WORKFLOW.md",
             "SCHEMA.md": self.root / "SCHEMA.md",
             "RUNTIME_RULES.md": self.root / "RUNTIME_RULES.md",
@@ -98,6 +99,7 @@ class WikiStore:
         self.page_categories: dict[str, str] = {
             "README.md": "orientation",
             "PROJECT_CONTEXT.md": "orientation",
+            "KNOWLEDGE_ARCHITECTURE.md": "orientation",
             "INGEST_WORKFLOW.md": "orientation",
             "SCHEMA.md": "orientation",
             "RUNTIME_RULES.md": "runtime",
@@ -151,6 +153,9 @@ class WikiStore:
         summaries["README.md"] = "Repo overview, current status, directory layout, and working conventions."
         summaries["PROJECT_CONTEXT.md"] = (
             "What this wiki is for, why it exists, and the LLM-wiki operating model behind it."
+        )
+        summaries["KNOWLEDGE_ARCHITECTURE.md"] = (
+            "Architecture stance for compiled markdown knowledge, graph retrieval, long-source ingest, and when not to add heavier RAG infrastructure."
         )
         summaries["INGEST_WORKFLOW.md"] = (
             "Practical playbook for turning raw PDFs into stable topic pages."

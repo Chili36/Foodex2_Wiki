@@ -4,7 +4,7 @@ This repository contains a structured markdown knowledge base for EFSA FoodEx2 g
 
 It follows the "LLM wiki" pattern: raw source documents stay immutable, while an LLM incrementally builds and maintains a topic-oriented markdown layer that is easier to read, search, cite, and update over time.
 
-See [PROJECT_CONTEXT.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/PROJECT_CONTEXT.md) for the project rationale and the connection to Andrej Karpathy's `llm-wiki` gist.
+See [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) for the project rationale and the connection to Andrej Karpathy's `llm-wiki` gist. See [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md) for the current architecture stance on compiled markdown knowledge, graph retrieval, long-source ingest, and why heavier RAG infrastructure is deferred.
 
 ## Related Projects
 
@@ -29,48 +29,51 @@ The current focus is not "wiki-owned solving". The current focus is prompt conte
 
 At the moment, the repository contains:
 
-- Immutable source PDFs in [foodex2_docs](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/foodex2_docs)
-- LLM-maintained topic pages in [raw/efsa-guidance](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance)
-- A content index in [index.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/index.md)
-- A chronological wiki log in [log.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/log.md)
+- Immutable source PDFs in [foodex2_docs](foodex2_docs)
+- LLM-maintained topic pages in [raw/efsa-guidance](raw/efsa-guidance)
+- A content index in [index.md](index.md)
+- A knowledge architecture decision page in [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md)
+- A chronological wiki log in [log.md](log.md)
 - A validator-rule layer distilled from the sibling `Foodex2 Code Validator` project
 - A local FastAPI retrieval service in `wiki_api/` so client applications can request selected wiki context from this repo instead of owning wiki navigation themselves
 
 The current wiki pages include:
 
-- [foodex2-overview.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/foodex2-overview.md)
-- [base-term-selection.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/base-term-selection.md)
-- [facet-coding-rules.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/facet-coding-rules.md)
-- [implicit-vs-explicit-facets.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/implicit-vs-explicit-facets.md)
-- [code-string-format.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/code-string-format.md)
-- [process-facets.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/process-facets.md)
-- [ingredient-facets.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/ingredient-facets.md)
-- [packaging-facets.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/packaging-facets.md)
-- [chemical-monitoring-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/chemical-monitoring-foodex2.md)
-- [pesticides-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/pesticides-foodex2.md)
-- [contaminants-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/contaminants-foodex2.md)
-- [vmpr-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/vmpr-foodex2.md)
-- [additives-flavourings-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/additives-flavourings-foodex2.md)
-- [validation-rules.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/validation-rules.md)
-- [structural-validation.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/structural-validation.md)
-- [term-type-facet-constraints.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/term-type-facet-constraints.md)
-- [process-validation-rules.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/process-validation-rules.md)
-- [domain-specific-validation.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/domain-specific-validation.md)
-- [maintenance-history.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/maintenance-history.md)
-- [maintenance-2015.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/maintenance-2015.md)
-- [maintenance-2016-2018.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/maintenance-2016-2018.md)
-- [maintenance-2019.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/maintenance-2019.md)
-- [maintenance-2020.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/maintenance-2020.md)
-- [maintenance-2021.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/maintenance-2021.md)
-- [maintenance-2022.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/maintenance-2022.md)
-- [maintenance-2023.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/maintenance-2023.md)
-- [maintenance-2024.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/maintenance-2024.md)
+- [foodex2-overview.md](raw/efsa-guidance/foodex2-overview.md)
+- [base-term-selection.md](raw/efsa-guidance/base-term-selection.md)
+- [facet-coding-rules.md](raw/efsa-guidance/facet-coding-rules.md)
+- [implicit-vs-explicit-facets.md](raw/efsa-guidance/implicit-vs-explicit-facets.md)
+- [code-string-format.md](raw/efsa-guidance/code-string-format.md)
+- [process-facets.md](raw/efsa-guidance/process-facets.md)
+- [ingredient-facets.md](raw/efsa-guidance/ingredient-facets.md)
+- [packaging-facets.md](raw/efsa-guidance/packaging-facets.md)
+- [chemical-monitoring-foodex2.md](raw/efsa-guidance/chemical-monitoring-foodex2.md)
+- [pesticides-foodex2.md](raw/efsa-guidance/pesticides-foodex2.md)
+- [contaminants-foodex2.md](raw/efsa-guidance/contaminants-foodex2.md)
+- [vmpr-foodex2.md](raw/efsa-guidance/vmpr-foodex2.md)
+- [vmpr-legislative-mapping.md](raw/efsa-guidance/vmpr-legislative-mapping.md)
+- [additives-flavourings-foodex2.md](raw/efsa-guidance/additives-flavourings-foodex2.md)
+- [validation-rules.md](raw/efsa-guidance/validation-rules.md)
+- [structural-validation.md](raw/efsa-guidance/structural-validation.md)
+- [term-type-facet-constraints.md](raw/efsa-guidance/term-type-facet-constraints.md)
+- [process-validation-rules.md](raw/efsa-guidance/process-validation-rules.md)
+- [domain-specific-validation.md](raw/efsa-guidance/domain-specific-validation.md)
+- [maintenance-history.md](raw/efsa-guidance/maintenance-history.md)
+- [maintenance-2015.md](raw/efsa-guidance/maintenance-2015.md)
+- [maintenance-2016-2018.md](raw/efsa-guidance/maintenance-2016-2018.md)
+- [maintenance-2019.md](raw/efsa-guidance/maintenance-2019.md)
+- [maintenance-2020.md](raw/efsa-guidance/maintenance-2020.md)
+- [maintenance-2021.md](raw/efsa-guidance/maintenance-2021.md)
+- [maintenance-2022.md](raw/efsa-guidance/maintenance-2022.md)
+- [maintenance-2023.md](raw/efsa-guidance/maintenance-2023.md)
+- [maintenance-2024.md](raw/efsa-guidance/maintenance-2024.md)
 
 Added since initial bootstrap:
 
-- A formal ingest workflow document in [INGEST_WORKFLOW.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/INGEST_WORKFLOW.md)
-- A schema document in [SCHEMA.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/SCHEMA.md)
-- A compact runtime rules file in [RUNTIME_RULES.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/RUNTIME_RULES.md)
+- A formal ingest workflow document in [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md)
+- A schema document in [SCHEMA.md](SCHEMA.md)
+- A compact runtime rules file in [RUNTIME_RULES.md](RUNTIME_RULES.md)
+- An architecture stance in [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md) that keeps markdown and the derived graph as the primary knowledge layer while treating long-document indexing as an ingest aid.
 
 ## Alpha Architecture
 
@@ -80,6 +83,8 @@ This repo has four practical layers:
 - Knowledge layer: topic pages under `raw/efsa-guidance/`
 - Retrieval layer: the FastAPI wiki service in `wiki_api/`
 - Caller layer: an external application such as DMT that requests pages and packs them into a prompt
+
+The architecture decision is deliberately conservative. Because FoodEx2 source updates are rare, the repo should improve compiled pages, authored links, graph-derived retrieval, source traceability, and regression tests before adding a vector database, graph database, or automatic watch-mode ingestion. Long-document techniques such as tree summaries or long-context retrieval belong in ingest and source-audit workflows first; the durable runtime unit remains the curated wiki page.
 
 At the moment, the simplest and most important runtime path is:
 
@@ -148,7 +153,7 @@ Each wiki page should:
 4. Keep the markdown layer as the default working surface for future FoodEx2 coding questions.
 5. Use the PDFs and validator sources as the source of truth whenever a claim needs verification.
 
-For the concrete ingest method, use [INGEST_WORKFLOW.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/INGEST_WORKFLOW.md).
+For the concrete ingest method, use [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md).
 
 ## Ingest Flow
 
@@ -167,8 +172,8 @@ In practice, an ingest or update pass should do all of the following:
 - add inline cross-links so related concepts can be discovered by humans and selectors
 - add a `Relevant Business Rules` section when `BRxx` rules materially constrain that page
 - add a `Relevant Policy` section when decision order matters for that page
-- update [index.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/index.md) so the selector sees accurate summaries and keywords
-- record the change in [log.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/log.md) when the update is material
+- update [index.md](index.md) so the selector sees accurate summaries and keywords
+- record the change in [log.md](log.md) when the update is material
 
 The practical goal is not to mirror the PDFs page-by-page. The goal is to produce a usable markdown layer that lets a caller retrieve the right guidance pages for a concrete coding case.
 
@@ -178,18 +183,19 @@ The knowledge base is intentionally not flat even though it is stored as markdow
 
 It has a few recurring page types:
 
-- orientation and schema pages such as [SCHEMA.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/SCHEMA.md)
-- compact runtime pages such as [RUNTIME_RULES.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/RUNTIME_RULES.md)
-- orientation pages such as [foodex2-overview.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/foodex2-overview.md)
-- operational guidance pages such as [base-term-selection.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/base-term-selection.md) and [implicit-vs-explicit-facets.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/implicit-vs-explicit-facets.md)
-- validator-facing rule pages such as [business-rules.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/business-rules.md) and [process-validation-rules.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/process-validation-rules.md)
-- conditional domain overlays such as [pesticides-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/pesticides-foodex2.md), [contaminants-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/contaminants-foodex2.md), [vmpr-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/vmpr-foodex2.md), [additives-flavourings-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/additives-flavourings-foodex2.md), and [domain-specific-validation.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/domain-specific-validation.md)
+- orientation and schema pages such as [SCHEMA.md](SCHEMA.md)
+- architecture pages such as [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md)
+- compact runtime pages such as [RUNTIME_RULES.md](RUNTIME_RULES.md)
+- orientation pages such as [foodex2-overview.md](raw/efsa-guidance/foodex2-overview.md)
+- operational guidance pages such as [base-term-selection.md](raw/efsa-guidance/base-term-selection.md) and [implicit-vs-explicit-facets.md](raw/efsa-guidance/implicit-vs-explicit-facets.md)
+- validator-facing rule pages such as [business-rules.md](raw/efsa-guidance/business-rules.md) and [process-validation-rules.md](raw/efsa-guidance/process-validation-rules.md)
+- conditional domain overlays such as [pesticides-foodex2.md](raw/efsa-guidance/pesticides-foodex2.md), [contaminants-foodex2.md](raw/efsa-guidance/contaminants-foodex2.md), [vmpr-foodex2.md](raw/efsa-guidance/vmpr-foodex2.md), [additives-flavourings-foodex2.md](raw/efsa-guidance/additives-flavourings-foodex2.md), and [domain-specific-validation.md](raw/efsa-guidance/domain-specific-validation.md)
 - maintenance pages that explain yearly changes
-- one richer control-layer page: [policy-contract.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/policy-contract.md)
+- one richer control-layer page: [policy-contract.md](raw/efsa-guidance/policy-contract.md)
 
 The runtime rules page and the policy page are both still markdown in the repo. They are not secret service-side prompts. The API reads them from the repo and exposes them as normal wiki content.
 
-The repo also has a lightweight relationship model rather than a flat pile of pages: frontmatter `related` links, inline `[[...]]` cross-links, `Relevant Policy` sections, `Relevant Business Rules` sections, and `index.md` as the main hub. The details are documented in [SCHEMA.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/SCHEMA.md).
+The repo also has a lightweight relationship model rather than a flat pile of pages: frontmatter `related` links, inline `[[...]]` cross-links, `Relevant Policy` sections, `Relevant Business Rules` sections, and `index.md` as the main hub. The details are documented in [SCHEMA.md](SCHEMA.md).
 
 ## What Context-Pack Does
 
@@ -217,10 +223,10 @@ For the simple `context-pack` path, the API always attaches the compact runtime 
 
 In practice, the caller receives:
 
-- `guiding_principles` derived from [index.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/index.md)
-- `policy_contract` parsed from [policy-contract.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/policy-contract.md)
+- `guiding_principles` derived from [index.md](index.md)
+- `policy_contract` parsed from [policy-contract.md](raw/efsa-guidance/policy-contract.md)
 - `pages_used`
-- `pages`, with [RUNTIME_RULES.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/RUNTIME_RULES.md) forced to the top
+- `pages`, with [RUNTIME_RULES.md](RUNTIME_RULES.md) forced to the top
 - `trace` metadata
 
 The important design decision is that the runtime and policy layers are still markdown-backed. The JSON `policy_contract` field is a convenience view for callers that want structure, but the canonical source of truth remains the markdown pages themselves.
@@ -239,7 +245,7 @@ python3 -m venv .venv
 pip install -r requirements.txt
 ```
 
-Then edit [`.env.example`](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/.env.example) into a local `.env`, or edit the generated [`.env`](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/.env) directly:
+Then edit [`.env.example`](.env.example) into a local `.env`, or edit the generated [`.env`](.env) directly:
 
 ```bash
 cp .env.example .env
@@ -413,7 +419,7 @@ Use `context-pack` when you want pure context delivery plus the compact runtime 
 Use `policy-pack` when you want the wiki service to act as a solver-style knowledge synthesizer.
 Use `solve` when you want the wiki service to return the final FoodEx2 coding decision itself, still grounded in the selected wiki context and external candidate list.
 
-The current runtime layer is [RUNTIME_RULES.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/RUNTIME_RULES.md), and the richer control layer is [policy-contract.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/policy-contract.md). Both are markdown-backed and retrieval-visible; the API reads and exposes them, but does not author them in service code.
+The current runtime layer is [RUNTIME_RULES.md](RUNTIME_RULES.md), and the richer control layer is [policy-contract.md](raw/efsa-guidance/policy-contract.md). Both are markdown-backed and retrieval-visible; the API reads and exposes them, but does not author them in service code.
 
 The graph and backlink endpoints are also derived artifacts. They are generated from the same markdown relationship model rather than maintained as separate handwritten pages. Use `/wiki/graph/compact` when you want to render the wiki in a browser graph view without pulling the full edge metadata.
 

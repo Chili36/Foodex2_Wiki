@@ -11,6 +11,7 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 
 - [README.md](README.md): Repo overview, current status, directory layout, and working conventions.
 - [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md): What this wiki is for, why it exists, and the LLM-wiki operating model behind it.
+- [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md): Architecture stance for compiled markdown knowledge, graph retrieval, long-source ingest, and when not to add heavier RAG infrastructure.
 - [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md): Practical playbook for turning raw PDFs into stable topic pages without collapsing into one-shot summarization.
 - [SCHEMA.md](SCHEMA.md): Page types, frontmatter fields, section conventions, and ingest schema for the FoodEx2 wiki.
 - [RUNTIME_RULES.md](RUNTIME_RULES.md): Compact prompt-facing rules file always attached by `context-pack` before supporting guidance pages.

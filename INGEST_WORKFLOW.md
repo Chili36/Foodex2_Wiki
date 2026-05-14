@@ -1,6 +1,10 @@
 ---
 title: "Ingest Workflow"
-last_updated: "2026-04-08"
+last_updated: "2026-05-14"
+related:
+  - "[[KNOWLEDGE_ARCHITECTURE.md]]"
+  - "[[SCHEMA.md]]"
+  - "[[RUNTIME_RULES.md]]"
 ---
 
 # FoodEx2 Wiki Ingest Workflow
@@ -198,6 +202,23 @@ Avoid building pages out of examples without a governing principle.
 # Handling Large PDFs
 
 When a source is long or dense, split the ingest mentally into three passes.
+
+Use [[KNOWLEDGE_ARCHITECTURE.md]] as the governing architecture: long-document structure is an ingest aid, not a second runtime knowledge base. The durable output should be patched topic pages, index summaries, source notes, and log entries.
+
+## Long-Source Workspace
+
+For dense PDFs, complex tables, or multi-modal source material, create a temporary working map before editing the wiki:
+
+- document outline
+- section summaries
+- table notes
+- page-range notes
+- affected-page map
+- explicit uncertainty list
+
+This can be produced with manual reading, OCR/markdown conversion, or a tree-style long-document pass. The important rule is that the temporary map must retain source filename and page-range traceability.
+
+Do not commit bulky extraction dumps unless they are intentionally curated source artifacts. Most long-source notes should resolve into concise page updates or be discarded after the ingest pass.
 
 ## Pass A: Skeleton
 

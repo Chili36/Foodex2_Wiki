@@ -1,8 +1,14 @@
 ---
 title: "Project Context"
-last_updated: "2026-04-05"
+last_updated: "2026-05-14"
 source_inspiration:
   - "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f"
+  - "https://github.com/VectifyAI/OpenKB"
+  - "https://microsoft.github.io/graphrag/query/overview/"
+related:
+  - "[[KNOWLEDGE_ARCHITECTURE.md]]"
+  - "[[INGEST_WORKFLOW.md]]"
+  - "[[SCHEMA.md]]"
 ---
 
 # What We Are Building
@@ -35,3 +41,11 @@ Why this matters for FoodEx2:
 # Design Principle
 
 This project follows the general pattern described in Andrej Karpathy's `llm-wiki` gist published on April 4, 2026: raw sources stay immutable, while the LLM incrementally builds and maintains a persistent interlinked wiki that compounds in value over time.
+
+# Architecture Stance
+
+The repo already has a markdown-native graph: frontmatter `related` links, inline `[[...]]` links, `Relevant Policy`, `Relevant Business Rules`, and `index.md` hub references. That graph should be strengthened before adding a separate graph database.
+
+Because FoodEx2 source additions are rare, the project should favor deliberate compilation over automatic watch-mode ingestion. Long-document indexing, tree summaries, and long-context retrieval are useful during source ingest or source audit, but the durable runtime surface should remain compiled wiki pages served through `context-pack`.
+
+The detailed architecture decision lives in [[KNOWLEDGE_ARCHITECTURE.md]].

@@ -324,6 +324,14 @@ def test_store_cleans_page_content_for_model() -> None:
     assert "(VMPR mapping p4)" not in vmpr_cleaned
 
 
+def test_store_catalog_pages_have_summaries_and_categories() -> None:
+    store = _store()
+    pages = store.catalog()
+
+    assert [page.name for page in pages if not page.summary] == []
+    assert [page.name for page in pages if store.page_category(page.name) == "unknown"] == []
+
+
 def test_store_projects_context_pack_content_for_runtime_prompts() -> None:
     store = _store()
     page = store.read_page("RUNTIME_RULES.md")

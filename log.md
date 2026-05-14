@@ -225,3 +225,9 @@ last_updated: "2026-05-14"
 - Replaced hard-coded local LaunchAgent paths with a rendered template installer so the service definition works across checkout locations.
 - Added minimal GitHub Actions coverage for the Python test suite and ignored local Codex/Claude experiment artifacts that should not be committed.
 - Normalized VMPR mapping inline citation prefixes so model-facing page cleaning strips source boilerplate correctly.
+
+## [2026-05-14] architecture | Define knowledge architecture stance
+
+- Added `KNOWLEDGE_ARCHITECTURE.md` to capture the repo's compiled-wiki, markdown-graph, and long-source ingest strategy.
+- Recorded that separate vector or graph infrastructure should wait for observed retrieval failures, because FoodEx2 source additions are rare and source interpretation needs deliberate review.
+- Registered the architecture page in the wiki index, schema, API catalog, graph categories, and tests.

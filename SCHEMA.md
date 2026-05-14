@@ -1,11 +1,13 @@
 ---
 title: "Wiki Schema"
-last_updated: "2026-04-10"
+last_updated: "2026-05-14"
 sources:
   - "PROJECT_CONTEXT.md"
+  - "KNOWLEDGE_ARCHITECTURE.md"
   - "INGEST_WORKFLOW.md"
   - "README.md"
 related:
+  - "[[KNOWLEDGE_ARCHITECTURE.md]]"
   - "[[PROJECT_CONTEXT.md]]"
   - "[[INGEST_WORKFLOW.md]]"
   - "[[RUNTIME_RULES.md]]"
@@ -38,6 +40,7 @@ Examples:
 
 - `README.md`
 - `PROJECT_CONTEXT.md`
+- `KNOWLEDGE_ARCHITECTURE.md`
 - `INGEST_WORKFLOW.md`
 - `SCHEMA.md`
 
@@ -45,6 +48,7 @@ Use for:
 
 - repo purpose
 - architecture
+- retrieval and knowledge-layer architecture decisions
 - ingest method
 - maintenance conventions
 
@@ -193,6 +197,8 @@ The wiki has a lightweight markdown-native relationship model.
 
 It is graph-like, but it is not a separate graph database or a formal graph engine.
 
+The current architecture intentionally keeps this graph markdown-authored. For the repo's current scale and rare-update pattern, improve links, summaries, graph traversal, and tests before adding an external graph store.
+
 Today the main edge types are:
 
 - `related` in frontmatter: explicit near-neighbor edges between pages.
@@ -208,6 +214,8 @@ What this means in practice:
 - The selector also benefits from the inline links and section conventions because they make neighboring concepts legible inside retrieved page text.
 - Generated graph views can be built from the same markdown without introducing a separate authoring format.
 - Backlinks, adjacency maps, or graph traversal can be added later without changing how pages are authored.
+
+See [[KNOWLEDGE_ARCHITECTURE.md]] for the runtime stance: compiled wiki pages are the durable knowledge layer; long-source indexes are ingest aids; graph expansion should be derived from markdown unless selector evidence proves that heavier infrastructure is needed.
 
 ## Runtime Serving Rules
 
