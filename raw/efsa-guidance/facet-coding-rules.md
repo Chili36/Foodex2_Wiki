@@ -32,7 +32,7 @@ last_updated: "2026-04-08"
 | `F21` | Production method such as organic, aquaculture, wild. |
 | `F26` | Required when coding from a generic term because the exact detailed term is missing. |
 
-- Specialist facets are domain-bound: `F24-F25` for microbiology, `F29-F32` for animal-domain coding, `F33` for legislation-oriented reporting. When those domain overlays matter, continue with [[chemical-monitoring-foodex2]] and [[domain-specific-validation]]. (EFSA guidance p35-36)
+- Specialist facets are domain-bound: `F24-F25` for microbiology, `F29-F32` for animal-domain coding, `F33` for legislation-oriented reporting. When those domain overlays matter, continue with [[chemical-monitoring-foodex2]], the relevant reporting-domain page, and [[domain-specific-validation]]. (EFSA guidance p35-36)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p40, p47-48; EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p33-36 -->
 ## Worked Examples

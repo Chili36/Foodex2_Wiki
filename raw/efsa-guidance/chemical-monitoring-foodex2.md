@@ -3,12 +3,19 @@ title: "FoodEx2 In Chemical Monitoring"
 sources:
   - "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf"
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+  - "Guidance VMPR mapping to legislative products.pdf"
 related:
   - "[[foodex2-overview]]"
   - "[[facet-coding-rules]]"
   - "[[implicit-vs-explicit-facets]]"
+  - "[[pesticides-foodex2]]"
+  - "[[contaminants-foodex2]]"
+  - "[[vmpr-foodex2]]"
+  - "[[additives-flavourings-foodex2]]"
   - "[[maintenance-2024]]"
-last_updated: "2026-04-08"
+  - "[[domain-specific-validation]]"
+  - "[[vmpr-legislative-mapping]]"
+last_updated: "2026-05-14"
 ---
 
 # FoodEx2 In Chemical Monitoring
@@ -18,6 +25,15 @@ last_updated: "2026-04-08"
 
 - ChemMon does not redefine FoodEx2. It adds reporting constraints for chemical-monitoring workflows. Use this page as a domain-specific overlay, not as the core coding model described in [[foodex2-overview]]. (ChemMon 2025 p33-36; ChemMon 2026 p33-36)
 - Samples are coded from the MTX reporting hierarchy at the lowest useful level of detail. (ChemMon 2025 p33)
+- Domain overlays are conditional. Apply pesticide, contaminants, VMPR, additives, or flavourings rules only when the reporting domain is explicit, the parameter/legal context identifies it, or the candidate universe has already been filtered to that domain. (ChemMon 2026 FoodEx2 mapping and reporting flags sections)
+
+## Domain Pages
+
+- Use [[pesticides-foodex2]] for pesticide residue monitoring, Regulation (EC) No 396/2005, `PEST`, `pestParam`, or `MATRIX` contexts.
+- Use [[contaminants-foodex2]] for contaminants or occurrence monitoring, `OCC`, `chemAnalysis`, acrylamide, pyrrolizidine alkaloids, metals, packaging migrants, and similar contaminant contexts.
+- Use [[vmpr-foodex2]] for veterinary medicinal product residues, `VMPR`, `VETDRUG`, `vmprParam`, `vmprCls`, VetDrugRes, and Plan 3 contexts.
+- Use [[additives-flavourings-foodex2]] for additive and flavouring monitoring, `ADD`, `FLAV`, `addAnalysis`, `flavAnalysis`, and Regulation (EC) No 1333/2008 contexts.
+- If no reporting domain is known, stay with all-domain FoodEx2 pages and the returned candidate list. Do not guess a domain from the food name alone.
 
 ## General Rules
 
@@ -29,10 +45,11 @@ last_updated: "2026-04-08"
 
 - For VMPR, `F01 Source` and `F02 Part-nature` must be present, except for the feed/water and processed-composite cases described by ChemMon. That overlays the normal term-type rules in [[term-type-facet-constraints]]. (ChemMon 2025 p33-36; ChemMon 2026 p33-36)
 - For processed derivatives under VMPR, `F01` may need to be added explicitly because it is not always implicit on processed terms such as dried egg or milk powder. This is a ChemMon exception to the default implicit logic in [[implicit-vs-explicit-facets]]. (ChemMon 2025 p33; ChemMon 2026 p33)
-- Wild-animal VMPR samples require `F21.A07RY` (`Wild, gathered or hunted`). (ChemMon 2025 p34; ChemMon 2026 p33)
+- Wild-animal VMPR samples require `F21.A07RY` (`Wild, gathered or hunted`). In the downstream ETL mapping this sets `Wild=1`, and that wild route supersedes the ordinary game route in the final legislative grouping. See [[vmpr-legislative-mapping]]. (ChemMon 2025 p34; ChemMon 2026 p33; VMPR mapping p5-6)
 - Feed and water VMPR coding depends on `F23 Target-consumer`; conflicting explicit `F23` values can force classification to `Other`. (ChemMon 2025 p34-36; ChemMon 2026 p33-36)
 - Non-food animal matrices use the generic base term `A0C60` plus explicit `F02` and `F01`. (ChemMon 2025 p36; ChemMon 2026 p36)
-- `F33 Legislative-classes` is also important for VMPR processed products and for additives/flavourings workflows. The corresponding blocking checks live in [[domain-specific-validation]]. (ChemMon 2025 CHEMON91-93; ChemMon 2026 CHEMON91-93)
+- `F33 Legislative-classes` is also important for VMPR processed products and for additives/flavourings workflows. In VMPR it is one of the classifier inputs EFSA uses downstream for legislative matrix assignment, not just a validation check. The corresponding blocking checks live in [[domain-specific-validation]], and the mapping flow is summarised in [[vmpr-legislative-mapping]]. (ChemMon 2025 CHEMON91-93; ChemMon 2026 CHEMON91-93; VMPR mapping p4-6)
+- EFSA's downstream VMPR mapping derives `Game`, `Wild`, `FoodClassVMPR`, and `FoodClassVMPR_report` from the final `sampMatCode`. In that layer, `F21.A07RY`, `F23`, `F20.A0F4V`, and explicit `F33` can change the legislative outcome even when the FoodEx2 code already passes normal syntax checks. See [[vmpr-legislative-mapping]]. (VMPR mapping p3-6)
 
 ## Worked Examples
 

@@ -15,6 +15,7 @@ HTML_COMMENT_RE = re.compile(r"<!--.*?-->", re.DOTALL)
 WIKILINK_RE = re.compile(r"\[\[([^\]]+)\]\]")
 MARKDOWN_LINK_RE = re.compile(r"(?<!!)\[([^\]]+)\]\(([^)]+)\)")
 HEADING_RE = re.compile(r"^#{1,6}\s+(.+?)\s*$")
+MARKDOWN_HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
 TRAILING_SOURCE_CITATION_RE = re.compile(
     r"\s*\((?:EFSA guidance|Training|ChemMon|VMPR|"
     r"\d{4} maintenance|docs/[^)]+|BUSINESS-RULES[^)]*|"
@@ -23,6 +24,23 @@ TRAILING_SOURCE_CITATION_RE = re.compile(
 SOURCE_ONLY_LINE_RE = re.compile(
     r"^\s*\((?:EFSA guidance|Training|ChemMon|VMPR|\d{4} maintenance)[^)]*\)\s*$"
 )
+
+PROMPT_CONTEXT_PAGE_CATEGORIES = {"runtime", "guidance", "validation", "domain_overlay"}
+PROMPT_CONTEXT_OMITTED_SECTIONS = {
+    "appendix a2 codes",
+    "authority",
+    "how to use this page during ingest",
+    "maintenance history",
+    "orientation",
+    "read these pages with",
+    "related projects",
+    "relevant business rules",
+    "relevant policy",
+    "release context",
+    "source layer",
+    "supporting pages by signal",
+    "worked examples",
+}
 
 
 @dataclass(frozen=True)
@@ -95,6 +113,11 @@ class WikiStore:
             "ingredient-facets.md": "guidance",
             "packaging-facets.md": "guidance",
             "chemical-monitoring-foodex2.md": "domain_overlay",
+            "pesticides-foodex2.md": "domain_overlay",
+            "contaminants-foodex2.md": "domain_overlay",
+            "vmpr-foodex2.md": "domain_overlay",
+            "vmpr-legislative-mapping.md": "domain_overlay",
+            "additives-flavourings-foodex2.md": "domain_overlay",
             "business-rules.md": "validation",
             "validation-rules.md": "validation",
             "structural-validation.md": "validation",
@@ -403,7 +426,11 @@ class WikiStore:
 
     def page_category(self, page_name: str) -> str:
         normalized = self.normalize_page_name(page_name)
-        return self.page_categories.get(normalized, "unknown")
+        if normalized in self.page_categories:
+            return self.page_categories[normalized]
+        if (self.guidance_dir / normalized).exists():
+            return "guidance"
+        return "unknown"
 
     def compact_graph_data(self) -> dict[str, Any]:
         graph = self._graph
@@ -472,6 +499,88 @@ class WikiStore:
             if line.strip():
                 blank_run = 0
                 collapsed.append(line)
+            else:
+                blank_run += 1
+                if blank_run <= 1:
+                    collapsed.append("")
+        return "\n".join(collapsed).strip()
+
+    def prompt_content_for_context_pack(self, page: WikiPage) -> str | None:
+        if self.page_category(page.name) not in PROMPT_CONTEXT_PAGE_CATEGORIES:
+            return None
+
+        cleaned = self.clean_content_for_model(page)
+        cleaned = self._drop_prompt_page_scaffolding(cleaned)
+        cleaned = self._drop_prompt_irrelevant_sections(cleaned)
+        cleaned = self._render_links_as_text(cleaned)
+        cleaned = self._collapse_blank_lines(cleaned.splitlines())
+        return cleaned or None
+
+    def _drop_prompt_page_scaffolding(self, content: str) -> str:
+        lines = content.splitlines()
+        first_h1_idx = next(
+            (
+                idx
+                for idx, line in enumerate(lines)
+                if line.startswith("# ") and line.lstrip() == line
+            ),
+            None,
+        )
+        if first_h1_idx is None:
+            return content.strip()
+
+        first_h2_after_h1 = next(
+            (
+                idx
+                for idx in range(first_h1_idx + 1, len(lines))
+                if lines[idx].startswith("## ") and lines[idx].lstrip() == lines[idx]
+            ),
+            None,
+        )
+        if first_h2_after_h1 is not None:
+            return "\n".join(lines[first_h2_after_h1:]).strip()
+
+        return "\n".join(
+            line for idx, line in enumerate(lines) if idx != first_h1_idx
+        ).strip()
+
+    def _drop_prompt_irrelevant_sections(self, content: str) -> str:
+        kept: list[str] = []
+        skip_until_level: int | None = None
+
+        for line in content.splitlines():
+            heading_match = MARKDOWN_HEADING_RE.match(line.strip())
+            if heading_match:
+                level = len(heading_match.group(1))
+                title = heading_match.group(2).strip().lower()
+                if skip_until_level is not None and level > skip_until_level:
+                    continue
+                skip_until_level = None
+                if title in PROMPT_CONTEXT_OMITTED_SECTIONS:
+                    skip_until_level = level
+                    continue
+            elif skip_until_level is not None:
+                continue
+
+            kept.append(line)
+
+        return "\n".join(kept).strip()
+
+    def _render_links_as_text(self, content: str) -> str:
+        def wikilink_label(match: re.Match[str]) -> str:
+            target = match.group(1).strip()
+            return target.split("|", 1)[1].strip() if "|" in target else target
+
+        without_wikilinks = WIKILINK_RE.sub(wikilink_label, content)
+        return MARKDOWN_LINK_RE.sub(lambda match: match.group(1).strip(), without_wikilinks)
+
+    def _collapse_blank_lines(self, lines: list[str]) -> str:
+        collapsed: list[str] = []
+        blank_run = 0
+        for line in lines:
+            if line.strip():
+                blank_run = 0
+                collapsed.append(line.rstrip())
             else:
                 blank_run += 1
                 if blank_run <= 1:

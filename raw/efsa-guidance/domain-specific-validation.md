@@ -4,12 +4,18 @@ sources:
   - "docs/DOMAIN_SPECIFIC_RULES.md"
   - "docs/CONTEXT_SPECIFIC_RULES.md"
   - "BUSINESS-RULES-COMPACT.json"
+  - "Guidance VMPR mapping to legislative products.pdf"
 related:
   - "[[business-rules]]"
   - "[[chemical-monitoring-foodex2]]"
+  - "[[pesticides-foodex2]]"
+  - "[[contaminants-foodex2]]"
+  - "[[vmpr-foodex2]]"
+  - "[[additives-flavourings-foodex2]]"
   - "[[facet-coding-rules]]"
   - "[[validation-rules]]"
-last_updated: "2026-04-05"
+  - "[[vmpr-legislative-mapping]]"
+last_updated: "2026-05-14"
 ---
 
 # Domain-Specific Validation
@@ -18,7 +24,9 @@ last_updated: "2026-04-05"
 ## These Rules Are Contextual
 
 - These checks are not universal FoodEx2 syntax rules. They activate only when the reporting domain or analysis context is known. (Domain Specific Rules; Compact JSON)
-- They matter most for VMPR, additives, acrylamide, and non-food animal matrices. See [[chemical-monitoring-foodex2]]. (Domain Specific Rules)
+- They matter most for VMPR, additives/flavourings, contaminants substance rules such as acrylamide, and non-food animal matrices. Start from [[chemical-monitoring-foodex2]], then use the relevant domain page. (Domain Specific Rules)
+- If the context is all-domain FoodEx2 and no domain-filtered candidate set is active, do not apply these validation overlays by default.
+- In VMPR, some explicit descriptors also control EFSA's downstream legislative mapping, not only pass/fail validation. See [[vmpr-legislative-mapping]]. (VMPR mapping p3-6)
 
 <!-- Source: docs/DOMAIN_SPECIFIC_RULES.md Implementation Matrix; docs/CONTEXT_SPECIFIC_RULES.md -->
 ## Common Mandatory Or Recommended Facets
@@ -27,6 +35,7 @@ last_updated: "2026-04-05"
 | --- | --- |
 | VMPR standard animal products | `F01` and `F02` mandatory |
 | VMPR processed or derivative products | explicit `F01` mandatory |
+| VMPR wild or hunted samples | explicit `F21.A07RY` needed to trigger the `Wild` mapping |
 | Base term `A0C60` non-food animal matrices | `F01` and `F02` mandatory |
 | VMPR Plan 3 processed imports | one `F33` mandatory |
 | Food additives monitoring | `F33` mandatory, `F03` highly recommended |
@@ -41,6 +50,7 @@ last_updated: "2026-04-05"
 
 - Before: `A0C60#F02.A0C63` in VMPR non-food context. After: incomplete; add explicit `F01` because `A0C60` requires both `F01` and `F02`. (Domain Specific Rules; Context Specific Rules)
 - Before: processed VMPR sample with no explicit `F01`. After: invalid in that domain, even if the animal source feels inferable. (Domain Specific Rules VMPR-RPC)
+- Before: a hunted or wild VMPR sample with no explicit `F21.A07RY`. After: the downstream mapping cannot create `Wild=1`, so the sample will stay on the ordinary game or parent-commodity route instead of the wild-game route. See [[vmpr-legislative-mapping]]. (VMPR mapping p5-6)
 - Before: food additive sample with no `F33`. After: invalid for additives monitoring; the legislative category is mandatory. (Domain Specific Rules Additives)
 - Before: acrylamide result on french fries (`A0BYV`) with no `F33`. After: `A0BYV#F33.A169H`. CHEMMON12 requires the acrylamide legislative class even though `A0BYV` may carry an implicit `F33`. (ChemMon 2026; CHEMMON12)
 

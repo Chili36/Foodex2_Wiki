@@ -1,6 +1,6 @@
 ---
 title: "Runtime Rules"
-last_updated: "2026-04-10"
+last_updated: "2026-05-09"
 sources:
   - "raw/efsa-guidance/policy-contract.md"
   - "raw/efsa-guidance/base-term-selection.md"
@@ -38,6 +38,7 @@ Use it as the always-on runtime layer before the supporting guidance pages.
 - Do not use explicit `F01` merely to restate a raw base commodity.
 - Do not duplicate implicit facets explicitly.
 - Do not reconstruct a standard derivative group from a raw base plus `F28` when the derivative group already exists.
+- Treat reporting-domain overlays as opt-in; do not infer a domain unless context or domain-filtered candidates identify it.
 - If the needed code is not present in the candidate list, do not invent it.
 
 ## Supporting Pages By Signal
@@ -48,7 +49,7 @@ Use it as the always-on runtime layer before the supporting guidance pages.
 - Processing: `process-facets.md` and `process-validation-rules.md`
 - Ingredients or composites: `ingredient-facets.md`
 - Packaging: `packaging-facets.md`
-- Domain overlays such as VMPR, additives, acrylamide, or infant reporting: `chemical-monitoring-foodex2.md` and `domain-specific-validation.md`
+- Reporting-domain overlays are conditional. Use them only when the domain is explicit or the candidate set is domain-filtered: `pesticides-foodex2.md`, `contaminants-foodex2.md`, `vmpr-foodex2.md`, `additives-flavourings-foodex2.md`, and `domain-specific-validation.md`
 
 ## Authority
 

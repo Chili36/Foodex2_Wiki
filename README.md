@@ -46,6 +46,11 @@ The current wiki pages include:
 - [process-facets.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/process-facets.md)
 - [ingredient-facets.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/ingredient-facets.md)
 - [packaging-facets.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/packaging-facets.md)
+- [chemical-monitoring-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/chemical-monitoring-foodex2.md)
+- [pesticides-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/pesticides-foodex2.md)
+- [contaminants-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/contaminants-foodex2.md)
+- [vmpr-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/vmpr-foodex2.md)
+- [additives-flavourings-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/additives-flavourings-foodex2.md)
 - [validation-rules.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/validation-rules.md)
 - [structural-validation.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/structural-validation.md)
 - [term-type-facet-constraints.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/term-type-facet-constraints.md)
@@ -178,7 +183,7 @@ It has a few recurring page types:
 - orientation pages such as [foodex2-overview.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/foodex2-overview.md)
 - operational guidance pages such as [base-term-selection.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/base-term-selection.md) and [implicit-vs-explicit-facets.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/implicit-vs-explicit-facets.md)
 - validator-facing rule pages such as [business-rules.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/business-rules.md) and [process-validation-rules.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/process-validation-rules.md)
-- domain overlays such as [domain-specific-validation.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/domain-specific-validation.md)
+- conditional domain overlays such as [pesticides-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/pesticides-foodex2.md), [contaminants-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/contaminants-foodex2.md), [vmpr-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/vmpr-foodex2.md), [additives-flavourings-foodex2.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/additives-flavourings-foodex2.md), and [domain-specific-validation.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/domain-specific-validation.md)
 - maintenance pages that explain yearly changes
 - one richer control-layer page: [policy-contract.md](/Users/davidfoster/Dev/LLM%20Knowledge%20Base/raw/efsa-guidance/policy-contract.md)
 
@@ -262,6 +267,30 @@ Run it locally with:
 ```bash
 . .venv/bin/activate
 uvicorn wiki_api.app:app --reload
+```
+
+Run it as a persistent macOS user service with the versioned LaunchAgent template in [deploy/launchd/com.chili36.foodex2-wiki.plist](deploy/launchd/com.chili36.foodex2-wiki.plist). Render the template for the current checkout path, then reload it with:
+
+```bash
+./deploy/launchd/install-foodex2-wiki-launchagent.sh
+launchctl bootout gui/$(id -u) ~/Library/LaunchAgents/com.chili36.foodex2-wiki.plist 2>/dev/null || true
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.chili36.foodex2-wiki.plist
+launchctl kickstart -k gui/$(id -u)/com.chili36.foodex2-wiki
+```
+
+The installer uses `.venv/bin/python` by default. Set `FOODEX2_WIKI_PYTHON=/path/to/python` before running it if the service should use another interpreter.
+
+Check service health with:
+
+```bash
+curl -s http://127.0.0.1:8010/health
+```
+
+Inspect service logs with:
+
+```bash
+tail -f /tmp/foodex2_wiki_8010.out.log
+tail -f /tmp/foodex2_wiki_8010.err.log
 ```
 
 `context-pack`, `policy-pack`, and `solve` currently use Anthropic internally. `context-pack` uses the lighter page-selector path, while `policy-pack` and `solve` use the richer librarian and solver flow. The wiki API loads `ANTHROPIC_API_KEY`, `WIKI_LIBRARIAN_MODEL`, and the optional endpoint-specific overrides from `.env`.
