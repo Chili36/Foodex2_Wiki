@@ -342,6 +342,15 @@ def test_get_project_context_page_returns_200() -> None:
     assert "What We Are Building" in payload["content"]
 
 
+def test_get_knowledge_architecture_page_returns_200() -> None:
+    response = request("GET", "/wiki/pages/KNOWLEDGE_ARCHITECTURE.md")
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["page_name"] == "KNOWLEDGE_ARCHITECTURE.md"
+    assert payload["title"] == "Knowledge Architecture"
+    assert "Long-source workspace" in payload["content"]
+
+
 def test_graph_view_route_returns_html() -> None:
     response = request("GET", "/wiki/graph-view")
     assert response.status_code == 200
@@ -375,6 +384,8 @@ def test_compact_wiki_graph_is_frontend_friendly() -> None:
     assert schema_node["label"] == "Wiki Schema"
     assert schema_node["category"] == "orientation"
     assert schema_node["total_links"] == schema_node["incoming_count"] + schema_node["outgoing_count"]
+    architecture_node = next(node for node in payload["nodes"] if node["id"] == "KNOWLEDGE_ARCHITECTURE.md")
+    assert architecture_node["category"] == "orientation"
     vmpr_node = next(node for node in payload["nodes"] if node["id"] == "vmpr-legislative-mapping.md")
     assert vmpr_node["category"] == "domain_overlay"
     pesticide_node = next(node for node in payload["nodes"] if node["id"] == "pesticides-foodex2.md")
