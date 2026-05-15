@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 
 from wiki_api.librarian import (
@@ -11,6 +12,7 @@ from wiki_api.librarian import (
 from wiki_api.wiki_store import WikiStore
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
+WIKILINK_RE = re.compile(r"\[\[([^\]]+)\]\]")
 
 
 def _response(*, stop_reason: str, content: list[dict[str, object]], input_tokens: int, output_tokens: int):
@@ -330,6 +332,22 @@ def test_store_catalog_pages_have_summaries_and_categories() -> None:
 
     assert [page.name for page in pages if not page.summary] == []
     assert [page.name for page in pages if store.page_category(page.name) == "unknown"] == []
+
+
+def test_served_wikilinks_are_extensionless() -> None:
+    store = _store()
+    offenders: list[str] = []
+    for page in store.catalog():
+        references = [*page.related, *WIKILINK_RE.findall(page.body)]
+        for reference in references:
+            target = reference.strip()
+            if target.startswith("[[") and target.endswith("]]"):
+                target = target[2:-2]
+            target = target.split("|", 1)[0].split("#", 1)[0].strip()
+            if target.endswith(".md"):
+                offenders.append(f"{page.name}: {target}")
+
+    assert offenders == []
 
 
 def test_store_projects_context_pack_content_for_runtime_prompts() -> None:

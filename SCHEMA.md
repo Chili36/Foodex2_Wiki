@@ -7,10 +7,10 @@ sources:
   - "INGEST_WORKFLOW.md"
   - "README.md"
 related:
-  - "[[KNOWLEDGE_ARCHITECTURE.md]]"
-  - "[[PROJECT_CONTEXT.md]]"
-  - "[[INGEST_WORKFLOW.md]]"
-  - "[[RUNTIME_RULES.md]]"
+  - "[[KNOWLEDGE_ARCHITECTURE]]"
+  - "[[PROJECT_CONTEXT]]"
+  - "[[INGEST_WORKFLOW]]"
+  - "[[RUNTIME_RULES]]"
   - "[[policy-contract]]"
 ---
 
@@ -215,7 +215,7 @@ What this means in practice:
 - Generated graph views can be built from the same markdown without introducing a separate authoring format.
 - Backlinks, adjacency maps, or graph traversal can be added later without changing how pages are authored.
 
-See [[KNOWLEDGE_ARCHITECTURE.md]] for the runtime stance: compiled wiki pages are the durable knowledge layer; long-source indexes are ingest aids; graph expansion should be derived from markdown unless selector evidence proves that heavier infrastructure is needed.
+See [[KNOWLEDGE_ARCHITECTURE]] for the runtime stance: compiled wiki pages are the durable knowledge layer; long-source indexes are ingest aids; graph expansion should be derived from markdown unless selector evidence proves that heavier infrastructure is needed.
 
 ## Runtime Serving Rules
 

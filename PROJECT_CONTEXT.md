@@ -6,9 +6,9 @@ source_inspiration:
   - "https://github.com/VectifyAI/OpenKB"
   - "https://microsoft.github.io/graphrag/query/overview/"
 related:
-  - "[[KNOWLEDGE_ARCHITECTURE.md]]"
-  - "[[INGEST_WORKFLOW.md]]"
-  - "[[SCHEMA.md]]"
+  - "[[KNOWLEDGE_ARCHITECTURE]]"
+  - "[[INGEST_WORKFLOW]]"
+  - "[[SCHEMA]]"
 ---
 
 # What We Are Building
@@ -48,4 +48,4 @@ The repo already has a markdown-native graph: frontmatter `related` links, inlin
 
 Because FoodEx2 source additions are rare, the project should favor deliberate compilation over automatic watch-mode ingestion. Long-document indexing, tree summaries, and long-context retrieval are useful during source ingest or source audit, but the durable runtime surface should remain compiled wiki pages served through `context-pack`.
 
-The detailed architecture decision lives in [[KNOWLEDGE_ARCHITECTURE.md]].
+The detailed architecture decision lives in [[KNOWLEDGE_ARCHITECTURE]].

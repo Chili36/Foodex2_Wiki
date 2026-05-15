@@ -2,9 +2,9 @@
 title: "Ingest Workflow"
 last_updated: "2026-05-14"
 related:
-  - "[[KNOWLEDGE_ARCHITECTURE.md]]"
-  - "[[SCHEMA.md]]"
-  - "[[RUNTIME_RULES.md]]"
+  - "[[KNOWLEDGE_ARCHITECTURE]]"
+  - "[[SCHEMA]]"
+  - "[[RUNTIME_RULES]]"
 ---
 
 # FoodEx2 Wiki Ingest Workflow
@@ -203,7 +203,7 @@ Avoid building pages out of examples without a governing principle.
 
 When a source is long or dense, split the ingest mentally into three passes.
 
-Use [[KNOWLEDGE_ARCHITECTURE.md]] as the governing architecture: long-document structure is an ingest aid, not a second runtime knowledge base. The durable output should be patched topic pages, index summaries, source notes, and log entries.
+Use [[KNOWLEDGE_ARCHITECTURE]] as the governing architecture: long-document structure is an ingest aid, not a second runtime knowledge base. The durable output should be patched topic pages, index summaries, source notes, and log entries.
 
 ## Long-Source Workspace
 

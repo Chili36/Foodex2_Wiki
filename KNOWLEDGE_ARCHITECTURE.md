@@ -9,10 +9,10 @@ source_inspiration:
   - "https://arxiv.org/abs/2406.15319"
   - "https://arxiv.org/abs/2405.14831"
 related:
-  - "[[PROJECT_CONTEXT.md]]"
-  - "[[INGEST_WORKFLOW.md]]"
-  - "[[SCHEMA.md]]"
-  - "[[RUNTIME_RULES.md]]"
+  - "[[PROJECT_CONTEXT]]"
+  - "[[INGEST_WORKFLOW]]"
+  - "[[SCHEMA]]"
+  - "[[RUNTIME_RULES]]"
   - "[[policy-contract]]"
 ---
 
