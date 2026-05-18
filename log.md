@@ -1,6 +1,6 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-05-14"
+last_updated: "2026-05-18"
 ---
 
 # Log
@@ -231,3 +231,9 @@ last_updated: "2026-05-14"
 - Added `KNOWLEDGE_ARCHITECTURE.md` to capture the repo's compiled-wiki, markdown-graph, and long-source ingest strategy.
 - Recorded that separate vector or graph infrastructure should wait for observed retrieval failures, because FoodEx2 source additions are rare and source interpretation needs deliberate review.
 - Registered the architecture page in the wiki index, schema, API catalog, graph categories, and tests.
+
+## [2026-05-18] guidance | Add facet category reference
+
+- Added a compact `Facet Category Reference` table to `facet-coding-rules.md` so prompt contexts can map facet descriptor candidates to `Fxx` families without carrying a full descriptor catalog.
+- Clarified that greenhouse or under-glass growing descriptors belong under `F21` production method or growing condition, while exact descriptor membership still comes from candidate or validator metadata.
+- Linked `packaging-facets.md` from the facet page because the reference table now includes `F18` and `F19`.

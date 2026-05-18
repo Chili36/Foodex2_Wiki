@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-05-14"
+last_updated: "2026-05-18"
 ---
 
 # Index
@@ -30,7 +30,7 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 
 - [foodex2-overview.md](raw/efsa-guidance/foodex2-overview.md): High-level explanation of FoodEx2 purpose, hierarchy model, and coding philosophy.
 - [base-term-selection.md](raw/efsa-guidance/base-term-selection.md): Rules for choosing the right base term, including tie-breaks and missing-term handling.
-- [facet-coding-rules.md](raw/efsa-guidance/facet-coding-rules.md): When to add facets, which facets matter most, and domain-specific exceptions.
+- [facet-coding-rules.md](raw/efsa-guidance/facet-coding-rules.md): Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.
 - [implicit-vs-explicit-facets.md](raw/efsa-guidance/implicit-vs-explicit-facets.md): Distinguishes inherited facet information from coder-supplied facet detail.
 - [code-string-format.md](raw/efsa-guidance/code-string-format.md): Exact FoodEx2 code syntax, separators, and ordering conventions.
 - [process-facets.md](raw/efsa-guidance/process-facets.md): Compact reference for Appendix A2 process facet codes and when to use them.

@@ -8,7 +8,8 @@ related:
   - "[[implicit-vs-explicit-facets]]"
   - "[[process-facets]]"
   - "[[ingredient-facets]]"
-last_updated: "2026-04-08"
+  - "[[packaging-facets]]"
+last_updated: "2026-05-18"
 ---
 
 # Facet Coding Rules
@@ -19,6 +20,38 @@ last_updated: "2026-04-08"
 - Add facets only when they refine the chosen base term in a way that matters for coding or reporting. If the base term already carries the detail implicitly, do not repeat it explicitly; the default logic is spelled out in [[implicit-vs-explicit-facets]]. (EFSA guidance p39-40; ChemMon 2026 p33)
 - In practice, only a few facets are needed. Focus on the treatments or descriptors that make the difference. (EFSA guidance p46-47)
 - `F13` to `F16` are largely deprecated; use `F28 process` instead, following [[process-facets]]. (EFSA guidance p46-47)
+
+<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p35-36, p39-40, p46-47, p56; EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p33-36, p54-55 -->
+## Facet Category Reference
+
+Use this table to map an explicit descriptor candidate to the correct `Fxx` family. It is a category guide, not a descriptor catalog; exact descriptor membership should still come from the candidate or validator data.
+
+| Facet | Meaning | Use |
+| --- | --- | --- |
+| `F01` | Source | Biological source where explicit source is permitted or required; do not add it merely to restate a raw base commodity. |
+| `F02` | Part-nature | Part or sample-matrix nature, especially when a generic matrix needs an explicit part. |
+| `F03` | Physical state | Physical form or state; do not use it on raw commodities because it can create a derivative classification. |
+| `F04` | Ingredient | Characterising recipe ingredient for composites, or a minor later-added ingredient on otherwise raw or derivative foods. |
+| `F06` | Surrounding medium | Packing or surrounding medium such as liquid, brine, oil, or sauce when it matters separately from packaging. |
+| `F07` | Fat content | Fat-content expression when the reporting context or result basis needs it. |
+| `F09` | Fortification component | Added enrichment or fortification component, such as calcium in a fortified product. |
+| `F10` | Qualitative information | Qualitative descriptors such as light, sugar-free, lactose-free, or similar non-process attributes. |
+| `F17` | Cooking extent | Heat-treatment or cooking-extent detail when a domain rule asks for it, for example furans or acrylamide reporting. |
+| `F18` | Packaging format | Container or presentation format such as jar, bottle, can, box, or wrapper. |
+| `F19` | Packaging material | Contact material such as glass, plastic, paper, or metal. |
+| `F20` | Part consumed or analysed | Analysed or consumed part detail when downstream classification needs it. |
+| `F21` | Production method or growing condition | Production or husbandry method such as organic, wild, aquaculture, indoor, greenhouse, or under-glass growing. |
+| `F23` | Target consumer | Intended consumer group, including infant products and animal feed target categories. |
+| `F24-F25` | Microbiology-specific facets | Specialist microbiological reporting descriptors; use only in microbiology contexts. |
+| `F26` | Other or missing-detail marker | Add when the exact detailed term is missing and the generic base or origin facet needs an `other` marker. |
+| `F27` | Source commodity | Constitutive source commodity for derivatives or same-nature raw/derivative mixtures. |
+| `F28` | Process | Treatment or processing detail that is not already implicit in the selected base term. |
+| `F29-F32` | Animal-domain facets | Specialist animal-domain descriptors; use only when the reporting domain activates them. |
+| `F33` | Legislative class | Legislation-oriented reporting class, mainly in chemical monitoring, VMPR, additives, and flavourings contexts. |
+| `F34` | Host sampled | Host-sampled descriptor introduced for relevant host/vector reporting contexts. |
+
+- If a candidate is a facet descriptor, it still cannot be the base term. First choose the base term, then attach the descriptor under the correct `Fxx` family only if it adds non-implicit information.
+- A descriptor such as `Indoor/under glass growing condition` belongs under `F21` because it describes production or growing method. In a raw commodity case such as greenhouse cherry tomatoes, the base remains the raw commodity and the greenhouse detail is an optional explicit `F21` when that detail matters.
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p35-36, p46-47 -->
 ## High-Value Facets

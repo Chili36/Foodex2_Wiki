@@ -380,6 +380,14 @@ def test_context_pack_projection_omits_examples_and_large_reference_catalogs() -
     assert "## Worked Examples" not in projected_base
     assert "kangaroo fresh fat tissue" not in projected_base
 
+    facet_page = store.read_page("facet-coding-rules.md")
+    projected_facet = store.prompt_content_for_context_pack(facet_page)
+    assert projected_facet is not None
+    assert "## Facet Category Reference" in projected_facet
+    assert "`F21` | Production method or growing condition" in projected_facet
+    assert "under-glass growing" in projected_facet
+    assert "## Worked Examples" not in projected_facet
+
 
 def test_solver_prefers_solver_model_env(monkeypatch) -> None:
     monkeypatch.setenv("WIKI_LIBRARIAN_MODEL", "shared-model")
