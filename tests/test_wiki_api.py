@@ -298,6 +298,45 @@ class FakeSelector:
         )
 
 
+class FakeDomoicAcidScallopSelector:
+    def __init__(self) -> None:
+        self.max_pages = 7
+        self.model = "fake-claude-context"
+        self.calls: list[dict[str, object]] = []
+
+    def run(self, payload: dict[str, object]) -> PageSelectionResult:
+        self.calls.append(payload)
+        return PageSelectionResult(
+            pages_used=[
+                "index.md",
+                "domoic-acid-scallops.md",
+                "contaminants-foodex2.md",
+                "domain-specific-validation.md",
+            ],
+            tool_trace=[
+                {"page_name": "domoic-acid-scallops.md", "order": 1, "chars": 100, "synthetic": False},
+                {"page_name": "contaminants-foodex2.md", "order": 2, "chars": 100, "synthetic": False},
+                {
+                    "page_name": "domain-specific-validation.md",
+                    "order": 3,
+                    "chars": 100,
+                    "synthetic": False,
+                },
+            ],
+            token_summary={
+                "model": self.model,
+                "calls": 1,
+                "input_tokens": 80,
+                "output_tokens": 20,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 100,
+                "per_call": [],
+            },
+            timing_summary={"calls": 1, "llm_time_ms": 120, "per_call": []},
+        )
+
+
 def setup_function() -> None:
     app_module.librarian_runner = FakeLibrarian()
     app_module.selector_runner = FakeSelector()
@@ -324,6 +363,7 @@ def test_list_pages_includes_packaging() -> None:
     assert "RUNTIME_RULES.md" in names
     assert "pesticides-foodex2.md" in names
     assert "contaminants-foodex2.md" in names
+    assert "domoic-acid-scallops.md" in names
     assert "vmpr-foodex2.md" in names
     assert "additives-flavourings-foodex2.md" in names
 
@@ -390,6 +430,8 @@ def test_compact_wiki_graph_is_frontend_friendly() -> None:
     assert vmpr_node["category"] == "domain_overlay"
     pesticide_node = next(node for node in payload["nodes"] if node["id"] == "pesticides-foodex2.md")
     assert pesticide_node["category"] == "domain_overlay"
+    domoic_node = next(node for node in payload["nodes"] if node["id"] == "domoic-acid-scallops.md")
+    assert domoic_node["category"] == "domain_overlay"
     assert any(
         edge["source"] == "index.md"
         and edge["target"] == "pesticides-foodex2.md"
@@ -614,6 +656,41 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
             "termType": "s",
         }
     ]
+
+
+def test_context_pack_can_return_domoic_acid_scallop_overlay() -> None:
+    app_module.selector_runner = FakeDomoicAcidScallopSelector()
+
+    response = request(
+        "POST",
+        "/wiki/context-pack",
+        json={
+            "search_term": "domoic acid in Pecten maximus hepatopancreas",
+            "deconstructed_query": {
+                "analyte": "domoic acid",
+                "matrix": "scallop",
+                "species": "Pecten maximus",
+                "part": "hepatopancreas",
+            },
+            "candidate_hints": [
+                {"code": "A16FR", "name": "Scallop edible offal", "termType": "r"},
+            ],
+            "context": {"reporting_domain": "contaminants"},
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["pages_used"][:2] == ["RUNTIME_RULES.md", "index.md"]
+    assert "domoic-acid-scallops.md" in payload["pages_used"]
+    pages_by_name = {page["page_name"]: page for page in payload["pages"]}
+    content = pages_by_name["domoic-acid-scallops.md"]["content"]
+    assert content is not None
+    assert "## Reporting Rule" in content
+    assert "`A16FR#F01.A055P$F20.A18FH`" in content
+    assert "Pecten maximus, Hepatopancreas" in content
+    assert "origFishAreaCode" in content
+    assert app_module.selector_runner.calls[0]["context"] == {"reporting_domain": "contaminants"}
 
 
 def test_policy_pack_accepts_legacy_scope_note_but_normalizes_to_coverage_text() -> None:

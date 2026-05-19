@@ -1,6 +1,6 @@
 ---
 title: "Wiki Schema"
-last_updated: "2026-05-14"
+last_updated: "2026-05-19"
 sources:
   - "PROJECT_CONTEXT.md"
   - "KNOWLEDGE_ARCHITECTURE.md"
@@ -106,6 +106,7 @@ Examples:
 - `chemical-monitoring-foodex2.md`
 - `pesticides-foodex2.md`
 - `contaminants-foodex2.md`
+- `domoic-acid-scallops.md`
 - `vmpr-foodex2.md`
 - `additives-flavourings-foodex2.md`
 - `domain-specific-validation.md`

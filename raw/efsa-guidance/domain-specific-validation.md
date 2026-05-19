@@ -5,17 +5,19 @@ sources:
   - "docs/CONTEXT_SPECIFIC_RULES.md"
   - "BUSINESS-RULES-COMPACT.json"
   - "Guidance VMPR mapping to legislative products.pdf"
+  - "Reportable Scallops list of FoodEx2 codes - MTX.xlsx"
 related:
   - "[[business-rules]]"
   - "[[chemical-monitoring-foodex2]]"
   - "[[pesticides-foodex2]]"
   - "[[contaminants-foodex2]]"
+  - "[[domoic-acid-scallops]]"
   - "[[vmpr-foodex2]]"
   - "[[additives-flavourings-foodex2]]"
   - "[[facet-coding-rules]]"
   - "[[validation-rules]]"
   - "[[vmpr-legislative-mapping]]"
-last_updated: "2026-05-14"
+last_updated: "2026-05-19"
 ---
 
 # Domain-Specific Validation
@@ -24,7 +26,7 @@ last_updated: "2026-05-14"
 ## These Rules Are Contextual
 
 - These checks are not universal FoodEx2 syntax rules. They activate only when the reporting domain or analysis context is known. (Domain Specific Rules; Compact JSON)
-- They matter most for VMPR, additives/flavourings, contaminants substance rules such as acrylamide, and non-food animal matrices. Start from [[chemical-monitoring-foodex2]], then use the relevant domain page. (Domain Specific Rules)
+- They matter most for VMPR, additives/flavourings, contaminants substance rules such as acrylamide or domoic acid in scallops, and non-food animal matrices. Start from [[chemical-monitoring-foodex2]], then use the relevant domain page. (Domain Specific Rules)
 - If the context is all-domain FoodEx2 and no domain-filtered candidate set is active, do not apply these validation overlays by default.
 - In VMPR, some explicit descriptors also control EFSA's downstream legislative mapping, not only pass/fail validation. See [[vmpr-legislative-mapping]]. (VMPR mapping p3-6)
 
@@ -40,6 +42,7 @@ last_updated: "2026-05-14"
 | VMPR Plan 3 processed imports | one `F33` mandatory |
 | Food additives monitoring | `F33` mandatory, `F03` highly recommended |
 | Acrylamide monitoring (paramCode `RF-00000410-ORG`) | `F33` mandatory per CHEMMON12, even if the base term already carries an implicit `F33`. Legal basis: Commission Regulation (EU) 2017/2158 and Recommendation (EU) 2019/1888 |
+| Domoic acid in scallops | select `sampMatCode` and `sampMatText` from the source-provided [[domoic-acid-scallops]] lookup; include `origFishAreaCode` from FAREA wherever possible |
 | Furans or acrylamide heat-treatment reporting | `F17` should be present |
 | Bisphenol or phthalates analysis | `F19` packaging should be present |
 | Fat-weight expression | `F07` should be present |
