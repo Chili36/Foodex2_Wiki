@@ -117,6 +117,7 @@ class WikiStore:
             "chemical-monitoring-foodex2.md": "domain_overlay",
             "pesticides-foodex2.md": "domain_overlay",
             "contaminants-foodex2.md": "domain_overlay",
+            "domoic-acid-scallops.md": "domain_overlay",
             "vmpr-foodex2.md": "domain_overlay",
             "vmpr-legislative-mapping.md": "domain_overlay",
             "additives-flavourings-foodex2.md": "domain_overlay",

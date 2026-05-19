@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import csv
 import json
 import re
 from pathlib import Path
@@ -387,6 +388,33 @@ def test_context_pack_projection_omits_examples_and_large_reference_catalogs() -
     assert "`F21` | Production method or growing condition" in projected_facet
     assert "under-glass growing" in projected_facet
     assert "## Worked Examples" not in projected_facet
+
+
+def test_domoic_acid_scallops_lookup_is_prompt_ready() -> None:
+    store = _store()
+    page = store.read_page("domoic-acid-scallops.md")
+    projected = store.prompt_content_for_context_pack(page)
+
+    assert store.page_category(page.name) == "domain_overlay"
+    assert projected is not None
+    assert "## Reporting Rule" in projected
+    assert "origFishAreaCode" in projected
+    assert "`A16FR#F01.A055P$F20.A18FH`" in projected
+    assert "Pecten maximus, Hepatopancreas" in projected
+    assert "Do not invent a scallop species" in projected
+
+    with (REPO_ROOT / "foodex2_docs" / "domoic_acid_scallops_mtx.csv").open(
+        encoding="utf-8", newline=""
+    ) as handle:
+        rows = list(csv.DictReader(handle))
+
+    assert len(rows) == 60
+    assert {
+        "scientific_name": "Pecten maximus",
+        "part_of_scallops": "Hepatopancreas",
+        "sampMatCode": "A16FR#F01.A055P$F20.A18FH",
+        "sampMatText": "Pecten maximus, Hepatopancreas",
+    }.items() <= rows[34].items()
 
 
 def test_solver_prefers_solver_model_env(monkeypatch) -> None:

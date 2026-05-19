@@ -1,6 +1,6 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-05-18"
+last_updated: "2026-05-19"
 ---
 
 # Log
@@ -237,3 +237,9 @@ last_updated: "2026-05-18"
 - Added a compact `Facet Category Reference` table to `facet-coding-rules.md` so prompt contexts can map facet descriptor candidates to `Fxx` families without carrying a full descriptor catalog.
 - Clarified that greenhouse or under-glass growing descriptors belong under `F21` production method or growing condition, while exact descriptor membership still comes from candidate or validator metadata.
 - Linked `packaging-facets.md` from the facet page because the reference table now includes `F18` and `F19`.
+
+## [2026-05-19] ingest | Add domoic acid scallop reporting overlay
+
+- Added the EFSA/IDATA scallop matrix workbook `Reportable Scallops list of FoodEx2 codes - MTX.xlsx` as immutable source material and generated `domoic_acid_scallops_mtx.csv` as the normalised lookup extract.
+- Created `domoic-acid-scallops.md` as a contaminants-domain overlay for domoic acid in scallops, including the source-provided `sampMatCode` / `sampMatText` matrix table and the FAREA `origFishAreaCode` recommendation.
+- Routed domoic-acid/scallop signals through the chemical-monitoring, contaminants, domain-validation, index, schema, README, and API page-category layers.

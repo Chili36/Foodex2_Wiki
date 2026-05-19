@@ -10,12 +10,13 @@ related:
   - "[[implicit-vs-explicit-facets]]"
   - "[[pesticides-foodex2]]"
   - "[[contaminants-foodex2]]"
+  - "[[domoic-acid-scallops]]"
   - "[[vmpr-foodex2]]"
   - "[[additives-flavourings-foodex2]]"
   - "[[maintenance-2024]]"
   - "[[domain-specific-validation]]"
   - "[[vmpr-legislative-mapping]]"
-last_updated: "2026-05-14"
+last_updated: "2026-05-19"
 ---
 
 # FoodEx2 In Chemical Monitoring
@@ -30,7 +31,8 @@ last_updated: "2026-05-14"
 ## Domain Pages
 
 - Use [[pesticides-foodex2]] for pesticide residue monitoring, Regulation (EC) No 396/2005, `PEST`, `pestParam`, or `MATRIX` contexts.
-- Use [[contaminants-foodex2]] for contaminants or occurrence monitoring, `OCC`, `chemAnalysis`, acrylamide, pyrrolizidine alkaloids, metals, packaging migrants, and similar contaminant contexts.
+- Use [[contaminants-foodex2]] for contaminants or occurrence monitoring, `OCC`, `chemAnalysis`, acrylamide, domoic acid, pyrrolizidine alkaloids, metals, packaging migrants, and similar contaminant contexts.
+- Use [[domoic-acid-scallops]] when the contaminant is domoic acid and the matrix is scallop; that overlay carries the source-provided `sampMatCode` / `sampMatText` lookup and the `origFishAreaCode` recommendation.
 - Use [[vmpr-foodex2]] for veterinary medicinal product residues, `VMPR`, `VETDRUG`, `vmprParam`, `vmprCls`, VetDrugRes, and Plan 3 contexts.
 - Use [[additives-flavourings-foodex2]] for additive and flavouring monitoring, `ADD`, `FLAV`, `addAnalysis`, `flavAnalysis`, and Regulation (EC) No 1333/2008 contexts.
 - If no reporting domain is known, stay with all-domain FoodEx2 pages and the returned candidate list. Do not guess a domain from the food name alone.
