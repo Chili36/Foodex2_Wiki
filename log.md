@@ -1,6 +1,6 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-05-19"
+last_updated: "2026-05-23"
 ---
 
 # Log
@@ -243,3 +243,9 @@ last_updated: "2026-05-19"
 - Added the EFSA/IDATA scallop matrix workbook `Reportable Scallops list of FoodEx2 codes - MTX.xlsx` as immutable source material and generated `domoic_acid_scallops_mtx.csv` as the normalised lookup extract.
 - Created `domoic-acid-scallops.md` as a contaminants-domain overlay for domoic acid in scallops, including the source-provided `sampMatCode` / `sampMatText` matrix table and the FAREA `origFishAreaCode` recommendation.
 - Routed domoic-acid/scallop signals through the chemical-monitoring, contaminants, domain-validation, index, schema, README, and API page-category layers.
+
+## [2026-05-23] maintenance | Add wiki doctor and maintenance loop
+
+- Added `wiki_api.doctor` for deterministic wiki health checks covering index registration, page-category registration, link resolution, prompt projection, graph orphans, and source-reference warnings.
+- Added scheduled and manual GitHub Actions coverage for the wiki doctor so maintenance drift is reported outside normal feature work.
+- Added `MAINTENANCE_WORKFLOW.md` to document deterministic checks, supervised LLM lint, and the maintainer loop.

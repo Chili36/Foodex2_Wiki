@@ -4,7 +4,7 @@ This repository contains a structured markdown knowledge base for EFSA FoodEx2 g
 
 It follows the "LLM wiki" pattern: raw source documents stay immutable, while an LLM incrementally builds and maintains a topic-oriented markdown layer that is easier to read, search, cite, and update over time.
 
-See [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) for the project rationale and the connection to Andrej Karpathy's `llm-wiki` gist. See [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md) for the current architecture stance on compiled markdown knowledge, graph retrieval, long-source ingest, and why heavier RAG infrastructure is deferred.
+See [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) for the project rationale and the connection to Andrej Karpathy's `llm-wiki` gist. See [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md) for the current architecture stance on compiled markdown knowledge, graph retrieval, long-source ingest, and why heavier RAG infrastructure is deferred. See [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md) for the deterministic and LLM-assisted maintenance loop.
 
 ## Related Projects
 
@@ -33,6 +33,7 @@ At the moment, the repository contains:
 - LLM-maintained topic pages in [raw/efsa-guidance](raw/efsa-guidance)
 - A content index in [index.md](index.md)
 - A knowledge architecture decision page in [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md)
+- A maintenance workflow in [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md)
 - A chronological wiki log in [log.md](log.md)
 - A validator-rule layer distilled from the sibling `Foodex2 Code Validator` project
 - A local FastAPI retrieval service in `wiki_api/` so client applications can request selected wiki context from this repo instead of owning wiki navigation themselves
@@ -75,6 +76,7 @@ Added since initial bootstrap:
 - A schema document in [SCHEMA.md](SCHEMA.md)
 - A compact runtime rules file in [RUNTIME_RULES.md](RUNTIME_RULES.md)
 - An architecture stance in [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md) that keeps markdown and the derived graph as the primary knowledge layer while treating long-document indexing as an ingest aid.
+- A deterministic maintenance doctor and supervised LLM lint workflow in [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md).
 
 ## Alpha Architecture
 
@@ -175,6 +177,7 @@ In practice, an ingest or update pass should do all of the following:
 - add a `Relevant Policy` section when decision order matters for that page
 - update [index.md](index.md) so the selector sees accurate summaries and keywords
 - record the change in [log.md](log.md) when the update is material
+- run the wiki doctor before publishing material wiki changes
 
 The practical goal is not to mirror the PDFs page-by-page. The goal is to produce a usable markdown layer that lets a caller retrieve the right guidance pages for a concrete coding case.
 
@@ -430,6 +433,17 @@ Run tests with:
 . .venv/bin/activate
 pytest -q
 ```
+
+Run deterministic wiki maintenance checks with:
+
+```bash
+. .venv/bin/activate
+python -m wiki_api.doctor
+```
+
+CI runs the doctor with GitHub annotations on pull requests, maintained branches, a weekly schedule, and manual dispatch. Use [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md) for the full maintenance loop, including when to add a supervised LLM lint pass.
+
+Scheduled and manual doctor runs also check external markdown URLs as warnings.
 
 ## Scope Notes
 

@@ -93,6 +93,7 @@ class WikiStore:
             "PROJECT_CONTEXT.md": self.root / "PROJECT_CONTEXT.md",
             "KNOWLEDGE_ARCHITECTURE.md": self.root / "KNOWLEDGE_ARCHITECTURE.md",
             "INGEST_WORKFLOW.md": self.root / "INGEST_WORKFLOW.md",
+            "MAINTENANCE_WORKFLOW.md": self.root / "MAINTENANCE_WORKFLOW.md",
             "SCHEMA.md": self.root / "SCHEMA.md",
             "RUNTIME_RULES.md": self.root / "RUNTIME_RULES.md",
         }
@@ -101,6 +102,7 @@ class WikiStore:
             "PROJECT_CONTEXT.md": "orientation",
             "KNOWLEDGE_ARCHITECTURE.md": "orientation",
             "INGEST_WORKFLOW.md": "orientation",
+            "MAINTENANCE_WORKFLOW.md": "orientation",
             "SCHEMA.md": "orientation",
             "RUNTIME_RULES.md": "runtime",
             "index.md": "orientation",
@@ -160,6 +162,9 @@ class WikiStore:
         )
         summaries["INGEST_WORKFLOW.md"] = (
             "Practical playbook for turning raw PDFs into stable topic pages."
+        )
+        summaries["MAINTENANCE_WORKFLOW.md"] = (
+            "Deterministic and LLM-assisted maintenance workflow for keeping the wiki healthy."
         )
         summaries["SCHEMA.md"] = (
             "Page types, frontmatter fields, section conventions, and ingest schema for the FoodEx2 wiki."
