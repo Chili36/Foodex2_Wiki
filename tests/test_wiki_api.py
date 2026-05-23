@@ -367,6 +367,9 @@ def test_list_pages_includes_packaging() -> None:
     assert "domoic-acid-scallops.md" in names
     assert "vmpr-foodex2.md" in names
     assert "additives-flavourings-foodex2.md" in names
+    pages_by_name = {page["page_name"]: page for page in payload["pages"]}
+    assert pages_by_name["MAINTENANCE_WORKFLOW.md"]["category"] == "orientation"
+    assert pages_by_name["domoic-acid-scallops.md"]["category"] == "domain_overlay"
 
 
 def test_get_unknown_page_returns_404() -> None:
@@ -398,6 +401,14 @@ def test_graph_view_route_returns_html() -> None:
     assert "text/html" in response.headers["content-type"]
     assert "FoodEx2 Wiki Graph" in response.text
     assert "/wiki/graph/compact" in response.text
+
+
+def test_wiki_viewer_builds_navigation_from_page_catalog() -> None:
+    response = request("GET", "/wiki/view")
+    assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+    assert "normalizePageList(data.pages || [])" in response.text
+    assert "const sections = {" not in response.text
 
 
 def test_wiki_graph_exposes_index_hub_edges() -> None:
