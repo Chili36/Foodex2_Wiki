@@ -313,6 +313,7 @@ Main endpoints:
 - `GET /health`: service health check
 - `GET /wiki/index`: raw `index.md`
 - `GET /wiki/pages`: page catalog with titles and summaries
+- `GET /wiki/search`: deterministic text find over served wiki pages
 - `GET /wiki/pages/{page_name}`: one wiki page
 - `GET /wiki/graph`: generated adjacency map built from markdown links and frontmatter
 - `GET /wiki/graph/compact`: compact graph payload intended for browser visualization

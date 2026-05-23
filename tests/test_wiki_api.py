@@ -408,7 +408,35 @@ def test_wiki_viewer_builds_navigation_from_page_catalog() -> None:
     assert response.status_code == 200
     assert "text/html" in response.headers["content-type"]
     assert "normalizePageList(data.pages || [])" in response.text
+    assert "/wiki/search?q=" in response.text
     assert "const sections = {" not in response.text
+
+
+def test_wiki_search_finds_facet_text_without_llm() -> None:
+    response = request("GET", "/wiki/search", params={"q": "fortification facet (F09)"})
+    assert response.status_code == 200
+    payload = response.json()
+
+    assert payload["terms"] == ["fortification", "facet", "F09"]
+    assert payload["result_count"] >= 1
+    first = payload["results"][0]
+    assert first["page_name"] == "facet-coding-rules.md"
+    assert first["category"] == "guidance"
+    assert set(first["matches"]) == {"fortification", "facet", "F09"}
+    assert any("Fortification component" in snippet for snippet in first["snippets"])
+
+
+def test_wiki_search_returns_no_results_for_invented_phrase() -> None:
+    response = request(
+        "GET",
+        "/wiki/search",
+        params={"q": '"Add only when the descriptor is explicitly present or mandated by reporting context."'},
+    )
+    assert response.status_code == 200
+    payload = response.json()
+
+    assert payload["result_count"] == 0
+    assert payload["results"] == []
 
 
 def test_wiki_graph_exposes_index_hub_edges() -> None:
@@ -857,6 +885,7 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     assert "policy_contract" in payload["components"]["schemas"]["PolicyPackResponse"]["properties"]
     assert "policy_contract" in payload["components"]["schemas"]["SolveResponse"]["properties"]
     assert "/wiki/ask" in payload["paths"]
+    assert "/wiki/search" in payload["paths"]
     assert "/wiki/graph" in payload["paths"]
     assert "/wiki/graph/compact" in payload["paths"]
     assert "/wiki/pages/{page_name}/backlinks" in payload["paths"]
