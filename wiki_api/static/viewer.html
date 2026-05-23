@@ -221,32 +221,41 @@
 </main>
 
 <script>
-const sections = {
-  "Orientation": ["index.md", "README.md", "PROJECT_CONTEXT.md", "log.md"],
-  "Guidance": [
-    "foodex2-overview.md", "base-term-selection.md", "facet-coding-rules.md",
-    "implicit-vs-explicit-facets.md", "code-string-format.md", "process-facets.md",
-    "ingredient-facets.md", "packaging-facets.md"
-  ],
-  "Domain Overlays": [
-    "chemical-monitoring-foodex2.md", "pesticides-foodex2.md",
-    "contaminants-foodex2.md", "vmpr-foodex2.md",
-    "additives-flavourings-foodex2.md"
-  ],
-  "Validation": [
-    "validation-rules.md", "structural-validation.md",
-    "term-type-facet-constraints.md", "process-validation-rules.md",
-    "domain-specific-validation.md"
-  ],
-  "Maintenance": [
-    "maintenance-history.md", "maintenance-2015.md", "maintenance-2016-2018.md",
-    "maintenance-2019.md", "maintenance-2020.md", "maintenance-2021.md",
-    "maintenance-2022.md", "maintenance-2023.md", "maintenance-2024.md"
-  ]
+const categoryLabels = {
+  orientation: "Orientation",
+  runtime: "Runtime",
+  guidance: "Guidance",
+  domain_overlay: "Domain Overlays",
+  validation: "Validation",
+  maintenance: "Maintenance",
+  unknown: "Other"
 };
+
+const categoryOrder = ["orientation", "runtime", "guidance", "domain_overlay", "validation", "maintenance", "unknown"];
+
+const builtInPages = [
+  { page_name: "index.md", title: "Wiki Index", category: "orientation" },
+  { page_name: "log.md", title: "Wiki Log", category: "maintenance" }
+];
+
+const preferredOrder = [
+  "index.md", "README.md", "PROJECT_CONTEXT.md", "KNOWLEDGE_ARCHITECTURE.md",
+  "INGEST_WORKFLOW.md", "MAINTENANCE_WORKFLOW.md", "SCHEMA.md",
+  "RUNTIME_RULES.md", "policy-contract.md", "foodex2-overview.md",
+  "base-term-selection.md", "facet-coding-rules.md", "implicit-vs-explicit-facets.md",
+  "code-string-format.md", "process-facets.md", "ingredient-facets.md",
+  "packaging-facets.md", "chemical-monitoring-foodex2.md",
+  "pesticides-foodex2.md", "contaminants-foodex2.md", "domoic-acid-scallops.md",
+  "vmpr-foodex2.md", "vmpr-legislative-mapping.md",
+  "additives-flavourings-foodex2.md", "business-rules.md",
+  "validation-rules.md", "structural-validation.md",
+  "term-type-facet-constraints.md", "process-validation-rules.md",
+  "domain-specific-validation.md", "maintenance-history.md"
+];
 
 let pageCache = {};
 let pageTitles = {};
+let navPages = [];
 
 function sanitize(html) {
   return DOMPurify.sanitize(html, { ADD_ATTR: ['onclick'] });
@@ -256,32 +265,66 @@ async function init() {
   try {
     const res = await fetch("/wiki/pages");
     const data = await res.json();
-    for (const p of data.pages) {
+    navPages = normalizePageList(data.pages || []);
+    for (const p of navPages) {
       pageTitles[p.page_name] = p.title;
     }
-    pageTitles["index.md"] = "Wiki Index";
-    pageTitles["log.md"] = "Wiki Log";
   } catch(e) {
     console.warn("Could not fetch page list", e);
+    navPages = normalizePageList([]);
   }
-  buildNav();
+  buildNav(navPages);
   const hash = location.hash.replace("#", "");
   loadPage(hash || "index.md");
 }
 
-function buildNav() {
+function normalizePageList(apiPages) {
+  const pagesByName = new Map();
+  for (const page of builtInPages) {
+    pagesByName.set(page.page_name, page);
+  }
+  for (const page of apiPages) {
+    const category = categoryLabels[page.category] ? page.category : "unknown";
+    pagesByName.set(page.page_name, {
+      page_name: page.page_name,
+      title: page.title || page.page_name,
+      category
+    });
+  }
+  return Array.from(pagesByName.values()).sort(comparePages);
+}
+
+function comparePages(a, b) {
+  const categoryDelta = categoryOrder.indexOf(a.category) - categoryOrder.indexOf(b.category);
+  if (categoryDelta !== 0) return categoryDelta;
+
+  const aPreferred = preferredOrder.indexOf(a.page_name);
+  const bPreferred = preferredOrder.indexOf(b.page_name);
+  if (aPreferred !== -1 || bPreferred !== -1) {
+    if (aPreferred === -1) return 1;
+    if (bPreferred === -1) return -1;
+    return aPreferred - bPreferred;
+  }
+
+  return a.page_name.localeCompare(b.page_name);
+}
+
+function buildNav(pages) {
   const nav = document.getElementById("nav");
   while (nav.firstChild) nav.removeChild(nav.firstChild);
-  for (const [section, pages] of Object.entries(sections)) {
+  for (const category of categoryOrder) {
+    const sectionPages = pages.filter(function(page) { return page.category === category; });
+    if (sectionPages.length === 0) continue;
+
     const header = document.createElement("div");
     header.className = "nav-section";
-    header.textContent = section;
+    header.textContent = categoryLabels[category] || category;
     nav.appendChild(header);
-    for (const page of pages) {
+    for (const page of sectionPages) {
       const a = document.createElement("a");
-      a.href = "#" + page;
-      a.textContent = pageTitles[page] || page.replace(".md", "").replace(/-/g, " ");
-      a.dataset.page = page;
+      a.href = "#" + page.page_name;
+      a.textContent = page.title || page.page_name.replace(".md", "").replace(/-/g, " ");
+      a.dataset.page = page.page_name;
       a.addEventListener("click", function(e) {
         e.preventDefault();
         loadPage(this.dataset.page);
@@ -382,7 +425,8 @@ function renderPage(data) {
       const linksDiv = document.createElement("div");
       linksDiv.className = "related-links";
       data.related.forEach(function(r) {
-        const name = r.replace(/\[\[|\]\]/g, "") + ".md";
+        const target = r.replace(/\[\[|\]\]/g, "").split("|", 1)[0].split("#", 1)[0];
+        const name = target.endsWith(".md") ? target : target + ".md";
         const title = pageTitles[name] || name.replace(".md", "").replace(/-/g, " ");
         const span = document.createElement("span");
         span.className = "related-link";

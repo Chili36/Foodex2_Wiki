@@ -661,6 +661,7 @@ def list_pages() -> dict[str, Any]:
             "page_name": page.name,
             "title": page.title,
             "summary": page.summary,
+            "category": store.page_category(page.name),
             "sources": page.sources,
             "related": page.related,
         }
