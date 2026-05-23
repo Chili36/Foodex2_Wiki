@@ -1,6 +1,6 @@
 ---
 title: "Knowledge Architecture"
-last_updated: "2026-05-14"
+last_updated: "2026-05-23"
 source_inspiration:
   - "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f"
   - "https://github.com/VectifyAI/OpenKB"
@@ -11,6 +11,7 @@ source_inspiration:
 related:
   - "[[PROJECT_CONTEXT]]"
   - "[[INGEST_WORKFLOW]]"
+  - "[[MAINTENANCE_WORKFLOW]]"
   - "[[SCHEMA]]"
   - "[[RUNTIME_RULES]]"
   - "[[policy-contract]]"
@@ -28,6 +29,7 @@ The project already follows the core LLM-wiki idea: raw sources stay immutable, 
 - Keep the authored wiki graph in frontmatter, inline links, `index.md`, policy links, and business-rule links.
 - Keep `context-pack` as the primary runtime surface for DMT and other callers.
 - Treat long-document indexing as an ingest aid, not the runtime source of truth.
+- Treat deterministic doctor checks as the first maintenance gate, with LLM lint as supervised review rather than autonomous rewriting.
 - Do not add a vector database, graph database, or watch-mode ingestion loop until the data volume or update frequency justifies the operational cost.
 
 This matches the project reality: FoodEx2 source data changes rarely, but the interpretation has high consequence. The best return comes from careful compilation, cross-linking, regression tests, and source traceability.
@@ -38,8 +40,9 @@ This matches the project reality: FoodEx2 source data changes rarely, but the in
 2. Long-source workspace: optional temporary indexes, outlines, page summaries, or extraction notes used only while ingesting dense PDFs or tables.
 3. Compiled wiki layer: durable topic pages, runtime pages, validation pages, domain overlays, and maintenance pages.
 4. Markdown graph layer: generated from frontmatter `related`, inline links, `Relevant Policy`, `Relevant Business Rules`, and `index.md`.
-5. Retrieval API layer: `wiki_api/`, especially `/wiki/context-pack`, `/wiki/graph`, `/wiki/graph/compact`, `/wiki/policy-pack`, and `/wiki/solve`.
-6. Caller layer: DMT or another downstream application that supplies the user query, candidate hints, and final prompt assembly.
+5. Maintenance layer: `wiki_api.doctor`, GitHub Actions, and supervised LLM lint described in [[MAINTENANCE_WORKFLOW]].
+6. Retrieval API layer: `wiki_api/`, especially `/wiki/context-pack`, `/wiki/graph`, `/wiki/graph/compact`, `/wiki/policy-pack`, and `/wiki/solve`.
+7. Caller layer: DMT or another downstream application that supplies the user query, candidate hints, and final prompt assembly.
 
 ## What Popular Patterns Mean Here
 
@@ -124,7 +127,7 @@ Because source additions are rare, ingestion should optimize for correctness ove
 3. Identify affected existing pages before creating new pages.
 4. Update the smallest durable page set.
 5. Add cross-links and index summaries.
-6. Run graph and API tests.
+6. Run the wiki doctor, graph tests, and API tests.
 7. Record the ingest in `log.md`.
 
 Do not enable watch-mode auto-ingest by default. Automatic file watching is useful for high-volume personal-note workflows, but this repo needs deliberate review because source interpretations affect coding behavior.
@@ -158,10 +161,10 @@ Every architecture change should preserve these constraints:
 - Domain overlays stay conditional.
 - Business rules are retrieved through relevant pages, not attached blindly.
 - Long-source notes must resolve into durable pages or source audit artifacts.
+- Scheduled maintenance reports wiki drift; it does not silently rewrite or merge knowledge changes.
 
 ## Near-Term Improvements
 
 - Add selector tests for graph-expansion trigger cases.
-- Add a small graph-health check for orphaned served pages and missing index summaries.
 - Add ingest notes for long PDFs so future EFSA sources can be compiled with page-range traceability.
 - Add a retrieval evaluation set for common FoodEx2 failure modes: raw-vs-derivative, composite ingredients, packaging, VMPR wild/game mapping, contaminants, pesticides, and additives.

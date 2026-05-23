@@ -1,6 +1,6 @@
 ---
 title: "Wiki Schema"
-last_updated: "2026-05-19"
+last_updated: "2026-05-23"
 sources:
   - "PROJECT_CONTEXT.md"
   - "KNOWLEDGE_ARCHITECTURE.md"
@@ -10,6 +10,7 @@ related:
   - "[[KNOWLEDGE_ARCHITECTURE]]"
   - "[[PROJECT_CONTEXT]]"
   - "[[INGEST_WORKFLOW]]"
+  - "[[MAINTENANCE_WORKFLOW]]"
   - "[[RUNTIME_RULES]]"
   - "[[policy-contract]]"
 ---
@@ -26,7 +27,7 @@ The repo has four practical layers:
 
 1. `foodex2_docs/`: immutable source material
 2. `raw/efsa-guidance/`: compiled markdown knowledge pages
-3. root runtime and maintenance docs such as `RUNTIME_RULES.md`, `README.md`, and this file
+3. root runtime and maintenance docs such as `RUNTIME_RULES.md`, `MAINTENANCE_WORKFLOW.md`, `README.md`, and this file
 4. `wiki_api/`: retrieval and serving layer
 
 Do not write generated interpretations back into `foodex2_docs/`.
@@ -42,6 +43,7 @@ Examples:
 - `PROJECT_CONTEXT.md`
 - `KNOWLEDGE_ARCHITECTURE.md`
 - `INGEST_WORKFLOW.md`
+- `MAINTENANCE_WORKFLOW.md`
 - `SCHEMA.md`
 
 Use for:
@@ -51,6 +53,7 @@ Use for:
 - retrieval and knowledge-layer architecture decisions
 - ingest method
 - maintenance conventions
+- deterministic and LLM-assisted wiki health checks
 
 ### Runtime
 
@@ -235,4 +238,5 @@ When adding or revising pages:
 5. add `Relevant Business Rules` where material
 6. add `Relevant Policy` where decision order matters
 7. update `index.md`
-8. update `log.md` if the change is material
+8. run `python -m wiki_api.doctor`
+9. update `log.md` if the change is material

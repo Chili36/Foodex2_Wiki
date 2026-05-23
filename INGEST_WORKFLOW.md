@@ -1,8 +1,9 @@
 ---
 title: "Ingest Workflow"
-last_updated: "2026-05-14"
+last_updated: "2026-05-23"
 related:
   - "[[KNOWLEDGE_ARCHITECTURE]]"
+  - "[[MAINTENANCE_WORKFLOW]]"
   - "[[SCHEMA]]"
   - "[[RUNTIME_RULES]]"
 ---
@@ -274,6 +275,7 @@ Do not create a new page when:
 Every meaningful ingest or maintenance pass should also:
 
 - update `index.md` if navigation changed
+- run `python -m wiki_api.doctor`
 - update `log.md`
 - explain whether the change is:
   - `ingest`
@@ -331,7 +333,8 @@ If you are under time pressure, do this:
 3. Patch only the highest-signal rules
 4. Add one or two worked examples if they teach a reusable principle
 5. Update `index.md` only if navigation changed
-6. Add a `log.md` entry
-7. Stop before the page turns into a document dump
+6. Run `python -m wiki_api.doctor`
+7. Add a `log.md` entry
+8. Stop before the page turns into a document dump
 
 That is better than a heroic one-shot ingest that becomes unreadable or brittle.

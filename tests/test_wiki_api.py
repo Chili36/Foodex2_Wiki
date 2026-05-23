@@ -359,6 +359,7 @@ def test_list_pages_includes_packaging() -> None:
     assert "README.md" in names
     assert "PROJECT_CONTEXT.md" in names
     assert "INGEST_WORKFLOW.md" in names
+    assert "MAINTENANCE_WORKFLOW.md" in names
     assert "SCHEMA.md" in names
     assert "RUNTIME_RULES.md" in names
     assert "pesticides-foodex2.md" in names
@@ -432,6 +433,12 @@ def test_compact_wiki_graph_is_frontend_friendly() -> None:
     assert pesticide_node["category"] == "domain_overlay"
     domoic_node = next(node for node in payload["nodes"] if node["id"] == "domoic-acid-scallops.md")
     assert domoic_node["category"] == "domain_overlay"
+    assert any(
+        edge["source"] == "index.md"
+        and edge["target"] == "MAINTENANCE_WORKFLOW.md"
+        and edge["type"] == "index_reference"
+        for edge in payload["edges"]
+    )
     assert any(
         edge["source"] == "index.md"
         and edge["target"] == "pesticides-foodex2.md"
