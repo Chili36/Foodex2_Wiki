@@ -249,3 +249,8 @@ last_updated: "2026-05-23"
 - Added `wiki_api.doctor` for deterministic wiki health checks covering index registration, page-category registration, link resolution, prompt projection, graph orphans, and source-reference warnings.
 - Added scheduled and manual GitHub Actions coverage for the wiki doctor so maintenance drift is reported outside normal feature work.
 - Added `MAINTENANCE_WORKFLOW.md` to document deterministic checks, supervised LLM lint, and the maintainer loop.
+
+## [2026-05-23] service | Add deterministic wiki find
+
+- Added `GET /wiki/search` as a non-LLM text finder over served wiki pages, with quoted phrase support, page categories, and snippets.
+- Added a Find panel to `/wiki/view` so users can verify whether a claimed rule or phrase exists in the wiki before asking an LLM to interpret it.

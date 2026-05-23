@@ -23,6 +23,8 @@ from .wiki_store import WikiPage, WikiStore
 
 
 _WIKI_LINK_RE = re.compile(r"\[\[([a-zA-Z0-9_\-]+)(?:\|[^\]]+)?\]\]")
+_SEARCH_TOKEN_RE = re.compile(r'"([^"]+)"|(\S+)')
+_SEARCH_TOKEN_TRIM = " \t\r\n.,;:!?()[]{}'“”"
 REPO_ROOT = Path(__file__).resolve().parent.parent
 store = WikiStore(REPO_ROOT)
 librarian_runner: AnthropicWikiLibrarian | Any | None = None
@@ -199,9 +201,27 @@ class PageSummary(BaseModel):
     page_name: str
     title: str
     summary: str
+    category: str | None = None
     sources: list[str] = Field(default_factory=list)
     related: list[str] = Field(default_factory=list)
     content: str | None = None
+
+
+class WikiSearchResult(BaseModel):
+    page_name: str
+    title: str
+    category: str
+    summary: str
+    score: int
+    matches: list[str] = Field(default_factory=list)
+    snippets: list[str] = Field(default_factory=list)
+
+
+class WikiSearchResponse(BaseModel):
+    query: str
+    terms: list[str] = Field(default_factory=list)
+    result_count: int
+    results: list[WikiSearchResult] = Field(default_factory=list)
 
 
 class AskRequest(BaseModel):
@@ -493,6 +513,110 @@ def _normalize_solver_data(data: dict[str, Any]) -> dict[str, Any]:
     return normalized
 
 
+def _parse_search_terms(query: str) -> list[str]:
+    terms: list[str] = []
+    seen: set[str] = set()
+    for match in _SEARCH_TOKEN_RE.finditer(query):
+        raw_term = match.group(1) or match.group(2) or ""
+        term = raw_term.strip(_SEARCH_TOKEN_TRIM)
+        if not term:
+            continue
+        key = term.casefold()
+        if key in seen:
+            continue
+        seen.add(key)
+        terms.append(term)
+    return terms
+
+
+def _search_snippet(text: str, term: str, *, width: int = 180) -> str | None:
+    folded_text = text.casefold()
+    folded_term = term.casefold()
+    index = folded_text.find(folded_term)
+    if index < 0:
+        return None
+
+    start = max(0, index - width // 2)
+    end = min(len(text), index + len(term) + width // 2)
+    snippet = re.sub(r"\s+", " ", text[start:end]).strip()
+    if start > 0:
+        snippet = "..." + snippet
+    if end < len(text):
+        snippet += "..."
+    return snippet
+
+
+def _search_score(page: WikiPage, terms: list[str]) -> tuple[int, list[str], list[str]]:
+    title = page.title
+    summary = page.summary
+    body = store.clean_content_for_model(page)
+    title_folded = title.casefold()
+    summary_folded = summary.casefold()
+    body_folded = body.casefold()
+    full_folded = f"{title}\n{summary}\n{body}".casefold()
+
+    score = 0
+    matches: list[str] = []
+    snippets: list[str] = []
+    for term in terms:
+        folded = term.casefold()
+        if folded not in full_folded:
+            continue
+        matches.append(term)
+        score += 10
+        if folded in title_folded:
+            score += 40
+        if folded in summary_folded:
+            score += 20
+        score += min(body_folded.count(folded), 10)
+        for source in (summary, body):
+            snippet = _search_snippet(source, term)
+            if snippet and snippet not in snippets:
+                snippets.append(snippet)
+                break
+
+    if matches and len(matches) == len(terms):
+        score += 60
+    return score, matches, snippets[:3]
+
+
+def _search_wiki(query: str, *, limit: int) -> WikiSearchResponse:
+    normalized_query = query.strip()
+    terms = _parse_search_terms(normalized_query)
+    if not terms:
+        return WikiSearchResponse(query=normalized_query, terms=[], result_count=0, results=[])
+
+    results: list[WikiSearchResult] = []
+    for page_name in sorted(store.allowed_page_names()):
+        page = store.read_page(page_name)
+        score, matches, snippets = _search_score(page, terms)
+        if not matches:
+            continue
+        results.append(
+            WikiSearchResult(
+                page_name=page.name,
+                title=page.title,
+                category=store.page_category(page.name),
+                summary=page.summary,
+                score=score,
+                matches=matches,
+                snippets=snippets,
+            )
+        )
+
+    full_matches = [item for item in results if len(item.matches) == len(terms)]
+    if full_matches:
+        results = full_matches
+
+    results.sort(key=lambda item: (-len(item.matches), -item.score, item.page_name.casefold()))
+    return WikiSearchResponse(
+        query=normalized_query,
+        terms=terms,
+        result_count=len(results),
+        results=results[:limit],
+    )
+
+
 POLICY_PAGE_NAME = "policy-contract.md"
 RUNTIME_RULES_PAGE_NAME = "RUNTIME_RULES.md"
 
@@ -517,6 +641,7 @@ def _ensure_front_page(
             page_name=page.name,
             title=page.title,
             summary=page.summary,
+            category=store.page_category(page.name),
             sources=page.sources,
             related=page.related,
             content=content_for_page(page) if include_content else None,
@@ -670,6 +795,22 @@ def list_pages() -> dict[str, Any]:
     return {"pages": pages, "count": len(pages)}
 
 
+@app.get(
+    "/wiki/search",
+    response_model=WikiSearchResponse,
+    summary="Find text in served wiki pages",
+    description=(
+        "Deterministic case-insensitive text search over served wiki pages. "
+        "Use quotes for exact phrases; no LLM is used."
+    ),
+)
+def search_wiki(
+    q: str = Query(min_length=1, description="Text or quoted phrase to find."),
+    limit: int = Query(default=20, ge=1, le=50),
+) -> WikiSearchResponse:
+    return _search_wiki(q, limit=limit)
+
+
 @app.get("/wiki/pages/{page_name}")
 def get_page(page_name: str, include_content: bool = Query(default=True)) -> dict[str, Any]:
     try:
@@ -756,6 +897,7 @@ def ask_question(request: AskRequest) -> AskResponse:
             page_name=page.name,
             title=page.title,
             summary=page.summary,
+            category=store.page_category(page.name),
             sources=page.sources,
             related=page.related,
             content=store.clean_content_for_model(page) if request.include_page_content else None,
@@ -772,6 +914,7 @@ def ask_question(request: AskRequest) -> AskResponse:
                 page_name=page.name,
                 title=page.title,
                 summary=page.summary,
+                category=store.page_category(page.name),
                 sources=page.sources,
                 related=page.related,
                 content=expansion_content_by_page.get(page.name)
@@ -946,6 +1089,7 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
             page_name=page.name,
             title=page.title,
             summary=page.summary,
+            category=store.page_category(page.name),
             sources=page.sources,
             related=page.related,
             content=store.clean_content_for_model(page) if request.include_page_content else None,
@@ -1047,6 +1191,7 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
             page_name=page.name,
             title=page.title,
             summary=page.summary,
+            category=store.page_category(page.name),
             sources=page.sources,
             related=page.related,
             content=store.prompt_content_for_context_pack(page) if request.include_page_content else None,
@@ -1187,6 +1332,7 @@ def solve_foodex2(request: SolveRequest) -> SolveResponse:
             page_name=page.name,
             title=page.title,
             summary=page.summary,
+            category=store.page_category(page.name),
             sources=page.sources,
             related=page.related,
             content=store.clean_content_for_model(page) if request.include_page_content else None,
