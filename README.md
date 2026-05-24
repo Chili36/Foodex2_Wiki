@@ -268,6 +268,7 @@ Optional overrides:
 WIKI_CONTEXT_MODEL=claude-3-7-sonnet-latest
 WIKI_POLICY_MODEL=claude-3-7-sonnet-latest
 WIKI_SOLVER_MODEL=claude-3-7-sonnet-latest
+WIKI_LINT_MODEL=claude-3-7-sonnet-latest
 ```
 
 If the endpoint-specific variables are unset, the service falls back to `WIKI_LIBRARIAN_MODEL`.
@@ -445,6 +446,15 @@ python -m wiki_api.doctor
 CI runs the doctor with GitHub annotations on pull requests, maintained branches, a weekly schedule, and manual dispatch. Use [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md) for the full maintenance loop, including when to add a supervised LLM lint pass.
 
 Scheduled and manual doctor runs also check external markdown URLs as warnings.
+
+Run a supervised LLM lint report for one or more pages with:
+
+```bash
+. .venv/bin/activate
+python -m wiki_api.llm_lint --page facet-coding-rules.md --focus "F09 examples"
+```
+
+The lint pass writes a markdown report under `reports/` by default and never edits wiki pages.
 
 ## Scope Notes
 
