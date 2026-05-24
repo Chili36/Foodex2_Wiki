@@ -84,6 +84,20 @@ The scheduled job is a monitor. It reports drift; it does not change files.
 
 The LLM-maintenance role is useful after deterministic checks have made the repo mechanically healthy.
 
+Run a targeted lint pass with:
+
+```bash
+python -m wiki_api.llm_lint --page facet-coding-rules.md --focus "F09 examples"
+```
+
+For a broader but higher-token review, run:
+
+```bash
+python -m wiki_api.llm_lint --all-pages --max-page-chars 6000
+```
+
+Reports are written under `reports/` by default. They are review artifacts, not source-of-truth wiki pages.
+
 Use an LLM to read:
 
 - the doctor report

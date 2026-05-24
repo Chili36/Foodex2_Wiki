@@ -254,3 +254,9 @@ last_updated: "2026-05-23"
 
 - Added `GET /wiki/search` as a non-LLM text finder over served wiki pages, with quoted phrase support, page categories, and snippets.
 - Added a Find panel to `/wiki/view` so users can verify whether a claimed rule or phrase exists in the wiki before asking an LLM to interpret it.
+
+## [2026-05-24] maintenance | Add supervised LLM lint runner
+
+- Added `python -m wiki_api.llm_lint` for manual, supervised semantic review of selected wiki pages or the full served wiki.
+- The lint runner combines wiki-doctor output, index/log context, graph summary, prompt-projection policy, page backlinks, raw page text, and prompt-projected text into one LLM report payload.
+- Reports are written under `reports/wiki-lint-*.md` by default and are intentionally ignored so lint findings remain review artifacts unless promoted into a deliberate PR.
