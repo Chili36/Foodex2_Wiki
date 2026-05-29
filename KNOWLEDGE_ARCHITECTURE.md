@@ -1,6 +1,6 @@
 ---
 title: "Knowledge Architecture"
-last_updated: "2026-05-23"
+last_updated: "2026-05-29"
 source_inspiration:
   - "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f"
   - "https://github.com/VectifyAI/OpenKB"
@@ -27,7 +27,8 @@ The project already follows the core LLM-wiki idea: raw sources stay immutable, 
 
 - Keep markdown as the canonical knowledge layer.
 - Keep the authored wiki graph in frontmatter, inline links, `index.md`, policy links, and business-rule links.
-- Keep `context-pack` as the primary runtime surface for DMT and other callers.
+- Keep `/wiki/ask` as the compact guidance surface for short strategy questions.
+- Keep `/wiki/context-pack` as the primary page-evidence surface for DMT and other downstream classifiers.
 - Treat long-document indexing as an ingest aid, not the runtime source of truth.
 - Treat deterministic doctor checks as the first maintenance gate, with LLM lint as supervised review rather than autonomous rewriting.
 - Do not add a vector database, graph database, or watch-mode ingestion loop until the data volume or update frequency justifies the operational cost.
@@ -41,7 +42,7 @@ This matches the project reality: FoodEx2 source data changes rarely, but the in
 3. Compiled wiki layer: durable topic pages, runtime pages, validation pages, domain overlays, and maintenance pages.
 4. Markdown graph layer: generated from frontmatter `related`, inline links, `Relevant Policy`, `Relevant Business Rules`, and `index.md`.
 5. Maintenance layer: `wiki_api.doctor`, GitHub Actions, and supervised LLM lint described in [[MAINTENANCE_WORKFLOW]].
-6. Retrieval API layer: `wiki_api/`, especially `/wiki/context-pack`, `/wiki/graph`, `/wiki/graph/compact`, `/wiki/policy-pack`, and `/wiki/solve`.
+6. Retrieval API layer: `wiki_api/`, especially `/wiki/ask`, `/wiki/context-pack`, `/wiki/graph`, `/wiki/graph/compact`, `/wiki/policy-pack`, and `/wiki/solve`.
 7. Caller layer: DMT or another downstream application that supplies the user query, candidate hints, and final prompt assembly.
 
 ## What Popular Patterns Mean Here
@@ -86,14 +87,36 @@ We should add more structure only where it improves a real FoodEx2 decision:
 
 ## Retrieval Modes
 
+### Guidance Brief
+
+Use this when the caller needs a short answer to shape the next move rather than raw page text.
+
+The API surface is `POST /wiki/ask`.
+
+Good uses:
+
+- "What should I think about before coding this?"
+- "Is this likely raw, derivative, or composite?"
+- "Which facet families might matter?"
+- "Does this look like a domain-overlay case?"
+- "Should I escalate to full page context?"
+
+This mode selects pages, optionally expands to related-page summaries, and runs a concise wiki answerer. The result is a strategy brief with citations. It is useful before candidate retrieval when the source wording is confusing, and after deconstruction when extracted facts can be turned into a sharper guidance question.
+
+Do not treat this mode as a catalogue, validator, or final-code authority. It should not invent FoodEx2 codes or facet descriptors beyond the provided page evidence.
+
 ### Default Case Retrieval
 
-Use this for ordinary FoodEx2 coding:
+Use this when the caller needs page evidence for ordinary FoodEx2 coding.
+
+The API surface is `POST /wiki/context-pack`.
 
 1. Attach `RUNTIME_RULES.md`.
 2. Use the selector to choose the smallest useful page set.
 3. Include pages as projected prompt content, omitting examples, appendices, and maintenance bulk unless needed.
 4. Let the downstream caller or solver make the final coding decision against candidate data.
+
+This mode is heavier than `/wiki/ask`, but better when the downstream model needs exact rule text, auditability, or a prompt context pack.
 
 ### Graph Expansion
 
@@ -111,6 +134,26 @@ Bad triggers:
 - Simple base-term selection already has enough context.
 - The extra neighbors would mostly add examples or appendix tables.
 - The user needs a final answer under a tight token budget.
+
+### Flow Selection
+
+The caller should choose the lightest retrieval surface that can answer the case:
+
+```text
+quick strategy:
+query -> /wiki/ask
+
+strategy before candidates:
+query -> deconstruct query -> /wiki/ask -> candidate retrieval -> downstream classifier -> validator
+
+page-evidence classification:
+query -> deconstruct query -> candidate retrieval -> /wiki/context-pack -> downstream classifier -> validator
+
+wiki-owned solving experiment:
+query -> candidate retrieval -> /wiki/solve -> external validation or human review
+```
+
+The strategy-before-candidates flow is useful when the wiki answer can change what the caller searches for, for example derivative bases before raw commodities, raw terms as possible `F27` or `F04` facet values, or domain overlays only when explicitly supplied.
 
 ### Long-Source Verification
 

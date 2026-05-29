@@ -1,6 +1,6 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-05-23"
+last_updated: "2026-05-29"
 ---
 
 # Log
@@ -260,3 +260,10 @@ last_updated: "2026-05-23"
 - Added `python -m wiki_api.llm_lint` for manual, supervised semantic review of selected wiki pages or the full served wiki.
 - The lint runner combines wiki-doctor output, index/log context, graph summary, prompt-projection policy, page backlinks, raw page text, and prompt-projected text into one LLM report payload.
 - Reports are written under `reports/wiki-lint-*.md` by default and are intentionally ignored so lint findings remain review artifacts unless promoted into a deliberate PR.
+
+## [2026-05-29] documentation | Document wiki guidance and page-evidence modes
+
+- Updated the project documentation to treat `POST /wiki/ask` as a first-class compact guidance endpoint alongside `POST /wiki/context-pack`.
+- Clarified that `/wiki/ask` is useful for short strategy briefs and "what should I think about?" questions, while `/wiki/context-pack` remains the page-evidence path for downstream classifier prompts.
+- Added `WIKI_ANSWERER_MODEL` to the documented environment overrides and updated the endpoint list, response summaries, architecture flow guidance, schema runtime serving rules, and index summaries.
+- Recorded the practical downstream flow distinction: quick guidance can come before candidate retrieval, while full page context should be reserved for auditability, domain-sensitive cases, facet-heavy cases, or validation-sensitive prompts.

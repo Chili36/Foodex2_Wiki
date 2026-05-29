@@ -18,14 +18,12 @@ Yes: the wiki layer has been created.
 
 This project is now at an early alpha stage.
 
-The main thing that is considered stable enough to try is the simple `context-pack` flow:
+The wiki API has two practical runtime surfaces that are stable enough to try:
 
-1. a caller sends a query, optional deconstructed query, and lightweight candidate hints
-2. the wiki API uses its internal page selector to choose a small set of relevant pages
-3. the API returns those pages as text, with the runtime rules page first
-4. the caller packs that text into its own downstream prompt
+1. `POST /wiki/ask` for a compact guidance brief. This is useful when the caller wants a short "what should I think about?" answer before or during candidate retrieval.
+2. `POST /wiki/context-pack` for prompt-ready page evidence. This is useful when the caller wants selected wiki pages, runtime rules, and trace metadata to place into its own downstream prompt.
 
-The current focus is not "wiki-owned solving". The current focus is prompt context delivery.
+The default production stance is still not "wiki-owned solving". The current focus is wiki-backed guidance and prompt context delivery. `POST /wiki/solve` exists for experiments where the wiki service is allowed to make the final FoodEx2 coding decision, but downstream classifiers such as DMT should usually keep final code construction and validation in their own pipeline.
 
 At the moment, the repository contains:
 
@@ -89,17 +87,22 @@ This repo has four practical layers:
 
 The architecture decision is deliberately conservative. Because FoodEx2 source updates are rare, the repo should improve compiled pages, authored links, graph-derived retrieval, source traceability, and regression tests before adding a vector database, graph database, or automatic watch-mode ingestion. Long-document techniques such as tree summaries or long-context retrieval belong in ingest and source-audit workflows first; the durable runtime unit remains the curated wiki page.
 
-At the moment, the simplest and most important runtime path is:
+At the moment, the two most important runtime paths are:
 
 ```mermaid
 flowchart LR
-    A["Caller (for example DMT)"] --> B["POST /wiki/context-pack"]
-    B --> C["LLM page selector"]
-    C --> D["RUNTIME_RULES.md + selected support pages"]
-    D --> A
-    A --> E["Downstream model prompt"]
-    E --> F["FoodEx2 coding answer"]
+    A["Caller (for example DMT)"] --> B["POST /wiki/ask"]
+    B --> C["Short wiki-grounded guidance brief"]
+    C --> D["Candidate search and classifier strategy"]
+    A --> E["POST /wiki/context-pack"]
+    E --> F["RUNTIME_RULES.md + selected support pages"]
+    F --> G["Downstream model prompt"]
+    G --> H["FoodEx2 coding answer"]
 ```
+
+`/wiki/ask` is a compact strategy layer. It answers from selected wiki pages and citations, but it is not an authoritative catalogue or validator.
+
+`/wiki/context-pack` is a page-evidence layer. It returns selected page content so another classifier can build its own prompt and make the final decision against candidate terms and validator output.
 
 The content-building path looks like this:
 
@@ -267,6 +270,7 @@ Optional overrides:
 ```bash
 WIKI_CONTEXT_MODEL=claude-3-7-sonnet-latest
 WIKI_POLICY_MODEL=claude-3-7-sonnet-latest
+WIKI_ANSWERER_MODEL=claude-3-7-sonnet-latest
 WIKI_SOLVER_MODEL=claude-3-7-sonnet-latest
 WIKI_LINT_MODEL=claude-3-7-sonnet-latest
 ```
@@ -304,10 +308,14 @@ tail -f /tmp/foodex2_wiki_8010.out.log
 tail -f /tmp/foodex2_wiki_8010.err.log
 ```
 
-`context-pack`, `policy-pack`, and `solve` currently use Anthropic internally. `context-pack` uses the lighter page-selector path, while `policy-pack` and `solve` use the richer librarian and solver flow. The wiki API loads `ANTHROPIC_API_KEY`, `WIKI_LIBRARIAN_MODEL`, and the optional endpoint-specific overrides from `.env`.
+`ask`, `context-pack`, `policy-pack`, and `solve` currently use Anthropic internally. `ask` and `context-pack` use the lighter page-selector path, `ask` then runs a compact answerer, and `policy-pack` and `solve` use the richer librarian and solver flow. The wiki API loads `ANTHROPIC_API_KEY`, `WIKI_LIBRARIAN_MODEL`, and the optional endpoint-specific overrides from `.env`.
 For the LLM-driven paths, the service injects `index.md` into the first prompt so the model can choose and batch follow-up wiki page reads without spending a separate LLM turn just to fetch the catalog.
 
-For alpha usage, start with `context-pack`.
+For alpha usage:
+
+- start with `/wiki/ask` when you want a concise strategy or guidance brief
+- use `/wiki/context-pack` when you need page-level evidence for a downstream prompt
+- reserve `/wiki/policy-pack` and `/wiki/solve` for solver-style experiments or audits
 
 Main endpoints:
 
@@ -319,12 +327,14 @@ Main endpoints:
 - `GET /wiki/graph`: generated adjacency map built from markdown links and frontmatter
 - `GET /wiki/graph/compact`: compact graph payload intended for browser visualization
 - `GET /wiki/pages/{page_name}/backlinks`: generated incoming-link view for one page
-- `POST /wiki/context-pack`: the main alpha endpoint; returns selected wiki pages plus trace metadata so a caller can build its own prompt
+- `POST /wiki/ask`: returns a compact wiki-grounded answer, citations, selected pages, optional graph-expanded summaries, and trace metadata
+- `POST /wiki/context-pack`: the main page-evidence endpoint; returns selected wiki pages plus trace metadata so a caller can build its own prompt
 - `POST /wiki/policy-pack`: runs the internal wiki librarian, returns selected pages plus a synthesized policy pack for a coding case
 - `POST /wiki/solve`: runs the internal wiki librarian and a final coding solver, then returns a complete FoodEx2 coding result plus the underlying context and trace
 
 Endpoint-specific request guidance:
 
+- `POST /wiki/ask`: send a natural-language question; use this for compact "what should I think about?" guidance rather than final code authority
 - `POST /wiki/context-pack`: prefer `candidate_hints` with only `code`, `name`, and `termType`
 - `POST /wiki/policy-pack`: prefer `candidates_trimmed` with `code`, `name`, `termType`, optional `coverageText`, and optional `implicitFacets`
 - `POST /wiki/solve`: send the full `candidates` list because this endpoint makes the final coding decision
@@ -333,6 +343,27 @@ Legacy compatibility:
 
 - `context-pack` and `policy-pack` still accept a full `candidates` list, but the service reduces that payload internally before selection or LLM retrieval
 - the canonical machine-readable contract is published at `GET /openapi.json`
+
+Example `POST /wiki/ask` body:
+
+```json
+{
+  "question": "If I want to code fresh cheese made from milk with rennet and a minimum of 20% fat, what should I think about?",
+  "max_pages": 5,
+  "include_page_content": false,
+  "use_graph_expansion": true
+}
+```
+
+`POST /wiki/ask` response includes:
+
+- `answer`: a concise wiki-grounded guidance answer
+- `citations`: wiki pages cited by the answer
+- `pages_used`: selected pages plus graph-expanded neighbor pages when enabled
+- `pages`: selected page metadata and optional page content
+- `trace`: selector, graph-expansion, answerer, token, and timing metadata
+
+Use `/wiki/ask` when a short decision brief can shape the next step. Common examples are pre-search strategy, "what should I think about?" questions, domain-overlay routing questions, and lightweight checks before deciding whether full page evidence is necessary. It is not a substitute for catalogue term data or validator output.
 
 Example `POST /wiki/context-pack` body:
 
@@ -421,9 +452,31 @@ Example `POST /wiki/policy-pack` body:
 - `solution`: final FoodEx2 coding result including selected base term, constructed code, validation check, alternatives, and confidence
 - `trace`: split process metadata for retrieval, solver, and totals including models, tokens, calls, and timing
 
-Use `context-pack` when you want pure context delivery plus the compact runtime rules layer, and will do the main reasoning in a downstream model. This is the primary alpha path.
+Use `ask` when you want compact wiki-grounded guidance. This is often enough for straightforward "how should I think about this?" questions, especially before candidate search or before deciding whether full page evidence is needed.
+
+Use `context-pack` when you want pure context delivery plus the compact runtime rules layer, and will do the main reasoning in a downstream model. This is the primary page-evidence path.
+
 Use `policy-pack` when you want the wiki service to act as a solver-style knowledge synthesizer.
+
 Use `solve` when you want the wiki service to return the final FoodEx2 coding decision itself, still grounded in the selected wiki context and external candidate list.
+
+Recommended downstream flows:
+
+```text
+Simple guidance:
+query -> /wiki/ask -> human or downstream search strategy
+
+Lean classifier flow:
+query -> deconstruct query -> /wiki/ask strategy brief -> candidates -> classifier -> validator
+
+Evidence-heavy classifier flow:
+query -> deconstruct query -> candidates -> /wiki/context-pack -> classifier -> validator
+
+Wiki-owned experiment:
+query -> candidates -> /wiki/solve -> external validator or human review
+```
+
+The important distinction is that `/wiki/ask` returns synthesized guidance, while `/wiki/context-pack` returns page evidence. A caller can start with `/wiki/ask` and escalate to `/wiki/context-pack` when the case is domain-sensitive, facet-heavy, validation-sensitive, or needs auditability.
 
 The current runtime layer is [RUNTIME_RULES.md](RUNTIME_RULES.md), and the richer control layer is [policy-contract.md](raw/efsa-guidance/policy-contract.md). Both are markdown-backed and retrieval-visible; the API reads and exposes them, but does not author them in service code.
 

@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-05-23"
+last_updated: "2026-05-29"
 ---
 
 # Index
@@ -9,13 +9,13 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 
 ## Orientation
 
-- [README.md](README.md): Repo overview, current status, directory layout, and working conventions.
+- [README.md](README.md): Repo overview, current status, API runtime modes, directory layout, and working conventions.
 - [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md): What this wiki is for, why it exists, and the LLM-wiki operating model behind it.
-- [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md): Architecture stance for compiled markdown knowledge, graph retrieval, long-source ingest, and when not to add heavier RAG infrastructure.
+- [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md): Architecture stance for compiled markdown knowledge, guidance briefs, page-evidence retrieval, graph retrieval, long-source ingest, and when not to add heavier RAG infrastructure.
 - [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md): Practical playbook for turning raw PDFs into stable topic pages without collapsing into one-shot summarization.
 - [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md): Deterministic and LLM-assisted maintenance workflow for link checks, source checks, retrieval-health checks, and supervised wiki linting.
 - [SCHEMA.md](SCHEMA.md): Page types, frontmatter fields, section conventions, and ingest schema for the FoodEx2 wiki.
-- [RUNTIME_RULES.md](RUNTIME_RULES.md): Compact prompt-facing rules file always attached by `context-pack` before supporting guidance pages.
+- [RUNTIME_RULES.md](RUNTIME_RULES.md): Compact prompt-facing rules file always attached by `context-pack` and page-evidence prompt contexts before supporting guidance pages.
 - [log.md](log.md): Chronological record of ingests and maintenance work.
 - [policy-contract.md](raw/efsa-guidance/policy-contract.md): Richer control-layer page defining decision order, binding rules, tie-breaks, and anti-patterns for structured and solver-oriented flows.
 

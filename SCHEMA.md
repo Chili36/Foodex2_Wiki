@@ -1,6 +1,6 @@
 ---
 title: "Wiki Schema"
-last_updated: "2026-05-23"
+last_updated: "2026-05-29"
 sources:
   - "PROJECT_CONTEXT.md"
   - "KNOWLEDGE_ARCHITECTURE.md"
@@ -223,9 +223,12 @@ See [[KNOWLEDGE_ARCHITECTURE]] for the runtime stance: compiled wiki pages are t
 
 ## Runtime Serving Rules
 
-- `RUNTIME_RULES.md` is the compact always-on prompt-facing page for `context-pack`.
+- `/wiki/ask` is the compact guidance endpoint. It selects wiki pages, can add graph-expanded summary context, and returns a cited answer. Use it for strategy briefs, routing questions, and quick "what should I think about?" guidance.
+- `/wiki/context-pack` is the page-evidence endpoint. It returns prompt-ready pages and trace metadata for a downstream classifier.
+- `RUNTIME_RULES.md` is the compact always-on prompt-facing page for `context-pack` and other page-evidence prompt contexts.
 - `policy-contract.md` remains the richer control page used by structured and solver-oriented flows.
 - `business-rules.md` is not automatically attached to every request. It should be reached through relevant pages and explicit need.
+- `ask` answers are grounded in selected pages, but they are not a replacement for catalogue term data, candidate retrieval, or validator output.
 
 ## Ingest Checklist
 
