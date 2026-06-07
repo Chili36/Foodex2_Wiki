@@ -1,0 +1,1646 @@
+{
+  "coder": "deepseek-v4-pro",
+  "answerer": "claude-sonnet-4-6",
+  "collection": "mtx_monitoring_openai_current",
+  "cases": [
+    {
+      "id": "challenge-fortified-chocolate-rice-cereal",
+      "input": "Popped rice breakfast cereal with chocolate flavour, fortified with vitamins and iron.",
+      "expected_base": "A00DR",
+      "expected_facets": [
+        [
+          "F04",
+          "A06MF"
+        ],
+        [
+          "F09",
+          "A0EVG"
+        ],
+        [
+          "F09",
+          "A0EXD"
+        ],
+        [
+          "F10",
+          "A0F6C"
+        ]
+      ],
+      "base_in_pool": true,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 1906,
+          "sources": [
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1747,
+          "sources": [
+            "contaminants-foodex2.md",
+            "additives-flavourings-foodex2.md",
+            "domain-specific-validation.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1510,
+          "sources": [
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A00DR#F04.A06MF$F10.A0F6C$F09.A0EVG$F09.A0EXD",
+          "base": "A00DR",
+          "facets": [
+            [
+              "F04",
+              "A06MF"
+            ],
+            [
+              "F10",
+              "A0F6C"
+            ],
+            [
+              "F09",
+              "A0EVG"
+            ],
+            [
+              "F09",
+              "A0EXD"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 4,
+          "facets_family_ok": 4
+        },
+        "2_wiki": {
+          "constructed": "A00DR#F04.A06MF$F09.A0EVG$F09.A0EXD",
+          "base": "A00DR",
+          "facets": [
+            [
+              "F04",
+              "A06MF"
+            ],
+            [
+              "F09",
+              "A0EVG"
+            ],
+            [
+              "F09",
+              "A0EXD"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 3,
+          "facets_family_ok": 3
+        },
+        "3_wiki_rag": {
+          "constructed": "A00DR#F04.A06MF$F10.A0F6C$F09.A0EVG$F09.A0EXD",
+          "base": "A00DR",
+          "facets": [
+            [
+              "F04",
+              "A06MF"
+            ],
+            [
+              "F10",
+              "A0F6C"
+            ],
+            [
+              "F09",
+              "A0EVG"
+            ],
+            [
+              "F09",
+              "A0EXD"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 4,
+          "facets_family_ok": 4
+        },
+        "4_source_rag": {
+          "constructed": "A00EL#F04.A00DR$F04.A06MF$F09.A0EVG$F09.A0EXD$F10.A0F6C",
+          "base": "A00EL",
+          "facets": [
+            [
+              "F04",
+              "A00DR"
+            ],
+            [
+              "F04",
+              "A06MF"
+            ],
+            [
+              "F09",
+              "A0EVG"
+            ],
+            [
+              "F09",
+              "A0EXD"
+            ],
+            [
+              "F10",
+              "A0F6C"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 4,
+          "facets_family_ok": 4
+        }
+      }
+    },
+    {
+      "id": "challenge-follow-on-formula-fortified-powder",
+      "input": "Milk-based follow-on formula powder fortified with calcium, iron, and vitamin C.",
+      "expected_base": "A03QL",
+      "expected_facets": [
+        [
+          "F09",
+          "A0EXH"
+        ],
+        [
+          "F09",
+          "A0EXD"
+        ],
+        [
+          "F09",
+          "A0EXN"
+        ],
+        [
+          "F10",
+          "A0F6C"
+        ]
+      ],
+      "base_in_pool": true,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 2218,
+          "sources": [
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "process-facets.md",
+            "additives-flavourings-foodex2.md",
+            "domain-specific-validation.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1618,
+          "sources": [
+            "additives-flavourings-foodex2.md",
+            "domain-specific-validation.md",
+            "contaminants-foodex2.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1769,
+          "sources": [
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A03QL#F10.A0F6C",
+          "base": "A03QL",
+          "facets": [
+            [
+              "F10",
+              "A0F6C"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 1,
+          "facets_family_ok": 1
+        },
+        "2_wiki": {
+          "constructed": "A03QL#F04.A0EXH$F04.A0EXD$F04.A0EXN",
+          "base": "A03QL",
+          "facets": [
+            [
+              "F04",
+              "A0EXH"
+            ],
+            [
+              "F04",
+              "A0EXD"
+            ],
+            [
+              "F04",
+              "A0EXN"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 3,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A03QL#F09.A0EXH$F09.A0EXD$F09.A0EXN",
+          "base": "A03QL",
+          "facets": [
+            [
+              "F09",
+              "A0EXH"
+            ],
+            [
+              "F09",
+              "A0EXD"
+            ],
+            [
+              "F09",
+              "A0EXN"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 3,
+          "facets_family_ok": 3
+        },
+        "4_source_rag": {
+          "constructed": "A03QL#F09.A0EXH$F09.A0EXD$F09.A0EXN",
+          "base": "A03QL",
+          "facets": [
+            [
+              "F09",
+              "A0EXH"
+            ],
+            [
+              "F09",
+              "A0EXD"
+            ],
+            [
+              "F09",
+              "A0EXN"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 3,
+          "facets_family_ok": 3
+        }
+      }
+    },
+    {
+      "id": "challenge-ready-to-eat-child-meal-jar-homogenized",
+      "input": "Ready-to-eat meat-based meal for children, homogenized, containing calf meat, chicken meat, and leafy vegetables, packed in a jar.",
+      "expected_base": "A03RF",
+      "expected_facets": [
+        [
+          "F28",
+          "A07LJ"
+        ],
+        [
+          "F04",
+          "A01QY"
+        ],
+        [
+          "F04",
+          "A01SP"
+        ],
+        [
+          "F04",
+          "A00KR"
+        ],
+        [
+          "F18",
+          "A07NN"
+        ]
+      ],
+      "base_in_pool": true,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 2313,
+          "sources": [
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "process-facets.md",
+            "packaging-facets.md",
+            "domain-specific-validation.md",
+            "business-rules.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 2093,
+          "sources": [
+            "domain-specific-validation.md",
+            "contaminants-foodex2.md",
+            "additives-flavourings-foodex2.md",
+            "facet-coding-rules.md",
+            "chemical-monitoring-foodex2.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1841,
+          "sources": [
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A03RF#F04.A01QY$F04.A01SP$F04.A00KR$F28.A07LJ$F28.A0BYP",
+          "base": "A03RF",
+          "facets": [
+            [
+              "F04",
+              "A01QY"
+            ],
+            [
+              "F04",
+              "A01SP"
+            ],
+            [
+              "F04",
+              "A00KR"
+            ],
+            [
+              "F28",
+              "A07LJ"
+            ],
+            [
+              "F28",
+              "A0BYP"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 4,
+          "facets_family_ok": 4
+        },
+        "2_wiki": {
+          "constructed": "A03RF#F04.A01QY$F04.A01SP$F04.A00KR$F28.A07LJ$F28.A0BYP",
+          "base": "A03RF",
+          "facets": [
+            [
+              "F04",
+              "A01QY"
+            ],
+            [
+              "F04",
+              "A01SP"
+            ],
+            [
+              "F04",
+              "A00KR"
+            ],
+            [
+              "F28",
+              "A07LJ"
+            ],
+            [
+              "F28",
+              "A0BYP"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 4,
+          "facets_family_ok": 4
+        },
+        "3_wiki_rag": {
+          "constructed": "A03RF#F04.A01QY$F04.A01SP$F04.A00KR$F28.A07LJ$F28.A0BYP",
+          "base": "A03RF",
+          "facets": [
+            [
+              "F04",
+              "A01QY"
+            ],
+            [
+              "F04",
+              "A01SP"
+            ],
+            [
+              "F04",
+              "A00KR"
+            ],
+            [
+              "F28",
+              "A07LJ"
+            ],
+            [
+              "F28",
+              "A0BYP"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 4,
+          "facets_family_ok": 4
+        },
+        "4_source_rag": {
+          "constructed": "A03RF#F04.A01QY$F04.A01SP$F04.A00KR$F28.A07LJ$F28.A0BYP",
+          "base": "A03RF",
+          "facets": [
+            [
+              "F04",
+              "A01QY"
+            ],
+            [
+              "F04",
+              "A01SP"
+            ],
+            [
+              "F04",
+              "A00KR"
+            ],
+            [
+              "F28",
+              "A07LJ"
+            ],
+            [
+              "F28",
+              "A0BYP"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 4,
+          "facets_family_ok": 4
+        }
+      }
+    },
+    {
+      "id": "challenge-spreadable-cheese-low-fat-17-percent",
+      "input": "Processed spreadable cheese, low fat, 17 percent fat.",
+      "expected_base": "A031C",
+      "expected_facets": [
+        [
+          "F10",
+          "A077C"
+        ],
+        [
+          "F07",
+          "A073E"
+        ]
+      ],
+      "base_in_pool": true,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 1881,
+          "sources": [
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1564,
+          "sources": [
+            "domain-specific-validation.md",
+            "contaminants-foodex2.md",
+            "additives-flavourings-foodex2.md",
+            "facet-coding-rules.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1720,
+          "sources": [
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A031C#F07.A073E$F10.A077C",
+          "base": "A031C",
+          "facets": [
+            [
+              "F07",
+              "A073E"
+            ],
+            [
+              "F10",
+              "A077C"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 2,
+          "facets_family_ok": 2
+        },
+        "2_wiki": {
+          "constructed": "A031C#F10.A077C$F07.A073E",
+          "base": "A031C",
+          "facets": [
+            [
+              "F10",
+              "A077C"
+            ],
+            [
+              "F07",
+              "A073E"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 2,
+          "facets_family_ok": 2
+        },
+        "3_wiki_rag": {
+          "constructed": "A031C#F07.A073E$F10.A077C",
+          "base": "A031C",
+          "facets": [
+            [
+              "F07",
+              "A073E"
+            ],
+            [
+              "F10",
+              "A077C"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 2,
+          "facets_family_ok": 2
+        },
+        "4_source_rag": {
+          "constructed": "A031C#F07.A073E",
+          "base": "A031C",
+          "facets": [
+            [
+              "F07",
+              "A073E"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 1,
+          "facets_family_ok": 1
+        }
+      }
+    },
+    {
+      "id": "challenge-yoghurt-apricot-skimmed-no-added-sugar-01-fat",
+      "input": "Flavoured cow milk yoghurt, apricot flavour, skimmed, without added sugar, 0.1 percent fat.",
+      "expected_base": "A02NH",
+      "expected_facets": [
+        [
+          "F04",
+          "A06KE"
+        ],
+        [
+          "F10",
+          "A077H"
+        ],
+        [
+          "F10",
+          "A077K"
+        ],
+        [
+          "F07",
+          "A06YJ"
+        ]
+      ],
+      "base_in_pool": true,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 2067,
+          "sources": [
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1280,
+          "sources": [
+            "additives-flavourings-foodex2.md",
+            "domain-specific-validation.md",
+            "facet-coding-rules.md",
+            "contaminants-foodex2.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1619,
+          "sources": [
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A02NH#F04.A06KE$F07.A06YJ$F10.A077K$F27.A02LV",
+          "base": "A02NH",
+          "facets": [
+            [
+              "F04",
+              "A06KE"
+            ],
+            [
+              "F07",
+              "A06YJ"
+            ],
+            [
+              "F10",
+              "A077K"
+            ],
+            [
+              "F27",
+              "A02LV"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 3,
+          "facets_family_ok": 3
+        },
+        "2_wiki": {
+          "constructed": "A02NH#F04.A06KE$F07.A06YJ$F10.A077K",
+          "base": "A02NH",
+          "facets": [
+            [
+              "F04",
+              "A06KE"
+            ],
+            [
+              "F07",
+              "A06YJ"
+            ],
+            [
+              "F10",
+              "A077K"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 3,
+          "facets_family_ok": 3
+        },
+        "3_wiki_rag": {
+          "constructed": "A02NH#F04.A06KE$F10.A077K$F07.A06YJ",
+          "base": "A02NH",
+          "facets": [
+            [
+              "F04",
+              "A06KE"
+            ],
+            [
+              "F10",
+              "A077K"
+            ],
+            [
+              "F07",
+              "A06YJ"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 3,
+          "facets_family_ok": 3
+        },
+        "4_source_rag": {
+          "constructed": "A02NH#F04.A06KE$F07.A06YJ$F10.A077K",
+          "base": "A02NH",
+          "facets": [
+            [
+              "F04",
+              "A06KE"
+            ],
+            [
+              "F07",
+              "A06YJ"
+            ],
+            [
+              "F10",
+              "A077K"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 3,
+          "facets_family_ok": 3
+        }
+      }
+    },
+    {
+      "id": "challenge-vitamin-d-liquid-supplement",
+      "input": "Vitamin D only supplement in liquid formulation.",
+      "expected_base": "A03SL",
+      "expected_facets": [
+        [
+          "F04",
+          "A0EXM"
+        ],
+        [
+          "F03",
+          "A06JL"
+        ]
+      ],
+      "base_in_pool": true,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 2013,
+          "sources": [
+            "additives-flavourings-foodex2.md",
+            "facet-coding-rules.md",
+            "packaging-facets.md",
+            "base-term-selection.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1204,
+          "sources": [
+            "additives-flavourings-foodex2.md",
+            "domain-specific-validation.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1051,
+          "sources": [
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A03SL#F04.A0EXM$F03.A06JL",
+          "base": "A03SL",
+          "facets": [
+            [
+              "F04",
+              "A0EXM"
+            ],
+            [
+              "F03",
+              "A06JL"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 2,
+          "facets_family_ok": 2
+        },
+        "2_wiki": {
+          "constructed": "A03SL#F03.A06JL$F04.A0EXM",
+          "base": "A03SL",
+          "facets": [
+            [
+              "F03",
+              "A06JL"
+            ],
+            [
+              "F04",
+              "A0EXM"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 2,
+          "facets_family_ok": 2
+        },
+        "3_wiki_rag": {
+          "constructed": "A03SL#F03.A06JL$F33.A0C15",
+          "base": "A03SL",
+          "facets": [
+            [
+              "F03",
+              "A06JL"
+            ],
+            [
+              "F33",
+              "A0C15"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 1,
+          "facets_family_ok": 1
+        },
+        "4_source_rag": {
+          "constructed": "A03SL#F03.A06JL$F04.A0EXM$F33.A0C15",
+          "base": "A03SL",
+          "facets": [
+            [
+              "F03",
+              "A06JL"
+            ],
+            [
+              "F04",
+              "A0EXM"
+            ],
+            [
+              "F33",
+              "A0C15"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 2,
+          "facets_family_ok": 2
+        }
+      }
+    },
+    {
+      "id": "challenge-meat-imitate-wheat-chickpea-processes",
+      "input": "Meat imitate based on common wheat grain and chickpeas, ground, salted, and preserved with additives.",
+      "expected_base": "A03TE",
+      "expected_facets": [
+        [
+          "F27",
+          "A001N"
+        ],
+        [
+          "F27",
+          "A013M"
+        ],
+        [
+          "F28",
+          "A07LA"
+        ],
+        [
+          "F28",
+          "A07JP"
+        ],
+        [
+          "F28",
+          "A07JS"
+        ]
+      ],
+      "base_in_pool": true,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 2768,
+          "sources": [
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "additives-flavourings-foodex2.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1627,
+          "sources": [
+            "additives-flavourings-foodex2.md",
+            "domain-specific-validation.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1749,
+          "sources": [
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A03TE#F04.A001N$F04.A013M$F28.A07KG$F28.A07JP$F28.A07JS$F26.A07XE",
+          "base": "A03TE",
+          "facets": [
+            [
+              "F04",
+              "A001N"
+            ],
+            [
+              "F04",
+              "A013M"
+            ],
+            [
+              "F28",
+              "A07KG"
+            ],
+            [
+              "F28",
+              "A07JP"
+            ],
+            [
+              "F28",
+              "A07JS"
+            ],
+            [
+              "F26",
+              "A07XE"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 4,
+          "facets_family_ok": 2
+        },
+        "2_wiki": {
+          "constructed": "A03TE#F04.A001N$F04.A013M$F28.A0CJK$F28.A07JS",
+          "base": "A03TE",
+          "facets": [
+            [
+              "F04",
+              "A001N"
+            ],
+            [
+              "F04",
+              "A013M"
+            ],
+            [
+              "F28",
+              "A0CJK"
+            ],
+            [
+              "F28",
+              "A07JS"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 3,
+          "facets_family_ok": 1
+        },
+        "3_wiki_rag": {
+          "constructed": "A03TE#F04.A001N$F04.A013M$F28.A07JS$F26.A07XE",
+          "base": "A03TE",
+          "facets": [
+            [
+              "F04",
+              "A001N"
+            ],
+            [
+              "F04",
+              "A013M"
+            ],
+            [
+              "F28",
+              "A07JS"
+            ],
+            [
+              "F26",
+              "A07XE"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 3,
+          "facets_family_ok": 1
+        },
+        "4_source_rag": {
+          "constructed": "A03TE#F04.A003X$F04.A01BH$F28.A0CJK$F28.A07JS",
+          "base": "A03TE",
+          "facets": [
+            [
+              "F04",
+              "A003X"
+            ],
+            [
+              "F04",
+              "A01BH"
+            ],
+            [
+              "F28",
+              "A0CJK"
+            ],
+            [
+              "F28",
+              "A07JS"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 1,
+          "facets_family_ok": 1
+        }
+      }
+    },
+    {
+      "id": "challenge-canned-sweet-corn-without-medium",
+      "input": "Canned sweet corn, drained or without surrounding medium.",
+      "expected_base": "A00ZP",
+      "expected_facets": [
+        [
+          "F20",
+          "A0F2X"
+        ]
+      ],
+      "base_in_pool": true,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 2005,
+          "sources": [
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "packaging-facets.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1563,
+          "sources": [
+            "contaminants-foodex2.md",
+            "domain-specific-validation.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1500,
+          "sources": [
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A00ZP#F06.A0F2X",
+          "base": "A00ZP",
+          "facets": [
+            [
+              "F06",
+              "A0F2X"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 1,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A00ZP#F06.A0F2X",
+          "base": "A00ZP",
+          "facets": [
+            [
+              "F06",
+              "A0F2X"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 1,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A00ZP#F06.A0F2X",
+          "base": "A00ZP",
+          "facets": [
+            [
+              "F06",
+              "A0F2X"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 1,
+          "facets_family_ok": 0
+        },
+        "4_source_rag": {
+          "constructed": "A00ZP#F06.A0F2X",
+          "base": "A00ZP",
+          "facets": [
+            [
+              "F06",
+              "A0F2X"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 1,
+          "facets_family_ok": 0
+        }
+      }
+    },
+    {
+      "id": "challenge-canned-artichokes-in-olive-oil",
+      "input": "Canned or jarred globe artichokes in olive oil.",
+      "expected_base": "A0ETQ",
+      "expected_facets": [
+        [
+          "F27",
+          "A00RS"
+        ],
+        [
+          "F06",
+          "A06XK"
+        ]
+      ],
+      "base_in_pool": true,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 2069,
+          "sources": [
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "packaging-facets.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1738,
+          "sources": [
+            "contaminants-foodex2.md",
+            "domain-specific-validation.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1461,
+          "sources": [
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A0ETQ#F27.A00RS$F06.A06XK",
+          "base": "A0ETQ",
+          "facets": [
+            [
+              "F27",
+              "A00RS"
+            ],
+            [
+              "F06",
+              "A06XK"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 2,
+          "facets_family_ok": 2
+        },
+        "2_wiki": {
+          "constructed": "A0ETQ#F27.A00RS$F04.A06XK",
+          "base": "A0ETQ",
+          "facets": [
+            [
+              "F27",
+              "A00RS"
+            ],
+            [
+              "F04",
+              "A06XK"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 2,
+          "facets_family_ok": 1
+        },
+        "3_wiki_rag": {
+          "constructed": "A0ETQ#F27.A00RS$F04.A06XK",
+          "base": "A0ETQ",
+          "facets": [
+            [
+              "F27",
+              "A00RS"
+            ],
+            [
+              "F04",
+              "A06XK"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 2,
+          "facets_family_ok": 1
+        },
+        "4_source_rag": {
+          "constructed": "A0ETQ#F27.A00RS$F04.A06XK",
+          "base": "A0ETQ",
+          "facets": [
+            [
+              "F27",
+              "A00RS"
+            ],
+            [
+              "F04",
+              "A06XK"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 2,
+          "facets_family_ok": 1
+        }
+      }
+    },
+    {
+      "id": "challenge-tiramisu-recipe-aggregate",
+      "input": "Tiramisu dessert with sweet plain biscuits, mascarpone, coffee beverage, and cocoa powder.",
+      "expected_base": "A00AS",
+      "expected_facets": [
+        [
+          "F04",
+          "A009X"
+        ],
+        [
+          "F04",
+          "A02QH"
+        ],
+        [
+          "F04",
+          "A03KC"
+        ],
+        [
+          "F04",
+          "A03HG"
+        ]
+      ],
+      "base_in_pool": false,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 2221,
+          "sources": [
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "process-facets.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1362,
+          "sources": [
+            "contaminants-foodex2.md",
+            "additives-flavourings-foodex2.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1560,
+          "sources": [
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A00AT",
+          "base": "A00AT",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A00AT#F04.A03KA$F04.A03HG",
+          "base": "A00AT",
+          "facets": [
+            [
+              "F04",
+              "A03KA"
+            ],
+            [
+              "F04",
+              "A03HG"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 1,
+          "facets_family_ok": 1
+        },
+        "3_wiki_rag": {
+          "constructed": "A00AT",
+          "base": "A00AT",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "4_source_rag": {
+          "constructed": "A00AT#F04.A03HG$F04.A03KB",
+          "base": "A00AT",
+          "facets": [
+            [
+              "F04",
+              "A03HG"
+            ],
+            [
+              "F04",
+              "A03KB"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 1,
+          "facets_family_ok": 1
+        }
+      }
+    },
+    {
+      "id": "challenge-cod-breaded-deep-fried",
+      "input": "Codfish, breaded and deep fried.",
+      "expected_base": "A02BV",
+      "expected_facets": [
+        [
+          "F28",
+          "A07HK"
+        ],
+        [
+          "F28",
+          "A07GV"
+        ]
+      ],
+      "base_in_pool": true,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 1962,
+          "sources": [
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "ingredient-facets.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1299,
+          "sources": [
+            "contaminants-foodex2.md",
+            "chemical-monitoring-foodex2.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1734,
+          "sources": [
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A02KC#F27.A02BV",
+          "base": "A02KC",
+          "facets": [
+            [
+              "F27",
+              "A02BV"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A02KC#F27.A02BX",
+          "base": "A02KC",
+          "facets": [
+            [
+              "F27",
+              "A02BX"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A02KC#F27.A02BV$F28.A07GV",
+          "base": "A02KC",
+          "facets": [
+            [
+              "F27",
+              "A02BV"
+            ],
+            [
+              "F28",
+              "A07GV"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 1,
+          "facets_family_ok": 1
+        },
+        "4_source_rag": {
+          "constructed": "A02KC#F27.A02BV$F28.A07GV",
+          "base": "A02KC",
+          "facets": [
+            [
+              "F27",
+              "A02BV"
+            ],
+            [
+              "F28",
+              "A07GV"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 1,
+          "facets_family_ok": 1
+        }
+      }
+    },
+    {
+      "id": "challenge-ricotta-full-fat-cow-sheep",
+      "input": "Full-fat ricotta made from cow milk and sheep milk.",
+      "expected_base": "A02QL",
+      "expected_facets": [
+        [
+          "F10",
+          "A077A"
+        ],
+        [
+          "F27",
+          "A02LY"
+        ],
+        [
+          "F27",
+          "A02MC"
+        ]
+      ],
+      "base_in_pool": true,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 1866,
+          "sources": [
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1579,
+          "sources": [
+            "vmpr-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "contaminants-foodex2.md",
+            "domain-specific-validation.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1442,
+          "sources": [
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A02QL#F10.A077A$F27.A02LV$F27.A02MC",
+          "base": "A02QL",
+          "facets": [
+            [
+              "F10",
+              "A077A"
+            ],
+            [
+              "F27",
+              "A02LV"
+            ],
+            [
+              "F27",
+              "A02MC"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 2,
+          "facets_family_ok": 2
+        },
+        "2_wiki": {
+          "constructed": "A02QL#F27.A02LV$F27.A02MC$F10.A077A",
+          "base": "A02QL",
+          "facets": [
+            [
+              "F27",
+              "A02LV"
+            ],
+            [
+              "F27",
+              "A02MC"
+            ],
+            [
+              "F10",
+              "A077A"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 2,
+          "facets_family_ok": 2
+        },
+        "3_wiki_rag": {
+          "constructed": "A02QL#F27.A02LV$F27.A02MC$F10.A077A",
+          "base": "A02QL",
+          "facets": [
+            [
+              "F27",
+              "A02LV"
+            ],
+            [
+              "F27",
+              "A02MC"
+            ],
+            [
+              "F10",
+              "A077A"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 2,
+          "facets_family_ok": 2
+        },
+        "4_source_rag": {
+          "constructed": "A02QL#F27.A02LV$F27.A02MC$F10.A077A",
+          "base": "A02QL",
+          "facets": [
+            [
+              "F27",
+              "A02LV"
+            ],
+            [
+              "F27",
+              "A02MC"
+            ],
+            [
+              "F10",
+              "A077A"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 2,
+          "facets_family_ok": 2
+        }
+      }
+    }
+  ]
+}

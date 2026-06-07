@@ -1,0 +1,48 @@
+{
+  "source": {
+    "note": "Monitoring-domain probes (NOT consumption). References are the DATA-PROVIDER benchmark codes, not 'whatever the models converged on'. SHEEP URINE: A0C60 not surfaced by retrieval; off fails (food term), the ask brief flips it to A0C60 — the clean cross-domain win. WILD BOAR PLASMA: reference A0C60#F02.A0CEX$F01.A056Y$F21.A07RX; models near-unanimously pick A0F1T 'Animal blood' (defensible alternative, expert review, NOT corrected gold) regardless of the brief. DRIED CHILI: reference A019K#F27.A00JB (dried-peppers derivative base + chili source); raw+F28 is invalid. FISH LIVER: A02EJ + F27 source (provisional)."
+  },
+  "domain": "monitoring",
+  "cases": [
+    {
+      "id": "mon-sheep-urine",
+      "input": "Sheep urine",
+      "expected_base": {"code": "A0C60", "name": "Non-food animal-related matrices"},
+      "expected_facets": [],
+      "challenge": "Cross-domain non-food matrix. A0C60 NOT in candidate pool (retrieval surfaces sheep food terms: milk/offal/kidney). Ask must steer the base to A0C60.",
+      "difficulty": "high"
+    },
+    {
+      "id": "mon-wildboar-plasma",
+      "input": "Wild boar (Semi-domesticated) - Plasma",
+      "expected_base": {"code": "A0C60", "name": "Non-food animal-related matrices"},
+      "expected_facets": [
+        {"facet": "F02", "code": "A0CEX", "name": "Plasma (as part-nature)"},
+        {"facet": "F01", "code": "A056Y", "name": "Wild boar (as animal)"},
+        {"facet": "F21", "code": "A07RX", "name": "Semi-domesticated / production method"}
+      ],
+      "challenge": "DATA-PROVIDER REFERENCE = A0C60#F02.A0CEX$F01.A056Y$F21.A07RX. Models often pick A0F1T 'Animal blood' (semantically tempting, specific) — that is a defensible alternative for expert review, NOT the corrected gold. Do not change the reference to A0F1T unless the benchmark owner does.",
+      "difficulty": "high"
+    },
+    {
+      "id": "mon-fishliver-trout",
+      "input": "Fish liver - Rainbow trout",
+      "expected_base": {"code": "A02EJ", "name": "Fish liver"},
+      "expected_facets": [
+        {"facet": "F27", "code": "A029N", "name": "Rainbow trout"}
+      ],
+      "challenge": "Edible-offal monitoring matrix; base in pool. Species source facet (F27 provisional).",
+      "difficulty": "medium"
+    },
+    {
+      "id": "mon-dried-chili",
+      "input": "Dried chili pepper",
+      "expected_base": {"code": "A019K", "name": "Peppers, dried"},
+      "expected_facets": [
+        {"facet": "F27", "code": "A00JB", "name": "Chili peppers (source-commodity)"}
+      ],
+      "challenge": "DATA-PROVIDER REFERENCE = A019K#F27.A00JB (Daniel). Drying CHANGES the nature of the raw commodity → use the processed derivative base 'Peppers, dried' (A019K), narrowed to chili via F27.A00JB. Raw chili pepper + F28 drying is INVALID. Wording: 'dried chili pepper(s)' = the dried-chili-pepper commodity; 'dried chili' alone is shorthand the benchmark reads the same way (not necessarily powder/flakes/dish).",
+      "difficulty": "medium"
+    }
+  ]
+}

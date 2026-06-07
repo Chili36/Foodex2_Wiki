@@ -1,0 +1,992 @@
+{
+  "coder": "mistral-large-2512",
+  "answerer": "claude-sonnet-4-6",
+  "collection": "mtx_monitoring_openai_current",
+  "cases": [
+    {
+      "id": "ext-jungfruolivolja",
+      "input": "Jungfruolivolja",
+      "expected_base": null,
+      "expected_facets": [],
+      "base_in_pool": false,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 1522,
+          "sources": [
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "pesticides-foodex2.md",
+            "contaminants-foodex2.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 329,
+          "sources": []
+        },
+        "rag_source": {
+          "len": 416,
+          "sources": []
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A036Q",
+          "base": "A036Q",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A036Q",
+          "base": "A036Q",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A036Q",
+          "base": "A036Q",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "4_source_rag": {
+          "constructed": "A036Q",
+          "base": "A036Q",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        }
+      }
+    },
+    {
+      "id": "ext-notkreatursfett",
+      "input": "N\u00f6tkreatursfett",
+      "expected_base": null,
+      "expected_facets": [],
+      "base_in_pool": false,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 1408,
+          "sources": [
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "contaminants-foodex2.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1233,
+          "sources": [
+            "contaminants-foodex2.md",
+            "domain-specific-validation.md",
+            "RUNTIME_RULES.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1476,
+          "sources": [
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A037X",
+          "base": "A037X",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A037X",
+          "base": "A037X",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A037X#F07.A076Z",
+          "base": "A037X",
+          "facets": [
+            [
+              "F07",
+              "A076Z"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "4_source_rag": {
+          "constructed": "A037X#F33.A0C58",
+          "base": "A037X",
+          "facets": [
+            [
+              "F33",
+              "A0C58"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        }
+      }
+    },
+    {
+      "id": "ext-stromming-ostersjon",
+      "input": "Str\u00f6mming/sill fr\u00e5n \u00d6stersj\u00f6n",
+      "expected_base": null,
+      "expected_facets": [],
+      "base_in_pool": false,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 2711,
+          "sources": [
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "vmpr-foodex2.md",
+            "contaminants-foodex2.md",
+            "domoic-acid-scallops.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1511,
+          "sources": [
+            "contaminants-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "domain-specific-validation.md",
+            "domoic-acid-scallops.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1541,
+          "sources": [
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A16FS#F21.A07XA",
+          "base": "A16FS",
+          "facets": [
+            [
+              "F21",
+              "A07XA"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A16FS#F21.A07RY$F26.A07XE",
+          "base": "A16FS",
+          "facets": [
+            [
+              "F21",
+              "A07RY"
+            ],
+            [
+              "F26",
+              "A07XE"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A16FS#F21.A07RY$F27.origFishAreaCode.BAL",
+          "base": "A16FS",
+          "facets": [
+            [
+              "F21",
+              "A07RY"
+            ],
+            [
+              "F27",
+              "origFishAreaCode.BAL"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "4_source_rag": {
+          "constructed": "A16FS#F21.A07XA$F27.M27IIIa$F07.A0D5R",
+          "base": "A16FS",
+          "facets": [
+            [
+              "F21",
+              "A07XA"
+            ],
+            [
+              "F27",
+              "M27IIIa"
+            ],
+            [
+              "F07",
+              "A0D5R"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        }
+      }
+    },
+    {
+      "id": "ext-mork-choklad",
+      "input": "M\u00f6rk choklad",
+      "expected_base": null,
+      "expected_facets": [],
+      "base_in_pool": false,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 1975,
+          "sources": [
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "ingredient-facets.md",
+            "process-facets.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1345,
+          "sources": [
+            "additives-flavourings-foodex2.md",
+            "contaminants-foodex2.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1178,
+          "sources": [
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A034G",
+          "base": "A034G",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A034G",
+          "base": "A034G",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A034G",
+          "base": "A034G",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "4_source_rag": {
+          "constructed": "A034G",
+          "base": "A034G",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        }
+      }
+    },
+    {
+      "id": "ext-pommes-frites-bintje",
+      "input": "Pommes frites av Bintje",
+      "expected_base": null,
+      "expected_facets": [],
+      "base_in_pool": false,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 1733,
+          "sources": [
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "contaminants-foodex2.md",
+            "facet-coding-rules.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1085,
+          "sources": [
+            "contaminants-foodex2.md",
+            "domain-specific-validation.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1447,
+          "sources": [
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A0BYV#F27.A00ZX$F21.A0C4P",
+          "base": "A0BYV",
+          "facets": [
+            [
+              "F27",
+              "A00ZX"
+            ],
+            [
+              "F21",
+              "A0C4P"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A0BYV#F27.A00ZX$F26.A07XE$F33.A169H",
+          "base": "A0BYV",
+          "facets": [
+            [
+              "F27",
+              "A00ZX"
+            ],
+            [
+              "F26",
+              "A07XE"
+            ],
+            [
+              "F33",
+              "A169H"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A0BYV#F33.A169H$F17.A07GR",
+          "base": "A0BYV",
+          "facets": [
+            [
+              "F33",
+              "A169H"
+            ],
+            [
+              "F17",
+              "A07GR"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "4_source_rag": {
+          "constructed": "A0BYV#F33.A169H$F04.A00ZX$F28.A07GR$F21.A000A",
+          "base": "A0BYV",
+          "facets": [
+            [
+              "F33",
+              "A169H"
+            ],
+            [
+              "F04",
+              "A00ZX"
+            ],
+            [
+              "F28",
+              "A07GR"
+            ],
+            [
+              "F21",
+              "A000A"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        }
+      }
+    },
+    {
+      "id": "ext-renkott",
+      "input": "Renk\u00f6tt",
+      "expected_base": null,
+      "expected_facets": [],
+      "base_in_pool": false,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 1835,
+          "sources": [
+            "base-term-selection.md",
+            "vmpr-foodex2.md",
+            "vmpr-legislative-mapping.md",
+            "process-facets.md",
+            "facet-coding-rules.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1078,
+          "sources": [
+            "RUNTIME_RULES.md"
+          ]
+        },
+        "rag_source": {
+          "len": 598,
+          "sources": []
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A01SF",
+          "base": "A01SF",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A01SF#F20.A0F4V$F21.A07RY",
+          "base": "A01SF",
+          "facets": [
+            [
+              "F20",
+              "A0F4V"
+            ],
+            [
+              "F21",
+              "A07RY"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A01SF",
+          "base": "A01SF",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "4_source_rag": {
+          "constructed": "A01SF",
+          "base": "A01SF",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        }
+      }
+    },
+    {
+      "id": "ext-mjolmasklarver",
+      "input": "Mj\u00f6lmasklarver",
+      "expected_base": null,
+      "expected_facets": [],
+      "base_in_pool": false,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 1031,
+          "sources": [
+            "base-term-selection.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1291,
+          "sources": [
+            "contaminants-foodex2.md",
+            "chemical-monitoring-foodex2.md"
+          ]
+        },
+        "rag_source": {
+          "len": 505,
+          "sources": []
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A16XC#F27.A16SV$F31.A16RM",
+          "base": "A16XC",
+          "facets": [
+            [
+              "F27",
+              "A16SV"
+            ],
+            [
+              "F31",
+              "A16RM"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A16XC#F26.A07XE$F27.A16SV",
+          "base": "A16XC",
+          "facets": [
+            [
+              "F26",
+              "A07XE"
+            ],
+            [
+              "F27",
+              "A16SV"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A16XC#F31.A16RM",
+          "base": "A16XC",
+          "facets": [
+            [
+              "F31",
+              "A16RM"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "4_source_rag": {
+          "constructed": "A16XC#F31.A16RM",
+          "base": "A16XC",
+          "facets": [
+            [
+              "F31",
+              "A16RM"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        }
+      }
+    },
+    {
+      "id": "ext-falukorv",
+      "input": "Falukorv",
+      "expected_base": null,
+      "expected_facets": [],
+      "base_in_pool": false,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 2475,
+          "sources": [
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 2041,
+          "sources": [
+            "RUNTIME_RULES.md",
+            "chemical-monitoring-foodex2.md",
+            "domain-specific-validation.md",
+            "contaminants-foodex2.md",
+            "additives-flavourings-foodex2.md"
+          ]
+        },
+        "rag_source": {
+          "len": 315,
+          "sources": []
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A024T#F27.A01RG$F28.A07JV",
+          "base": "A024T",
+          "facets": [
+            [
+              "F27",
+              "A01RG"
+            ],
+            [
+              "F28",
+              "A07JV"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A024F#F27.A01RG$F27.A01QV$F28.A0BA1$F10.A07VP",
+          "base": "A024F",
+          "facets": [
+            [
+              "F27",
+              "A01RG"
+            ],
+            [
+              "F27",
+              "A01QV"
+            ],
+            [
+              "F28",
+              "A0BA1"
+            ],
+            [
+              "F10",
+              "A07VP"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A024S#F01.A01RG$F01.A01QV$F28.A0BA1",
+          "base": "A024S",
+          "facets": [
+            [
+              "F01",
+              "A01RG"
+            ],
+            [
+              "F01",
+              "A01QV"
+            ],
+            [
+              "F28",
+              "A0BA1"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "4_source_rag": {
+          "constructed": "A024S#F27.A01RG$F27.A01QV$F28.A0BA1",
+          "base": "A024S",
+          "facets": [
+            [
+              "F27",
+              "A01RG"
+            ],
+            [
+              "F27",
+              "A01QV"
+            ],
+            [
+              "F28",
+              "A0BA1"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        }
+      }
+    },
+    {
+      "id": "ext-surimi",
+      "input": "Surimi",
+      "expected_base": null,
+      "expected_facets": [],
+      "base_in_pool": false,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 1954,
+          "sources": [
+            "base-term-selection.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "ingredient-facets.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1380,
+          "sources": [
+            "contaminants-foodex2.md",
+            "domain-specific-validation.md",
+            "additives-flavourings-foodex2.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1249,
+          "sources": [
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A02KE",
+          "base": "A02KE",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A02KE",
+          "base": "A02KE",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A02KE",
+          "base": "A02KE",
+          "facets": [],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "4_source_rag": {
+          "constructed": "A02KE#F28.A07LM$F33.A0C37",
+          "base": "A02KE",
+          "facets": [
+            [
+              "F28",
+              "A07LM"
+            ],
+            [
+              "F33",
+              "A0C37"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        }
+      }
+    },
+    {
+      "id": "ext-tonfisk-burk",
+      "input": "Tonfisk p\u00e5 burk",
+      "expected_base": null,
+      "expected_facets": [],
+      "base_in_pool": false,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 1774,
+          "sources": [
+            "base-term-selection.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "packaging-facets.md",
+            "contaminants-foodex2.md",
+            "implicit-vs-explicit-facets.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1175,
+          "sources": [
+            "contaminants-foodex2.md",
+            "domain-specific-validation.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1404,
+          "sources": [
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A0EYR#F27.A02DX$F18.A07NN",
+          "base": "A0EYR",
+          "facets": [
+            [
+              "F27",
+              "A02DX"
+            ],
+            [
+              "F18",
+              "A07NN"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A0EYR#F27.A02DX$F06.A06KP",
+          "base": "A0EYR",
+          "facets": [
+            [
+              "F27",
+              "A02DX"
+            ],
+            [
+              "F06",
+              "A06KP"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A0EYR#F27.A02DX$F19.A07QH",
+          "base": "A0EYR",
+          "facets": [
+            [
+              "F27",
+              "A02DX"
+            ],
+            [
+              "F19",
+              "A07QH"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "4_source_rag": {
+          "constructed": "A0EYR#F27.A02DX$F18.A07NN$F19.A07QH$F20.A0EMS$F06.A07QG",
+          "base": "A0EYR",
+          "facets": [
+            [
+              "F27",
+              "A02DX"
+            ],
+            [
+              "F18",
+              "A07NN"
+            ],
+            [
+              "F19",
+              "A07QH"
+            ],
+            [
+              "F20",
+              "A0EMS"
+            ],
+            [
+              "F06",
+              "A07QG"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        }
+      }
+    }
+  ]
+}

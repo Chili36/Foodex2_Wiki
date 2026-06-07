@@ -1,0 +1,449 @@
+{
+  "coder": "deepseek-v4-pro",
+  "answerer": "claude-sonnet-4-6",
+  "collection": "mtx_monitoring_openai_current",
+  "cases": [
+    {
+      "id": "mon-sheep-urine",
+      "input": "Sheep urine",
+      "expected_base": "A0C60",
+      "expected_facets": [],
+      "base_in_pool": false,
+      "n_candidates": 49,
+      "briefs": {
+        "wiki": {
+          "len": 1406,
+          "sources": [
+            "vmpr-foodex2.md",
+            "domain-specific-validation.md",
+            "facet-coding-rules.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 959,
+          "sources": [
+            "vmpr-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "vmpr-legislative-mapping.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1051,
+          "sources": [
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A057G#F02.A0CET",
+          "base": "A057G",
+          "facets": [
+            [
+              "F02",
+              "A0CET"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A021H#F01.A057G$F02.A0CET",
+          "base": "A021H",
+          "facets": [
+            [
+              "F01",
+              "A057G"
+            ],
+            [
+              "F02",
+              "A0CET"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A0C60#F02.A0CET$F01.A057G",
+          "base": "A0C60",
+          "facets": [
+            [
+              "F02",
+              "A0CET"
+            ],
+            [
+              "F01",
+              "A057G"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "4_source_rag": {
+          "constructed": "A0C60#F01.A057G$F02.A0CET",
+          "base": "A0C60",
+          "facets": [
+            [
+              "F01",
+              "A057G"
+            ],
+            [
+              "F02",
+              "A0CET"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        }
+      }
+    },
+    {
+      "id": "mon-wildboar-plasma",
+      "input": "Wild boar (Semi-domesticated) - Plasma",
+      "expected_base": "A0C60",
+      "expected_facets": [
+        [
+          "F01",
+          "A056Y"
+        ],
+        [
+          "F02",
+          "A0CEX"
+        ]
+      ],
+      "base_in_pool": false,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 1666,
+          "sources": [
+            "vmpr-legislative-mapping.md",
+            "vmpr-foodex2.md",
+            "facet-coding-rules.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1551,
+          "sources": [
+            "vmpr-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "domain-specific-validation.md",
+            "vmpr-legislative-mapping.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1509,
+          "sources": [
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A021X#F02.A0CEX$F21.A07RX",
+          "base": "A021X",
+          "facets": [
+            [
+              "F02",
+              "A0CEX"
+            ],
+            [
+              "F21",
+              "A07RX"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 1,
+          "facets_family_ok": 1
+        },
+        "2_wiki": {
+          "constructed": "A0F1T#F01.A056Y$F02.A0CEX$F21.A07RX",
+          "base": "A0F1T",
+          "facets": [
+            [
+              "F01",
+              "A056Y"
+            ],
+            [
+              "F02",
+              "A0CEX"
+            ],
+            [
+              "F21",
+              "A07RX"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 2,
+          "facets_family_ok": 2
+        },
+        "3_wiki_rag": {
+          "constructed": "A0F1T#F01.A056Y$F02.A0CEX$F21.A07RX",
+          "base": "A0F1T",
+          "facets": [
+            [
+              "F01",
+              "A056Y"
+            ],
+            [
+              "F02",
+              "A0CEX"
+            ],
+            [
+              "F21",
+              "A07RX"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 2,
+          "facets_family_ok": 2
+        },
+        "4_source_rag": {
+          "constructed": "A0F1T#F01.A056Y$F02.A0CEX$F21.A07RX",
+          "base": "A0F1T",
+          "facets": [
+            [
+              "F01",
+              "A056Y"
+            ],
+            [
+              "F02",
+              "A0CEX"
+            ],
+            [
+              "F21",
+              "A07RX"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 2,
+          "facets_family_ok": 2
+        }
+      }
+    },
+    {
+      "id": "mon-fishliver-trout",
+      "input": "Fish liver - Rainbow trout",
+      "expected_base": "A02EJ",
+      "expected_facets": [
+        [
+          "F27",
+          "A029N"
+        ]
+      ],
+      "base_in_pool": true,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 1862,
+          "sources": [
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "vmpr-foodex2.md",
+            "contaminants-foodex2.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1486,
+          "sources": [
+            "chemical-monitoring-foodex2.md",
+            "domain-specific-validation.md",
+            "contaminants-foodex2.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1388,
+          "sources": [
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A02EJ#F01.A04YE",
+          "base": "A02EJ",
+          "facets": [
+            [
+              "F01",
+              "A04YE"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A02EJ#F01.A04YE$F26.A07XE",
+          "base": "A02EJ",
+          "facets": [
+            [
+              "F01",
+              "A04YE"
+            ],
+            [
+              "F26",
+              "A07XE"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A029N#F02.A069M",
+          "base": "A029N",
+          "facets": [
+            [
+              "F02",
+              "A069M"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "4_source_rag": {
+          "constructed": "A02EJ#F01.A04YE",
+          "base": "A02EJ",
+          "facets": [
+            [
+              "F01",
+              "A04YE"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": true,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        }
+      }
+    },
+    {
+      "id": "mon-dried-chili",
+      "input": "Dried chili pepper",
+      "expected_base": "A00JB",
+      "expected_facets": [],
+      "base_in_pool": true,
+      "n_candidates": 50,
+      "briefs": {
+        "wiki": {
+          "len": 2130,
+          "sources": [
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "pesticides-foodex2.md",
+            "contaminants-foodex2.md"
+          ]
+        },
+        "rag_wiki": {
+          "len": 1516,
+          "sources": [
+            "process-facets.md",
+            "contaminants-foodex2.md"
+          ]
+        },
+        "rag_source": {
+          "len": 1483,
+          "sources": [
+            "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
+          ]
+        }
+      },
+      "conditions": {
+        "1_off": {
+          "constructed": "A019K#F27.A00JB",
+          "base": "A019K",
+          "facets": [
+            [
+              "F27",
+              "A00JB"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "2_wiki": {
+          "constructed": "A019K#F27.A00JB",
+          "base": "A019K",
+          "facets": [
+            [
+              "F27",
+              "A00JB"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "3_wiki_rag": {
+          "constructed": "A019K#F27.A00JB",
+          "base": "A019K",
+          "facets": [
+            [
+              "F27",
+              "A00JB"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        },
+        "4_source_rag": {
+          "constructed": "A019K#F27.A00JB",
+          "base": "A019K",
+          "facets": [
+            [
+              "F27",
+              "A00JB"
+            ]
+          ],
+          "attempts": 1,
+          "raw_tail": null,
+          "base_correct": false,
+          "facets_recovered": 0,
+          "facets_family_ok": 0
+        }
+      }
+    }
+  ]
+}

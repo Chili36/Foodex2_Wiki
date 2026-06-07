@@ -8,3 +8,7 @@ __pycache__/
 .claude/ralph-loop-budget.json
 foodex2_agent_app/
 reports/wiki-lint-*.md
+
+# Microsoft Office lock/temp files
+~$*
+.~lock.*

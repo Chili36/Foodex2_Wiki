@@ -1,0 +1,360 @@
+{
+  "source": {
+    "pdf": "/Users/davidfoster/Downloads/nutrients-16-01065.pdf",
+    "extracted_text": "reports/dmt-foodex2-paper/nutrients-16-01065.txt",
+    "paper": "D'Addezio et al. FoodEx2 Harmonization of the Food Consumption Database from the Italian IV SCAI Children's Survey. Nutrients 2024, 16, 1065."
+  },
+  "purpose": "Paper-derived DMT candidate-recall and classification tests for FoodEx2 base-plus-facet construction in a food-consumption/dietary-survey context, not monitoring-domain gold codes.",
+  "scope_boundary": {
+    "data_domain": "food consumption / dietary survey coding",
+    "not_authority_for": [
+      "chemical monitoring sample coding",
+      "pesticide reporting",
+      "contaminants reporting",
+      "VMPR/VETDRUG reporting",
+      "sample-taking rules"
+    ]
+  },
+  "scoring": {
+    "base_recall": "Expected base code appears in candidate retrieval.",
+    "facet_recall": "Expected facet descriptor codes appear in candidate retrieval.",
+    "facet_family": "Facet descriptor is attached to the correct facet type.",
+    "construction": "Final constructed code matches the paper example or an explicitly accepted alternative.",
+    "validation": "Constructed code passes the FoodEx2 validator or reports clear domain/context reasons."
+  },
+  "test_cases": [
+    {
+      "id": "paper-breakfast-cereal-fortified-chocolate-rice",
+      "input": "Popped rice breakfast cereal with chocolate flavour, fortified with vitamins and iron.",
+      "article_expected_code": "A00DR#F04.A06MF$F09.A0EVG$F09.A0EXD$F10.A0F6C",
+      "expected_base": {"code": "A00DR", "name": "Rice, popped"},
+      "expected_facets": [
+        {"facet": "F04", "code": "A06MF", "name": "Chocolate flavour"},
+        {"facet": "F09", "code": "A0EVG", "name": "Vitamins"},
+        {"facet": "F09", "code": "A0EXD", "name": "Iron"},
+        {"facet": "F10", "code": "A0F6C", "name": "Fortified"}
+      ],
+      "dmt_test_goal": "Can DMT retrieve a specific cereal derivative plus F04, F09 and F10 descriptors?",
+      "difficulty": "high"
+    },
+    {
+      "id": "paper-infant-follow-on-formula-fortified-powder",
+      "input": "Milk-based follow-on formula powder fortified with calcium, iron, and vitamin C.",
+      "article_expected_code": "A03QL#F09.A0EXH$F09.A0EXD$F09.A0EXN$F10.A0F6C",
+      "expected_base": {"code": "A03QL", "name": "Follow-on formula, milk-based, powder"},
+      "expected_facets": [
+        {"facet": "F09", "code": "A0EXH", "name": "Calcium"},
+        {"facet": "F09", "code": "A0EXD", "name": "Iron"},
+        {"facet": "F09", "code": "A0EXN", "name": "Vitamin C (ascorbic acid)"},
+        {"facet": "F10", "code": "A0F6C", "name": "Fortified"}
+      ],
+      "dmt_test_goal": "Tests infant formula base specificity and fortification facets.",
+      "difficulty": "high"
+    },
+    {
+      "id": "paper-ready-to-eat-child-meal-jar-homogenized-meat-veg",
+      "input": "Ready-to-eat meat-based meal for children, homogenized, containing calf meat, chicken meat, and leafy vegetables, packed in a jar.",
+      "article_expected_code": "A03RF#F28.A07LJ$F04.A01QY$F04.A01SP$F04.A00KR$F18.A07NN",
+      "expected_base": {"code": "A03RF", "name": "Ready-to-eat meat-based meal for children"},
+      "expected_facets": [
+        {"facet": "F28", "code": "A07LJ", "name": "Homogenizing or emulsifying"},
+        {"facet": "F04", "code": "A01QY", "name": "Calf fresh meat"},
+        {"facet": "F04", "code": "A01SP", "name": "Chicken fresh meat"},
+        {"facet": "F04", "code": "A00KR", "name": "Leafy vegetables"},
+        {"facet": "F18", "code": "A07NN", "name": "Jar"}
+      ],
+      "dmt_test_goal": "Tests child-meal composite/product base plus process, ingredients, and packaging.",
+      "difficulty": "high"
+    },
+    {
+      "id": "paper-cow-milk-lactose-free",
+      "input": "Whole cow milk, lactose free.",
+      "article_expected_code": "A02LY#F10.A0CQD",
+      "expected_base": {"code": "A02LY", "name": "Cow milk, whole"},
+      "expected_facets": [
+        {"facet": "F10", "code": "A0CQD", "name": "Lactose free"}
+      ],
+      "dmt_test_goal": "Tests simple qualitative facet addition to a specific dairy base.",
+      "difficulty": "low"
+    },
+    {
+      "id": "paper-fortified-flavoured-milk-chocolate-semi-skimmed",
+      "input": "Fortified flavoured milk made with semi-skimmed cow milk and bitter-sweet chocolate, fortified with vitamins B1, B2, B6, and E.",
+      "article_expected_code": "A02MP#F04.A02LZ$F04.A034H$F09.A0EXY$F09.A0EXX$F09.A0EXS$F09.A0EXL$F10.A0F6C",
+      "expected_base": {"code": "A02MP", "name": "Flavoured milks"},
+      "expected_facets": [
+        {"facet": "F04", "code": "A02LZ", "name": "Cow milk, semi skimmed (half fat)"},
+        {"facet": "F04", "code": "A034H", "name": "Bitter-sweet chocolate"},
+        {"facet": "F09", "code": "A0EXY", "name": "Vitamin B1 (thiamine)"},
+        {"facet": "F09", "code": "A0EXX", "name": "Vitamin B2 (riboflavin)"},
+        {"facet": "F09", "code": "A0EXS", "name": "Vitamin B6"},
+        {"facet": "F09", "code": "A0EXL", "name": "Vitamin E"},
+        {"facet": "F10", "code": "A0F6C", "name": "Fortified"}
+      ],
+      "dmt_test_goal": "Tests broad fortified dairy product with several F09 nutrients.",
+      "difficulty": "very_high"
+    },
+    {
+      "id": "paper-ricotta-full-fat-cow-sheep",
+      "input": "Full-fat ricotta made from cow milk and sheep milk.",
+      "article_expected_code": "A02QL#F10.A077A$F27.A02LY$F27.A02MC",
+      "expected_base": {"code": "A02QL", "name": "Ricotta"},
+      "expected_facets": [
+        {"facet": "F10", "code": "A077A", "name": "Full fat"},
+        {"facet": "F27", "code": "A02LY", "name": "Cow milk, whole"},
+        {"facet": "F27", "code": "A02MC", "name": "Sheep milk"}
+      ],
+      "dmt_test_goal": "Tests derivative source-commodity refinement with multiple F27 values.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "paper-processed-spreadable-cheese-low-fat-17",
+      "input": "Processed spreadable cheese, low fat, 17 percent fat.",
+      "article_expected_code": "A031C#F10.A077C$F07.A073E",
+      "expected_base": {"code": "A031C", "name": "Processed cheese, spreadable"},
+      "expected_facets": [
+        {"facet": "F10", "code": "A077C", "name": "Low fat"},
+        {"facet": "F07", "code": "A073E", "name": "17% fat"}
+      ],
+      "dmt_test_goal": "Tests avoiding the common mistake of putting exact fat percentage under F10 instead of F07.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "paper-yoghurt-apricot-skimmed-no-added-sugar-01-fat",
+      "input": "Flavoured cow milk yoghurt, apricot flavour, skimmed, without added sugar, 0.1 percent fat.",
+      "article_expected_code": "A02NH#F04.A06KE$F10.A077H$F10.A077K$F07.A06YJ",
+      "expected_base": {"code": "A02NH", "name": "Yogurt, cow milk, flavoured"},
+      "expected_facets": [
+        {"facet": "F04", "code": "A06KE", "name": "Apricot flavour"},
+        {"facet": "F10", "code": "A077H", "name": "Skimmed"},
+        {"facet": "F10", "code": "A077K", "name": "Without added sugar"},
+        {"facet": "F07", "code": "A06YJ", "name": "0.1% fat"}
+      ],
+      "dmt_test_goal": "Tests multi-facet dairy coding with flavour, qualitative information, and exact fat content.",
+      "difficulty": "high"
+    },
+    {
+      "id": "paper-vitamin-d-liquid-supplement",
+      "input": "Vitamin D only supplement in liquid formulation.",
+      "article_expected_code": "A03SL#F04.A0EXM$F03.A06JL",
+      "expected_base": {"code": "A03SL", "name": "Vitamin only supplements"},
+      "expected_facets": [
+        {"facet": "F04", "code": "A0EXM", "name": "Vitamin D"},
+        {"facet": "F03", "code": "A06JL", "name": "Liquid"}
+      ],
+      "dmt_test_goal": "Tests supplement coding where active nutrient is F04 ingredient and formulation is F03.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "paper-nutritionally-incomplete-formula-powder",
+      "input": "Nutritionally incomplete formula powder containing milk protein, calcium, phosphorus, and magnesium.",
+      "article_expected_code": "A03SF#F04.A02PR$F04.A0EXH$F04.A0EXG$F04.A0EXF$F03.A06JD",
+      "expected_base": {"code": "A03SF", "name": "Nutritionally incomplete formulae"},
+      "expected_facets": [
+        {"facet": "F04", "code": "A02PR", "name": "Milk protein"},
+        {"facet": "F04", "code": "A0EXH", "name": "Calcium"},
+        {"facet": "F04", "code": "A0EXG", "name": "Phosphorus"},
+        {"facet": "F04", "code": "A0EXF", "name": "Magnesium"},
+        {"facet": "F03", "code": "A06JD", "name": "Powder"}
+      ],
+      "dmt_test_goal": "Tests special-diet formula base plus multiple nutrient/ingredient facets and physical state.",
+      "difficulty": "high"
+    },
+    {
+      "id": "paper-oral-rehydration-product-liquid-gluten-free",
+      "input": "Liquid oral rehydration product with zinc, dietary fibre, chemical elements, gluten free.",
+      "article_expected_code": "A03SH#F04.A0EXE$F04.A0EVR$F04.A0EVF$F10.A0B8L$F03.A06JL",
+      "expected_base": {"code": "A03SH", "name": "Oral rehydration products"},
+      "expected_facets": [
+        {"facet": "F04", "code": "A0EXE", "name": "Zinc"},
+        {"facet": "F04", "code": "A0EVR", "name": "Dietary fibre"},
+        {"facet": "F04", "code": "A0EVF", "name": "Chemical elements"},
+        {"facet": "F10", "code": "A0B8L", "name": "Gluten free"},
+        {"facet": "F03", "code": "A06JL", "name": "Liquid"}
+      ],
+      "dmt_test_goal": "Tests special-diet product with ingredient, qualitative, and physical-state facets.",
+      "difficulty": "high"
+    },
+    {
+      "id": "paper-meat-imitate-wheat-chickpea-salted-preserved",
+      "input": "Meat imitate based on common wheat grain and chickpeas, ground, salted, and preserved with additives.",
+      "article_expected_code": "A03TE#F27.A001N$F27.A013M$F28.A07LA$F28.A07JP$F28.A07JS",
+      "expected_base": {"code": "A03TE", "name": "Meat imitates"},
+      "expected_facets": [
+        {"facet": "F27", "code": "A001N", "name": "Common wheat grain"},
+        {"facet": "F27", "code": "A013M", "name": "Chickpeas (dry)"},
+        {"facet": "F28", "code": "A07LA", "name": "Grinding/milling/crushing"},
+        {"facet": "F28", "code": "A07JP", "name": "Preserving with salt"},
+        {"facet": "F28", "code": "A07JS", "name": "Preserving with preserving additives"}
+      ],
+      "dmt_test_goal": "Tests same-nature source facets and multiple process facets on a food imitation base.",
+      "difficulty": "very_high"
+    },
+    {
+      "id": "paper-fruit-vegetable-puree-pear-banana-without-peel",
+      "input": "Fruit puree made from pears and banana, without peel.",
+      "article_expected_code": "A01QJ#F27.A01DP$F27.A01LC$F20.A07QF",
+      "expected_base": {"code": "A01QJ", "name": "Fruit or fruit-vegetable puree"},
+      "expected_facets": [
+        {"facet": "F27", "code": "A01DP", "name": "Pears"},
+        {"facet": "F27", "code": "A01LC", "name": "Common banana"},
+        {"facet": "F20", "code": "A07QF", "name": "Without peel"}
+      ],
+      "dmt_test_goal": "Tests derivative base narrowed by multiple source commodities and analysed/consumed part detail.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "paper-jam-without-added-sugar",
+      "input": "Fruit jam without added sugar.",
+      "article_expected_code": "A01MM#F04.A04RK$F10.A077K",
+      "expected_base": {"code": "A01MM", "name": "Jam of fruit/vegetables"},
+      "expected_facets": [
+        {"facet": "F04", "code": "A04RK", "name": "Fruit used as fruit"},
+        {"facet": "F10", "code": "A077K", "name": "Without added sugar"}
+      ],
+      "dmt_test_goal": "Tests generic jam base with ingredient and no-added-sugar qualitative descriptor.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "paper-cauliflower-boiled",
+      "input": "Boiled cauliflower.",
+      "article_expected_code": "A00FR#F28.A07GL",
+      "expected_base": {"code": "A00FR", "name": "Cauliflowers"},
+      "expected_facets": [
+        {"facet": "F28", "code": "A07GL", "name": "Boiling"}
+      ],
+      "dmt_test_goal": "Tests simple cooking process facet on a raw vegetable base.",
+      "difficulty": "low"
+    },
+    {
+      "id": "paper-canned-sweet-corn-without-medium",
+      "input": "Canned sweet corn, drained or without surrounding medium.",
+      "article_expected_code": "A00ZP#F20.A0F2X",
+      "expected_base": {"code": "A00ZP", "name": "Sweet corn canned"},
+      "expected_facets": [
+        {"facet": "F20", "code": "A0F2X", "name": "Without surrounding medium"}
+      ],
+      "dmt_test_goal": "Tests part-consumed/analysed detail for canned products.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "paper-canned-artichokes-in-olive-oil",
+      "input": "Canned or jarred globe artichokes in olive oil.",
+      "article_expected_code": "A0ETQ#F27.A00RS$F06.A06XK",
+      "expected_base": {"code": "A0ETQ", "name": "Canned/jarred vegetables"},
+      "expected_facets": [
+        {"facet": "F27", "code": "A00RS", "name": "Globe artichokes"},
+        {"facet": "F06", "code": "A06XK", "name": "In olive oil"}
+      ],
+      "dmt_test_goal": "Tests generic processed vegetable base plus source commodity and surrounding medium.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "paper-sheep-fresh-meat-grilled",
+      "input": "Sheep adult fresh meat, grilled.",
+      "article_expected_code": "A01RJ#F28.A07GZ",
+      "expected_base": {"code": "A01RJ", "name": "Sheep (adult) fresh meat"},
+      "expected_facets": [
+        {"facet": "F28", "code": "A07GZ", "name": "Broiling/grilling"}
+      ],
+      "dmt_test_goal": "Tests cooking process facet on fresh meat.",
+      "difficulty": "low"
+    },
+    {
+      "id": "paper-turkey-breast-fresh-meat",
+      "input": "Turkey fresh meat, breast.",
+      "article_expected_code": "A01SQ#F02.A07XS",
+      "expected_base": {"code": "A01SQ", "name": "Turkey fresh meat"},
+      "expected_facets": [
+        {"facet": "F02", "code": "A07XS", "name": "Breast"}
+      ],
+      "dmt_test_goal": "Tests animal part-nature facet on fresh meat.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "paper-bovine-edible-offal-heart",
+      "input": "Bovine edible offal, heart.",
+      "article_expected_code": "A01ZM#F02.A06AC",
+      "expected_base": {"code": "A01ZM", "name": "Bovine edible offal, non-muscle, other than liver and kidney"},
+      "expected_facets": [
+        {"facet": "F02", "code": "A06AC", "name": "Heart"}
+      ],
+      "dmt_test_goal": "Tests generic offal base plus specific part-nature.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "paper-cooked-chicken-poultry-meat-slices",
+      "input": "Cooked chicken poultry meat in slices.",
+      "article_expected_code": "A023X#F27.A01SP$F03.A06JA$F22.A07SH",
+      "expected_base": {"code": "A023X", "name": "Cooked other poultry meat"},
+      "expected_facets": [
+        {"facet": "F27", "code": "A01SP", "name": "Chicken fresh meat"},
+        {"facet": "F03", "code": "A06JA", "name": "Slices, steaks or other flat cuts"},
+        {"facet": "F22", "code": "A07SH", "name": "Article example descriptor"}
+      ],
+      "dmt_test_goal": "Tests whether DMT can preserve less common facet families and not collapse the item to generic cooked poultry.",
+      "difficulty": "high"
+    },
+    {
+      "id": "paper-cod-frozen-fillet",
+      "input": "Cod fillet, frozen.",
+      "article_expected_code": "A02BV#F28.A07KQ$F03.A06HZ",
+      "expected_base": {"code": "A02BV", "name": "Cod"},
+      "expected_facets": [
+        {"facet": "F28", "code": "A07KQ", "name": "Freezing"},
+        {"facet": "F03", "code": "A06HZ", "name": "Primal cuts/fillets/halves or quarters"}
+      ],
+      "dmt_test_goal": "Tests process plus physical-state/presentation facets for fish.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "paper-diet-soft-drink-caffeine-sugar-free",
+      "input": "Diet soft drink with caffeine, sugar free.",
+      "article_expected_code": "A03FY#F10.A077L",
+      "expected_base": {"code": "A03FY", "name": "Diet soft drink with caffeine"},
+      "expected_facets": [
+        {"facet": "F10", "code": "A077L", "name": "Sugar free"}
+      ],
+      "dmt_test_goal": "Tests qualitative descriptor on a beverage base.",
+      "difficulty": "low"
+    },
+    {
+      "id": "paper-biscuits-rusks-cookies-children-fortified-grain-mixture",
+      "input": "Biscuits, rusks and cookies for children, made with mixture of grains, fortified.",
+      "article_expected_code": "A03RA#F04.A001X$F10.A0F6C",
+      "expected_base": {"code": "A03RA", "name": "Biscuits, rusks and cookies for children"},
+      "expected_facets": [
+        {"facet": "F04", "code": "A001X", "name": "Mixture of grains"},
+        {"facet": "F10", "code": "A0F6C", "name": "Fortified"}
+      ],
+      "dmt_test_goal": "Tests child-food base with ingredient and fortified qualitative descriptor.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "paper-tiramisu",
+      "input": "Tiramisu dessert with sweet plain biscuits, mascarpone, coffee beverage, and cocoa powder.",
+      "article_expected_code": "A00AS#F04.A009X$F04.A02QH$F04.A03KC$F04.A03HG",
+      "expected_base": {"code": "A00AS", "name": "Cream cheese cake"},
+      "expected_facets": [
+        {"facet": "F04", "code": "A009X", "name": "Biscuits, sweet, plain"},
+        {"facet": "F04", "code": "A02QH", "name": "Mascarpone"},
+        {"facet": "F04", "code": "A03KC", "name": "Coffee beverage"},
+        {"facet": "F04", "code": "A03HG", "name": "Cocoa powder"}
+      ],
+      "dmt_test_goal": "Tests recipe-name to nearest composite base plus characterising ingredient facets.",
+      "difficulty": "very_high"
+    },
+    {
+      "id": "paper-cod-breaded-deep-fried-consumption-occasion",
+      "input": "Codfish, breaded and deep fried.",
+      "article_expected_code": "A02BV#F28.A07HK$F28.A07GV",
+      "expected_base": {"code": "A02BV", "name": "Cod"},
+      "expected_facets": [
+        {"facet": "F28", "code": "A07HK", "name": "Breading"},
+        {"facet": "F28", "code": "A07GV", "name": "Deep frying"}
+      ],
+      "dmt_test_goal": "Tests consumption-occasion personalization: raw/fresh base plus added process facets.",
+      "difficulty": "medium"
+    }
+  ]
+}

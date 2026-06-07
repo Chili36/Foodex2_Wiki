@@ -1,0 +1,191 @@
+{
+  "source": {
+    "pdf": "/Users/davidfoster/Downloads/nutrients-16-01065.pdf",
+    "paper": "D'Addezio et al. FoodEx2 Harmonization of the Food Consumption Database from the Italian IV SCAI Children's Survey. Nutrients 2024, 16, 1065.",
+    "basis": "Paper examples extracted into dmt_foodex2_test_cases.json and candidate-recall findings in foodex2_harmonization_learning.md."
+  },
+  "purpose": "A compact challenge suite for DMT built from a consumption-data paper. These cases are designed to expose retrieval and construction failure modes in consumed-food descriptions rather than prove one universal gold code for monitoring or every reporting context.",
+  "scope_boundary": {
+    "data_domain": "food consumption / dietary survey coding",
+    "not_authority_for": [
+      "chemical monitoring sample coding",
+      "pesticide reporting",
+      "contaminants reporting",
+      "VMPR/VETDRUG reporting",
+      "sample-taking rules"
+    ],
+    "intended_use": "Candidate-recall, facet-family, fact-coverage, construction, and validator-interaction probes."
+  },
+  "scoring": {
+    "base_recall": "Expected base code appears in the retrieved candidate set.",
+    "facet_recall": "Expected facet descriptor codes appear in the retrieved candidate set.",
+    "facet_family": "The classifier attaches each descriptor to the expected facet family.",
+    "fact_coverage": "Every meaningful source fact is marked as implicit, explicit, unsupported, or deliberately not coded.",
+    "construction": "The final constructed code matches the paper consumption-data example or a validated, explicitly justified alternative.",
+    "validation": "The constructed code passes the FoodEx2 validator, or the failure is explained as a paper-vs-validator/domain-context issue."
+  },
+  "retrieval_expectation": {
+    "single_query": "Useful as a baseline, but expected to miss many facet descriptors.",
+    "component_queries": "Expected to perform much better: query the base identity and each meaningful source fact separately."
+  },
+  "cases": [
+    {
+      "id": "challenge-fortified-chocolate-rice-cereal",
+      "input": "Popped rice breakfast cereal with chocolate flavour, fortified with vitamins and iron.",
+      "article_expected_code": "A00DR#F04.A06MF$F09.A0EVG$F09.A0EXD$F10.A0F6C",
+      "expected_base": {"code": "A00DR", "name": "Rice, popped"},
+      "expected_facets": [
+        {"facet": "F04", "code": "A06MF", "name": "Chocolate flavour"},
+        {"facet": "F09", "code": "A0EVG", "name": "Vitamins"},
+        {"facet": "F09", "code": "A0EXD", "name": "Iron"},
+        {"facet": "F10", "code": "A0F6C", "name": "Fortified"}
+      ],
+      "challenge": "Single-query retrieval found the base but missed all four facet descriptors in the smoke test. This probes whether DMT deconstructs facts before searching.",
+      "difficulty": "high"
+    },
+    {
+      "id": "challenge-follow-on-formula-fortified-powder",
+      "input": "Milk-based follow-on formula powder fortified with calcium, iron, and vitamin C.",
+      "article_expected_code": "A03QL#F09.A0EXH$F09.A0EXD$F09.A0EXN$F10.A0F6C",
+      "expected_base": {"code": "A03QL", "name": "Follow-on formula, milk-based, powder"},
+      "expected_facets": [
+        {"facet": "F09", "code": "A0EXH", "name": "Calcium"},
+        {"facet": "F09", "code": "A0EXD", "name": "Iron"},
+        {"facet": "F09", "code": "A0EXN", "name": "Vitamin C (ascorbic acid)"},
+        {"facet": "F10", "code": "A0F6C", "name": "Fortified"}
+      ],
+      "challenge": "Tests infant-food base specificity and nutrient-fortification descriptors. The key risk is stopping at the correct formula base and ignoring F09/F10.",
+      "difficulty": "high"
+    },
+    {
+      "id": "challenge-ready-to-eat-child-meal-jar-homogenized",
+      "input": "Ready-to-eat meat-based meal for children, homogenized, containing calf meat, chicken meat, and leafy vegetables, packed in a jar.",
+      "article_expected_code": "A03RF#F28.A07LJ$F04.A01QY$F04.A01SP$F04.A00KR$F18.A07NN",
+      "expected_base": {"code": "A03RF", "name": "Ready-to-eat meat-based meal for children"},
+      "expected_facets": [
+        {"facet": "F28", "code": "A07LJ", "name": "Homogenizing or emulsifying"},
+        {"facet": "F04", "code": "A01QY", "name": "Calf fresh meat"},
+        {"facet": "F04", "code": "A01SP", "name": "Chicken fresh meat"},
+        {"facet": "F04", "code": "A00KR", "name": "Leafy vegetables"},
+        {"facet": "F18", "code": "A07NN", "name": "Jar"}
+      ],
+      "challenge": "Combines product base, process, characterising ingredients, and packaging. This is a strong test of fact-led facet construction.",
+      "difficulty": "high"
+    },
+    {
+      "id": "challenge-spreadable-cheese-low-fat-17-percent",
+      "input": "Processed spreadable cheese, low fat, 17 percent fat.",
+      "article_expected_code": "A031C#F10.A077C$F07.A073E",
+      "expected_base": {"code": "A031C", "name": "Processed cheese, spreadable"},
+      "expected_facets": [
+        {"facet": "F10", "code": "A077C", "name": "Low fat"},
+        {"facet": "F07", "code": "A073E", "name": "17% fat"}
+      ],
+      "challenge": "Explicitly separates qualitative fat wording from exact fat percentage. This catches the common error of putting exact fat percentage under F10.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "challenge-yoghurt-apricot-skimmed-no-added-sugar-01-fat",
+      "input": "Flavoured cow milk yoghurt, apricot flavour, skimmed, without added sugar, 0.1 percent fat.",
+      "article_expected_code": "A02NH#F04.A06KE$F10.A077H$F10.A077K$F07.A06YJ",
+      "expected_base": {"code": "A02NH", "name": "Yogurt, cow milk, flavoured"},
+      "expected_facets": [
+        {"facet": "F04", "code": "A06KE", "name": "Apricot flavour"},
+        {"facet": "F10", "code": "A077H", "name": "Skimmed"},
+        {"facet": "F10", "code": "A077K", "name": "Without added sugar"},
+        {"facet": "F07", "code": "A06YJ", "name": "0.1% fat"}
+      ],
+      "challenge": "Multi-facet dairy case: flavour as F04, qualitative descriptors as F10, exact fat as F07. It tests whether DMT can keep similar-looking descriptors apart.",
+      "difficulty": "high"
+    },
+    {
+      "id": "challenge-vitamin-d-liquid-supplement",
+      "input": "Vitamin D only supplement in liquid formulation.",
+      "article_expected_code": "A03SL#F04.A0EXM$F03.A06JL",
+      "expected_base": {"code": "A03SL", "name": "Vitamin only supplements"},
+      "expected_facets": [
+        {"facet": "F04", "code": "A0EXM", "name": "Vitamin D"},
+        {"facet": "F03", "code": "A06JL", "name": "Liquid"}
+      ],
+      "challenge": "Tests supplement coding where the active nutrient is an ingredient facet and formulation is a physical-state facet.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "challenge-meat-imitate-wheat-chickpea-processes",
+      "input": "Meat imitate based on common wheat grain and chickpeas, ground, salted, and preserved with additives.",
+      "article_expected_code": "A03TE#F27.A001N$F27.A013M$F28.A07LA$F28.A07JP$F28.A07JS",
+      "expected_base": {"code": "A03TE", "name": "Meat imitates"},
+      "expected_facets": [
+        {"facet": "F27", "code": "A001N", "name": "Common wheat grain"},
+        {"facet": "F27", "code": "A013M", "name": "Chickpeas (dry)"},
+        {"facet": "F28", "code": "A07LA", "name": "Grinding/milling/crushing"},
+        {"facet": "F28", "code": "A07JP", "name": "Preserving with salt"},
+        {"facet": "F28", "code": "A07JS", "name": "Preserving with preserving additives"}
+      ],
+      "challenge": "Very high-load construction: broad derivative base, multiple source commodities, and multiple process facets. This is a stress test for deconstruction and process-facet recall.",
+      "difficulty": "very_high"
+    },
+    {
+      "id": "challenge-canned-sweet-corn-without-medium",
+      "input": "Canned sweet corn, drained or without surrounding medium.",
+      "article_expected_code": "A00ZP#F20.A0F2X",
+      "expected_base": {"code": "A00ZP", "name": "Sweet corn canned"},
+      "expected_facets": [
+        {"facet": "F20", "code": "A0F2X", "name": "Without surrounding medium"}
+      ],
+      "challenge": "Looks simple, but the extra fact is not another process or ingredient. It tests recall of part-consumed/analysed detail for canned products.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "challenge-canned-artichokes-in-olive-oil",
+      "input": "Canned or jarred globe artichokes in olive oil.",
+      "article_expected_code": "A0ETQ#F27.A00RS$F06.A06XK",
+      "expected_base": {"code": "A0ETQ", "name": "Canned/jarred vegetables"},
+      "expected_facets": [
+        {"facet": "F27", "code": "A00RS", "name": "Globe artichokes"},
+        {"facet": "F06", "code": "A06XK", "name": "In olive oil"}
+      ],
+      "challenge": "Tests a generic processed base plus source-commodity narrowing and surrounding medium. It should not be reconstructed from raw artichoke plus canning.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "challenge-tiramisu-recipe-aggregate",
+      "input": "Tiramisu dessert with sweet plain biscuits, mascarpone, coffee beverage, and cocoa powder.",
+      "article_expected_code": "A00AS#F04.A009X$F04.A02QH$F04.A03KC$F04.A03HG",
+      "expected_base": {"code": "A00AS", "name": "Cream cheese cake"},
+      "expected_facets": [
+        {"facet": "F04", "code": "A009X", "name": "Biscuits, sweet, plain"},
+        {"facet": "F04", "code": "A02QH", "name": "Mascarpone"},
+        {"facet": "F04", "code": "A03KC", "name": "Coffee beverage"},
+        {"facet": "F04", "code": "A03HG", "name": "Cocoa powder"}
+      ],
+      "challenge": "Tests recipe-name aggregation to a nearest composite base plus characterising ingredients. This should be scored with acceptable-alternative handling.",
+      "difficulty": "very_high"
+    },
+    {
+      "id": "challenge-cod-breaded-deep-fried",
+      "input": "Codfish, breaded and deep fried.",
+      "article_expected_code": "A02BV#F28.A07HK$F28.A07GV",
+      "expected_base": {"code": "A02BV", "name": "Cod"},
+      "expected_facets": [
+        {"facet": "F28", "code": "A07HK", "name": "Breading"},
+        {"facet": "F28", "code": "A07GV", "name": "Deep frying"}
+      ],
+      "challenge": "Tests consumption-occasion processing: the paper uses a simple cod base with process facets rather than a pre-breaded fish product. This should be checked against validator/domain expectations.",
+      "difficulty": "medium"
+    },
+    {
+      "id": "challenge-ricotta-full-fat-cow-sheep",
+      "input": "Full-fat ricotta made from cow milk and sheep milk.",
+      "article_expected_code": "A02QL#F10.A077A$F27.A02LY$F27.A02MC",
+      "expected_base": {"code": "A02QL", "name": "Ricotta"},
+      "expected_facets": [
+        {"facet": "F10", "code": "A077A", "name": "Full fat"},
+        {"facet": "F27", "code": "A02LY", "name": "Cow milk, whole"},
+        {"facet": "F27", "code": "A02MC", "name": "Sheep milk"}
+      ],
+      "challenge": "Tests derivative source-commodity refinement with multiple F27 values and a qualitative fat descriptor.",
+      "difficulty": "medium"
+    }
+  ]
+}

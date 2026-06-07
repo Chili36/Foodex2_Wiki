@@ -1,0 +1,18 @@
+{
+  "source": {
+    "note": "10-item extension drawn from the EFSA/DMT monitoring masterlist (efsa_dmt_testdata_masterlista.xlsx). Swedish names used verbatim (livsmedel_sv) to exercise the real deconstruct→translate→search→code path. NO blind gold: FoodEx2_mapping_hint is a hint, not truth (per the masterlist's own Mappingnoter). Scored on change-detection across conditions + catalogue-validity + cross-coder agreement, NOT exact-match. 'Pommes frites av Bintje' adds a potato sort the file lacked (acrylamide-relevant fry variety)."
+  },
+  "domain": "monitoring-extension",
+  "cases": [
+    {"id": "ext-jungfruolivolja",        "input": "Jungfruolivolja",                "domain": "Bekämpningsmedel",   "matrix": "olja",                 "expected_base": null, "expected_facets": []},
+    {"id": "ext-notkreatursfett",        "input": "Nötkreatursfett",               "domain": "Bekämpningsmedel",   "matrix": "animaliskt fett",      "expected_base": null, "expected_facets": []},
+    {"id": "ext-stromming-ostersjon",    "input": "Strömming/sill från Östersjön", "domain": "Kontaminanter",      "matrix": "fiskkött",             "expected_base": null, "expected_facets": []},
+    {"id": "ext-mork-choklad",           "input": "Mörk choklad",                  "domain": "Kontaminanter",      "matrix": "choklad",              "expected_base": null, "expected_facets": []},
+    {"id": "ext-pommes-frites-bintje",   "input": "Pommes frites av Bintje",       "domain": "Kontaminanter",      "matrix": "tillagad/friterad",    "expected_base": null, "expected_facets": []},
+    {"id": "ext-renkott",                "input": "Renkött",                       "domain": "VMPR",               "matrix": "muskelkött",           "expected_base": null, "expected_facets": []},
+    {"id": "ext-mjolmasklarver",         "input": "Mjölmasklarver",                "domain": "VMPR",               "matrix": "insektsprodukt",       "expected_base": null, "expected_facets": []},
+    {"id": "ext-falukorv",               "input": "Falukorv",                      "domain": "Tillsatser/aromer",  "matrix": "köttprodukt",          "expected_base": null, "expected_facets": []},
+    {"id": "ext-surimi",                 "input": "Surimi",                        "domain": "Tillsatser/aromer",  "matrix": "sammansatt produkt",   "expected_base": null, "expected_facets": []},
+    {"id": "ext-tonfisk-burk",           "input": "Tonfisk på burk",               "domain": "Övriga kemikalier/FCM","matrix": "livsmedel i metallburk","expected_base": null, "expected_facets": []}
+  ]
+}
