@@ -1,0 +1,173 @@
+[
+  {
+    "question": "What should I think about when coding Infant formula fortified with vitamins and minerals?",
+    "output_path": "reports/retrieval-ab/what-should-i-think-about-when-coding-infant-formula-fortified-with-vitamins-and-minerals.json",
+    "summary": [
+      {
+        "mode": "normal_markdown_ask",
+        "status_code": 200,
+        "elapsed_ms": 19289,
+        "trace_total_ms": 19267,
+        "total_tokens": 13965,
+        "retrieval_tokens": 3493,
+        "answerer_tokens": 10472,
+        "llm_calls": 2,
+        "pages_used": [
+          "index.md",
+          "base-term-selection.md",
+          "facet-coding-rules.md",
+          "ingredient-facets.md",
+          "domain-specific-validation.md",
+          "additives-flavourings-foodex2.md",
+          "implicit-vs-explicit-facets.md",
+          "foodex2-overview.md",
+          "process-facets.md",
+          "packaging-facets.md",
+          "business-rules.md",
+          "chemical-monitoring-foodex2.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "domoic-acid-scallops.md"
+        ],
+        "citations": [
+          "base-term-selection.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "domain-specific-validation.md",
+          "additives-flavourings-foodex2.md"
+        ]
+      },
+      {
+        "mode": "qdrant_ask_emulation",
+        "collection": "foodex2_wiki_markdown_v1",
+        "elapsed_ms": 8996,
+        "total_tokens": 3872,
+        "answerer_tokens": 3858,
+        "embedding_tokens": 14,
+        "llm_calls": 1,
+        "results": [
+          {
+            "score": 0.47093087,
+            "page_name": "facet-coding-rules.md",
+            "heading_path": "Facet Coding Rules > Worked Examples",
+            "category": "guidance",
+            "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+          },
+          {
+            "score": 0.448927,
+            "page_name": "facet-coding-rules.md",
+            "heading_path": "Facet Coding Rules > Facet Category Reference",
+            "category": "guidance",
+            "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+          },
+          {
+            "score": 0.43743354,
+            "page_name": "additives-flavourings-foodex2.md",
+            "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Additional Facets",
+            "category": "domain_overlay",
+            "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices."
+          },
+          {
+            "score": 0.42968306,
+            "page_name": "facet-coding-rules.md",
+            "heading_path": "Facet Coding Rules > High-Value Facets",
+            "category": "guidance",
+            "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+          },
+          {
+            "score": 0.4081648,
+            "page_name": "facet-coding-rules.md",
+            "heading_path": "Facet Coding Rules > Relevant Policy",
+            "category": "guidance",
+            "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+          },
+          {
+            "score": 0.40343586,
+            "page_name": "foodex2-overview.md",
+            "heading_path": "FoodEx2 Overview > Worked Examples",
+            "category": "guidance",
+            "summary": "High-level explanation of FoodEx2 purpose, hierarchy model, and coding philosophy."
+          },
+          {
+            "score": 0.38919812,
+            "page_name": "additives-flavourings-foodex2.md",
+            "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Relevant Policy",
+            "category": "domain_overlay",
+            "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices."
+          }
+        ],
+        "citations": [
+          "facet-coding-rules.md",
+          "additives-flavourings-foodex2.md",
+          "foodex2-overview.md"
+        ]
+      },
+      {
+        "mode": "qdrant_ask_emulation",
+        "collection": "foodex2_source_docs_v1",
+        "elapsed_ms": 12500,
+        "total_tokens": 7364,
+        "answerer_tokens": 7350,
+        "embedding_tokens": 14,
+        "llm_calls": 1,
+        "results": [
+          {
+            "score": 0.41933018,
+            "source_file": "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "location": "page 40",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.3988494,
+            "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "location": "page 40",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.39091003,
+            "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "location": "page 39",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.3876208,
+            "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "location": "page 53",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.3772166,
+            "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "location": "page 56",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.3701887,
+            "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "location": "page 47",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.36976245,
+            "source_file": "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "location": "page 55",
+            "source_suffix": "pdf"
+          }
+        ],
+        "citations": [
+          "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf :: page 40",
+          "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf :: page 39",
+          "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf :: page 47",
+          "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf :: page 53"
+        ]
+      }
+    ]
+  }
+]

@@ -439,6 +439,58 @@ def test_wiki_search_returns_no_results_for_invented_phrase() -> None:
     assert payload["results"] == []
 
 
+def test_wiki_rag_status_reports_deterministic_index_drift(monkeypatch) -> None:
+    def fake_get_wiki_rag_status(**kwargs: object) -> dict[str, object]:
+        return {
+            "ok": False,
+            "collection": kwargs["collection"] or "foodex2_wiki_markdown_v1",
+            "qdrant_url": kwargs["qdrant_url"] or "http://127.0.0.1:6333",
+            "embedding_provider": "voyage",
+            "embedding_model": kwargs["embedding_model"] or "voyage-context-3",
+            "embedding_dimension": kwargs["embedding_dimension"] or 1024,
+            "chunking": {
+                "max_chars": kwargs["max_chars"],
+                "categories": ["guidance", "runtime"],
+            },
+            "expected": {
+                "page_count": 2,
+                "chunk_count": 4,
+                "pages": ["RUNTIME_RULES.md", "base-term-selection.md"],
+            },
+            "indexed": {
+                "collection_exists": True,
+                "points_count": 3,
+                "chunk_count": 3,
+                "page_count": 2,
+                "pages": ["RUNTIME_RULES.md", "old-page.md"],
+                "payloadless_points": 0,
+                "duplicate_chunk_ids": [],
+            },
+            "drift": {
+                "missing_pages": ["base-term-selection.md"],
+                "stale_pages": ["RUNTIME_RULES.md"],
+                "orphaned_pages": ["old-page.md"],
+                "missing_chunk_ids": ["base-term-selection.md#000-00-base-term-selection-rules"],
+                "stale_chunk_ids": ["RUNTIME_RULES.md#000-00-runtime-rules"],
+                "orphaned_chunk_ids": ["old-page.md#000-00-old-page"],
+                "embedding_model_mismatch_chunk_ids": [],
+                "embedding_dimension_mismatch_chunk_ids": [],
+            },
+            "errors": [],
+        }
+
+    monkeypatch.setattr(app_module, "get_wiki_rag_status", fake_get_wiki_rag_status)
+
+    response = request("GET", "/wiki/rag/status")
+    assert response.status_code == 200
+    payload = response.json()
+
+    assert payload["ok"] is False
+    assert payload["collection"] == "foodex2_wiki_markdown_v1"
+    assert payload["drift"]["missing_pages"] == ["base-term-selection.md"]
+    assert payload["drift"]["orphaned_pages"] == ["old-page.md"]
+
+
 def test_wiki_graph_exposes_index_hub_edges() -> None:
     response = request("GET", "/wiki/graph")
     assert response.status_code == 200
@@ -534,6 +586,249 @@ def test_ask_returns_answer_with_citations_and_trace() -> None:
     first_page = app_module.answerer_runner.calls[0]["pages"][0]
     assert first_page["page_name"] == "index.md"
     assert "content" in first_page
+
+
+def test_ask_rag_uses_qdrant_context_and_answerer(monkeypatch) -> None:
+    calls: list[dict[str, object]] = []
+
+    def fake_retrieve_qdrant_ask_context(**kwargs: object) -> dict[str, object]:
+        calls.append(kwargs)
+        return {
+            "answerer_pages": [
+                {
+                    "page_name": "base-term-selection.md",
+                    "content": "Food type first, then select the base term.",
+                },
+                {
+                    "page_name": "implicit-vs-explicit-facets.md",
+                    "content": "Do not duplicate implicit facets.",
+                },
+            ],
+            "page_summaries": [
+                {
+                    "page_name": "base-term-selection.md",
+                    "title": "Base Term Selection Rules",
+                    "summary": "Choose food type and base term.",
+                    "category": "rules",
+                    "sources": [],
+                    "related": [],
+                    "content": "Food type first, then select the base term.",
+                },
+                {
+                    "page_name": "implicit-vs-explicit-facets.md",
+                    "title": "Implicit vs Explicit Facets",
+                    "summary": "Account for implicit facets.",
+                    "category": "rules",
+                    "sources": [],
+                    "related": [],
+                    "content": "Do not duplicate implicit facets.",
+                },
+            ],
+            "pages_used": ["base-term-selection.md", "implicit-vs-explicit-facets.md"],
+            "embedding": {
+                "provider": "voyage",
+                "model": "voyage-context-3",
+                "dimension": 1024,
+                "elapsed_ms": 20,
+                "usage": {"total_tokens": 12},
+                "tracked_tokens": 12,
+            },
+            "retrieval": {
+                "provider": "qdrant",
+                "retrieval_mode": "wiki",
+                "collection": "foodex2_wiki_markdown_v1",
+                "qdrant_url": "http://127.0.0.1:6333",
+                "elapsed_ms": 5,
+                "limit": 3,
+                "result_count": 2,
+                "results": [
+                    {"score": 0.91, "page_name": "base-term-selection.md"},
+                    {"score": 0.88, "page_name": "implicit-vs-explicit-facets.md"},
+                ],
+            },
+        }
+
+    monkeypatch.setattr(app_module, "retrieve_qdrant_ask_context", fake_retrieve_qdrant_ask_context)
+
+    response = request(
+        "POST",
+        "/wiki/ask-rag",
+        json={
+            "question": "What should I think about when coding dried chili?",
+            "retrieval_mode": "wiki",
+            "limit": 3,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["trace"]["selection_method"] == "qdrant wiki retrieval + answerer"
+    assert payload["trace"]["retrieval"]["collection"] == "foodex2_wiki_markdown_v1"
+    assert payload["trace"]["embedding"]["tracked_tokens"] == 12
+    assert payload["trace"]["total"]["total_llm_calls"] == 1
+    assert payload["trace"]["total"]["total_embedding_calls"] == 1
+    assert payload["trace"]["total"]["total_tracked_tokens"] == 302
+    assert payload["citations"] == ["base-term-selection.md", "implicit-vs-explicit-facets.md"]
+    assert payload["pages"][0]["content"] is None
+    assert calls[0]["retrieval_mode"] == "wiki"
+    assert calls[0]["limit"] == 3
+    assert app_module.answerer_runner.calls[0]["pages"][0]["page_name"] == "base-term-selection.md"
+
+
+def test_ask_rag_can_return_source_rag_with_page_content(monkeypatch) -> None:
+    class SourceAnswerer(FakeAnswerer):
+        def run(self, *, question: str, pages: list[dict[str, object]]) -> AnswerResult:
+            self.calls.append({"question": question, "pages": pages})
+            return AnswerResult(
+                answer="Use the raw source chunk as source evidence, then classify with catalogue data.",
+                citations=["guidance.pdf"],
+                token_summary={
+                    "model": self.model,
+                    "calls": 1,
+                    "input_tokens": 100,
+                    "output_tokens": 40,
+                    "cache_creation_input_tokens": 0,
+                    "cache_read_input_tokens": 0,
+                    "total_tracked_tokens": 140,
+                    "per_call": [],
+                },
+                timing_summary={"calls": 1, "llm_time_ms": 300, "per_call": []},
+            )
+
+    def fake_retrieve_qdrant_ask_context(**kwargs: object) -> dict[str, object]:
+        return {
+            "answerer_pages": [
+                {"page_name": "guidance.pdf", "content": "Source file: guidance.pdf\nLocation: page 4"}
+            ],
+            "page_summaries": [
+                {
+                    "page_name": "guidance.pdf",
+                    "title": "guidance.pdf :: page 4",
+                    "summary": "foodex2_docs/guidance.pdf",
+                    "category": "source_document",
+                    "sources": ["foodex2_docs/guidance.pdf"],
+                    "related": [],
+                    "content": "Source file: guidance.pdf\nLocation: page 4",
+                }
+            ],
+            "pages_used": ["guidance.pdf"],
+            "embedding": {
+                "provider": "voyage",
+                "model": "voyage-context-3",
+                "dimension": 1024,
+                "elapsed_ms": 25,
+                "usage": {},
+                "tracked_tokens": None,
+            },
+            "retrieval": {
+                "provider": "qdrant",
+                "retrieval_mode": "source",
+                "collection": "foodex2_source_docs_v1",
+                "qdrant_url": "http://127.0.0.1:6333",
+                "elapsed_ms": 6,
+                "limit": 2,
+                "result_count": 1,
+                "results": [{"score": 0.87, "source_file": "guidance.pdf", "location": "page 4"}],
+            },
+        }
+
+    app_module.answerer_runner = SourceAnswerer()
+    monkeypatch.setattr(app_module, "retrieve_qdrant_ask_context", fake_retrieve_qdrant_ask_context)
+
+    response = request(
+        "POST",
+        "/wiki/ask-rag",
+        json={
+            "question": "What should I think about when reporting sheep urine?",
+            "retrieval_mode": "source",
+            "limit": 2,
+            "include_page_content": True,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["trace"]["selection_method"] == "qdrant source retrieval + answerer"
+    assert payload["trace"]["retrieval"]["collection"] == "foodex2_source_docs_v1"
+    assert payload["trace"]["total"]["total_tracked_tokens"] == 140
+    assert payload["citations"] == ["guidance.pdf"]
+    assert "Source file" in payload["pages"][0]["content"]
+
+
+def test_ask_accepts_per_request_model_overrides(monkeypatch) -> None:
+    created: dict[str, object] = {}
+
+    class OverrideSelector(FakeSelector):
+        def __init__(self, *, store: object, model: str, max_pages: int) -> None:
+            super().__init__()
+            self.model = model
+            self.max_pages = max_pages
+            created["selector"] = self
+
+    class OverrideAnswerer(FakeAnswerer):
+        def __init__(self, *, model: str) -> None:
+            super().__init__()
+            self.model = model
+            created["answerer"] = self
+
+    monkeypatch.setattr(app_module, "AnthropicWikiPageSelector", OverrideSelector)
+    monkeypatch.setattr(app_module, "AnthropicFoodEx2Answerer", OverrideAnswerer)
+
+    response = request(
+        "POST",
+        "/wiki/ask",
+        json={
+            "question": "How should I think about coding fresh cheese made from milk?",
+            "selector_model": " selector-test-model ",
+            "answerer_model": " answerer-test-model ",
+            "max_pages": 5,
+            "use_graph_expansion": False,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["trace"]["retrieval"]["model"] == "selector-test-model"
+    assert payload["trace"]["answerer"]["model"] == "answerer-test-model"
+    assert created["selector"].max_pages == 5
+
+
+def test_ask_routes_non_anthropic_model_overrides(monkeypatch) -> None:
+    created: dict[str, object] = {}
+
+    class JsonSelector(FakeSelector):
+        def __init__(self, *, store: object, model: str, max_pages: int) -> None:
+            super().__init__()
+            self.model = model
+            self.max_pages = max_pages
+            created["selector"] = self
+
+    class JsonAnswerer(FakeAnswerer):
+        def __init__(self, *, model: str) -> None:
+            super().__init__()
+            self.model = model
+            created["answerer"] = self
+
+    monkeypatch.setattr(app_module, "JsonWikiPageSelector", JsonSelector)
+    monkeypatch.setattr(app_module, "JsonFoodEx2Answerer", JsonAnswerer)
+
+    response = request(
+        "POST",
+        "/wiki/ask",
+        json={
+            "question": "How should I think about coding fresh cheese made from milk?",
+            "selector_model": "gpt-5.4-mini",
+            "answerer_model": "gemini-3.5-flash",
+            "use_graph_expansion": False,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["trace"]["retrieval"]["model"] == "gpt-5.4-mini"
+    assert payload["trace"]["answerer"]["model"] == "gemini-3.5-flash"
+    assert created["selector"].model == "gpt-5.4-mini"
+    assert created["answerer"].model == "gemini-3.5-flash"
 
 
 def test_ask_requires_question() -> None:
@@ -684,6 +979,10 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert "Use it as the always-on runtime layer" not in runtime_content
     assert "## Core Decision Order" in runtime_content
     assert "Treat reporting-domain overlays as opt-in" in runtime_content
+    assert "Treat returned wiki pages as coding knowledge" in runtime_content
+    assert "candidate list is retrieval evidence" in runtime_content
+    assert "Do not invent FoodEx2 codes from memory" in runtime_content
+    assert "mark the candidate set incomplete" in runtime_content
     assert "## Supporting Pages By Signal" not in runtime_content
     assert "Worked Examples" not in runtime_content
     base_content = pages_by_name["base-term-selection.md"]["content"]
@@ -885,6 +1184,7 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     assert "policy_contract" in payload["components"]["schemas"]["PolicyPackResponse"]["properties"]
     assert "policy_contract" in payload["components"]["schemas"]["SolveResponse"]["properties"]
     assert "/wiki/ask" in payload["paths"]
+    assert "/wiki/ask-rag" in payload["paths"]
     assert "/wiki/search" in payload["paths"]
     assert "/wiki/graph" in payload["paths"]
     assert "/wiki/graph/compact" in payload["paths"]

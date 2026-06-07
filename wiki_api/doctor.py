@@ -12,6 +12,11 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
+from .rag_index import (
+    DEFAULT_WIKI_CATEGORIES,
+    DEFAULT_WIKI_CHUNK_MAX_CHARS,
+    get_wiki_rag_status,
+)
 from .wiki_store import (
     MARKDOWN_LINK_RE,
     PROMPT_CONTEXT_PAGE_CATEGORIES,
@@ -72,7 +77,18 @@ class DoctorReport:
         }
 
 
-def run_doctor(root: Path | str = ".", *, check_external_links: bool = False) -> DoctorReport:
+def run_doctor(
+    root: Path | str = ".",
+    *,
+    check_external_links: bool = False,
+    check_rag_index: bool = False,
+    rag_collection: str | None = None,
+    rag_qdrant_url: str | None = None,
+    rag_embedding_model: str | None = None,
+    rag_embedding_dimension: int | None = None,
+    rag_categories: str = DEFAULT_WIKI_CATEGORIES,
+    rag_max_chars: int = DEFAULT_WIKI_CHUNK_MAX_CHARS,
+) -> DoctorReport:
     store = WikiStore(root)
     issues: list[DoctorIssue] = []
 
@@ -88,6 +104,18 @@ def run_doctor(root: Path | str = ".", *, check_external_links: bool = False) ->
     issues.extend(_check_prompt_projection(store, pages.values()))
     issues.extend(_check_graph_connectivity(store))
     issues.extend(_check_source_references(store, pages.values()))
+    if check_rag_index:
+        issues.extend(
+            _check_rag_index(
+                root=Path(root),
+                collection=rag_collection,
+                qdrant_url=rag_qdrant_url,
+                embedding_model=rag_embedding_model,
+                embedding_dimension=rag_embedding_dimension,
+                categories=rag_categories,
+                max_chars=rag_max_chars,
+            )
+        )
 
     # Keep index/log in the allowed-page consistency check even though catalog() intentionally
     # omits them as root docs.
@@ -103,6 +131,103 @@ def run_doctor(root: Path | str = ".", *, check_external_links: bool = False) ->
             )
 
     return DoctorReport(sorted(issues, key=lambda item: (item.severity, item.check, item.location)))
+
+
+def _check_rag_index(
+    *,
+    root: Path,
+    collection: str | None,
+    qdrant_url: str | None,
+    embedding_model: str | None,
+    embedding_dimension: int | None,
+    categories: str,
+    max_chars: int,
+) -> Iterable[DoctorIssue]:
+    status = get_wiki_rag_status(
+        root=root,
+        collection=collection,
+        qdrant_url=qdrant_url,
+        embedding_model=embedding_model,
+        embedding_dimension=embedding_dimension,
+        categories=categories,
+        max_chars=max_chars,
+    )
+    if status["ok"]:
+        return []
+
+    issues: list[DoctorIssue] = []
+    collection_name = str(status.get("collection", "wiki-rag"))
+    for message in status.get("errors", []):
+        issues.append(
+            DoctorIssue(
+                "error",
+                "rag_index",
+                collection_name,
+                f"Could not inspect Qdrant wiki index: {message}",
+            )
+        )
+
+    indexed = status.get("indexed", {})
+    if indexed.get("collection_exists") and indexed.get("chunk_count") == 0:
+        issues.append(
+            DoctorIssue(
+                "error",
+                "rag_index",
+                collection_name,
+                "Qdrant wiki index exists but contains no indexed markdown chunks.",
+            )
+        )
+
+    drift = status.get("drift", {})
+    for page_name in drift.get("missing_pages", []):
+        issues.append(
+            DoctorIssue(
+                "error",
+                "rag_index",
+                str(page_name),
+                "Markdown page is selected for wiki RAG but is missing from Qdrant.",
+            )
+        )
+    for page_name in drift.get("stale_pages", []):
+        issues.append(
+            DoctorIssue(
+                "error",
+                "rag_index",
+                str(page_name),
+                "Markdown page has stale, missing, or embedding-mismatched Qdrant chunks.",
+            )
+        )
+    for page_name in drift.get("orphaned_pages", []):
+        issues.append(
+            DoctorIssue(
+                "error",
+                "rag_index",
+                str(page_name),
+                "Qdrant contains chunks for a page no longer selected for wiki RAG.",
+            )
+        )
+
+    payloadless = indexed.get("payloadless_points", 0)
+    if payloadless:
+        issues.append(
+            DoctorIssue(
+                "error",
+                "rag_index",
+                collection_name,
+                f"Qdrant contains {payloadless} point(s) without wiki chunk payload metadata.",
+            )
+        )
+    duplicate_chunk_ids = indexed.get("duplicate_chunk_ids", [])
+    if duplicate_chunk_ids:
+        issues.append(
+            DoctorIssue(
+                "error",
+                "rag_index",
+                collection_name,
+                f"Qdrant contains duplicate wiki chunk ids: {', '.join(duplicate_chunk_ids[:10])}",
+            )
+        )
+    return issues
 
 
 def _check_category_registration(
@@ -505,9 +630,44 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Also check external http(s) markdown links and report failures as warnings.",
     )
+    parser.add_argument(
+        "--check-rag-index",
+        action="store_true",
+        help="Also compare the curated markdown wiki with the configured Qdrant wiki index.",
+    )
+    parser.add_argument("--rag-collection", default=None, help="Qdrant wiki collection override.")
+    parser.add_argument("--rag-qdrant-url", default=None, help="Qdrant URL override.")
+    parser.add_argument("--rag-embedding-model", default=None, help="Expected wiki embedding model.")
+    parser.add_argument(
+        "--rag-embedding-dimension",
+        type=int,
+        default=None,
+        help="Expected wiki embedding dimension.",
+    )
+    parser.add_argument(
+        "--rag-categories",
+        default=DEFAULT_WIKI_CATEGORIES,
+        help="Comma-separated wiki categories included in the Qdrant markdown index.",
+    )
+    parser.add_argument(
+        "--rag-max-chars",
+        type=int,
+        default=DEFAULT_WIKI_CHUNK_MAX_CHARS,
+        help="Markdown chunk max character length used by the wiki indexer.",
+    )
     args = parser.parse_args(argv)
 
-    report = run_doctor(Path(args.root), check_external_links=args.check_external_links)
+    report = run_doctor(
+        Path(args.root),
+        check_external_links=args.check_external_links,
+        check_rag_index=args.check_rag_index,
+        rag_collection=args.rag_collection,
+        rag_qdrant_url=args.rag_qdrant_url,
+        rag_embedding_model=args.rag_embedding_model,
+        rag_embedding_dimension=args.rag_embedding_dimension,
+        rag_categories=args.rag_categories,
+        rag_max_chars=args.rag_max_chars,
+    )
     if args.format == "json":
         print(json.dumps(report.as_dict(), indent=2, ensure_ascii=False))
     elif args.format == "github":

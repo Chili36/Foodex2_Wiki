@@ -4,6 +4,7 @@
 .env
 __pycache__/
 *.pyc
+~$*
 .claude/settings.local.json
 .claude/ralph-loop-budget.json
 foodex2_agent_app/

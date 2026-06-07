@@ -1,6 +1,6 @@
 ---
 title: "Project Context"
-last_updated: "2026-05-29"
+last_updated: "2026-05-30"
 source_inspiration:
   - "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f"
   - "https://github.com/VectifyAI/OpenKB"
@@ -48,11 +48,12 @@ The repo already has a markdown-native graph: frontmatter `related` links, inlin
 
 Because FoodEx2 source additions are rare, the project should favor deliberate compilation over automatic watch-mode ingestion. Long-document indexing, tree summaries, and long-context retrieval are useful during source ingest or source audit, but the durable runtime surface should remain compiled wiki pages served through the wiki API.
 
-At runtime the wiki now has two main non-final modes:
+At runtime the wiki now has three main non-final modes:
 
 - `/wiki/ask` for compact wiki-grounded guidance such as "what should I think about?"
+- `/wiki/ask-rag` for compact guidance using Qdrant retrieval over either curated wiki markdown or raw source documents
 - `/wiki/context-pack` for selected page evidence that a downstream classifier can place into its own prompt
 
-Both modes use the compiled markdown layer. They differ in output shape: `/wiki/ask` synthesizes a short cited answer, while `/wiki/context-pack` returns prompt-ready pages.
+The modes differ in retrieval method and output shape: `/wiki/ask` synthesizes a short cited answer from selected markdown pages, `/wiki/ask-rag` returns the same answer shape from Qdrant-backed wiki or source chunks, and `/wiki/context-pack` returns prompt-ready pages. `/wiki/ask` also supports provider-aware per-request selector and answerer model overrides so callers can choose the right cost and quality point without changing service defaults.
 
 The detailed architecture decision lives in [[KNOWLEDGE_ARCHITECTURE]].

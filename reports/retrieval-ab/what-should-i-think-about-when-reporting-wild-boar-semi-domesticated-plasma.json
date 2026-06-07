@@ -1,0 +1,808 @@
+{
+  "question": "What should I think about when reporting Wild boar (Semi-domesticated) - Plasma?",
+  "answerer_model": "claude-sonnet-4-6",
+  "embedding_model": "voyage-context-3",
+  "embedding_dimension": 1024,
+  "runs": [
+    {
+      "mode": "normal_markdown_ask",
+      "question": "What should I think about when reporting Wild boar (Semi-domesticated) - Plasma?",
+      "status_code": 200,
+      "elapsed_ms": 26428,
+      "request_payload": {
+        "question": "What should I think about when reporting Wild boar (Semi-domesticated) - Plasma?",
+        "max_pages": 7,
+        "include_page_content": false,
+        "use_graph_expansion": true
+      },
+      "response": {
+        "answer": "Key considerations for coding Wild boar (Semi-domesticated) - Plasma in VMPR context:\n\n- **Base term**: Select a suitable base term from the VetDrugRes hierarchy. Plasma is a blood-fraction matrix, so look for a non-food animal matrix or a plasma-specific term. If no exact term exists, use `A0C60 Non-food animal-related matrices` as a fallback and add explicit `F01 Source` and `F02 Part-nature` to specify wild boar source and plasma part.\n\n- **F01 Source**: Wild boar source facet is `F01.A056Y` (wild boar). This is operationally significant because `A056Y` is one of the designated game-source codes that triggers `Game=1` in the downstream VMPR legislative mapping.\n\n- **F02 Part-nature**: Plasma must be specified explicitly via `F02` since the base term alone will not convey it. Add the appropriate plasma descriptor under `F02`.\n\n- **Wild vs. semi-domesticated tension — the most critical decision**: `F21.A07RY` (`Wild, gathered or hunted`) drives the `Wild=1` flag, which in the final legislative mapping overrides the `Game` flag and assigns `MC008A Game (Wild Game)`. If the animal is semi-domesticated (i.e., farmed/ranched, not truly hunted), you should **not** add `F21.A07RY`. Omitting it means `Wild=0`, `Game=1` (from `F01.A056Y`), and the sample routes to `MC007A Game (Farmed Game)` instead. This distinction is operationally meaningful — verify the actual production method before deciding.\n\n- **F21 Production method**: If the animal is confirmed as farmed/semi-domesticated, do not add `F21.A07RY`. If it is genuinely wild or hunted, `F21.A07RY` is not optional — omitting it will prevent the downstream VMPR mapping from promoting the sample into the wild-game route.\n\n- **F01/F02 are mandatory in VMPR**: Unlike general FoodEx2 coding, VMPR requires explicit `F01` and `F02` on animal-product matrices because they directly feed the classifier stages.\n\n- **Downstream mapping consequence**: With `F01.A056Y` present, the `Game` flag fires. The final legislative output (`FoodClassVMPR_report`) will be `MC007A` (farmed game) or `MC008A` (wild game) depending solely on whether `F21.A07RY` is present.",
+        "citations": [
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "facet-coding-rules.md",
+          "base-term-selection.md"
+        ],
+        "pages_used": [
+          "index.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "base-term-selection.md",
+          "facet-coding-rules.md",
+          "chemical-monitoring-foodex2.md",
+          "domain-specific-validation.md",
+          "term-type-facet-constraints.md",
+          "implicit-vs-explicit-facets.md",
+          "maintenance-2024.md",
+          "foodex2-overview.md",
+          "ingredient-facets.md",
+          "process-facets.md"
+        ],
+        "pages": [
+          {
+            "page_name": "index.md",
+            "title": "Wiki Index",
+            "summary": "Top-level catalog for the FoodEx2 wiki layer.",
+            "category": "orientation",
+            "sources": [],
+            "related": [],
+            "content": null
+          },
+          {
+            "page_name": "vmpr-foodex2.md",
+            "title": "FoodEx2 In VMPR Monitoring",
+            "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices such as urine, plasma, serum, blood, hair, and feathers, and Plan 3 F33.",
+            "category": "domain_overlay",
+            "sources": [
+              "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+              "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf",
+              "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf"
+            ],
+            "related": [
+              "[[chemical-monitoring-foodex2]]",
+              "[[domain-specific-validation]]",
+              "[[term-type-facet-constraints]]",
+              "[[implicit-vs-explicit-facets]]",
+              "[[maintenance-2024]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "vmpr-legislative-mapping.md",
+            "title": "VMPR Legislative Mapping",
+            "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+            "category": "domain_overlay",
+            "sources": [
+              "Guidance VMPR mapping to legislative products.pdf"
+            ],
+            "related": [
+              "[[chemical-monitoring-foodex2]]",
+              "[[domain-specific-validation]]",
+              "[[maintenance-2024]]",
+              "[[facet-coding-rules]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "base-term-selection.md",
+            "title": "Base Term Selection Rules",
+            "summary": "Rules for choosing the right base term, including tie-breaks and missing-term handling.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
+            ],
+            "related": [
+              "[[foodex2-overview]]",
+              "[[implicit-vs-explicit-facets]]",
+              "[[ingredient-facets]]",
+              "[[process-facets]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "facet-coding-rules.md",
+            "title": "Facet Coding Rules",
+            "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+            ],
+            "related": [
+              "[[foodex2-overview]]",
+              "[[implicit-vs-explicit-facets]]",
+              "[[process-facets]]",
+              "[[ingredient-facets]]",
+              "[[packaging-facets]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "chemical-monitoring-foodex2.md",
+            "title": "FoodEx2 In Chemical Monitoring",
+            "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+            "category": "domain_overlay",
+            "sources": [
+              "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf",
+              "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+              "Guidance VMPR mapping to legislative products.pdf"
+            ],
+            "related": [
+              "[[foodex2-overview]]",
+              "[[facet-coding-rules]]",
+              "[[implicit-vs-explicit-facets]]",
+              "[[pesticides-foodex2]]",
+              "[[contaminants-foodex2]]",
+              "[[domoic-acid-scallops]]",
+              "[[vmpr-foodex2]]",
+              "[[additives-flavourings-foodex2]]",
+              "[[maintenance-2024]]",
+              "[[domain-specific-validation]]",
+              "[[vmpr-legislative-mapping]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "domain-specific-validation.md",
+            "title": "Domain-Specific Validation",
+            "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+            "category": "domain_overlay",
+            "sources": [
+              "docs/DOMAIN_SPECIFIC_RULES.md",
+              "docs/CONTEXT_SPECIFIC_RULES.md",
+              "BUSINESS-RULES-COMPACT.json",
+              "Guidance VMPR mapping to legislative products.pdf",
+              "Reportable Scallops list of FoodEx2 codes - MTX.xlsx"
+            ],
+            "related": [
+              "[[business-rules]]",
+              "[[chemical-monitoring-foodex2]]",
+              "[[pesticides-foodex2]]",
+              "[[contaminants-foodex2]]",
+              "[[domoic-acid-scallops]]",
+              "[[vmpr-foodex2]]",
+              "[[additives-flavourings-foodex2]]",
+              "[[facet-coding-rules]]",
+              "[[validation-rules]]",
+              "[[vmpr-legislative-mapping]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "term-type-facet-constraints.md",
+            "title": "Term Type And Facet Constraints",
+            "summary": "Allowed and forbidden facets by FoodEx2 term type.",
+            "category": "validation",
+            "sources": [
+              "BUSINESS-RULES.md",
+              "BUSINESS-RULES-COMPACT.json",
+              "docs/VALIDATION_RULES_SUMMARY.md",
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+            ],
+            "related": [
+              "[[base-term-selection]]",
+              "[[business-rules]]",
+              "[[facet-coding-rules]]",
+              "[[validation-rules]]",
+              "[[process-validation-rules]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "implicit-vs-explicit-facets.md",
+            "title": "Implicit vs Explicit Facets",
+            "summary": "Distinguishes inherited facet information from coder-supplied facet detail.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+            ],
+            "related": [
+              "[[foodex2-overview]]",
+              "[[facet-coding-rules]]",
+              "[[base-term-selection]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "maintenance-2024.md",
+            "title": "FoodEx2 Maintenance 2024",
+            "summary": "VetDrugRes overhaul and expanded legislative mapping.",
+            "category": "maintenance",
+            "sources": [
+              "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf"
+            ],
+            "related": [
+              "[[maintenance-history]]",
+              "[[maintenance-2023]]",
+              "[[facet-coding-rules]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "foodex2-overview.md",
+            "title": "FoodEx2 Overview",
+            "summary": "High-level explanation of FoodEx2 purpose, hierarchy model, and coding philosophy.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
+            ],
+            "related": [
+              "[[base-term-selection]]",
+              "[[facet-coding-rules]]",
+              "[[code-string-format]]",
+              "[[implicit-vs-explicit-facets]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "ingredient-facets.md",
+            "title": "Ingredient Facets",
+            "summary": "Rules for characterising ingredients, mixed foods, composite coding, and minor flavouring/added-ingredient use on derivatives.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
+            ],
+            "related": [
+              "[[facet-coding-rules]]",
+              "[[base-term-selection]]",
+              "[[implicit-vs-explicit-facets]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "process-facets.md",
+            "title": "Process Facets",
+            "summary": "Compact reference for Appendix A2 process facet codes and when to use them.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+            ],
+            "related": [
+              "[[facet-coding-rules]]",
+              "[[base-term-selection]]",
+              "[[code-string-format]]"
+            ],
+            "content": null
+          }
+        ],
+        "trace": {
+          "index_used": true,
+          "max_pages": 7,
+          "selection_method": "service-owned llm page selector + answerer",
+          "retrieval": {
+            "model": "claude-sonnet-4-6",
+            "tool_trace": [
+              {
+                "page_name": "vmpr-foodex2.md",
+                "order": 1,
+                "chars": 3782,
+                "synthetic": false
+              },
+              {
+                "page_name": "vmpr-legislative-mapping.md",
+                "order": 2,
+                "chars": 6907,
+                "synthetic": false
+              },
+              {
+                "page_name": "base-term-selection.md",
+                "order": 3,
+                "chars": 5651,
+                "synthetic": false
+              },
+              {
+                "page_name": "facet-coding-rules.md",
+                "order": 4,
+                "chars": 7700,
+                "synthetic": false
+              }
+            ],
+            "token_summary": {
+              "model": "claude-sonnet-4-6",
+              "calls": 1,
+              "input_tokens": 3279,
+              "output_tokens": 172,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "total_tracked_tokens": 3451,
+              "per_call": [
+                {
+                  "stop_reason": "tool_use",
+                  "input_tokens": 3279,
+                  "output_tokens": 172,
+                  "cache_creation_input_tokens": 0,
+                  "cache_read_input_tokens": 0,
+                  "total_tracked_tokens": 3451
+                }
+              ]
+            },
+            "timing_summary": {
+              "calls": 1,
+              "llm_time_ms": 3865,
+              "per_call": [
+                {
+                  "call_number": 1,
+                  "duration_ms": 3865,
+                  "stop_reason": "tool_use"
+                }
+              ],
+              "selector_wall_time_ms": 3876
+            }
+          },
+          "graph_expansion": {
+            "enabled": true,
+            "neighbors_added": [
+              "chemical-monitoring-foodex2.md",
+              "domain-specific-validation.md",
+              "term-type-facet-constraints.md",
+              "implicit-vs-explicit-facets.md",
+              "maintenance-2024.md",
+              "foodex2-overview.md",
+              "ingredient-facets.md",
+              "process-facets.md"
+            ],
+            "neighbors_count": 8
+          },
+          "answerer": {
+            "model": "claude-sonnet-4-6",
+            "token_summary": {
+              "model": "claude-sonnet-4-6",
+              "calls": 1,
+              "input_tokens": 8571,
+              "output_tokens": 678,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "total_tracked_tokens": 9249,
+              "per_call": [
+                {
+                  "stop_reason": "end_turn",
+                  "input_tokens": 8571,
+                  "output_tokens": 678,
+                  "cache_creation_input_tokens": 0,
+                  "cache_read_input_tokens": 0,
+                  "total_tracked_tokens": 9249
+                }
+              ]
+            },
+            "timing_summary": {
+              "calls": 1,
+              "llm_time_ms": 22493,
+              "per_call": [
+                {
+                  "call_number": 1,
+                  "duration_ms": 22493,
+                  "stop_reason": "end_turn"
+                }
+              ],
+              "answerer_wall_time_ms": 22493
+            }
+          },
+          "total": {
+            "request_wall_time_ms": 26394,
+            "total_llm_calls": 2,
+            "total_tracked_tokens": 12700
+          },
+          "phase_timings_ms": {
+            "selector_total": 3876,
+            "page_read": 4,
+            "graph_expansion": 14,
+            "answerer_total": 22493
+          }
+        }
+      }
+    },
+    {
+      "mode": "qdrant_ask_emulation",
+      "question": "What should I think about when reporting Wild boar (Semi-domesticated) - Plasma?",
+      "retrieval_collection": "foodex2_wiki_markdown_v1",
+      "elapsed_ms": 12558,
+      "embedding": {
+        "provider": "voyage",
+        "model": "voyage-context-3",
+        "dimension": 1024,
+        "elapsed_ms": 315,
+        "usage": {
+          "total_tokens": 19
+        },
+        "tracked_tokens": 19
+      },
+      "retrieval": {
+        "provider": "qdrant",
+        "collection": "foodex2_wiki_markdown_v1",
+        "elapsed_ms": 38,
+        "limit": 7,
+        "results": [
+          {
+            "score": 0.39533162,
+            "page_name": "vmpr-foodex2.md",
+            "heading_path": "FoodEx2 In VMPR Monitoring > Worked Signals",
+            "category": "domain_overlay",
+            "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices, and Plan 3 F33."
+          },
+          {
+            "score": 0.35347563,
+            "page_name": "domain-specific-validation.md",
+            "heading_path": "Domain-Specific Validation > Common Mandatory Or Recommended Facets",
+            "category": "domain_overlay",
+            "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays."
+          },
+          {
+            "score": 0.35347128,
+            "page_name": "chemical-monitoring-foodex2.md",
+            "heading_path": "FoodEx2 In Chemical Monitoring > Worked Examples",
+            "category": "domain_overlay",
+            "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages."
+          },
+          {
+            "score": 0.35010058,
+            "page_name": "chemical-monitoring-foodex2.md",
+            "heading_path": "FoodEx2 In Chemical Monitoring > VMPR-Specific Rules",
+            "category": "domain_overlay",
+            "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages."
+          },
+          {
+            "score": 0.3423386,
+            "page_name": "vmpr-foodex2.md",
+            "heading_path": "FoodEx2 In VMPR Monitoring > Core VMPR Requirements",
+            "category": "domain_overlay",
+            "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices, and Plan 3 F33."
+          },
+          {
+            "score": 0.3196159,
+            "page_name": "domain-specific-validation.md",
+            "heading_path": "Domain-Specific Validation > Worked Examples",
+            "category": "domain_overlay",
+            "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays."
+          },
+          {
+            "score": 0.3165184,
+            "page_name": "vmpr-legislative-mapping.md",
+            "heading_path": "VMPR Legislative Mapping > Practical Consequences For Coding",
+            "category": "domain_overlay",
+            "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups."
+          }
+        ]
+      },
+      "answerer": {
+        "model": "claude-sonnet-4-6",
+        "elapsed_ms": 12204,
+        "token_summary": {
+          "model": "claude-sonnet-4-6",
+          "calls": 1,
+          "input_tokens": 3912,
+          "output_tokens": 519,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "total_tracked_tokens": 4431,
+          "per_call": [
+            {
+              "stop_reason": "end_turn",
+              "input_tokens": 3912,
+              "output_tokens": 519,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "total_tracked_tokens": 4431
+            }
+          ]
+        },
+        "timing_summary": {
+          "calls": 1,
+          "llm_time_ms": 12164,
+          "per_call": [
+            {
+              "call_number": 1,
+              "duration_ms": 12164,
+              "stop_reason": "end_turn"
+            }
+          ],
+          "answerer_wall_time_ms": 12164
+        }
+      },
+      "total": {
+        "elapsed_ms": 12558,
+        "llm_calls": 1,
+        "answerer_tracked_tokens": 4431,
+        "embedding_tracked_tokens": 19,
+        "combined_known_tokens": 4450
+      },
+      "answer": "When coding Wild boar (Semi-domesticated) - Plasma for VMPR reporting, keep these points in mind:\n\n- **Wild status facet**: Wild boar that is truly wild or hunted requires explicit `F21.A07RY` (Wild, gathered or hunted). Without it, the downstream ETL cannot set `Wild=1` and the sample will fall onto the ordinary game route instead of the wild-game route. If the animal is semi-domesticated (i.e., not hunted/gathered), you need to assess whether `F21.A07RY` actually applies — semi-domesticated status may mean it does *not* qualify as wild, so do not add it automatically.\n\n- **F01 (Source) and F02 (Part-nature) are mandatory**: For standard VMPR animal-product matrices, both must be present explicitly. Plasma is a non-standard matrix, so explicit `F02` (part-nature = plasma) and `F01` (source = wild boar) are required.\n\n- **Non-food matrix consideration**: If plasma is not used as a food matrix, the base term `A0C60` (Non-food animal-related matrices) may apply, which also requires explicit `F01` and `F02`.\n\n- **Semi-domesticated production method**: If the animal is semi-domesticated rather than fully wild or farmed, confirm whether a production-method facet (F20 or F21) needs to be stated explicitly. The pages warn that omitting relevant production-method facets can change the downstream VMPR classifier result.\n\n- **Downstream impact**: EFSA's VMPR mapping derives `Game`, `Wild`, `FoodClassVMPR`, and `FoodClassVMPR_report` from the final `sampMatCode`. Getting `F21`, `F01`, and `F02` right is what determines which legislative commodity group the sample lands in — not just syntax validity.",
+      "citations": [
+        "vmpr-foodex2.md",
+        "domain-specific-validation.md",
+        "chemical-monitoring-foodex2.md",
+        "vmpr-legislative-mapping.md"
+      ]
+    },
+    {
+      "mode": "qdrant_ask_emulation",
+      "question": "What should I think about when reporting Wild boar (Semi-domesticated) - Plasma?",
+      "retrieval_collection": "foodex2_source_docs_v1",
+      "elapsed_ms": 18176,
+      "embedding": {
+        "provider": "voyage",
+        "model": "voyage-context-3",
+        "dimension": 1024,
+        "elapsed_ms": 281,
+        "usage": {
+          "total_tokens": 19
+        },
+        "tracked_tokens": 19
+      },
+      "retrieval": {
+        "provider": "qdrant",
+        "collection": "foodex2_source_docs_v1",
+        "elapsed_ms": 43,
+        "limit": 7,
+        "results": [
+          {
+            "score": 0.3379259,
+            "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "location": "page 50",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.3287515,
+            "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "location": "page 52",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.32803884,
+            "source_file": "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "location": "page 54",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.32575977,
+            "source_file": "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "location": "page 52",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.32324457,
+            "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "location": "page 46",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.31563556,
+            "source_file": "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "location": "page 48",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.31401426,
+            "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "location": "page 44",
+            "source_suffix": "pdf"
+          }
+        ]
+      },
+      "answerer": {
+        "model": "claude-sonnet-4-6",
+        "elapsed_ms": 17850,
+        "token_summary": {
+          "model": "claude-sonnet-4-6",
+          "calls": 1,
+          "input_tokens": 6606,
+          "output_tokens": 855,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "total_tracked_tokens": 7461,
+          "per_call": [
+            {
+              "stop_reason": "end_turn",
+              "input_tokens": 6606,
+              "output_tokens": 855,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "total_tracked_tokens": 7461
+            }
+          ]
+        },
+        "timing_summary": {
+          "calls": 1,
+          "llm_time_ms": 17828,
+          "per_call": [
+            {
+              "call_number": 1,
+              "duration_ms": 17828,
+              "stop_reason": "end_turn"
+            }
+          ],
+          "answerer_wall_time_ms": 17828
+        }
+      },
+      "total": {
+        "elapsed_ms": 18176,
+        "llm_calls": 1,
+        "answerer_tracked_tokens": 7461,
+        "embedding_tracked_tokens": 19,
+        "combined_known_tokens": 7480
+      },
+      "answer": "When reporting Wild boar (Semi-domesticated) – Plasma, consider the following:\n\n- Use A0C60 (Non-food animal-related matrices) as the base term, adding F01 for the wild boar animal source and F02 for plasma as the part nature — following the same structure as the sheep blood serum example (A0C60#F01.[animal]$F02.[part]).\n- The semi-domesticated status is critical: facet F21=A07RY ('wild or gathered or hunted') should only be applied if the animal is truly wild/hunted. Since this animal is semi-domesticated, A07RY should likely NOT be added. The guidance explicitly flags this distinction for wild boar.\n- If production intensity is known, F21 can carry A0C6Q (intensive) or A18FG (extensive/non-intensive) to further describe the semi-domesticated context.\n- Use the appropriate F02 sub-code for plasma (similar to A0CEY used for blood serum); the exact plasma code must be confirmed in the FoodEx2 browser, as it is not explicitly listed in the retrieved pages.\n- The exact F01 code for wild boar also needs to be verified in the FoodEx2 catalogue, as the pages do not provide it explicitly.",
+      "citations": [
+        "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf :: page 50",
+        "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf :: page 46",
+        "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf :: page 52",
+        "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf :: page 48"
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "mode": "normal_markdown_ask",
+      "status_code": 200,
+      "elapsed_ms": 26428,
+      "trace_total_ms": 26394,
+      "total_tokens": 12700,
+      "retrieval_tokens": 3451,
+      "answerer_tokens": 9249,
+      "llm_calls": 2,
+      "pages_used": [
+        "index.md",
+        "vmpr-foodex2.md",
+        "vmpr-legislative-mapping.md",
+        "base-term-selection.md",
+        "facet-coding-rules.md",
+        "chemical-monitoring-foodex2.md",
+        "domain-specific-validation.md",
+        "term-type-facet-constraints.md",
+        "implicit-vs-explicit-facets.md",
+        "maintenance-2024.md",
+        "foodex2-overview.md",
+        "ingredient-facets.md",
+        "process-facets.md"
+      ],
+      "citations": [
+        "vmpr-foodex2.md",
+        "vmpr-legislative-mapping.md",
+        "facet-coding-rules.md",
+        "base-term-selection.md"
+      ]
+    },
+    {
+      "mode": "qdrant_ask_emulation",
+      "collection": "foodex2_wiki_markdown_v1",
+      "elapsed_ms": 12558,
+      "total_tokens": 4450,
+      "answerer_tokens": 4431,
+      "embedding_tokens": 19,
+      "llm_calls": 1,
+      "results": [
+        {
+          "score": 0.39533162,
+          "page_name": "vmpr-foodex2.md",
+          "heading_path": "FoodEx2 In VMPR Monitoring > Worked Signals",
+          "category": "domain_overlay",
+          "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices, and Plan 3 F33."
+        },
+        {
+          "score": 0.35347563,
+          "page_name": "domain-specific-validation.md",
+          "heading_path": "Domain-Specific Validation > Common Mandatory Or Recommended Facets",
+          "category": "domain_overlay",
+          "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays."
+        },
+        {
+          "score": 0.35347128,
+          "page_name": "chemical-monitoring-foodex2.md",
+          "heading_path": "FoodEx2 In Chemical Monitoring > Worked Examples",
+          "category": "domain_overlay",
+          "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages."
+        },
+        {
+          "score": 0.35010058,
+          "page_name": "chemical-monitoring-foodex2.md",
+          "heading_path": "FoodEx2 In Chemical Monitoring > VMPR-Specific Rules",
+          "category": "domain_overlay",
+          "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages."
+        },
+        {
+          "score": 0.3423386,
+          "page_name": "vmpr-foodex2.md",
+          "heading_path": "FoodEx2 In VMPR Monitoring > Core VMPR Requirements",
+          "category": "domain_overlay",
+          "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices, and Plan 3 F33."
+        },
+        {
+          "score": 0.3196159,
+          "page_name": "domain-specific-validation.md",
+          "heading_path": "Domain-Specific Validation > Worked Examples",
+          "category": "domain_overlay",
+          "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays."
+        },
+        {
+          "score": 0.3165184,
+          "page_name": "vmpr-legislative-mapping.md",
+          "heading_path": "VMPR Legislative Mapping > Practical Consequences For Coding",
+          "category": "domain_overlay",
+          "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups."
+        }
+      ],
+      "citations": [
+        "vmpr-foodex2.md",
+        "domain-specific-validation.md",
+        "chemical-monitoring-foodex2.md",
+        "vmpr-legislative-mapping.md"
+      ]
+    },
+    {
+      "mode": "qdrant_ask_emulation",
+      "collection": "foodex2_source_docs_v1",
+      "elapsed_ms": 18176,
+      "total_tokens": 7480,
+      "answerer_tokens": 7461,
+      "embedding_tokens": 19,
+      "llm_calls": 1,
+      "results": [
+        {
+          "score": 0.3379259,
+          "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "location": "page 50",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.3287515,
+          "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "location": "page 52",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.32803884,
+          "source_file": "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+          "location": "page 54",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.32575977,
+          "source_file": "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+          "location": "page 52",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.32324457,
+          "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "location": "page 46",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.31563556,
+          "source_file": "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+          "location": "page 48",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.31401426,
+          "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "location": "page 44",
+          "source_suffix": "pdf"
+        }
+      ],
+      "citations": [
+        "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf :: page 50",
+        "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf :: page 46",
+        "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf :: page 52",
+        "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf :: page 48"
+      ]
+    }
+  ]
+}
