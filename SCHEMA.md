@@ -1,6 +1,6 @@
 ---
 title: "Wiki Schema"
-last_updated: "2026-05-29"
+last_updated: "2026-05-30"
 sources:
   - "PROJECT_CONTEXT.md"
   - "KNOWLEDGE_ARCHITECTURE.md"
@@ -224,11 +224,15 @@ See [[KNOWLEDGE_ARCHITECTURE]] for the runtime stance: compiled wiki pages are t
 ## Runtime Serving Rules
 
 - `/wiki/ask` is the compact guidance endpoint. It selects wiki pages, can add graph-expanded summary context, and returns a cited answer. Use it for strategy briefs, routing questions, and quick "what should I think about?" guidance.
+- `/wiki/ask` callers may supply optional `selector_model` and `answerer_model` request fields to choose the page-selection and answer-synthesis models for that request. If omitted, the service uses the configured environment defaults. `claude*` models route to Anthropic, `gpt*` models route to OpenAI, and `gemini*` models route to the Gemini API.
+- `/wiki/ask-rag` is the compact guidance endpoint for vector retrieval experiments. It accepts the same kind of natural-language question as `/wiki/ask`, plus `retrieval_mode: "wiki"` for `foodex2_wiki_markdown_v1` or `retrieval_mode: "source"` for `foodex2_source_docs_v1`. Its response shape matches `/wiki/ask` and adds embedding plus Qdrant trace metadata.
 - `/wiki/context-pack` is the page-evidence endpoint. It returns prompt-ready pages and trace metadata for a downstream classifier.
 - `RUNTIME_RULES.md` is the compact always-on prompt-facing page for `context-pack` and other page-evidence prompt contexts.
 - `policy-contract.md` remains the richer control page used by structured and solver-oriented flows.
 - `business-rules.md` is not automatically attached to every request. It should be reached through relevant pages and explicit need.
-- `ask` answers are grounded in selected pages, but they are not a replacement for catalogue term data, candidate retrieval, or validator output.
+- `ask` and `ask-rag` answers are grounded in retrieved text, but they are not a replacement for catalogue term data, candidate retrieval, or validator output.
+- `foodex2_wiki_markdown_v1` is an optional Qdrant collection built from the served markdown pages for retrieval A/B testing. Its payload mirrors wiki concepts (`page_name`, `category`, `heading_path`, `summary`, `source_path`, `sources`, `related`, and `content`) and must be rebuilt from markdown rather than edited directly.
+- `foodex2_source_docs_v1` is an optional Qdrant collection built from immutable source files under `foodex2_docs/`. Its payload uses source-oriented fields (`source_file`, `source_path`, `source_suffix`, `location`, page/section metadata, and `content`) and is intended for source-audit or hybrid-retrieval experiments.
 
 ## Ingest Checklist
 

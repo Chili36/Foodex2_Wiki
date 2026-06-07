@@ -1,0 +1,712 @@
+{
+  "question": "What should I think about when coding cucumber finger sandwhich with mayo?",
+  "answerer_model": "claude-sonnet-4-6",
+  "embedding_model": "voyage-context-3",
+  "embedding_dimension": 1024,
+  "runs": [
+    {
+      "mode": "normal_markdown_ask",
+      "question": "What should I think about when coding cucumber finger sandwhich with mayo?",
+      "status_code": 200,
+      "elapsed_ms": 18217,
+      "request_payload": {
+        "question": "What should I think about when coding cucumber finger sandwhich with mayo?",
+        "max_pages": 7,
+        "include_page_content": false,
+        "use_graph_expansion": true
+      },
+      "response": {
+        "answer": "A cucumber finger sandwich with mayo is a composite food. Here is the decision path:\n\n- **Food type**: This is a composite — multiple ingredients of different natures (bread, cucumber, mayo) combined in a recipe. Do not try to code it as a raw commodity or a single derivative. (base-term-selection.md)\n\n- **Base term**: Look for a composite sandwich or filled bread/roll term. If no single ingredient clearly dominates, apply the tie-break priority: meat > fish > cheese/dairy > egg > legume > potato > cereal > fruit > vegetable. Cucumber is a vegetable and mayo is a condiment, but bread (cereal) outranks vegetable in that priority list, so if no dedicated sandwich composite exists, a cereal-based composite sandwich term is the strongest candidate. If an exact \"sandwich\" composite term exists in the catalogue, prefer that. (base-term-selection.md)\n\n- **Implicit facets**: Once you select a composite sandwich base term, do not restate what it already implies (e.g., bread as the base). (implicit-vs-explicit-facets.md)\n\n- **Explicit F04 ingredient facets**: Add one or a few characterising ingredients that distinguish this sandwich — cucumber is the key characterising ingredient; mayo could also be added if it materially distinguishes the product. Do not list every component; only the signal-bearing ones. (ingredient-facets.md)\n\n- **Process facets (F28)**: Only add if a treatment is not already implicit in the base term. If the sandwich is simply assembled and not cooked, no F28 is needed. If it were toasted, F28.A07HC would be relevant. (process-facets.md)\n\n- **Other facets**: Consider F10 for qualitative attributes (e.g., light mayo) only if they matter for your reporting purpose. Packaging facets (F18/F19) apply only if packaging detail is required by your domain. (facet-coding-rules.md)\n\n- **Validation check**: Composites cannot use F01 (source) or F27 (source commodity) — those are forbidden on composite base terms. F04 is the correct origin facet here. (ingredient-facets.md, implicit-vs-explicit-facets.md)",
+        "citations": [
+          "base-term-selection.md",
+          "ingredient-facets.md",
+          "implicit-vs-explicit-facets.md",
+          "process-facets.md",
+          "facet-coding-rules.md"
+        ],
+        "pages_used": [
+          "index.md",
+          "base-term-selection.md",
+          "ingredient-facets.md",
+          "process-facets.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "foodex2-overview.md",
+          "code-string-format.md",
+          "packaging-facets.md"
+        ],
+        "pages": [
+          {
+            "page_name": "index.md",
+            "title": "Wiki Index",
+            "summary": "Top-level catalog for the FoodEx2 wiki layer.",
+            "category": "orientation",
+            "sources": [],
+            "related": [],
+            "content": null
+          },
+          {
+            "page_name": "base-term-selection.md",
+            "title": "Base Term Selection Rules",
+            "summary": "Rules for choosing the right base term, including tie-breaks and missing-term handling.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
+            ],
+            "related": [
+              "[[foodex2-overview]]",
+              "[[implicit-vs-explicit-facets]]",
+              "[[ingredient-facets]]",
+              "[[process-facets]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "ingredient-facets.md",
+            "title": "Ingredient Facets",
+            "summary": "Rules for characterising ingredients, mixed foods, composite coding, and minor flavouring/added-ingredient use on derivatives.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
+            ],
+            "related": [
+              "[[facet-coding-rules]]",
+              "[[base-term-selection]]",
+              "[[implicit-vs-explicit-facets]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "process-facets.md",
+            "title": "Process Facets",
+            "summary": "Compact reference for Appendix A2 process facet codes and when to use them.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+            ],
+            "related": [
+              "[[facet-coding-rules]]",
+              "[[base-term-selection]]",
+              "[[code-string-format]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "facet-coding-rules.md",
+            "title": "Facet Coding Rules",
+            "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+            ],
+            "related": [
+              "[[foodex2-overview]]",
+              "[[implicit-vs-explicit-facets]]",
+              "[[process-facets]]",
+              "[[ingredient-facets]]",
+              "[[packaging-facets]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "implicit-vs-explicit-facets.md",
+            "title": "Implicit vs Explicit Facets",
+            "summary": "Distinguishes inherited facet information from coder-supplied facet detail.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+            ],
+            "related": [
+              "[[foodex2-overview]]",
+              "[[facet-coding-rules]]",
+              "[[base-term-selection]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "foodex2-overview.md",
+            "title": "FoodEx2 Overview",
+            "summary": "High-level explanation of FoodEx2 purpose, hierarchy model, and coding philosophy.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
+            ],
+            "related": [
+              "[[base-term-selection]]",
+              "[[facet-coding-rules]]",
+              "[[code-string-format]]",
+              "[[implicit-vs-explicit-facets]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "code-string-format.md",
+            "title": "FoodEx2 Code String Format",
+            "summary": "Exact FoodEx2 code syntax, separators, and ordering conventions.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+            ],
+            "related": [
+              "[[foodex2-overview]]",
+              "[[facet-coding-rules]]",
+              "[[implicit-vs-explicit-facets]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "packaging-facets.md",
+            "title": "Packaging Facets",
+            "summary": "When to use `F18` packaging-format and `F19` packaging-material, and how they differ from `F28` process.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+            ],
+            "related": [
+              "[[facet-coding-rules]]",
+              "[[code-string-format]]",
+              "[[process-facets]]",
+              "[[chemical-monitoring-foodex2]]"
+            ],
+            "content": null
+          }
+        ],
+        "trace": {
+          "index_used": true,
+          "max_pages": 7,
+          "selection_method": "service-owned llm page selector + answerer",
+          "retrieval": {
+            "model": "claude-sonnet-4-6",
+            "tool_trace": [
+              {
+                "page_name": "base-term-selection.md",
+                "order": 1,
+                "chars": 5651,
+                "synthetic": false
+              },
+              {
+                "page_name": "ingredient-facets.md",
+                "order": 2,
+                "chars": 4226,
+                "synthetic": false
+              },
+              {
+                "page_name": "process-facets.md",
+                "order": 3,
+                "chars": 7103,
+                "synthetic": false
+              },
+              {
+                "page_name": "facet-coding-rules.md",
+                "order": 4,
+                "chars": 7700,
+                "synthetic": false
+              },
+              {
+                "page_name": "implicit-vs-explicit-facets.md",
+                "order": 5,
+                "chars": 5167,
+                "synthetic": false
+              }
+            ],
+            "token_summary": {
+              "model": "claude-sonnet-4-6",
+              "calls": 1,
+              "input_tokens": 3269,
+              "output_tokens": 173,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "total_tracked_tokens": 3442,
+              "per_call": [
+                {
+                  "stop_reason": "tool_use",
+                  "input_tokens": 3269,
+                  "output_tokens": 173,
+                  "cache_creation_input_tokens": 0,
+                  "cache_read_input_tokens": 0,
+                  "total_tracked_tokens": 3442
+                }
+              ]
+            },
+            "timing_summary": {
+              "calls": 1,
+              "llm_time_ms": 3796,
+              "per_call": [
+                {
+                  "call_number": 1,
+                  "duration_ms": 3796,
+                  "stop_reason": "tool_use"
+                }
+              ],
+              "selector_wall_time_ms": 3804
+            }
+          },
+          "graph_expansion": {
+            "enabled": true,
+            "neighbors_added": [
+              "foodex2-overview.md",
+              "code-string-format.md",
+              "packaging-facets.md"
+            ],
+            "neighbors_count": 3
+          },
+          "answerer": {
+            "model": "claude-sonnet-4-6",
+            "token_summary": {
+              "model": "claude-sonnet-4-6",
+              "calls": 1,
+              "input_tokens": 9898,
+              "output_tokens": 609,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "total_tracked_tokens": 10507,
+              "per_call": [
+                {
+                  "stop_reason": "end_turn",
+                  "input_tokens": 9898,
+                  "output_tokens": 609,
+                  "cache_creation_input_tokens": 0,
+                  "cache_read_input_tokens": 0,
+                  "total_tracked_tokens": 10507
+                }
+              ]
+            },
+            "timing_summary": {
+              "calls": 1,
+              "llm_time_ms": 14396,
+              "per_call": [
+                {
+                  "call_number": 1,
+                  "duration_ms": 14396,
+                  "stop_reason": "end_turn"
+                }
+              ],
+              "answerer_wall_time_ms": 14396
+            }
+          },
+          "total": {
+            "request_wall_time_ms": 18214,
+            "total_llm_calls": 2,
+            "total_tracked_tokens": 13949
+          },
+          "phase_timings_ms": {
+            "selector_total": 3804,
+            "page_read": 4,
+            "graph_expansion": 6,
+            "answerer_total": 14396
+          }
+        }
+      }
+    },
+    {
+      "mode": "qdrant_ask_emulation",
+      "question": "What should I think about when coding cucumber finger sandwhich with mayo?",
+      "retrieval_collection": "foodex2_wiki_markdown_v1",
+      "elapsed_ms": 15609,
+      "embedding": {
+        "provider": "voyage",
+        "model": "voyage-context-3",
+        "dimension": 1024,
+        "elapsed_ms": 340,
+        "usage": {
+          "total_tokens": 13
+        },
+        "tracked_tokens": 13
+      },
+      "retrieval": {
+        "provider": "qdrant",
+        "collection": "foodex2_wiki_markdown_v1",
+        "elapsed_ms": 36,
+        "limit": 7,
+        "results": [
+          {
+            "score": 0.24698648,
+            "page_name": "contaminants-foodex2.md",
+            "heading_path": "FoodEx2 In Contaminants Monitoring > High-Impact Rules",
+            "category": "domain_overlay",
+            "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions."
+          },
+          {
+            "score": 0.23063102,
+            "page_name": "facet-coding-rules.md",
+            "heading_path": "Facet Coding Rules > Relevant Policy",
+            "category": "guidance",
+            "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+          },
+          {
+            "score": 0.22506334,
+            "page_name": "contaminants-foodex2.md",
+            "heading_path": "FoodEx2 In Contaminants Monitoring > Worked Signals",
+            "category": "domain_overlay",
+            "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions."
+          },
+          {
+            "score": 0.22045933,
+            "page_name": "facet-coding-rules.md",
+            "heading_path": "Facet Coding Rules > Worked Examples",
+            "category": "guidance",
+            "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+          },
+          {
+            "score": 0.21172528,
+            "page_name": "packaging-facets.md",
+            "heading_path": "Packaging Facets > Worked Examples",
+            "category": "guidance",
+            "summary": "When to use `F18` packaging-format and `F19` packaging-material, and how they differ from `F28` process."
+          },
+          {
+            "score": 0.21161345,
+            "page_name": "ingredient-facets.md",
+            "heading_path": "Ingredient Facets > Worked Examples",
+            "category": "guidance",
+            "summary": "Rules for characterising ingredients, mixed foods, composite coding, and minor flavouring/added-ingredient use on derivatives."
+          },
+          {
+            "score": 0.20964932,
+            "page_name": "facet-coding-rules.md",
+            "heading_path": "Facet Coding Rules > General Rule",
+            "category": "guidance",
+            "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+          }
+        ]
+      },
+      "answerer": {
+        "model": "claude-sonnet-4-6",
+        "elapsed_ms": 15231,
+        "token_summary": {
+          "model": "claude-sonnet-4-6",
+          "calls": 1,
+          "input_tokens": 3029,
+          "output_tokens": 406,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "total_tracked_tokens": 3435,
+          "per_call": [
+            {
+              "stop_reason": "end_turn",
+              "input_tokens": 3029,
+              "output_tokens": 406,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "total_tracked_tokens": 3435
+            }
+          ]
+        },
+        "timing_summary": {
+          "calls": 1,
+          "llm_time_ms": 15210,
+          "per_call": [
+            {
+              "call_number": 1,
+              "duration_ms": 15210,
+              "stop_reason": "end_turn"
+            }
+          ],
+          "answerer_wall_time_ms": 15210
+        }
+      },
+      "total": {
+        "elapsed_ms": 15609,
+        "llm_calls": 1,
+        "answerer_tracked_tokens": 3435,
+        "embedding_tracked_tokens": 13,
+        "combined_known_tokens": 3448
+      },
+      "answer": "The provided wiki pages do not contain specific guidance on coding a cucumber finger sandwich with mayo. However, based on general principles found across the pages, here is what to consider:\n\n- Base term: Look for a composite/mixed food base term that best represents a finger sandwich or filled sandwich. Avoid being more specific than the base term already implies.\n- Ingredients via F04/F27: Cucumber and mayo are meaningful characterising ingredients. Use F04 for minor or 'foreign-nature' components (e.g. mayo as a condiment), and F27 for same-nature source commodities if applicable — similar to how 'asparagus risotto' uses F04 for the characterising ingredient (ingredient-facets.md).\n- Do not repeat facets that are already implicit in the base term (facet-coding-rules.md).\n- Process facets (F28): Only add if a relevant preparation step (e.g. toasting) is not already implied by the base term.\n- Packaging (F18/F19): Only add if the marketed packaging format is relevant to your reporting context (packaging-facets.md).\n- Domain overlay: For standard dietary surveys this is straightforward; contaminants-specific rules (e.g. acrylamide F33) would only apply if this is a contaminants monitoring context (contaminants-foodex2.md).\n\nThe pages do not provide the specific base-term code for a finger sandwich, so you would need to look that up in the FoodEx2 catalogue directly.",
+      "citations": [
+        "ingredient-facets.md",
+        "facet-coding-rules.md",
+        "packaging-facets.md",
+        "contaminants-foodex2.md"
+      ]
+    },
+    {
+      "mode": "qdrant_ask_emulation",
+      "question": "What should I think about when coding cucumber finger sandwhich with mayo?",
+      "retrieval_collection": "foodex2_source_docs_v1",
+      "elapsed_ms": 12046,
+      "embedding": {
+        "provider": "voyage",
+        "model": "voyage-context-3",
+        "dimension": 1024,
+        "elapsed_ms": 306,
+        "usage": {
+          "total_tokens": 13
+        },
+        "tracked_tokens": 13
+      },
+      "retrieval": {
+        "provider": "qdrant",
+        "collection": "foodex2_source_docs_v1",
+        "elapsed_ms": 31,
+        "limit": 7,
+        "results": [
+          {
+            "score": 0.23346399,
+            "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "location": "page 56",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.20185648,
+            "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "location": "page 47",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.19307612,
+            "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "location": "page 44",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.19214585,
+            "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "location": "page 43",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.1908252,
+            "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "location": "page 52",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.18607534,
+            "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "location": "page 22",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.18307747,
+            "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "location": "page 46",
+            "source_suffix": "pdf"
+          }
+        ]
+      },
+      "answerer": {
+        "model": "claude-sonnet-4-6",
+        "elapsed_ms": 11708,
+        "token_summary": {
+          "model": "claude-sonnet-4-6",
+          "calls": 1,
+          "input_tokens": 5966,
+          "output_tokens": 493,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "total_tracked_tokens": 6459,
+          "per_call": [
+            {
+              "stop_reason": "end_turn",
+              "input_tokens": 5966,
+              "output_tokens": 493,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "total_tracked_tokens": 6459
+            }
+          ]
+        },
+        "timing_summary": {
+          "calls": 1,
+          "llm_time_ms": 11692,
+          "per_call": [
+            {
+              "call_number": 1,
+              "duration_ms": 11692,
+              "stop_reason": "end_turn"
+            }
+          ],
+          "answerer_wall_time_ms": 11692
+        }
+      },
+      "total": {
+        "elapsed_ms": 12046,
+        "llm_calls": 1,
+        "answerer_tracked_tokens": 6459,
+        "embedding_tracked_tokens": 13,
+        "combined_known_tokens": 6472
+      },
+      "answer": "For a cucumber finger sandwich with mayo, here is the decision path based on FoodEx2 principles:\n\n- **Food type**: This is a composite food (multiple ingredients combined). It should be coded under an appropriate composite/sandwich food group as the base term, not as a raw commodity.\n\n- **Ingredient facet (F04)**: Use this to report the *characterising* ingredient(s) — cucumber is what makes this sandwich distinct within the sandwich group. Mayo is a common condiment and would not normally be listed unless it is the characterising feature. Only one or a few characterising ingredients are expected; do not attempt to list the full recipe.\n\n- **Minor ingredients**: Mayo could be treated as a minor ingredient (similar to a coating or flavouring addition). The wiki notes that the ingredient facet can be extended to cover minor ingredients added to foods (like coatings or flavourings), so if mayo is considered a minor/characterising addition, it could be included via F04.\n\n- **Process facet (F28)**: If any notable processing applies (e.g., the bread is toasted), this should be captured in F28. Only treatments that 'make the difference' need to be mentioned.\n\n- **Do not encode the full recipe**: FoodEx2 is not intended to capture full qualitative recipes. External recipe databases should handle that. Only characterising ingredients belong in the code.\n\n- **Quality check**: After coding, verify that the base term correctly represents the food group, that only characterising ingredients are listed, and that implicit facets (source, process) are not redundantly repeated.",
+      "citations": [
+        "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf :: page 56",
+        "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf :: page 22",
+        "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf :: page 47"
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "mode": "normal_markdown_ask",
+      "status_code": 200,
+      "elapsed_ms": 18217,
+      "trace_total_ms": 18214,
+      "total_tokens": 13949,
+      "retrieval_tokens": 3442,
+      "answerer_tokens": 10507,
+      "llm_calls": 2,
+      "pages_used": [
+        "index.md",
+        "base-term-selection.md",
+        "ingredient-facets.md",
+        "process-facets.md",
+        "facet-coding-rules.md",
+        "implicit-vs-explicit-facets.md",
+        "foodex2-overview.md",
+        "code-string-format.md",
+        "packaging-facets.md"
+      ],
+      "citations": [
+        "base-term-selection.md",
+        "ingredient-facets.md",
+        "implicit-vs-explicit-facets.md",
+        "process-facets.md",
+        "facet-coding-rules.md"
+      ]
+    },
+    {
+      "mode": "qdrant_ask_emulation",
+      "collection": "foodex2_wiki_markdown_v1",
+      "elapsed_ms": 15609,
+      "total_tokens": 3448,
+      "answerer_tokens": 3435,
+      "embedding_tokens": 13,
+      "llm_calls": 1,
+      "results": [
+        {
+          "score": 0.24698648,
+          "page_name": "contaminants-foodex2.md",
+          "heading_path": "FoodEx2 In Contaminants Monitoring > High-Impact Rules",
+          "category": "domain_overlay",
+          "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions."
+        },
+        {
+          "score": 0.23063102,
+          "page_name": "facet-coding-rules.md",
+          "heading_path": "Facet Coding Rules > Relevant Policy",
+          "category": "guidance",
+          "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+        },
+        {
+          "score": 0.22506334,
+          "page_name": "contaminants-foodex2.md",
+          "heading_path": "FoodEx2 In Contaminants Monitoring > Worked Signals",
+          "category": "domain_overlay",
+          "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions."
+        },
+        {
+          "score": 0.22045933,
+          "page_name": "facet-coding-rules.md",
+          "heading_path": "Facet Coding Rules > Worked Examples",
+          "category": "guidance",
+          "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+        },
+        {
+          "score": 0.21172528,
+          "page_name": "packaging-facets.md",
+          "heading_path": "Packaging Facets > Worked Examples",
+          "category": "guidance",
+          "summary": "When to use `F18` packaging-format and `F19` packaging-material, and how they differ from `F28` process."
+        },
+        {
+          "score": 0.21161345,
+          "page_name": "ingredient-facets.md",
+          "heading_path": "Ingredient Facets > Worked Examples",
+          "category": "guidance",
+          "summary": "Rules for characterising ingredients, mixed foods, composite coding, and minor flavouring/added-ingredient use on derivatives."
+        },
+        {
+          "score": 0.20964932,
+          "page_name": "facet-coding-rules.md",
+          "heading_path": "Facet Coding Rules > General Rule",
+          "category": "guidance",
+          "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+        }
+      ],
+      "citations": [
+        "ingredient-facets.md",
+        "facet-coding-rules.md",
+        "packaging-facets.md",
+        "contaminants-foodex2.md"
+      ]
+    },
+    {
+      "mode": "qdrant_ask_emulation",
+      "collection": "foodex2_source_docs_v1",
+      "elapsed_ms": 12046,
+      "total_tokens": 6472,
+      "answerer_tokens": 6459,
+      "embedding_tokens": 13,
+      "llm_calls": 1,
+      "results": [
+        {
+          "score": 0.23346399,
+          "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "location": "page 56",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.20185648,
+          "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "location": "page 47",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.19307612,
+          "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "location": "page 44",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.19214585,
+          "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "location": "page 43",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.1908252,
+          "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "location": "page 52",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.18607534,
+          "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "location": "page 22",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.18307747,
+          "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "location": "page 46",
+          "source_suffix": "pdf"
+        }
+      ],
+      "citations": [
+        "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf :: page 56",
+        "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf :: page 22",
+        "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf :: page 47"
+      ]
+    }
+  ]
+}

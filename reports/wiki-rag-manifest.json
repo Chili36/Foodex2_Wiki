@@ -1,0 +1,909 @@
+{
+  "manifest_version": 1,
+  "generated_at": "2026-06-06T14:36:29.329692+00:00",
+  "collection": "foodex2_wiki_markdown_v1",
+  "embedding_provider": "voyage",
+  "embedding_model": "voyage-context-3",
+  "embedding_dimension": 1024,
+  "chunking": {
+    "strategy": "markdown-heading-sections-with-paragraph-splitting",
+    "max_chars": 2800,
+    "categories": [
+      "domain_overlay",
+      "guidance",
+      "maintenance",
+      "runtime",
+      "validation"
+    ]
+  },
+  "page_count": 32,
+  "chunk_count": 251,
+  "pages": [
+    {
+      "page_name": "RUNTIME_RULES.md",
+      "title": "Runtime Rules",
+      "category": "runtime",
+      "source_path": "RUNTIME_RULES.md",
+      "chunk_count": 5,
+      "content_hash": "d9335ac4c8a9d23df40eb759f68dac6a424d22a31396c69b088acd9f3952bc18",
+      "chunk_hashes": [
+        "119aca22c12b020794ad3186ace3781f52d19b793f40822b40f1fa5a47e1081a",
+        "5396ce23002e4816ce6130f91c4a6082ad388c41c6a694dbbf6de22e18273364",
+        "a037d30bbb64d5e60648b8ab46ed84d042b4ccfc26efc48c10220b68276ba279",
+        "dec951f51d7fe0ca86c2f4f3947e8a6b9559c2b9e9cd6878543c9db162e967d2",
+        "501e8d0ec1ff6cfdbad3e75b44e434868a0ad984f0edbf5d20da43ac4af835e2"
+      ],
+      "chunk_ids": [
+        "RUNTIME_RULES.md#000-00-runtime-rules",
+        "RUNTIME_RULES.md#001-00-runtime-rules-core-decision-order",
+        "RUNTIME_RULES.md#002-00-runtime-rules-always-on-rules",
+        "RUNTIME_RULES.md#003-00-runtime-rules-supporting-pages-by-signal",
+        "RUNTIME_RULES.md#004-00-runtime-rules-authority"
+      ]
+    },
+    {
+      "page_name": "additives-flavourings-foodex2.md",
+      "title": "FoodEx2 In Additives And Flavourings Monitoring",
+      "category": "domain_overlay",
+      "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md",
+      "chunk_count": 7,
+      "content_hash": "96aa1f8a16762a597bb93e768e981827caf01b2bfc8f82561c04a606963b3d5a",
+      "chunk_hashes": [
+        "26f7cf6be37db8d5f8b4aac3ec83d59a9ca1b3619894d7a0b2a17faadcfe0d11",
+        "ebe62b445ec597bdc906f8db7d9075d30f7f26e00bf233f97378697fccac3e24",
+        "e943429a4344ac4ae8b52d62ee3aba4b8a37e72c29bd54116ce2f4c18df71305",
+        "ae3d9f8430f36b58c65203d88cc488446891d21f986e2a8ea5459ebdf4ce5bf5",
+        "4409c6dc05bd7aedb8c160f7b9434eed39ddbc6ee1eb4c88833a830a0ddc16a4",
+        "96a158ae0fd5788ac37edf545c3f56813e28f10e3ef2fed81d11d0348460ecd8",
+        "2fdd3c242b375de63e6da04eca72e27581598400a8933a49a31a6860475d4dcb"
+      ],
+      "chunk_ids": [
+        "additives-flavourings-foodex2.md#000-00-foodex2-in-additives-and-flavourings-monitoring",
+        "additives-flavourings-foodex2.md#001-00-foodex2-in-additives-and-flavourings-monitoring-use-only-when-additives-or-flavo",
+        "additives-flavourings-foodex2.md#002-00-foodex2-in-additives-and-flavourings-monitoring-f33-legislative-class",
+        "additives-flavourings-foodex2.md#003-00-foodex2-in-additives-and-flavourings-monitoring-additional-facets",
+        "additives-flavourings-foodex2.md#004-00-foodex2-in-additives-and-flavourings-monitoring-matrix-terms-not-to-report-as-th",
+        "additives-flavourings-foodex2.md#005-00-foodex2-in-additives-and-flavourings-monitoring-worked-signals",
+        "additives-flavourings-foodex2.md#006-00-foodex2-in-additives-and-flavourings-monitoring-relevant-policy"
+      ]
+    },
+    {
+      "page_name": "base-term-selection.md",
+      "title": "Base Term Selection Rules",
+      "category": "guidance",
+      "source_path": "raw/efsa-guidance/base-term-selection.md",
+      "chunk_count": 7,
+      "content_hash": "14fc73e21f038bf3c8317bd024490041f5920980b27933e47b29da7696f35c8b",
+      "chunk_hashes": [
+        "2c88b3642b0914cf43c2773428f4c64740d98041b7370dafa6155fd3a2bd87b7",
+        "7d7c4b251c7ab59fb1e558093283e6dc2965f3009b48ec291724b517eb9c95f1",
+        "0a2900f9845dcafd12511b9d164bff6adcb978d1bbd514524b514224f7571605",
+        "a9009803f263bd7b0b3e9c4c9d8c1130d165d885e49cd5705d03b82ca4cf82ce",
+        "60c223af55113fc8065b4e5424822fc088038ec2d817f30672c3c9293cff505d",
+        "6e9e972b4b39282f3ee812691124c1e64762f7df420802189b52708ee688758b",
+        "d5a5904ca8f8aa2e8dbadff86844709c1f4985702e4b785de7e7a8d78b29f96b"
+      ],
+      "chunk_ids": [
+        "base-term-selection.md#000-00-base-term-selection",
+        "base-term-selection.md#001-00-base-term-selection-start-with-food-type",
+        "base-term-selection.md#002-00-base-term-selection-choose-the-base-term-class",
+        "base-term-selection.md#003-00-base-term-selection-tie-break-rules",
+        "base-term-selection.md#004-00-base-term-selection-worked-examples",
+        "base-term-selection.md#005-00-base-term-selection-relevant-policy",
+        "base-term-selection.md#006-00-base-term-selection-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "business-rules.md",
+      "title": "Business Rules",
+      "category": "validation",
+      "source_path": "raw/efsa-guidance/business-rules.md",
+      "chunk_count": 33,
+      "content_hash": "88e6c33073e66ba629969d435b27a7dc77aca72491c81eca012afc13cfa86592",
+      "chunk_hashes": [
+        "a66893c07d758f9610e633a8b02c5418c1052c9e476c23e8b57cfe57ec2daeb2",
+        "358d4fa93bcd2b036e37f19d3977ad9755b0d94aae9aa570d1c3b61ce212e43e",
+        "6d6147211549e06843e2294567b2ca1f41af926144a7254dcd38b72ea972ee07",
+        "df66617a0ae88dfd8afc1b3511a19cddd12c8365529db2c98d514b6ffc4160aa",
+        "f76aacccd0a4c1c57b01e659e4c2225793a6c15b1a47fe4a67ea8e4c039350b9",
+        "e629e860c0b3f01b452aa2ca3e5bfe9ba2d90be9efd0261e66fd7d23a77e3e98",
+        "199dbed11a305a340712e4c1625186b2257777d75f004d39357245dbf6fdc457",
+        "292c4e8d6da3ab70bcc942a3f80be201bbbb4f6cd905a307b9e903506ba2a030",
+        "3425527c6955bd1de1adbba2485e5c11652c7092f6ba2af1ae99d48b89724404",
+        "a261c90b38f3dc239eb5f8f8142ae5a86ae13ff2303e45a668b4b853bdd9e2ee",
+        "fb1ce44f6ae212dca6c048aa49f8569d4011027fe67c7ae8b75a34e3a359ba94",
+        "5455a11722964b1d3e8e06174c9820609e8b02603fa63cd5d812b12de77ebb7e",
+        "b0d9c377fed7a0258fcf8b76e8eccf48b81ba8bd351095d0cafe843da1563c3c",
+        "075704562901ba825ee04522388bcb44d38787f21a067d0bd56f8454c5fafb8e",
+        "b7a4dfc0cb920ace52a6faf6d4308c8e7d370929f780970e1944179dcd237fb0",
+        "0fd0fdce866931707e0b348dd2233c46d244773bcc893f12ad4718b0771ee660",
+        "3ef7544e28141ee9ca04688457086a7a0c6e78cb1464923073cf22d30d451b35",
+        "4eb433b567aece78f01b48fe6fcb922370fda7a883ea5c68592b6d94633098df",
+        "2de0e39c1e408381708def4f8bfa6af9379624dffbafcaa1e12e87c0e0188499",
+        "07604c77823d979ceb20c230872fd26fda7dc8e08808fb021207992b360597e6",
+        "37f98a15e6a4747063e8ee6570967eeea9994b1ba61597b0f0266e36a917b956",
+        "4a58357d20564b9061585b2cb9c677905a69b9413a4cab89d0f191bcbc138d62",
+        "3336da2c76df1d714867e5d445d618f5f5361bea8044f72ea695ed0c5c14b8bd",
+        "08aa83836a9d2aac31d0d7dbe2d9ba64cd793b08e69c1a7f25b6f372ec1cde32",
+        "03c65d83a4f7b9fc9e0fc21029c5e60fc534651dde090ac85c10cb9261aae263",
+        "f0ba5c70ab1af920252cadd1c762027f465f1586a64096be96c549bd2f9606fa",
+        "5b565bb87bfc8310bbb7d90b39e11c8c601ea30e71f8a71acbbbaf34029df5a2",
+        "82daba185ccf6e43c94e7096f5908bfbbcf5ded51345d15c322c75bb27a803fa",
+        "51f76f6d420dfba56799d859e8fe424c49210dcc4f32f6eca14b3f1c2f1fc880",
+        "67d6bb160ae3fc429ed07e7aeb715b3fe400745caeb4ca52714c7ecf72ab007a",
+        "f184090117532976071b1dd1ded9c19ce47930d9db054ecf7011a04492fd27b5",
+        "9d77366ad43a8e541ad68d0f3ad530495b18b15544fb69d31bc472c13aa9425f",
+        "f9330b118375bfc396a50740cc0edec18ba0abc74d1eab41e470aec8f45358cb"
+      ],
+      "chunk_ids": [
+        "business-rules.md#000-00-business-rules",
+        "business-rules.md#001-00-business-rules-severity-model",
+        "business-rules.md#002-00-business-rules-br01-source-commodity-validation-for-raw-terms",
+        "business-rules.md#003-00-business-rules-br03-no-source-facet-in-composite-foods",
+        "business-rules.md#004-00-business-rules-br04-no-source-commodities-in-composite-foods",
+        "business-rules.md#005-00-business-rules-br05-f27-restrictions-for-derivatives",
+        "business-rules.md#006-00-business-rules-br06-f01-source-requires-f27",
+        "business-rules.md#007-00-business-rules-br07-f01-for-single-f27-only",
+        "business-rules.md#008-00-business-rules-br08-non-reportable-terms-forbidden",
+        "business-rules.md#009-00-business-rules-br10-non-specific-terms-discouraged",
+        "business-rules.md#010-00-business-rules-br11-generic-process-terms-discouraged",
+        "business-rules.md#011-00-business-rules-br12-ingredient-facet-restrictions",
+        "business-rules.md#012-00-business-rules-br13-physical-state-creates-derivatives",
+        "business-rules.md#013-00-business-rules-br14-ict-dcf-only-rule",
+        "business-rules.md#014-00-business-rules-br15-dcf-only-rule",
+        "business-rules.md#015-00-business-rules-br16-process-detail-level-check",
+        "business-rules.md#016-00-business-rules-br17-facets-as-base-terms-forbidden",
+        "business-rules.md#017-00-business-rules-br19-forbidden-processes-on-raw-commodities",
+        "business-rules.md#018-00-business-rules-br20-deprecated-terms",
+        "business-rules.md#019-00-business-rules-br21-dismissed-terms",
+        "business-rules.md#020-00-business-rules-br22-success-message",
+        "business-rules.md#021-00-business-rules-br23-hierarchy-terms-discouraged",
+        "business-rules.md#022-00-business-rules-br24-non-exposure-hierarchy-warning",
+        "business-rules.md#023-00-business-rules-br25-single-cardinality-enforcement",
+        "business-rules.md#024-00-business-rules-br26-mutually-exclusive-processes",
+        "business-rules.md#025-00-business-rules-br27-decimal-ordcode-process-conflicts",
+        "business-rules.md#026-00-business-rules-br28-reconstitution-restrictions",
+        "business-rules.md#027-00-business-rules-br29-code-structure-validation",
+        "business-rules.md#028-00-business-rules-br30-invalid-facet-category",
+        "business-rules.md#029-00-business-rules-br31-facet-not-in-category-hierarchy",
+        "business-rules.md#030-00-business-rules-how-to-use-this-page-during-ingest",
+        "business-rules.md#031-00-business-rules-relevant-policy",
+        "business-rules.md#032-00-business-rules-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "chemical-monitoring-foodex2.md",
+      "title": "FoodEx2 In Chemical Monitoring",
+      "category": "domain_overlay",
+      "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md",
+      "chunk_count": 8,
+      "content_hash": "cce803355aa653a2f016f2a7d4c2c23f4fe7f0113a645021fad6de2e097ecbbe",
+      "chunk_hashes": [
+        "01629c1d16f1d34e580559f4749d4312e806384b4c32af82f8ddf0d21aff3cfa",
+        "db6483b3b8bde76941d0f5660d4a39b5a7678568e419e3fd4368d6eceeeeb74e",
+        "f0a192e2f9f75b3f94601e83c473fcc5c2556d38b8e3dbfa964e96699e4bc5f7",
+        "838bdfad28e35598242f7e11ca41136bf3cb2e32aa4f42c42ec5ad5c23064fd1",
+        "cd0bab68f35eff0bc5d9c0517dc3c9924e2e8e2669e743b5a2ee9d3094c65cf3",
+        "b2d36b41a6520dfa87da492f8105288ff4c207c2a231cac370d699bd6ae9742b",
+        "0e71f62d80e3a60c5485ea88fcfc18c9d02df0a7b510f0eb813d54c57d1b6e01",
+        "2e705a643d32adea45a8e2ea484f21b4936bb61676063b8852e4fa4b0bdc8045"
+      ],
+      "chunk_ids": [
+        "chemical-monitoring-foodex2.md#000-00-foodex2-in-chemical-monitoring",
+        "chemical-monitoring-foodex2.md#001-00-foodex2-in-chemical-monitoring-scope",
+        "chemical-monitoring-foodex2.md#002-00-foodex2-in-chemical-monitoring-domain-pages",
+        "chemical-monitoring-foodex2.md#003-00-foodex2-in-chemical-monitoring-general-rules",
+        "chemical-monitoring-foodex2.md#004-00-foodex2-in-chemical-monitoring-vmpr-specific-rules",
+        "chemical-monitoring-foodex2.md#005-00-foodex2-in-chemical-monitoring-worked-examples",
+        "chemical-monitoring-foodex2.md#006-00-foodex2-in-chemical-monitoring-relevant-policy",
+        "chemical-monitoring-foodex2.md#007-00-foodex2-in-chemical-monitoring-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "code-string-format.md",
+      "title": "FoodEx2 Code String Format",
+      "category": "guidance",
+      "source_path": "raw/efsa-guidance/code-string-format.md",
+      "chunk_count": 5,
+      "content_hash": "712f7be1abb8d34f59b12cc31ed74c60ea5ea732b870d9eb13b40edd4c948097",
+      "chunk_hashes": [
+        "99679491277cfe3fbcd78fed3d484eea8b11285a2973201ee9d5533103a4a0d8",
+        "5239a31d1504ac264c221d8485c5ae8829131b17f167c7441b75662cb02e32d8",
+        "b4ce9a4158042755320c45cc6e7f9c2f2cbd1db72b47aa2176d021caa9753f85",
+        "52f16753e8e69454733d591da5944aacb8473af38c5b5b40541ef73f4acc5c60",
+        "f98174ecf8b1f3df8c954e48d37557d79e84d49e18895f3f2f0c780136337661"
+      ],
+      "chunk_ids": [
+        "code-string-format.md#000-00-code-string-format",
+        "code-string-format.md#001-00-code-string-format-syntax",
+        "code-string-format.md#002-00-code-string-format-worked-examples",
+        "code-string-format.md#003-00-code-string-format-relevant-policy",
+        "code-string-format.md#004-00-code-string-format-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "contaminants-foodex2.md",
+      "title": "FoodEx2 In Contaminants Monitoring",
+      "category": "domain_overlay",
+      "source_path": "raw/efsa-guidance/contaminants-foodex2.md",
+      "chunk_count": 7,
+      "content_hash": "c3000894e104181523a4ea6a7facecbf3ed599caf139cb1812587a6d67c0ec6f",
+      "chunk_hashes": [
+        "93fe47ffd03394d0d97632afdc55c433e4763d3fe02be27d41dc2fc0d3ac1ccf",
+        "e8519c7c7d0e78dacd573262592bc1e8d451b6b58dce36f8b066addf4ccba3ec",
+        "61a6771eb7dfb4a2bf782bab83d746833078b68558eae822a8e14bdc8bd04c1c",
+        "1c4b95428dee9a785e9ba8e3ea5070a637d600d3d82914f2b83891ce4c257351",
+        "c6ad2689c8cd6af64cbb49f60c413a274c68d9918278843351774c7d553da0ba",
+        "d73b5591ded79778f7c0a21d0e487071c48a027cf435bd6905d50fb0feeae61f",
+        "31535a4411bfe22f801994ec0528a95ac6a60573c1a1e2e7255e622e98046262"
+      ],
+      "chunk_ids": [
+        "contaminants-foodex2.md#000-00-foodex2-in-contaminants-monitoring",
+        "contaminants-foodex2.md#001-00-foodex2-in-contaminants-monitoring-use-only-when-contaminants-context-is-active",
+        "contaminants-foodex2.md#002-00-foodex2-in-contaminants-monitoring-domain-boundary",
+        "contaminants-foodex2.md#003-00-foodex2-in-contaminants-monitoring-high-impact-rules",
+        "contaminants-foodex2.md#004-00-foodex2-in-contaminants-monitoring-pesticide-contrast",
+        "contaminants-foodex2.md#005-00-foodex2-in-contaminants-monitoring-worked-signals",
+        "contaminants-foodex2.md#006-00-foodex2-in-contaminants-monitoring-relevant-policy"
+      ]
+    },
+    {
+      "page_name": "domain-specific-validation.md",
+      "title": "Domain-Specific Validation",
+      "category": "domain_overlay",
+      "source_path": "raw/efsa-guidance/domain-specific-validation.md",
+      "chunk_count": 6,
+      "content_hash": "5f1b6728e3d20e00a9dfdcbeb8cf0fcba8daf156e416c84a765e750c883d2797",
+      "chunk_hashes": [
+        "c6d3582ef391ac226c6d378579baed0f0e3e70e721812746f4a011507b4a3036",
+        "a59bd492a5ebb6a7328744cb6f47da829c11c64a5431bee10c7f8e8c06e23f85",
+        "0b3fb06504875610bc26dcc0fa01e321abaecbb261172bb9ae782340b1eb8d18",
+        "a7e7b83ea0a328fbd1ab6c275152c91469ab2c70cc150d045f91c9077d7cd718",
+        "917b9ebc6f844349c5c220066e2ccde1bbedcc74f155a40cc568b4660b208b37",
+        "4dbe7734c52e01741b9d93251262d903ba3add55dd46f25cf70941bda3458663"
+      ],
+      "chunk_ids": [
+        "domain-specific-validation.md#000-00-domain-specific-validation",
+        "domain-specific-validation.md#001-00-domain-specific-validation-these-rules-are-contextual",
+        "domain-specific-validation.md#002-00-domain-specific-validation-common-mandatory-or-recommended-facets",
+        "domain-specific-validation.md#003-00-domain-specific-validation-worked-examples",
+        "domain-specific-validation.md#004-00-domain-specific-validation-relevant-policy",
+        "domain-specific-validation.md#005-00-domain-specific-validation-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "domoic-acid-scallops.md",
+      "title": "Domoic Acid In Scallops",
+      "category": "domain_overlay",
+      "source_path": "raw/efsa-guidance/domoic-acid-scallops.md",
+      "chunk_count": 10,
+      "content_hash": "1a905730f2163b84ede4554067655574a41cb49370ccbcca20b3a67f3f85933e",
+      "chunk_hashes": [
+        "1a1588c03d33f23105e3a56f986d322de200f8e4c2fea5b36238961516c54dc1",
+        "0ccc3aea7fda9b64eff87bdcd273f1344e31f85ac7783a40bcda134ed005f458",
+        "e47eeb6ca51bce1c88ce7d866644aaaa549fee83a14bca867c62056bf47d510a",
+        "bef87f354093f1d6b5f12ca57dd4b3c42080a9b143266914e9113461d678dbe3",
+        "7229dda4496850211097264f371c4eee1ec5d01e7340b20347c62b70f694c04c",
+        "6c00c8bce4060bc14eb9bf6637cd8d29321e45eb8fdeaab3e035530a80787eb3",
+        "a30d5e44d185c9b52c401d12a594ee829d7e36bf82cb609cb4f5c8648d71290d",
+        "478bb367ac4fb844d1df03bb4e82df3776b96503ebf26d61db7b509b550507d7",
+        "59ef49959f94bf1db6454c14bb65a2311b4781327106dc37099dc40a01350193",
+        "8dcf4a15bd1b25bc5abd94afb4ff30e7432756fdd72b9aa64a6c545ec18cf79f"
+      ],
+      "chunk_ids": [
+        "domoic-acid-scallops.md#000-00-domoic-acid-in-scallops",
+        "domoic-acid-scallops.md#001-00-domoic-acid-in-scallops-use-only-for-domoic-acid-scallop-reporting",
+        "domoic-acid-scallops.md#002-00-domoic-acid-in-scallops-reporting-rule",
+        "domoic-acid-scallops.md#003-00-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+        "domoic-acid-scallops.md#003-01-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+        "domoic-acid-scallops.md#003-02-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+        "domoic-acid-scallops.md#003-03-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+        "domoic-acid-scallops.md#004-00-domoic-acid-in-scallops-retrieval-signals",
+        "domoic-acid-scallops.md#005-00-domoic-acid-in-scallops-relevant-policy",
+        "domoic-acid-scallops.md#006-00-domoic-acid-in-scallops-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "facet-coding-rules.md",
+      "title": "Facet Coding Rules",
+      "category": "guidance",
+      "source_path": "raw/efsa-guidance/facet-coding-rules.md",
+      "chunk_count": 9,
+      "content_hash": "58618656d33f5b11a8e1b978e3020f8c3e2280faece0a1ccccfe457ab2bb7804",
+      "chunk_hashes": [
+        "0afe1eb14ce134f1bbfc57bfc484f5cab49ce2e21416653fe6f210d0b1d4cea0",
+        "3c1180fe11a3e655a38bef24c8d4150a2618263e243117639b9ce7711722948e",
+        "b76141f051099db4443072e8c30574bbd5a0ec511ed1580acee56ba53cab4e83",
+        "d58b436ec7464b6ce95e307c2520f1bd98d6ddf1eb83e573be37037a2a6edc4d",
+        "2f196aacaff74d5a89a988455c7608eab7b9f56f5875eb338ec7cbe910fa1392",
+        "1825401ec3ba1e60612c46b87889edf15978bacb01d6fc8df5beeef74001c65e",
+        "d11ca3b565bdd0c71e253baec6cc551c259822d872bba2610dc88e4dfdc97bb2",
+        "9cdec892c972bac8939b535b4289ada67552603d62b21bb560ad8661edc7ac23",
+        "a15b70d8b61c1395f48730d094c9f464e5a3013d1a952a53a41b8fb32e681222"
+      ],
+      "chunk_ids": [
+        "facet-coding-rules.md#000-00-facet-coding-rules",
+        "facet-coding-rules.md#001-00-facet-coding-rules-general-rule",
+        "facet-coding-rules.md#002-00-facet-coding-rules-facet-category-reference",
+        "facet-coding-rules.md#002-01-facet-coding-rules-facet-category-reference",
+        "facet-coding-rules.md#002-02-facet-coding-rules-facet-category-reference",
+        "facet-coding-rules.md#003-00-facet-coding-rules-high-value-facets",
+        "facet-coding-rules.md#004-00-facet-coding-rules-worked-examples",
+        "facet-coding-rules.md#005-00-facet-coding-rules-relevant-policy",
+        "facet-coding-rules.md#006-00-facet-coding-rules-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "foodex2-overview.md",
+      "title": "FoodEx2 Overview",
+      "category": "guidance",
+      "source_path": "raw/efsa-guidance/foodex2-overview.md",
+      "chunk_count": 8,
+      "content_hash": "f9c6aa3690b4d6eac504c1770fa514d6dd14f084f3cfd2bf53ec6bb91f49d384",
+      "chunk_hashes": [
+        "e22335349103d2da87ae35536dbddf41f2d7f2d1f52218f8bb0e084ff26f2087",
+        "65a3d234e3b942960e3c9e272c026f61d69f3fef5002080ef6a940f242ee9877",
+        "896d1ed306745a89e7ffc701f73bbaabc2a91055eadcabd89580e5ed0a5555aa",
+        "2332f04dbd3786c12ea84de5633d18d63a25755a1ee53b75283f162dff0909aa",
+        "960bbfd6bf5e211ad0989532f49a2b7e1221e6327813830a25f9820b72eba7d5",
+        "0208b017e8fc2066ce2467b0cd73f180c428e1871c63242b72cd0a1e42bcb629",
+        "400533854e914a83f6b27b93cf7aed9de31d8018b6f42c01a5973b0809408600",
+        "e2435e44c749bd597f2b9a1ea0bfa0bd769382896f64b33c41315704412973b4"
+      ],
+      "chunk_ids": [
+        "foodex2-overview.md#000-00-foodex2-overview",
+        "foodex2-overview.md#001-00-foodex2-overview-purpose",
+        "foodex2-overview.md#002-00-foodex2-overview-core-model",
+        "foodex2-overview.md#003-00-foodex2-overview-hierarchies",
+        "foodex2-overview.md#004-00-foodex2-overview-coding-philosophy",
+        "foodex2-overview.md#005-00-foodex2-overview-worked-examples",
+        "foodex2-overview.md#006-00-foodex2-overview-relevant-policy",
+        "foodex2-overview.md#007-00-foodex2-overview-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "implicit-vs-explicit-facets.md",
+      "title": "Implicit vs Explicit Facets",
+      "category": "guidance",
+      "source_path": "raw/efsa-guidance/implicit-vs-explicit-facets.md",
+      "chunk_count": 6,
+      "content_hash": "f87e9004a199249034143bac7871b60d12be473e248ba7f47921bd42e7a06b29",
+      "chunk_hashes": [
+        "97e74302668e0dd1d33940d191bbf0920f5c8afe142eb67a10168268b6a10a17",
+        "5e336479d1bf11b06c835a296bec25b84bbb46209f210ff8f07c44c08e902b33",
+        "00653b40ce32f4352a57cac9f14ca27de9e231401b7536a5dde3fc1987f92233",
+        "8d70b9756d5f0154eab25f9a9d329d9444f66aa6aa4fbfb0856429dc82df0ba9",
+        "8b6b0e99fdcbdf913540e1f73ff1131a18d74bf874763768652c327721bdb660",
+        "d33f91bb362eeba950b692c86afa118c7cec8768d5ce1ade0960e0410e2de904"
+      ],
+      "chunk_ids": [
+        "implicit-vs-explicit-facets.md#000-00-implicit-vs-explicit-facets",
+        "implicit-vs-explicit-facets.md#001-00-implicit-vs-explicit-facets-default-logic",
+        "implicit-vs-explicit-facets.md#002-00-implicit-vs-explicit-facets-when-to-add-an-explicit-facet",
+        "implicit-vs-explicit-facets.md#003-00-implicit-vs-explicit-facets-worked-examples",
+        "implicit-vs-explicit-facets.md#004-00-implicit-vs-explicit-facets-relevant-policy",
+        "implicit-vs-explicit-facets.md#005-00-implicit-vs-explicit-facets-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "ingredient-facets.md",
+      "title": "Ingredient Facets",
+      "category": "guidance",
+      "source_path": "raw/efsa-guidance/ingredient-facets.md",
+      "chunk_count": 6,
+      "content_hash": "44dceb9fe9d7a09a05bba968a440e37fa3c573f5ecebfbf2c405c7249e9b138c",
+      "chunk_hashes": [
+        "c6d6fcad69fb063b43d4e39509e6403ccc6aba75da771ad4a94af3fffdf0dbee",
+        "de119e90ba8b0b794482556577dae43e15e2c2850488f6549af669b5d5b6a2b2",
+        "45fe2728d8bc9201bdb86eb4685688df5c3b57880ec812aaaa7fb48e435621a6",
+        "5109b148f2ed79beaa1523238b9ac2047caaab63412c7e0fea8687ca07197bfb",
+        "4728a7e153e46e48c65428534f02e38c0949c86b3335155c73279318fa3944a6",
+        "3c49924db5878c47ddb3105fb06daf3bc4ba93a67a72bb28837780335403e440"
+      ],
+      "chunk_ids": [
+        "ingredient-facets.md#000-00-ingredient-facets",
+        "ingredient-facets.md#001-00-ingredient-facets-core-rule",
+        "ingredient-facets.md#002-00-ingredient-facets-common-combinations",
+        "ingredient-facets.md#003-00-ingredient-facets-worked-examples",
+        "ingredient-facets.md#004-00-ingredient-facets-relevant-policy",
+        "ingredient-facets.md#005-00-ingredient-facets-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "maintenance-2015.md",
+      "title": "FoodEx2 Maintenance 2015",
+      "category": "maintenance",
+      "source_path": "raw/efsa-guidance/maintenance-2015.md",
+      "chunk_count": 6,
+      "content_hash": "fc46ce7787d675baa44c7d8d2b221127b13a1da72b03cbfe4c5fbad83cd5218c",
+      "chunk_hashes": [
+        "519850aaffdef295fc478ad780092d95668d983249ed5803a953183d00c88a14",
+        "9dafc6063d6e373dd94d9e96b102d0cdad5041ecc74d502ef90efd7a107a7e23",
+        "d19f8e63159a307f20e5b3616e45bec34d37bf20c539775db0ed1194926c3ea6",
+        "b5caa800325b1196d895c973f069f7c86c64cf22eb2496a9839b3dee9dd09464",
+        "8021e2950ddc22fb7f481eae775f59f454dc0ae268b0d1963d78e03e4cfd752a",
+        "62525b5b2d90049361be9fe8f17d0c6245828ecf53b0b2e780f28536292c4325"
+      ],
+      "chunk_ids": [
+        "maintenance-2015.md#000-00-maintenance-2015",
+        "maintenance-2015.md#001-00-maintenance-2015-summary",
+        "maintenance-2015.md#002-00-maintenance-2015-why-it-matters",
+        "maintenance-2015.md#003-00-maintenance-2015-release-context",
+        "maintenance-2015.md#004-00-maintenance-2015-relevant-policy",
+        "maintenance-2015.md#005-00-maintenance-2015-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "maintenance-2016-2018.md",
+      "title": "FoodEx2 Maintenance 2016-2018",
+      "category": "maintenance",
+      "source_path": "raw/efsa-guidance/maintenance-2016-2018.md",
+      "chunk_count": 6,
+      "content_hash": "cabe6a56b856212e1a78ab592bc7fe4d96c5819514cbe90068b8ae89cf059673",
+      "chunk_hashes": [
+        "09dd9fc9d9253c15a62d4632c075347f425c61b11912a484a9b468d1e8057f1d",
+        "92962bf4bfec596cad9ba400b46a7c2c1ef470be8d13e5dacd55884eba8b2693",
+        "792b4b5c5e8d7b9fc174efb8427ed054962aaa7bcfeca330235fda18c5d6ae27",
+        "d8974b0233aae93301435aeab7a67a8df53e1d6c1fa1922305f4509c61f2e1f2",
+        "1fd13b6d75060a1a3ad0baa0b2defb64e1252ccd205d855da26c21643c3e5d0e",
+        "4ec1fd199257bba301f2ac27875fedbc1471703553bba0e63f09738e487860b2"
+      ],
+      "chunk_ids": [
+        "maintenance-2016-2018.md#000-00-maintenance-2016-2018",
+        "maintenance-2016-2018.md#001-00-maintenance-2016-2018-summary",
+        "maintenance-2016-2018.md#002-00-maintenance-2016-2018-structural-changes",
+        "maintenance-2016-2018.md#003-00-maintenance-2016-2018-why-it-matters",
+        "maintenance-2016-2018.md#004-00-maintenance-2016-2018-relevant-policy",
+        "maintenance-2016-2018.md#005-00-maintenance-2016-2018-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "maintenance-2019.md",
+      "title": "FoodEx2 Maintenance 2019",
+      "category": "maintenance",
+      "source_path": "raw/efsa-guidance/maintenance-2019.md",
+      "chunk_count": 6,
+      "content_hash": "2a89a943c1c04a3606f13e748db9fc8e9fb3ef3e3e4ec0d2525a7b002f1975e7",
+      "chunk_hashes": [
+        "7384425992838272127d0324223c967fac70c7319a4bbea084507bf3dee0c0ae",
+        "3f81108d278a90cb1d5d940ee92bd21056aeba00421630ec1efef5931f45dbcc",
+        "396c0fda72c4d511f7dd55c293ca2645e9e2c623d64a1a2b56cf1544df102da9",
+        "0fd020d0022f3438b909feac510de52e37d46d8013f0babb96b91ee7dde35c45",
+        "c02ecbd43c142f0ba8f26ed304e7ed86470a9d22aab25f9a4f31191cbdb3e7a9",
+        "dbc665e7806079368216a33a5e41467e399c4c5f3c6467a218a980ff106bdc37"
+      ],
+      "chunk_ids": [
+        "maintenance-2019.md#000-00-maintenance-2019",
+        "maintenance-2019.md#001-00-maintenance-2019-summary",
+        "maintenance-2019.md#002-00-maintenance-2019-feed-and-domain-changes",
+        "maintenance-2019.md#003-00-maintenance-2019-release-context",
+        "maintenance-2019.md#004-00-maintenance-2019-relevant-policy",
+        "maintenance-2019.md#005-00-maintenance-2019-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "maintenance-2020.md",
+      "title": "FoodEx2 Maintenance 2020",
+      "category": "maintenance",
+      "source_path": "raw/efsa-guidance/maintenance-2020.md",
+      "chunk_count": 6,
+      "content_hash": "19992336ef89d39a2727e062458a4435d49a4306a473bb5bb86dac616babb198",
+      "chunk_hashes": [
+        "7f74fc1f162edd67607d3d32e045f5df3435f197e09f1f79ed697d7e326cd435",
+        "a29121d818dd77cfbd38b64436798fe61572df4c80a147cd60d725ace1bd82c0",
+        "900da9e61e320745c98a437b9178bf9ebbc389ad0e32f342074bf262d77e4889",
+        "50a3c3d8530616c996e361249d1611df6b2f1a4b69a0ae777ca9e0f31cae062f",
+        "639ca3891db61bf0e60ef850bd2aa66ed46ebe97bda7fa260cb802363c5941f6",
+        "7924799a0ca9c2b7d822387de9ab52ea535a925fcb36002dfe5676710f74a007"
+      ],
+      "chunk_ids": [
+        "maintenance-2020.md#000-00-maintenance-2020",
+        "maintenance-2020.md#001-00-maintenance-2020-summary",
+        "maintenance-2020.md#002-00-maintenance-2020-project-driven-changes",
+        "maintenance-2020.md#003-00-maintenance-2020-release-context",
+        "maintenance-2020.md#004-00-maintenance-2020-relevant-policy",
+        "maintenance-2020.md#005-00-maintenance-2020-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "maintenance-2021.md",
+      "title": "FoodEx2 Maintenance 2021",
+      "category": "maintenance",
+      "source_path": "raw/efsa-guidance/maintenance-2021.md",
+      "chunk_count": 6,
+      "content_hash": "ceafbe9732defe6f40b08f4a40fe24deec008351ae30148e576672216a989dcd",
+      "chunk_hashes": [
+        "4eac4303e3b37e1e29c5f87f5158e3ebe1c4f0043ccb84715c9e118131b22e65",
+        "3021d368a1bae411e32b5697296e35f9104876eb11ae02fa502302f9f59cf591",
+        "99b9a4012e9021e5ee482d7272298b2c8159bee4d9f33e7d5249f72e1cee7ff8",
+        "86c181b4f8e38118a0b57d19397546f67da4d1e20629d7220abb523b19d20579",
+        "d7f6cfe6dd57d0f5abb2d965b26f3b6290e70b223b7abd6d76c728bb318f578d",
+        "02a5072d51ef52434e738f08ceba1ea3c94775ede3ae9384802be5b4b2bea99d"
+      ],
+      "chunk_ids": [
+        "maintenance-2021.md#000-00-maintenance-2021",
+        "maintenance-2021.md#001-00-maintenance-2021-summary",
+        "maintenance-2021.md#002-00-maintenance-2021-mapping-changes",
+        "maintenance-2021.md#003-00-maintenance-2021-release-context",
+        "maintenance-2021.md#004-00-maintenance-2021-relevant-policy",
+        "maintenance-2021.md#005-00-maintenance-2021-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "maintenance-2022.md",
+      "title": "FoodEx2 Maintenance 2022",
+      "category": "maintenance",
+      "source_path": "raw/efsa-guidance/maintenance-2022.md",
+      "chunk_count": 6,
+      "content_hash": "d4adc179c9401c5a6ed577584f873c3affebe235875480edc025ef560533ab3c",
+      "chunk_hashes": [
+        "da0988ebc0e55c70ed0197708eb56d7ad3c38b8e1c9dcfd354d8bd89a0551001",
+        "9f618a34352b6df173ed9ce56ee6be689fd7624c1877b28bbc27db710582cb2b",
+        "b5af8c36e86c3eec0ffbb55381873e41ae1f154d0ee7dddb480384351a01fc83",
+        "962b37cac990d09b60dec53a8ea55dd8117f9f10e82fbce4cfc7bba10df04309",
+        "36a2b9355db6910181687a07a6008fdd408e9434d33f104ff8090acbf4bb6549",
+        "cc93ae3f660291f5a3f02cdc0d6b5bc2637055bf216151cba4eb9f7f86201a7d"
+      ],
+      "chunk_ids": [
+        "maintenance-2022.md#000-00-maintenance-2022",
+        "maintenance-2022.md#001-00-maintenance-2022-summary",
+        "maintenance-2022.md#002-00-maintenance-2022-other-major-changes",
+        "maintenance-2022.md#003-00-maintenance-2022-release-context",
+        "maintenance-2022.md#004-00-maintenance-2022-relevant-policy",
+        "maintenance-2022.md#005-00-maintenance-2022-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "maintenance-2023.md",
+      "title": "FoodEx2 Maintenance 2023",
+      "category": "maintenance",
+      "source_path": "raw/efsa-guidance/maintenance-2023.md",
+      "chunk_count": 6,
+      "content_hash": "51504a27515dbc56e7855c4adf3695f6c79a7ba0472da01ce9dddc09cac0ae9e",
+      "chunk_hashes": [
+        "f6c36868bbfa590632bec36295ba0987570fcd18dd1bef3f005e9ec35036b689",
+        "597b97b017b8c59ee2ed206e62b35d090d3e3d63af2f529a42f54f6bd22670bd",
+        "a7807a963d563ec5f1a42d4601d4bf42ced3dbfef2bb199a029f8401578b1c5e",
+        "df4645ddca42a0d8c4beb921d6768a4a632ab7b3751794f77eab8ef25821414b",
+        "a8486c62c22bc55696e2ff584dacf6872f2e86334a62db424b9d5e88f8419f85",
+        "af21ae26e58eaf13cffcff65f563855bf213f5741687bee95638e1f2593267f3"
+      ],
+      "chunk_ids": [
+        "maintenance-2023.md#000-00-maintenance-2023",
+        "maintenance-2023.md#001-00-maintenance-2023-summary",
+        "maintenance-2023.md#002-00-maintenance-2023-structural-changes",
+        "maintenance-2023.md#003-00-maintenance-2023-release-context",
+        "maintenance-2023.md#004-00-maintenance-2023-relevant-policy",
+        "maintenance-2023.md#005-00-maintenance-2023-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "maintenance-2024.md",
+      "title": "FoodEx2 Maintenance 2024",
+      "category": "maintenance",
+      "source_path": "raw/efsa-guidance/maintenance-2024.md",
+      "chunk_count": 6,
+      "content_hash": "06a59c83ebefbdd21455b431def70b2eadd080807faff532988b67e2dc85dd07",
+      "chunk_hashes": [
+        "eb60cc2de86e3debbba60915d1fa883c7502648266228ba48d1b9aff6ea2120e",
+        "2310be55dfe7f8466f3ce5850252c8407b085913c8da1a7baf1bffd51c616649",
+        "070406e640de11d18133709bc8e631ea54690c58402c11edadf1f66e364fcb47",
+        "74ff7ea40f8b9466fcd49835b10807e3b9aa1812ac0a8cef8ac3339b2d8bfd0d",
+        "0d046a697b0f7b1122f2da8462c3472fbec5b344d5f085b84b7c79b9dfd89bea",
+        "e00bed2b970d2bdfb2a0371845eadc38423a8c7b8d35f70fec581a2b867f8d02"
+      ],
+      "chunk_ids": [
+        "maintenance-2024.md#000-00-maintenance-2024",
+        "maintenance-2024.md#001-00-maintenance-2024-summary",
+        "maintenance-2024.md#002-00-maintenance-2024-why-this-is-important",
+        "maintenance-2024.md#003-00-maintenance-2024-release-context",
+        "maintenance-2024.md#004-00-maintenance-2024-relevant-policy",
+        "maintenance-2024.md#005-00-maintenance-2024-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "maintenance-history.md",
+      "title": "FoodEx2 Maintenance History",
+      "category": "maintenance",
+      "source_path": "raw/efsa-guidance/maintenance-history.md",
+      "chunk_count": 6,
+      "content_hash": "3b7e116e8c9ecd9b45fec88dbad77172fadf81cae6855c15225e91f23085f4ee",
+      "chunk_hashes": [
+        "9f4a63e021428ceec43711cccdeb75ae16f9d701617b25eafa996f0f34f4ce31",
+        "1ed0da868189989282f529a45f4083e1b732af851e847e930983884220054683",
+        "01fb260c54bca5321d1d8d5413f1a21a25ade482249fdc5d203520042c1307ef",
+        "8b3e34a033ff9e5a4da0b786c3c76fb7cdae96de327640834aaf8e8a5fee27f0",
+        "980b1ee43b29a35b08c348812398fd3bf19dace51317c536da0e14b56571ad79",
+        "feae2f77b43648be6b7c84525eade658a09157016ce34857acd9885f833aa93e"
+      ],
+      "chunk_ids": [
+        "maintenance-history.md#000-00-maintenance-history",
+        "maintenance-history.md#001-00-maintenance-history-why-it-matters",
+        "maintenance-history.md#002-00-maintenance-history-timeline",
+        "maintenance-history.md#003-00-maintenance-history-read-these-pages-with",
+        "maintenance-history.md#004-00-maintenance-history-relevant-policy",
+        "maintenance-history.md#005-00-maintenance-history-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "packaging-facets.md",
+      "title": "Packaging Facets",
+      "category": "guidance",
+      "source_path": "raw/efsa-guidance/packaging-facets.md",
+      "chunk_count": 7,
+      "content_hash": "69141b3755c58a572dc68ee933d97df5ca3deef65be77a34b035d1b4a6d5fdf1",
+      "chunk_hashes": [
+        "39111122afc2a3962f4acaa9e2004c30d4ffa88f6735b105b8d9c715342071ca",
+        "fc6d4ade35b8690efd9cce245cca2a84defaac422fc7ba0658c11776f2accc44",
+        "7ac8435d9e04a129ee1e3375c2e41b1e80167159fff822b7e89a64de0832c93d",
+        "1ba573805788a241bd4f7bfa18e3b218a253ad4efee1dd63c1939875acdcad01",
+        "13266ccaa3c016d381fd9e170badf48eb1d41afd98a6ae8c5bd94c8f33d5ef98",
+        "f9efc08363ec7b89c16a54ac3ba33073d962635d594bab173880330fd11af7b0",
+        "3948d6410218de2de48bf5c54b856c72d0de867e5690b1ab1c71996869f8de49"
+      ],
+      "chunk_ids": [
+        "packaging-facets.md#000-00-packaging-facets",
+        "packaging-facets.md#001-00-packaging-facets-core-rule",
+        "packaging-facets.md#002-00-packaging-facets-f18-vs-f19",
+        "packaging-facets.md#003-00-packaging-facets-packaging-is-not-the-same-as-process",
+        "packaging-facets.md#004-00-packaging-facets-worked-examples",
+        "packaging-facets.md#005-00-packaging-facets-relevant-policy",
+        "packaging-facets.md#006-00-packaging-facets-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "pesticides-foodex2.md",
+      "title": "FoodEx2 In Pesticide Residue Monitoring",
+      "category": "domain_overlay",
+      "source_path": "raw/efsa-guidance/pesticides-foodex2.md",
+      "chunk_count": 6,
+      "content_hash": "754058258d72d3795ae10dfbae7885d85c4874b8f37347ce8588cedc6f3951d4",
+      "chunk_hashes": [
+        "45adeab2c69000dd00d85c7db73ebcbda755f018435da506c77566cef52801e6",
+        "55b60560ba740996d428486c315352f6eee290d2f2ff32f86de45a8aeffe86f4",
+        "194a65f048ca398e1a214d2ed2d8302ad9c240d68b1e3345f0b02618a71a5bc0",
+        "510183f433407d6e839c47ea126c3ed3208e3d221f589854b8667ecc8bd5874e",
+        "46247c388c109ef2a3f4aed789bb6c9c6b1c48350a846010023682aa9d4d01b4",
+        "ae68dbd6c36b28a4641fb1f74de972260763c8e35e6896470a154afc8ebdf10a"
+      ],
+      "chunk_ids": [
+        "pesticides-foodex2.md#000-00-foodex2-in-pesticide-residue-monitoring",
+        "pesticides-foodex2.md#001-00-foodex2-in-pesticide-residue-monitoring-use-only-when-pesticide-context-is-activ",
+        "pesticides-foodex2.md#002-00-foodex2-in-pesticide-residue-monitoring-domain-boundary",
+        "pesticides-foodex2.md#003-00-foodex2-in-pesticide-residue-monitoring-facet-consequences",
+        "pesticides-foodex2.md#004-00-foodex2-in-pesticide-residue-monitoring-worked-signals",
+        "pesticides-foodex2.md#005-00-foodex2-in-pesticide-residue-monitoring-relevant-policy"
+      ]
+    },
+    {
+      "page_name": "policy-contract.md",
+      "title": "Policy Contract",
+      "category": "runtime",
+      "source_path": "raw/efsa-guidance/policy-contract.md",
+      "chunk_count": 14,
+      "content_hash": "9bcfce2893d809a3d9ece989c5ae7dcdb3401a31eabbcf862933afcbf83468d3",
+      "chunk_hashes": [
+        "85be61cd179149f488f662b4694a9588781f1a95c9bd2f6aa91d30639fb5a694",
+        "f65b0651e4ff32c93fde42295cbb35a8a3a738dc3020261bab64836d9f94a554",
+        "4350a5056309053d1a3551827bb223a465aaa9a10a84a382b638c5c3b08d3c93",
+        "aaa61f9d47dd63cb0d0353a5bae6aa4cfd843b3d27f4dc83dcc684813cdb263d",
+        "f830d6029a15ae320b9bfaa8cdd5db3a35b8ead3ce15076cf8f7361105388862",
+        "d7a14cda4850f47aeac6f0b8bacd5ff984b915cbe649c4579da7c817dc8386a9",
+        "66918d66fafff81195914b8e6b098df881064511e915ce7b658a0391c3711218",
+        "fc8ead86a7c45fe3c21a5f96237a0673e16a916d2c7ff687dbd17877316c8ab3",
+        "0169ef391e8066dc26df3f5cb76bce9bde5a445142e64e017b349920b801de5c",
+        "869806f46e724b2fcde52dc8c840837cec2e8be23884cf6543acff78f38e909c",
+        "eecf47f06527d1d2e438669855ef660102b92ef6e264e3ca2e26f4c5a7e2b8dc",
+        "fcc42b8541f8c4b60abab009dfaa7850091dcd2a06e15b29905b4aa264917567",
+        "c5396721b418c294b69c1aca032b55f87877f5cd885dc100e8a065d5092812a9",
+        "90cb281b4f03be2b5e3f5f83df331e201d2428235ae48ce9950236bfdabab4e6"
+      ],
+      "chunk_ids": [
+        "policy-contract.md#000-00-policy-contract",
+        "policy-contract.md#001-00-policy-contract-reading-order",
+        "policy-contract.md#002-00-policy-contract-policy-version",
+        "policy-contract.md#003-00-policy-contract-constitution",
+        "policy-contract.md#004-00-policy-contract-decision-procedure",
+        "policy-contract.md#005-00-policy-contract-binding-rules",
+        "policy-contract.md#005-01-policy-contract-binding-rules",
+        "policy-contract.md#005-02-policy-contract-binding-rules",
+        "policy-contract.md#006-00-policy-contract-tie-break-rules",
+        "policy-contract.md#007-00-policy-contract-anti-patterns",
+        "policy-contract.md#008-00-policy-contract-ground-rules",
+        "policy-contract.md#009-00-policy-contract-operational-rules",
+        "policy-contract.md#010-00-policy-contract-relevant-policy",
+        "policy-contract.md#011-00-policy-contract-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "process-facets.md",
+      "title": "Process Facets",
+      "category": "guidance",
+      "source_path": "raw/efsa-guidance/process-facets.md",
+      "chunk_count": 9,
+      "content_hash": "a57ae20320a32decee59f3f44f758534feddfebce34524b5522c53c7a3587d86",
+      "chunk_hashes": [
+        "6cce580045a18c65b002e84be869f0c97a89ee2a4272f8b2ea941d01b00697d1",
+        "bfcc945b990291628f7679293e8af8f3bb43dc7699dfd0b0c4207e38cab73578",
+        "f63cf9f2aa597b99d042a53fc7865d7566365aad4846a8d31434a3774bc4dc77",
+        "4a1bba4d8aae09fbd2d1d451d90be309e4a9f6e2442578a174f93a6dbe63e225",
+        "2001bcd68f76219c0fdfec4ae2895620e53316dc4a7a4b3fd4bcf6791067bdab",
+        "c388791205a23bb5d9c9a59784ce3f92780d6c3cfa15238741f3ea0ad626b4b0",
+        "61a9a91aeeccd95a41d57696f966b1bcb1af3c2cdd9df4281fafc61eb4e58f3f",
+        "59334a1a2ffa73c7aab6c4589d868b77e426be9119eae4d951c0d1d35a2e2c27",
+        "21b1861359174fbb871d7a9e393160945ebde535cc6bcf829ca0d3f7d1a19b38"
+      ],
+      "chunk_ids": [
+        "process-facets.md#000-00-process-facets",
+        "process-facets.md#001-00-process-facets-rule-of-use",
+        "process-facets.md#002-00-process-facets-appendix-a2-codes",
+        "process-facets.md#002-01-process-facets-appendix-a2-codes",
+        "process-facets.md#002-02-process-facets-appendix-a2-codes",
+        "process-facets.md#002-03-process-facets-appendix-a2-codes",
+        "process-facets.md#003-00-process-facets-worked-examples",
+        "process-facets.md#004-00-process-facets-relevant-policy",
+        "process-facets.md#005-00-process-facets-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "process-validation-rules.md",
+      "title": "Process Validation Rules",
+      "category": "validation",
+      "source_path": "raw/efsa-guidance/process-validation-rules.md",
+      "chunk_count": 6,
+      "content_hash": "2b9c932101f91d4af58e351295b5045b9fb38e2e3d06d366d21e8f287130db49",
+      "chunk_hashes": [
+        "ed2e832d7f19c5986b7a15e5991f660988ea7ec579e1bec362c70cc9271cacc2",
+        "5df53dbcd8e8b50c437c78f2c2ec4183ee0d7af2c9a8e0fd9334085c82ce5bd0",
+        "26a8156d46cfbf07b7226374fd1738903556926b7481a9cf809caec13dfa6777",
+        "9d037bd37bfaf97cdcdd7a630f7e2ae38fe087bd55f19a0d48f7f05c6e02bd6e",
+        "20949ee1119a21da2b8882f6a8019d80df8109e2734cb84a3b3617844c2513e0",
+        "ddca233df1231d98033a4d3af5b5b8911580ae9badcef0faa4f31a5fe68ce6b3"
+      ],
+      "chunk_ids": [
+        "process-validation-rules.md#000-00-process-validation-rules",
+        "process-validation-rules.md#001-00-process-validation-rules-ordinal-groups",
+        "process-validation-rules.md#002-00-process-validation-rules-main-process-rules",
+        "process-validation-rules.md#003-00-process-validation-rules-worked-examples",
+        "process-validation-rules.md#004-00-process-validation-rules-relevant-policy",
+        "process-validation-rules.md#005-00-process-validation-rules-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "structural-validation.md",
+      "title": "Structural Validation",
+      "category": "validation",
+      "source_path": "raw/efsa-guidance/structural-validation.md",
+      "chunk_count": 7,
+      "content_hash": "8650cbaa02185f299abc93f4d0292f3c8f0ac2da81bb1436c131de9638afa624",
+      "chunk_hashes": [
+        "d96d18f9c4ed5c8f759aae3b70c8ede9289c5b5ba5ed89c22a61b5b9a2e53589",
+        "0657d86f222805d155d6e0afaa28a659f9d1b9e933aa50af8bde52b50a98f924",
+        "aa50bd0d8db6d704ad15a723f01c18ee3c6601f4fa7c49abba8670c6765fa3cf",
+        "876dd34fc502fa9454e3c2aa5314ff80cd2706c163809255f02e0f13ab6a61e0",
+        "f54089da054a9c7801cea871b0a8dc58f53d22d144067d2255734a7be18bcacf",
+        "6fb877d57b2befb13d08352898c7adb9d73e8bc32afae0b56201851298a7976b",
+        "302ce6ef7f0e647c89cf309345f0cec53d402fba0134acbee7712f8d2185a122"
+      ],
+      "chunk_ids": [
+        "structural-validation.md#000-00-structural-validation",
+        "structural-validation.md#001-00-structural-validation-syntax-checks",
+        "structural-validation.md#002-00-structural-validation-descriptor-and-facet-checks",
+        "structural-validation.md#003-00-structural-validation-validation-order",
+        "structural-validation.md#004-00-structural-validation-worked-examples",
+        "structural-validation.md#005-00-structural-validation-relevant-policy",
+        "structural-validation.md#006-00-structural-validation-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "term-type-facet-constraints.md",
+      "title": "Term Type And Facet Constraints",
+      "category": "validation",
+      "source_path": "raw/efsa-guidance/term-type-facet-constraints.md",
+      "chunk_count": 6,
+      "content_hash": "46243ac263d6aa8da62bc293581846dd017e3814f690d65871d6fabc168886d9",
+      "chunk_hashes": [
+        "28119d1c46d807dba52a3d86e4e08bfea24d29228933664e7f4ffd7629b286f8",
+        "0303bab3e3fc7ba23fe54211b10b72051c4e49439dbee82c51322af75fa2b13b",
+        "f786dfcac382285dde83da313dc891d55bdb303fb07c33f5cfd995c789366c2d",
+        "c4dbc75f136807bd5b1db03f9560c61692e245c9a3d2661d2e504bc584c07d91",
+        "5975999d479eb0427325304dc37830c2d7d0eae23e74fb4f35c67089e5aa00a3",
+        "b1491cda3af648212c520abeac3ac65f66ca1a84a23e33c594dfc6a58a5802c5"
+      ],
+      "chunk_ids": [
+        "term-type-facet-constraints.md#000-00-term-type-and-facet-constraints",
+        "term-type-facet-constraints.md#001-00-term-type-and-facet-constraints-core-matrix",
+        "term-type-facet-constraints.md#002-00-term-type-and-facet-constraints-practical-reading",
+        "term-type-facet-constraints.md#003-00-term-type-and-facet-constraints-worked-examples",
+        "term-type-facet-constraints.md#004-00-term-type-and-facet-constraints-relevant-policy",
+        "term-type-facet-constraints.md#005-00-term-type-and-facet-constraints-relevant-business-rules"
+      ]
+    },
+    {
+      "page_name": "validation-rules.md",
+      "title": "Validation Rules Overview",
+      "category": "validation",
+      "source_path": "raw/efsa-guidance/validation-rules.md",
+      "chunk_count": 7,
+      "content_hash": "a59e9290c3325ab64d7a3831c93f1b1232c66a6db237dbf9a647845b526690b6",
+      "chunk_hashes": [
+        "d3131627d3f5c0614e42bc0f96a983e90be8b884bb75e7dd3ddfcc3763e36129",
+        "194da075614fe8de6af98fa7d84eb4572b13c761c8b087521c0bb6c45f5257c5",
+        "c04bd5d2de6913ad68eccdfa31037baeaa0cc3ecb7614f5c2ca427d310043859",
+        "bcaafe541aab3c8d1984277c084a27891d91939e4c973bcd490feff716ac3a08",
+        "0192ef44aa06d6b53e8047f1684bdc93f083fcd2f767197a8c014a52b996190b",
+        "2b5bb78f1e6463640e23b3b595154e3c62bc7c2f8691a59c210fdd5d892d34f5",
+        "5d05fb448136c860b936eca02b8ad95c147e275a2d844887cddcbf0d909de5f3"
+      ],
+      "chunk_ids": [
+        "validation-rules.md#000-00-validation-rules-overview",
+        "validation-rules.md#001-00-validation-rules-overview-two-validation-layers",
+        "validation-rules.md#002-00-validation-rules-overview-severity-model",
+        "validation-rules.md#003-00-validation-rules-overview-high-impact-blocking-rules",
+        "validation-rules.md#004-00-validation-rules-overview-relevant-policy",
+        "validation-rules.md#005-00-validation-rules-overview-relevant-business-rules",
+        "validation-rules.md#006-00-validation-rules-overview-worked-examples"
+      ]
+    },
+    {
+      "page_name": "vmpr-foodex2.md",
+      "title": "FoodEx2 In VMPR Monitoring",
+      "category": "domain_overlay",
+      "source_path": "raw/efsa-guidance/vmpr-foodex2.md",
+      "chunk_count": 8,
+      "content_hash": "030a4fbd374f5f295314442fc2202b482d7eecafa3ac652e56eab2ee721d19de",
+      "chunk_hashes": [
+        "401bd66722f5e65eed18b6ded8b9c64dd1c7fe0336d815389af4fafe092d8ae4",
+        "110672daf0e95bcbbe198db203678c5b5dad7a6c960453d5344fc49c29993485",
+        "2ea8d18f399f29f249f0f0bc06498710da635c886a535675b3f7d02b3bf80d03",
+        "9d72c750983b5a3028be950c7fa1d658cddfcf41a371bbf0d95ec4470827eae8",
+        "14164f20149ec90c23be539c9e12ca2dfa150ce790c5e85e5b50c2f69fc827e3",
+        "89caa43b37b01c57ecfbf27c33d0e6a630bced82cd99c95a43a608cdc921f453",
+        "5c0a6902f7a6bb7683f78eba72637b53349ecf4ba7a3effcfd362e6969ab66ed",
+        "f429852e001007b1c8fdb6e0bbb788bcffc5579ce4930df09f227cd7bae6a9cf"
+      ],
+      "chunk_ids": [
+        "vmpr-foodex2.md#000-00-foodex2-in-vmpr-monitoring",
+        "vmpr-foodex2.md#001-00-foodex2-in-vmpr-monitoring-use-only-when-vmpr-context-is-active",
+        "vmpr-foodex2.md#002-00-foodex2-in-vmpr-monitoring-core-vmpr-requirements",
+        "vmpr-foodex2.md#003-00-foodex2-in-vmpr-monitoring-non-food-biological-sample-boundary",
+        "vmpr-foodex2.md#004-00-foodex2-in-vmpr-monitoring-feed-and-water",
+        "vmpr-foodex2.md#005-00-foodex2-in-vmpr-monitoring-processed-products-and-f33",
+        "vmpr-foodex2.md#006-00-foodex2-in-vmpr-monitoring-worked-signals",
+        "vmpr-foodex2.md#007-00-foodex2-in-vmpr-monitoring-relevant-policy"
+      ]
+    },
+    {
+      "page_name": "vmpr-legislative-mapping.md",
+      "title": "VMPR Legislative Mapping",
+      "category": "domain_overlay",
+      "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md",
+      "chunk_count": 10,
+      "content_hash": "8c7bb717c49d642b3c88a864293885c912961cdcadb1e3b9571844ed2e48a7a3",
+      "chunk_hashes": [
+        "7af3f78dde6d8b0ad4a46ce57d998a35885fc42b348a705361a19d224b94d543",
+        "c00b391d851b47a86bae7c336c6b1730daad6e6cce797d6eceb945de2d5303bf",
+        "5d1424ebf4d99475baf67a2385a47bf0cb2dab2233fd0c1da6cfd72187f4d457",
+        "1c9cc63182aa356b8565fa60c8bc23d758bba34131e9675867b7f9c57d2b3b4c",
+        "9a5f36bdd634c3c7a462d7b8aa658d6cccad282970ce9405875dc50cdaed2c1a",
+        "339cccc29efe5cecfff9852db7dac3ef3ba82d8e8f05dc1bd7a6ee9ac37ee47b",
+        "fa311aeac1d0830037555d7e28efe4f87300fbb89af162d5585d1bcde5df23b5",
+        "4574eaf31f6aea04899410a6c05df25019d2d7ab37f03cf729acff0c1e9519ac",
+        "0bf98b98c77dbf8b4c5c7eb19b97dc00b135f959e600849d0835a8f2082e677d",
+        "18c90b0d21730a380bc857f1c04b28fc43089c83d39520ac745afe2b4db09c32"
+      ],
+      "chunk_ids": [
+        "vmpr-legislative-mapping.md#000-00-vmpr-legislative-mapping",
+        "vmpr-legislative-mapping.md#001-00-vmpr-legislative-mapping-scope",
+        "vmpr-legislative-mapping.md#002-00-vmpr-legislative-mapping-mapping-stages",
+        "vmpr-legislative-mapping.md#003-00-vmpr-legislative-mapping-game-flag",
+        "vmpr-legislative-mapping.md#004-00-vmpr-legislative-mapping-foodclassvmpr-classifier",
+        "vmpr-legislative-mapping.md#005-00-vmpr-legislative-mapping-wild-flag",
+        "vmpr-legislative-mapping.md#006-00-vmpr-legislative-mapping-final-legislative-commodity-mapping",
+        "vmpr-legislative-mapping.md#007-00-vmpr-legislative-mapping-practical-consequences-for-coding",
+        "vmpr-legislative-mapping.md#008-00-vmpr-legislative-mapping-relevant-policy",
+        "vmpr-legislative-mapping.md#009-00-vmpr-legislative-mapping-relevant-business-rules"
+      ]
+    }
+  ]
+}

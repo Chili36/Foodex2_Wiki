@@ -1,0 +1,868 @@
+{
+  "question": "What should I think about when coding Infant formula fortified with vitamins and minerals?",
+  "answerer_model": "claude-sonnet-4-6",
+  "embedding_model": "voyage-context-3",
+  "embedding_dimension": 1024,
+  "runs": [
+    {
+      "mode": "normal_markdown_ask",
+      "question": "What should I think about when coding Infant formula fortified with vitamins and minerals?",
+      "status_code": 200,
+      "elapsed_ms": 19289,
+      "request_payload": {
+        "question": "What should I think about when coding Infant formula fortified with vitamins and minerals?",
+        "max_pages": 7,
+        "include_page_content": false,
+        "use_graph_expansion": true
+      },
+      "response": {
+        "answer": "When coding infant formula fortified with vitamins and minerals, work through these steps:\n\n- **Base term first**: Identify whether a specific reportable base term for infant formula exists in FoodEx2. It is a composite/derived food product, not a raw commodity, so look for a derivative or composite base term that already captures 'infant formula' as a food type. Do not reconstruct it from a raw dairy or grain base term plus process facets if a dedicated term exists (BR19).\n\n- **Fortification with vitamins and minerals — use F09**: The `F09 Fortification component` facet is the correct facet family for added enrichment or fortification components such as vitamins or minerals. Add explicit `F09` descriptors for the fortification components that are not already implicit in the chosen base term. Do not add them if the base term already carries fortification implicitly.\n\n- **Target consumer — add F23**: For products formulated for infants under 12 months, `F23 Target-consumer` should be added when the target consumer is not already implicit in the base term. This is both a general recommendation (domain-specific-validation.md) and specifically reinforced in the additives/flavourings overlay for infant products (additives-flavourings-foodex2.md).\n\n- **Implicit vs explicit discipline**: Only add explicit facets for fortification components that are not already implicit in the base term. If the base term for 'infant formula' already implies a standard fortification profile, do not restate those components explicitly (implicit-vs-explicit-facets.md, C04/C08).\n\n- **Domain overlay check**: If this is being reported in an additives/flavourings monitoring context, `F33 Legislative-class` becomes mandatory, and `F03 Physical-state` is highly recommended. Add `F03` only if not already implicit. Do not add `F33` if the base term already carries it implicitly (additives-flavourings-foodex2.md).\n\n- **Qualitative attributes**: If the formula has additional qualitative descriptors (e.g., lactose-free, hypoallergenic), consider `F10 Qualitative information`. Production method claims (e.g., organic) would go under `F21`.",
+        "citations": [
+          "base-term-selection.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "domain-specific-validation.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "pages_used": [
+          "index.md",
+          "base-term-selection.md",
+          "facet-coding-rules.md",
+          "ingredient-facets.md",
+          "domain-specific-validation.md",
+          "additives-flavourings-foodex2.md",
+          "implicit-vs-explicit-facets.md",
+          "foodex2-overview.md",
+          "process-facets.md",
+          "packaging-facets.md",
+          "business-rules.md",
+          "chemical-monitoring-foodex2.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "domoic-acid-scallops.md"
+        ],
+        "pages": [
+          {
+            "page_name": "index.md",
+            "title": "Wiki Index",
+            "summary": "Top-level catalog for the FoodEx2 wiki layer.",
+            "category": "orientation",
+            "sources": [],
+            "related": [],
+            "content": null
+          },
+          {
+            "page_name": "base-term-selection.md",
+            "title": "Base Term Selection Rules",
+            "summary": "Rules for choosing the right base term, including tie-breaks and missing-term handling.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
+            ],
+            "related": [
+              "[[foodex2-overview]]",
+              "[[implicit-vs-explicit-facets]]",
+              "[[ingredient-facets]]",
+              "[[process-facets]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "facet-coding-rules.md",
+            "title": "Facet Coding Rules",
+            "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+            ],
+            "related": [
+              "[[foodex2-overview]]",
+              "[[implicit-vs-explicit-facets]]",
+              "[[process-facets]]",
+              "[[ingredient-facets]]",
+              "[[packaging-facets]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "ingredient-facets.md",
+            "title": "Ingredient Facets",
+            "summary": "Rules for characterising ingredients, mixed foods, composite coding, and minor flavouring/added-ingredient use on derivatives.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
+            ],
+            "related": [
+              "[[facet-coding-rules]]",
+              "[[base-term-selection]]",
+              "[[implicit-vs-explicit-facets]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "domain-specific-validation.md",
+            "title": "Domain-Specific Validation",
+            "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+            "category": "domain_overlay",
+            "sources": [
+              "docs/DOMAIN_SPECIFIC_RULES.md",
+              "docs/CONTEXT_SPECIFIC_RULES.md",
+              "BUSINESS-RULES-COMPACT.json",
+              "Guidance VMPR mapping to legislative products.pdf",
+              "Reportable Scallops list of FoodEx2 codes - MTX.xlsx"
+            ],
+            "related": [
+              "[[business-rules]]",
+              "[[chemical-monitoring-foodex2]]",
+              "[[pesticides-foodex2]]",
+              "[[contaminants-foodex2]]",
+              "[[domoic-acid-scallops]]",
+              "[[vmpr-foodex2]]",
+              "[[additives-flavourings-foodex2]]",
+              "[[facet-coding-rules]]",
+              "[[validation-rules]]",
+              "[[vmpr-legislative-mapping]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "additives-flavourings-foodex2.md",
+            "title": "FoodEx2 In Additives And Flavourings Monitoring",
+            "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+            "category": "domain_overlay",
+            "sources": [
+              "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+              "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf",
+              "EFSA Supporting Publications - 2024 -  - FoodEx2 maintenance 2023.pdf"
+            ],
+            "related": [
+              "[[chemical-monitoring-foodex2]]",
+              "[[domain-specific-validation]]",
+              "[[facet-coding-rules]]",
+              "[[implicit-vs-explicit-facets]]",
+              "[[maintenance-2023]]",
+              "[[maintenance-2024]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "implicit-vs-explicit-facets.md",
+            "title": "Implicit vs Explicit Facets",
+            "summary": "Distinguishes inherited facet information from coder-supplied facet detail.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+            ],
+            "related": [
+              "[[foodex2-overview]]",
+              "[[facet-coding-rules]]",
+              "[[base-term-selection]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "foodex2-overview.md",
+            "title": "FoodEx2 Overview",
+            "summary": "High-level explanation of FoodEx2 purpose, hierarchy model, and coding philosophy.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
+            ],
+            "related": [
+              "[[base-term-selection]]",
+              "[[facet-coding-rules]]",
+              "[[code-string-format]]",
+              "[[implicit-vs-explicit-facets]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "process-facets.md",
+            "title": "Process Facets",
+            "summary": "Compact reference for Appendix A2 process facet codes and when to use them.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+            ],
+            "related": [
+              "[[facet-coding-rules]]",
+              "[[base-term-selection]]",
+              "[[code-string-format]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "packaging-facets.md",
+            "title": "Packaging Facets",
+            "summary": "When to use `F18` packaging-format and `F19` packaging-material, and how they differ from `F28` process.",
+            "category": "guidance",
+            "sources": [
+              "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+              "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+            ],
+            "related": [
+              "[[facet-coding-rules]]",
+              "[[code-string-format]]",
+              "[[process-facets]]",
+              "[[chemical-monitoring-foodex2]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "business-rules.md",
+            "title": "Business Rules",
+            "summary": "Canonical wiki target for `BR01`-`BR31`, used for page-level business-rule backlinks during ingest and retrieval.",
+            "category": "validation",
+            "sources": [
+              "BUSINESS-RULES.md",
+              "BUSINESS-RULES-COMPACT.json",
+              "foodex2_docs/business_rules.md"
+            ],
+            "related": [
+              "[[validation-rules]]",
+              "[[structural-validation]]",
+              "[[term-type-facet-constraints]]",
+              "[[process-validation-rules]]",
+              "[[domain-specific-validation]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "chemical-monitoring-foodex2.md",
+            "title": "FoodEx2 In Chemical Monitoring",
+            "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+            "category": "domain_overlay",
+            "sources": [
+              "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf",
+              "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+              "Guidance VMPR mapping to legislative products.pdf"
+            ],
+            "related": [
+              "[[foodex2-overview]]",
+              "[[facet-coding-rules]]",
+              "[[implicit-vs-explicit-facets]]",
+              "[[pesticides-foodex2]]",
+              "[[contaminants-foodex2]]",
+              "[[domoic-acid-scallops]]",
+              "[[vmpr-foodex2]]",
+              "[[additives-flavourings-foodex2]]",
+              "[[maintenance-2024]]",
+              "[[domain-specific-validation]]",
+              "[[vmpr-legislative-mapping]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "pesticides-foodex2.md",
+            "title": "FoodEx2 In Pesticide Residue Monitoring",
+            "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+            "category": "domain_overlay",
+            "sources": [
+              "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+              "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf",
+              "EFSA Supporting Publications - 2019 -  - FoodEx2 maintenance 2016-2018.pdf"
+            ],
+            "related": [
+              "[[chemical-monitoring-foodex2]]",
+              "[[contaminants-foodex2]]",
+              "[[base-term-selection]]",
+              "[[implicit-vs-explicit-facets]]",
+              "[[maintenance-2016-2018]]",
+              "[[maintenance-2024]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "contaminants-foodex2.md",
+            "title": "FoodEx2 In Contaminants Monitoring",
+            "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+            "category": "domain_overlay",
+            "sources": [
+              "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+              "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf",
+              "Reportable Scallops list of FoodEx2 codes - MTX.xlsx"
+            ],
+            "related": [
+              "[[chemical-monitoring-foodex2]]",
+              "[[pesticides-foodex2]]",
+              "[[domoic-acid-scallops]]",
+              "[[domain-specific-validation]]",
+              "[[facet-coding-rules]]",
+              "[[implicit-vs-explicit-facets]]"
+            ],
+            "content": null
+          },
+          {
+            "page_name": "domoic-acid-scallops.md",
+            "title": "Domoic Acid In Scallops",
+            "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+            "category": "domain_overlay",
+            "sources": [
+              "Reportable Scallops list of FoodEx2 codes - MTX.xlsx",
+              "domoic_acid_scallops_mtx.csv"
+            ],
+            "related": [
+              "[[chemical-monitoring-foodex2]]",
+              "[[contaminants-foodex2]]",
+              "[[domain-specific-validation]]",
+              "[[facet-coding-rules]]",
+              "[[implicit-vs-explicit-facets]]"
+            ],
+            "content": null
+          }
+        ],
+        "trace": {
+          "index_used": true,
+          "max_pages": 7,
+          "selection_method": "service-owned llm page selector + answerer",
+          "retrieval": {
+            "model": "claude-sonnet-4-6",
+            "tool_trace": [
+              {
+                "page_name": "base-term-selection.md",
+                "order": 1,
+                "chars": 5651,
+                "synthetic": false
+              },
+              {
+                "page_name": "facet-coding-rules.md",
+                "order": 2,
+                "chars": 7700,
+                "synthetic": false
+              },
+              {
+                "page_name": "ingredient-facets.md",
+                "order": 3,
+                "chars": 4226,
+                "synthetic": false
+              },
+              {
+                "page_name": "domain-specific-validation.md",
+                "order": 4,
+                "chars": 4782,
+                "synthetic": false
+              },
+              {
+                "page_name": "additives-flavourings-foodex2.md",
+                "order": 5,
+                "chars": 3629,
+                "synthetic": false
+              },
+              {
+                "page_name": "implicit-vs-explicit-facets.md",
+                "order": 6,
+                "chars": 5167,
+                "synthetic": false
+              }
+            ],
+            "token_summary": {
+              "model": "claude-sonnet-4-6",
+              "calls": 1,
+              "input_tokens": 3275,
+              "output_tokens": 218,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "total_tracked_tokens": 3493,
+              "per_call": [
+                {
+                  "stop_reason": "tool_use",
+                  "input_tokens": 3275,
+                  "output_tokens": 218,
+                  "cache_creation_input_tokens": 0,
+                  "cache_read_input_tokens": 0,
+                  "total_tracked_tokens": 3493
+                }
+              ]
+            },
+            "timing_summary": {
+              "calls": 1,
+              "llm_time_ms": 6075,
+              "per_call": [
+                {
+                  "call_number": 1,
+                  "duration_ms": 6075,
+                  "stop_reason": "tool_use"
+                }
+              ],
+              "selector_wall_time_ms": 6089
+            }
+          },
+          "graph_expansion": {
+            "enabled": true,
+            "neighbors_added": [
+              "foodex2-overview.md",
+              "process-facets.md",
+              "packaging-facets.md",
+              "business-rules.md",
+              "chemical-monitoring-foodex2.md",
+              "pesticides-foodex2.md",
+              "contaminants-foodex2.md",
+              "domoic-acid-scallops.md"
+            ],
+            "neighbors_count": 8
+          },
+          "answerer": {
+            "model": "claude-sonnet-4-6",
+            "token_summary": {
+              "model": "claude-sonnet-4-6",
+              "calls": 1,
+              "input_tokens": 9861,
+              "output_tokens": 611,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "total_tracked_tokens": 10472,
+              "per_call": [
+                {
+                  "stop_reason": "end_turn",
+                  "input_tokens": 9861,
+                  "output_tokens": 611,
+                  "cache_creation_input_tokens": 0,
+                  "cache_read_input_tokens": 0,
+                  "total_tracked_tokens": 10472
+                }
+              ]
+            },
+            "timing_summary": {
+              "calls": 1,
+              "llm_time_ms": 13148,
+              "per_call": [
+                {
+                  "call_number": 1,
+                  "duration_ms": 13148,
+                  "stop_reason": "end_turn"
+                }
+              ],
+              "answerer_wall_time_ms": 13149
+            }
+          },
+          "total": {
+            "request_wall_time_ms": 19267,
+            "total_llm_calls": 2,
+            "total_tracked_tokens": 13965
+          },
+          "phase_timings_ms": {
+            "selector_total": 6090,
+            "page_read": 7,
+            "graph_expansion": 14,
+            "answerer_total": 13149
+          }
+        }
+      }
+    },
+    {
+      "mode": "qdrant_ask_emulation",
+      "question": "What should I think about when coding Infant formula fortified with vitamins and minerals?",
+      "retrieval_collection": "foodex2_wiki_markdown_v1",
+      "elapsed_ms": 8996,
+      "embedding": {
+        "provider": "voyage",
+        "model": "voyage-context-3",
+        "dimension": 1024,
+        "elapsed_ms": 412,
+        "usage": {
+          "total_tokens": 14
+        },
+        "tracked_tokens": 14
+      },
+      "retrieval": {
+        "provider": "qdrant",
+        "collection": "foodex2_wiki_markdown_v1",
+        "elapsed_ms": 30,
+        "limit": 7,
+        "results": [
+          {
+            "score": 0.47093087,
+            "page_name": "facet-coding-rules.md",
+            "heading_path": "Facet Coding Rules > Worked Examples",
+            "category": "guidance",
+            "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+          },
+          {
+            "score": 0.448927,
+            "page_name": "facet-coding-rules.md",
+            "heading_path": "Facet Coding Rules > Facet Category Reference",
+            "category": "guidance",
+            "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+          },
+          {
+            "score": 0.43743354,
+            "page_name": "additives-flavourings-foodex2.md",
+            "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Additional Facets",
+            "category": "domain_overlay",
+            "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices."
+          },
+          {
+            "score": 0.42968306,
+            "page_name": "facet-coding-rules.md",
+            "heading_path": "Facet Coding Rules > High-Value Facets",
+            "category": "guidance",
+            "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+          },
+          {
+            "score": 0.4081648,
+            "page_name": "facet-coding-rules.md",
+            "heading_path": "Facet Coding Rules > Relevant Policy",
+            "category": "guidance",
+            "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+          },
+          {
+            "score": 0.40343586,
+            "page_name": "foodex2-overview.md",
+            "heading_path": "FoodEx2 Overview > Worked Examples",
+            "category": "guidance",
+            "summary": "High-level explanation of FoodEx2 purpose, hierarchy model, and coding philosophy."
+          },
+          {
+            "score": 0.38919812,
+            "page_name": "additives-flavourings-foodex2.md",
+            "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Relevant Policy",
+            "category": "domain_overlay",
+            "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices."
+          }
+        ]
+      },
+      "answerer": {
+        "model": "claude-sonnet-4-6",
+        "elapsed_ms": 8553,
+        "token_summary": {
+          "model": "claude-sonnet-4-6",
+          "calls": 1,
+          "input_tokens": 3477,
+          "output_tokens": 381,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "total_tracked_tokens": 3858,
+          "per_call": [
+            {
+              "stop_reason": "end_turn",
+              "input_tokens": 3477,
+              "output_tokens": 381,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "total_tracked_tokens": 3858
+            }
+          ]
+        },
+        "timing_summary": {
+          "calls": 1,
+          "llm_time_ms": 8516,
+          "per_call": [
+            {
+              "call_number": 1,
+              "duration_ms": 8516,
+              "stop_reason": "end_turn"
+            }
+          ],
+          "answerer_wall_time_ms": 8516
+        }
+      },
+      "total": {
+        "elapsed_ms": 8996,
+        "llm_calls": 1,
+        "answerer_tracked_tokens": 3858,
+        "embedding_tracked_tokens": 14,
+        "combined_known_tokens": 3872
+      },
+      "answer": "Key considerations when coding infant formula fortified with vitamins and minerals:\n\n- **Base term**: Choose the most specific infant formula base term available. If no dedicated term exists, use the nearest generic base term and recover specificity with facets (e.g., F27 + F26 as shown in the quinoa flour example).\n\n- **F09 – Fortification component**: Add an F09 facet for each added enrichment or fortification component (vitamins, minerals). Only add descriptors not already implicit in the base term — e.g., the orange nectar example shows `F09.A0EXH` for calcium fortification.\n\n- **F23 – Target consumer**: In the additives/flavourings domain overlay, F23 must be added for products formulated for infants under 12 months when the target consumer is not already implicit in the chosen base term.\n\n- **F03 – Physical state**: Highly recommended (and sometimes required) in additive/flavouring reporting contexts when not implicit in the base term.\n\n- **Avoid redundancy**: Do not add facets that merely restate what the base term already captures. Only explicit detail that adds real information beyond the base term should be included.\n\n- **Domain check**: If reporting under additives/flavourings monitoring, also verify F33 (legislative class) requirements and run domain-specific validation checks.",
+      "citations": [
+        "facet-coding-rules.md",
+        "additives-flavourings-foodex2.md",
+        "foodex2-overview.md"
+      ]
+    },
+    {
+      "mode": "qdrant_ask_emulation",
+      "question": "What should I think about when coding Infant formula fortified with vitamins and minerals?",
+      "retrieval_collection": "foodex2_source_docs_v1",
+      "elapsed_ms": 12500,
+      "embedding": {
+        "provider": "voyage",
+        "model": "voyage-context-3",
+        "dimension": 1024,
+        "elapsed_ms": 292,
+        "usage": {
+          "total_tokens": 14
+        },
+        "tracked_tokens": 14
+      },
+      "retrieval": {
+        "provider": "qdrant",
+        "collection": "foodex2_source_docs_v1",
+        "elapsed_ms": 32,
+        "limit": 7,
+        "results": [
+          {
+            "score": 0.41933018,
+            "source_file": "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "location": "page 40",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.3988494,
+            "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "location": "page 40",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.39091003,
+            "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "location": "page 39",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.3876208,
+            "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "location": "page 53",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.3772166,
+            "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "location": "page 56",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.3701887,
+            "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "location": "page 47",
+            "source_suffix": "pdf"
+          },
+          {
+            "score": 0.36976245,
+            "source_file": "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "source_path": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "location": "page 55",
+            "source_suffix": "pdf"
+          }
+        ]
+      },
+      "answerer": {
+        "model": "claude-sonnet-4-6",
+        "elapsed_ms": 12175,
+        "token_summary": {
+          "model": "claude-sonnet-4-6",
+          "calls": 1,
+          "input_tokens": 6743,
+          "output_tokens": 607,
+          "cache_creation_input_tokens": 0,
+          "cache_read_input_tokens": 0,
+          "total_tracked_tokens": 7350,
+          "per_call": [
+            {
+              "stop_reason": "end_turn",
+              "input_tokens": 6743,
+              "output_tokens": 607,
+              "cache_creation_input_tokens": 0,
+              "cache_read_input_tokens": 0,
+              "total_tracked_tokens": 7350
+            }
+          ]
+        },
+        "timing_summary": {
+          "calls": 1,
+          "llm_time_ms": 12160,
+          "per_call": [
+            {
+              "call_number": 1,
+              "duration_ms": 12160,
+              "stop_reason": "end_turn"
+            }
+          ],
+          "answerer_wall_time_ms": 12160
+        }
+      },
+      "total": {
+        "elapsed_ms": 12500,
+        "llm_calls": 1,
+        "answerer_tracked_tokens": 7350,
+        "embedding_tracked_tokens": 14,
+        "combined_known_tokens": 7364
+      },
+      "answer": "When coding infant formula fortified with vitamins and minerals, consider the following steps:\n\n- **Base term selection**: Choose the most specific infant formula base term available. Examples from the guidance include A03QH (Infant formula, milk and soya-based, liquid) or A03QF (Infant formula, milk-based, liquid), depending on the formula's composition.\n\n- **Implicit facets**: Several facets are already implied by these base terms and do not need to be added explicitly, including: F02 Part-nature = 'Infant formulae', F04 Ingredient = 'Milk' (and 'Soya proteins' if applicable), F03 Physical-state = 'Liquid', F23 Target-consumer = 'Infant or toddler food', and F33 Legislative-classes = 'FA-13.1.1 Infant formulae as defined by Commission Directive 2006/141/EC'.\n\n- **Fortification**: Because the product is fortified with vitamins and minerals, you should add the F09 (Fortification-agent) facet explicitly. F09 is described as 'Important for fortified food products'. You would add the relevant vitamin and/or mineral descriptors under F09.\n\n- **Target-consumer facet (F23)**: If the sample is formulated for infants (<12 months) and F23 is not already implicitly assigned by the base term, it is recommended to add it explicitly.\n\n- **F33 Legislative-classes**: For food additives domain reporting, F33 is mandatory. If not implicit, add it explicitly. For infant formula this maps to FA-13.1.1.\n\n- **F03 Physical-state**: If not implicit, it is highly recommended to add this facet (e.g., liquid).\n\n- **Validation**: Ensure only one FoodEx2 code is recorded per field, no spaces in the code, and the base term is always present.",
+      "citations": [
+        "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf :: page 40",
+        "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf :: page 39",
+        "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf :: page 47",
+        "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf :: page 53"
+      ]
+    }
+  ],
+  "summary": [
+    {
+      "mode": "normal_markdown_ask",
+      "status_code": 200,
+      "elapsed_ms": 19289,
+      "trace_total_ms": 19267,
+      "total_tokens": 13965,
+      "retrieval_tokens": 3493,
+      "answerer_tokens": 10472,
+      "llm_calls": 2,
+      "pages_used": [
+        "index.md",
+        "base-term-selection.md",
+        "facet-coding-rules.md",
+        "ingredient-facets.md",
+        "domain-specific-validation.md",
+        "additives-flavourings-foodex2.md",
+        "implicit-vs-explicit-facets.md",
+        "foodex2-overview.md",
+        "process-facets.md",
+        "packaging-facets.md",
+        "business-rules.md",
+        "chemical-monitoring-foodex2.md",
+        "pesticides-foodex2.md",
+        "contaminants-foodex2.md",
+        "domoic-acid-scallops.md"
+      ],
+      "citations": [
+        "base-term-selection.md",
+        "facet-coding-rules.md",
+        "implicit-vs-explicit-facets.md",
+        "domain-specific-validation.md",
+        "additives-flavourings-foodex2.md"
+      ]
+    },
+    {
+      "mode": "qdrant_ask_emulation",
+      "collection": "foodex2_wiki_markdown_v1",
+      "elapsed_ms": 8996,
+      "total_tokens": 3872,
+      "answerer_tokens": 3858,
+      "embedding_tokens": 14,
+      "llm_calls": 1,
+      "results": [
+        {
+          "score": 0.47093087,
+          "page_name": "facet-coding-rules.md",
+          "heading_path": "Facet Coding Rules > Worked Examples",
+          "category": "guidance",
+          "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+        },
+        {
+          "score": 0.448927,
+          "page_name": "facet-coding-rules.md",
+          "heading_path": "Facet Coding Rules > Facet Category Reference",
+          "category": "guidance",
+          "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+        },
+        {
+          "score": 0.43743354,
+          "page_name": "additives-flavourings-foodex2.md",
+          "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Additional Facets",
+          "category": "domain_overlay",
+          "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices."
+        },
+        {
+          "score": 0.42968306,
+          "page_name": "facet-coding-rules.md",
+          "heading_path": "Facet Coding Rules > High-Value Facets",
+          "category": "guidance",
+          "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+        },
+        {
+          "score": 0.4081648,
+          "page_name": "facet-coding-rules.md",
+          "heading_path": "Facet Coding Rules > Relevant Policy",
+          "category": "guidance",
+          "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions."
+        },
+        {
+          "score": 0.40343586,
+          "page_name": "foodex2-overview.md",
+          "heading_path": "FoodEx2 Overview > Worked Examples",
+          "category": "guidance",
+          "summary": "High-level explanation of FoodEx2 purpose, hierarchy model, and coding philosophy."
+        },
+        {
+          "score": 0.38919812,
+          "page_name": "additives-flavourings-foodex2.md",
+          "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Relevant Policy",
+          "category": "domain_overlay",
+          "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices."
+        }
+      ],
+      "citations": [
+        "facet-coding-rules.md",
+        "additives-flavourings-foodex2.md",
+        "foodex2-overview.md"
+      ]
+    },
+    {
+      "mode": "qdrant_ask_emulation",
+      "collection": "foodex2_source_docs_v1",
+      "elapsed_ms": 12500,
+      "total_tokens": 7364,
+      "answerer_tokens": 7350,
+      "embedding_tokens": 14,
+      "llm_calls": 1,
+      "results": [
+        {
+          "score": 0.41933018,
+          "source_file": "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+          "location": "page 40",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.3988494,
+          "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "location": "page 40",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.39091003,
+          "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "location": "page 39",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.3876208,
+          "source_file": "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf",
+          "location": "page 53",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.3772166,
+          "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "location": "page 56",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.3701887,
+          "source_file": "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+          "location": "page 47",
+          "source_suffix": "pdf"
+        },
+        {
+          "score": 0.36976245,
+          "source_file": "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+          "source_path": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+          "location": "page 55",
+          "source_suffix": "pdf"
+        }
+      ],
+      "citations": [
+        "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf :: page 40",
+        "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf :: page 39",
+        "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf :: page 47",
+        "EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf :: page 53"
+      ]
+    }
+  ]
+}

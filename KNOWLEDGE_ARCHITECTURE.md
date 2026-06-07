@@ -1,6 +1,6 @@
 ---
 title: "Knowledge Architecture"
-last_updated: "2026-05-29"
+last_updated: "2026-05-30"
 source_inspiration:
   - "https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f"
   - "https://github.com/VectifyAI/OpenKB"
@@ -42,7 +42,7 @@ This matches the project reality: FoodEx2 source data changes rarely, but the in
 3. Compiled wiki layer: durable topic pages, runtime pages, validation pages, domain overlays, and maintenance pages.
 4. Markdown graph layer: generated from frontmatter `related`, inline links, `Relevant Policy`, `Relevant Business Rules`, and `index.md`.
 5. Maintenance layer: `wiki_api.doctor`, GitHub Actions, and supervised LLM lint described in [[MAINTENANCE_WORKFLOW]].
-6. Retrieval API layer: `wiki_api/`, especially `/wiki/ask`, `/wiki/context-pack`, `/wiki/graph`, `/wiki/graph/compact`, `/wiki/policy-pack`, and `/wiki/solve`.
+6. Retrieval API layer: `wiki_api/`, especially `/wiki/ask`, `/wiki/ask-rag`, `/wiki/context-pack`, `/wiki/graph`, `/wiki/graph/compact`, `/wiki/policy-pack`, and `/wiki/solve`.
 7. Caller layer: DMT or another downstream application that supplies the user query, candidate hints, and final prompt assembly.
 
 ## What Popular Patterns Mean Here
@@ -101,9 +101,24 @@ Good uses:
 - "Does this look like a domain-overlay case?"
 - "Should I escalate to full page context?"
 
-This mode selects pages, optionally expands to related-page summaries, and runs a concise wiki answerer. The result is a strategy brief with citations. It is useful before candidate retrieval when the source wording is confusing, and after deconstruction when extracted facts can be turned into a sharper guidance question.
+This mode selects pages, optionally expands to related-page summaries, and runs a concise wiki answerer. The result is a strategy brief with citations. It is useful before candidate retrieval when the source wording is confusing, and after deconstruction when extracted facts can be turned into a sharper guidance question. Callers may override the selector and answerer models per request when they need a different cost, latency, or accuracy point, including provider-aware `claude*`, `gpt*`, and `gemini*` model tests, but the default behavior remains configured by the service environment.
 
 Do not treat this mode as a catalogue, validator, or final-code authority. It should not invent FoodEx2 codes or facet descriptors beyond the provided page evidence.
+
+### Vector Guidance Brief
+
+Use this when the caller wants the same compact answer shape as `/wiki/ask`, but wants to test vector retrieval instead of the page-selector path.
+
+The API surface is `POST /wiki/ask-rag`.
+
+Retrieval modes:
+
+- `retrieval_mode: "wiki"` searches `foodex2_wiki_markdown_v1`, the Qdrant collection built from curated markdown pages.
+- `retrieval_mode: "source"` searches `foodex2_source_docs_v1`, the Qdrant collection built from immutable source files under `foodex2_docs/`.
+
+This mode exists for retrieval A/B testing and source-audit experiments. It should not change the durable knowledge stance: curated markdown remains the maintained source of operational guidance, and raw-source retrieval should feed page updates when it exposes missing or ambiguous guidance.
+
+The curated markdown collection has a deterministic drift contract. `GET /wiki/rag/status` and `python scripts/wiki_rag_status.py` compare the current markdown-derived page chunks with the live Qdrant payload hashes. They report missing pages, stale chunks, orphaned chunks, and embedding model or dimension mismatches. `python -m wiki_api.doctor --check-rag-index` can include the same check in maintenance when Qdrant is available. These checks use hashes and Qdrant payload metadata, not LLM judgement.
 
 ### Default Case Retrieval
 
@@ -143,6 +158,9 @@ The caller should choose the lightest retrieval surface that can answer the case
 quick strategy:
 query -> /wiki/ask
 
+retrieval A/B strategy:
+query -> /wiki/ask-rag with wiki or source mode
+
 strategy before candidates:
 query -> deconstruct query -> /wiki/ask -> candidate retrieval -> downstream classifier -> validator
 
@@ -177,7 +195,7 @@ Do not enable watch-mode auto-ingest by default. Automatic file watching is usef
 
 ## When To Add Infrastructure
 
-Add a vector index only if selector failures show that keyword, index, and graph selection cannot find the right page.
+Use a vector index only as a derived experiment unless selector failures show that keyword, index, and graph selection cannot find the right page. The current local Qdrant collection, `foodex2_wiki_markdown_v1`, is built from the curated markdown pages for A/B testing; it is not an independent source of FoodEx2 truth. The companion collection, `foodex2_source_docs_v1`, is built from immutable source documents for source-audit and hybrid-retrieval tests. Keep these collections separate so evaluation can distinguish curated guidance from raw evidence.
 
 Add a graph database only if markdown-derived adjacency is no longer enough for traversal, filtering, or explanation.
 

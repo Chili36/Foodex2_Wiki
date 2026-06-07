@@ -10,7 +10,7 @@ related:
   - "[[term-type-facet-constraints]]"
   - "[[implicit-vs-explicit-facets]]"
   - "[[maintenance-2024]]"
-last_updated: "2026-05-09"
+last_updated: "2026-06-06"
 ---
 
 # FoodEx2 In VMPR Monitoring
@@ -29,6 +29,13 @@ last_updated: "2026-05-09"
 - Wild animal VMPR samples require `F21.A07RY` (`Wild, gathered or hunted`).
 - Non-food animal matrices use `A0C60 Non-food animal-related matrices` with explicit `F01 Source` and `F02 Part-nature`.
 
+## Non-Food Biological Sample Boundary
+
+- In active VMPR reporting, if the sampled matrix is a non-food biological sample, use `A0C60 Non-food animal-related matrices` with explicit `F01 Source` and `F02 Part-nature`, even when a more food-like animal-product term exists. ChemMon gives urine, retina, hair, and blood serum as non-food VMPR examples using this pattern. (ChemMon 2025 p36; ChemMon 2026 p36)
+- Blood-related samples need this boundary explicitly: blood, blood serum, and plasma taken as VMPR non-food residue-monitoring samples should be treated as biological sample matrices, not as ordinary edible animal products. First decide whether the reporting row is a non-food VMPR biological sample; if it is, use the `A0C60` pattern. (ChemMon 2025 p36; ChemMon 2026 p36)
+- `A0C60` is an intentional VMPR non-food exception to the ordinary preference for the most specific food base term. The specificity comes from the explicit facets: `F01` identifies the animal source and `F02` identifies the biological matrix.
+- This rule is conditional. If blood is being coded as a food ingredient, edible blood product, or ordinary all-domain food matrix outside VMPR non-food sampling, use the normal FoodEx2 base-term workflow instead.
+
 ## Feed And Water
 
 - VMPR feed and water cases are exceptions to the ordinary animal-product pattern.
@@ -46,6 +53,8 @@ last_updated: "2026-05-09"
 ## Worked Signals
 
 - Cow hair in VMPR: `A0C60#F02.A0ESP$F01.A057E`, because non-food animal matrices require explicit part and source.
+- Sheep blood serum in VMPR: `A0C60#F01.A0CDE$F02.A0CEY`, because ChemMon treats blood serum as a non-food animal-related matrix with explicit animal source and part-nature.
+- For VMPR non-food biological sample rows, keep `A0C60` as the base and attach the catalogue-confirmed `F02` descriptor for the sampled matrix plus the relevant explicit `F01` animal source.
 - Feed for pigs: use a feed base term with pig target-consumer, for example `A0BBB#F23.A07VC` when that base term is the correct feed candidate.
 - Wild deer meat in VMPR: add `F21.A07RY` when the wild status is known and not implicit.
 
@@ -54,4 +63,3 @@ last_updated: "2026-05-09"
 - [[term-type-facet-constraints]] still controls facet legality by term type.
 - [[implicit-vs-explicit-facets]] explains why VMPR is exceptional: explicit facets can affect classification and are not neutral repetition.
 - [[domain-specific-validation]] contains the validation checks that enforce VMPR mandatory facets.
-

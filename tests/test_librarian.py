@@ -9,6 +9,7 @@ from wiki_api.librarian import (
     AnthropicFoodEx2Solver,
     AnthropicWikiLibrarian,
     AnthropicWikiPageSelector,
+    infer_model_provider,
 )
 from wiki_api.wiki_store import WikiStore
 
@@ -46,6 +47,13 @@ class FakeAnthropicClient:
 
 def _store() -> WikiStore:
     return WikiStore(REPO_ROOT)
+
+
+def test_infer_model_provider_for_ask_overrides() -> None:
+    assert infer_model_provider("claude-haiku-4-5") == "anthropic"
+    assert infer_model_provider("gemini-3.5-flash") == "gemini"
+    assert infer_model_provider("gpt-5.4-mini") == "openai"
+    assert infer_model_provider(None) == "anthropic"
 
 
 def test_librarian_batches_page_reads() -> None:

@@ -5,7 +5,7 @@ import logging
 from pathlib import Path
 import re
 import time
-from typing import Any, Callable
+from typing import Any, Callable, Literal
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -17,8 +17,17 @@ from .librarian import (
     AnthropicFoodEx2Solver,
     AnthropicWikiLibrarian,
     AnthropicWikiPageSelector,
+    JsonFoodEx2Answerer,
+    JsonWikiPageSelector,
+    infer_model_provider,
 )
 from .policy import build_policy_contract
+from .qdrant_ask import QdrantAskError, retrieve_qdrant_ask_context
+from .rag_index import (
+    DEFAULT_WIKI_CATEGORIES,
+    DEFAULT_WIKI_CHUNK_MAX_CHARS,
+    get_wiki_rag_status,
+)
 from .wiki_store import WikiPage, WikiStore
 
 
@@ -43,7 +52,11 @@ def get_librarian_runner() -> AnthropicWikiLibrarian | Any:
     return librarian_runner
 
 
-def get_selector_runner() -> Any:
+def get_selector_runner(*, model: str | None = None, max_pages: int | None = None) -> Any:
+    if model is not None:
+        if infer_model_provider(model) != "anthropic":
+            return JsonWikiPageSelector(store=store, model=model, max_pages=max_pages or 7)
+        return AnthropicWikiPageSelector(store=store, model=model, max_pages=max_pages or 7)
     global selector_runner
     if selector_runner is None:
         selector_runner = AnthropicWikiPageSelector(store=store)
@@ -57,7 +70,11 @@ def get_solver_runner() -> AnthropicFoodEx2Solver | Any:
     return solver_runner
 
 
-def get_answerer_runner() -> AnthropicFoodEx2Answerer | Any:
+def get_answerer_runner(*, model: str | None = None) -> AnthropicFoodEx2Answerer | Any:
+    if model is not None:
+        if infer_model_provider(model) != "anthropic":
+            return JsonFoodEx2Answerer(model=model)
+        return AnthropicFoodEx2Answerer(model=model)
     global answerer_runner
     if answerer_runner is None:
         answerer_runner = AnthropicFoodEx2Answerer()
@@ -235,6 +252,106 @@ class AskRequest(BaseModel):
             "selected pages."
         ),
     )
+    selector_model: str | None = Field(
+        default=None,
+        description=(
+            "Optional per-request Anthropic model override for wiki page selection. "
+            "If omitted, the service uses WIKI_CONTEXT_MODEL, then WIKI_LIBRARIAN_MODEL."
+        ),
+    )
+    answerer_model: str | None = Field(
+        default=None,
+        description=(
+            "Optional per-request Anthropic model override for the synthesized answer. "
+            "If omitted, the service uses WIKI_ANSWERER_MODEL, then WIKI_LIBRARIAN_MODEL."
+        ),
+    )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _normalize_model_overrides(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            normalized = dict(data)
+            for field_name in ("selector_model", "answerer_model"):
+                value = normalized.get(field_name)
+                if isinstance(value, str):
+                    normalized[field_name] = value.strip() or None
+            return normalized
+        return data
+
+
+class AskRagRequest(BaseModel):
+    question: str = Field(min_length=1, description="The user's FoodEx2 coding question.")
+    retrieval_mode: Literal["wiki", "source"] = Field(
+        default="wiki",
+        description=(
+            "Which Qdrant corpus should provide the answer context: `wiki` for curated "
+            "markdown chunks or `source` for raw source-document chunks."
+        ),
+    )
+    limit: int = Field(default=7, ge=1, le=20)
+    include_page_content: bool = False
+    answerer_model: str | None = Field(
+        default=None,
+        description=(
+            "Optional per-request model override for the synthesized answer. "
+            "If omitted, the service uses WIKI_ANSWERER_MODEL, then WIKI_LIBRARIAN_MODEL."
+        ),
+    )
+    collection: str | None = Field(
+        default=None,
+        description=(
+            "Optional Qdrant collection override. If omitted, `wiki` uses "
+            "WIKI_QDRANT_COLLECTION and `source` uses SOURCE_QDRANT_COLLECTION."
+        ),
+    )
+    qdrant_url: str | None = Field(
+        default=None,
+        description="Optional Qdrant URL override. If omitted, QDRANT_URL or localhost is used.",
+    )
+    embedding_model: str | None = Field(
+        default=None,
+        description="Optional embedding model override. Defaults to WIKI_EMBED_MODEL/SOURCE_EMBED_MODEL.",
+    )
+    embedding_dimension: int | None = Field(
+        default=None,
+        ge=1,
+        description="Optional embedding output dimension override.",
+    )
+    timeout_seconds: float = Field(default=180.0, gt=0, le=600)
+
+    @model_validator(mode="before")
+    @classmethod
+    def _normalize_optional_strings(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            normalized = dict(data)
+            for field_name in (
+                "answerer_model",
+                "collection",
+                "qdrant_url",
+                "embedding_model",
+            ):
+                value = normalized.get(field_name)
+                if isinstance(value, str):
+                    normalized[field_name] = value.strip() or None
+            return normalized
+        return data
+
+
+class WikiRagStatusResponse(BaseModel):
+    model_config = ConfigDict(extra="allow")
+
+    ok: bool
+    collection: str
+    qdrant_url: str
+    embedding_provider: str
+    embedding_model: str
+    embedding_dimension: int
+    chunking: dict[str, Any]
+    expected: dict[str, Any]
+    indexed: dict[str, Any]
+    drift: dict[str, Any]
+    errors: list[str] = Field(default_factory=list)
 
 
 class AskResponse(BaseModel):
@@ -717,6 +834,24 @@ def _normalize_ask_citations(raw_citations: list[Any], allowed_pages: set[str]) 
     return list(dict.fromkeys(citations))
 
 
+def _normalize_direct_citations(raw_citations: list[Any], allowed_pages: set[str]) -> list[str]:
+    citations: list[str] = []
+    for raw_citation in raw_citations:
+        if not isinstance(raw_citation, str):
+            continue
+        citation = raw_citation.strip()
+        if not citation:
+            continue
+        if citation in allowed_pages:
+            citations.append(citation)
+            continue
+        for allowed_page in allowed_pages:
+            if citation in allowed_page or allowed_page in citation:
+                citations.append(allowed_page)
+                break
+    return list(dict.fromkeys(citations))
+
+
 def _effective_context_candidates(request: ContextPackRequest) -> tuple[list[dict[str, Any]], str]:
     if request.candidate_hints:
         return _plain_models(request.candidate_hints), "candidate_hints"
@@ -811,6 +946,47 @@ def search_wiki(
     return _search_wiki(q, limit=limit)
 
 
+@app.get(
+    "/wiki/rag/status",
+    response_model=WikiRagStatusResponse,
+    summary="Return deterministic drift status for the curated wiki Qdrant index",
+    description=(
+        "Compares the current markdown-derived wiki chunks with the configured Qdrant "
+        "wiki collection. No LLM is used. The markdown wiki remains the source of truth; "
+        "Qdrant is treated as a rebuildable derived index."
+    ),
+)
+def get_rag_status(
+    collection: str | None = Query(default=None, description="Optional Qdrant collection override."),
+    qdrant_url: str | None = Query(default=None, description="Optional Qdrant URL override."),
+    embedding_model: str | None = Query(default=None, description="Expected embedding model."),
+    embedding_dimension: int | None = Query(default=None, ge=1, description="Expected embedding dimension."),
+    categories: str = Query(
+        default=DEFAULT_WIKI_CATEGORIES,
+        description="Comma-separated page categories that belong in the wiki RAG index.",
+    ),
+    max_chars: int = Query(
+        default=DEFAULT_WIKI_CHUNK_MAX_CHARS,
+        ge=200,
+        le=20000,
+        description="Chunk max length used by the markdown indexer.",
+    ),
+    timeout_seconds: float = Query(default=30.0, gt=0, le=180),
+) -> WikiRagStatusResponse:
+    return WikiRagStatusResponse(
+        **get_wiki_rag_status(
+            root=REPO_ROOT,
+            collection=collection,
+            qdrant_url=qdrant_url,
+            embedding_model=embedding_model,
+            embedding_dimension=embedding_dimension,
+            categories=categories,
+            max_chars=max_chars,
+            timeout=timeout_seconds,
+        )
+    )
+
+
 @app.get("/wiki/pages/{page_name}")
 def get_page(page_name: str, include_content: bool = Query(default=True)) -> dict[str, Any]:
     try:
@@ -845,13 +1021,15 @@ def ask_question(request: AskRequest) -> AskResponse:
                 "question": request.question,
                 "max_pages": request.max_pages,
                 "use_graph_expansion": request.use_graph_expansion,
+                "selector_model": request.selector_model,
+                "answerer_model": request.answerer_model,
             },
             ensure_ascii=False,
         ),
     )
 
     selector_start = time.perf_counter()
-    selector = get_selector_runner()
+    selector = get_selector_runner(model=request.selector_model, max_pages=request.max_pages)
     if request.max_pages != selector.max_pages:
         selector.max_pages = request.max_pages
     selector_payload = {
@@ -923,7 +1101,7 @@ def ask_question(request: AskRequest) -> AskResponse:
             )
         )
 
-    answerer = get_answerer_runner()
+    answerer = get_answerer_runner(model=request.answerer_model)
     answerer_start = time.perf_counter()
     try:
         answer_result = answerer.run(question=request.question, pages=answerer_input_pages)
@@ -981,6 +1159,125 @@ def ask_question(request: AskRequest) -> AskResponse:
         json.dumps(
             {
                 "question": request.question,
+                "answer_length": len(response.answer),
+                "citations": response.citations,
+                "pages_used": response.pages_used,
+                "total_trace": response.trace["total"],
+            },
+            ensure_ascii=False,
+        ),
+    )
+    return response
+
+
+@app.post(
+    "/wiki/ask-rag",
+    response_model=AskResponse,
+    summary="Ask a FoodEx2 guidance question with Qdrant retrieval",
+    description=(
+        "Send a natural language FoodEx2 coding question and retrieve answer context from "
+        "a Qdrant collection. Use `retrieval_mode=wiki` for curated markdown chunks or "
+        "`retrieval_mode=source` for raw source-document chunks. This endpoint preserves "
+        "`/wiki/ask` as the service-owned page-selector path and gives DMT a separate "
+        "A/B surface for vector retrieval."
+    ),
+)
+def ask_question_rag(request: AskRagRequest) -> AskResponse:
+    request_started = time.perf_counter()
+    logger.info(
+        "ask_rag_request %s",
+        json.dumps(
+            {
+                "question": request.question,
+                "retrieval_mode": request.retrieval_mode,
+                "limit": request.limit,
+                "answerer_model": request.answerer_model,
+                "collection": request.collection,
+            },
+            ensure_ascii=False,
+        ),
+    )
+
+    retrieval_start = time.perf_counter()
+    try:
+        context = retrieve_qdrant_ask_context(
+            question=request.question,
+            retrieval_mode=request.retrieval_mode,
+            collection=request.collection,
+            limit=request.limit,
+            qdrant_url=request.qdrant_url,
+            embedding_model=request.embedding_model,
+            embedding_dimension=request.embedding_dimension,
+            timeout=request.timeout_seconds,
+        )
+    except QdrantAskError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    retrieval_total_ms = int((time.perf_counter() - retrieval_start) * 1000)
+
+    pages = [
+        PageSummary(
+            **{
+                **page_summary,
+                "content": page_summary.get("content") if request.include_page_content else None,
+            }
+        )
+        for page_summary in context["page_summaries"]
+    ]
+    pages_used = context["pages_used"]
+
+    answerer = get_answerer_runner(model=request.answerer_model)
+    answerer_start = time.perf_counter()
+    try:
+        answer_result = answerer.run(question=request.question, pages=context["answerer_pages"])
+    except (RuntimeError, ValueError) as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    answerer_total_ms = int((time.perf_counter() - answerer_start) * 1000)
+
+    answerer_tokens = int(answer_result.token_summary.get("total_tracked_tokens", 0))
+    embedding_tokens = context["embedding"].get("tracked_tokens")
+    total_tracked_tokens = answerer_tokens
+    if isinstance(embedding_tokens, int):
+        total_tracked_tokens += embedding_tokens
+    request_wall_time_ms = int((time.perf_counter() - request_started) * 1000)
+    response = AskResponse(
+        answer=answer_result.answer,
+        citations=_normalize_direct_citations(answer_result.citations, set(pages_used)),
+        pages_used=pages_used,
+        pages=pages,
+        trace={
+            "index_used": False,
+            "max_pages": request.limit,
+            "selection_method": f"qdrant {request.retrieval_mode} retrieval + answerer",
+            "retrieval": context["retrieval"],
+            "embedding": context["embedding"],
+            "answerer": {
+                "model": answerer.model,
+                "token_summary": answer_result.token_summary,
+                "timing_summary": answer_result.timing_summary,
+            },
+            "total": {
+                "request_wall_time_ms": request_wall_time_ms,
+                "total_llm_calls": int(answer_result.token_summary.get("calls", 0)),
+                "total_embedding_calls": 1,
+                "total_model_calls": int(answer_result.token_summary.get("calls", 0)) + 1,
+                "total_tracked_tokens": total_tracked_tokens,
+                "answerer_tracked_tokens": answerer_tokens,
+                "embedding_tracked_tokens": embedding_tokens,
+            },
+            "phase_timings_ms": {
+                "retrieval_total": retrieval_total_ms,
+                "embedding": context["embedding"].get("elapsed_ms"),
+                "qdrant_search": context["retrieval"].get("elapsed_ms"),
+                "answerer_total": answerer_total_ms,
+            },
+        },
+    )
+    logger.info(
+        "ask_rag_response %s",
+        json.dumps(
+            {
+                "question": request.question,
+                "retrieval_mode": request.retrieval_mode,
                 "answer_length": len(response.answer),
                 "citations": response.citations,
                 "pages_used": response.pages_used,

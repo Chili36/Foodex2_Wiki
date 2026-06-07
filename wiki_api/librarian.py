@@ -3,11 +3,13 @@ from __future__ import annotations
 import json
 import logging
 import os
+import ssl
 from dataclasses import dataclass
 from pathlib import Path
 import re
 import time
 from typing import Any, Protocol
+from urllib import error, parse, request
 
 from anthropic import Anthropic
 from dotenv import load_dotenv
@@ -18,6 +20,11 @@ from .wiki_store import WikiStore
 REPO_ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(REPO_ROOT / ".env")
 logger = logging.getLogger("wiki_api.prompts")
+
+try:
+    import certifi
+except ImportError:  # pragma: no cover - certifi is installed with common HTTP clients.
+    certifi = None
 
 
 READ_WIKI_PAGES_TOOL = {
@@ -451,6 +458,171 @@ def _selection_payload_from_response(content: list[Any]) -> list[str]:
     return [str(name) for name in raw]
 
 
+def infer_model_provider(model: str | None) -> str:
+    if not model:
+        return "anthropic"
+    normalized = model.lower().strip()
+    if normalized.startswith("gemini") or "/gemini" in normalized:
+        return "gemini"
+    if (
+        normalized.startswith("gpt")
+        or normalized.startswith("o1")
+        or normalized.startswith("o3")
+        or normalized.startswith("o4")
+        or normalized.startswith("o5")
+    ):
+        return "openai"
+    return "anthropic"
+
+
+def _http_post_json(
+    *,
+    url: str,
+    headers: dict[str, str],
+    payload: dict[str, Any],
+    timeout: float = 180.0,
+) -> dict[str, Any]:
+    encoded_payload = json.dumps(payload).encode("utf-8")
+    req = request.Request(
+        url,
+        data=encoded_payload,
+        headers={"Content-Type": "application/json", **headers},
+        method="POST",
+    )
+    context = ssl.create_default_context(cafile=certifi.where()) if certifi else None
+    try:
+        with request.urlopen(req, timeout=timeout, context=context) as response:
+            body = response.read().decode("utf-8")
+            return json.loads(body)
+    except error.HTTPError as exc:
+        body = exc.read().decode("utf-8", errors="replace")
+        raise RuntimeError(f"LLM API error {exc.code}: {body}") from exc
+    except error.URLError as exc:
+        raise RuntimeError(f"LLM API connection error: {exc}") from exc
+
+
+def _usage_from_counts(
+    *,
+    input_tokens: int,
+    output_tokens: int,
+    stop_reason: str | None,
+    total_tokens: int | None = None,
+) -> dict[str, int | str | None]:
+    total = total_tokens if total_tokens is not None else input_tokens + output_tokens
+    return {
+        "stop_reason": stop_reason,
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": total,
+    }
+
+
+def _extract_openai_text(data: dict[str, Any]) -> str:
+    if isinstance(data.get("output_text"), str):
+        return str(data["output_text"]).strip()
+    parts: list[str] = []
+    for item in data.get("output", []):
+        if not isinstance(item, dict):
+            continue
+        for block in item.get("content", []):
+            if not isinstance(block, dict):
+                continue
+            if isinstance(block.get("text"), str):
+                parts.append(block["text"])
+    return "".join(parts).strip()
+
+
+def _extract_gemini_text(data: dict[str, Any]) -> str:
+    parts: list[str] = []
+    for candidate in data.get("candidates", []):
+        content = candidate.get("content", {}) if isinstance(candidate, dict) else {}
+        for part in content.get("parts", []):
+            if isinstance(part, dict) and isinstance(part.get("text"), str):
+                parts.append(part["text"])
+    return "".join(parts).strip()
+
+
+def _create_json_completion(
+    *,
+    model: str,
+    system: str,
+    user_content: str,
+    max_tokens: int,
+) -> tuple[str, dict[str, int | str | None]]:
+    provider = infer_model_provider(model)
+    if provider == "openai":
+        api_key = os.getenv("OPENAI_API_KEY")
+        if not api_key:
+            raise RuntimeError("OPENAI_API_KEY is not set")
+        data = _http_post_json(
+            url="https://api.openai.com/v1/responses",
+            headers={"Authorization": f"Bearer {api_key}"},
+            payload={
+                "model": model,
+                "instructions": system,
+                "input": [
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "input_text",
+                                "text": f"Return JSON only.\n\n{user_content}",
+                            }
+                        ],
+                    }
+                ],
+                "max_output_tokens": max_tokens,
+                "text": {"format": {"type": "json_object"}},
+            },
+        )
+        usage = data.get("usage", {}) if isinstance(data, dict) else {}
+        return _extract_openai_text(data), _usage_from_counts(
+            input_tokens=int(usage.get("input_tokens", 0) or 0),
+            output_tokens=int(usage.get("output_tokens", 0) or 0),
+            total_tokens=int(usage.get("total_tokens", 0) or 0) or None,
+            stop_reason=str(data.get("status", "")) or None,
+        )
+    if provider == "gemini":
+        api_key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
+        if not api_key:
+            raise RuntimeError("GEMINI_API_KEY or GOOGLE_API_KEY is not set")
+        escaped_model = parse.quote(model, safe="")
+        data = _http_post_json(
+            url=(
+                "https://generativelanguage.googleapis.com/v1beta/models/"
+                f"{escaped_model}:generateContent"
+            ),
+            headers={"x-goog-api-key": api_key},
+            payload={
+                "systemInstruction": {"parts": [{"text": system}]},
+                "contents": [
+                    {
+                        "role": "user",
+                        "parts": [{"text": user_content}],
+                    }
+                ],
+                "generationConfig": {
+                    "maxOutputTokens": max_tokens,
+                    "responseMimeType": "application/json",
+                },
+            },
+        )
+        usage = data.get("usageMetadata", {}) if isinstance(data, dict) else {}
+        candidates = data.get("candidates", []) if isinstance(data, dict) else []
+        stop_reason = None
+        if candidates and isinstance(candidates[0], dict):
+            stop_reason = candidates[0].get("finishReason")
+        return _extract_gemini_text(data), _usage_from_counts(
+            input_tokens=int(usage.get("promptTokenCount", 0) or 0),
+            output_tokens=int(usage.get("candidatesTokenCount", 0) or 0),
+            total_tokens=int(usage.get("totalTokenCount", 0) or 0) or None,
+            stop_reason=str(stop_reason) if stop_reason else None,
+        )
+    raise RuntimeError(f"Unsupported non-Anthropic model provider for {model!r}")
+
+
 def build_anthropic_client() -> AnthropicClientProtocol:
     api_key = os.getenv("ANTHROPIC_API_KEY")
     if not api_key:
@@ -690,6 +862,80 @@ class AnthropicWikiPageSelector:
         )
 
 
+class JsonWikiPageSelector:
+    def __init__(
+        self,
+        *,
+        store: WikiStore,
+        model: str,
+        max_pages: int = 7,
+        max_tokens: int = 1500,
+    ):
+        self.store = store
+        self.model = model
+        self.max_pages = max_pages
+        self.max_tokens = max_tokens
+
+    def run(self, payload: dict[str, Any]) -> PageSelectionResult:
+        selector_started = time.perf_counter()
+        index_content = self.store.read_page("index.md").content
+        selection_system_prompt = build_selection_system_prompt(
+            additional_page_limit=max(self.max_pages - 1, 0)
+        )
+        user_content = json.dumps(
+            {
+                "case": payload,
+                "wiki_index": index_content,
+            },
+            ensure_ascii=False,
+        )
+        llm_started = time.perf_counter()
+        _log_prompt(
+            "context_pack",
+            model=self.model,
+            system=selection_system_prompt,
+            messages=[{"role": "user", "content": user_content}],
+            max_tokens=self.max_tokens,
+        )
+        final_text, usage = _create_json_completion(
+            model=self.model,
+            system=selection_system_prompt,
+            user_content=user_content,
+            max_tokens=self.max_tokens,
+        )
+        llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
+        data = _extract_json_payload(final_text)
+        raw_page_names = data.get("page_names", [])
+        if not isinstance(raw_page_names, list):
+            raw_page_names = [raw_page_names]
+        pages_read: list[str] = []
+        tool_trace: list[dict[str, Any]] = []
+        _read_pages_payload(
+            store=self.store,
+            requested_page_names=[str(name) for name in raw_page_names],
+            max_pages=self.max_pages,
+            pages_read=pages_read,
+            tool_trace=tool_trace,
+        )
+        return PageSelectionResult(
+            pages_used=list(dict.fromkeys(["index.md", *pages_read])),
+            tool_trace=tool_trace,
+            token_summary=_aggregate_usage([usage], self.model),
+            timing_summary={
+                **_aggregate_timing(
+                    [
+                        {
+                            "call_number": 1,
+                            "duration_ms": llm_duration_ms,
+                            "stop_reason": usage.get("stop_reason"),
+                        }
+                    ]
+                ),
+                "selector_wall_time_ms": int((time.perf_counter() - selector_started) * 1000),
+            },
+        )
+
+
 class AnthropicFoodEx2Solver:
     def __init__(
         self,
@@ -819,6 +1065,63 @@ class AnthropicFoodEx2Answerer:
                             "call_number": 1,
                             "duration_ms": llm_duration_ms,
                             "stop_reason": _get_block_value(response, "stop_reason"),
+                        }
+                    ]
+                ),
+                "answerer_wall_time_ms": int((time.perf_counter() - answerer_started) * 1000),
+            },
+        )
+
+
+class JsonFoodEx2Answerer:
+    def __init__(
+        self,
+        *,
+        model: str,
+        max_tokens: int = 2500,
+    ):
+        self.model = model
+        self.max_tokens = max_tokens
+
+    def run(self, *, question: str, pages: list[dict[str, Any]]) -> AnswerResult:
+        answerer_started = time.perf_counter()
+        user_content = json.dumps(
+            {
+                "question": question,
+                "pages": pages,
+            },
+            ensure_ascii=False,
+        )
+        llm_started = time.perf_counter()
+        _log_prompt(
+            "ask",
+            model=self.model,
+            system=ANSWERER_SYSTEM_PROMPT,
+            messages=[{"role": "user", "content": user_content}],
+            max_tokens=self.max_tokens,
+        )
+        final_text, usage = _create_json_completion(
+            model=self.model,
+            system=ANSWERER_SYSTEM_PROMPT,
+            user_content=user_content,
+            max_tokens=self.max_tokens,
+        )
+        llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
+        data = _extract_json_payload(final_text)
+        citations = data.get("citations", [])
+        if not isinstance(citations, list):
+            citations = []
+        return AnswerResult(
+            answer=str(data.get("answer", "")).strip(),
+            citations=[str(citation) for citation in citations],
+            token_summary=_aggregate_usage([usage], self.model),
+            timing_summary={
+                **_aggregate_timing(
+                    [
+                        {
+                            "call_number": 1,
+                            "duration_ms": llm_duration_ms,
+                            "stop_reason": usage.get("stop_reason"),
                         }
                     ]
                 ),

@@ -16,7 +16,7 @@ related:
   - "[[maintenance-2024]]"
   - "[[domain-specific-validation]]"
   - "[[vmpr-legislative-mapping]]"
-last_updated: "2026-05-19"
+last_updated: "2026-06-06"
 ---
 
 # FoodEx2 In Chemical Monitoring
@@ -49,7 +49,7 @@ last_updated: "2026-05-19"
 - For processed derivatives under VMPR, `F01` may need to be added explicitly because it is not always implicit on processed terms such as dried egg or milk powder. This is a ChemMon exception to the default implicit logic in [[implicit-vs-explicit-facets]]. (ChemMon 2025 p33; ChemMon 2026 p33)
 - Wild-animal VMPR samples require `F21.A07RY` (`Wild, gathered or hunted`). In the downstream ETL mapping this sets `Wild=1`, and that wild route supersedes the ordinary game route in the final legislative grouping. See [[vmpr-legislative-mapping]]. (ChemMon 2025 p34; ChemMon 2026 p33; VMPR mapping p5-6)
 - Feed and water VMPR coding depends on `F23 Target-consumer`; conflicting explicit `F23` values can force classification to `Other`. (ChemMon 2025 p34-36; ChemMon 2026 p33-36)
-- Non-food animal matrices use the generic base term `A0C60` plus explicit `F02` and `F01`. (ChemMon 2025 p36; ChemMon 2026 p36)
+- Non-food animal matrices use the generic base term `A0C60` plus explicit `F02` and `F01`; this includes non-food VMPR biological samples such as urine, retina, hair, and blood serum. See [[vmpr-foodex2]] for applying this boundary to blood-related biological sample rows. (ChemMon 2025 p36; ChemMon 2026 p36)
 - `F33 Legislative-classes` is also important for VMPR processed products and for additives/flavourings workflows. In VMPR it is one of the classifier inputs EFSA uses downstream for legislative matrix assignment, not just a validation check. The corresponding blocking checks live in [[domain-specific-validation]], and the mapping flow is summarised in [[vmpr-legislative-mapping]]. (ChemMon 2025 CHEMON91-93; ChemMon 2026 CHEMON91-93; VMPR mapping p4-6)
 - EFSA's downstream VMPR mapping derives `Game`, `Wild`, `FoodClassVMPR`, and `FoodClassVMPR_report` from the final `sampMatCode`. In that layer, `F21.A07RY`, `F23`, `F20.A0F4V`, and explicit `F33` can change the legislative outcome even when the FoodEx2 code already passes normal syntax checks. See [[vmpr-legislative-mapping]]. (VMPR mapping p3-6)
 
@@ -57,6 +57,7 @@ last_updated: "2026-05-19"
 
 - Before: feed for pigs. After: `A0BBB#F23.A07VC`. This keeps the feed sample out of the generic `Other` bucket. (ChemMon 2025 p34-35; ChemMon 2026 p34-35)
 - Before: cow hair sample. After: `A0C60#F02.A0ESP$F01.A057E`. ChemMon expects explicit source and part-nature for this non-food case, even though the generic-base strategy still follows [[facet-coding-rules]]. (ChemMon 2025 p36; ChemMon 2026 p36)
+- Before: sheep blood serum sample in VMPR. After: `A0C60#F01.A0CDE$F02.A0CEY`. ChemMon treats this as a non-food animal-related matrix, not an edible blood commodity. (ChemMon 2025 p36; ChemMon 2026 p36)
 - Before: wild deer fresh meat in VMPR. After: `A01SA#F21.A07RY`. The wild-production method must be added explicitly. (ChemMon 2026 lines around sample examples)
 - Before: acrylamide result on french fries with no legislative class. After: `A0BYV#F33.A169H`. CHEMMON12 requires explicit `F33` for acrylamide (paramCode `RF-00000410-ORG`) even when the base term already carries an implicit `F33`. The acrylamide legislative class `A169H` maps to "AC-1.1 French fries from fresh potatoes" under Commission Regulation (EU) 2017/2158; this is one of the explicit exceptions noted in [[implicit-vs-explicit-facets]]. (ChemMon 2026; CHEMMON12)
 

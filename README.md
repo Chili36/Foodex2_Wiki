@@ -18,10 +18,13 @@ Yes: the wiki layer has been created.
 
 This project is now at an early alpha stage.
 
-The wiki API has two practical runtime surfaces that are stable enough to try:
+The wiki API has three practical runtime surfaces that are stable enough to try:
 
 1. `POST /wiki/ask` for a compact guidance brief. This is useful when the caller wants a short "what should I think about?" answer before or during candidate retrieval.
-2. `POST /wiki/context-pack` for prompt-ready page evidence. This is useful when the caller wants selected wiki pages, runtime rules, and trace metadata to place into its own downstream prompt.
+2. `POST /wiki/ask-rag` for a compact guidance brief from a Qdrant corpus. This is useful for A/B testing curated wiki markdown retrieval against raw source-document retrieval while keeping the same answer shape as `/wiki/ask`.
+3. `POST /wiki/context-pack` for prompt-ready page evidence. This is useful when the caller wants selected wiki pages, runtime rules, and trace metadata to place into its own downstream prompt.
+
+The service also exposes `GET /wiki/rag/status`, a deterministic health endpoint for the curated markdown Qdrant index. It compares the current markdown-derived chunks with the live collection and reports missing, stale, orphaned, or embedding-mismatched chunks without using an LLM.
 
 The default production stance is still not "wiki-owned solving". The current focus is wiki-backed guidance and prompt context delivery. `POST /wiki/solve` exists for experiments where the wiki service is allowed to make the final FoodEx2 coding decision, but downstream classifiers such as DMT should usually keep final code construction and validation in their own pipeline.
 
@@ -75,6 +78,7 @@ Added since initial bootstrap:
 - A compact runtime rules file in [RUNTIME_RULES.md](RUNTIME_RULES.md)
 - An architecture stance in [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md) that keeps markdown and the derived graph as the primary knowledge layer while treating long-document indexing as an ingest aid.
 - A deterministic maintenance doctor and supervised LLM lint workflow in [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md).
+- Deterministic Qdrant wiki-index drift checks in `scripts/wiki_rag_status.py`, `GET /wiki/rag/status`, and `python -m wiki_api.doctor --check-rag-index`.
 
 ## Alpha Architecture
 
@@ -85,7 +89,7 @@ This repo has four practical layers:
 - Retrieval layer: the FastAPI wiki service in `wiki_api/`
 - Caller layer: an external application such as DMT that requests pages and packs them into a prompt
 
-The architecture decision is deliberately conservative. Because FoodEx2 source updates are rare, the repo should improve compiled pages, authored links, graph-derived retrieval, source traceability, and regression tests before adding a vector database, graph database, or automatic watch-mode ingestion. Long-document techniques such as tree summaries or long-context retrieval belong in ingest and source-audit workflows first; the durable runtime unit remains the curated wiki page.
+The architecture decision is deliberately conservative. Because FoodEx2 source updates are rare, the repo should treat compiled pages, authored links, graph-derived retrieval, source traceability, and regression tests as the primary knowledge system. A local Qdrant index can be built from those markdown pages for A/B retrieval tests, but it is a derived runtime artifact rather than a replacement source of truth. Long-document techniques such as tree summaries or long-context retrieval belong in ingest and source-audit workflows first; the durable runtime unit remains the curated wiki page.
 
 At the moment, the two most important runtime paths are:
 
@@ -265,6 +269,13 @@ ANTHROPIC_API_KEY=...
 WIKI_LIBRARIAN_MODEL=claude-3-7-sonnet-latest
 ```
 
+Add these only when testing `/wiki/ask` with non-Anthropic per-request model overrides:
+
+```bash
+OPENAI_API_KEY=...
+GEMINI_API_KEY=...
+```
+
 Optional overrides:
 
 ```bash
@@ -308,7 +319,7 @@ tail -f /tmp/foodex2_wiki_8010.out.log
 tail -f /tmp/foodex2_wiki_8010.err.log
 ```
 
-`ask`, `context-pack`, `policy-pack`, and `solve` currently use Anthropic internally. `ask` and `context-pack` use the lighter page-selector path, `ask` then runs a compact answerer, and `policy-pack` and `solve` use the richer librarian and solver flow. The wiki API loads `ANTHROPIC_API_KEY`, `WIKI_LIBRARIAN_MODEL`, and the optional endpoint-specific overrides from `.env`.
+`context-pack`, `policy-pack`, and `solve` use Anthropic internally. `ask` uses the lighter page-selector path plus a compact answerer and can route per-request model overrides to Anthropic, OpenAI, or Gemini. The wiki API loads `ANTHROPIC_API_KEY`, `WIKI_LIBRARIAN_MODEL`, and the optional endpoint-specific overrides from `.env`. `POST /wiki/ask` accepts per-request `selector_model` and `answerer_model` overrides when a caller wants to trade cost, latency, and answer quality for a specific question without changing service defaults.
 For the LLM-driven paths, the service injects `index.md` into the first prompt so the model can choose and batch follow-up wiki page reads without spending a separate LLM turn just to fetch the catalog.
 
 For alpha usage:
@@ -328,6 +339,7 @@ Main endpoints:
 - `GET /wiki/graph/compact`: compact graph payload intended for browser visualization
 - `GET /wiki/pages/{page_name}/backlinks`: generated incoming-link view for one page
 - `POST /wiki/ask`: returns a compact wiki-grounded answer, citations, selected pages, optional graph-expanded summaries, and trace metadata
+- `POST /wiki/ask-rag`: returns the same compact answer shape using Qdrant retrieval over either curated wiki markdown or raw source documents
 - `POST /wiki/context-pack`: the main page-evidence endpoint; returns selected wiki pages plus trace metadata so a caller can build its own prompt
 - `POST /wiki/policy-pack`: runs the internal wiki librarian, returns selected pages plus a synthesized policy pack for a coding case
 - `POST /wiki/solve`: runs the internal wiki librarian and a final coding solver, then returns a complete FoodEx2 coding result plus the underlying context and trace
@@ -335,6 +347,7 @@ Main endpoints:
 Endpoint-specific request guidance:
 
 - `POST /wiki/ask`: send a natural-language question; use this for compact "what should I think about?" guidance rather than final code authority
+- `POST /wiki/ask-rag`: send the same kind of question with `retrieval_mode` set to `wiki` or `source`; use this for retrieval A/B tests, not as a new source of truth
 - `POST /wiki/context-pack`: prefer `candidate_hints` with only `code`, `name`, and `termType`
 - `POST /wiki/policy-pack`: prefer `candidates_trimmed` with `code`, `name`, `termType`, optional `coverageText`, and optional `implicitFacets`
 - `POST /wiki/solve`: send the full `candidates` list because this endpoint makes the final coding decision
@@ -351,9 +364,13 @@ Example `POST /wiki/ask` body:
   "question": "If I want to code fresh cheese made from milk with rennet and a minimum of 20% fat, what should I think about?",
   "max_pages": 5,
   "include_page_content": false,
-  "use_graph_expansion": true
+  "use_graph_expansion": true,
+  "selector_model": "claude-3-7-sonnet-latest",
+  "answerer_model": "claude-3-7-sonnet-latest"
 }
 ```
+
+`selector_model` and `answerer_model` are optional per-request overrides. Omit them to use the configured defaults from `WIKI_CONTEXT_MODEL`, `WIKI_ANSWERER_MODEL`, or `WIKI_LIBRARIAN_MODEL`. Use `selector_model` for the page-selection step and `answerer_model` for the synthesized guidance answer. Model names beginning with `claude` use Anthropic, names beginning with `gpt` use OpenAI, and names beginning with `gemini` use the Gemini API.
 
 `POST /wiki/ask` response includes:
 
@@ -364,6 +381,91 @@ Example `POST /wiki/ask` body:
 - `trace`: selector, graph-expansion, answerer, token, and timing metadata
 
 Use `/wiki/ask` when a short decision brief can shape the next step. Common examples are pre-search strategy, "what should I think about?" questions, domain-overlay routing questions, and lightweight checks before deciding whether full page evidence is necessary. It is not a substitute for catalogue term data or validator output.
+
+Example `POST /wiki/ask-rag` body:
+
+```json
+{
+  "question": "What should I think about when reporting sheep urine?",
+  "retrieval_mode": "wiki",
+  "limit": 7,
+  "include_page_content": false,
+  "answerer_model": "claude-3-7-sonnet-latest"
+}
+```
+
+Set `retrieval_mode` to `wiki` for `foodex2_wiki_markdown_v1` or `source` for `foodex2_source_docs_v1`. Optional overrides include `collection`, `qdrant_url`, `embedding_model`, and `embedding_dimension`. The response reuses the `/wiki/ask` shape and adds `trace.embedding` plus Qdrant retrieval metadata so callers can compare cost, latency, and retrieved evidence.
+
+DMT can now model the four ask-condition tests with a small orchestration switch around the advisory-brief call; the downstream classifier prompt can stay the same:
+
+| # | Condition | Brief prepended to classifier | Wiki API call |
+| --- | --- | --- | --- |
+| 1 | ask off | none | no call |
+| 2 | ask + wiki | LLM page-selector synthesis | `POST /wiki/ask` |
+| 3 | ask + wiki RAG | Qdrant over curated wiki markdown | `POST /wiki/ask-rag` with `retrieval_mode: "wiki"` |
+| 4 | ask + source RAG | Qdrant over raw source documents | `POST /wiki/ask-rag` with `retrieval_mode: "source"` |
+
+To compare `/wiki/ask` model choices against the same question, run:
+
+```bash
+.venv/bin/python scripts/wiki_ask_model_sweep.py \
+  --question "What should I think about when coding Gallus gallus (chicken) - Plasma in VMPR?" \
+  --models claude-sonnet-4-6,claude-haiku-4-5,gpt-5.4-mini,gemini-3.1-flash-lite,gemini-3.5-flash \
+  --max-pages 7
+```
+
+The sweep script reports status, selected/answerer models, token totals, elapsed time, pages, citations, and the returned answers. Use `--selector-model ... --answerer-models ...` when you want to hold page selection fixed and compare only answer synthesis.
+
+### Optional Markdown Qdrant Index
+
+For A/B testing page selection against vector retrieval, build a local Qdrant collection from the curated markdown wiki:
+
+```bash
+.venv/bin/python scripts/index_wiki_qdrant.py \
+  --collection foodex2_wiki_markdown_v1 \
+  --recreate
+```
+
+Defaults:
+
+- Qdrant URL: `http://127.0.0.1:6333`
+- collection: `foodex2_wiki_markdown_v1`
+- embedding model: `voyage-context-3`
+- embedding dimension: `1024`
+- indexed categories: `runtime`, `guidance`, `validation`, `domain_overlay`, and `maintenance`
+
+The indexer reads the served markdown pages, excludes `log.md`, creates section-aware chunks, embeds them with Voyage contextualized embeddings, and writes payload metadata such as `page_name`, `category`, `heading_path`, `summary`, `source_path`, `sources`, and `related`.
+
+Probe the collection with:
+
+```bash
+.venv/bin/python scripts/search_wiki_qdrant.py \
+  "Gallus gallus chicken plasma VMPR" \
+  --limit 5
+```
+
+Use this index for retrieval experiments only. The wiki markdown remains the authored knowledge layer, and `/wiki/ask-rag` is the API surface for callers that want to test Qdrant-backed guidance briefs.
+
+To add raw-source evidence as a separate retrieval dimension, build the source-document collection:
+
+```bash
+.venv/bin/python scripts/index_source_qdrant.py \
+  --collection foodex2_source_docs_v1 \
+  --recreate
+```
+
+This indexes immutable source files under `foodex2_docs/`, including PDFs through local `pdftotext`, markdown, CSV, and XLSX workbooks. Large PDFs are split into contextual windows before embedding so one source file does not exceed the embedding model context limit.
+
+Probe the source collection with:
+
+```bash
+.venv/bin/python scripts/search_wiki_qdrant.py \
+  "sheep urine VMPR explicit F01 F02" \
+  --collection foodex2_source_docs_v1 \
+  --limit 7
+```
+
+Keep the source collection separate from `foodex2_wiki_markdown_v1`. The markdown index tests the curated knowledge layer; the source index tests whether raw source pages add useful recall or audit evidence.
 
 Example `POST /wiki/context-pack` body:
 
@@ -465,6 +567,9 @@ Recommended downstream flows:
 ```text
 Simple guidance:
 query -> /wiki/ask -> human or downstream search strategy
+
+Retrieval A/B guidance:
+query -> /wiki/ask-rag with wiki or source mode -> classifier brief
 
 Lean classifier flow:
 query -> deconstruct query -> /wiki/ask strategy brief -> candidates -> classifier -> validator

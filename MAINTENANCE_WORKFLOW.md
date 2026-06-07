@@ -69,6 +69,50 @@ The doctor treats unresolved source references as warnings by default. Some sour
 
 External `http` and `https` markdown links are optional warnings because remote sites can throttle or block automated checks. They are useful for maintenance reports, but they should not block normal PR work.
 
+## Deterministic Wiki RAG Index Checks
+
+The curated wiki Qdrant collection is a derived artifact of the markdown wiki. The markdown files remain the source of truth; Qdrant must be treated as stale whenever page hashes, chunk hashes, embedding settings, or selected page membership drift.
+
+Check live drift with:
+
+```bash
+python scripts/wiki_rag_status.py
+```
+
+Print the expected markdown-derived manifest without contacting Qdrant:
+
+```bash
+python scripts/wiki_rag_status.py --manifest-only
+```
+
+Include the Qdrant drift check in the doctor when Qdrant is available:
+
+```bash
+python -m wiki_api.doctor --check-rag-index
+```
+
+The same status is exposed at:
+
+```text
+GET /wiki/rag/status
+```
+
+The status check reports:
+
+- markdown pages selected for wiki RAG but missing from Qdrant
+- stale chunks where the markdown-derived content hash no longer matches
+- embedding model or dimension mismatches
+- orphaned Qdrant chunks for removed, renamed, or no-longer-selected pages
+- malformed Qdrant points without wiki chunk metadata
+
+Rebuild or sync the curated markdown collection with:
+
+```bash
+python scripts/index_wiki_qdrant.py --delete-orphans --manifest-path reports/wiki-rag-manifest.json
+```
+
+Use `--recreate` when you want a clean rebuild of the whole collection. Use `--delete-orphans` when incrementally upserting and removing stale chunks left by page deletion, renaming, heading changes, or category changes.
+
 ## Scheduled Maintenance
 
 GitHub Actions should run the doctor on:

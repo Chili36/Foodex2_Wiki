@@ -1,9 +1,16 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-05-29"
+last_updated: "2026-05-30"
 ---
 
 # Log
+
+## [2026-05-30] service | Add Qdrant-backed ask endpoint for DMT A/B tests
+
+- Added `POST /wiki/ask-rag` as a compact guidance endpoint backed by Qdrant retrieval.
+- Kept `/wiki/ask` unchanged as the service-owned page-selector synthesis path.
+- Documented the DMT four-condition test contract: ask off, ask + wiki, ask + wiki RAG, and ask + source RAG.
+- Added mocked API tests for both `wiki` and `source` retrieval modes.
 
 ## [2026-04-05] ingest | Initial FoodEx2 guidance compilation
 
@@ -267,3 +274,43 @@ last_updated: "2026-05-29"
 - Clarified that `/wiki/ask` is useful for short strategy briefs and "what should I think about?" questions, while `/wiki/context-pack` remains the page-evidence path for downstream classifier prompts.
 - Added `WIKI_ANSWERER_MODEL` to the documented environment overrides and updated the endpoint list, response summaries, architecture flow guidance, schema runtime serving rules, and index summaries.
 - Recorded the practical downstream flow distinction: quick guidance can come before candidate retrieval, while full page context should be reserved for auditability, domain-sensitive cases, facet-heavy cases, or validation-sensitive prompts.
+
+## [2026-05-30] service | Add ask model overrides
+
+- Added optional per-request `selector_model` and `answerer_model` fields to `POST /wiki/ask`.
+- Kept the existing environment-driven defaults unchanged when callers omit the override fields.
+- Updated the request contract documentation so callers can choose the cost, latency, and accuracy point for broad wiki guidance without changing service configuration.
+- Added `scripts/wiki_ask_model_sweep.py` to compare `/wiki/ask` responses, citations, token totals, and timings across model choices.
+- Extended `/wiki/ask` overrides beyond Anthropic so `gpt*` models route through OpenAI and `gemini*` models route through the Gemini API.
+
+## [2026-05-30] retrieval | Add markdown Qdrant A/B index
+
+- Added `scripts/index_wiki_qdrant.py` to build `foodex2_wiki_markdown_v1` from the curated markdown wiki using Voyage contextualized embeddings.
+- Created the local Qdrant collection with 32 pages, 250 section-aware chunks, cosine vectors at 1024 dimensions, and keyword payload indexes for page/category/section filtering.
+- Added `scripts/search_wiki_qdrant.py` so retrieval experiments can probe the markdown vector index before wiring it into any API path.
+- Documented that the Qdrant collection is a derived A/B testing artifact; markdown remains the authored source of truth.
+
+## [2026-05-30] retrieval | Add raw source Qdrant index
+
+- Added `scripts/index_source_qdrant.py` to build `foodex2_source_docs_v1` from immutable source files under `foodex2_docs/`.
+- Indexed 18 source files into 913 chunks using Voyage contextualized embeddings at 1024 dimensions, with keyword payload indexes for source file, source path, suffix, and location.
+- Kept the source collection separate from the markdown collection so A/B tests can distinguish curated guidance retrieval from raw-source evidence retrieval.
+- Updated the Qdrant probe script to display either wiki-page metadata or source-document metadata.
+
+## [2026-05-31] maintenance | Add deterministic wiki RAG drift checks
+
+- Added `GET /wiki/rag/status` and `scripts/wiki_rag_status.py` to compare the current markdown-derived wiki chunks with the live `foodex2_wiki_markdown_v1` Qdrant collection.
+- Added optional `python -m wiki_api.doctor --check-rag-index` coverage so missing, stale, orphaned, malformed, or embedding-mismatched chunks can fail maintenance checks when Qdrant is available.
+- Extended the markdown indexer with `--delete-orphans` and `--manifest-path` so incremental rebuilds can remove stale chunks and write a reproducible manifest for the derived index.
+
+## [2026-06-06] policy | Treat wiki pages as coding evidence
+
+- Updated `RUNTIME_RULES.md` so downstream classifiers treat returned wiki pages as coding knowledge, not merely background text.
+- Kept the anti-invention guard by allowing only codes explicitly present in candidates, returned wiki pages, catalogue data, or validator evidence.
+- Clarified that when the wiki establishes a required concept but no explicit code is present in returned evidence, the classifier should mark the candidate set incomplete instead of forcing a misleading near-match.
+
+## [2026-06-06] guidance | Clarify VMPR non-food blood matrices
+
+- Strengthened `vmpr-foodex2.md` so blood, blood serum, and plasma taken as VMPR non-food biological samples are routed to `A0C60 Non-food animal-related matrices` with explicit `F01` and `F02`, while preserving the ordinary FoodEx2 workflow for edible blood products outside VMPR non-food sampling.
+- Grounded the rule in ChemMon 2025/2026 examples: non-food matrices use `A0C60`, and sheep blood serum is shown as `A0C60#F01.A0CDE$F02.A0CEY`.
+- Updated the ChemMon overview and wiki index summary so retrieval exposes the blood/serum/plasma boundary without applying it to ordinary all-domain food coding.
