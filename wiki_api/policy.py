@@ -21,7 +21,7 @@ DECISION_STEP_RE = re.compile(
     re.MULTILINE,
 )
 BINDING_RULE_RE = re.compile(
-    r"^- `(?P<id>[^`]+)` when `(?P<when>[^`]+)`: (?P<kind>must not|must|may) (?P<text>.+)$",
+    r"^- `(?P<id>[^`]+)` when `(?P<when>[^`]+)`: (?P<kind>must not|must|may|should) (?P<text>.+)$",
     re.MULTILINE,
 )
 TIE_BREAK_RE = re.compile(
@@ -108,6 +108,8 @@ def build_policy_contract() -> dict[str, Any]:
             rule["must_not"] = text
         elif kind == "may":
             rule["may"] = text
+        elif kind == "should":
+            rule["should"] = text
         binding_rules.append(rule)
 
     tie_break_rules = []

@@ -1214,4 +1214,8 @@ def test_policy_contract_is_loaded_from_markdown_source() -> None:
     assert "business-rules.md BR19" in contract["constitution"][2]["derived_from"]
     assert "execution-layer" in contract["constitution"][4]["derived_from"]
     binding_rules_by_id = {rule["id"]: rule for rule in contract["binding_rules"]}
+    assert binding_rules_by_id["R-PROC-001"]["should"].startswith(
+        "keep at most one process per ordinal group"
+    )
+    assert "business-rules.md BR26" in binding_rules_by_id["R-PROC-001"]["derived_from"]
     assert "business-rules.md BR25" in binding_rules_by_id["R-CARD-001"]["derived_from"]
