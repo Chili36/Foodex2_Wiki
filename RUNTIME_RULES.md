@@ -1,6 +1,6 @@
 ---
 title: "Runtime Rules"
-last_updated: "2026-06-06"
+last_updated: "2026-06-07"
 sources:
   - "raw/efsa-guidance/policy-contract.md"
   - "raw/efsa-guidance/base-term-selection.md"
@@ -38,6 +38,7 @@ Use it as the always-on runtime layer before the supporting guidance pages.
 - Do not use explicit `F01` merely to restate a raw base commodity.
 - Do not duplicate implicit facets explicitly.
 - Do not reconstruct a standard derivative group from a raw base plus `F28` when the derivative group already exists.
+- For raw commodities, `BR13` blocks the disintegration-family `F03` descriptors such as powder, paste, and puree; it is not a blanket ban on every `F03` descriptor.
 - Treat reporting-domain overlays as opt-in; do not infer a domain unless context or domain-filtered candidates identify it.
 - Treat returned wiki pages as coding knowledge, not merely background. The candidate list is retrieval evidence, but it can be incomplete.
 - Do not invent FoodEx2 codes from memory. Prefer candidates, but a code explicitly named in returned wiki pages, catalogue data, or validator evidence may be used when that evidence shows the retrieved candidate list is incomplete.

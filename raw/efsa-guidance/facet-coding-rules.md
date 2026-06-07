@@ -9,7 +9,7 @@ related:
   - "[[process-facets]]"
   - "[[ingredient-facets]]"
   - "[[packaging-facets]]"
-last_updated: "2026-05-18"
+last_updated: "2026-06-07"
 ---
 
 # Facet Coding Rules
@@ -30,7 +30,7 @@ Use this table to map an explicit descriptor candidate to the correct `Fxx` fami
 | --- | --- | --- |
 | `F01` | Source | Biological source where explicit source is permitted or required; do not add it merely to restate a raw base commodity. |
 | `F02` | Part-nature | Part or sample-matrix nature, especially when a generic matrix needs an explicit part. |
-| `F03` | Physical state | Physical form or state; do not use it on raw commodities because it can create a derivative classification. |
+| `F03` | Physical state | Physical form or state. On raw commodities, BR13 blocks only disintegration-family physical states such as powder, paste, and puree; non-disintegration states such as solid can be valid when otherwise legal. |
 | `F04` | Ingredient | Characterising recipe ingredient for composites, or a minor later-added ingredient on otherwise raw or derivative foods. |
 | `F06` | Surrounding medium | Packing or surrounding medium such as liquid, brine, oil, or sauce when it matters separately from packaging. |
 | `F07` | Fat content | Fat-content expression when the reporting context or result basis needs it. |
@@ -52,6 +52,7 @@ Use this table to map an explicit descriptor candidate to the correct `Fxx` fami
 
 - If a candidate is a facet descriptor, it still cannot be the base term. First choose the base term, then attach the descriptor under the correct `Fxx` family only if it adds non-implicit information.
 - A descriptor such as `Indoor/under glass growing condition` belongs under `F21` because it describes production or growing method. In a raw commodity case such as greenhouse cherry tomatoes, the base remains the raw commodity and the greenhouse detail is an optional explicit `F21` when that detail matters.
+- A descriptor such as `Powder`, `Fine powder`, `Coarse powder`, `Paste`, `Fine paste`, `coarse paste/minced`, or `Puree-type` belongs to the BR13 disintegration boundary when attached as `F03` to a raw commodity. Do not generalise that into a ban on every `F03` descriptor for raw commodities; verify the actual descriptor and rule result.
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p35-36, p46-47 -->
 ## High-Value Facets

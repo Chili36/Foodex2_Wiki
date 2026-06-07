@@ -11,7 +11,7 @@ related:
   - "[[process-validation-rules]]"
   - "[[domain-specific-validation]]"
   - "[[code-string-format]]"
-last_updated: "2026-04-05"
+last_updated: "2026-06-07"
 ---
 
 # Validation Rules Overview
@@ -33,6 +33,9 @@ last_updated: "2026-04-05"
 | `NONE` | Informational only | `BR22` |
 
 - `BR02`, `BR09`, and `BR18` are placeholders and are not currently implemented. (Business Rules Overview; Compact JSON)
+- `BR13` is precise: it blocks seven disintegration-family `F03` descriptors on raw commodities, not all `F03` descriptors. (Business Rules `BR13`)
+- `BR19+` warnings can appear in the sibling validator when transparent local extension rows cover BR19 root/process gaps left by the stale upstream `BR_Data.csv`. (Business Rules `BR19`)
+- `BR26` has a known validator-silence divergence; process ordinal conflicts remain coding risks even when current validators do not emit BR26. (Business Rules `BR26`)
 
 <!-- Source: docs/VALIDATION_RULES_SUMMARY.md Quick Reference Table; BUSINESS-RULES.md BR03, BR04, BR17, BR20, BR21, BR29, BR30, BR31 -->
 ## High-Impact Blocking Rules

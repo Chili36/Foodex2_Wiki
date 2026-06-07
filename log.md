@@ -1,9 +1,16 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-05-30"
+last_updated: "2026-06-07"
 ---
 
 # Log
+
+## [2026-06-07] maintenance | Update validator-rule guidance for MTX 17.1 and BR13/BR19/BR26
+
+- Updated the validation layer for the sibling validator's MTX `17.1` status: imported 2026-06-06, `PUBLISHED MINOR`, 31,690 terms, last EFSA update 2026-04-28.
+- Replaced broad "no F03 on raw" wording with the ICT-derived seven-code BR13 disintegration list: `A06JD`, `A06JE`, `A06JF`, `A06JG`, `A07Y2`, `A07Y3`, and `A07Y4`.
+- Documented the BR19 stale-data problem: upstream `BR_Data.csv` is frozen at 2020-05-20, so the sibling validator can emit transparent `BR19+` extension warnings from `data/BR_Data.extension.csv` unless `STRICT_ICT_PARITY=1` is set.
+- Added the BR26 known-divergence note: stock ICT and the sibling validator are effectively silent in the observed state, though for different implementation causes, so process-composition guidance should not rely on BR26 firing.
 
 ## [2026-05-30] service | Add Qdrant-backed ask endpoint for DMT A/B tests
 
