@@ -10,7 +10,7 @@ related:
   - "[[term-type-facet-constraints]]"
   - "[[process-validation-rules]]"
   - "[[domain-specific-validation]]"
-last_updated: "2026-04-09"
+last_updated: "2026-06-07"
 ---
 
 # Business Rules
@@ -32,6 +32,14 @@ Use it for two jobs:
 | `NONE` | Informational only | `BR22` |
 
 `BR02`, `BR09`, and `BR18` are placeholders and are not implemented.
+
+## Validator Data Status
+
+- Operational provenance: this status reflects the sibling validator PR stream for the MTX `17.1` import, BR13 ICT parity, BR19 extension layer, and BR26 audit. Treat these as validator-maintenance facts, not new EFSA ontology authority.
+- The sibling validator's MTX `17.1` update stream imports MTX `17.1` on 2026-06-06. The catalogue status is `PUBLISHED MINOR`, with 31,690 terms and last EFSA update date 2026-04-28. In that import, 410 terms are tagged `17.1`, with a net increase of 10 unique `termCode` values compared with MTX `17.0`.
+- The BR19 forbidden-process source file `BR_Data.csv` is older than the MTX catalogue. It was last updated upstream on 2020-05-20, so some root groups added or reorganised after that date are not covered by the official BR19 table.
+- The sibling validator can load an additive `BR_Data.extension.csv` after the official `BR_Data.csv`. Extension rows are labelled `BR19+` in warnings, carry rationale/date fields, and can be disabled with `STRICT_ICT_PARITY=1` when strict stock-ICT comparison is required.
+- Treat extension rows as validator evidence for clear data-freshness gaps, not as new FoodEx2 ontology. The long-term fix is upstream rule-data refresh; the extension layer is a transparent local bridge.
 
 ## BR01: Source Commodity Validation for Raw Terms
 
@@ -98,7 +106,10 @@ Use it for two jobs:
 
 - Severity: `HIGH`
 - Applies to: raw terms (`r`)
-- Rule: `F03` cannot be applied to raw commodities because it creates a derivative
+- Rule: `BR13` fires on raw commodities only when explicit `F03` is one of the seven ICT disintegration descriptors below. It does not mean that every `F03` physical-state descriptor is forbidden on raw commodities.
+- Forbidden `F03` descriptors: `A06JD` powder, `A06JE` coarse paste/minced, `A06JF` paste, `A06JG` puree-type, `A07Y2` fine powder, `A07Y3` coarse powder, `A07Y4` fine paste.
+- Boundary: non-disintegration physical states such as `A0C2M` solid or `A0C3M` liquid can be valid on a raw commodity if all other rules pass.
+- Operational reading for DMT/LLM consumers: "powder/paste/puree-style disintegration cannot be added to a raw base" is correct; "no `F03` on raw" is too broad.
 
 ## BR14: ICT/DCF Only Rule
 
@@ -129,6 +140,9 @@ Use it for two jobs:
 - Severity: `ERROR`
 - Applies to: raw terms (`r`)
 - Rule: processes that create derivatives cannot be applied to raw commodities
+- Data-source note: official BR19 coverage comes from `BR_Data.csv`, which is frozen upstream at 2020-05-20. Because MTX is now at `17.1`, some clear-pattern root groups can be absent from the official BR19 table.
+- Local-extension note: the sibling validator can add transparent `BR19+` rows from `data/BR_Data.extension.csv`. The extension uses the same five official columns plus `RATIONALE` and `ADDED`; official rows take precedence when the same root/process pair exists.
+- Workflow impact: stock ICT can be silent where local validation flags a derivative-creating process on a raw commodity. This is expected when the local warning is `BR19+`, and can be disabled with `STRICT_ICT_PARITY=1` for strict stock-ICT parity checks.
 
 ## BR20: Deprecated Terms
 
@@ -171,6 +185,8 @@ Use it for two jobs:
 - Severity: `HIGH`
 - Applies to: derivatives with explicit `F28`
 - Rule: processes in the same ordinal group cannot be combined
+- Known divergence: in the observed stock ICT source, the `mutuallyExclusiveCheck` call appears to be inactive, so BR26 is effectively silent. The sibling validator is also effectively silent for BR26 at present because its process ordinal lookup resolves to `0` for the derivative cases where BR26 would apply. The outcome matches stock ICT silence, but the implementation cause differs.
+- Practical reading: do not rely on BR26 firing as evidence that same-ordinal process combinations are semantically good. Keep the process-composition guidance in [[process-validation-rules]], and treat a proper BR26 implementation as deferred validator work.
 
 ## BR27: Decimal Ordcode Process Conflicts
 

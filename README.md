@@ -28,6 +28,13 @@ The service also exposes `GET /wiki/rag/status`, a deterministic health endpoint
 
 The default production stance is still not "wiki-owned solving". The current focus is wiki-backed guidance and prompt context delivery. `POST /wiki/solve` exists for experiments where the wiki service is allowed to make the final FoodEx2 coding decision, but downstream classifiers such as DMT should usually keep final code construction and validation in their own pipeline.
 
+Validator and catalogue status:
+
+- The sibling FoodEx2 validator has an MTX `17.1` update in its current PR stream, moving from MTX `17.0` to `17.1`. The MTX `17.1` import is `PUBLISHED MINOR`, imported 2026-06-06, with 31,690 terms and last EFSA update date 2026-04-28.
+- `BR13` should be read as a seven-code disintegration-family restriction on `F03` for raw commodities, not as "all physical-state facets are invalid on raw commodities".
+- `BR19` can differ from stock ICT when the validator loads transparent `BR19+` extension rows for stale `BR_Data.csv` coverage gaps. Set `STRICT_ICT_PARITY=1` in the validator when strict stock-ICT behaviour is required.
+- `BR26` is a known divergence: stock ICT and the sibling validator are effectively silent in the observed state, though for different implementation reasons. Same-ordinal process stacking should still be treated cautiously even when BR26 does not fire.
+
 At the moment, the repository contains:
 
 - Immutable source PDFs in [foodex2_docs](foodex2_docs)

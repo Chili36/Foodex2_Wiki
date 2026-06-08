@@ -478,6 +478,7 @@ class BindingRule(BaseModel):
     must: str | None = None
     must_not: str | None = None
     may: str | None = None
+    should: str | None = None
     derived_from: list[str] = Field(default_factory=list)
 
 

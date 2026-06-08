@@ -8,7 +8,7 @@ related:
   - "[[base-term-selection]]"
   - "[[process-facets]]"
   - "[[implicit-vs-explicit-facets]]"
-last_updated: "2026-04-09"
+last_updated: "2026-06-07"
 ---
 
 # Policy Contract
@@ -39,7 +39,7 @@ Use the cited business rules and guidance pages as the controlling sources under
 
 ## Policy Version
 
-`2026-04-09-v0.5`
+`2026-06-07-v0.6`
 
 ## Constitution
 
@@ -72,11 +72,11 @@ Use the cited business rules and guidance pages as the controlling sources under
 - `R-FACET-001` when `an explicit facet only repeats an implicit property of the chosen base`: must not keep that explicit facet in the final code. {derived_from: implicit-vs-explicit-facets.md; facet-coding-rules.md}
 - `R-SCOPE-001` when `candidate wording or any available coverage text excludes the described product or narrows it away from the query`: must not select that candidate as the base term. {derived_from: base-term-selection.md}
 - `R-DESC-001` when `F10 or F21 information is present and not already implicit in a reportable base term`: may add the descriptive facet explicitly. {derived_from: facet-coding-rules.md}
-- `R-PROC-001` when `multiple explicit F28 processes are added`: must keep at most one process per ordinal group. {derived_from: process-validation-rules.md; business-rules.md BR26; business-rules.md BR27}
+- `R-PROC-001` when `multiple explicit F28 processes are added`: should keep at most one process per ordinal group; note that BR26 may currently be silent in validators, so this is still a construction discipline even when validation does not flag it. {derived_from: process-validation-rules.md; business-rules.md BR26; business-rules.md BR27}
 - `R-PROC-002` when `the chosen base already implies a process`: must ensure any remaining explicit `F28` is at least as specific as the implicit process. {derived_from: process-facets.md; process-validation-rules.md; business-rules.md BR16}
 - `R-CARD-001` when `using F01, F02, F03, F07, F11, F22, F24, F26, F30, F32, or F34`: must keep only one value for that facet family. {derived_from: business-rules.md BR25; structural-validation.md}
 - `R-F27-001` when `an explicit F27 is used`: must make the `F27` refine or equal the implicit or source commodity chain. {derived_from: term-type-facet-constraints.md; business-rules.md BR01; business-rules.md BR05}
-- `R-F03-001` when `food_type=raw_primary_commodity`: must not add `F03` to the final code. {derived_from: term-type-facet-constraints.md; business-rules.md BR13}
+- `R-F03-001` when `food_type=raw_primary_commodity and F03 descriptor is in the BR13 disintegration list`: must not add that `F03` to the final code; choose the appropriate derivative base instead. This is not a blanket ban on all `F03` descriptors for raw commodities. {derived_from: term-type-facet-constraints.md; business-rules.md BR13}
 - `R-F01-004` when `food_type=derivative and explicit F01 is present`: must use `F01` only when the derivative rules permit it, including the single-`F27` dependency. {derived_from: term-type-facet-constraints.md; business-rules.md BR06; business-rules.md BR07}
 - `R-SYNTAX-001` when `composing the final code`: must use the syntax `base#facetType.code($facetType2.code2...)`. {derived_from: code-string-format.md; business-rules.md BR29}
 - `R-LENGTH-001` when `composing the facet string`: must keep the full facet string at or below 256 characters. {derived_from: code-string-format.md}
@@ -111,10 +111,10 @@ These are the practical ground rules the solver should always keep in view:
   - `h` / `g`: do not use as coding base terms when a reportable term exists.
 - `F10 qualitative-info` and `F21 production-method` are descriptive facets and may be used on reportable base terms when the information is present and not already implicit.
 - Implicit facets are already present. Never duplicate them explicitly.
-- For `F28`, keep one process per ordinal group and do not add a process that is broader than the one already implicit in the base term.
+- For `F28`, keep one process per ordinal group and do not add a process that is broader than the one already implicit in the base term. BR26 may currently be silent in validators, so do not use validator silence alone as approval for same-ordinal process stacking.
 - Single-cardinality facet families allow only one value: `F01`, `F02`, `F03`, `F07`, `F11`, `F22`, `F24`, `F26`, `F30`, `F32`, and `F34`.
 - `F27` must refine or equal the implicit/source commodity chain.
-- Do not use `F03` on raw commodities.
+- On raw commodities, do not use the BR13 disintegration-family `F03` descriptors: `A06JD`, `A06JE`, `A06JF`, `A06JG`, `A07Y2`, `A07Y3`, or `A07Y4`. Non-disintegration physical-state descriptors are not blocked by BR13 merely because they are `F03`.
 - Do not use `F01` on raw commodities. On derivatives, use `F01` only when the derivative rules permit it.
 - Code syntax is `base#facetType.code($facetType2.code2...)`.
 - The full facet string must stay within the SSD2 limit of 256 characters.

@@ -886,7 +886,7 @@ def test_policy_pack_uses_librarian_response() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
-    assert payload["policy_contract"]["policy_version"] == "2026-04-09-v0.5"
+    assert payload["policy_contract"]["policy_version"] == "2026-06-07-v0.6"
     assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["policy_contract"]["anti_patterns"][0]["id"] == "AP-001"
     assert "business-rules.md BR19" in payload["policy_contract"]["binding_rules"][0]["derived_from"]
@@ -945,7 +945,7 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
-    assert payload["policy_contract"]["policy_version"] == "2026-04-09-v0.5"
+    assert payload["policy_contract"]["policy_version"] == "2026-06-07-v0.6"
     assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["guiding_principles"][2].startswith("FoodEx2 prefers modular description")
     assert payload["pages_used"] == [
@@ -1109,7 +1109,7 @@ def test_solve_returns_final_code_and_stage_traces() -> None:
     )
     assert response.status_code == 200
     payload = response.json()
-    assert payload["policy_contract"]["policy_version"] == "2026-04-09-v0.5"
+    assert payload["policy_contract"]["policy_version"] == "2026-06-07-v0.6"
     assert payload["solution"]["constructedCode"] == "A044C#F04.A00VV$F04.A00GZ$F18.A07NN$F19.A07PF"
     assert payload["solution"]["validationCheck"]["passes"] is True
     assert payload["solution"]["confidence"] == 5
@@ -1205,7 +1205,7 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
 
 def test_policy_contract_is_loaded_from_markdown_source() -> None:
     contract = build_policy_contract()
-    assert contract["policy_version"] == "2026-04-09-v0.5"
+    assert contract["policy_version"] == "2026-06-07-v0.6"
     assert contract["constitution"][0]["id"] == "C01"
     assert contract["decision_procedure"][0]["name"] == "determine_food_type"
     assert contract["anti_patterns"][0]["id"] == "AP-001"
@@ -1213,4 +1213,9 @@ def test_policy_contract_is_loaded_from_markdown_source() -> None:
     assert contract["binding_rules"][8]["id"] == "R-DESC-001"
     assert "business-rules.md BR19" in contract["constitution"][2]["derived_from"]
     assert "execution-layer" in contract["constitution"][4]["derived_from"]
-    assert "business-rules.md BR25" in contract["binding_rules"][11]["derived_from"]
+    binding_rules_by_id = {rule["id"]: rule for rule in contract["binding_rules"]}
+    assert binding_rules_by_id["R-PROC-001"]["should"].startswith(
+        "keep at most one process per ordinal group"
+    )
+    assert "business-rules.md BR26" in binding_rules_by_id["R-PROC-001"]["derived_from"]
+    assert "business-rules.md BR25" in binding_rules_by_id["R-CARD-001"]["derived_from"]
