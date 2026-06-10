@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-06-07T16:27:44.117991+00:00",
+  "generated_at": "2026-06-10T18:01:29.217120+00:00",
   "collection": "foodex2_wiki_markdown_v1",
   "embedding_provider": "voyage",
   "embedding_model": "voyage-context-3",
@@ -179,14 +179,14 @@
       "category": "domain_overlay",
       "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md",
       "chunk_count": 8,
-      "content_hash": "cce803355aa653a2f016f2a7d4c2c23f4fe7f0113a645021fad6de2e097ecbbe",
+      "content_hash": "5170b15e4fa45999aa5687c6145b634a501f693f0da913ae332b291d0145e303",
       "chunk_hashes": [
         "01629c1d16f1d34e580559f4749d4312e806384b4c32af82f8ddf0d21aff3cfa",
         "db6483b3b8bde76941d0f5660d4a39b5a7678568e419e3fd4368d6eceeeeb74e",
         "f0a192e2f9f75b3f94601e83c473fcc5c2556d38b8e3dbfa964e96699e4bc5f7",
         "838bdfad28e35598242f7e11ca41136bf3cb2e32aa4f42c42ec5ad5c23064fd1",
-        "cd0bab68f35eff0bc5d9c0517dc3c9924e2e8e2669e743b5a2ee9d3094c65cf3",
-        "b2d36b41a6520dfa87da492f8105288ff4c207c2a231cac370d699bd6ae9742b",
+        "8a9864a77e6e91f1951280ea867b7ed48d4ab6ad9b36d02c7d61b8569922dbd7",
+        "7d17169d16b11bc80092718c6c5377b08f61e582f6c4e6c7666511e02ae5f02c",
         "0e71f62d80e3a60c5485ea88fcfc18c9d02df0a7b510f0eb813d54c57d1b6e01",
         "2e705a643d32adea45a8e2ea484f21b4936bb61676063b8852e4fa4b0bdc8045"
       ],
@@ -855,15 +855,15 @@
       "category": "domain_overlay",
       "source_path": "raw/efsa-guidance/vmpr-foodex2.md",
       "chunk_count": 8,
-      "content_hash": "030a4fbd374f5f295314442fc2202b482d7eecafa3ac652e56eab2ee721d19de",
+      "content_hash": "98202596f8fbdbcd9c405e951100e4859dcf6b2eacdfee07183d0fd4d4f5c39e",
       "chunk_hashes": [
         "401bd66722f5e65eed18b6ded8b9c64dd1c7fe0336d815389af4fafe092d8ae4",
         "110672daf0e95bcbbe198db203678c5b5dad7a6c960453d5344fc49c29993485",
         "2ea8d18f399f29f249f0f0bc06498710da635c886a535675b3f7d02b3bf80d03",
-        "9d72c750983b5a3028be950c7fa1d658cddfcf41a371bbf0d95ec4470827eae8",
+        "c21624648c492166bd2d0e008b5ce8462c74dca8b6bc5a43e2cf68403e79352e",
         "14164f20149ec90c23be539c9e12ca2dfa150ce790c5e85e5b50c2f69fc827e3",
         "89caa43b37b01c57ecfbf27c33d0e6a630bced82cd99c95a43a608cdc921f453",
-        "5c0a6902f7a6bb7683f78eba72637b53349ecf4ba7a3effcfd362e6969ab66ed",
+        "75299172eb381425d67f7533fa3f2888d479abde3a6a7aa797fb5ece8eba6d13",
         "f429852e001007b1c8fdb6e0bbb788bcffc5579ce4930df09f227cd7bae6a9cf"
       ],
       "chunk_ids": [
