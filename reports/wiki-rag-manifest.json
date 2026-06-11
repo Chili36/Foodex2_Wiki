@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-06-10T18:01:29.217120+00:00",
+  "generated_at": "2026-06-11T22:02:32.334899+00:00",
   "collection": "foodex2_wiki_markdown_v1",
   "embedding_provider": "voyage",
   "embedding_model": "voyage-context-3",
@@ -16,8 +16,8 @@
       "validation"
     ]
   },
-  "page_count": 32,
-  "chunk_count": 253,
+  "page_count": 33,
+  "chunk_count": 258,
   "pages": [
     {
       "page_name": "RUNTIME_RULES.md",
@@ -65,6 +65,28 @@
         "additives-flavourings-foodex2.md#004-00-foodex2-in-additives-and-flavourings-monitoring-matrix-terms-not-to-report-as-th",
         "additives-flavourings-foodex2.md#005-00-foodex2-in-additives-and-flavourings-monitoring-worked-signals",
         "additives-flavourings-foodex2.md#006-00-foodex2-in-additives-and-flavourings-monitoring-relevant-policy"
+      ]
+    },
+    {
+      "page_name": "anses-codification-guidance.md",
+      "title": "ANSES FoodEx2 Codification Guidance",
+      "category": "guidance",
+      "source_path": "raw/efsa-guidance/anses-codification-guidance.md",
+      "chunk_count": 5,
+      "content_hash": "7b14709780466d21b6388db9a1ba596acec77d53b29a191eb84988bbd12684ab",
+      "chunk_hashes": [
+        "460f81d37b3df6a4f8a8a08c7cf8703fb4e8431a0ea8067fcfd97bd3dd756a8a",
+        "5c11ff5fd69fc426fb45453fce1b0ace679f10f94ff4e87ca57ffacf58b3e99e",
+        "78e9d424f316e0bcb7f3632d21f88cdf418ca8cbd9241668518d17d615c1e123",
+        "9bc2f34c16238e2f184a47f8cf53048701d6c44005552c5b586c7f4af10fb38b",
+        "c0f672b3e5018f3a46c02ea660835f8dde839bdc0ef7c9c24b1a22b6c91bdf38"
+      ],
+      "chunk_ids": [
+        "anses-codification-guidance.md#000-00-anses-foodex2-codification-guidance",
+        "anses-codification-guidance.md#001-00-anses-foodex2-codification-guidance-source-tier",
+        "anses-codification-guidance.md#002-00-anses-foodex2-codification-guidance-authority-boundary",
+        "anses-codification-guidance.md#003-00-anses-foodex2-codification-guidance-ingest-use",
+        "anses-codification-guidance.md#004-00-anses-foodex2-codification-guidance-relevant-pages"
       ]
     },
     {
