@@ -327,3 +327,9 @@ last_updated: "2026-06-10"
 - Strengthened `vmpr-foodex2.md` so blood, blood serum, and plasma taken as VMPR non-food biological samples are routed to `A0C60 Non-food animal-related matrices` with explicit `F01` and `F02`, while preserving the ordinary FoodEx2 workflow for edible blood products outside VMPR non-food sampling.
 - Grounded the rule in ChemMon 2025/2026 examples: non-food matrices use `A0C60`, and sheep blood serum is shown as `A0C60#F01.A0CDE$F02.A0CEY`.
 - Updated the ChemMon overview and wiki index summary so retrieval exposes the blood/serum/plasma boundary without applying it to ordinary all-domain food coding.
+
+## [2026-06-11] source | Add source-tier metadata and ANSES guidance intake
+
+- Added optional `source_tier` page metadata with deterministic doctor validation for `authoritative_rule`, `expert_guidance`, `local_policy`, and `diagnostic`.
+- Added `FoodEx2 codification guidance_2025_12_v3.pdf` to `foodex2_docs/` and created `anses-codification-guidance.md` as an `expert_guidance` source note.
+- Documented that ANSES guidance can support workflow, examples, conventions, and interpretation, but should not silently override EFSA catalogue data, business rules, ChemMon reporting obligations, or validator behaviour.

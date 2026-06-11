@@ -20,6 +20,7 @@ from .rag_index import (
 from .wiki_store import (
     MARKDOWN_LINK_RE,
     PROMPT_CONTEXT_PAGE_CATEGORIES,
+    SOURCE_TIER_VALUES,
     WIKILINK_RE,
     WikiPage,
     WikiStore,
@@ -103,6 +104,7 @@ def run_doctor(
         issues.extend(_check_external_markdown_links(pages.values()))
     issues.extend(_check_prompt_projection(store, pages.values()))
     issues.extend(_check_graph_connectivity(store))
+    issues.extend(_check_source_tiers(pages.values()))
     issues.extend(_check_source_references(store, pages.values()))
     if check_rag_index:
         issues.extend(
@@ -541,6 +543,27 @@ def _check_source_references(store: WikiStore, pages: Iterable[WikiPage]) -> Ite
                     f"Source reference does not resolve to a committed file: {source}",
                 )
             )
+    return issue_list
+
+
+def _check_source_tiers(pages: Iterable[WikiPage]) -> Iterable[DoctorIssue]:
+    issue_list: list[DoctorIssue] = []
+    for page in pages:
+        if page.source_tier is None:
+            continue
+        if page.source_tier in SOURCE_TIER_VALUES:
+            continue
+        issue_list.append(
+            DoctorIssue(
+                "error",
+                "source_tier",
+                page.name,
+                (
+                    f"Unknown source_tier `{page.source_tier}`. "
+                    f"Allowed values: {', '.join(sorted(SOURCE_TIER_VALUES))}."
+                ),
+            )
+        )
     return issue_list
 
 

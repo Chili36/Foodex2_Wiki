@@ -588,9 +588,20 @@ function renderPage(data) {
   // build meta bar
   const hasSources = data.sources && data.sources.length > 0;
   const hasRelated = data.related && data.related.length > 0;
+  const hasSourceTier = data.source_tier;
 
-  if (hasSources || hasRelated) {
+  if (hasSourceTier || hasSources || hasRelated) {
     while (metaEl.firstChild) metaEl.removeChild(metaEl.firstChild);
+
+    if (hasSourceTier) {
+      const tierDiv = document.createElement("div");
+      const tierLabel = document.createElement("span");
+      tierLabel.className = "label";
+      tierLabel.textContent = "Source tier: ";
+      tierDiv.appendChild(tierLabel);
+      tierDiv.appendChild(document.createTextNode(data.source_tier));
+      metaEl.appendChild(tierDiv);
+    }
 
     if (hasSources) {
       const srcDiv = document.createElement("div");

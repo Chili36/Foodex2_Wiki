@@ -186,6 +186,7 @@ In practice, an ingest or update pass should do all of the following:
 - preserve the original PDFs and validator-derived sources unchanged
 - update or create topic pages in `raw/efsa-guidance/`
 - add or maintain frontmatter fields such as `title`, `sources`, `related`, and `last_updated`
+- use optional `source_tier` only when authority matters; allowed values are `authoritative_rule`, `expert_guidance`, `local_policy`, and `diagnostic`
 - add inline cross-links so related concepts can be discovered by humans and selectors
 - add a `Relevant Business Rules` section when `BRxx` rules materially constrain that page
 - add a `Relevant Policy` section when decision order matters for that page
