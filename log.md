@@ -1,9 +1,15 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-06-07"
+last_updated: "2026-06-10"
 ---
 
 # Log
+
+## [2026-06-10] guidance | Clarify VMPR blood-related biological sample default
+
+- Tightened the VMPR non-food biological sample boundary so active VMPR biological-sample rows for blood, blood serum, and plasma default to `A0C60 Non-food animal-related matrices` with explicit `F01` source and `F02` part-nature.
+- Documented whole blood as a structural grey area: FoodEx2 has food-chain blood terms, while maintenance 2021 added blood-related `F02` descriptors for ASF/WGS biological sample description. Preserve the normal edible-blood path for explicit food-chain rows, including `is_food=true`, edible products, blood ingredients, slaughterhouse food commodities, ordinary all-domain food matrices, or where VMPR biological-sample context is absent.
+- Added the blood/serum/plasma `F02` descriptor signal: blood `F02.A06AL`, blood serum `F02.A0CEY`, plasma `F02.A0CEX`; source animals still come from catalogue evidence.
 
 ## [2026-06-07] maintenance | Update validator-rule guidance for MTX 17.1 and BR13/BR19/BR26
 
