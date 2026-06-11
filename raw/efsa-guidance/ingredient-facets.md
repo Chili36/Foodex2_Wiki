@@ -3,11 +3,12 @@ title: "Ingredient Facets"
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
+  - "FoodEx2 codification guidance_2025_12_v3.pdf"
 related:
   - "[[facet-coding-rules]]"
   - "[[base-term-selection]]"
   - "[[implicit-vs-explicit-facets]]"
-last_updated: "2026-04-08"
+last_updated: "2026-06-12"
 ---
 
 # Ingredient Facets
@@ -18,6 +19,7 @@ last_updated: "2026-04-08"
 - `F04 Ingredient` is the origin facet for composite foods. Use it to name the characterising ingredient or ingredients that distinguish one composite product from another. The composite-vs-derivative choice still comes first in [[base-term-selection]]. (EFSA guidance p19-20, p56; Training p5)
 - It is not a full recipe field. Only one or a few ingredient descriptors are expected, not every component. Recipes belong in an external database if needed, and the same "few facets, high signal" rule is summarized in [[facet-coding-rules]]. (EFSA guidance p56)
 - When the ingredient is used mainly for flavour identity, code it as the raw commodity term for consistency. (EFSA guidance p56)
+- For flavoured foods, distinguish a food ingredient contributing the flavour from a regulated flavouring. If source text is limited but indicates a food-derived flavour, at least the food ingredient should normally be represented; use a single flavouring descriptor only when the product uses flavouring without a food ingredient contributing the flavour note. (ANSES guidance p43, p91)
 - On derivative base terms, use `F04` for minor added ingredients that characterise or flavour the product, not for the constitutive source of the derivative itself. Ask: was the food obtained from that commodity, or was the commodity added later? This is the same origin-chain distinction described in [[implicit-vs-explicit-facets]] and constrained in [[term-type-facet-constraints]]. (EFSA guidance p19-20, p56)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p45, p49-50, p56; EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf p6 -->

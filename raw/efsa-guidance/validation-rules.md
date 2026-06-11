@@ -4,6 +4,7 @@ sources:
   - "BUSINESS-RULES.md"
   - "BUSINESS-RULES-COMPACT.json"
   - "docs/VALIDATION_RULES_SUMMARY.md"
+  - "FoodEx2 codification guidance_2025_12_v3.pdf"
 related:
   - "[[business-rules]]"
   - "[[structural-validation]]"
@@ -11,7 +12,7 @@ related:
   - "[[process-validation-rules]]"
   - "[[domain-specific-validation]]"
   - "[[code-string-format]]"
-last_updated: "2026-06-07"
+last_updated: "2026-06-12"
 ---
 
 # Validation Rules Overview
@@ -44,6 +45,19 @@ last_updated: "2026-06-07"
 - `BR17`: a facet term can never be the base term. (Business Rules `BR17`)
 - `BR20` and `BR21`: deprecated and dismissed terms are always invalid, even if the code string is well formed. (Business Rules `BR20-BR21`)
 - `BR29-BR31`: the code must use valid syntax, a real facet category, and a descriptor that belongs to that category. See [[structural-validation]]. (Business Rules `BR29-BR31`)
+
+<!-- Source: FoodEx2 codification guidance_2025_12_v3.pdf p89-92 -->
+## Practical Dataset Checks
+
+These checks come from ANSES expert guidance and are useful for batch review. They are not replacements for the validator.
+
+- Feed/food mismatches: feed entries should use feed terms, and food entries should not be coded with feed terms unless the source text genuinely identifies animal feed. (ANSES guidance p89)
+- Hierarchy bases: filter for hierarchy detail levels used as base terms, then replace them with reportable non-hierarchy terms where the source detail allows it. (ANSES guidance p89)
+- Raw base plus derivative-creating process: filter raw base terms with process facets such as milling, drying, curing, fermentation, pickling, canning/jarring, or smoking because a derivative base probably exists. See [[process-validation-rules]] for the validator side of this rule. (ANSES guidance p90)
+- Flavouring review: check whether a flavoured product uses a food ingredient, a regulated flavouring, or both; incomplete ingredient reporting is common. See [[ingredient-facets]]. (ANSES guidance p91)
+- Infusion ambiguity: check whether the code describes the dry infusion material or the final reconstituted beverage. (ANSES guidance p91)
+- `F04` on raw or derivative bases: review whether it is a legitimate minor ingredient/coating/flavour, or whether the code incorrectly used `F04` where `F01` or `F27` should describe source. (ANSES guidance p92)
+- Multiple `F01` sources on raw bases: same-nature mixed raw commodities should usually use multiple `F27 Source-commodities`, not multiple `F01 Source` descriptors. (ANSES guidance p92)
 
 ## Relevant Policy
 

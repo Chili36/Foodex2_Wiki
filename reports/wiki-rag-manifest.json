@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-06-11T22:02:32.334899+00:00",
+  "generated_at": "2026-06-11T22:16:44.535971+00:00",
   "collection": "foodex2_wiki_markdown_v1",
   "embedding_provider": "voyage",
   "embedding_model": "voyage-context-3",
@@ -17,7 +17,7 @@
     ]
   },
   "page_count": 33,
-  "chunk_count": 258,
+  "chunk_count": 266,
   "pages": [
     {
       "page_name": "RUNTIME_RULES.md",
@@ -72,21 +72,35 @@
       "title": "ANSES FoodEx2 Codification Guidance",
       "category": "guidance",
       "source_path": "raw/efsa-guidance/anses-codification-guidance.md",
-      "chunk_count": 5,
-      "content_hash": "7b14709780466d21b6388db9a1ba596acec77d53b29a191eb84988bbd12684ab",
+      "chunk_count": 12,
+      "content_hash": "fd980d19c5af789dac663fc95874daa3856bf6d812cbf64d2593155620902fc3",
       "chunk_hashes": [
-        "460f81d37b3df6a4f8a8a08c7cf8703fb4e8431a0ea8067fcfd97bd3dd756a8a",
-        "5c11ff5fd69fc426fb45453fce1b0ace679f10f94ff4e87ca57ffacf58b3e99e",
-        "78e9d424f316e0bcb7f3632d21f88cdf418ca8cbd9241668518d17d615c1e123",
-        "9bc2f34c16238e2f184a47f8cf53048701d6c44005552c5b586c7f4af10fb38b",
-        "c0f672b3e5018f3a46c02ea660835f8dde839bdc0ef7c9c24b1a22b6c91bdf38"
+        "9800d618ccbf094acd04c5046d034f70ed1936d586b3cf14a5d3796ec66e1163",
+        "18c5e6fee69c47100e86f06c177968607a897ff3adcc5737f4590a4f68085ded",
+        "f675372b53ab88e9bcd44ce35988f941ce74c5f57bda1f2a037ab0ec43e99142",
+        "e15a421640aecd203d534302f0b182140dd72a418503c864d9b7e8e6413d910f",
+        "bb473fc80c73a7a5911643d81f43019d961810f9a52e01004f4b3d783f0e6cff",
+        "2cf52654a925b919a56cc95dbd9ab712c5ac85eaf8974607c8c75e53b4b0db41",
+        "e342f67f48fe931f65dfeb33ab5beaf96071cef7788ee8d9028a9cc0fdad898f",
+        "f07cb45797c2d475ab3fa3f3bc756c8a1f548b7a59e3902292c402c8a7ae271f",
+        "9b84bb5b568e6dcdd041141bef1367b08683aa229f86da502c5404bab58680cc",
+        "2d33220d6f8a29e384b1c115029e5931a6148f8ce6f37e5b254e75d13e33061c",
+        "56c64d9072fa1ede5864486ab806ba87c87bddcbbf3a14b3bceb47ba4c0f5880",
+        "b6e3d3e6f2357ec5b06fd50b4ee3e14cda4124cb438af8b191956b6b03118eae"
       ],
       "chunk_ids": [
         "anses-codification-guidance.md#000-00-anses-foodex2-codification-guidance",
         "anses-codification-guidance.md#001-00-anses-foodex2-codification-guidance-source-tier",
         "anses-codification-guidance.md#002-00-anses-foodex2-codification-guidance-authority-boundary",
         "anses-codification-guidance.md#003-00-anses-foodex2-codification-guidance-ingest-use",
-        "anses-codification-guidance.md#004-00-anses-foodex2-codification-guidance-relevant-pages"
+        "anses-codification-guidance.md#004-00-anses-foodex2-codification-guidance-extracted-guidance",
+        "anses-codification-guidance.md#005-00-anses-foodex2-codification-guidance-extracted-guidance-base-term-workflow",
+        "anses-codification-guidance.md#006-00-anses-foodex2-codification-guidance-extracted-guidance-facet-workflow",
+        "anses-codification-guidance.md#007-00-anses-foodex2-codification-guidance-extracted-guidance-missing-terms",
+        "anses-codification-guidance.md#008-00-anses-foodex2-codification-guidance-extracted-guidance-mixed-products",
+        "anses-codification-guidance.md#009-00-anses-foodex2-codification-guidance-extracted-guidance-special-cases-and-checks",
+        "anses-codification-guidance.md#010-00-anses-foodex2-codification-guidance-known-limits",
+        "anses-codification-guidance.md#011-00-anses-foodex2-codification-guidance-relevant-pages"
       ]
     },
     {
@@ -95,12 +109,12 @@
       "category": "guidance",
       "source_path": "raw/efsa-guidance/base-term-selection.md",
       "chunk_count": 7,
-      "content_hash": "14fc73e21f038bf3c8317bd024490041f5920980b27933e47b29da7696f35c8b",
+      "content_hash": "4f533a0dea68b8daac750c911f60233d90d16931ebbba64149c47be9fd7f755a",
       "chunk_hashes": [
         "2c88b3642b0914cf43c2773428f4c64740d98041b7370dafa6155fd3a2bd87b7",
-        "7d7c4b251c7ab59fb1e558093283e6dc2965f3009b48ec291724b517eb9c95f1",
-        "0a2900f9845dcafd12511b9d164bff6adcb978d1bbd514524b514224f7571605",
-        "a9009803f263bd7b0b3e9c4c9d8c1130d165d885e49cd5705d03b82ca4cf82ce",
+        "9ac29e9f79f26e61d5f079c5d023885ab2c9f3bacffcdeb247d8cf7b3bf1a22d",
+        "04338ded87cad9e39d909cf14320c2c00460c23a639b700833826b4063dde0fd",
+        "1f7c2d920c73ab983288b652bb89698676272ebd7c93979be31b0a64bec61d35",
         "60c223af55113fc8065b4e5424822fc088038ec2d817f30672c3c9293cff505d",
         "6e9e972b4b39282f3ee812691124c1e64762f7df420802189b52708ee688758b",
         "d5a5904ca8f8aa2e8dbadff86844709c1f4985702e4b785de7e7a8d78b29f96b"
@@ -229,10 +243,10 @@
       "category": "guidance",
       "source_path": "raw/efsa-guidance/code-string-format.md",
       "chunk_count": 5,
-      "content_hash": "712f7be1abb8d34f59b12cc31ed74c60ea5ea732b870d9eb13b40edd4c948097",
+      "content_hash": "e0d1da89b86c3aa22c91711bb1c34fcd1152e533eec26776816d1a7598c13ca2",
       "chunk_hashes": [
         "99679491277cfe3fbcd78fed3d484eea8b11285a2973201ee9d5533103a4a0d8",
-        "5239a31d1504ac264c221d8485c5ae8829131b17f167c7441b75662cb02e32d8",
+        "790736ccb0640d390e9e89249ad40176d1563c5561f51163f2242f0a84f0d2da",
         "b4ce9a4158042755320c45cc6e7f9c2f2cbd1db72b47aa2176d021caa9753f85",
         "52f16753e8e69454733d591da5944aacb8473af38c5b5b40541ef73f4acc5c60",
         "f98174ecf8b1f3df8c954e48d37557d79e84d49e18895f3f2f0c780136337661"
@@ -333,14 +347,14 @@
       "category": "guidance",
       "source_path": "raw/efsa-guidance/facet-coding-rules.md",
       "chunk_count": 10,
-      "content_hash": "a6a873872eb1357ae87634d39087364c0ac977bf057c0fa4d8d182ed3350e1dc",
+      "content_hash": "ad1c3bb009705dcdf1bd9843a05c1d9157003cb772893ad489b64c9c45c96556",
       "chunk_hashes": [
         "0afe1eb14ce134f1bbfc57bfc484f5cab49ce2e21416653fe6f210d0b1d4cea0",
-        "3c1180fe11a3e655a38bef24c8d4150a2618263e243117639b9ce7711722948e",
+        "af4d3b712885baaf2813007c806b4f04cf9ed6ac6c780a412dcd9ed879d02fb2",
         "b76141f051099db4443072e8c30574bbd5a0ec511ed1580acee56ba53cab4e83",
-        "7043a42e3c3d474353dccc4b11b3ea74cd4dca9ec05deb081c03e52369fe64d7",
-        "0e85dbad1ded2e53f673ea55f019934bd28e4a3ccc27198fc4db73d590d1ed9c",
-        "881e9796f2801b96903762160a2d15c72d9ef98cbd362182b53faad70a8a7cd4",
+        "8379b9058e62d047cbc0197b017b028055c26cb237407d84b066faf9601fe768",
+        "ee40f1c3384f4dcb5daaee33f1183fecab327b91739d45057d8d452c4f547f9b",
+        "5917b3c401e126d39d9a77bbb86401dae49048b37d596777dab2bf0e499e2a24",
         "1825401ec3ba1e60612c46b87889edf15978bacb01d6fc8df5beeef74001c65e",
         "d11ca3b565bdd0c71e253baec6cc551c259822d872bba2610dc88e4dfdc97bb2",
         "9cdec892c972bac8939b535b4289ada67552603d62b21bb560ad8661edc7ac23",
@@ -393,11 +407,11 @@
       "category": "guidance",
       "source_path": "raw/efsa-guidance/implicit-vs-explicit-facets.md",
       "chunk_count": 6,
-      "content_hash": "f87e9004a199249034143bac7871b60d12be473e248ba7f47921bd42e7a06b29",
+      "content_hash": "4d9be50a3389141748597c64630038541ab46a0747a6a67b71a5dd9256b76814",
       "chunk_hashes": [
         "97e74302668e0dd1d33940d191bbf0920f5c8afe142eb67a10168268b6a10a17",
-        "5e336479d1bf11b06c835a296bec25b84bbb46209f210ff8f07c44c08e902b33",
-        "00653b40ce32f4352a57cac9f14ca27de9e231401b7536a5dde3fc1987f92233",
+        "047456c4d377bb6ad0dd6f12ff5f0a26c97f691982dfcd43aa3a4d211725f72a",
+        "929c7cda93a8abebfdc7471bafd80f4d424a5be33055f4708cb99682eb3c9c15",
         "8d70b9756d5f0154eab25f9a9d329d9444f66aa6aa4fbfb0856429dc82df0ba9",
         "8b6b0e99fdcbdf913540e1f73ff1131a18d74bf874763768652c327721bdb660",
         "d33f91bb362eeba950b692c86afa118c7cec8768d5ce1ade0960e0410e2de904"
@@ -417,10 +431,10 @@
       "category": "guidance",
       "source_path": "raw/efsa-guidance/ingredient-facets.md",
       "chunk_count": 6,
-      "content_hash": "44dceb9fe9d7a09a05bba968a440e37fa3c573f5ecebfbf2c405c7249e9b138c",
+      "content_hash": "7070d636577aaea547515b9582a42a651f891aa8dcc8baae6946d51c8f18e7e5",
       "chunk_hashes": [
         "c6d6fcad69fb063b43d4e39509e6403ccc6aba75da771ad4a94af3fffdf0dbee",
-        "de119e90ba8b0b794482556577dae43e15e2c2850488f6549af669b5d5b6a2b2",
+        "d16427282739397e0b570419018a5f13ff18918873e03dc2d1dab5b3964a5f8c",
         "45fe2728d8bc9201bdb86eb4685688df5c3b57880ec812aaaa7fb48e435621a6",
         "5109b148f2ed79beaa1523238b9ac2047caaab63412c7e0fea8687ca07197bfb",
         "4728a7e153e46e48c65428534f02e38c0949c86b3335155c73279318fa3944a6",
@@ -850,13 +864,14 @@
       "title": "Validation Rules Overview",
       "category": "validation",
       "source_path": "raw/efsa-guidance/validation-rules.md",
-      "chunk_count": 7,
-      "content_hash": "5b3f7cf24571bd032f69616d49d600af5dd30796bbbfcf1e4ad1bb757839b001",
+      "chunk_count": 8,
+      "content_hash": "b8191d68d6acdc283972ed9efbf4ebc86770e651b8603addab6fd4492fde3393",
       "chunk_hashes": [
         "d3131627d3f5c0614e42bc0f96a983e90be8b884bb75e7dd3ddfcc3763e36129",
         "194da075614fe8de6af98fa7d84eb4572b13c761c8b087521c0bb6c45f5257c5",
         "f3339abed70fa8fecec8dc7e57831b16b760fef34eced678801a36326b809b5c",
         "bcaafe541aab3c8d1984277c084a27891d91939e4c973bcd490feff716ac3a08",
+        "3f55c210f2858de531f6bd7e563bc2ce80d5165aa592f2fca6246e6da6065233",
         "0192ef44aa06d6b53e8047f1684bdc93f083fcd2f767197a8c014a52b996190b",
         "2b5bb78f1e6463640e23b3b595154e3c62bc7c2f8691a59c210fdd5d892d34f5",
         "5d05fb448136c860b936eca02b8ad95c147e275a2d844887cddcbf0d909de5f3"
@@ -866,9 +881,10 @@
         "validation-rules.md#001-00-validation-rules-overview-two-validation-layers",
         "validation-rules.md#002-00-validation-rules-overview-severity-model",
         "validation-rules.md#003-00-validation-rules-overview-high-impact-blocking-rules",
-        "validation-rules.md#004-00-validation-rules-overview-relevant-policy",
-        "validation-rules.md#005-00-validation-rules-overview-relevant-business-rules",
-        "validation-rules.md#006-00-validation-rules-overview-worked-examples"
+        "validation-rules.md#004-00-validation-rules-overview-practical-dataset-checks",
+        "validation-rules.md#005-00-validation-rules-overview-relevant-policy",
+        "validation-rules.md#006-00-validation-rules-overview-relevant-business-rules",
+        "validation-rules.md#007-00-validation-rules-overview-worked-examples"
       ]
     },
     {

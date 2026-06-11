@@ -2,11 +2,12 @@
 title: "FoodEx2 Code String Format"
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+  - "FoodEx2 codification guidance_2025_12_v3.pdf"
 related:
   - "[[foodex2-overview]]"
   - "[[facet-coding-rules]]"
   - "[[implicit-vs-explicit-facets]]"
-last_updated: "2026-04-05"
+last_updated: "2026-06-12"
 ---
 
 # Code String Format
@@ -22,8 +23,8 @@ last_updated: "2026-04-05"
 - The base term is mandatory. A base-term-only code is valid; a facet-only code is not. (EFSA guidance p40)
 - `#` starts the facet section. `$` separates facet descriptors. There is no trailing `$`. (EFSA guidance p40)
 - A facet is written as `Fxx.` plus a five-character descriptor code, for example `F04.A032J`. (EFSA guidance p39-40)
-- Spaces are not allowed. Only one FoodEx2 code should be stored in the field. (EFSA guidance p40)
-- Facet order is not fixed, but EFSA recommends increasing alphabetical order by facet header. (EFSA guidance p40)
+- Spaces are not allowed. Only one FoodEx2 code should be stored in the field. (EFSA guidance p40; ANSES guidance p24)
+- Facet order is not fixed by the string grammar, but EFSA/ANSES guidance recommends increasing alphanumeric order by facet header for consistent automated handling. (EFSA guidance p40; ANSES guidance p24)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p39-40 -->
 ## Worked Examples

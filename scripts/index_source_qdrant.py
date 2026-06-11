@@ -6,11 +6,14 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 import time
 import uuid
 import zipfile
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -48,7 +51,7 @@ def _clean_text(text: str) -> str:
     return text.strip()
 
 
-def _pdf_pages(path: Path) -> list[tuple[int, str]]:
+def _pdf_text_layer_pages(path: Path) -> list[tuple[int, str]]:
     result = subprocess.run(
         ["pdftotext", "-layout", str(path), "-"],
         check=True,
@@ -60,6 +63,62 @@ def _pdf_pages(path: Path) -> list[tuple[int, str]]:
         cleaned = _clean_text(page_text)
         if cleaned:
             pages.append((index, cleaned))
+    return pages
+
+
+def _page_number_from_image(path: Path) -> int:
+    match = re.search(r"-(\d+)\.png$", path.name)
+    return int(match.group(1)) if match else 0
+
+
+def _ocr_image(image_path: Path) -> tuple[int, str]:
+    result = subprocess.run(
+        ["tesseract", str(image_path), "stdout", "-l", "eng"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    return _page_number_from_image(image_path), _clean_text(result.stdout)
+
+
+def _ocr_pdf_pages(path: Path) -> list[tuple[int, str]]:
+    with tempfile.TemporaryDirectory(prefix="foodex2-source-ocr-") as temp_dir:
+        prefix = Path(temp_dir) / "page"
+        subprocess.run(
+            ["pdftoppm", "-r", "200", "-png", str(path), str(prefix)],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        image_paths = sorted(Path(temp_dir).glob("page-*.png"), key=_page_number_from_image)
+        with ThreadPoolExecutor(max_workers=min(6, max(1, len(image_paths)))) as executor:
+            pages = list(executor.map(_ocr_image, image_paths))
+    return [(page_number, text) for page_number, text in pages if text]
+
+
+def _should_ocr_pdf(pages: list[tuple[int, str]]) -> bool:
+    if len(pages) < 20:
+        return False
+    total_chars = sum(len(text) for _, text in pages)
+    average_chars = total_chars / len(pages)
+    sparse_pages = sum(1 for _, text in pages if len(text) < 250)
+    return average_chars < 700 and sparse_pages / len(pages) > 0.25
+
+
+def _pdf_pages(path: Path) -> list[tuple[int, str]]:
+    pages = _pdf_text_layer_pages(path)
+    if (
+        pages
+        and _should_ocr_pdf(pages)
+        and shutil.which("pdftoppm")
+        and shutil.which("tesseract")
+    ):
+        try:
+            ocr_pages = _ocr_pdf_pages(path)
+        except (OSError, subprocess.CalledProcessError):
+            return pages
+        if sum(len(text) for _, text in ocr_pages) > sum(len(text) for _, text in pages) * 1.5:
+            return ocr_pages
     return pages
 
 
@@ -372,7 +431,8 @@ def main() -> int:
 
     print(
         f"Indexing {len(all_chunks)} chunks from {len(source_files)} source files into "
-        f"{args.collection} ({args.model}, {args.dimension}d)."
+        f"{args.collection} ({args.model}, {args.dimension}d).",
+        flush=True,
     )
     _create_collection(
         qdrant_url=qdrant_url,
@@ -419,7 +479,7 @@ def main() -> int:
         )
         indexed_count += len(batch_chunks)
         elapsed = time.perf_counter() - started
-        print(f"Indexed {indexed_count}/{len(all_chunks)} chunks ({elapsed:.1f}s batch).")
+        print(f"Indexed {indexed_count}/{len(all_chunks)} chunks ({elapsed:.1f}s batch).", flush=True)
 
     info = _http_json(method="GET", url=f"{qdrant_url}/collections/{args.collection}")
     result = info.get("result", {})
@@ -434,7 +494,8 @@ def main() -> int:
                 "dimension": args.dimension,
             },
             indent=2,
-        )
+        ),
+        flush=True,
     )
     return 0
 

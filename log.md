@@ -333,3 +333,11 @@ last_updated: "2026-06-10"
 - Added optional `source_tier` page metadata with deterministic doctor validation for `authoritative_rule`, `expert_guidance`, `local_policy`, and `diagnostic`.
 - Added `FoodEx2 codification guidance_2025_12_v3.pdf` to `foodex2_docs/` and created `anses-codification-guidance.md` as an `expert_guidance` source note.
 - Documented that ANSES guidance can support workflow, examples, conventions, and interpretation, but should not silently override EFSA catalogue data, business rules, ChemMon reporting obligations, or validator behaviour.
+
+## [2026-06-12] ingest | Extract ANSES expert guidance into operational pages
+
+- OCR-extracted the ANSES FoodEx2 codification guidance v3 because the embedded PDF text layer omitted much of the body text.
+- Expanded `anses-codification-guidance.md` from a source note into an extracted `expert_guidance` page covering base-term workflow, facet workflow, missing-term conventions, mixed products, range values, and dataset QC checks.
+- Patched the core operational pages where ANSES adds reusable guidance: type-before-origin base selection, browser-order caveats, implicit facets as narrowing evidence, range-value handling for single-cardinality numeric facets, flavouring/ingredient review, and practical batch-validation filters.
+- Added a sparse-PDF OCR fallback to the source Qdrant indexer so raw-source retrieval can index the ANSES PDF body text rather than the incomplete embedded text layer.
+- Kept authority boundaries explicit: ANSES guidance informs conventions and examples, while current EFSA catalogue data, business rules, ChemMon/domain guidance, and validator behaviour remain higher-authority sources.

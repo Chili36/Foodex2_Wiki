@@ -3,11 +3,12 @@ title: "Implicit vs Explicit Facets"
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
+  - "FoodEx2 codification guidance_2025_12_v3.pdf"
 related:
   - "[[foodex2-overview]]"
   - "[[facet-coding-rules]]"
   - "[[base-term-selection]]"
-last_updated: "2026-04-08"
+last_updated: "2026-06-12"
 ---
 
 # Implicit vs Explicit Facets
@@ -16,6 +17,7 @@ last_updated: "2026-04-08"
 ## Default Logic
 
 - Detailed FoodEx2 base terms already inherit key facets. Do not report implicit facets in datasets; they can be recovered later. (EFSA guidance p39-40)
+- Implicit facets are still useful evidence: they identify the part, origin, or process chain already carried by the base term and show which facet family can legitimately be narrowed when the base is too generic. (ANSES guidance p36, p39-41)
 - The building order is `part-nature -> source/source-commodities/ingredient -> process`. That order explains why some information is already encoded in the base term itself, and it is the same order followed in [[base-term-selection]] and [[facet-coding-rules]]. (EFSA guidance p20)
 - Use the direct origin facet for each food type: raw commodities take `source`, derivatives take `source-commodities`, composites take `ingredient`. Do not jump one level higher in the chain. The term-type-specific limits are summarised in [[term-type-facet-constraints]]. (EFSA guidance p19-20)
 - For derivatives, read `F27 Source-commodities` as "from what primary commodity was this derivative obtained?" not "what was added later?" Later-added flavouring, coating, or characterising ingredients belong in `F04 Ingredient`, not `F27`; see [[ingredient-facets]] for the operational rule. (EFSA guidance p19-20, p56)
@@ -32,6 +34,7 @@ last_updated: "2026-04-08"
 
 - In VMPR workflows, explicit facets can override the implicit categorisation if they are reported, so unnecessary explicit repetition is not neutral. See [[vmpr-foodex2]] for the domain-specific overlay. (ChemMon 2026 p33)
 - When a derivative base term carries a broad implicit F27, narrow it with an explicit F27 pointing to the specific source commodity. Do not abandon the derivative base term and reconstruct the food from the raw commodity plus F28 — that violates [[policy-contract|AP-001]] and loses the derivative classification. The explicit F27 refines the implicit one; it does not replace the base term.
+- If a missing derivative can only be described by a generic derivative base and no suitable `F27` descriptor exists, `F01` may be a narrow tolerated fallback only when it clearly refers to the single source commodity and `F26.A07XE` marks the missing detailed term. Do not generalise this into ordinary `F01` use on derivatives. (ANSES guidance p49-50)
 - Exception: for acrylamide monitoring, explicit `F33` is mandatory even if the base term already carries an implicit `F33`. CHEMMON12 enforces this regardless of implicit state; the reporting context is in [[contaminants-foodex2]]. (ChemMon 2026; CHEMMON12)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p54-56 -->
