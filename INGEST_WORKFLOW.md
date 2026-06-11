@@ -54,12 +54,19 @@ The goal is not perfect one-shot completeness. The goal is a durable, updateable
 - Add the source file to `foodex2_docs/`.
 - Keep the raw file immutable.
 - Do not edit or rename the source casually after ingest starts.
+- Assign a source tier when the authority distinction matters:
+  - `authoritative_rule` for EFSA catalogue/rules, validator behaviour, ChemMon reporting guidance, legislation, or other sources that can define obligations
+  - `expert_guidance` for official institutional or expert coding guidance, training, examples, and conventions
+  - `local_policy` for project-specific scoring references or grey-area decisions
+  - `diagnostic` for model logs, retrieval comparisons, and failure analyses
+- A lower-tier source can improve explanations and examples, but it must not silently override a higher-tier rule source.
 
 ## 2. Run A Structure Scan First
 
 Before writing pages, answer:
 
 - What kind of document is this?
+- What source tier applies, and what can this source legitimately change?
 - Is it core FoodEx2 guidance, annual maintenance, domain overlay, validator policy, or a clarification?
 - Which existing wiki pages are likely affected?
 - Does this document introduce a new topic that deserves its own page?

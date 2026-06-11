@@ -26,6 +26,7 @@ SOURCE_ONLY_LINE_RE = re.compile(
 )
 
 PROMPT_CONTEXT_PAGE_CATEGORIES = {"runtime", "guidance", "validation", "domain_overlay"}
+SOURCE_TIER_VALUES = {"authoritative_rule", "expert_guidance", "local_policy", "diagnostic"}
 PROMPT_CONTEXT_OMITTED_SECTIONS = {
     "appendix a2 codes",
     "authority",
@@ -48,6 +49,7 @@ class WikiPage:
     name: str
     title: str
     summary: str
+    source_tier: str | None
     sources: list[str]
     related: list[str]
     content: str
@@ -116,6 +118,7 @@ class WikiStore:
             "process-facets.md": "guidance",
             "ingredient-facets.md": "guidance",
             "packaging-facets.md": "guidance",
+            "anses-codification-guidance.md": "guidance",
             "chemical-monitoring-foodex2.md": "domain_overlay",
             "pesticides-foodex2.md": "domain_overlay",
             "contaminants-foodex2.md": "domain_overlay",
@@ -244,6 +247,8 @@ class WikiStore:
         raw = path.read_text(encoding="utf-8")
         frontmatter, body = split_frontmatter(raw)
         title = str(frontmatter.get("title") or page_name)
+        source_tier_raw = frontmatter.get("source_tier")
+        source_tier = str(source_tier_raw) if isinstance(source_tier_raw, str) else None
         sources = [
             str(item) for item in frontmatter.get("sources", []) if isinstance(item, str)
         ]
@@ -255,6 +260,7 @@ class WikiStore:
             name=normalized_name,
             title=title,
             summary=self._summaries.get(normalized_name, summary),
+            source_tier=source_tier,
             sources=sources,
             related=related,
             content=raw,

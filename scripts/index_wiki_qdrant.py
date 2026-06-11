@@ -172,6 +172,7 @@ def _chunk_page(
                     "title": page.title,
                     "summary": page.summary,
                     "category": store.page_category(page.name),
+                    "source_tier": page.source_tier,
                     "heading_path": heading_path,
                     "section_index": section_index,
                     "part_index": part_index,

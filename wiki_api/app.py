@@ -219,6 +219,7 @@ class PageSummary(BaseModel):
     title: str
     summary: str
     category: str | None = None
+    source_tier: str | None = None
     sources: list[str] = Field(default_factory=list)
     related: list[str] = Field(default_factory=list)
     content: str | None = None
@@ -228,6 +229,7 @@ class WikiSearchResult(BaseModel):
     page_name: str
     title: str
     category: str
+    source_tier: str | None = None
     summary: str
     score: int
     matches: list[str] = Field(default_factory=list)
@@ -715,6 +717,7 @@ def _search_wiki(query: str, *, limit: int) -> WikiSearchResponse:
                 page_name=page.name,
                 title=page.title,
                 category=store.page_category(page.name),
+                source_tier=page.source_tier,
                 summary=page.summary,
                 score=score,
                 matches=matches,
@@ -760,6 +763,7 @@ def _ensure_front_page(
             title=page.title,
             summary=page.summary,
             category=store.page_category(page.name),
+            source_tier=page.source_tier,
             sources=page.sources,
             related=page.related,
             content=content_for_page(page) if include_content else None,
@@ -923,6 +927,7 @@ def list_pages() -> dict[str, Any]:
             "title": page.title,
             "summary": page.summary,
             "category": store.page_category(page.name),
+            "source_tier": page.source_tier,
             "sources": page.sources,
             "related": page.related,
         }
@@ -998,6 +1003,7 @@ def get_page(page_name: str, include_content: bool = Query(default=True)) -> dic
         "page_name": page.name,
         "title": page.title,
         "summary": page.summary,
+        "source_tier": page.source_tier,
         "sources": page.sources,
         "related": page.related,
         "content": page.content if include_content else None,
@@ -1077,6 +1083,7 @@ def ask_question(request: AskRequest) -> AskResponse:
             title=page.title,
             summary=page.summary,
             category=store.page_category(page.name),
+            source_tier=page.source_tier,
             sources=page.sources,
             related=page.related,
             content=store.clean_content_for_model(page) if request.include_page_content else None,
@@ -1094,6 +1101,7 @@ def ask_question(request: AskRequest) -> AskResponse:
                 title=page.title,
                 summary=page.summary,
                 category=store.page_category(page.name),
+                source_tier=page.source_tier,
                 sources=page.sources,
                 related=page.related,
                 content=expansion_content_by_page.get(page.name)
@@ -1388,6 +1396,7 @@ def create_policy_pack(request: PolicyPackRequest) -> PolicyPackResponse:
             title=page.title,
             summary=page.summary,
             category=store.page_category(page.name),
+            source_tier=page.source_tier,
             sources=page.sources,
             related=page.related,
             content=store.clean_content_for_model(page) if request.include_page_content else None,
@@ -1490,6 +1499,7 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
             title=page.title,
             summary=page.summary,
             category=store.page_category(page.name),
+            source_tier=page.source_tier,
             sources=page.sources,
             related=page.related,
             content=store.prompt_content_for_context_pack(page) if request.include_page_content else None,
@@ -1631,6 +1641,7 @@ def solve_foodex2(request: SolveRequest) -> SolveResponse:
             title=page.title,
             summary=page.summary,
             category=store.page_category(page.name),
+            source_tier=page.source_tier,
             sources=page.sources,
             related=page.related,
             content=store.clean_content_for_model(page) if request.include_page_content else None,

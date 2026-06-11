@@ -100,6 +100,7 @@ def _payload_fields(retrieval_mode: Literal["wiki", "source"]) -> list[str]:
         "page_name",
         "title",
         "category",
+        "source_tier",
         "heading_path",
         "summary",
         "source_path",
@@ -189,6 +190,7 @@ def _format_wiki_result(item: dict[str, Any]) -> dict[str, Any]:
         f"Page: {title}\n"
         f"File: {page_name}\n"
         f"Category: {payload.get('category')}\n"
+        f"Source tier: {payload.get('source_tier')}\n"
         f"Section: {heading}\n"
         f"Summary: {payload.get('summary')}\n\n"
         f"{payload.get('content', '')}"
@@ -200,6 +202,7 @@ def _format_wiki_result(item: dict[str, Any]) -> dict[str, Any]:
             "title": title,
             "summary": str(payload.get("summary") or ""),
             "category": payload.get("category"),
+            "source_tier": payload.get("source_tier"),
             "sources": payload.get("sources") if isinstance(payload.get("sources"), list) else [],
             "related": payload.get("related") if isinstance(payload.get("related"), list) else [],
             "content": content,
@@ -210,6 +213,7 @@ def _format_wiki_result(item: dict[str, Any]) -> dict[str, Any]:
             "page_name": page_name,
             "heading_path": heading,
             "category": payload.get("category"),
+            "source_tier": payload.get("source_tier"),
             "summary": payload.get("summary"),
             "source_path": payload.get("source_path"),
         },

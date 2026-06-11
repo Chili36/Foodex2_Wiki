@@ -151,6 +151,7 @@ Preferred fields:
 
 Optional fields:
 
+- `source_tier`
 - `source_inspiration`
 - other page-specific metadata when clearly useful
 
@@ -159,7 +160,17 @@ Field meanings:
 - `title`: human-readable page title
 - `last_updated`: ISO date string
 - `sources`: canonical backing sources for the page
+- `source_tier`: optional authority level for the page's primary source basis; allowed values are `authoritative_rule`, `expert_guidance`, `local_policy`, and `diagnostic`
 - `related`: nearest neighboring wiki pages
+
+## Source Tiers
+
+Use source tiers only when the authority distinction matters. Do not add them mechanically to every old page.
+
+- `authoritative_rule`: EFSA catalogue, EFSA business rules, official validator behaviour, ChemMon reporting guidance, legislation, or other sources that can define validation/reporting obligations.
+- `expert_guidance`: official institutional or expert FoodEx2 guidance, training, or coding guides that explain conventions, examples, and interpretation but should not override authoritative rules.
+- `local_policy`: project-specific reference decisions, scoring conventions, or grey-area choices that are useful for this wiki but not official FoodEx2 rules.
+- `diagnostic`: model logs, retrieval comparisons, failure analyses, and tool observations used to improve the system but not to create rules directly.
 
 ## Section Conventions
 
