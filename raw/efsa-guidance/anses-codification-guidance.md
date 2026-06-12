@@ -53,6 +53,8 @@ Before adding content from it to operational pages:
 4. add it as a rule only when supported by authoritative evidence
 5. otherwise add it as expert guidance, a caveat, or a worked example
 
+The retroactive source impact report is stored at [reports/source-intake/anses-codification-guidance-2025-12-v3.md](../../reports/source-intake/anses-codification-guidance-2025-12-v3.md). It records what the source added, where it overlapped with existing pages, and which risks were controlled during ingest.
+
 ## Extracted Guidance
 
 This ingest keeps the ANSES document as `expert_guidance`. The points below are durable coding guidance extracted from the December 2025 v3 PDF; they should be used to clarify existing FoodEx2 wiki pages, not to override current EFSA catalogue data, validator behaviour, ChemMon guidance, or domain-specific reporting rules.

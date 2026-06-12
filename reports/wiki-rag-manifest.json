@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-06-11T22:16:44.535971+00:00",
+  "generated_at": "2026-06-12T14:00:58.617468+00:00",
   "collection": "foodex2_wiki_markdown_v1",
   "embedding_provider": "voyage",
   "embedding_model": "voyage-context-3",
@@ -73,12 +73,12 @@
       "category": "guidance",
       "source_path": "raw/efsa-guidance/anses-codification-guidance.md",
       "chunk_count": 12,
-      "content_hash": "fd980d19c5af789dac663fc95874daa3856bf6d812cbf64d2593155620902fc3",
+      "content_hash": "3afb4ce15d0fdba54dac86e957166ea2dda72ec9e3c37a504b76dc128e39834c",
       "chunk_hashes": [
         "9800d618ccbf094acd04c5046d034f70ed1936d586b3cf14a5d3796ec66e1163",
         "18c5e6fee69c47100e86f06c177968607a897ff3adcc5737f4590a4f68085ded",
         "f675372b53ab88e9bcd44ce35988f941ce74c5f57bda1f2a037ab0ec43e99142",
-        "e15a421640aecd203d534302f0b182140dd72a418503c864d9b7e8e6413d910f",
+        "0034a630ef3b66525426b54ed6d047af24702dac288c92b8ed068b634aa8fad4",
         "bb473fc80c73a7a5911643d81f43019d961810f9a52e01004f4b3d783f0e6cff",
         "2cf52654a925b919a56cc95dbd9ab712c5ac85eaf8974607c8c75e53b4b0db41",
         "e342f67f48fe931f65dfeb33ab5beaf96071cef7788ee8d9028a9cc0fdad898f",

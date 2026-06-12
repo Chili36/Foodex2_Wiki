@@ -184,6 +184,7 @@ The ingest process is deliberately simple:
 In practice, an ingest or update pass should do all of the following:
 
 - preserve the original PDFs and validator-derived sources unchanged
+- write a source impact report under `reports/source-intake/` when a new document materially changes the wiki or raises authority questions
 - update or create topic pages in `raw/efsa-guidance/`
 - add or maintain frontmatter fields such as `title`, `sources`, `related`, and `last_updated`
 - use optional `source_tier` only when authority matters; allowed values are `authoritative_rule`, `expert_guidance`, `local_policy`, and `diagnostic`

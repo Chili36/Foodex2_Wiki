@@ -341,3 +341,9 @@ last_updated: "2026-06-10"
 - Patched the core operational pages where ANSES adds reusable guidance: type-before-origin base selection, browser-order caveats, implicit facets as narrowing evidence, range-value handling for single-cardinality numeric facets, flavouring/ingredient review, and practical batch-validation filters.
 - Added a sparse-PDF OCR fallback to the source Qdrant indexer so raw-source retrieval can index the ANSES PDF body text rather than the incomplete embedded text layer.
 - Kept authority boundaries explicit: ANSES guidance informs conventions and examples, while current EFSA catalogue data, business rules, ChemMon/domain guidance, and validator behaviour remain higher-authority sources.
+
+## [2026-06-12] ingest | Add retroactive ANSES source impact report
+
+- Updated `INGEST_WORKFLOW.md` so future source ingests include a source impact report before operational page edits.
+- Added `reports/source-intake/anses-codification-guidance-2025-12-v3.md` as a retroactive report for the ANSES document, covering novelty, overlap, conflicts, ingest risks, justified wiki changes, and candidate regression cases.
+- Linked the report from `anses-codification-guidance.md` so the expert-guidance page keeps its intake rationale visible.

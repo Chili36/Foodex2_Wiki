@@ -1,6 +1,6 @@
 ---
 title: "Ingest Workflow"
-last_updated: "2026-05-23"
+last_updated: "2026-06-12"
 related:
   - "[[KNOWLEDGE_ARCHITECTURE]]"
   - "[[MAINTENANCE_WORKFLOW]]"
@@ -73,7 +73,24 @@ Before writing pages, answer:
 
 This pass should be shallow and fast. It exists to prevent blind summarization.
 
-## 3. Build Or Update The Topic Map
+## 3. Write A Source Impact Report
+
+Before editing operational pages, write a short source impact report. This can be LLM-assisted, but it is a maintainer decision aid rather than an authority source.
+
+The report should answer:
+
+- Source identity: title, file, source tier, version, date, and intended audience.
+- Scope: which FoodEx2 topics the source covers.
+- Novelty: what the source adds beyond the current wiki.
+- Overlap: which existing pages already cover the same concepts.
+- Conflicts or tension: where it might disagree with current catalogue data, business rules, validator behaviour, domain guidance, or local policy.
+- Ingest risk: old FoodEx2 version, OCR noise, ambiguous examples, domain leakage, or examples that could overfit prompts.
+- Recommended action: no ingest, source note only, patch existing pages, create a new page, add tests, or defer.
+- Candidate test cases: concrete examples that would show whether the source improves coding decisions.
+
+Keep source impact reports under `reports/source-intake/`. Reports are not runtime rules. They are audit records explaining why the wiki was, or was not, changed.
+
+## 4. Build Or Update The Topic Map
 
 Decide whether the source should:
 
@@ -88,7 +105,7 @@ Good heuristic:
 - if the document introduces a stable new concept or rule family, create a new page
 - if it is year-specific or reporting-specific, prefer an overlay page rather than polluting core guidance pages
 
-## 4. Extract Durable Content Only
+## 5. Extract Durable Content Only
 
 Move only the parts that compound in value:
 
@@ -106,7 +123,7 @@ Do not over-extract:
 - long legal boilerplate
 - every example in the source
 
-## 5. Write Into Small Topic Pages
+## 6. Write Into Small Topic Pages
 
 Each page should stay narrow in scope.
 
@@ -121,7 +138,7 @@ Preferred page shape:
 
 If a page starts becoming a second document dump, split it.
 
-## 6. Always Check Relevant Policy And Business Rules
+## 7. Always Check Relevant Policy And Business Rules
 
 For every page touched during ingest or maintenance, explicitly ask:
 
