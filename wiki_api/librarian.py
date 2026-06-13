@@ -638,6 +638,19 @@ def _resolve_model(*env_keys: str, default: str) -> str:
     return default
 
 
+def _env_bool(name: str, default: bool = False) -> bool:
+    value = os.getenv(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {"1", "true", "yes", "on"}
+
+
+def _anthropic_thinking_args(enabled: bool) -> dict[str, Any]:
+    if not enabled:
+        return {}
+    return {"thinking": {"type": "adaptive"}}
+
+
 class AnthropicWikiLibrarian:
     def __init__(
         self,

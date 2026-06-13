@@ -4,6 +4,10 @@ import json
 from pathlib import Path
 
 from wiki_api.llm_lint import AnthropicWikiLinter, build_lint_payload
+from wiki_api.source_intake import (
+    AnthropicSourceIntakeReviewer,
+    build_source_intake_payload,
+)
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -69,6 +73,65 @@ def test_linter_returns_markdown_report_and_usage_trace() -> None:
 
     call = client.messages.calls[0]
     assert call["model"] == "fake-lint-model"
+    assert call["thinking"] == {"type": "adaptive"}
     assert "wiki lint reviewer" in str(call["system"])
     message_payload = json.loads(call["messages"][0]["content"])
     assert message_payload["selected_pages"] == ["facet-coding-rules.md"]
+
+
+def test_linter_can_disable_thinking() -> None:
+    report = "## Verdict\n\nNo material findings."
+    client = FakeAnthropicClient(_response(text=report))
+    payload = build_lint_payload(root=REPO_ROOT, page_names=["facet-coding-rules.md"])
+
+    AnthropicWikiLinter(
+        client=client,
+        model="fake-lint-model",
+        thinking_enabled=False,
+    ).run(payload)
+
+    call = client.messages.calls[0]
+    assert "thinking" not in call
+
+
+def test_source_intake_payload_includes_source_and_existing_pages() -> None:
+    payload = build_source_intake_payload(
+        root=REPO_ROOT,
+        source_file="raw/efsa-guidance/base-term-selection.md",
+        source_tier="diagnostic",
+        focus="impact on base-term workflow",
+        page_names=["base-term-selection.md"],
+        max_source_chars=1200,
+        max_page_chars=1200,
+    )
+
+    assert payload["focus"] == "impact on base-term workflow"
+    assert payload["source"]["file"] == "raw/efsa-guidance/base-term-selection.md"
+    assert payload["source"]["source_tier"] == "diagnostic"
+    assert "Base Term Selection" in payload["source"]["source_text"]
+    assert payload["selected_existing_pages"][0]["page_name"] == "base-term-selection.md"
+    assert payload["doctor_report"]["error_count"] == 0
+    assert "# FoodEx2 Wiki Ingest Workflow" in payload["ingest_workflow"]
+
+
+def test_source_intake_reviewer_uses_adaptive_thinking() -> None:
+    report = "## Intake Verdict\n\nPatch existing pages."
+    client = FakeAnthropicClient(_response(text=report, input_tokens=500, output_tokens=100))
+    payload = build_source_intake_payload(
+        root=REPO_ROOT,
+        source_file="raw/efsa-guidance/base-term-selection.md",
+        page_names=["base-term-selection.md"],
+    )
+
+    result = AnthropicSourceIntakeReviewer(
+        client=client,
+        model="fake-intake-model",
+    ).run(payload)
+
+    assert result.report == report
+    assert result.source_file == "raw/efsa-guidance/base-term-selection.md"
+    assert result.token_summary["model"] == "fake-intake-model"
+    assert result.token_summary["thinking_enabled"] is True
+    call = client.messages.calls[0]
+    assert call["thinking"] == {"type": "adaptive"}
+    assert "source-intake reviewer" in str(call["system"])

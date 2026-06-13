@@ -14,6 +14,8 @@ from .librarian import (
     AnthropicClientProtocol,
     _aggregate_timing,
     _aggregate_usage,
+    _anthropic_thinking_args,
+    _env_bool,
     _get_block_value,
     _resolve_model,
     _response_text,
@@ -154,6 +156,7 @@ class AnthropicWikiLinter:
         client: AnthropicClientProtocol | None = None,
         model: str | None = None,
         max_tokens: int = 4000,
+        thinking_enabled: bool | None = None,
     ):
         self.client = client or build_anthropic_client()
         self.model = model or _resolve_model(
@@ -162,6 +165,11 @@ class AnthropicWikiLinter:
             default="claude-3-7-sonnet-latest",
         )
         self.max_tokens = max_tokens
+        self.thinking_enabled = (
+            _env_bool("WIKI_LINT_THINKING", default=True)
+            if thinking_enabled is None
+            else thinking_enabled
+        )
 
     def run(self, payload: dict[str, Any]) -> WikiLintResult:
         started = time.perf_counter()
@@ -175,6 +183,7 @@ class AnthropicWikiLinter:
             max_tokens=self.max_tokens,
             system=LLM_LINT_SYSTEM_PROMPT,
             messages=[message],
+            **_anthropic_thinking_args(self.thinking_enabled),
         )
         timing = [
             {
@@ -192,6 +201,7 @@ class AnthropicWikiLinter:
             ],
             self.model,
         )
+        token_summary["thinking_enabled"] = self.thinking_enabled
         return WikiLintResult(
             report=_response_text(_get_block_value(response, "content", [])),
             pages_linted=list(payload.get("selected_pages", [])),
@@ -240,6 +250,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--max-tokens", type=int, default=4000)
     parser.add_argument("--max-page-chars", type=int, default=12000)
     parser.add_argument(
+        "--thinking",
+        action=argparse.BooleanOptionalAction,
+        default=None,
+        help="Enable Anthropic adaptive thinking. Defaults to WIKI_LINT_THINKING, or on.",
+    )
+    parser.add_argument(
         "--output",
         default=None,
         help="Report path. Defaults to reports/wiki-lint-<timestamp>.md.",
@@ -264,7 +280,11 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(payload, indent=2, ensure_ascii=False))
         return 0
 
-    result = AnthropicWikiLinter(model=args.model, max_tokens=args.max_tokens).run(payload)
+    result = AnthropicWikiLinter(
+        model=args.model,
+        max_tokens=args.max_tokens,
+        thinking_enabled=args.thinking,
+    ).run(payload)
     output_path = Path(args.output) if args.output else _default_output_path(root)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(_render_report(result), encoding="utf-8")

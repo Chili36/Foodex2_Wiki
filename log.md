@@ -347,3 +347,9 @@ last_updated: "2026-06-10"
 - Updated `INGEST_WORKFLOW.md` so future source ingests include a source impact report before operational page edits.
 - Added `reports/source-intake/anses-codification-guidance-2025-12-v3.md` as a retroactive report for the ANSES document, covering novelty, overlap, conflicts, ingest risks, justified wiki changes, and candidate regression cases.
 - Linked the report from `anses-codification-guidance.md` so the expert-guidance page keeps its intake rationale visible.
+
+## [2026-06-13] maintenance | Enable thinking for offline lint and source intake
+
+- Added Anthropic adaptive thinking support to the supervised LLM lint runner, enabled by default for offline semantic review and disabled with `--no-thinking` or `WIKI_LINT_THINKING=0`.
+- Added `python -m wiki_api.source_intake` for LLM-assisted source impact reports before ingest, using `WIKI_INTAKE_MODEL` and adaptive thinking by default.
+- Kept runtime wiki endpoints unchanged: `/wiki/ask`, `/wiki/context-pack`, and `/wiki/ask-rag` do not enable thinking by default.

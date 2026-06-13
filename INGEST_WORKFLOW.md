@@ -90,6 +90,17 @@ The report should answer:
 
 Keep source impact reports under `reports/source-intake/`. Reports are not runtime rules. They are audit records explaining why the wiki was, or was not, changed.
 
+For LLM-assisted intake, use:
+
+```bash
+python -m wiki_api.source_intake \
+  --source-file foodex2_docs/new-source.pdf \
+  --source-tier expert_guidance \
+  --page base-term-selection.md
+```
+
+This offline command uses `WIKI_INTAKE_MODEL` and Anthropic adaptive thinking by default. Use `--no-thinking` when comparing cost or when the source is trivial.
+
 ## 4. Build Or Update The Topic Map
 
 Decide whether the source should:

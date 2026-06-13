@@ -293,9 +293,13 @@ WIKI_POLICY_MODEL=claude-3-7-sonnet-latest
 WIKI_ANSWERER_MODEL=claude-3-7-sonnet-latest
 WIKI_SOLVER_MODEL=claude-3-7-sonnet-latest
 WIKI_LINT_MODEL=claude-3-7-sonnet-latest
+WIKI_INTAKE_MODEL=claude-3-7-sonnet-latest
+WIKI_LINT_THINKING=1
+WIKI_INTAKE_THINKING=1
 ```
 
 If the endpoint-specific variables are unset, the service falls back to `WIKI_LIBRARIAN_MODEL`.
+`WIKI_LINT_THINKING` and `WIKI_INTAKE_THINKING` affect only offline maintenance commands; they do not enable thinking for `/wiki/ask`, `/wiki/context-pack`, or `/wiki/ask-rag`.
 
 Run it locally with:
 
@@ -622,6 +626,19 @@ python -m wiki_api.llm_lint --page facet-coding-rules.md --focus "F09 examples"
 ```
 
 The lint pass writes a markdown report under `reports/` by default and never edits wiki pages.
+
+Run a source impact report before ingesting a new document with:
+
+```bash
+. .venv/bin/activate
+python -m wiki_api.source_intake \
+  --source-file foodex2_docs/new-source.pdf \
+  --source-tier expert_guidance \
+  --page base-term-selection.md \
+  --page facet-coding-rules.md
+```
+
+The source-intake and lint commands use Anthropic adaptive thinking by default because they are offline review tasks. Add `--no-thinking` to either command for a cheaper comparison run.
 
 ## Scope Notes
 

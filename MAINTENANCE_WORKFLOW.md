@@ -142,6 +142,8 @@ python -m wiki_api.llm_lint --all-pages --max-page-chars 6000
 
 Reports are written under `reports/` by default. They are review artifacts, not source-of-truth wiki pages.
 
+LLM lint is an offline semantic review task, so it uses Anthropic adaptive thinking by default when run against Claude models. Disable it with `--no-thinking` for a cheaper comparison run, or set `WIKI_LINT_THINKING=0`.
+
 Use an LLM to read:
 
 - the doctor report
@@ -173,6 +175,20 @@ For a normal maintenance or ingest pass:
 5. Update `log.md` for material maintenance work.
 6. Run the test suite.
 7. Restart the local wiki service if page registration, selector-visible summaries, or API code changed.
+
+## Source Intake Reports
+
+Before ingesting a source that might materially change wiki guidance, run:
+
+```bash
+python -m wiki_api.source_intake \
+  --source-file foodex2_docs/new-source.pdf \
+  --source-tier expert_guidance \
+  --page base-term-selection.md \
+  --page facet-coding-rules.md
+```
+
+The source-intake runner writes a maintainer report under `reports/source-intake/` and uses `WIKI_INTAKE_MODEL`, falling back to `WIKI_LINT_MODEL` and then `WIKI_LIBRARIAN_MODEL`. It uses Anthropic adaptive thinking by default because the task is source evaluation, not runtime retrieval. Disable with `--no-thinking` or `WIKI_INTAKE_THINKING=0`.
 
 ## Do Not
 
