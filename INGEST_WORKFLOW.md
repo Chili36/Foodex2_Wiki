@@ -99,7 +99,9 @@ python -m wiki_api.source_intake \
   --page base-term-selection.md
 ```
 
-This offline command uses `WIKI_INTAKE_MODEL` and Anthropic adaptive thinking by default. Use `--no-thinking` when comparing cost or when the source is trivial.
+This offline command uses `WIKI_INTAKE_MODEL`. Adaptive thinking is off by default;
+enable it with `--thinking` only for a difficult source-authority review.
+If direct PDF text extraction is sparse or incomplete, rerun with `--source-text-file` pointing to OCR or curated extracted text before relying on the report.
 
 ## 4. Build Or Update The Topic Map
 
