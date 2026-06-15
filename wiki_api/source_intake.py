@@ -195,7 +195,7 @@ class AnthropicSourceIntakeReviewer:
             "WIKI_INTAKE_MODEL",
             "WIKI_LINT_MODEL",
             "WIKI_LIBRARIAN_MODEL",
-            default="claude-3-7-sonnet-latest",
+            default="claude-sonnet-4-6",
         )
         self.client = client or build_messages_client(self.model)
         self.thinking_enabled = (
