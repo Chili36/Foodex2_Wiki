@@ -459,9 +459,19 @@ def _selection_payload_from_response(content: list[Any]) -> list[str]:
 
 
 def infer_model_provider(model: str | None) -> str:
+    forced_provider = os.getenv("WIKI_LLM_PROVIDER") or os.getenv("LLM_PROVIDER")
+    if forced_provider and forced_provider.strip().lower() in {"lmstudio", "lm-studio", "local"}:
+        return "lmstudio"
     if not model:
         return "anthropic"
     normalized = model.lower().strip()
+    if (
+        normalized.startswith("lmstudio:")
+        or normalized.startswith("lm-studio:")
+        or normalized.startswith("lmstudio/")
+        or normalized.startswith("lm-studio/")
+    ):
+        return "lmstudio"
     if normalized.startswith("gemini") or "/gemini" in normalized:
         return "gemini"
     if (
@@ -473,6 +483,174 @@ def infer_model_provider(model: str | None) -> str:
     ):
         return "openai"
     return "anthropic"
+
+
+def _lmstudio_api_model_name(model: str) -> str:
+    for prefix in ("lmstudio:", "lm-studio:", "lmstudio/", "lm-studio/"):
+        if model.lower().startswith(prefix):
+            return model[len(prefix) :]
+    return model
+
+
+def _lmstudio_base_url() -> str:
+    return (
+        os.getenv("WIKI_LMSTUDIO_BASE_URL")
+        or os.getenv("LMSTUDIO_BASE_URL")
+        or "http://127.0.0.1:1234/v1"
+    ).rstrip("/")
+
+
+def _lmstudio_headers() -> dict[str, str]:
+    api_key = os.getenv("WIKI_LMSTUDIO_API_KEY") or os.getenv("LMSTUDIO_API_KEY")
+    if not api_key:
+        return {}
+    return {"Authorization": f"Bearer {api_key}"}
+
+
+def _openai_tool_schema(tool: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "type": "function",
+        "function": {
+            "name": tool["name"],
+            "description": tool.get("description", ""),
+            "parameters": tool.get("input_schema", {"type": "object", "properties": {}}),
+        },
+    }
+
+
+def _openai_messages_from_anthropic(
+    *,
+    system: str | None,
+    messages: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    converted: list[dict[str, Any]] = []
+    if system:
+        converted.append({"role": "system", "content": system})
+
+    for message in messages:
+        role = str(message.get("role", "user"))
+        content = message.get("content", "")
+        if isinstance(content, str):
+            converted.append({"role": role, "content": content})
+            continue
+
+        if not isinstance(content, list):
+            converted.append({"role": role, "content": str(content)})
+            continue
+
+        text_parts: list[str] = []
+        tool_calls: list[dict[str, Any]] = []
+        tool_results: list[dict[str, Any]] = []
+        for block in content:
+            block_type = _get_block_value(block, "type")
+            if block_type == "text":
+                text_parts.append(str(_get_block_value(block, "text", "")))
+            elif block_type == "tool_use":
+                tool_calls.append(
+                    {
+                        "id": str(_get_block_value(block, "id", "")),
+                        "type": "function",
+                        "function": {
+                            "name": str(_get_block_value(block, "name", "")),
+                            "arguments": json.dumps(
+                                _get_block_value(block, "input", {}) or {},
+                                ensure_ascii=False,
+                            ),
+                        },
+                    }
+                )
+            elif block_type == "tool_result":
+                tool_results.append(
+                    {
+                        "role": "tool",
+                        "tool_call_id": str(_get_block_value(block, "tool_use_id", "")),
+                        "content": str(_get_block_value(block, "content", "")),
+                    }
+                )
+
+        if role == "assistant":
+            assistant_message: dict[str, Any] = {
+                "role": "assistant",
+                "content": "\n".join(part for part in text_parts if part) or None,
+            }
+            if tool_calls:
+                assistant_message["tool_calls"] = tool_calls
+            converted.append(assistant_message)
+        elif tool_results:
+            if text_parts:
+                converted.append({"role": "user", "content": "\n".join(text_parts)})
+            converted.extend(tool_results)
+        else:
+            converted.append({"role": role, "content": "\n".join(text_parts)})
+
+    return converted
+
+
+class OpenAICompatibleMessagesClient:
+    def __init__(self, *, base_url: str, headers: dict[str, str] | None = None):
+        self.base_url = base_url.rstrip("/")
+        self.headers = headers or {}
+        self.messages = self
+
+    def create(self, **kwargs: Any) -> dict[str, Any]:
+        model = str(kwargs["model"])
+        payload: dict[str, Any] = {
+            "model": _lmstudio_api_model_name(model),
+            "messages": _openai_messages_from_anthropic(
+                system=kwargs.get("system"),
+                messages=list(kwargs.get("messages", [])),
+            ),
+            "max_tokens": int(kwargs.get("max_tokens", 1024)),
+        }
+        tools = kwargs.get("tools")
+        if tools:
+            payload["tools"] = [_openai_tool_schema(tool) for tool in tools]
+            payload["tool_choice"] = "auto"
+
+        data = _http_post_json(
+            url=f"{self.base_url}/chat/completions",
+            headers=self.headers,
+            payload=payload,
+        )
+        choices = data.get("choices", []) if isinstance(data, dict) else []
+        choice = choices[0] if choices and isinstance(choices[0], dict) else {}
+        message = choice.get("message", {}) if isinstance(choice.get("message"), dict) else {}
+        content_blocks: list[dict[str, Any]] = []
+        text = message.get("content")
+        if isinstance(text, str) and text:
+            content_blocks.append({"type": "text", "text": text})
+        for tool_call in message.get("tool_calls", []) or []:
+            if not isinstance(tool_call, dict):
+                continue
+            function = tool_call.get("function", {})
+            raw_arguments = function.get("arguments", "{}") if isinstance(function, dict) else "{}"
+            try:
+                arguments = json.loads(raw_arguments or "{}")
+            except json.JSONDecodeError:
+                arguments = {}
+            content_blocks.append(
+                {
+                    "type": "tool_use",
+                    "id": str(tool_call.get("id", "")),
+                    "name": str(function.get("name", "")) if isinstance(function, dict) else "",
+                    "input": arguments,
+                }
+            )
+        finish_reason = choice.get("finish_reason")
+        stop_reason = "tool_use" if any(
+            block.get("type") == "tool_use" for block in content_blocks
+        ) else str(finish_reason or "stop")
+        usage = data.get("usage", {}) if isinstance(data, dict) else {}
+        return {
+            "stop_reason": stop_reason,
+            "content": content_blocks,
+            "usage": {
+                "input_tokens": int(usage.get("prompt_tokens", 0) or 0),
+                "output_tokens": int(usage.get("completion_tokens", 0) or 0),
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+            },
+        }
 
 
 def _http_post_json(
@@ -620,6 +798,30 @@ def _create_json_completion(
             total_tokens=int(usage.get("totalTokenCount", 0) or 0) or None,
             stop_reason=str(stop_reason) if stop_reason else None,
         )
+    if provider == "lmstudio":
+        data = _http_post_json(
+            url=f"{_lmstudio_base_url()}/chat/completions",
+            headers=_lmstudio_headers(),
+            payload={
+                "model": _lmstudio_api_model_name(model),
+                "messages": [
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": f"Return JSON only.\n\n{user_content}"},
+                ],
+                "max_tokens": max_tokens,
+                "response_format": {"type": "json_object"},
+            },
+        )
+        choices = data.get("choices", []) if isinstance(data, dict) else []
+        choice = choices[0] if choices and isinstance(choices[0], dict) else {}
+        message = choice.get("message", {}) if isinstance(choice.get("message"), dict) else {}
+        usage = data.get("usage", {}) if isinstance(data, dict) else {}
+        return str(message.get("content", "")).strip(), _usage_from_counts(
+            input_tokens=int(usage.get("prompt_tokens", 0) or 0),
+            output_tokens=int(usage.get("completion_tokens", 0) or 0),
+            total_tokens=int(usage.get("total_tokens", 0) or 0) or None,
+            stop_reason=str(choice.get("finish_reason") or "") or None,
+        )
     raise RuntimeError(f"Unsupported non-Anthropic model provider for {model!r}")
 
 
@@ -630,7 +832,26 @@ def build_anthropic_client() -> AnthropicClientProtocol:
     return Anthropic(api_key=api_key)
 
 
+def build_messages_client(model: str) -> AnthropicClientProtocol:
+    provider = infer_model_provider(model)
+    if provider == "anthropic":
+        return build_anthropic_client()
+    if provider == "lmstudio":
+        return OpenAICompatibleMessagesClient(
+            base_url=_lmstudio_base_url(),
+            headers=_lmstudio_headers(),
+        )
+    raise RuntimeError(
+        f"{provider!r} models are supported only by JSON completion helpers such as /wiki/ask; "
+        "use Anthropic or LM Studio for tool-using wiki flows."
+    )
+
+
 def _resolve_model(*env_keys: str, default: str) -> str:
+    if infer_model_provider(None) == "lmstudio":
+        local_model = os.getenv("WIKI_LMSTUDIO_MODEL") or os.getenv("LMSTUDIO_MODEL")
+        if local_model:
+            return local_model
     for key in env_keys:
         value = os.getenv(key)
         if value:
@@ -662,12 +883,12 @@ class AnthropicWikiLibrarian:
         max_tokens: int = 4000,
     ):
         self.store = store
-        self.client = client or build_anthropic_client()
         self.model = model or _resolve_model(
             "WIKI_POLICY_MODEL",
             "WIKI_LIBRARIAN_MODEL",
             default="claude-3-7-sonnet-latest",
         )
+        self.client = client or build_messages_client(self.model)
         self.max_pages = max_pages
         self.max_tokens = max_tokens
 
@@ -797,12 +1018,12 @@ class AnthropicWikiPageSelector:
         max_tokens: int = 1500,
     ):
         self.store = store
-        self.client = client or build_anthropic_client()
         self.model = model or _resolve_model(
             "WIKI_CONTEXT_MODEL",
             "WIKI_LIBRARIAN_MODEL",
             default="claude-3-7-sonnet-latest",
         )
+        self.client = client or build_messages_client(self.model)
         self.max_pages = max_pages
         self.max_tokens = max_tokens
 
@@ -957,12 +1178,12 @@ class AnthropicFoodEx2Solver:
         model: str | None = None,
         max_tokens: int = 2500,
     ):
-        self.client = client or build_anthropic_client()
         self.model = model or _resolve_model(
             "WIKI_SOLVER_MODEL",
             "WIKI_LIBRARIAN_MODEL",
             default="claude-3-7-sonnet-latest",
         )
+        self.client = client or build_messages_client(self.model)
         self.max_tokens = max_tokens
 
     def run(self, payload: dict[str, Any]) -> SolverResult:
@@ -1021,12 +1242,12 @@ class AnthropicFoodEx2Answerer:
         model: str | None = None,
         max_tokens: int = 2500,
     ):
-        self.client = client or build_anthropic_client()
         self.model = model or _resolve_model(
             "WIKI_ANSWERER_MODEL",
             "WIKI_LIBRARIAN_MODEL",
             default="claude-3-7-sonnet-latest",
         )
+        self.client = client or build_messages_client(self.model)
         self.max_tokens = max_tokens
 
     def run(self, *, question: str, pages: list[dict[str, Any]]) -> AnswerResult:

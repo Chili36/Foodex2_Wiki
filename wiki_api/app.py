@@ -45,6 +45,10 @@ if not logging.getLogger().handlers:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 
 
+def _uses_messages_client(model: str | None) -> bool:
+    return infer_model_provider(model) in {"anthropic", "lmstudio"}
+
+
 def get_librarian_runner() -> AnthropicWikiLibrarian | Any:
     global librarian_runner
     if librarian_runner is None:
@@ -54,9 +58,9 @@ def get_librarian_runner() -> AnthropicWikiLibrarian | Any:
 
 def get_selector_runner(*, model: str | None = None, max_pages: int | None = None) -> Any:
     if model is not None:
-        if infer_model_provider(model) != "anthropic":
-            return JsonWikiPageSelector(store=store, model=model, max_pages=max_pages or 7)
-        return AnthropicWikiPageSelector(store=store, model=model, max_pages=max_pages or 7)
+        if _uses_messages_client(model):
+            return AnthropicWikiPageSelector(store=store, model=model, max_pages=max_pages or 7)
+        return JsonWikiPageSelector(store=store, model=model, max_pages=max_pages or 7)
     global selector_runner
     if selector_runner is None:
         selector_runner = AnthropicWikiPageSelector(store=store)
@@ -72,9 +76,9 @@ def get_solver_runner() -> AnthropicFoodEx2Solver | Any:
 
 def get_answerer_runner(*, model: str | None = None) -> AnthropicFoodEx2Answerer | Any:
     if model is not None:
-        if infer_model_provider(model) != "anthropic":
-            return JsonFoodEx2Answerer(model=model)
-        return AnthropicFoodEx2Answerer(model=model)
+        if _uses_messages_client(model):
+            return AnthropicFoodEx2Answerer(model=model)
+        return JsonFoodEx2Answerer(model=model)
     global answerer_runner
     if answerer_runner is None:
         answerer_runner = AnthropicFoodEx2Answerer()
@@ -257,15 +261,19 @@ class AskRequest(BaseModel):
     selector_model: str | None = Field(
         default=None,
         description=(
-            "Optional per-request Anthropic model override for wiki page selection. "
-            "If omitted, the service uses WIKI_CONTEXT_MODEL, then WIKI_LIBRARIAN_MODEL."
+            "Optional per-request model override for wiki page selection. "
+            "Use claude* for Anthropic, lmstudio:<model> for LM Studio, "
+            "or gpt*/gemini* for JSON-only hosted overrides. If omitted, "
+            "the service uses WIKI_CONTEXT_MODEL, then WIKI_LIBRARIAN_MODEL."
         ),
     )
     answerer_model: str | None = Field(
         default=None,
         description=(
-            "Optional per-request Anthropic model override for the synthesized answer. "
-            "If omitted, the service uses WIKI_ANSWERER_MODEL, then WIKI_LIBRARIAN_MODEL."
+            "Optional per-request model override for the synthesized answer. "
+            "Use claude* for Anthropic, lmstudio:<model> for LM Studio, "
+            "or gpt*/gemini* for JSON-only hosted overrides. If omitted, "
+            "the service uses WIKI_ANSWERER_MODEL, then WIKI_LIBRARIAN_MODEL."
         ),
     )
 

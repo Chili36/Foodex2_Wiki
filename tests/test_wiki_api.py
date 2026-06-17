@@ -831,6 +831,41 @@ def test_ask_routes_non_anthropic_model_overrides(monkeypatch) -> None:
     assert created["answerer"].model == "gemini-3.5-flash"
 
 
+def test_ask_routes_lmstudio_model_overrides_through_messages_client(monkeypatch) -> None:
+    created: dict[str, object] = {}
+
+    class OverrideSelector(FakeSelector):
+        def __init__(self, *, store: object, model: str, max_pages: int) -> None:
+            super().__init__()
+            self.model = model
+            self.max_pages = max_pages
+            created["selector"] = self
+
+    class OverrideAnswerer(FakeAnswerer):
+        def __init__(self, *, model: str) -> None:
+            super().__init__()
+            self.model = model
+            created["answerer"] = self
+
+    monkeypatch.setattr(app_module, "AnthropicWikiPageSelector", OverrideSelector)
+    monkeypatch.setattr(app_module, "AnthropicFoodEx2Answerer", OverrideAnswerer)
+
+    response = request(
+        "POST",
+        "/wiki/ask",
+        json={
+            "question": "What should I think about when reporting sheep urine?",
+            "selector_model": "lmstudio:qwen-local",
+            "answerer_model": "lmstudio:qwen-local",
+            "use_graph_expansion": False,
+        },
+    )
+
+    assert response.status_code == 200
+    assert created["selector"].model == "lmstudio:qwen-local"
+    assert created["answerer"].model == "lmstudio:qwen-local"
+
+
 def test_ask_requires_question() -> None:
     response = request("POST", "/wiki/ask", json={"question": ""})
     assert response.status_code == 422
