@@ -602,6 +602,9 @@ class OpenAICompatibleMessagesClient:
             ),
             "max_tokens": int(kwargs.get("max_tokens", 1024)),
         }
+        reasoning_effort = kwargs.get("reasoning_effort")
+        if reasoning_effort:
+            payload["reasoning_effort"] = str(reasoning_effort)
         tools = kwargs.get("tools")
         if tools:
             payload["tools"] = [_openai_tool_schema(tool) for tool in tools]
@@ -728,32 +731,36 @@ def _create_json_completion(
     system: str,
     user_content: str,
     max_tokens: int,
+    reasoning_effort: str | None = None,
 ) -> tuple[str, dict[str, int | str | None]]:
     provider = infer_model_provider(model)
     if provider == "openai":
         api_key = os.getenv("OPENAI_API_KEY")
         if not api_key:
             raise RuntimeError("OPENAI_API_KEY is not set")
+        payload: dict[str, Any] = {
+            "model": model,
+            "instructions": system,
+            "input": [
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "input_text",
+                            "text": f"Return JSON only.\n\n{user_content}",
+                        }
+                    ],
+                }
+            ],
+            "max_output_tokens": max_tokens,
+            "text": {"format": {"type": "json_object"}},
+        }
+        if reasoning_effort:
+            payload["reasoning"] = {"effort": reasoning_effort}
         data = _http_post_json(
             url="https://api.openai.com/v1/responses",
             headers={"Authorization": f"Bearer {api_key}"},
-            payload={
-                "model": model,
-                "instructions": system,
-                "input": [
-                    {
-                        "role": "user",
-                        "content": [
-                            {
-                                "type": "input_text",
-                                "text": f"Return JSON only.\n\n{user_content}",
-                            }
-                        ],
-                    }
-                ],
-                "max_output_tokens": max_tokens,
-                "text": {"format": {"type": "json_object"}},
-            },
+            payload=payload,
         )
         usage = data.get("usage", {}) if isinstance(data, dict) else {}
         return _extract_openai_text(data), _usage_from_counts(
@@ -799,18 +806,21 @@ def _create_json_completion(
             stop_reason=str(stop_reason) if stop_reason else None,
         )
     if provider == "lmstudio":
+        payload = {
+            "model": _lmstudio_api_model_name(model),
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": f"Return JSON only.\n\n{user_content}"},
+            ],
+            "max_tokens": max_tokens,
+            "response_format": {"type": "json_object"},
+        }
+        if reasoning_effort:
+            payload["reasoning_effort"] = reasoning_effort
         data = _http_post_json(
             url=f"{_lmstudio_base_url()}/chat/completions",
             headers=_lmstudio_headers(),
-            payload={
-                "model": _lmstudio_api_model_name(model),
-                "messages": [
-                    {"role": "system", "content": system},
-                    {"role": "user", "content": f"Return JSON only.\n\n{user_content}"},
-                ],
-                "max_tokens": max_tokens,
-                "response_format": {"type": "json_object"},
-            },
+            payload=payload,
         )
         choices = data.get("choices", []) if isinstance(data, dict) else []
         choice = choices[0] if choices and isinstance(choices[0], dict) else {}
@@ -1016,6 +1026,7 @@ class AnthropicWikiPageSelector:
         model: str | None = None,
         max_pages: int = 7,
         max_tokens: int = 1500,
+        reasoning_effort: str | None = None,
     ):
         self.store = store
         self.model = model or _resolve_model(
@@ -1026,6 +1037,7 @@ class AnthropicWikiPageSelector:
         self.client = client or build_messages_client(self.model)
         self.max_pages = max_pages
         self.max_tokens = max_tokens
+        self.reasoning_effort = reasoning_effort
 
     def run(self, payload: dict[str, Any]) -> PageSelectionResult:
         selector_started = time.perf_counter()
@@ -1053,13 +1065,16 @@ class AnthropicWikiPageSelector:
             messages=messages,
             max_tokens=self.max_tokens,
         )
-        response = self.client.messages.create(
-            model=self.model,
-            max_tokens=self.max_tokens,
-            system=selection_system_prompt,
-            tools=TOOLS,
-            messages=messages,
-        )
+        create_kwargs: dict[str, Any] = {
+            "model": self.model,
+            "max_tokens": self.max_tokens,
+            "system": selection_system_prompt,
+            "tools": TOOLS,
+            "messages": messages,
+        }
+        if self.reasoning_effort and infer_model_provider(self.model) == "lmstudio":
+            create_kwargs["reasoning_effort"] = self.reasoning_effort
+        response = self.client.messages.create(**create_kwargs)
         llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
         timing_trace = [
             {
@@ -1104,11 +1119,13 @@ class JsonWikiPageSelector:
         model: str,
         max_pages: int = 7,
         max_tokens: int = 1500,
+        reasoning_effort: str | None = None,
     ):
         self.store = store
         self.model = model
         self.max_pages = max_pages
         self.max_tokens = max_tokens
+        self.reasoning_effort = reasoning_effort
 
     def run(self, payload: dict[str, Any]) -> PageSelectionResult:
         selector_started = time.perf_counter()
@@ -1136,6 +1153,7 @@ class JsonWikiPageSelector:
             system=selection_system_prompt,
             user_content=user_content,
             max_tokens=self.max_tokens,
+            reasoning_effort=self.reasoning_effort,
         )
         llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
         data = _extract_json_payload(final_text)
@@ -1241,6 +1259,7 @@ class AnthropicFoodEx2Answerer:
         client: AnthropicClientProtocol | None = None,
         model: str | None = None,
         max_tokens: int = 2500,
+        reasoning_effort: str | None = None,
     ):
         self.model = model or _resolve_model(
             "WIKI_ANSWERER_MODEL",
@@ -1249,6 +1268,7 @@ class AnthropicFoodEx2Answerer:
         )
         self.client = client or build_messages_client(self.model)
         self.max_tokens = max_tokens
+        self.reasoning_effort = reasoning_effort
 
     def run(self, *, question: str, pages: list[dict[str, Any]]) -> AnswerResult:
         answerer_started = time.perf_counter()
@@ -1272,12 +1292,15 @@ class AnthropicFoodEx2Answerer:
             messages=messages,
             max_tokens=self.max_tokens,
         )
-        response = self.client.messages.create(
-            model=self.model,
-            max_tokens=self.max_tokens,
-            system=ANSWERER_SYSTEM_PROMPT,
-            messages=messages,
-        )
+        create_kwargs: dict[str, Any] = {
+            "model": self.model,
+            "max_tokens": self.max_tokens,
+            "system": ANSWERER_SYSTEM_PROMPT,
+            "messages": messages,
+        }
+        if self.reasoning_effort and infer_model_provider(self.model) == "lmstudio":
+            create_kwargs["reasoning_effort"] = self.reasoning_effort
+        response = self.client.messages.create(**create_kwargs)
         llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
         usage = _usage_dict(
             _get_block_value(response, "usage"),
@@ -1313,9 +1336,11 @@ class JsonFoodEx2Answerer:
         *,
         model: str,
         max_tokens: int = 2500,
+        reasoning_effort: str | None = None,
     ):
         self.model = model
         self.max_tokens = max_tokens
+        self.reasoning_effort = reasoning_effort
 
     def run(self, *, question: str, pages: list[dict[str, Any]]) -> AnswerResult:
         answerer_started = time.perf_counter()
@@ -1339,6 +1364,7 @@ class JsonFoodEx2Answerer:
             system=ANSWERER_SYSTEM_PROMPT,
             user_content=user_content,
             max_tokens=self.max_tokens,
+            reasoning_effort=self.reasoning_effort,
         )
         llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
         data = _extract_json_payload(final_text)

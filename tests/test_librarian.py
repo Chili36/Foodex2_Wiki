@@ -368,6 +368,7 @@ def test_lmstudio_openai_compatible_client_maps_tool_calls(monkeypatch) -> None:
     response = client.messages.create(
         model="lmstudio:local-model",
         max_tokens=100,
+        reasoning_effort="high",
         system="system text",
         tools=[
             {
@@ -382,6 +383,7 @@ def test_lmstudio_openai_compatible_client_maps_tool_calls(monkeypatch) -> None:
     assert calls[0]["url"] == "http://127.0.0.1:1234/v1/chat/completions"
     payload = calls[0]["payload"]
     assert payload["model"] == "local-model"
+    assert payload["reasoning_effort"] == "high"
     assert payload["messages"][0] == {"role": "system", "content": "system text"}
     assert payload["tools"][0]["function"]["name"] == "read_wiki_pages"
     assert response["stop_reason"] == "tool_use"

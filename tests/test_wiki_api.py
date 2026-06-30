@@ -866,6 +866,60 @@ def test_ask_routes_lmstudio_model_overrides_through_messages_client(monkeypatch
     assert created["answerer"].model == "lmstudio:qwen-local"
 
 
+def test_ask_passes_reasoning_effort_to_lmstudio_overrides(monkeypatch) -> None:
+    created: dict[str, object] = {}
+
+    class OverrideSelector(FakeSelector):
+        def __init__(
+            self,
+            *,
+            store: object,
+            model: str,
+            max_pages: int,
+            reasoning_effort: str | None = None,
+        ) -> None:
+            super().__init__()
+            self.model = model
+            self.max_pages = max_pages
+            self.reasoning_effort = reasoning_effort
+            created["selector"] = self
+
+    class OverrideAnswerer(FakeAnswerer):
+        def __init__(
+            self,
+            *,
+            model: str,
+            reasoning_effort: str | None = None,
+        ) -> None:
+            super().__init__()
+            self.model = model
+            self.reasoning_effort = reasoning_effort
+            created["answerer"] = self
+
+    monkeypatch.setattr(app_module, "AnthropicWikiPageSelector", OverrideSelector)
+    monkeypatch.setattr(app_module, "AnthropicFoodEx2Answerer", OverrideAnswerer)
+
+    response = request(
+        "POST",
+        "/wiki/ask",
+        json={
+            "question": "What should I think about when reporting sheep urine?",
+            "selector_model": "lmstudio:gpt-oss-120b",
+            "answerer_model": "lmstudio:gpt-oss-120b",
+            "selector_reasoning_effort": "high",
+            "answerer_reasoning_effort": "high",
+            "use_graph_expansion": False,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert created["selector"].reasoning_effort == "high"
+    assert created["answerer"].reasoning_effort == "high"
+    assert payload["trace"]["retrieval"]["reasoning_effort"] == "high"
+    assert payload["trace"]["answerer"]["reasoning_effort"] == "high"
+
+
 def test_ask_requires_question() -> None:
     response = request("POST", "/wiki/ask", json={"question": ""})
     assert response.status_code == 422

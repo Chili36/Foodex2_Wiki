@@ -403,6 +403,8 @@ Example `POST /wiki/ask` body:
 
 `selector_model` and `answerer_model` are optional per-request overrides. Omit them to use the configured defaults from `WIKI_CONTEXT_MODEL`, `WIKI_ANSWERER_MODEL`, or `WIKI_LIBRARIAN_MODEL` unless `WIKI_LLM_PROVIDER=lmstudio` is active, in which case `WIKI_LMSTUDIO_MODEL` is used. Use `selector_model` for the page-selection step and `answerer_model` for the synthesized guidance answer. Model names beginning with `claude` use Anthropic, names beginning with `lmstudio:` or `lm-studio:` use LM Studio, names beginning with `gpt` use OpenAI, and names beginning with `gemini` use the Gemini API.
 
+`selector_reasoning_effort` and `answerer_reasoning_effort` are optional per-request tuning fields with values `low`, `medium`, or `high`. They are mainly for LM Studio / OpenAI-compatible model experiments where reasoning-heavy local models need explicit effort control. Providers that do not support the setting ignore it; the response trace echoes the requested value so evaluation runs can compare cost, latency, and answer quality.
+
 `POST /wiki/ask` response includes:
 
 - `answer`: a concise wiki-grounded guidance answer
