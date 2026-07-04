@@ -4,7 +4,7 @@ This repository contains a structured markdown knowledge base for EFSA FoodEx2 g
 
 It follows the "LLM wiki" pattern: raw source documents stay immutable, while an LLM incrementally builds and maintains a topic-oriented markdown layer that is easier to read, search, cite, and update over time.
 
-See [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) for the project rationale and the connection to Andrej Karpathy's `llm-wiki` gist. See [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md) for the current architecture stance on compiled markdown knowledge, graph retrieval, long-source ingest, and why heavier RAG infrastructure is deferred. See [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md) for the deterministic and LLM-assisted maintenance loop.
+See [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) for the project rationale and the connection to Andrej Karpathy's `llm-wiki` gist. See [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md) for the current architecture stance on compiled markdown knowledge, graph retrieval, long-source ingest, and why heavier RAG infrastructure is deferred. See [WIKI_ARCHITECTURE_FOR_MODELS.md](WIKI_ARCHITECTURE_FOR_MODELS.md) for a model-facing architecture map that explains the wiki layers, runtime endpoints, retrieval modes, and maintenance gates. See [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md) for the deterministic and LLM-assisted maintenance loop.
 
 ## Related Projects
 
@@ -41,6 +41,7 @@ At the moment, the repository contains:
 - LLM-maintained topic pages in [raw/efsa-guidance](raw/efsa-guidance)
 - A content index in [index.md](index.md)
 - A knowledge architecture decision page in [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md)
+- A model-facing architecture orientation in [WIKI_ARCHITECTURE_FOR_MODELS.md](WIKI_ARCHITECTURE_FOR_MODELS.md)
 - A maintenance workflow in [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md)
 - A chronological wiki log in [log.md](log.md)
 - A validator-rule layer distilled from the sibling `Foodex2 Code Validator` project

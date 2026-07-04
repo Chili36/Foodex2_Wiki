@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-06-12"
+last_updated: "2026-07-04"
 ---
 
 # Index
@@ -12,6 +12,7 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 - [README.md](README.md): Repo overview, current status, API runtime modes, directory layout, and working conventions.
 - [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md): What this wiki is for, why it exists, and the LLM-wiki operating model behind it.
 - [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md): Architecture stance for compiled markdown knowledge, guidance briefs, page-evidence retrieval, graph retrieval, long-source ingest, and when not to add heavier RAG infrastructure.
+- [WIKI_ARCHITECTURE_FOR_MODELS.md](WIKI_ARCHITECTURE_FOR_MODELS.md): Model-facing architecture orientation covering knowledge layers, page types, runtime endpoints, retrieval modes, Qdrant, maintenance gates, and operating assumptions.
 - [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md): Practical playbook for turning raw PDFs into stable topic pages without collapsing into one-shot summarization.
 - [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md): Deterministic and LLM-assisted maintenance workflow for link checks, source checks, retrieval-health checks, and supervised wiki linting.
 - [SCHEMA.md](SCHEMA.md): Page types, frontmatter fields, section conventions, and ingest schema for the FoodEx2 wiki.

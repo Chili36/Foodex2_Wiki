@@ -1,9 +1,15 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-06-10"
+last_updated: "2026-07-04"
 ---
 
 # Log
+
+## [2026-07-04] maintenance | Add model-facing wiki architecture orientation
+
+- Added `WIKI_ARCHITECTURE_FOR_MODELS.md` as a first-class orientation page for models and maintainers that need the full architecture, structure, runtime endpoints, retrieval modes, source tiers, Qdrant role, and maintenance philosophy in one place.
+- Registered the page in the wiki store and index so it is served by the local wiki and checked by the deterministic doctor.
+- Linked the page from `README.md` and `SCHEMA.md` so future handoffs can use it as the canonical architecture briefing instead of reconstructing the system from scattered files.
 
 ## [2026-06-10] guidance | Clarify VMPR blood-related biological sample default
 

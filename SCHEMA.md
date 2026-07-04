@@ -1,6 +1,6 @@
 ---
 title: "Wiki Schema"
-last_updated: "2026-05-30"
+last_updated: "2026-07-04"
 sources:
   - "PROJECT_CONTEXT.md"
   - "KNOWLEDGE_ARCHITECTURE.md"
@@ -42,6 +42,7 @@ Examples:
 - `README.md`
 - `PROJECT_CONTEXT.md`
 - `KNOWLEDGE_ARCHITECTURE.md`
+- `WIKI_ARCHITECTURE_FOR_MODELS.md`
 - `INGEST_WORKFLOW.md`
 - `MAINTENANCE_WORKFLOW.md`
 - `SCHEMA.md`

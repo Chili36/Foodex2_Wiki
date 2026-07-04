@@ -94,6 +94,9 @@ class WikiStore:
             "README.md": self.root / "README.md",
             "PROJECT_CONTEXT.md": self.root / "PROJECT_CONTEXT.md",
             "KNOWLEDGE_ARCHITECTURE.md": self.root / "KNOWLEDGE_ARCHITECTURE.md",
+            "WIKI_ARCHITECTURE_FOR_MODELS.md": (
+                self.root / "WIKI_ARCHITECTURE_FOR_MODELS.md"
+            ),
             "INGEST_WORKFLOW.md": self.root / "INGEST_WORKFLOW.md",
             "MAINTENANCE_WORKFLOW.md": self.root / "MAINTENANCE_WORKFLOW.md",
             "SCHEMA.md": self.root / "SCHEMA.md",
@@ -103,6 +106,7 @@ class WikiStore:
             "README.md": "orientation",
             "PROJECT_CONTEXT.md": "orientation",
             "KNOWLEDGE_ARCHITECTURE.md": "orientation",
+            "WIKI_ARCHITECTURE_FOR_MODELS.md": "orientation",
             "INGEST_WORKFLOW.md": "orientation",
             "MAINTENANCE_WORKFLOW.md": "orientation",
             "SCHEMA.md": "orientation",
@@ -162,6 +166,9 @@ class WikiStore:
         )
         summaries["KNOWLEDGE_ARCHITECTURE.md"] = (
             "Architecture stance for compiled markdown knowledge, graph retrieval, long-source ingest, and when not to add heavier RAG infrastructure."
+        )
+        summaries["WIKI_ARCHITECTURE_FOR_MODELS.md"] = (
+            "Model-facing orientation to the FoodEx2 wiki architecture, knowledge layers, runtime endpoints, retrieval modes, and maintenance philosophy."
         )
         summaries["INGEST_WORKFLOW.md"] = (
             "Practical playbook for turning raw PDFs into stable topic pages."
