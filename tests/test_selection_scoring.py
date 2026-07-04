@@ -32,6 +32,17 @@ def test_unlabeled_page_reported_not_leaked():
     assert s["precision"] == 2 / 3
 
 
+def test_duplicate_pages_do_not_skew_scores():
+    pages = [
+        "base-term-selection.md", "base-term-selection.md",
+        "term-type-facet-constraints.md",
+        "process-facets.md", "process-facets.md",
+    ]
+    s = score_case(LABELS, pages)
+    assert s["precision"] == 2 / 3
+    assert s["unlabeled"] == ["process-facets.md"]
+
+
 def test_aggregate():
     scores = [
         {"must_have_recall": 1.0, "precision": 1.0, "leaks": []},

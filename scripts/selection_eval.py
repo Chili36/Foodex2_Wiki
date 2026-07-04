@@ -7,6 +7,7 @@ import json
 import pathlib
 import sys
 import urllib.request
+from fnmatch import fnmatch
 
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
@@ -27,6 +28,26 @@ def call_context_pack(base_url: str, request_payload: dict) -> dict:
         return json.loads(response.read().decode("utf-8"))
 
 
+def check_gold_invariants(gold: dict) -> None:
+    """Verify no non-glob must_have/acceptable page matches any must_not pattern.
+
+    A hand-edit to the gold set could otherwise mark a page as simultaneously
+    recalled (must_have/acceptable) and leaked (must_not), which would make
+    scoring internally inconsistent.
+    """
+    for case in gold["cases"]:
+        labels = case["labels"]
+        must_not = labels.get("must_not", [])
+        for bucket in ("must_have", "acceptable"):
+            for page in labels.get(bucket, []):
+                for pattern in must_not:
+                    if fnmatch(page, pattern):
+                        raise RuntimeError(
+                            f"{case['id']}: {bucket} page {page!r} matches "
+                            f"must_not pattern {pattern!r}"
+                        )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base-url", default="http://127.0.0.1:8010")
@@ -36,6 +57,7 @@ def main() -> None:
     args = parser.parse_args()
 
     gold = json.loads(pathlib.Path(args.gold_path).read_text())
+    check_gold_invariants(gold)
     cases = [
         case for case in gold["cases"]
         if case.get("reviewed") or not args.only_reviewed
@@ -43,7 +65,11 @@ def main() -> None:
     rows = []
     for case in cases:
         response = call_context_pack(args.base_url, case["request"])
-        pages_used = response.get("pages_used", [])
+        pages_used = response.get("pages_used")
+        if not isinstance(pages_used, list):
+            raise RuntimeError(
+                f"{case['id']}: malformed /wiki/context-pack response: missing pages_used"
+            )
         pack_chars = sum(len(page.get("content") or "") for page in response.get("pages", []))
         score = score_case(case["labels"], pages_used)
         rows.append(

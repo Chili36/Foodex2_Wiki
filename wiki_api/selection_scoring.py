@@ -14,7 +14,9 @@ def _matches_any(page: str, patterns: list[str]) -> bool:
 
 
 def score_case(labels: dict, pages_used: list[str]) -> dict:
-    selected = [page for page in pages_used if page not in ALWAYS_PRESENT]
+    selected = list(dict.fromkeys(
+        page for page in pages_used if page not in ALWAYS_PRESENT
+    ))
     must_have = list(labels.get("must_have", []))
     acceptable = list(labels.get("acceptable", []))
     must_not = list(labels.get("must_not", []))
