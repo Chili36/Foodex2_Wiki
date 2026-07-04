@@ -1,0 +1,852 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "SEL-0001",
+      "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0001",
+      "reviewed": false,
+      "request": {
+        "search_term": "Bordsdruvor – färsk frukt (table grapes, fresh fruit)",
+        "deconstructed_query": {
+          "food": "table grapes",
+          "state": "fresh"
+        },
+        "context": {
+          "reporting_domain": "pesticides"
+        },
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "pesticides-foodex2.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "notes": "Rubric 1+6: raw fresh commodity, explicit pesticides. base-term + pesticides overlay + term-type validation are must_have; facet pages are only acceptable because a competent coder codes a plain raw fruit from implicit facets (rule 6). Rubric 2: exactly one overlay must_have, others must_not. Rubric 3/4: maintenance-* and orientation pages must_not. Mirrors the plan's SEL-0001 worked example."
+      }
+    },
+    {
+      "id": "SEL-0002",
+      "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0009",
+      "reviewed": false,
+      "request": {
+        "search_term": "Vetekärna – spannmålskärna (wheat grain, cereal kernel)",
+        "deconstructed_query": {
+          "food": "wheat grain",
+          "state": "raw"
+        },
+        "context": {
+          "reporting_domain": "pesticides"
+        },
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "pesticides-foodex2.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "notes": "Rubric 1+6: raw cereal commodity under pesticides; same skeleton as SEL-0001. Facet pages acceptable (implicit facets suffice for a raw grain, rule 6). Rubric 2 overlay exclusivity applied."
+      }
+    },
+    {
+      "id": "SEL-0003",
+      "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0047",
+      "reviewed": false,
+      "request": {
+        "search_term": "Paranötter – nötter (Brazil nuts, tree nuts)",
+        "deconstructed_query": {
+          "food": "brazil nuts",
+          "state": "raw"
+        },
+        "context": {
+          "reporting_domain": "contaminants"
+        },
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "contaminants-foodex2.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "vmpr-foodex2.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "notes": "Rubric 1+6: raw tree nut under contaminants (aflatoxin context). base-term + contaminants overlay + term-type validation must_have; facet pages acceptable (rule 6). Rubric 2: pesticides/vmpr/additives overlays must_not."
+      }
+    },
+    {
+      "id": "SEL-0004",
+      "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0120",
+      "reviewed": false,
+      "request": {
+        "search_term": "Gris – lever (pig liver, edible offal)",
+        "deconstructed_query": {
+          "food": "pig liver",
+          "state": "raw"
+        },
+        "context": {
+          "reporting_domain": "vmpr"
+        },
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "vmpr-foodex2.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md",
+          "vmpr-legislative-mapping.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "notes": "Rubric 1+6: this is a FOOD animal part under VMPR (over-fire guard: must NOT code A0C60). vmpr overlay must_have so the coder reads the non-food boundary and stays on the food term; term-type validation must_have. Rubric 2 overlay exclusivity. David: confirm food-guard framing."
+      }
+    },
+    {
+      "id": "SEL-0005",
+      "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0152",
+      "reviewed": false,
+      "request": {
+        "search_term": "Skivad ost med ytkonservering – ost (sliced cheese with surface preservative)",
+        "deconstructed_query": {
+          "food": "cheese",
+          "state": "sliced, surface-preserved"
+        },
+        "context": {
+          "reporting_domain": "additives"
+        },
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "process-facets.md",
+          "process-validation-rules.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "term-type-facet-constraints.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: derivative (cheese) with an explicit surface-preservation treatment -> process-facets must_have; processed food -> process-validation-rules is the validation must_have (rule 1). additives overlay must_have (rule 2). implicit-vs-explicit acceptable (derivative source)."
+      }
+    },
+    {
+      "id": "SEL-0006",
+      "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0160",
+      "reviewed": false,
+      "request": {
+        "search_term": "Glass med färg/smak – sammansatt produkt (ice cream with colour/flavour, composite)",
+        "deconstructed_query": {
+          "food": "ice cream",
+          "state": "composite, coloured/flavoured"
+        },
+        "context": {
+          "reporting_domain": "additives"
+        },
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "ingredient-facets.md",
+          "additives-flavourings-foodex2.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: composite product -> ingredient-facets must_have; base-term-selection carries the missing-term handling (known-hard: no ice-cream composite base). additives overlay must_have. term-type validation must_have (composite F04 constraints)."
+      }
+    },
+    {
+      "id": "SEL-0007",
+      "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0161",
+      "reviewed": false,
+      "request": {
+        "search_term": "Kanelbulle – bakverk (cinnamon bun, bakery)",
+        "deconstructed_query": {
+          "food": "cinnamon bun",
+          "state": "baked, composite"
+        },
+        "context": {
+          "reporting_domain": "additives"
+        },
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "ingredient-facets.md",
+          "additives-flavourings-foodex2.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md",
+          "process-facets.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: composite bakery -> ingredient-facets must_have. Baking is implicit in a bakery base term, so process-facets is acceptable not must_have (rule 6). additives overlay must_have; term-type validation must_have."
+      }
+    },
+    {
+      "id": "SEL-0008",
+      "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0181",
+      "reviewed": false,
+      "request": {
+        "search_term": "Nötkreatur – blod/serum (cattle blood/serum, VMPR biological sample)",
+        "deconstructed_query": {
+          "food": "cattle blood/serum",
+          "state": "biological sample"
+        },
+        "context": {
+          "reporting_domain": "vmpr"
+        },
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "vmpr-foodex2.md",
+          "facet-coding-rules.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md",
+          "vmpr-legislative-mapping.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "notes": "Rubric 1+2: VMPR non-food biological matrix -> A0C60 with mandatory explicit F01/F02, so vmpr overlay AND facet-coding-rules are must_have (a coder omitting F01/F02 produces a wrong code, rule 6). term-type validation must_have. vmpr page confirmed to cover blood/serum non-food matrices."
+      }
+    },
+    {
+      "id": "SEL-0009",
+      "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0184",
+      "reviewed": false,
+      "request": {
+        "search_term": "Nötkreatur – foder (cattle feed, VMPR feed matrix)",
+        "deconstructed_query": {
+          "food": "cattle feed",
+          "state": "feed"
+        },
+        "context": {
+          "reporting_domain": "vmpr"
+        },
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "vmpr-foodex2.md",
+          "facet-coding-rules.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md",
+          "vmpr-legislative-mapping.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "notes": "Rubric 1+2: VMPR feed exception -> feed base term with F23 target-consumer; vmpr overlay and facet-coding-rules (F23) must_have. term-type validation must_have. Distinct cross-domain rule from the blood/urine non-food matrices."
+      }
+    },
+    {
+      "id": "SEL-0010",
+      "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0202",
+      "reviewed": false,
+      "request": {
+        "search_term": "Får – urin (sheep urine, VMPR biological sample)",
+        "deconstructed_query": {
+          "food": "sheep urine",
+          "state": "biological sample"
+        },
+        "context": {
+          "reporting_domain": "vmpr"
+        },
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "vmpr-foodex2.md",
+          "facet-coding-rules.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md",
+          "vmpr-legislative-mapping.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "notes": "Rubric 1+2: canonical VMPR non-food matrix -> A0C60 with explicit F01/F02. vmpr overlay and facet-coding-rules must_have; term-type validation must_have. Highest-signal cross-domain page-selection test."
+      }
+    },
+    {
+      "id": "SEL-0011",
+      "source": "synthetic",
+      "reviewed": false,
+      "request": {
+        "search_term": "Quinoafmjöl – kvarnprodukt (quinoa flour, derivative; detailed term missing)",
+        "deconstructed_query": {
+          "food": "quinoa flour",
+          "state": "milled derivative"
+        },
+        "context": {
+          "reporting_domain": "pesticides"
+        },
+        "candidate_hints": [
+          {
+            "code": "A04KS",
+            "name": "Quinoa flour (generic derivative base term)",
+            "termType": "d"
+          },
+          {
+            "code": "A000R",
+            "name": "Quinoa grain (source raw commodity for F27)",
+            "termType": "r"
+          }
+        ],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "implicit-vs-explicit-facets.md",
+          "term-type-facet-constraints.md",
+          "pesticides-foodex2.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md",
+          "process-facets.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: derivative candidate needing the source-commodity model (F27 / F26.A07XE fallback) -> implicit-vs-explicit-facets must_have (a coder without it mishandles the derivative source, rule 6). term-type validation must_have; pesticides overlay must_have (rule 2). candidate_hints codes A04KS and A000R (F27.A000R) are cited verbatim in base-term-selection.md examples."
+      }
+    },
+    {
+      "id": "SEL-0012",
+      "source": "synthetic",
+      "reviewed": false,
+      "request": {
+        "search_term": "Gris – blodserum (pig blood serum, VMPR biological sample)",
+        "deconstructed_query": {
+          "food": "pig blood serum",
+          "state": "biological sample"
+        },
+        "context": {
+          "reporting_domain": "vmpr"
+        },
+        "candidate_hints": [
+          {
+            "code": "A0C60",
+            "name": "Non-food animal-related matrices (base matrix term)",
+            "termType": "r"
+          },
+          {
+            "code": "A0CEY",
+            "name": "Blood serum (F02 part-nature descriptor)",
+            "termType": "f"
+          }
+        ],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "vmpr-foodex2.md",
+          "facet-coding-rules.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md",
+          "vmpr-legislative-mapping.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "notes": "Rubric 1+2: synthetic VMPR non-food biological matrix -> A0C60 with mandatory F01/F02; vmpr overlay and facet-coding-rules must_have (rule 6). candidate_hints A0C60 and F02.A0CEY (blood serum) are cited in vmpr-foodex2.md worked signals. A0C60 termType marked 'r' as a base matrix term (special non-food base; David: verify term type). A0CEY given termType 'f' (facet descriptor)."
+      }
+    },
+    {
+      "id": "SEL-0013",
+      "source": "synthetic",
+      "reviewed": false,
+      "request": {
+        "search_term": "Blandad grönsakssallad – sammansatt (mixed vegetable salad, balanced composite)",
+        "deconstructed_query": {
+          "food": "mixed vegetable salad",
+          "state": "composite"
+        },
+        "context": {
+          "reporting_domain": "contaminants"
+        },
+        "candidate_hints": [
+          {
+            "code": "A042D",
+            "name": "Mixed vegetable salad (composite base term)",
+            "termType": "c"
+          },
+          {
+            "code": "A00KR",
+            "name": "Mixed leaf salad (composite base term)",
+            "termType": "c"
+          }
+        ],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "ingredient-facets.md",
+          "term-type-facet-constraints.md",
+          "contaminants-foodex2.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "vmpr-foodex2.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: balanced composite -> composite base term + F04 ingredient facets; ingredient-facets must_have. term-type validation must_have (composite forbids F01/F27). contaminants overlay must_have (rule 2). candidate_hints A042D and A00KR are cited in base-term-selection.md / ingredient-facets.md composite examples; termType 'c' verified against term-type-facet-constraints.md."
+      }
+    },
+    {
+      "id": "SEL-0014",
+      "source": "synthetic",
+      "reviewed": false,
+      "request": {
+        "search_term": "Pizza i laminerad avhämtningskartong (pizza in a laminated takeaway box; packaging matters)",
+        "deconstructed_query": {
+          "food": "pizza",
+          "state": "packed, composite"
+        },
+        "context": {
+          "reporting_domain": "contaminants"
+        },
+        "candidate_hints": [
+          {
+            "code": "A03ZN",
+            "name": "Pizza (composite base term)",
+            "termType": "c"
+          },
+          {
+            "code": "A07NL",
+            "name": "Box/carton (F18 packaging-format descriptor)",
+            "termType": "f"
+          },
+          {
+            "code": "A07PN",
+            "name": "Laminated material (F19 packaging-material descriptor)",
+            "termType": "f"
+          }
+        ],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "packaging-facets.md",
+          "term-type-facet-constraints.md",
+          "contaminants-foodex2.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md",
+          "ingredient-facets.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "vmpr-foodex2.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: packaging explicitly matters (migration under contaminants) -> packaging-facets must_have (F18 format / F19 material, distinct from F28 process). term-type validation must_have; contaminants overlay must_have. Pizza is composite so ingredient-facets is acceptable (base already chosen; packaging is the focus, rule 6). candidate_hints A03ZN#F18.A07NL$F19.A07PN cited verbatim in packaging-facets.md."
+      }
+    },
+    {
+      "id": "SEL-0015",
+      "source": "synthetic",
+      "reviewed": false,
+      "request": {
+        "search_term": "Äpple – färsk hel frukt (apple, fresh whole fruit; no reporting domain)",
+        "deconstructed_query": {
+          "food": "apple",
+          "state": "fresh, whole"
+        },
+        "context": {},
+        "candidate_hints": [
+          {
+            "code": "A01BQ",
+            "name": "Apple (raw commodity base term)",
+            "termType": "r"
+          }
+        ],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 2 (all-domain default): no reporting_domain signal -> ALL four overlays AND the chemical-monitoring router must_not. Rubric 1+6: plain raw fresh fruit; base-term + term-type validation must_have, facet pages acceptable. candidate_hints code A01BQ (apple) is INVENTED / not verified against a wiki page - David: verify or replace this base-term code."
+      }
+    }
+  ]
+}
