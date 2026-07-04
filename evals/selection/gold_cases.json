@@ -48,6 +48,7 @@
           "domoic-acid-scallops.md",
           "contaminants-foodex2.md",
           "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
           "additives-flavourings-foodex2.md"
         ],
         "notes": "Rubric 1+6: raw fresh commodity, explicit pesticides. base-term + pesticides overlay + term-type validation are must_have; facet pages are only acceptable because a competent coder codes a plain raw fruit from implicit facets (rule 6). Rubric 2: exactly one overlay must_have, others must_not. Rubric 3/4: maintenance-* and orientation pages must_not. Mirrors the plan's SEL-0001 worked example."
@@ -100,6 +101,7 @@
           "domoic-acid-scallops.md",
           "contaminants-foodex2.md",
           "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
           "additives-flavourings-foodex2.md"
         ],
         "notes": "Rubric 1+6: raw cereal commodity under pesticides; same skeleton as SEL-0001. Facet pages acceptable (implicit facets suffice for a raw grain, rule 6). Rubric 2 overlay exclusivity applied."
@@ -152,6 +154,7 @@
           "domoic-acid-scallops.md",
           "pesticides-foodex2.md",
           "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
           "additives-flavourings-foodex2.md"
         ],
         "notes": "Rubric 1+6: raw tree nut under contaminants (aflatoxin context). base-term + contaminants overlay + term-type validation must_have; facet pages acceptable (rule 6). Rubric 2: pesticides/vmpr/additives overlays must_not."
@@ -259,7 +262,8 @@
           "domoic-acid-scallops.md",
           "pesticides-foodex2.md",
           "contaminants-foodex2.md",
-          "vmpr-foodex2.md"
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md"
         ],
         "notes": "Rubric 1+5: derivative (cheese) with an explicit surface-preservation treatment -> process-facets must_have; processed food -> process-validation-rules is the validation must_have (rule 1). additives overlay must_have (rule 2). implicit-vs-explicit acceptable (derivative source)."
       }
@@ -312,7 +316,8 @@
           "domoic-acid-scallops.md",
           "pesticides-foodex2.md",
           "contaminants-foodex2.md",
-          "vmpr-foodex2.md"
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md"
         ],
         "notes": "Rubric 1+5: composite product -> ingredient-facets must_have; base-term-selection carries the missing-term handling (known-hard: no ice-cream composite base). additives overlay must_have. term-type validation must_have (composite F04 constraints)."
       }
@@ -366,7 +371,8 @@
           "domoic-acid-scallops.md",
           "pesticides-foodex2.md",
           "contaminants-foodex2.md",
-          "vmpr-foodex2.md"
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md"
         ],
         "notes": "Rubric 1+5: composite bakery -> ingredient-facets must_have. Baking is implicit in a bakery base term, so process-facets is acceptable not must_have (rule 6). additives overlay must_have; term-type validation must_have."
       }
@@ -589,6 +595,7 @@
           "domoic-acid-scallops.md",
           "contaminants-foodex2.md",
           "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
           "additives-flavourings-foodex2.md"
         ],
         "notes": "Rubric 1+5: derivative candidate needing the source-commodity model (F27 / F26.A07XE fallback) -> implicit-vs-explicit-facets must_have (a coder without it mishandles the derivative source, rule 6). term-type validation must_have; pesticides overlay must_have (rule 2). candidate_hints codes A04KS and A000R (F27.A000R) are cited verbatim in base-term-selection.md examples."
@@ -717,6 +724,7 @@
           "domoic-acid-scallops.md",
           "pesticides-foodex2.md",
           "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
           "additives-flavourings-foodex2.md"
         ],
         "notes": "Rubric 1+5: balanced composite -> composite base term + F04 ingredient facets; ingredient-facets must_have. term-type validation must_have (composite forbids F01/F27). contaminants overlay must_have (rule 2). candidate_hints A042D and A00KR are cited in base-term-selection.md / ingredient-facets.md composite examples; termType 'c' verified against term-type-facet-constraints.md."
@@ -787,6 +795,7 @@
           "domoic-acid-scallops.md",
           "pesticides-foodex2.md",
           "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
           "additives-flavourings-foodex2.md"
         ],
         "notes": "Rubric 1+5: packaging explicitly matters (migration under contaminants) -> packaging-facets must_have (F18 format / F19 material, distinct from F28 process). term-type validation must_have; contaminants overlay must_have. Pizza is composite so ingredient-facets is acceptable (base already chosen; packaging is the focus, rule 6). candidate_hints A03ZN#F18.A07NL$F19.A07PN cited verbatim in packaging-facets.md."
@@ -842,6 +851,7 @@
           "pesticides-foodex2.md",
           "contaminants-foodex2.md",
           "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
           "additives-flavourings-foodex2.md",
           "chemical-monitoring-foodex2.md"
         ],
