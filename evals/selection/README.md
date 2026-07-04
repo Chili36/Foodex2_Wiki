@@ -56,13 +56,15 @@ FoodEx2 sage to label a case.
    `process-validation-rules.md` when the food is processed).
 2. **Domain overlays:** the overlay page for the case's explicit domain is `must_have`;
    every *other* overlay page is `must_not`. If no domain signal exists, *all* overlay
-   pages are `must_not` (all-domain default). The Domain Overlay Pages set
-   (see `WIKI_ARCHITECTURE_FOR_MODELS.md`) includes `pesticides-foodex2.md`,
-   `contaminants-foodex2.md`, `vmpr-foodex2.md`, `vmpr-legislative-mapping.md`,
-   `additives-flavourings-foodex2.md`, and `domoic-acid-scallops.md`; these all follow the
-   exclusivity rule (only the active domain's page is `must_have`, all others `must_not`).
-   `chemical-monitoring-foodex2.md` (the router) is `acceptable` in domain cases but
-   `must_not` when there is no domain signal.
+   pages are `must_not` (all-domain default). The exclusivity-bound overlay set is
+   `pesticides-foodex2.md`, `contaminants-foodex2.md`, `vmpr-foodex2.md`,
+   `vmpr-legislative-mapping.md`, and `additives-flavourings-foodex2.md` (per
+   `WIKI_ARCHITECTURE_FOR_MODELS.md`'s Domain Overlay Pages list), plus
+   `domoic-acid-scallops.md`, which `README.md`/`SCHEMA.md` classify as a niche overlay.
+   `chemical-monitoring-foodex2.md` (the routing entry page) and
+   `domain-specific-validation.md` (treated as a validation page, not exclusivity-bound)
+   are deliberately not subject to this exclusivity rule: `chemical-monitoring-foodex2.md`
+   is `acceptable` in domain cases but `must_not` when there is no domain signal.
 3. **Maintenance pages:** `must_not` (glob `maintenance-*`) unless the question is
    explicitly about annual changes.
 4. **Orientation pages:** always `must_not` in context-pack cases (`README.md`,
