@@ -114,6 +114,7 @@ class WikiStore:
             "index.md": "orientation",
             "log.md": "maintenance",
             "policy-contract.md": "runtime",
+            "selection-policy.md": "orientation",
             "foodex2-overview.md": "guidance",
             "base-term-selection.md": "guidance",
             "facet-coding-rules.md": "guidance",

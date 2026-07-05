@@ -19,6 +19,7 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 - [RUNTIME_RULES.md](RUNTIME_RULES.md): Compact prompt-facing rules file always attached by `context-pack` and page-evidence prompt contexts before supporting guidance pages.
 - [log.md](log.md): Chronological record of ingests and maintenance work.
 - [policy-contract.md](raw/efsa-guidance/policy-contract.md): Richer control-layer page defining decision order, binding rules, tie-breaks, and anti-patterns for structured and solver-oriented flows.
+- [selection-policy.md](raw/efsa-guidance/selection-policy.md): Deterministic skeleton failsafe for context-pack assembly: required base-term/facet/validation roles, backfill defaults, drop rules, and the structural-invariants-only bright line.
 
 ## Guiding Principles
 
