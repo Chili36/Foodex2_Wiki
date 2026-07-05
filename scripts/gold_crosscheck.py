@@ -32,7 +32,7 @@ except ImportError:
                 return value
         return default
 
-from wiki_api.wiki_store import PROMPT_CONTEXT_PAGE_CATEGORIES, WikiStore  # noqa: E402
+from wiki_api.wiki_store import WikiStore  # noqa: E402
 
 SYSTEM = """You label FoodEx2 wiki page-selection gold cases.
 Given the labeling rubric, the list of selectable wiki pages with their

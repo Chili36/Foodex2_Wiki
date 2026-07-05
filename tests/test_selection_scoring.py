@@ -1,4 +1,4 @@
-from wiki_api.selection_scoring import aggregate, score_case
+from wiki_api.selection_scoring import aggregate, miss_frequency, score_case
 
 LABELS = {
     "must_have": ["base-term-selection.md", "term-type-facet-constraints.md"],
@@ -55,7 +55,6 @@ def test_aggregate():
     assert agg["case_count"] == 2
 
 
-from wiki_api.selection_scoring import miss_frequency
 
 
 def _row(case_id, missing):
