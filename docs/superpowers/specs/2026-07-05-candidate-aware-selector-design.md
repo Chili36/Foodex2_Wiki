@@ -85,3 +85,23 @@ Median of 3 runs on the 15-case gold set, all relative to the phase1-r3 referenc
 ## Out of scope
 
 Phase 1 failsafe changes; Qdrant/lexical recall shortlist (Phase 3, evidence-gated); candidate digest preprocessing (evidence-gated); `/wiki/solve` and `/wiki/policy-pack` prompts; `/wiki/ask` answerer; any LLM model name changes; `evals/selection/gold_cases.json` label changes (the ground truth does not move while we tune the thing it measures).
+
+## Addendum (post-review fix, 2026-07-05)
+
+Two review findings landed after the initial phase 2 merge and were fixed together (branch `feature/phase2-candidate-aware-selector`, commit after `359063a`):
+
+**Finding P2 (regression):** `selector_catalog()` originally had one shape — prompt-facing pages only (`PROMPT_CONTEXT_PAGE_CATEGORIES`) — reused by both `/wiki/context-pack` and `/wiki/ask` (per the note in Component 2 above: "the selector runner is shared with `/wiki/ask`, so ask benefits incidentally"). That single shape was correct for context-pack (its skeleton enforcement drops non-prompt-facing pages anyway) but was a regression for `/wiki/ask`: before this phase, both selector classes saw the full `index.md`, so `/wiki/ask` could discover orientation/maintenance/log pages (e.g. answering "what changed in the 2024 maintenance release?" with `maintenance-2024.md`). Restricting the catalog to prompt-facing categories made those pages unselectable for `/wiki/ask` too, even though nothing about `/wiki/ask`'s job requires that restriction.
+
+**Finding P3 (slot waste):** `/wiki/context-pack` unconditionally front-injects `RUNTIME_RULES.md` (`_ensure_front_page`), so the selector spending one of its limited picks selecting it (redundantly) was pure waste in the coding-scope catalog. For `/wiki/ask` there is no such front-injection, so `RUNTIME_RULES.md` is a legitimately selectable page there.
+
+**Fix: two catalog scopes.** `WikiStore.selector_catalog(scope: str = "coding")` now branches:
+
+- `scope="coding"` — prompt-facing pages (`PROMPT_CONTEXT_PAGE_CATEGORIES`) **excluding `RUNTIME_RULES.md`**. Used by `/wiki/context-pack`.
+- `scope="ask"` — every served page except `index.md`: prompt-facing pages (including `RUNTIME_RULES.md`) plus orientation, maintenance, and `log.md`. Used by `/wiki/ask`. Non-prompt-facing pages have no `select_when` hint, so they fall back to their `index.md` summary (or title) — the same graceful-degradation rule as before, just no longer gated to prompt-facing categories for this scope.
+- Any other value raises `ValueError`.
+
+`build_selection_user_content(*, store, payload, scope="coding")` threads the scope through, and both selector classes (`AnthropicWikiPageSelector`, `JsonWikiPageSelector`) take a `catalog_scope: str = "coding"` constructor parameter used when building the user message. The `run(payload)` signature is unchanged.
+
+**Wiring (`app.py`):** `get_selector_runner` gained a `scope` parameter. Two separate module-level singletons — `selector_runner` (coding) and `ask_selector_runner` (ask) — are each constructed once with their `catalog_scope` fixed at construction time and never mutated afterwards; per-request model/effort overrides likewise bake `catalog_scope` in at construction. This avoids the file's existing shared-runner-mutation footgun (`max_pages` is already mutated in place on the cached singleton) — scope is never mutated post-construction on a shared instance, so `/wiki/context-pack` and `/wiki/ask` cannot cross-contaminate each other's catalog even when both hit the no-override code path in the same running process.
+
+**Verification:** `/wiki/ask` re-tested live against "What changed for FoodEx2 in the 2024 maintenance release?" — the selector itself (not graph expansion) picked `maintenance-2024.md`, confirming the regression is fixed. The phase2 eval was re-run against `/wiki/context-pack` (`phase2-r3-askfix`, `--repeats 3`) to confirm removing `RUNTIME_RULES.md` from the coding catalog was neutral-or-better: all five acceptance criteria still pass, with every metric equal to or better than the `phase2-r3` (rev2) reference (see `reports/selection-evals/2026-07-05-phase2-r3-askfix/triage.md`).

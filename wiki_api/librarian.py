@@ -79,9 +79,11 @@ def build_selection_system_prompt_for_store(*, store: WikiStore, additional_page
     )
 
 
-def build_selection_user_content(*, store: WikiStore, payload: dict[str, Any]) -> str:
+def build_selection_user_content(
+    *, store: WikiStore, payload: dict[str, Any], scope: str = "coding"
+) -> str:
     return json.dumps(
-        {"case": payload, "selector_catalog": store.selector_catalog()},
+        {"case": payload, "selector_catalog": store.selector_catalog(scope)},
         ensure_ascii=False,
     )
 
@@ -1043,6 +1045,7 @@ class AnthropicWikiPageSelector:
         max_pages: int = 7,
         max_tokens: int = 1500,
         reasoning_effort: str | None = None,
+        catalog_scope: str = "coding",
     ):
         self.store = store
         self.model = model or _resolve_model(
@@ -1054,6 +1057,7 @@ class AnthropicWikiPageSelector:
         self.max_pages = max_pages
         self.max_tokens = max_tokens
         self.reasoning_effort = reasoning_effort
+        self.catalog_scope = catalog_scope
 
     def run(self, payload: dict[str, Any]) -> PageSelectionResult:
         selector_started = time.perf_counter()
@@ -1064,7 +1068,9 @@ class AnthropicWikiPageSelector:
         messages = [
             {
                 "role": "user",
-                "content": build_selection_user_content(store=self.store, payload=payload),
+                "content": build_selection_user_content(
+                    store=self.store, payload=payload, scope=self.catalog_scope
+                ),
             }
         ]
         llm_started = time.perf_counter()
@@ -1130,12 +1136,14 @@ class JsonWikiPageSelector:
         max_pages: int = 7,
         max_tokens: int = 1500,
         reasoning_effort: str | None = None,
+        catalog_scope: str = "coding",
     ):
         self.store = store
         self.model = model
         self.max_pages = max_pages
         self.max_tokens = max_tokens
         self.reasoning_effort = reasoning_effort
+        self.catalog_scope = catalog_scope
 
     def run(self, payload: dict[str, Any]) -> PageSelectionResult:
         selector_started = time.perf_counter()
@@ -1143,7 +1151,9 @@ class JsonWikiPageSelector:
             store=self.store,
             additional_page_limit=max(self.max_pages - 1, 0),
         )
-        user_content = build_selection_user_content(store=self.store, payload=payload)
+        user_content = build_selection_user_content(
+            store=self.store, payload=payload, scope=self.catalog_scope
+        )
         llm_started = time.perf_counter()
         _log_prompt(
             "context_pack",

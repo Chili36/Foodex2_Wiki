@@ -286,16 +286,36 @@ class WikiStore:
     def catalog(self) -> list[WikiPage]:
         return [self.read_page(name) for name in self.list_pages()]
 
-    def selector_catalog(self) -> str:
-        """Selector-facing page catalog: one line per prompt-facing page.
+    def selector_catalog(self, scope: str = "coding") -> str:
+        """Selector-facing page catalog: one line per selectable page.
 
         Prefers the page's select_when hint; falls back to its index.md
-        summary so unannotated pages stay selectable (never invisible).
+        summary (or title) so unannotated pages stay selectable (never
+        invisible).
+
+        Two scopes:
+        - "coding": prompt-facing pages (`PROMPT_CONTEXT_PAGE_CATEGORIES`)
+          excluding `RUNTIME_RULES.md`, which /wiki/context-pack always
+          front-injects itself (`_ensure_front_page`), so it would waste one
+          of the selector's limited picks if it stayed selectable there.
+        - "ask": every served page except `index.md` — prompt-facing pages
+          (including `RUNTIME_RULES.md`, which is legitimately selectable
+          for /wiki/ask) plus orientation, maintenance, and `log.md`, so
+          /wiki/ask can discover pages like maintenance-2024.md that the
+          coding scope correctly omits.
         """
+        if scope == "coding":
+            names = [name for name in self.list_pages() if name != "RUNTIME_RULES.md"]
+            names = [
+                name for name in names if self.page_category(name) in PROMPT_CONTEXT_PAGE_CATEGORIES
+            ]
+        elif scope == "ask":
+            names = [*self.list_pages(), "log.md"]
+        else:
+            raise ValueError(f"Unknown selector catalog scope: {scope!r}")
+
         lines: list[str] = []
-        for name in self.list_pages():
-            if self.page_category(name) not in PROMPT_CONTEXT_PAGE_CATEGORIES:
-                continue
+        for name in sorted(names):
             page = self.read_page(name)
             description = page.select_when or page.summary or page.title
             lines.append(f"- {name} — {description}")

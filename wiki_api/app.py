@@ -39,6 +39,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 store = WikiStore(REPO_ROOT)
 librarian_runner: AnthropicWikiLibrarian | Any | None = None
 selector_runner: Any | None = None
+ask_selector_runner: Any | None = None
 solver_runner: AnthropicFoodEx2Solver | Any | None = None
 answerer_runner: AnthropicFoodEx2Answerer | Any | None = None
 logger = logging.getLogger("wiki_api")
@@ -62,13 +63,24 @@ def get_selector_runner(
     model: str | None = None,
     max_pages: int | None = None,
     reasoning_effort: str | None = None,
+    scope: str = "coding",
 ) -> Any:
+    """Return a selector for the given catalog scope ("coding" or "ask").
+
+    `catalog_scope` is fixed at construction time and never mutated afterwards
+    on a shared instance — the two default singletons below
+    (`selector_runner` for coding, `ask_selector_runner` for ask) are each
+    built once, locked to their own scope, so /wiki/context-pack and
+    /wiki/ask can never cross-contaminate each other's catalog even though
+    both may share the no-override code path in the same running process.
+    """
     if model is not None or reasoning_effort is not None:
         if _uses_messages_client(model):
             kwargs: dict[str, Any] = {
                 "store": store,
                 "model": model,
                 "max_pages": max_pages or 7,
+                "catalog_scope": scope,
             }
             if reasoning_effort is not None:
                 kwargs["reasoning_effort"] = reasoning_effort
@@ -77,13 +89,21 @@ def get_selector_runner(
             "store": store,
             "model": model,
             "max_pages": max_pages or 7,
+            "catalog_scope": scope,
         }
         if reasoning_effort is not None:
             kwargs["reasoning_effort"] = reasoning_effort
         return JsonWikiPageSelector(**kwargs)
+
+    if scope == "ask":
+        global ask_selector_runner
+        if ask_selector_runner is None:
+            ask_selector_runner = AnthropicWikiPageSelector(store=store, catalog_scope="ask")
+        return ask_selector_runner
+
     global selector_runner
     if selector_runner is None:
-        selector_runner = AnthropicWikiPageSelector(store=store)
+        selector_runner = AnthropicWikiPageSelector(store=store, catalog_scope="coding")
     return selector_runner
 
 
@@ -1099,6 +1119,7 @@ def ask_question(request: AskRequest) -> AskResponse:
         model=request.selector_model,
         max_pages=request.max_pages,
         reasoning_effort=request.selector_reasoning_effort,
+        scope="ask",
     )
     if request.max_pages != selector.max_pages:
         selector.max_pages = request.max_pages
@@ -1547,7 +1568,7 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
             ensure_ascii=False,
         ),
     )
-    runner = get_selector_runner()
+    runner = get_selector_runner(scope="coding")
     if request.max_pages != runner.max_pages:
         runner.max_pages = request.max_pages
     payload = {
