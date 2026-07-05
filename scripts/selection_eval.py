@@ -13,7 +13,7 @@ from fnmatch import fnmatch
 REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
-from wiki_api.selection_scoring import aggregate, score_case  # noqa: E402
+from wiki_api.selection_scoring import aggregate, score_case, miss_frequency  # noqa: E402
 
 MEDIAN_METRICS = [
     "mean_must_have_recall",
@@ -154,6 +154,13 @@ def main() -> None:
     medians = median_summary(passes)
     print("\nMEDIAN SUMMARY:", json.dumps(medians, indent=2))
 
+    freq = miss_frequency([p["cases"] for p in passes])
+    print("\nMISS FREQUENCY (systematic = missed in >= ceil(2/3*repeats) passes):")
+    for entry in freq["systematic"]:
+        print(f"  SYSTEMATIC {entry['case_id']}: {entry['page']} missed {entry['missed']}/{entry['repeats']}")
+    for entry in freq["stochastic"]:
+        print(f"  stochastic {entry['case_id']}: {entry['page']} missed {entry['missed']}/{entry['repeats']}")
+
     out_dir = (
         REPO_ROOT / "reports" / "selection-evals"
         / f"{dt.date.today().isoformat()}-{args.label}"
@@ -161,7 +168,7 @@ def main() -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "results.json").write_text(
         json.dumps(
-            {"repeats": args.repeats, "passes": passes, "median_summary": medians},
+            {"repeats": args.repeats, "passes": passes, "median_summary": medians, "miss_frequency": freq},
             ensure_ascii=False,
             indent=2,
         )

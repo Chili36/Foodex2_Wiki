@@ -4,6 +4,7 @@ Excluded from scoring: pages present by construction in every context pack.
 """
 from __future__ import annotations
 
+import math
 from fnmatch import fnmatch
 
 ALWAYS_PRESENT = {"index.md", "RUNTIME_RULES.md"}
@@ -55,3 +56,27 @@ def aggregate(case_scores: list[dict]) -> dict:
         "leak_free_rate": len([s for s in case_scores if not s["leaks"]]) / count,
         "case_count": count,
     }
+
+
+def miss_frequency(pass_rows: list[list[dict]]) -> dict:
+    """Per-(case, page) miss counts across repeated eval passes.
+
+    Separates systematic misses (>= ceil(2/3 * repeats) passes) from
+    stochastic ones — the instrument that distinguishes a real selection
+    gap from selector run-to-run noise.
+    """
+    repeats = len(pass_rows)
+    counts: dict[str, dict[str, int]] = {}
+    for rows in pass_rows:
+        for row in rows:
+            for page in row.get("missing", []):
+                counts.setdefault(row["id"], {})
+                counts[row["id"]][page] = counts[row["id"]].get(page, 0) + 1
+    threshold = math.ceil(2 * repeats / 3) if repeats else 0
+    systematic: list[dict] = []
+    stochastic: list[dict] = []
+    for case_id in sorted(counts):
+        for page, missed in sorted(counts[case_id].items()):
+            entry = {"case_id": case_id, "page": page, "missed": missed, "repeats": repeats}
+            (systematic if missed >= threshold else stochastic).append(entry)
+    return {"counts": counts, "systematic": systematic, "stochastic": stochastic}

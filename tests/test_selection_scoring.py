@@ -53,3 +53,44 @@ def test_aggregate():
     assert agg["mean_precision"] == 0.875
     assert agg["leak_free_rate"] == 0.5
     assert agg["case_count"] == 2
+
+
+from wiki_api.selection_scoring import miss_frequency
+
+
+def _row(case_id, missing):
+    return {"id": case_id, "missing": missing}
+
+
+def test_miss_frequency_counts_and_split():
+    passes = [
+        [_row("A", ["p1.md"]), _row("B", [])],
+        [_row("A", ["p1.md"]), _row("B", ["p2.md"])],
+        [_row("A", ["p1.md"]), _row("B", [])],
+    ]
+    result = miss_frequency(passes)
+    assert result["counts"] == {"A": {"p1.md": 3}, "B": {"p2.md": 1}}
+    assert result["systematic"] == [
+        {"case_id": "A", "page": "p1.md", "missed": 3, "repeats": 3}
+    ]
+    assert result["stochastic"] == [
+        {"case_id": "B", "page": "p2.md", "missed": 1, "repeats": 3}
+    ]
+
+
+def test_miss_frequency_threshold_is_ceil_two_thirds():
+    # repeats=5 -> threshold ceil(10/3)=4
+    passes = [
+        [_row("A", ["p.md"])],
+        [_row("A", ["p.md"])],
+        [_row("A", ["p.md"])],
+        [_row("A", [])],
+        [_row("A", [])],
+    ]
+    assert miss_frequency(passes)["stochastic"][0]["missed"] == 3
+    passes[3] = [_row("A", ["p.md"])]
+    assert miss_frequency(passes)["systematic"][0]["missed"] == 4
+
+
+def test_miss_frequency_empty():
+    assert miss_frequency([]) == {"counts": {}, "systematic": [], "stochastic": []}
