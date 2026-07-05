@@ -1,10 +1,11 @@
 ---
 title: "Term Type And Facet Constraints"
 select_when: >-
-  The case needs to know which explicit facet families a chosen term type
-  legally permits or forbids: source versus source-commodity versus ingredient
-  origin, physical-state limits on raw commodities, and why facet and hierarchy
-  terms cannot serve as coding bases.
+  Any case that will attach explicit facets to a chosen base term needs this
+  legality matrix: which facet families each term type permits or forbids —
+  source versus source-commodity versus ingredient origin, physical-state
+  limits on raw commodities, and why facet and hierarchy terms cannot serve
+  as coding bases.
 sources:
   - "BUSINESS-RULES.md"
   - "BUSINESS-RULES-COMPACT.json"

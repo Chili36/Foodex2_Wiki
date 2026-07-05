@@ -1,0 +1,2139 @@
+{
+  "repeats": 3,
+  "passes": [
+    {
+      "summary": {
+        "mean_must_have_recall": 0.95,
+        "mean_precision": 1.0,
+        "leak_free_rate": 1.0,
+        "case_count": 15,
+        "mean_pack_chars": 23000.066666666666,
+        "backfill_case_rate": 0.8666666666666667,
+        "mean_backfills_per_case": 0.8666666666666667,
+        "mean_selector_tokens": 3327.9333333333334
+      },
+      "cases": [
+        {
+          "id": "SEL-0001",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "pesticides-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "chemical-monitoring-foodex2.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 24124,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3005,
+            "output_tokens": 269,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3274,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3005,
+                "output_tokens": 269,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3274
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0002",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 20998,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3007,
+            "output_tokens": 219,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3226,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3007,
+                "output_tokens": 219,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3226
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0003",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 24410,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3002,
+            "output_tokens": 273,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3275,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3002,
+                "output_tokens": 273,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3275
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0004",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "chemical-monitoring-foodex2.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "vmpr-legislative-mapping.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 31249,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3000,
+            "output_tokens": 269,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3269,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3000,
+                "output_tokens": 269,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3269
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0005",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "domain-specific-validation.md",
+            "chemical-monitoring-foodex2.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 19618,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3013,
+            "output_tokens": 278,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3291,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3013,
+                "output_tokens": 278,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3291
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "process-validation-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0006",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "ingredient-facets.md",
+            "domain-specific-validation.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 22438,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3016,
+            "output_tokens": 229,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3245,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3016,
+                "output_tokens": 229,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3245
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0007",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "additives-flavourings-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "domain-specific-validation.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 22316,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3011,
+            "output_tokens": 448,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3459,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3011,
+                "output_tokens": 448,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3459
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "domain-specific-validation.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 24879,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3014,
+            "output_tokens": 430,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3444,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3014,
+                "output_tokens": 430,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3444
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0009",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "base-term-selection.md",
+            "domain-specific-validation.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 24879,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3004,
+            "output_tokens": 280,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3284,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3004,
+                "output_tokens": 280,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3284
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0010",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "domain-specific-validation.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "vmpr-legislative-mapping.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 30037,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3004,
+            "output_tokens": 299,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3303,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3004,
+                "output_tokens": 299,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3303
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0011",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "chemical-monitoring-foodex2.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 18300,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3077,
+            "output_tokens": 325,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3402,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3077,
+                "output_tokens": 325,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3402
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0012",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "term-type-facet-constraints.md",
+            "base-term-selection.md",
+            "domain-specific-validation.md",
+            "facet-coding-rules.md"
+          ],
+          "pack_chars": 20898,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3076,
+            "output_tokens": 307,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3383,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3076,
+                "output_tokens": 307,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3383
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0013",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 24410,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3074,
+            "output_tokens": 259,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3333,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3074,
+                "output_tokens": 259,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3333
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0014",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "contaminants-foodex2.md",
+            "packaging-facets.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "code-string-format.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 19319,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3109,
+            "output_tokens": 310,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3419,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3109,
+                "output_tokens": 310,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3419
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0015",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 17126,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3028,
+            "output_tokens": 284,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3312,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3028,
+                "output_tokens": 284,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3312
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 0.95,
+        "mean_precision": 1.0,
+        "leak_free_rate": 1.0,
+        "case_count": 15,
+        "mean_pack_chars": 23340.466666666667,
+        "backfill_case_rate": 0.7333333333333333,
+        "mean_backfills_per_case": 0.8666666666666667,
+        "mean_selector_tokens": 3352.3333333333335
+      },
+      "cases": [
+        {
+          "id": "SEL-0001",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "pesticides-foodex2.md",
+            "base-term-selection.md",
+            "chemical-monitoring-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 24124,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3005,
+            "output_tokens": 280,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3285,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3005,
+                "output_tokens": 280,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3285
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0002",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 20998,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3007,
+            "output_tokens": 229,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3236,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3007,
+                "output_tokens": 229,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3236
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0003",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 24410,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3002,
+            "output_tokens": 281,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3283,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3002,
+                "output_tokens": 281,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3283
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0004",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "chemical-monitoring-foodex2.md",
+            "facet-coding-rules.md",
+            "domain-specific-validation.md",
+            "vmpr-legislative-mapping.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 30037,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3000,
+            "output_tokens": 279,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3279,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3000,
+                "output_tokens": 279,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3279
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0005",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "domain-specific-validation.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 18797,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3013,
+            "output_tokens": 303,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3316,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3013,
+                "output_tokens": 303,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3316
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "process-validation-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0006",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "additives-flavourings-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "ingredient-facets.md",
+            "domain-specific-validation.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 18202,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3016,
+            "output_tokens": 383,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3399,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3016,
+                "output_tokens": 383,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3399
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0007",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "chemical-monitoring-foodex2.md",
+            "domain-specific-validation.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 22316,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3011,
+            "output_tokens": 277,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3288,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3011,
+                "output_tokens": 277,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3288
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "domain-specific-validation.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "vmpr-legislative-mapping.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 30037,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3014,
+            "output_tokens": 303,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3317,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3014,
+                "output_tokens": 303,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3317
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0009",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "base-term-selection.md",
+            "domain-specific-validation.md",
+            "vmpr-legislative-mapping.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 30037,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3004,
+            "output_tokens": 273,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3277,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3004,
+                "output_tokens": 273,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3277
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            },
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0010",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "domain-specific-validation.md",
+            "base-term-selection.md",
+            "chemical-monitoring-foodex2.md",
+            "vmpr-legislative-mapping.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 30037,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3004,
+            "output_tokens": 300,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3304,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3004,
+                "output_tokens": 300,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3304
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0011",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 14319,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3077,
+            "output_tokens": 272,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3349,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3077,
+                "output_tokens": 272,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3349
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0012",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "term-type-facet-constraints.md",
+            "base-term-selection.md",
+            "domain-specific-validation.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md"
+          ],
+          "pack_chars": 24024,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3076,
+            "output_tokens": 558,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3634,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3076,
+                "output_tokens": 558,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3634
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0013",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 24410,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3074,
+            "output_tokens": 369,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3443,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3074,
+                "output_tokens": 369,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3443
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0014",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "contaminants-foodex2.md",
+            "packaging-facets.md",
+            "facet-coding-rules.md",
+            "code-string-format.md",
+            "domain-specific-validation.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 21233,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3109,
+            "output_tokens": 427,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3536,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3109,
+                "output_tokens": 427,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3536
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            },
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0015",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 17126,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3028,
+            "output_tokens": 311,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3339,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3028,
+                "output_tokens": 311,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3339
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 0.9666666666666667,
+        "mean_precision": 1.0,
+        "leak_free_rate": 1.0,
+        "case_count": 15,
+        "mean_pack_chars": 21800.2,
+        "backfill_case_rate": 0.8666666666666667,
+        "mean_backfills_per_case": 0.8666666666666667,
+        "mean_selector_tokens": 3356.6666666666665
+      },
+      "cases": [
+        {
+          "id": "SEL-0001",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "pesticides-foodex2.md",
+            "base-term-selection.md",
+            "chemical-monitoring-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 24124,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3005,
+            "output_tokens": 260,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3265,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3005,
+                "output_tokens": 260,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3265
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0002",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 24124,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3007,
+            "output_tokens": 397,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3404,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3007,
+                "output_tokens": 397,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3404
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0003",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 20429,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3002,
+            "output_tokens": 256,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3258,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3002,
+                "output_tokens": 256,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3258
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0004",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "chemical-monitoring-foodex2.md",
+            "domain-specific-validation.md",
+            "facet-coding-rules.md",
+            "vmpr-legislative-mapping.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 30037,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3000,
+            "output_tokens": 274,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3274,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3000,
+                "output_tokens": 274,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3274
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0005",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "domain-specific-validation.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 15637,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3013,
+            "output_tokens": 297,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3310,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3013,
+                "output_tokens": 297,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3310
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "process-validation-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0006",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "domain-specific-validation.md",
+            "chemical-monitoring-foodex2.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 18202,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3016,
+            "output_tokens": 393,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3409,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3016,
+                "output_tokens": 393,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3409
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0007",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "additives-flavourings-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "domain-specific-validation.md",
+            "ingredient-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 18202,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3011,
+            "output_tokens": 304,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3315,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3011,
+                "output_tokens": 304,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3315
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "base-term-selection.md",
+            "domain-specific-validation.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 24879,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3014,
+            "output_tokens": 300,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3314,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3014,
+                "output_tokens": 300,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3314
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0009",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "base-term-selection.md",
+            "domain-specific-validation.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 24879,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3004,
+            "output_tokens": 295,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3299,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3004,
+                "output_tokens": 295,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3299
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0010",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "domain-specific-validation.md",
+            "base-term-selection.md",
+            "chemical-monitoring-foodex2.md",
+            "term-type-facet-constraints.md",
+            "vmpr-legislative-mapping.md",
+            "facet-coding-rules.md"
+          ],
+          "pack_chars": 30037,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3004,
+            "output_tokens": 302,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3306,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3004,
+                "output_tokens": 302,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3306
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0011",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "chemical-monitoring-foodex2.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 18300,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3077,
+            "output_tokens": 319,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3396,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3077,
+                "output_tokens": 319,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3396
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0012",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "term-type-facet-constraints.md",
+            "base-term-selection.md",
+            "domain-specific-validation.md",
+            "facet-coding-rules.md"
+          ],
+          "pack_chars": 20898,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3076,
+            "output_tokens": 509,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3585,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3076,
+                "output_tokens": 509,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3585
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0013",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "foodex2-overview.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 20055,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3074,
+            "output_tokens": 278,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3352,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3074,
+                "output_tokens": 278,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3352
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0014",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "contaminants-foodex2.md",
+            "packaging-facets.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "code-string-format.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 19319,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3109,
+            "output_tokens": 408,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3517,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3109,
+                "output_tokens": 408,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3517
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0015",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "code-string-format.md",
+            "term-type-facet-constraints.md"
+          ],
+          "pack_chars": 17881,
+          "selector_tokens": {
+            "model": "claude-sonnet-4-6",
+            "calls": 1,
+            "input_tokens": 3028,
+            "output_tokens": 318,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3346,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3028,
+                "output_tokens": 318,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3346
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        }
+      ]
+    }
+  ],
+  "median_summary": {
+    "mean_must_have_recall": {
+      "median": 0.95,
+      "min": 0.95,
+      "max": 0.9666666666666667
+    },
+    "mean_precision": {
+      "median": 1.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "leak_free_rate": {
+      "median": 1.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "mean_pack_chars": {
+      "median": 23000.066666666666,
+      "min": 21800.2,
+      "max": 23340.466666666667
+    },
+    "backfill_case_rate": {
+      "median": 0.8666666666666667,
+      "min": 0.7333333333333333,
+      "max": 0.8666666666666667
+    },
+    "mean_backfills_per_case": {
+      "median": 0.8666666666666667,
+      "min": 0.8666666666666667,
+      "max": 0.8666666666666667
+    },
+    "mean_selector_tokens": {
+      "median": 3352.3333333333335,
+      "min": 3327.9333333333334,
+      "max": 3356.6666666666665
+    },
+    "passes": 3
+  }
+}

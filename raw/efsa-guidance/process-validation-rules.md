@@ -1,11 +1,11 @@
 ---
 title: "Process Validation Rules"
 select_when: >-
-  The case involves combining or checking process facets and needs the
-  process-specific validator logic: mutually exclusive ordinal groups,
-  explicit-versus-implicit process detail level, forbidden derivative-creating
-  processes on raw bases, and reconstitution limits on dried or concentrated
-  products.
+  If the constructed code will carry any process facet — a treatment,
+  preservation, or physical step — its validation needs these rules: which
+  processes may combine (mutually exclusive ordinal groups), process detail
+  implicit in a derivative base versus explicitly stated, forbidden
+  derivative-creating processes on raw bases, and reconstitution limits.
 sources:
   - "BUSINESS-RULES.md"
   - "BUSINESS-RULES-COMPACT.json"

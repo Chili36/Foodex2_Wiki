@@ -114,6 +114,9 @@ keywords or term types to page filenames.
   domain's overlay thinking. Never select overlay pages for domains the
   case does not signal; with no domain signal, the all-domain default
   applies and no overlay page belongs in the pack.
+- One overlay is usually enough. Prefer the page specific to the signalled
+  domain over umbrella monitoring overlays, and do not spend pack slots on
+  both unless the case genuinely spans several domains.
 - Processing, packaging, ingredient, mixture, or physical-state details in
   the query or deconstructed query are real coding work. Prefer pages
   whose hints cover those facet families and the validation rules that
@@ -127,3 +130,12 @@ which facets are legal and needed, and how the construction will be
 validated. Ask what this specific case makes difficult, then choose the
 pages whose selection hints address those difficulties. Do not pad the
 pack with pages the case does not need.
+
+Every constructed code faces validation, even when the query never
+mentions it. A pack that says nothing about how the construction will be
+checked is incomplete: include the pages whose hints cover validating the
+code you expect the coder to build. These needs are cumulative, not
+alternatives — a food that has been treated or preserved needs
+process-rule coverage, and facets attached to the chosen base term need
+facet-legality coverage. Domain-specific validation overlays supplement
+this core coverage; they never replace it.
