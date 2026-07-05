@@ -54,6 +54,7 @@ class WikiPage:
     related: list[str]
     content: str
     body: str
+    select_when: str | None = None
 
 
 @dataclass(frozen=True)
@@ -263,6 +264,12 @@ class WikiStore:
         related = [
             str(item) for item in frontmatter.get("related", []) if isinstance(item, str)
         ]
+        select_when_raw = frontmatter.get("select_when")
+        select_when = (
+            " ".join(str(select_when_raw).split())
+            if isinstance(select_when_raw, str) and select_when_raw.strip()
+            else None
+        )
         summary = self._summaries.get(page_name, "")
         return WikiPage(
             name=normalized_name,
@@ -273,10 +280,26 @@ class WikiStore:
             related=related,
             content=raw,
             body=body,
+            select_when=select_when,
         )
 
     def catalog(self) -> list[WikiPage]:
         return [self.read_page(name) for name in self.list_pages()]
+
+    def selector_catalog(self) -> str:
+        """Selector-facing page catalog: one line per prompt-facing page.
+
+        Prefers the page's select_when hint; falls back to its index.md
+        summary so unannotated pages stay selectable (never invisible).
+        """
+        lines: list[str] = []
+        for name in self.list_pages():
+            if self.page_category(name) not in PROMPT_CONTEXT_PAGE_CATEGORIES:
+                continue
+            page = self.read_page(name)
+            description = page.select_when or page.summary or page.title
+            lines.append(f"- {name} — {description}")
+        return "\n".join(lines)
 
     def guiding_principles(self) -> list[str]:
         return list(self._guiding_principles)
