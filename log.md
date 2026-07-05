@@ -1,9 +1,15 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-07-05"
+last_updated: "2026-07-06"
 ---
 
 # Log
+
+## [2026-07-06] maintenance | Wording-control arm measured: NOT CLOSED, mechanism phase justified
+
+- Measured the Phase 4 wording-control arm (design: `docs/superpowers/specs/2026-07-05-wording-control-arm-design.md`) against the phase3 baseline: 39 reviewed cases × 5 passes per run, fresh instances (ports 8015/8016, `skeleton_enforcement` probed), both permitted configurations exercised — the Task-1 wording as merged (`phase4-wording-arm`) and the single allowed revision round (`phase4-wording-arm-rev1`: `code-string-format.md` gate tightened to multi-segment constructions, Completeness Rubric sentence softened to "in addition to — never instead of").
+- Run 1 closed all five Pattern A/B target pairs at 5/5 picks each but induced **11 new systematic pairs by displacement**: the widened assembly hint fired in 31/39 cases, consuming a selector slot, and `term-type-facet-constraints.md`/`implicit-vs-explicit-facets.md` fell out of packs with the validation role still covered, so the failsafe never fired (recall 0.8731 vs bar >0.8923, backfill 0.1795→0.2821). Rev1 cut displacement to 3 new pairs and restored backfill to 0.1795 but **reopened Pattern A** (csf picks 0/5, 1/5, 0/5) — the tightened gate fires on query-visible code strings (acceptable-tier cases), never on output-inferred multi-segment needs (recall 0.8795, still below bar). Pattern B (`validation-rules.md`, SEL-0038/0039) closed durably in both runs — the arm's one keepable wording win. SEL-0034 (`business-rules.md`) proved wording-immune: `process-validation-rules.md` picked 5/5 under both hint versions.
+- **ARM VERDICT: NOT CLOSED — wording alone cannot close the systematic within-role ceiling; the mechanism phase is justified.** The two runs form an oscillation, not a convergence: hint strengthening reallocates ~6 fixed pack slots among must_haves instead of adding coverage (ttfc is must_have in 34/39 cases). The data specifically favours finer-grained roles (split validation into structural/business-severity/review, own role for term-type coverage) over more prompt iteration; a bounded completeness critic remains the fallback. Precision (0.9524/0.9469), leak-free (1.0/1.0), and tokens (~3560/~3587 ≤ 3,836) passed in both runs. Doctor clean, 106 tests green. Full verdict tables and caveats: `reports/selection-evals/2026-07-06-phase4-wording-arm-rev1/triage.md`.
 
 ## [2026-07-05] diagnostic | Expanded gold set + phase3 baseline: systematic recall ceiling confirmed
 

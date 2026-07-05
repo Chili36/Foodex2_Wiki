@@ -1,11 +1,11 @@
 ---
 title: "FoodEx2 Code String Format"
 select_when: >-
-  If the code the coder will produce carries explicit facet segments — one or
-  many — assembling it needs this page: the five-character base term, the
-  introducer and separators between segments, segment ordering, and the
-  no-spaces and one-code-per-field rules that keep a multi-segment code
-  syntactically well formed.
+  If the code the coder will produce is a multi-segment construction — several
+  explicit facet segments strung after the base term — assembling it needs
+  this page: the introducer and separators between segments, segment ordering,
+  and the no-spaces and one-code-per-field rules that keep a multi-segment
+  code syntactically well formed.
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "FoodEx2 codification guidance_2025_12_v3.pdf"
