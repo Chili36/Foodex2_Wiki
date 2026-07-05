@@ -2000,7 +2000,8 @@
         "must_have": [
           "base-term-selection.md",
           "business-rules.md",
-          "term-type-facet-constraints.md"
+          "term-type-facet-constraints.md",
+          "pesticides-foodex2.md"
         ],
         "acceptable": [
           "foodex2-overview.md",
@@ -2116,7 +2117,8 @@
           "base-term-selection.md",
           "validation-rules.md",
           "implicit-vs-explicit-facets.md",
-          "term-type-facet-constraints.md"
+          "term-type-facet-constraints.md",
+          "pesticides-foodex2.md"
         ],
         "acceptable": [
           "foodex2-overview.md",
