@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import shutil
 from pathlib import Path
 
@@ -67,6 +68,33 @@ def test_doctor_flags_corrupted_selection_policy(tmp_path):
 def test_doctor_passes_selection_policy_on_real_wiki():
     report = run_doctor(".")
     assert "selection_policy" not in {issue.check for issue in report.errors}
+
+
+def test_doctor_flags_missing_select_when(tmp_path):
+    root = _copy_wiki_root(tmp_path)
+    page_path = root / "raw" / "efsa-guidance" / "base-term-selection.md"
+    original = page_path.read_text(encoding="utf-8")
+    stripped = re.sub(
+        r"\nselect_when: >-\n(?:  .*\n)+",
+        "\n",
+        original,
+        count=1,
+    )
+    assert stripped != original, "select_when frontmatter block was not found/stripped"
+    page_path.write_text(stripped, encoding="utf-8")
+
+    report = run_doctor(root)
+    matching = [
+        issue
+        for issue in report.errors
+        if issue.check == "selection_metadata" and issue.location == "base-term-selection.md"
+    ]
+    assert matching, report.errors
+
+
+def test_doctor_passes_selection_metadata_on_real_wiki():
+    report = run_doctor(".")
+    assert "selection_metadata" not in {issue.check for issue in report.errors}
 
 
 def test_doctor_flags_missing_selector_guidance(tmp_path):

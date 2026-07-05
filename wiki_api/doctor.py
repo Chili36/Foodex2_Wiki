@@ -30,6 +30,8 @@ from .wiki_store import (
 
 Severity = Literal["error", "warning"]
 
+SELECT_WHEN_MAX_CHARS = 400
+
 EXTERNAL_LINK_RE = re.compile(r"^[a-z][a-z0-9+.-]*:", re.IGNORECASE)
 INDEX_ENTRY_RE = re.compile(r"^- \[[^\]]+\]\(([^)]+)\):")
 FENCED_CODE_RE = re.compile(r"(^|\n)(```|~~~).*?(?=\n\2|\Z)(?:\n\2)?", re.DOTALL)
@@ -108,6 +110,7 @@ def run_doctor(
     issues.extend(_check_source_tiers(pages.values()))
     issues.extend(_check_source_references(store, pages.values()))
     issues.extend(_check_selection_policy(store))
+    issues.extend(_check_selection_metadata(store))
     if check_rag_index:
         issues.extend(
             _check_rag_index(
@@ -625,6 +628,33 @@ def _check_selection_policy(store: WikiStore) -> Iterable[DoctorIssue]:
                 message=f"selector guidance unavailable: {exc}",
             )
         )
+    return issues
+
+
+def _check_selection_metadata(store: WikiStore) -> Iterable[DoctorIssue]:
+    issues: list[DoctorIssue] = []
+    for name in store.list_pages():
+        if store.page_category(name) not in PROMPT_CONTEXT_PAGE_CATEGORIES:
+            continue
+        page = store.read_page(name)
+        if not page.select_when:
+            issues.append(
+                DoctorIssue(
+                    severity="error",
+                    check="selection_metadata",
+                    location=name,
+                    message="prompt-facing page has no select_when frontmatter",
+                )
+            )
+        elif len(page.select_when) > SELECT_WHEN_MAX_CHARS:
+            issues.append(
+                DoctorIssue(
+                    severity="error",
+                    check="selection_metadata",
+                    location=name,
+                    message=f"select_when exceeds {SELECT_WHEN_MAX_CHARS} chars ({len(page.select_when)})",
+                )
+            )
     return issues
 
 
