@@ -1,5 +1,10 @@
 ---
 title: "FoodEx2 In Pesticide Residue Monitoring"
+select_when: >-
+  The case is reported under pesticide residue monitoring, where the coded food
+  must map to the legislative matrix catalogue and source-commodity facets can
+  be decisive for processed foods, so the ordinary base-term choice carries
+  extra pesticide-specific mapping consequences.
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf"

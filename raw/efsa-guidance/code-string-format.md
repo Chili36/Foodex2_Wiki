@@ -1,5 +1,10 @@
 ---
 title: "FoodEx2 Code String Format"
+select_when: >-
+  The case involves assembling or checking the final code string itself: the
+  five-character base term, the introducing and separating punctuation, the
+  facet-type-and-descriptor segments, their ordering, spacing, and length
+  limits that make a composed code syntactically well formed.
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "FoodEx2 codification guidance_2025_12_v3.pdf"

@@ -1,5 +1,10 @@
 ---
 title: "Process Facets"
+select_when: >-
+  The case involves a treatment or processing step and must decide whether it
+  belongs in the base-term choice or as an explicit process facet, and which
+  specific process descriptor applies — heating, preservation, drying,
+  fermentation, coating, milling, or similar transformations.
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
 related:

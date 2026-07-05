@@ -1,5 +1,11 @@
 ---
 title: "Process Validation Rules"
+select_when: >-
+  The case involves combining or checking process facets and needs the
+  process-specific validator logic: mutually exclusive ordinal groups,
+  explicit-versus-implicit process detail level, forbidden derivative-creating
+  processes on raw bases, and reconstitution limits on dried or concentrated
+  products.
 sources:
   - "BUSINESS-RULES.md"
   - "BUSINESS-RULES-COMPACT.json"

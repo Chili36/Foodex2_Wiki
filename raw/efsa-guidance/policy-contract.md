@@ -1,5 +1,10 @@
 ---
 title: "Policy Contract"
+select_when: >-
+  The case needs an explicit decision order and priority ranking when rules
+  pull in different directions: which constraint wins, how to sequence
+  food-type, base-term, origin, and validation steps, and which anti-patterns
+  to reject before composing the final code.
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"

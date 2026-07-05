@@ -1,5 +1,10 @@
 ---
 title: "Structural Validation"
+select_when: >-
+  The case involves the pre-business-rule structural gate: base-term length and
+  existence, facet parsing, descriptor-to-category membership, automatic
+  removal of implicit facets, and duplicate or single-cardinality detection
+  that reject a code before any policy rule runs.
 sources:
   - "docs/VBA_STRUCTURAL_RULES_SUMMARY.md"
   - "docs/VALIDATION_RULES_SUMMARY.md"

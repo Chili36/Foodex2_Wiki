@@ -1,5 +1,11 @@
 ---
 title: "Domain-Specific Validation"
+select_when: >-
+  The case needs the contextual validation checks that activate only inside a
+  specific reporting domain: which explicit facets are mandatory or recommended
+  for veterinary residues, additives, non-food animal matrices, acrylamide, or
+  similar contexts, turning domain recommendations into blocking or warning
+  behaviour.
 sources:
   - "docs/DOMAIN_SPECIFIC_RULES.md"
   - "docs/CONTEXT_SPECIFIC_RULES.md"

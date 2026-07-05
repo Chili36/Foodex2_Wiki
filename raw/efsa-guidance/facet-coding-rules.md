@@ -1,5 +1,11 @@
 ---
 title: "Facet Coding Rules"
+select_when: >-
+  The case needs to map a descriptive detail to the correct facet family and
+  decide whether it is worth adding — origin, process, physical state,
+  packaging, qualitative, production-method, or fortification — keeping only
+  the few descriptors that add information not already carried by the base
+  term.
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"

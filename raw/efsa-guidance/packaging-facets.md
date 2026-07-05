@@ -1,5 +1,10 @@
 ---
 title: "Packaging Facets"
+select_when: >-
+  The case describes the marketed container or the material in contact with the
+  food and needs to code packaging format and packaging material separately
+  from any preservation process, deciding whether the pack detail matters for
+  the reporting purpose at all.
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"

@@ -1,5 +1,10 @@
 ---
 title: "Business Rules"
+select_when: >-
+  The case needs the authoritative meaning, scope, and severity of a specific
+  numbered business rule: whether a construction is a blocking error, a hard or
+  soft warning, plus validator data-status caveats such as the disintegration
+  physical-state, forbidden-process, and mutually-exclusive-process boundaries.
 sources:
   - "BUSINESS-RULES.md"
   - "BUSINESS-RULES-COMPACT.json"

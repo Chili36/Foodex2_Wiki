@@ -1,5 +1,10 @@
 ---
 title: "Validation Rules Overview"
+select_when: >-
+  The case needs orientation to how validation works overall: the two-layer
+  structure of structural checks then business rules, the severity model, which
+  rules block a code outright, and practical batch-review checks — when the
+  question is why a code would fail rather than one specific rule.
 sources:
   - "BUSINESS-RULES.md"
   - "BUSINESS-RULES-COMPACT.json"

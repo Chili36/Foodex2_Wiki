@@ -1,5 +1,10 @@
 ---
 title: "Base Term Selection Rules"
+select_when: >-
+  The case turns on picking the anchoring base term: deciding raw versus
+  derivative versus composite, ranking competing candidate terms within that
+  type, resolving preservation or dominant-ingredient precedence, and choosing
+  a generic fallback plus origin facet when the exact term is missing.
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"

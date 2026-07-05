@@ -1,5 +1,11 @@
 ---
 title: "FoodEx2 In Chemical Monitoring"
+select_when: >-
+  The case is reported under a chemical-monitoring data collection and needs
+  the reporting overlay that sits on top of ordinary coding: how sampling
+  detail, mandatory explicit facets, and legislative grouping change once a
+  monitoring domain such as pesticides, contaminants, veterinary residues, or
+  additives is in scope.
 sources:
   - "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf"
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"

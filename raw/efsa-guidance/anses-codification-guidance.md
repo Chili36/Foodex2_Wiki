@@ -2,6 +2,12 @@
 title: "ANSES FoodEx2 Codification Guidance"
 last_updated: "2026-06-12"
 source_tier: "expert_guidance"
+select_when: >-
+  The case benefits from experienced-coder conventions and common coding traps
+  around base-term workflow, facet economy, missing-term fallbacks,
+  mixed-product handling, and dataset-quality checks — expert guidance that
+  clarifies practice without overriding catalogue data, business rules, or
+  reporting obligations.
 sources:
   - "FoodEx2 codification guidance_2025_12_v3.pdf"
 related:

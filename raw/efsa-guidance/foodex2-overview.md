@@ -1,5 +1,11 @@
 ---
 title: "FoodEx2 Overview"
+select_when: >-
+  The case needs the top-down mental model before coding: what a base term,
+  facet, and implicit facet are, how raw commodities, derivatives, and
+  composites differ, why hierarchy terms are not reported, and how the
+  reporting versus exposure hierarchies shape an unfamiliar first coding
+  decision.
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"

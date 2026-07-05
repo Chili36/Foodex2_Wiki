@@ -1,5 +1,10 @@
 ---
 title: "Ingredient Facets"
+select_when: >-
+  The case involves naming characterising or minor added ingredients: a
+  composite dish's defining components, a flavouring or coating on an otherwise
+  raw or derivative food, or a same-nature mixture, and deciding when
+  ingredient descriptors apply rather than constitutive-source ones.
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"

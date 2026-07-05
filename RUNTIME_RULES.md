@@ -1,5 +1,11 @@
 ---
 title: "Runtime Rules"
+select_when: >-
+  The case needs the always-on coding order that precedes any specialised
+  page: decide the food type first, prefer a reportable non-hierarchy base
+  term, use the origin-facet family that matches that type, and add only
+  explicit facets that are not already implicit. It anchors every FoodEx2
+  coding decision.
 last_updated: "2026-06-07"
 sources:
   - "raw/efsa-guidance/policy-contract.md"
