@@ -1,5 +1,10 @@
 ---
 title: "FoodEx2 In Additives And Flavourings Monitoring"
+select_when: >-
+  The case is reported under food additives or flavourings monitoring, where
+  the relevant legislative-class facet is required unless already implicit,
+  physical-state and target-consumer facets are recommended, and certain
+  substance or preparation terms must not be reported as the sample matrix.
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf"

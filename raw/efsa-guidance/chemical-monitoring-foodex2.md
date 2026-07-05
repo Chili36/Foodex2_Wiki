@@ -1,5 +1,10 @@
 ---
 title: "FoodEx2 In Chemical Monitoring"
+select_when: >-
+  The case needs the umbrella chemical-monitoring reporting overlay that sits
+  on top of ordinary coding — cross-domain sampling detail, mandatory explicit
+  facets, and legislative grouping — because the question spans several
+  monitoring domains or no domain-specific overlay covers the collection.
 sources:
   - "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf"
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"

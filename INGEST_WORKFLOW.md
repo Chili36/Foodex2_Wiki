@@ -149,6 +149,8 @@ Preferred page shape:
 
 If a page starts becoming a second document dump, split it.
 
+Every created or materially changed prompt-facing page gets a `select_when` hint written or refreshed against the writing rules in `SCHEMA.md`. The doctor fails pages that lack it. Optionally run `python -m wiki_api.llm_lint --page <page> --focus 'select_when hint quality: situation phrasing, no query-keyword or term-type-to-page mappings, accurate to page content'` for a supervised quality pass.
+
 ## 7. Always Check Relevant Policy And Business Rules
 
 For every page touched during ingest or maintenance, explicitly ask:

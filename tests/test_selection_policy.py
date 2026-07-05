@@ -5,6 +5,7 @@ from wiki_api.selection_policy import (
     SelectionPolicy,
     enforce_skeleton,
     load_selection_policy,
+    load_selector_guidance,
 )
 from wiki_api.wiki_store import WikiStore
 
@@ -126,3 +127,42 @@ def test_load_selection_policy_raises_value_error_when_page_missing(tmp_path):
     store = WikiStore(root)
     with pytest.raises(ValueError, match="could not be read"):
         load_selection_policy(store)
+
+
+def test_load_selector_guidance_from_wiki():
+    store = WikiStore(".")
+    guidance = load_selector_guidance(store)
+    assert "Reading The Candidate List" in guidance
+    assert "Completeness Rubric" in guidance
+    assert "```" not in guidance  # prose only, no fenced blocks
+
+
+def test_load_selector_guidance_missing_section_raises(tmp_path):
+    # Reuse the minimal temp-root scaffolding from
+    # test_load_selection_policy_rejects_missing_block, but write a
+    # selection-policy.md WITH a valid yaml block and WITHOUT a
+    # "## Selector Guidance" section.
+    root = tmp_path
+    (root / "raw" / "efsa-guidance").mkdir(parents=True)
+    for name in ("README.md", "PROJECT_CONTEXT.md", "KNOWLEDGE_ARCHITECTURE.md", "SCHEMA.md",
+                 "INGEST_WORKFLOW.md", "MAINTENANCE_WORKFLOW.md", "RUNTIME_RULES.md",
+                 "index.md", "log.md"):
+        (root / name).write_text("---\ntitle: x\n---\n# x\n")
+    (root / "raw" / "efsa-guidance" / "selection-policy.md").write_text(
+        "---\ntitle: x\n---\n"
+        "# Selection Skeleton Policy\n\n"
+        "## Policy Block\n\n"
+        "```yaml\n"
+        "skeleton_version: 1\n"
+        "required_roles:\n"
+        "  base_term:\n"
+        "    members:\n"
+        "      - base-term-selection.md\n"
+        "    default: base-term-selection.md\n"
+        "drop_pages:\n"
+        "  - \"maintenance-*\"\n"
+        "```\n"
+    )
+    store = WikiStore(root)
+    with pytest.raises(ValueError, match="Selector Guidance"):
+        load_selector_guidance(store)

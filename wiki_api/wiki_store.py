@@ -54,6 +54,7 @@ class WikiPage:
     related: list[str]
     content: str
     body: str
+    select_when: str | None = None
 
 
 @dataclass(frozen=True)
@@ -263,6 +264,12 @@ class WikiStore:
         related = [
             str(item) for item in frontmatter.get("related", []) if isinstance(item, str)
         ]
+        select_when_raw = frontmatter.get("select_when")
+        select_when = (
+            " ".join(str(select_when_raw).split())
+            if isinstance(select_when_raw, str) and select_when_raw.strip()
+            else None
+        )
         summary = self._summaries.get(page_name, "")
         return WikiPage(
             name=normalized_name,
@@ -273,10 +280,46 @@ class WikiStore:
             related=related,
             content=raw,
             body=body,
+            select_when=select_when,
         )
 
     def catalog(self) -> list[WikiPage]:
         return [self.read_page(name) for name in self.list_pages()]
+
+    def selector_catalog(self, scope: str = "coding") -> str:
+        """Selector-facing page catalog: one line per selectable page.
+
+        Prefers the page's select_when hint; falls back to its index.md
+        summary (or title) so unannotated pages stay selectable (never
+        invisible).
+
+        Two scopes:
+        - "coding": prompt-facing pages (`PROMPT_CONTEXT_PAGE_CATEGORIES`)
+          excluding `RUNTIME_RULES.md`, which /wiki/context-pack always
+          front-injects itself (`_ensure_front_page`), so it would waste one
+          of the selector's limited picks if it stayed selectable there.
+        - "ask": every served page except `index.md` — prompt-facing pages
+          (including `RUNTIME_RULES.md`, which is legitimately selectable
+          for /wiki/ask) plus orientation, maintenance, and `log.md`, so
+          /wiki/ask can discover pages like maintenance-2024.md that the
+          coding scope correctly omits.
+        """
+        if scope == "coding":
+            names = [name for name in self.list_pages() if name != "RUNTIME_RULES.md"]
+            names = [
+                name for name in names if self.page_category(name) in PROMPT_CONTEXT_PAGE_CATEGORIES
+            ]
+        elif scope == "ask":
+            names = [*self.list_pages(), "log.md"]
+        else:
+            raise ValueError(f"Unknown selector catalog scope: {scope!r}")
+
+        lines: list[str] = []
+        for name in sorted(names):
+            page = self.read_page(name)
+            description = page.select_when or page.summary or page.title
+            lines.append(f"- {name} — {description}")
+        return "\n".join(lines)
 
     def guiding_principles(self) -> list[str]:
         return list(self._guiding_principles)

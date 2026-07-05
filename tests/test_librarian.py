@@ -10,9 +10,13 @@ from wiki_api.librarian import (
     AnthropicFoodEx2Solver,
     AnthropicWikiLibrarian,
     AnthropicWikiPageSelector,
+    JsonWikiPageSelector,
     OpenAICompatibleMessagesClient,
+    build_selection_system_prompt,
+    build_selection_user_content,
     infer_model_provider,
 )
+from wiki_api.selection_policy import load_selector_guidance
 from wiki_api.wiki_store import WikiStore
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -301,6 +305,236 @@ def test_page_selector_accepts_direct_json_page_names_without_tool() -> None:
         "packaging-facets.md",
     ]
     assert result.token_summary["calls"] == 1
+
+
+def test_build_selection_system_prompt_embeds_selector_guidance() -> None:
+    store = _store()
+    guidance = load_selector_guidance(store)
+
+    system_prompt = build_selection_system_prompt(
+        additional_page_limit=6, selector_guidance=guidance
+    )
+
+    assert "Reading The Candidate List" in system_prompt
+    assert "Completeness Rubric" in system_prompt
+    assert guidance in system_prompt
+
+
+def test_build_selection_user_content_uses_selector_catalog_not_wiki_index() -> None:
+    store = _store()
+    payload = {
+        "search_term": "test",
+        "deconstructed_query": {},
+        "candidates": [],
+        "context": {},
+    }
+
+    user_content = build_selection_user_content(store=store, payload=payload)
+    data = json.loads(user_content)
+
+    assert "wiki_index" not in data
+    assert data["case"] == payload
+    assert "- base-term-selection.md — " in data["selector_catalog"]
+
+
+def test_build_selection_user_content_default_scope_is_coding() -> None:
+    store = _store()
+    payload = {"search_term": "test", "deconstructed_query": {}, "candidates": [], "context": {}}
+
+    default_content = build_selection_user_content(store=store, payload=payload)
+    coding_content = build_selection_user_content(store=store, payload=payload, scope="coding")
+
+    assert default_content == coding_content
+
+
+def test_build_selection_user_content_ask_scope_includes_maintenance() -> None:
+    store = _store()
+    payload = {"search_term": "test", "deconstructed_query": {}, "candidates": [], "context": {}}
+
+    user_content = build_selection_user_content(store=store, payload=payload, scope="ask")
+    data = json.loads(user_content)
+
+    assert "maintenance-2024.md" in data["selector_catalog"]
+
+
+def test_build_selection_user_content_coding_scope_excludes_maintenance_and_runtime_rules() -> None:
+    store = _store()
+    payload = {"search_term": "test", "deconstructed_query": {}, "candidates": [], "context": {}}
+
+    user_content = build_selection_user_content(store=store, payload=payload, scope="coding")
+    data = json.loads(user_content)
+
+    assert "maintenance-2024.md" not in data["selector_catalog"]
+    assert "RUNTIME_RULES.md" not in data["selector_catalog"]
+
+
+def test_anthropic_selector_prompt_carries_guidance_and_catalog() -> None:
+    client = FakeAnthropicClient(
+        [
+            _response(
+                stop_reason="end_turn",
+                content=[{"type": "text", "text": json.dumps({"page_names": []})}],
+                input_tokens=100,
+                output_tokens=25,
+            )
+        ]
+    )
+
+    selector = AnthropicWikiPageSelector(store=_store(), client=client, model="fake-model", max_pages=6)
+    selector.run(
+        {
+            "search_term": "test",
+            "deconstructed_query": {},
+            "candidates": [],
+            "context": {},
+        }
+    )
+
+    call = client.messages.calls[0]
+    assert "Reading The Candidate List" in call["system"]
+
+    user_content = call["messages"][0]["content"]
+    assert isinstance(user_content, str)
+    user_payload = json.loads(user_content)
+    assert "wiki_index" not in user_payload
+    assert "- base-term-selection.md — " in user_payload["selector_catalog"]
+
+
+def test_anthropic_selector_ask_scope_includes_maintenance_pages() -> None:
+    client = FakeAnthropicClient(
+        [
+            _response(
+                stop_reason="end_turn",
+                content=[{"type": "text", "text": json.dumps({"page_names": []})}],
+                input_tokens=100,
+                output_tokens=25,
+            )
+        ]
+    )
+
+    selector = AnthropicWikiPageSelector(
+        store=_store(),
+        client=client,
+        model="fake-model",
+        max_pages=6,
+        catalog_scope="ask",
+    )
+    selector.run(
+        {
+            "search_term": "test",
+            "deconstructed_query": {},
+            "candidates": [],
+            "context": {},
+        }
+    )
+
+    user_content = client.messages.calls[0]["messages"][0]["content"]
+    user_payload = json.loads(user_content)
+    assert "maintenance-2024.md" in user_payload["selector_catalog"]
+    assert "RUNTIME_RULES.md" in user_payload["selector_catalog"]
+
+
+def test_anthropic_selector_default_catalog_scope_is_coding() -> None:
+    client = FakeAnthropicClient(
+        [
+            _response(
+                stop_reason="end_turn",
+                content=[{"type": "text", "text": json.dumps({"page_names": []})}],
+                input_tokens=100,
+                output_tokens=25,
+            )
+        ]
+    )
+
+    selector = AnthropicWikiPageSelector(store=_store(), client=client, model="fake-model", max_pages=6)
+    assert selector.catalog_scope == "coding"
+    selector.run(
+        {
+            "search_term": "test",
+            "deconstructed_query": {},
+            "candidates": [],
+            "context": {},
+        }
+    )
+
+    user_content = client.messages.calls[0]["messages"][0]["content"]
+    user_payload = json.loads(user_content)
+    assert "maintenance-2024.md" not in user_payload["selector_catalog"]
+    assert "RUNTIME_RULES.md" not in user_payload["selector_catalog"]
+
+
+def test_json_selector_prompt_carries_guidance_and_catalog(monkeypatch) -> None:
+    captured: dict[str, object] = {}
+
+    def fake_create_json_completion(
+        *, model, system, user_content, max_tokens, reasoning_effort=None
+    ):
+        captured["system"] = system
+        captured["user_content"] = user_content
+        return json.dumps({"page_names": []}), {
+            "stop_reason": "end_turn",
+            "input_tokens": 10,
+            "output_tokens": 5,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 15,
+        }
+
+    monkeypatch.setattr(
+        librarian_module, "_create_json_completion", fake_create_json_completion
+    )
+
+    selector = JsonWikiPageSelector(store=_store(), model="fake-model", max_pages=6)
+    selector.run(
+        {
+            "search_term": "test",
+            "deconstructed_query": {},
+            "candidates": [],
+            "context": {},
+        }
+    )
+
+    assert "Reading The Candidate List" in captured["system"]
+    user_payload = json.loads(captured["user_content"])
+    assert "wiki_index" not in user_payload
+    assert "- base-term-selection.md — " in user_payload["selector_catalog"]
+
+
+def test_json_selector_ask_scope_includes_maintenance_pages(monkeypatch) -> None:
+    captured: dict[str, object] = {}
+
+    def fake_create_json_completion(
+        *, model, system, user_content, max_tokens, reasoning_effort=None
+    ):
+        captured["user_content"] = user_content
+        return json.dumps({"page_names": []}), {
+            "stop_reason": "end_turn",
+            "input_tokens": 10,
+            "output_tokens": 5,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 15,
+        }
+
+    monkeypatch.setattr(
+        librarian_module, "_create_json_completion", fake_create_json_completion
+    )
+
+    selector = JsonWikiPageSelector(
+        store=_store(), model="fake-model", max_pages=6, catalog_scope="ask"
+    )
+    selector.run(
+        {
+            "search_term": "test",
+            "deconstructed_query": {},
+            "candidates": [],
+            "context": {},
+        }
+    )
+
+    user_payload = json.loads(captured["user_content"])
+    assert "maintenance-2024.md" in user_payload["selector_catalog"]
+    assert "RUNTIME_RULES.md" in user_payload["selector_catalog"]
 
 
 def test_librarian_prefers_policy_model_env(monkeypatch) -> None:

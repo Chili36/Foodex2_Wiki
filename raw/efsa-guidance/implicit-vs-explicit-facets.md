@@ -1,5 +1,10 @@
 ---
 title: "Implicit vs Explicit Facets"
+select_when: >-
+  The case hinges on whether a detail is already inherited by the chosen base
+  term or must be stated explicitly: reading the origin chain, narrowing a
+  generic source with a more specific one, and avoiding redundant repetition
+  of properties the base already carries.
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"

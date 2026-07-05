@@ -1,5 +1,11 @@
 ---
 title: "FoodEx2 In VMPR Monitoring"
+select_when: >-
+  The case is reported under veterinary medicinal product residue monitoring,
+  where source and part-nature facets become mandatory, non-food biological
+  matrices use a generic animal-matrix base, wild samples need an explicit
+  production method, and feed, water, and processed products follow special
+  facet rules.
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf"

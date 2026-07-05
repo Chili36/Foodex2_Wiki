@@ -1,5 +1,10 @@
 ---
 title: "Domoic Acid In Scallops"
+select_when: >-
+  The case is a contaminants-monitoring analysis of domoic acid in a scallop
+  matrix, where exact reportable sample-matrix codes and texts are required per
+  species and analysed part, plus an area-of-origin code, drawn from a fixed
+  lookup rather than reconstructed by the coder.
 sources:
   - "Reportable Scallops list of FoodEx2 codes - MTX.xlsx"
   - "domoic_acid_scallops_mtx.csv"

@@ -340,8 +340,41 @@ class FakeDomoicAcidScallopSelector:
 def setup_function() -> None:
     app_module.librarian_runner = FakeLibrarian()
     app_module.selector_runner = FakeSelector()
+    app_module.ask_selector_runner = FakeSelector()
     app_module.solver_runner = FakeSolver()
     app_module.answerer_runner = FakeAnswerer()
+
+
+def test_get_selector_runner_default_scopes_never_cross_contaminate(monkeypatch) -> None:
+    """The coding and ask default singletons must be distinct, scope-locked instances.
+
+    /wiki/context-pack and /wiki/ask both call get_selector_runner() with no
+    per-request model/effort override in the common case, so they share the
+    "construct once, fall back to a module global" code path. This test
+    guards against a regression where that path collapses back to a single
+    shared instance (the pre-fix bug) by asserting the two scopes resolve to
+    different objects, each locked to its own catalog_scope.
+    """
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key-not-used")
+    app_module.selector_runner = None
+    app_module.ask_selector_runner = None
+    try:
+        coding_runner = app_module.get_selector_runner(scope="coding")
+        ask_runner = app_module.get_selector_runner(scope="ask")
+
+        assert coding_runner is not ask_runner
+        assert coding_runner.catalog_scope == "coding"
+        assert ask_runner.catalog_scope == "ask"
+
+        # Repeated calls with the same scope return the same cached instance,
+        # and never adopt the other scope's catalog_scope.
+        assert app_module.get_selector_runner(scope="coding") is coding_runner
+        assert app_module.get_selector_runner(scope="ask") is ask_runner
+        assert coding_runner.catalog_scope == "coding"
+        assert ask_runner.catalog_scope == "ask"
+    finally:
+        app_module.selector_runner = None
+        app_module.ask_selector_runner = None
 
 
 def test_health() -> None:
@@ -759,10 +792,13 @@ def test_ask_accepts_per_request_model_overrides(monkeypatch) -> None:
     created: dict[str, object] = {}
 
     class OverrideSelector(FakeSelector):
-        def __init__(self, *, store: object, model: str, max_pages: int) -> None:
+        def __init__(
+            self, *, store: object, model: str, max_pages: int, catalog_scope: str = "coding"
+        ) -> None:
             super().__init__()
             self.model = model
             self.max_pages = max_pages
+            self.catalog_scope = catalog_scope
             created["selector"] = self
 
     class OverrideAnswerer(FakeAnswerer):
@@ -791,16 +827,20 @@ def test_ask_accepts_per_request_model_overrides(monkeypatch) -> None:
     assert payload["trace"]["retrieval"]["model"] == "selector-test-model"
     assert payload["trace"]["answerer"]["model"] == "answerer-test-model"
     assert created["selector"].max_pages == 5
+    assert created["selector"].catalog_scope == "ask"
 
 
 def test_ask_routes_non_anthropic_model_overrides(monkeypatch) -> None:
     created: dict[str, object] = {}
 
     class JsonSelector(FakeSelector):
-        def __init__(self, *, store: object, model: str, max_pages: int) -> None:
+        def __init__(
+            self, *, store: object, model: str, max_pages: int, catalog_scope: str = "coding"
+        ) -> None:
             super().__init__()
             self.model = model
             self.max_pages = max_pages
+            self.catalog_scope = catalog_scope
             created["selector"] = self
 
     class JsonAnswerer(FakeAnswerer):
@@ -829,16 +869,20 @@ def test_ask_routes_non_anthropic_model_overrides(monkeypatch) -> None:
     assert payload["trace"]["answerer"]["model"] == "gemini-3.5-flash"
     assert created["selector"].model == "gpt-5.4-mini"
     assert created["answerer"].model == "gemini-3.5-flash"
+    assert created["selector"].catalog_scope == "ask"
 
 
 def test_ask_routes_lmstudio_model_overrides_through_messages_client(monkeypatch) -> None:
     created: dict[str, object] = {}
 
     class OverrideSelector(FakeSelector):
-        def __init__(self, *, store: object, model: str, max_pages: int) -> None:
+        def __init__(
+            self, *, store: object, model: str, max_pages: int, catalog_scope: str = "coding"
+        ) -> None:
             super().__init__()
             self.model = model
             self.max_pages = max_pages
+            self.catalog_scope = catalog_scope
             created["selector"] = self
 
     class OverrideAnswerer(FakeAnswerer):
@@ -877,11 +921,13 @@ def test_ask_passes_reasoning_effort_to_lmstudio_overrides(monkeypatch) -> None:
             model: str,
             max_pages: int,
             reasoning_effort: str | None = None,
+            catalog_scope: str = "coding",
         ) -> None:
             super().__init__()
             self.model = model
             self.max_pages = max_pages
             self.reasoning_effort = reasoning_effort
+            self.catalog_scope = catalog_scope
             created["selector"] = self
 
     class OverrideAnswerer(FakeAnswerer):
@@ -918,6 +964,7 @@ def test_ask_passes_reasoning_effort_to_lmstudio_overrides(monkeypatch) -> None:
     assert created["answerer"].reasoning_effort == "high"
     assert payload["trace"]["retrieval"]["reasoning_effort"] == "high"
     assert payload["trace"]["answerer"]["reasoning_effort"] == "high"
+    assert created["selector"].catalog_scope == "ask"
 
 
 def test_ask_requires_question() -> None:

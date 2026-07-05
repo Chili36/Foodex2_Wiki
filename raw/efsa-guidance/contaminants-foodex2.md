@@ -1,5 +1,10 @@
 ---
 title: "FoodEx2 In Contaminants Monitoring"
+select_when: >-
+  The case is reported under contaminants or occurrence monitoring and needs
+  the substance-specific reporting details for that domain: cooking-extent,
+  packaging-material, fat-content, or target-consumer facets, and preparation
+  assumptions that differ from the pesticide reading of the same matrix.
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf"

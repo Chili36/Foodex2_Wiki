@@ -16,6 +16,7 @@ from .wiki_store import WikiStore
 
 POLICY_PAGE_NAME = "selection-policy.md"
 _YAML_BLOCK_RE = re.compile(r"```yaml\s*\n(.*?)```", re.DOTALL)
+_GUIDANCE_HEADER = "## Selector Guidance"
 
 
 @dataclass(frozen=True)
@@ -81,6 +82,32 @@ def load_selection_policy(store: WikiStore) -> SelectionPolicy:
         required_roles=tuple(roles),
         drop_pages=tuple(str(pattern) for pattern in raw_drop),
     )
+
+
+def load_selector_guidance(store: WikiStore) -> str:
+    """Extract the Selector Guidance prose from the policy page.
+
+    Re-read per call, matching the module's no-caching idiom.
+    """
+    try:
+        page = store.read_page(POLICY_PAGE_NAME)
+    except (FileNotFoundError, OSError) as exc:
+        raise ValueError(f"{POLICY_PAGE_NAME} could not be read: {exc}") from exc
+    lines = page.content.splitlines()
+    collected: list[str] = []
+    in_section = False
+    for line in lines:
+        if line.strip() == _GUIDANCE_HEADER:
+            in_section = True
+            continue
+        if in_section and line.startswith("## "):
+            break
+        if in_section:
+            collected.append(line)
+    guidance = "\n".join(collected).strip()
+    if not guidance:
+        raise ValueError(f"{POLICY_PAGE_NAME} has no Selector Guidance section")
+    return guidance
 
 
 def enforce_skeleton(pages_used: list[str], policy: SelectionPolicy) -> SkeletonResult:

@@ -154,6 +154,7 @@ Optional fields:
 
 - `source_tier`
 - `source_inspiration`
+- `select_when`
 - other page-specific metadata when clearly useful
 
 Field meanings:
@@ -163,6 +164,39 @@ Field meanings:
 - `sources`: canonical backing sources for the page
 - `source_tier`: optional authority level for the page's primary source basis; allowed values are `authoritative_rule`, `expert_guidance`, `local_policy`, and `diagnostic`
 - `related`: nearest neighboring wiki pages
+- `select_when`: required on every prompt-facing page (categories `runtime`, `guidance`, `validation`, `domain_overlay`); a candidate-aware selection hint answering "in what coding situations does this page change the outcome?"
+
+### `select_when`
+
+`select_when` is what the candidate-aware selector reads to decide whether a prompt-facing page belongs in a given coding pass's context pack. It is not a summary of the page and not a keyword index — it describes the *situation* in which the page's content changes the outcome.
+
+Writing rules:
+
+- Use situation vocabulary: describe the coding decision or ambiguity the page resolves, not the page's topic label.
+- Keep it to roughly 60 words or fewer, and under 400 characters. The doctor rejects anything over 400 characters.
+- Write complete sentences, not a keyword list or a mapping.
+- Only prompt-facing pages (`runtime`, `guidance`, `validation`, `domain_overlay` categories) carry `select_when`. Orientation and maintenance pages do not need it.
+- Sibling pages must stay distinguishable — two validation pages, for example, should each name what they uniquely resolve rather than both saying "validation matters."
+- Never write query-keyword phrasing (matching on words the user's question might contain) or termType-to-page routing rules (a mechanical `if termType is X, pick page Y` mapping). Both are bright-line violations: they overfit to today's queries or hard-code selector logic in prose instead of describing the underlying situation.
+
+Good example (situation vocabulary, grounded in the page's actual content):
+
+```yaml
+select_when: >-
+  The case requires deciding whether a candidate term is legal as a
+  reportable base term, or which facet categories a chosen term type
+  permits or forbids — including when hierarchy, group, or facet terms
+  appear among the candidates.
+```
+
+Forbidden examples (never write these):
+
+```yaml
+select_when: "Select when the query mentions scallops"          # query keyword
+select_when: "If termType is d, select implicit-vs-explicit"    # termType→page rule
+```
+
+The doctor (`wiki_api/doctor.py`, check `selection_metadata`) fails any prompt-facing page missing `select_when`, and fails any `select_when` longer than 400 characters.
 
 ## Source Tiers
 

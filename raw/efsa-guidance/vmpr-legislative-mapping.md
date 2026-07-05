@@ -1,5 +1,11 @@
 ---
 title: "VMPR Legislative Mapping"
+select_when: >-
+  The case is a veterinary-residue sample whose coded facets feed the
+  downstream legislative-commodity mapping, and the question is how source,
+  production-method, part-consumed, and legislative-class facets drive the
+  game, wild, and final commodity classification after the code is already
+  composed.
 sources:
   - "Guidance VMPR mapping to legislative products.pdf"
 related:

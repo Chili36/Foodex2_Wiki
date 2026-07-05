@@ -14,7 +14,8 @@ related:
 # Selection Skeleton Policy
 
 This page defines the deterministic failsafe applied to `/wiki/context-pack`
-after the LLM page selector runs. It is maintainer policy, not FoodEx2
+after the LLM page selector runs, and carries the selector guidance injected
+into the page selector's system prompt. It is maintainer policy, not FoodEx2
 coding guidance, and is never projected into coding prompts.
 
 ## Why This Exists
@@ -82,3 +83,59 @@ drop_pages:
   - "log.md"
   - "selection-policy.md"
 ```
+
+## Selector Guidance
+
+This section is loaded by the wiki service and injected into the page
+selector's system prompt. It teaches the selector how to read a coding
+case. It describes meanings and situations only — it must never map query
+keywords or term types to page filenames.
+
+### Reading The Candidate List
+
+- Candidate `termType` values follow the FoodEx2 term-type model:
+  `r` raw commodity, `d` derivative, `c` composite, `s` simple composite,
+  `h` hierarchy, `g` generic or group, `f` facet descriptor, and
+  `n` non-specific.
+- A candidate set that mixes raw and derivative terms for the same
+  commodity means the coder must decide which descriptive details are
+  already implicit in a derivative base and which need explicit facets.
+  Prefer pages whose selection hints cover implicit-versus-explicit
+  reasoning and raw-versus-derivative process boundaries.
+- Hierarchy, group, facet, or non-specific terms in the candidate list are
+  traps: they are discouraged or invalid as reportable base terms, and the
+  coder must be steered toward a legal specific term. When such candidates
+  appear, prefer pages whose hints cover base-term legality and term-type
+  constraints.
+
+### Reading The Context
+
+- An explicit reporting domain in the case context activates exactly that
+  domain's overlay thinking. Never select overlay pages for domains the
+  case does not signal; with no domain signal, the all-domain default
+  applies and no overlay page belongs in the pack.
+- One overlay is usually enough. Prefer the page specific to the signalled
+  domain over umbrella monitoring overlays, and do not spend pack slots on
+  both unless the case genuinely spans several domains.
+- Processing, packaging, ingredient, mixture, or physical-state details in
+  the query or deconstructed query are real coding work. Prefer pages
+  whose hints cover those facet families and the validation rules that
+  constrain them.
+
+### Completeness Rubric
+
+A FoodEx2 code will be constructed from the pack you assemble. The pack
+must let the coder resolve the food type, the best reportable base term,
+which facets are legal and needed, and how the construction will be
+validated. Ask what this specific case makes difficult, then choose the
+pages whose selection hints address those difficulties. Do not pad the
+pack with pages the case does not need.
+
+Every constructed code faces validation, even when the query never
+mentions it. A pack that says nothing about how the construction will be
+checked is incomplete: include the pages whose hints cover validating the
+code you expect the coder to build. These needs are cumulative, not
+alternatives — a food that has been treated or preserved needs
+process-rule coverage, and facets attached to the chosen base term need
+facet-legality coverage. Domain-specific validation overlays supplement
+this core coverage; they never replace it.

@@ -14,6 +14,7 @@ from urllib import error, parse, request
 from anthropic import Anthropic
 from dotenv import load_dotenv
 
+from .selection_policy import load_selector_guidance
 from .wiki_store import WikiStore
 
 
@@ -51,23 +52,40 @@ READ_WIKI_PAGES_TOOL = {
 
 TOOLS = [READ_WIKI_PAGES_TOOL]
 
-def build_selection_system_prompt(*, additional_page_limit: int) -> str:
+def build_selection_system_prompt(*, additional_page_limit: int, selector_guidance: str) -> str:
     return f"""You are the FoodEx2 wiki page selector.
 
 Your only job is to choose which wiki pages should be returned as context for the current coding case so another model can create the correct FoodEx2 code.
 
+How to read the case:
+
+{selector_guidance}
+
 Rules:
-- The full catalog from `index.md` is already provided in the user message.
-- Use the query, deconstructed query, candidate list, and index together.
+- The selector catalog of available wiki pages is provided in the user message; each entry describes the situations in which that page should be selected.
+- Use the query, deconstructed query, candidate list, catalog, and the guidance above together.
 - Return only the pages needed for this case.
-- Prefer pages that resolve food type, process, facet legality, domain rules, ingredients, or packaging when those signals appear.
-- Do not request `index.md` again.
 - Do not solve the FoodEx2 coding task.
 - Do not summarize or rewrite the wiki.
-- Request only the additional wiki pages you need after reviewing the provided index.
 - Request at most {additional_page_limit} additional wiki pages.
 - If no additional pages are needed, return JSON only: {{"page_names": []}}
 """
+
+
+def build_selection_system_prompt_for_store(*, store: WikiStore, additional_page_limit: int) -> str:
+    return build_selection_system_prompt(
+        additional_page_limit=additional_page_limit,
+        selector_guidance=load_selector_guidance(store),
+    )
+
+
+def build_selection_user_content(
+    *, store: WikiStore, payload: dict[str, Any], scope: str = "coding"
+) -> str:
+    return json.dumps(
+        {"case": payload, "selector_catalog": store.selector_catalog(scope)},
+        ensure_ascii=False,
+    )
 
 POLICY_PACK_SYSTEM_PROMPT = """You are the FoodEx2 wiki librarian.
 
@@ -1027,6 +1045,7 @@ class AnthropicWikiPageSelector:
         max_pages: int = 7,
         max_tokens: int = 1500,
         reasoning_effort: str | None = None,
+        catalog_scope: str = "coding",
     ):
         self.store = store
         self.model = model or _resolve_model(
@@ -1038,22 +1057,19 @@ class AnthropicWikiPageSelector:
         self.max_pages = max_pages
         self.max_tokens = max_tokens
         self.reasoning_effort = reasoning_effort
+        self.catalog_scope = catalog_scope
 
     def run(self, payload: dict[str, Any]) -> PageSelectionResult:
         selector_started = time.perf_counter()
-        index_content = self.store.read_page("index.md").content
-        selection_system_prompt = build_selection_system_prompt(
-            additional_page_limit=max(self.max_pages - 1, 0)
+        selection_system_prompt = build_selection_system_prompt_for_store(
+            store=self.store,
+            additional_page_limit=max(self.max_pages - 1, 0),
         )
         messages = [
             {
                 "role": "user",
-                "content": json.dumps(
-                    {
-                        "case": payload,
-                        "wiki_index": index_content,
-                    },
-                    ensure_ascii=False,
+                "content": build_selection_user_content(
+                    store=self.store, payload=payload, scope=self.catalog_scope
                 ),
             }
         ]
@@ -1120,25 +1136,23 @@ class JsonWikiPageSelector:
         max_pages: int = 7,
         max_tokens: int = 1500,
         reasoning_effort: str | None = None,
+        catalog_scope: str = "coding",
     ):
         self.store = store
         self.model = model
         self.max_pages = max_pages
         self.max_tokens = max_tokens
         self.reasoning_effort = reasoning_effort
+        self.catalog_scope = catalog_scope
 
     def run(self, payload: dict[str, Any]) -> PageSelectionResult:
         selector_started = time.perf_counter()
-        index_content = self.store.read_page("index.md").content
-        selection_system_prompt = build_selection_system_prompt(
-            additional_page_limit=max(self.max_pages - 1, 0)
+        selection_system_prompt = build_selection_system_prompt_for_store(
+            store=self.store,
+            additional_page_limit=max(self.max_pages - 1, 0),
         )
-        user_content = json.dumps(
-            {
-                "case": payload,
-                "wiki_index": index_content,
-            },
-            ensure_ascii=False,
+        user_content = build_selection_user_content(
+            store=self.store, payload=payload, scope=self.catalog_scope
         )
         llm_started = time.perf_counter()
         _log_prompt(
