@@ -7,8 +7,11 @@ labels to produce recall, precision, and leak metrics.
 
 `gold_cases.json` shape: `{"version": 1, "cases": [ ... ]}`.
 
-All cases in this seed are drafts (`"reviewed": false`) awaiting David's sign-off.
-The runner exposes `--only-reviewed` to score the trusted subset.
+Each case carries a `"reviewed"` flag: `false` means a machine-drafted label awaiting
+David's sign-off, `true` means human-reviewed ground truth. All 15 seed cases were
+reviewed on 2026-07-05 (with corrections to SEL-0012 and SEL-0015). New cases start
+as `"reviewed": false` until signed off. The runner exposes `--only-reviewed` to
+score only the trusted subset; the committed baseline and phase1 evals use it.
 
 ## Case Schema
 
