@@ -1127,6 +1127,53 @@ def test_context_pack_can_return_domoic_acid_scallop_overlay() -> None:
     assert app_module.selector_runner.calls[0]["context"] == {"reporting_domain": "contaminants"}
 
 
+class FakeLeakySelector(FakeSelector):
+    def run(self, payload: dict[str, object]) -> PageSelectionResult:
+        result = super().run(payload)
+        return PageSelectionResult(
+            pages_used=["index.md", "base-term-selection.md", "ingredient-facets.md", "maintenance-2024.md"],
+            tool_trace=result.tool_trace,
+            token_summary=result.token_summary,
+            timing_summary=result.timing_summary,
+        )
+
+
+def test_context_pack_backfills_missing_roles_and_drops_leaks() -> None:
+    app_module.selector_runner = FakeLeakySelector()
+    response = request(
+        "POST",
+        "/wiki/context-pack",
+        json={"search_term": "test skeleton enforcement"},
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    pages_used = payload["pages_used"]
+    assert pages_used[0] == "RUNTIME_RULES.md"
+    assert "maintenance-2024.md" not in pages_used
+    assert "term-type-facet-constraints.md" in pages_used
+    enforcement = payload["trace"]["skeleton_enforcement"]
+    assert enforcement["backfilled"] == [
+        {"role": "validation", "page": "term-type-facet-constraints.md"}
+    ]
+    assert enforcement["dropped"] == ["maintenance-2024.md"]
+    assert enforcement["selector_covered_roles"] == ["base_term", "facet"]
+    page_names = [page["page_name"] for page in payload["pages"]]
+    assert "term-type-facet-constraints.md" in page_names
+    assert "maintenance-2024.md" not in page_names
+
+
+def test_context_pack_trace_reports_no_backfill_when_roles_covered() -> None:
+    response = request(
+        "POST",
+        "/wiki/context-pack",
+        json={"search_term": "test skeleton no-op"},
+    )
+    assert response.status_code == 200
+    enforcement = response.json()["trace"]["skeleton_enforcement"]
+    assert enforcement["backfilled"] == []
+    assert enforcement["dropped"] == []
+
+
 def test_policy_pack_accepts_legacy_scope_note_but_normalizes_to_coverage_text() -> None:
     response = request(
         "POST",

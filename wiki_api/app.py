@@ -28,6 +28,7 @@ from .rag_index import (
     DEFAULT_WIKI_CHUNK_MAX_CHARS,
     get_wiki_rag_status,
 )
+from .selection_policy import enforce_skeleton, load_selection_policy
 from .wiki_store import WikiPage, WikiStore
 
 
@@ -1560,6 +1561,25 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
     except (RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
 
+    try:
+        selection_policy = load_selection_policy(store)
+    except ValueError as exc:
+        raise HTTPException(status_code=503, detail=f"selection policy unavailable: {exc}") from exc
+    skeleton = enforce_skeleton(selection_result.pages_used, selection_policy)
+    for backfill in skeleton.backfilled:
+        logger.info(
+            "selector_miss %s",
+            json.dumps(
+                {
+                    "surface": "context-pack",
+                    "search_term": request.search_term,
+                    "role": backfill["role"],
+                    "page": backfill["page"],
+                },
+                ensure_ascii=False,
+            ),
+        )
+
     pages = [
         PageSummary(
             page_name=page.name,
@@ -1571,11 +1591,11 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
             related=page.related,
             content=store.prompt_content_for_context_pack(page) if request.include_page_content else None,
         )
-        for page in [store.read_page(page_name) for page_name in selection_result.pages_used]
+        for page in [store.read_page(page_name) for page_name in skeleton.final_pages]
     ]
     final_pages_used, pages = _ensure_front_page(
         RUNTIME_RULES_PAGE_NAME,
-        selection_result.pages_used,
+        skeleton.final_pages,
         pages,
         include_content=request.include_page_content,
         content_for_page=store.prompt_content_for_context_pack,
@@ -1605,6 +1625,12 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
                     "Supporting Pages By Signal",
                     "Worked Examples",
                 ],
+            },
+            "skeleton_enforcement": {
+                "policy_version": selection_policy.skeleton_version,
+                "backfilled": skeleton.backfilled,
+                "dropped": skeleton.dropped,
+                "selector_covered_roles": skeleton.selector_covered_roles,
             },
             "token_summary": selection_result.token_summary,
             "timing_summary": {
