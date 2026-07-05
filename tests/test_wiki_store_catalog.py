@@ -26,6 +26,17 @@ def test_selector_catalog_excludes_non_prompt_facing_pages(tmp_path):
     assert "maintenance-2024.md" not in catalog
 
 
+def test_selector_catalog_falls_back_to_title_when_no_hint_or_summary(tmp_path):
+    store = _make_store(tmp_path)
+    catalog = store.selector_catalog()
+    assert "- unsummarized.md — Unsummarized" in catalog
+
+
+def test_read_page_non_string_select_when_is_none(tmp_path):
+    store = _make_store(tmp_path)
+    assert store.read_page("bad-select-when.md").select_when is None
+
+
 def _make_store(tmp_path):
     root = tmp_path
     guidance = root / "raw" / "efsa-guidance"
@@ -40,10 +51,17 @@ def _make_store(tmp_path):
     )
     (guidance / "plain.md").write_text("---\ntitle: Plain\n---\n# Plain\n")
     (guidance / "maintenance-2024.md").write_text("---\ntitle: M24\n---\n# M24\n")
+    (guidance / "unsummarized.md").write_text(
+        "---\ntitle: Unsummarized\n---\n# Unsummarized\n"
+    )
+    (guidance / "bad-select-when.md").write_text(
+        "---\ntitle: Bad Select When\nselect_when: 42\n---\n# Bad Select When\n"
+    )
     (root / "index.md").write_text(
         "---\ntitle: Index\n---\n# Index\n\n## Guidance\n\n"
         "- [annotated.md](raw/efsa-guidance/annotated.md): Summary for annotated page.\n"
         "- [plain.md](raw/efsa-guidance/plain.md): Summary line for plain page.\n"
         "- [maintenance-2024.md](raw/efsa-guidance/maintenance-2024.md): M24 summary.\n"
+        "- [bad-select-when.md](raw/efsa-guidance/bad-select-when.md): Bad select_when summary.\n"
     )
     return WikiStore(root)

@@ -72,6 +72,13 @@ Rules:
 """
 
 
+def build_selection_system_prompt_for_store(*, store: WikiStore, additional_page_limit: int) -> str:
+    return build_selection_system_prompt(
+        additional_page_limit=additional_page_limit,
+        selector_guidance=load_selector_guidance(store),
+    )
+
+
 def build_selection_user_content(*, store: WikiStore, payload: dict[str, Any]) -> str:
     return json.dumps(
         {"case": payload, "selector_catalog": store.selector_catalog()},
@@ -1050,9 +1057,9 @@ class AnthropicWikiPageSelector:
 
     def run(self, payload: dict[str, Any]) -> PageSelectionResult:
         selector_started = time.perf_counter()
-        selection_system_prompt = build_selection_system_prompt(
+        selection_system_prompt = build_selection_system_prompt_for_store(
+            store=self.store,
             additional_page_limit=max(self.max_pages - 1, 0),
-            selector_guidance=load_selector_guidance(self.store),
         )
         messages = [
             {
@@ -1132,9 +1139,9 @@ class JsonWikiPageSelector:
 
     def run(self, payload: dict[str, Any]) -> PageSelectionResult:
         selector_started = time.perf_counter()
-        selection_system_prompt = build_selection_system_prompt(
+        selection_system_prompt = build_selection_system_prompt_for_store(
+            store=self.store,
             additional_page_limit=max(self.max_pages - 1, 0),
-            selector_guidance=load_selector_guidance(self.store),
         )
         user_content = build_selection_user_content(store=self.store, payload=payload)
         llm_started = time.perf_counter()

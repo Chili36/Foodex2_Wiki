@@ -625,7 +625,7 @@ def _check_selection_policy(store: WikiStore) -> Iterable[DoctorIssue]:
                 severity="error",
                 check="selection_policy",
                 location=POLICY_PAGE_NAME,
-                message=f"selector guidance unavailable: {exc}",
+                message=str(exc),
             )
         )
     return issues
