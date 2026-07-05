@@ -127,7 +127,10 @@ keywords or term types to page filenames.
 A FoodEx2 code will be constructed from the pack you assemble. The pack
 must let the coder resolve the food type, the best reportable base term,
 which facets are legal and needed, and how the construction will be
-validated. Ask what this specific case makes difficult, then choose the
+validated. The pack must serve the code the coder will produce: a
+construction that will carry explicit facet segments needs assembly-syntax
+and dataset-review coverage, not only concept pages. Ask what this
+specific case makes difficult, then choose the
 pages whose selection hints address those difficulties. Do not pad the
 pack with pages the case does not need.
 

@@ -1,10 +1,12 @@
 ---
 title: "Business Rules"
 select_when: >-
-  The case needs the authoritative meaning, scope, and severity of a specific
-  numbered business rule: whether a construction is a blocking error, a hard or
-  soft warning, plus validator data-status caveats such as the disintegration
-  physical-state, forbidden-process, and mutually-exclusive-process boundaries.
+  When the question is whether a construction is legal — which numbered rule
+  governs it and how severely it fires: blocking error, hard warning, or
+  advisory — this page decides. Rule identity, scope, severity, and validator
+  data-status caveats live here; mechanics pages apply the rules but do not
+  define them, including limits on adding a step the product's state already
+  embodies.
 sources:
   - "BUSINESS-RULES.md"
   - "BUSINESS-RULES-COMPACT.json"
