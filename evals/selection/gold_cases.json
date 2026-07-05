@@ -857,6 +857,1356 @@
         ],
         "notes": "Rubric 2 (all-domain default): no reporting_domain signal -> ALL four overlays AND the chemical-monitoring router must_not. Rubric 1+6: plain raw fresh fruit; base-term + term-type validation must_have, facet pages acceptable. candidate_hints code A01BQ (apple) is INVENTED / not verified against a wiki page - David: verify or replace this base-term code."
       }
+    },
+    {
+      "id": "SEL-0016",
+      "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_29_sm_r_fett_80",
+      "reviewed": true,
+      "request": {
+        "search_term": "Smör fett 80% (butter, fat 80%)",
+        "deconstructed_query": {
+          "food": "butter",
+          "state": "fat 80%"
+        },
+        "context": {},
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "facet-coding-rules.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1: a dairy derivative carrying an explicit quantitative fat-content descriptor (official DMT code A039C#F07.A076B). facet-coding-rules is must_have because a coder must know F07 fat-content is an explicit quantitative facet rather than folding the percentage into the base; term-type-facet-constraints is the validation must_have (F07 legal on a derivative, single value). Rubric 2 (all-domain default): no reporting domain, so every overlay and the chemical-monitoring router are must_not. base-term-selection stays must_have per rubric 1. DMT source is base+one-facet; termType not asserted as a candidate hint to avoid an unverified claim."
+      }
+    },
+    {
+      "id": "SEL-0017",
+      "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_151_l_ttmj_lk_fett_0_5_berikad",
+      "reviewed": true,
+      "request": {
+        "search_term": "Lättmjölk fett 0,5% berikad (low-fat milk, fat 0.5%, fortified)",
+        "deconstructed_query": {
+          "food": "low-fat milk",
+          "state": "fat 0.5%, vitamin-fortified"
+        },
+        "context": {},
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "facet-coding-rules.md",
+          "code-string-format.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "implicit-vs-explicit-facets.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+6: a derivative that legitimately carries several explicit facets at once (official DMT code A02MA#F07.A06YN$F10.A0CRG$F10.A0F6C$F09.A0EXM — fat level, two fortification descriptors, an added-vitamin descriptor). code-string-format is must_have because assembling four segments correctly turns on the # introducer, the $ separators, the no-trailing-$ rule and one-code-per-field (code-string-format Syntax section); a coder who mishandles the punctuation emits a malformed string even with the right descriptors. facet-coding-rules must_have for choosing F07/F09/F10; term-type validation must_have (multiple F10 is allowed because F10 is not single-cardinality). Rubric 2: no domain -> all overlays and chemical-monitoring must_not."
+      }
+    },
+    {
+      "id": "SEL-0018",
+      "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_995_lg_skav_r_frysvara",
+      "reviewed": true,
+      "request": {
+        "search_term": "Älg skav rå frysvara (moose shavings, raw, frozen)",
+        "deconstructed_query": {
+          "food": "moose meat",
+          "state": "raw, sliced/shaved, frozen"
+        },
+        "context": {},
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "process-facets.md",
+          "process-validation-rules.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: a raw commodity taking a physical-division state plus a preservation process (official DMT code A01SE#F03.A06JA$F28.A07KQ). process-facets is must_have because freezing (F28.A07KQ) is an explicit non-nature-changing preservation step that must be added rather than baked into the base. process-validation-rules is the validation must_have here: it decides that freezing is a BR19-allowed process on a raw base (term-type-facet-constraints worked example shows raw + F28.A07KQ valid), so the raw base is kept rather than forced to a derivative. term-type-facet-constraints must_have because the shaving/slicing physical state must be checked against BR13 (slicing is not one of the seven disintegration-family F03 descriptors, so it is legal on the raw base). Rubric 2: no domain -> all overlays must_not."
+      }
+    },
+    {
+      "id": "SEL-0019",
+      "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_1535_korv_varmkorv_stekt",
+      "reviewed": true,
+      "request": {
+        "search_term": "Korv varmkorv stekt (hot-dog sausage, fried)",
+        "deconstructed_query": {
+          "food": "sausage",
+          "state": "fried"
+        },
+        "context": {},
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "process-facets.md",
+          "process-validation-rules.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: a processed derivative where frying is the explicit added treatment (official DMT code A026B#F28.A07GR). process-facets must_have to pick the specific dry-heat frying descriptor rather than a generic process label (BR11). process-validation-rules is the validation must_have: frying is a heating-group (ordinal 1.x) process, so a coder must confirm it neither duplicates an implicit process on the sausage base (BR16) nor collides with another same-ordinal heating step (BR26). term-type validation must_have for F28 legality on a derivative. Rubric 2: no domain -> all overlays must_not."
+      }
+    },
+    {
+      "id": "SEL-0020",
+      "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_1433_blodbr_d_paltbr_d_kokt_med_salt",
+      "reviewed": true,
+      "request": {
+        "search_term": "Blodbröd paltbröd kokt med salt (blood bread, boiled with salt)",
+        "deconstructed_query": {
+          "food": "blood bread",
+          "state": "composite, boiled, salted"
+        },
+        "context": {},
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "ingredient-facets.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "process-facets.md",
+          "process-validation-rules.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: a composite bread whose characterising ingredients (blood, salt) are reported as F04 (official DMT code A005K#F04.A003J$F04.A0F1T). ingredient-facets must_have because a composite is coded with F04 ingredient descriptors and the blood ingredient is not optional. term-type-facet-constraints must_have to enforce that a composite forbids F01/F27 (BR03-BR04) and must use F04. process-facets stays acceptable because boiling is largely implicit in a cooked-bread base (rubric 6). Rubric 2: no domain -> all overlays must_not."
+      }
+    },
+    {
+      "id": "SEL-0021",
+      "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_262_potatissoppa_med_purjol_k",
+      "reviewed": true,
+      "request": {
+        "search_term": "Potatissoppa med purjolök (potato soup with leek)",
+        "deconstructed_query": {
+          "food": "potato soup",
+          "state": "composite"
+        },
+        "context": {},
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "ingredient-facets.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: a composite soup with a stated characterising ingredient (official DMT code A041P#F04.A00SB, leek). ingredient-facets must_have (composite -> F04); term-type validation must_have to hold the composite F01/F27 prohibition (BR03-BR04). Rubric 2: no domain -> all overlays must_not."
+      }
+    },
+    {
+      "id": "SEL-0022",
+      "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_1848_mj_lkchoklad_med_hackade_hasseln_tter",
+      "reviewed": true,
+      "request": {
+        "search_term": "Mjölkchoklad med hackade hasselnötter (milk chocolate with chopped hazelnuts)",
+        "deconstructed_query": {
+          "food": "milk chocolate",
+          "state": "with added hazelnuts"
+        },
+        "context": {},
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "ingredient-facets.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: a chocolate product carrying explicit characterising ingredients as F04 (official DMT code A034Q#F04.A014L$F04.A02PJ, milk and hazelnuts). ingredient-facets must_have because the added nuts and milk are reported as F04 ingredients; term-type validation must_have because if the base resolves as a derivative rather than a composite the coder must know F04 is minor-ingredient-only (BR12) and the origin family differs. Rubric 2: no domain -> all overlays must_not."
+      }
+    },
+    {
+      "id": "SEL-0023",
+      "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_1261_regnb_gslax_odlad_r",
+      "reviewed": true,
+      "request": {
+        "search_term": "Regnbågslax odlad rå (rainbow trout, farmed, raw)",
+        "deconstructed_query": {
+          "food": "rainbow trout",
+          "state": "raw, farmed"
+        },
+        "context": {},
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "facet-coding-rules.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1: a raw commodity carrying an explicit production-method facet (official DMT code A029N#F21.A07RV, farmed). facet-coding-rules must_have because 'farmed' is an explicit F21 production-method descriptor that a coder must attach rather than assume; term-type validation must_have for F21 legality on a raw base. Rubric 2: no domain -> all overlays must_not."
+      }
+    },
+    {
+      "id": "SEL-0024",
+      "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_6462_korv_stroganoff_hemlagad",
+      "reviewed": true,
+      "request": {
+        "search_term": "Korv stroganoff hemlagad (sausage stroganoff, homemade dish)",
+        "deconstructed_query": {
+          "food": "sausage stroganoff",
+          "state": "composite mixed dish"
+        },
+        "context": {},
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "ingredient-facets.md",
+          "code-string-format.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: a composite mixed dish whose official DMT code carries seven F04 ingredients plus an F22 descriptor (A03VY#F04.A024F$F04.A02ML$F04.A00ZD$F04.A00HC$F04.A003Y$F04.A042P$F22.A07SS). code-string-format is must_have because building an eight-segment code correctly is exactly the case its Syntax section governs: one # introducer, seven $ separators, no trailing $, one code per field. ingredient-facets must_have (many characterising F04 ingredients on a composite); term-type validation must_have (composite forbids F01/F27, BR03-BR04). Rubric 2: no domain -> all overlays must_not."
+      }
+    },
+    {
+      "id": "SEL-0025",
+      "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_7175_savoiardikex",
+      "reviewed": true,
+      "request": {
+        "search_term": "Savoiardikex (savoiardi ladyfinger biscuits)",
+        "deconstructed_query": {
+          "food": "ladyfinger biscuits",
+          "state": "composite bakery"
+        },
+        "context": {},
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "ingredient-facets.md",
+          "code-string-format.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: an industrial composite biscuit whose official DMT code carries five F04 ingredients plus an F22 descriptor (A16FJ#F04.A003Y$F04.A042P$F04.A032J$F04.A033Z$F04.A169T$F22.A07SH). code-string-format must_have for correctly assembling the six-segment facet string (# then five $ separators, no trailing $). ingredient-facets must_have (composite -> multiple F04); term-type validation must_have (composite F01/F27 prohibition). Rubric 2: no domain -> all overlays must_not."
+      }
+    },
+    {
+      "id": "SEL-0026",
+      "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_1747_saftsoppa",
+      "reviewed": true,
+      "request": {
+        "search_term": "Saftsoppa (fruit-syrup soup / berry cordial soup)",
+        "deconstructed_query": {
+          "food": "fruit-syrup soup",
+          "state": "generic term, detailed base missing"
+        },
+        "context": {},
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "implicit-vs-explicit-facets.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: a product where the detailed base term is missing and the official DMT code marks that gap with the generic-term facet (A046G#F26.A07XE). implicit-vs-explicit-facets must_have because F26.A07XE is the 'detailed term not present, generic base used' marker described in the implicit/explicit origin logic; a coder who does not understand the generic-term fallback either invents an over-specific base or drops the required marker. term-type validation must_have to keep the fallback within legal facet use. Rubric 2: no domain -> all overlays must_not."
+      }
+    },
+    {
+      "id": "SEL-0027",
+      "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_1389_mussla_p_burk_med_lag",
+      "reviewed": true,
+      "request": {
+        "search_term": "Mussla på burk med lag (mussels canned in liquid)",
+        "deconstructed_query": {
+          "food": "mussels",
+          "state": "raw commodity in packing liquid, species narrowed"
+        },
+        "context": {},
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "implicit-vs-explicit-facets.md",
+          "facet-coding-rules.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "packaging-facets.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: a raw shellfish commodity where an explicit source-commodity narrows the implicit generic source and a packing-medium facet is added (official DMT code A0BZ5#F06.A06XT$F27.A0FCY). implicit-vs-explicit-facets must_have because the explicit F27 must refine — not replace — the base's implicit source chain (BR01/BR05 reasoning; a coder who instead rebuilds from raw + process loses the classification). facet-coding-rules must_have for the F06 packing-medium descriptor; term-type validation must_have because F27 on a raw base must be a child of the base (BR01). Rubric 2: no domain -> all overlays must_not."
+      }
+    },
+    {
+      "id": "SEL-0028",
+      "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_626_plommon_p_burk_med_sockerlag",
+      "reviewed": true,
+      "request": {
+        "search_term": "Plommon på burk med sockerlag (plums canned in sugar syrup)",
+        "deconstructed_query": {
+          "food": "plums",
+          "state": "in sugar-syrup packing medium"
+        },
+        "context": {},
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "facet-coding-rules.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "process-facets.md",
+          "process-validation-rules.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1: a fruit carrying an explicit packing-medium facet (official DMT code A01NT#F06.A06XY, in syrup). facet-coding-rules must_have because the packing medium is an explicit F06 descriptor and must be distinguished from a preservation process or an added ingredient; term-type validation must_have for F06 legality on the chosen base. Rubric 2: no domain -> all overlays must_not."
+      }
+    },
+    {
+      "id": "SEL-0029",
+      "source": "synthetic",
+      "reviewed": true,
+      "request": {
+        "search_term": "Fryst produkt vars föreslagna kod har två identiska frysfasetter (frozen product whose proposed code repeats the same freezing facet)",
+        "deconstructed_query": {
+          "food": "frozen product",
+          "state": "proposed code has duplicate F28 freezing instance"
+        },
+        "context": {},
+        "candidate_hints": [
+          {
+            "code": "A0B9Z",
+            "name": "Base term used in the structural-validation worked example",
+            "termType": "g"
+          },
+          {
+            "code": "A07JS",
+            "name": "Preserving-additives process descriptor (F28)",
+            "termType": "f"
+          }
+        ],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "structural-validation.md",
+          "facet-coding-rules.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "business-rules.md",
+          "term-type-facet-constraints.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1 + rubric 6: the situation is a code whose facet section repeats one descriptor instance (structural-validation worked example A0B9Z#F28.A07JS$F28.A07JS is invalid — duplicate facet instance detected). structural-validation is the validation must_have here rather than term-type-facet-constraints, because the failure is caught in the pre-business-rule structural gate (parse -> descriptor lookup -> duplicate/cardinality step 6), not in the term-type legality matrix; a coder without this page keeps the redundant facet and emits an invalid code. facet-coding-rules must_have to identify which single F28 descriptor to keep. term-type-facet-constraints drops to acceptable because term-type legality is not the deciding factor. Rubric 2: no domain -> all overlays must_not. Candidate codes A0B9Z / A07JS are cited verbatim in structural-validation.md and process-facets.md."
+      }
+    },
+    {
+      "id": "SEL-0030",
+      "source": "synthetic",
+      "reviewed": true,
+      "request": {
+        "search_term": "Fettprodukt kodad med två olika F07-fetthaltsvärden (fat spread coded with two different F07 fat-content descriptors)",
+        "deconstructed_query": {
+          "food": "fat spread",
+          "state": "proposed code carries two F07 fat-content facets"
+        },
+        "context": {},
+        "candidate_hints": [
+          {
+            "code": "A076B",
+            "name": "Fat-content descriptor (F07)",
+            "termType": "f"
+          },
+          {
+            "code": "A075D",
+            "name": "Fat-content descriptor (F07)",
+            "termType": "f"
+          }
+        ],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "structural-validation.md",
+          "facet-coding-rules.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "business-rules.md",
+          "term-type-facet-constraints.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1 + rubric 6: the case turns on attaching two competing F07 fat-content values to one base. F07 is a single-cardinality facet family, so the structural gate rejects the second value (structural-validation Descriptor-and-Facet-Checks lists F07 among single-cardinality groups; BR25 ERROR). structural-validation is the validation must_have because the block is a cardinality check that runs before business-rule policy; facet-coding-rules must_have to decide which single fat-content descriptor legitimately applies. business-rules and term-type stay acceptable (BR25 severity is background, not the selection driver). Rubric 2: no domain -> all overlays must_not. F07 descriptors A076B / A075D are real fat-content descriptors observed in DMT official coding."
+      }
+    },
+    {
+      "id": "SEL-0031",
+      "source": "synthetic",
+      "reviewed": true,
+      "request": {
+        "search_term": "Torkat derivat där en explicit torkningsfasett upprepar den redan implicita processen (dried derivative where an explicit drying facet repeats the process already implicit in the base)",
+        "deconstructed_query": {
+          "food": "dried derivative (e.g. dried meat)",
+          "state": "explicit F28 drying duplicates implicit base process"
+        },
+        "context": {},
+        "candidate_hints": [
+          {
+            "code": "A04MP",
+            "name": "Dried-meat derivative base with implicit drying",
+            "termType": "d"
+          },
+          {
+            "code": "A07KG",
+            "name": "Drying process descriptor (F28)",
+            "termType": "f"
+          }
+        ],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "structural-validation.md",
+          "implicit-vs-explicit-facets.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "business-rules.md",
+          "term-type-facet-constraints.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "process-validation-rules.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: the situation is adding an explicit F28 drying facet to a derivative base that already implies drying (process-facets worked example: dried kangaroo A04MP takes no explicit F28.A07KG because drying is implicit). structural-validation is the validation must_have because the redundant facet is stripped automatically by the implicit-facet-removal step of the structural gate, with a warning — a coder who does not know this leaves a facet that the validator will remove. implicit-vs-explicit-facets must_have because deciding the facet is implicit (and must not be restated) is exactly its origin/implicit logic. Rubric 2: no domain -> all overlays must_not. A04MP / A07KG cited verbatim in process-facets.md."
+      }
+    },
+    {
+      "id": "SEL-0032",
+      "source": "synthetic",
+      "reviewed": true,
+      "request": {
+        "search_term": "Flaskvatten i PET-plastflaska, migrationsstudie (bottled water in a PET plastic bottle, migration monitoring)",
+        "deconstructed_query": {
+          "food": "bottled water",
+          "state": "marketed in a plastic bottle"
+        },
+        "context": {
+          "reporting_domain": "contaminants"
+        },
+        "candidate_hints": [
+          {
+            "code": "A07NM",
+            "name": "Bottle (F18 packaging-format descriptor)",
+            "termType": "f"
+          },
+          {
+            "code": "A16RX",
+            "name": "Plastic (F19 packaging-material descriptor)",
+            "termType": "f"
+          }
+        ],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "packaging-facets.md",
+          "term-type-facet-constraints.md",
+          "contaminants-foodex2.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: packaging is load-bearing because migration of contaminants from the container is the reporting purpose, so the marketed pack must be coded as F18 format plus F19 material (packaging-facets F18-vs-F19 table; worked example A03QF#...F18.A07NM$F19.A16RX). packaging-facets must_have because a coder must split format from material and keep packaging separate from any F28 process. term-type validation must_have for facet legality. Rubric 2: explicit contaminants domain -> contaminants overlay must_have, all other overlays must_not, chemical-monitoring acceptable. A07NM / A16RX cited verbatim in packaging-facets.md."
+      }
+    },
+    {
+      "id": "SEL-0033",
+      "source": "synthetic",
+      "reviewed": true,
+      "request": {
+        "search_term": "Torra frukostflingor i laminerad kartong (dry breakfast cereal in a laminated carton box)",
+        "deconstructed_query": {
+          "food": "breakfast cereal",
+          "state": "marketed in a laminated carton"
+        },
+        "context": {},
+        "candidate_hints": [
+          {
+            "code": "A07NL",
+            "name": "Box (F18 packaging-format descriptor)",
+            "termType": "f"
+          },
+          {
+            "code": "A07PN",
+            "name": "Laminated material (F19 packaging-material descriptor)",
+            "termType": "f"
+          }
+        ],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "packaging-facets.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: the marketed carton is the coding focus, so F18 format (box) and F19 material (laminated) must be coded separately, and the coder must not mistake the box for a preservation process (packaging-facets 'Packaging is not the same as process'). packaging-facets must_have; term-type validation must_have for facet legality. Rubric 2: no domain signal -> all overlays and chemical-monitoring must_not, so this also tests packaging selection in the all-domain default. A07NL / A07PN cited verbatim in packaging-facets.md."
+      }
+    },
+    {
+      "id": "SEL-0034",
+      "source": "synthetic",
+      "reviewed": true,
+      "request": {
+        "search_term": "Torkat buljongpulver där man överväger att lägga till en beredning/spädningsprocess (dried instant stock powder where a reconstitution/dilution process is being considered)",
+        "deconstructed_query": {
+          "food": "dried stock powder",
+          "state": "dehydrated; reconstitution being considered"
+        },
+        "context": {},
+        "candidate_hints": [
+          {
+            "code": "A07MR",
+            "name": "Reconstitution process descriptor (F28)",
+            "termType": "f"
+          },
+          {
+            "code": "A07KG",
+            "name": "Drying process descriptor (F28)",
+            "termType": "f"
+          }
+        ],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "process-facets.md",
+          "business-rules.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "term-type-facet-constraints.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "process-validation-rules.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: the decision is whether adding a reconstitution/dilution step to an already dehydrated product is legal. business-rules is the must_have because the answer is a specific numbered rule with a specific severity — BR28 (HIGH) forbids adding reconstitution or dilution to dehydrated/powdered/concentrated products and directs the coder to the reconstituted-product term instead. A coder who does not consult the rule's scope and severity produces a code the validator rejects. process-facets must_have to recognise reconstitution/drying as F28 descriptors. term-type stays acceptable; the deciding authority is the BR, not the term-type matrix. Rubric 2: no domain -> all overlays must_not. A07MR / A07KG cited verbatim in process-facets.md."
+      }
+    },
+    {
+      "id": "SEL-0035",
+      "source": "synthetic",
+      "reviewed": true,
+      "request": {
+        "search_term": "Kandidatlistan innehåller en utgången (deprecated) term jämte en giltig term (candidate list contains a deprecated term alongside a valid one)",
+        "deconstructed_query": {
+          "food": "food whose top search candidate is a deprecated term",
+          "state": "raw commodity"
+        },
+        "context": {},
+        "candidate_hints": [
+          {
+            "code": "A0XXX",
+            "name": "Deprecated term (illustrative; flagged deprecated) — do not use as base",
+            "termType": "r"
+          },
+          {
+            "code": "A0YYY",
+            "name": "Current reportable replacement term (illustrative)",
+            "termType": "r"
+          }
+        ],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "business-rules.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+6: the situation is a candidate set whose highest-ranked term is deprecated. business-rules is the must_have because whether the code is valid hinges on a specific numbered rule and its severity — BR20 (deprecated) and BR21 (dismissed) are ERROR: such terms are always invalid as bases even when the code string is perfectly well formed. A coder who only checks syntax and term-type legality would accept a structurally clean but deprecated base. term-type-facet-constraints must_have to reinforce that only reportable terms win base selection (BR08/BR23-BR24). No facet page is must_have because the decision is base rejection, not facet construction (same shape as SEL-0015). Rubric 2: no domain -> all overlays must_not. Candidate codes A0XXX / A0YYY are illustrative placeholders (no real deprecated code was available); flagged for review."
+      }
+    },
+    {
+      "id": "SEL-0036",
+      "source": "synthetic",
+      "reviewed": true,
+      "request": {
+        "search_term": "Rå krydda malen till pulver — är F03 pulver tillåtet på den råa basen? (raw spice ground to a powder — is an F03 powder state allowed on the raw base?)",
+        "deconstructed_query": {
+          "food": "raw spice",
+          "state": "ground to powder"
+        },
+        "context": {
+          "reporting_domain": "pesticides"
+        },
+        "candidate_hints": [
+          {
+            "code": "A00YH",
+            "name": "Sage, raw spice commodity",
+            "termType": "r"
+          },
+          {
+            "code": "A06JD",
+            "name": "Powder physical-state descriptor (F03)",
+            "termType": "f"
+          }
+        ],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "business-rules.md",
+          "term-type-facet-constraints.md",
+          "pesticides-foodex2.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "validation-rules.md",
+          "structural-validation.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md",
+          "process-validation-rules.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: the case turns on whether a powder physical state can sit on a raw commodity. business-rules is must_have because the outcome is a specific rule with a specific severity — BR13 (HIGH) blocks the seven disintegration-family F03 descriptors (A06JD powder among them) on raw commodities and forces a step to a powdered/derivative base. term-type-facet-constraints is also must_have: its core matrix and worked example (raw + F03.A06JD invalid, BR13) give the legality boundary, so both the severity and the matrix are needed to avoid a wrong code. Rubric 2: explicit pesticides domain -> pesticides overlay must_have, other overlays must_not, chemical-monitoring acceptable. A00YH / A06JD cited verbatim in process-facets.md / term-type-facet-constraints.md."
+      }
+    },
+    {
+      "id": "SEL-0037",
+      "source": "synthetic",
+      "reviewed": true,
+      "request": {
+        "search_term": "Sammansatt maträtt (t.ex. pizza) kodad med F27 källfasett — skulle koden gå igenom valideringen? (composite dish such as pizza coded with an F27 source facet — would the code pass validation?)",
+        "deconstructed_query": {
+          "food": "composite dish (pizza)",
+          "state": "proposed code uses F27 source"
+        },
+        "context": {},
+        "candidate_hints": [
+          {
+            "code": "A02LS",
+            "name": "Composite pizza base term",
+            "termType": "c"
+          },
+          {
+            "code": "A0EZJ",
+            "name": "Source-commodity descriptor (F27) wrongly applied to a composite",
+            "termType": "f"
+          }
+        ],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "validation-rules.md",
+          "ingredient-facets.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: the situation is a syntactically clean composite code that nonetheless carries an illegal F27 (term-type worked example A02LS#F27.A0EZJ invalid, BR04). validation-rules is the must_have because the deciding insight is the two-layer model: a code can pass structural checks and still fail policy, so a coder must understand that 'well-formed' does not mean 'valid' and that F27 on a composite is a HIGH blocking failure. ingredient-facets must_have because the fix is to use F04 ingredient on the composite; term-type validation must_have for the BR03-BR04 prohibition. Rubric 2: no domain -> all overlays must_not. A02LS#F27.A0EZJ cited verbatim in term-type-facet-constraints.md."
+      }
+    },
+    {
+      "id": "SEL-0038",
+      "source": "synthetic",
+      "reviewed": true,
+      "request": {
+        "search_term": "Blandade bär av samma natur, rå — flera F27 källråvaror eller flera F01 källor? (mixed same-nature raw berries — multiple F27 source-commodities or multiple F01 sources?)",
+        "deconstructed_query": {
+          "food": "mixed raw berries",
+          "state": "same-nature mixture"
+        },
+        "context": {
+          "reporting_domain": "pesticides"
+        },
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "validation-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "term-type-facet-constraints.md",
+          "pesticides-foodex2.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "code-string-format.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "notes": "Rubric 1+5: the case turns on how to describe a same-nature mixture of raw commodities. validation-rules is must_have because its practical dataset-review rule is the deciding authority: same-nature mixed raw commodities should use multiple F27 source-commodities, not multiple F01 source descriptors — a review check that catches a common mis-code. implicit-vs-explicit-facets must_have because narrowing the implicit source with explicit F27 (rather than F01) is the origin-chain decision. term-type validation must_have (F01 on a raw base is not permitted; F27 must refine the base, BR01). Rubric 2: explicit pesticides domain (berries are a pesticide matrix) -> pesticides overlay must_have, other overlays must_not, chemical-monitoring acceptable. No candidate base code asserted (mixed-berry base not verified against a wiki page); flagged for review."
+      }
+    },
+    {
+      "id": "SEL-0039",
+      "source": "synthetic",
+      "reviewed": true,
+      "request": {
+        "search_term": "Örtinfusion — beskriver koden det torra infusionsmaterialet eller den färdiga drycken? (herbal infusion — does the code describe the dry infusion material or the reconstituted beverage?)",
+        "deconstructed_query": {
+          "food": "herbal infusion",
+          "state": "dry material vs reconstituted beverage ambiguous"
+        },
+        "context": {},
+        "candidate_hints": [],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "validation-rules.md",
+          "term-type-facet-constraints.md"
+        ],
+        "acceptable": [
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "implicit-vs-explicit-facets.md",
+          "code-string-format.md",
+          "structural-validation.md",
+          "business-rules.md",
+          "domain-specific-validation.md",
+          "anses-codification-guidance.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "domoic-acid-scallops.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "notes": "Rubric 1+6: the case turns on an infusion ambiguity — the same words can mean the dry infusion material or the final reconstituted beverage, and the two map to different base terms. validation-rules is must_have because its practical dataset-review guidance explicitly flags this infusion-ambiguity check (decide whether the code describes the dry material or the reconstituted beverage); a coder who skips it can pick the wrong base and produce a code for the wrong product. term-type validation must_have for base-term legality. No facet page is must_have because the decision is base selection, not facet construction (same shape as SEL-0015 / SEL-0035). Rubric 2: no domain -> all overlays must_not."
+      }
     }
   ]
 }

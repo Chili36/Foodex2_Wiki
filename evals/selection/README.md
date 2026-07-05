@@ -85,6 +85,40 @@ FoodEx2 sage to label a case.
    page drops to `acceptable`, so `must_have` is `base-term-selection.md` + the domain
    overlay (if any) + the validation page — matching the SEL-0001 worked example.
 
+## Case Sourcing
+
+- `source: "wiki_ask_10_tests_..."` — the 10 original reviewed cases drawn from the
+  wiki-ask test transcript.
+- `source: "synthetic"` — hand-authored cases designed to exercise a specific rule
+  or page; candidate codes are cited verbatim from a wiki worked example wherever
+  possible, and any illustrative/unverified code is flagged in the case `notes`.
+- `source: "dmt:foodex2_eval_cases_from_facet_review.json:<case id>"` — real coding
+  requests mined from the DMT FoodEx2 facet-review corpus. Swedish queries are kept
+  and given a short English gloss in parentheses. The DMT record's official code is
+  quoted in the case `notes` as label grounding; DMT base-term `termType`s are **not**
+  asserted as candidate hints (they are not verifiable against a wiki page), so those
+  cases carry empty `candidate_hints`, matching the reviewed seed style.
+
+## Coverage Floor
+
+The gold set targets a per-page must-have floor: each of these 11 role-bearing pages is
+`must_have` in **at least 3 cases** across the whole set, so the eval can tell whether the
+selector picks the right *specific* page within a role (not just any validation or facet
+page):
+
+`term-type-facet-constraints.md`, `validation-rules.md`, `structural-validation.md`,
+`business-rules.md`, `process-validation-rules.md`, `facet-coding-rules.md`,
+`implicit-vs-explicit-facets.md`, `process-facets.md`, `ingredient-facets.md`,
+`packaging-facets.md`, `code-string-format.md`.
+
+Cases must *earn* each must-have from their situation (rubric rule 6): e.g. a duplicate or
+single-cardinality facet earns `structural-validation.md`; a "which numbered rule blocks
+this, and is it blocking or advisory?" construction earns `business-rules.md`; a "clean
+syntax but fails policy" or same-nature-mix review earns `validation-rules.md`; assembling
+a long multi-segment code string earns `code-string-format.md`. Never paste a page into
+`must_have` purely to hit the floor. The floor is enforced by the Task-2 validation script
+(see the expand-eval brief).
+
 ## Consistency Invariants (mechanical)
 
 - Exactly one domain overlay is `must_have` when the domain is explicit; all overlays are

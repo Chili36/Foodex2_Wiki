@@ -1,0 +1,926 @@
+{
+  "SEL-0016": {
+    "must_have": [
+      "base-term-selection.md",
+      "implicit-vs-explicit-facets.md",
+      "term-type-facet-constraints.md"
+    ],
+    "acceptable": [
+      "facet-coding-rules.md",
+      "process-facets.md",
+      "anses-codification-guidance.md",
+      "foodex2-overview.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "Butter at 80% fat is a well-known dairy derivative. No domain signal is present, so all overlay pages are must_not (rule 2). Maintenance and orientation pages are always must_not (rules 3-4).\n\nFor must_have: (1) base-term-selection.md is always required for code-construction cases — butter could be coded as a raw commodity or derivative (e.g. fat/lipid fraction); choosing between 'butter' base terms and confirming it is a derivative rather than a composite is a real decision. (2) implicit-vs-explicit-facets.md is must_have because butter is a derivative with fat content potentially carried implicitly by the base term; '80% fat' is a composition detail that a coder must decide whether to state explicitly or whether it is already implied by the base term choice — without this page, a competent coder could produce a redundant or incorrect facet annotation. (3) term-type-facet-constraints.md is required because the coder needs to confirm which facet families are permitted on a derivative base term and whether any physical-state or source facets are applicable.\n\nFor acceptable: facet-coding-rules.md is on-topic for deciding whether fat content constitutes a qualifying facet; process-facets.md is relevant because butter production involves a churning/separation process that may or may not appear as an explicit facet; anses-codification-guidance.md covers fat-content and dairy coding traps; foodex2-overview.md provides derivative-vs-composite context. None of these is strictly required for a competent coder to produce a correct code without them, so they stay acceptable.\n\npackaging-facets.md, ingredient-facets.md, process-validation-rules.md are not warranted because no packaging, composite/ingredient structure, or explicit process step is mentioned."
+  },
+  "SEL-0017": {
+    "must_have": [
+      "base-term-selection.md",
+      "implicit-vs-explicit-facets.md",
+      "term-type-facet-constraints.md"
+    ],
+    "acceptable": [
+      "facet-coding-rules.md",
+      "process-facets.md",
+      "process-validation-rules.md",
+      "foodex2-overview.md",
+      "anses-codification-guidance.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "maintenance-*",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "1. **No domain signal** → all domain overlay pages (pesticides-foodex2.md, contaminants-foodex2.md, vmpr-foodex2.md, vmpr-legislative-mapping.md, additives-flavourings-foodex2.md, domoic-acid-scallops.md) are must_not. chemical-monitoring-foodex2.md is also must_not when no domain signal exists (per rubric rule 2).\n\n2. **Code-construction case** → base-term-selection.md is must_have (rule 1).\n\n3. **Base term:** Low-fat milk (0.5% fat) is a derivative — it has been processed (fat reduced/skimmed) from whole milk. The coder must decide which derivative term to anchor on and whether the fat level (0.5%) is already implicit in a specific base term or needs a facet. This makes implicit-vs-explicit-facets.md must_have: the fat content and fortification status may or may not be carried implicitly by the chosen derivative base term, and getting this wrong produces an incomplete or redundant code (rubric rule 5 and rule 6).\n\n4. **Fortification** ('berikad' = fortified, vitamin-enriched): fortification is a treatment/enrichment step that might require an explicit process or fortification facet. This is a derivative with an added component, so term-type-facet-constraints.md is must_have to confirm which facet families are permitted on a derivative base term (rule 1, validation page). Without it a coder may attach a forbidden facet type to a derivative.\n\n5. **Process/fortification facets**: process-facets.md is acceptable (fortification is a processing treatment; deciding whether to code it as a process facet is relevant but may be resolved by the implicit-vs-explicit check alone). process-validation-rules.md is acceptable if a process facet is attached. facet-coding-rules.md is acceptable as general facet mapping guidance.\n\n6. **Packaging, composite, ingredient facets**: no packaging or composite/mixture language mentioned → packaging-facets.md and ingredient-facets.md are unlabeled/not needed.\n\n7. **Maintenance and orientation pages**: all must_not per rules 3 and 4."
+  },
+  "SEL-0018": {
+    "must_have": [
+      "base-term-selection.md",
+      "facet-coding-rules.md",
+      "term-type-facet-constraints.md",
+      "process-facets.md"
+    ],
+    "acceptable": [
+      "implicit-vs-explicit-facets.md",
+      "process-validation-rules.md",
+      "foodex2-overview.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "maintenance-*",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "No domain signal is present (context is {}), so all domain overlay pages are must_not (pesticides, contaminants, vmpr, vmpr-legislative-mapping, additives-flavourings, domoic-acid-scallops, and chemical-monitoring-foodex2). Maintenance and orientation pages are always must_not. For the code-construction labels: base-term-selection.md is must_have per rubric rule 1 — the coder must identify whether 'moose' maps to a specific raw meat base term or requires a generic animal meat fallback. The food has explicit processing states (sliced/shaved and frozen), both of which are process facets that must be coded explicitly; therefore process-facets.md is must_have (rubric rule 5 — processing/treatment mentioned). Because process facets will be attached, term-type-facet-constraints.md is must_have (rubric rule 1 — needed to confirm which facet families are permissible for a raw meat base term). facet-coding-rules.md is must_have because the coder must decide whether freezing and shaving are worth stating as explicit facets versus being implicit in any chosen base term — without this page a competent coder could mis-assign or omit these descriptors. implicit-vs-explicit-facets.md is acceptable (shaving/slicing may or may not be implicit in the base; freezing likewise — this page helps verify but the coder can get by with facet-coding-rules.md). process-validation-rules.md is acceptable because process facets are present but the food is raw (not a derivative), so mutual-exclusivity rules are lower risk. foodex2-overview.md is acceptable as orientation for an unusual wild-game meat."
+  },
+  "SEL-0019": {
+    "must_have": [
+      "base-term-selection.md",
+      "process-facets.md",
+      "process-validation-rules.md"
+    ],
+    "acceptable": [
+      "implicit-vs-explicit-facets.md",
+      "facet-coding-rules.md",
+      "ingredient-facets.md",
+      "term-type-facet-constraints.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "This is a code-construction case with no domain signal. The food is a hot-dog sausage that has been fried — a processed/treated food. Rubric rule 1 requires base-term-selection.md, at least one facet page, and at least one validation page. Rubric rule 5 specifies that when processing/treatment is mentioned, process-facets.md is must-have and process-validation-rules.md is the validation page (replacing the default term-type-facet-constraints.md as the primary validation page). So: base-term-selection.md (anchoring the base term for a composite/derivative sausage product), process-facets.md (deciding how to code the 'fried' treatment), and process-validation-rules.md (validating that the fried process facet is legal on this base term, checking for forbidden processes and derivative-creating process rules). Sausage is a composite/derivative product so implicit-vs-explicit-facets.md and facet-coding-rules.md are acceptable (helpful for deciding which facets are already implicit in the sausage base term). ingredient-facets.md is acceptable since sausage is a composite product with potential ingredient characterisation. term-type-facet-constraints.md is acceptable as a secondary validation reference. No domain signal exists, so all domain overlay pages are must_not. All maintenance and orientation pages are must_not per rubric rules 3 and 4."
+  },
+  "SEL-0020": {
+    "must_have": [
+      "base-term-selection.md",
+      "ingredient-facets.md",
+      "process-facets.md",
+      "process-validation-rules.md"
+    ],
+    "acceptable": [
+      "facet-coding-rules.md",
+      "implicit-vs-explicit-facets.md",
+      "term-type-facet-constraints.md",
+      "foodex2-overview.md",
+      "anses-codification-guidance.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "packaging-facets.md",
+      "maintenance-*",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "Blood bread (paltbröd) is a traditional Scandinavian composite/mixed food made with blood as a key ingredient, boiled and salted. Several rubric rules apply:\n\n1. **Code-construction case (rule 1):** `base-term-selection.md` is required. A competent coder also needs at least one validation page.\n\n2. **No domain signal (rule 2):** `context` is `{}`, so all domain overlay pages are `must_not`: `pesticides-foodex2.md`, `contaminants-foodex2.md`, `vmpr-foodex2.md`, `vmpr-legislative-mapping.md`, `additives-flavourings-foodex2.md`, `domoic-acid-scallops.md`. Also `chemical-monitoring-foodex2.md` is `must_not` per rule 2 (no domain signal).\n\n3. **Composite/mixed food (rule 5):** Blood bread has blood as a distinctive ingredient component — it is a composite product. `ingredient-facets.md` is `must_have`.\n\n4. **Processing mentioned (rule 5):** The food is explicitly described as boiled (`kokt`) and salted. `process-facets.md` is `must_have` because a competent coder must decide whether boiling belongs in the base-term or as an explicit process facet, and which descriptor applies. `process-validation-rules.md` is `must_have` as the validation page for process-carrying codes (replaces the default `term-type-facet-constraints.md` as the primary validation page per rule 1 and rule 5).\n\n5. **Facet legality:** `term-type-facet-constraints.md` is `acceptable` rather than `must_have` because `process-validation-rules.md` already covers the process-specific validation needs, and the composite nature means a coder may still want the legality matrix, but it is not strictly required to avoid a wrong code given the other pages.\n\n6. **`facet-coding-rules.md` and `implicit-vs-explicit-facets.md`:** Useful for deciding which facets (salt/boiling) to state explicitly versus what may already be implicit in a composite bread base term, but with `ingredient-facets.md` and `process-facets.md` already `must_have`, these are `acceptable` rather than strictly necessary.\n\n7. **Maintenance and orientation pages:** all `must_not` per rules 3 and 4."
+  },
+  "SEL-0021": {
+    "must_have": [
+      "base-term-selection.md",
+      "ingredient-facets.md",
+      "term-type-facet-constraints.md"
+    ],
+    "acceptable": [
+      "facet-coding-rules.md",
+      "implicit-vs-explicit-facets.md",
+      "process-facets.md",
+      "foodex2-overview.md",
+      "anses-codification-guidance.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "1. CODE-CONSTRUCTION BASE: All context-pack calls need base-term-selection.md (must_have, rule 1). The food is 'potato soup with leek' — a composite dish with named ingredients, so ingredient-facets.md is must_have per rule 5 ('mixed/composite food → ingredient-facets.md must-have'). term-type-facet-constraints.md is must_have as the default validation page for any code that will attach facets (rule 1). 2. DOMAIN: No domain signal (context: {}), so ALL overlay pages are must_not (rule 2): pesticides-foodex2.md, contaminants-foodex2.md, vmpr-foodex2.md, vmpr-legislative-mapping.md, additives-flavourings-foodex2.md, domoic-acid-scallops.md. chemical-monitoring-foodex2.md is also must_not when there is no domain signal (rule 2). 3. PROCESSING: Soup is a processed/cooked composite. process-facets.md is on-topic (deciding whether the cooking step needs an explicit process facet) but since the base term for a soup derivative likely carries implicit processing, a competent coder could manage without it — acceptable, not must_have. process-validation-rules.md would only become must_have if an explicit process facet is being constructed; here it's borderline, so left unlabeled. 4. FACET GUIDANCE: facet-coding-rules.md and implicit-vs-explicit-facets.md are on-topic and helpful for deciding which leek descriptor to add, but since ingredient-facets.md already covers the composite-ingredient coding decision, they drop to acceptable (rule 6). 5. MAINTENANCE/ORIENTATION: All maintenance-* and orientation pages are must_not (rules 3 & 4)."
+  },
+  "SEL-0022": {
+    "must_have": [
+      "base-term-selection.md",
+      "ingredient-facets.md",
+      "term-type-facet-constraints.md"
+    ],
+    "acceptable": [
+      "facet-coding-rules.md",
+      "implicit-vs-explicit-facets.md",
+      "foodex2-overview.md",
+      "process-facets.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "1. Code-construction case: must_have includes base-term-selection.md (rule 1). The food is 'milk chocolate with chopped hazelnuts' — a composite/mixed food with an added ingredient (hazelnuts). This makes ingredient-facets.md must_have per rule 5 (composite/mixed food with added components). term-type-facet-constraints.md is must_have as the default validation page (rule 1). 2. No domain signal: context is {}, so ALL domain overlays are must_not (rule 2). This covers pesticides-foodex2.md, contaminants-foodex2.md, vmpr-foodex2.md, vmpr-legislative-mapping.md, additives-flavourings-foodex2.md, domoic-acid-scallops.md, and chemical-monitoring-foodex2.md. 3. Maintenance and orientation pages are must_not (rules 3 and 4). 4. facet-coding-rules.md is acceptable — useful for deciding which facets to add, but ingredient-facets.md is the specific page that handles the composite/added-ingredient case. implicit-vs-explicit-facets.md is acceptable because the coder must judge what is implicit in a chocolate base term versus what must be stated explicitly for the hazelnut component. process-facets.md is acceptable because 'chopped' is a processing step that may or may not warrant a process facet. foodex2-overview.md is acceptable as general orientation for composites vs. derivatives. The food is a composite (milk chocolate as the dominant base, hazelnuts as an added ingredient), not a processed derivative, so process-validation-rules.md is not needed. packaging-facets.md is not warranted — no packaging mention."
+  },
+  "SEL-0023": {
+    "must_have": [
+      "base-term-selection.md",
+      "term-type-facet-constraints.md",
+      "implicit-vs-explicit-facets.md"
+    ],
+    "acceptable": [
+      "facet-coding-rules.md",
+      "foodex2-overview.md",
+      "anses-codification-guidance.md",
+      "policy-contract.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "maintenance-*",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "1. Code-construction case (rule 1): base-term-selection.md is always must_have. No domain signal exists (context is {}), so all domain overlays are must_not (rule 2), and chemical-monitoring-foodex2.md is also must_not.\n\n2. Validation page (rule 1): The food is a raw commodity (rainbow trout, raw, farmed) with no processing facets mentioned, so the default validation page term-type-facet-constraints.md is must_have. process-validation-rules.md is not needed.\n\n3. Facet decision — 'farmed' production method: 'farmed' is explicitly stated as a descriptor. For a raw fish like rainbow trout, aquaculture/farmed production method is NOT typically implicit in the base term (unlike, say, cattle beef which implies domesticated). A coder must decide whether 'farmed' is already implicit in the chosen base term or must be explicitly coded as a production-method facet. This hinges on whether the base term for rainbow trout already carries 'farmed' implicitly in its origin chain. This makes implicit-vs-explicit-facets.md must_have (rule 5: derivative needing source facet; more broadly, rule 6 — a coder would incorrectly omit or redundantly add the farmed facet without this page). Without it, a coder might miss that 'farmed' needs an explicit production-method facet or might add it redundantly.\n\n4. facet-coding-rules.md is acceptable: it helps map 'farmed' to the correct facet family (production method) and decide whether it adds information beyond what the base carries, but implicit-vs-explicit-facets.md already covers the core decision, so facet-coding-rules.md is on-topic but not strictly must_have.\n\n5. No processing is mentioned → process-facets.md and process-validation-rules.md are not needed.\n6. No composite/mixed food → ingredient-facets.md not needed.\n7. No packaging mentioned → packaging-facets.md not needed.\n8. Maintenance and orientation pages are must_not per rules 3 and 4."
+  },
+  "SEL-0024": {
+    "must_have": [
+      "base-term-selection.md",
+      "ingredient-facets.md",
+      "term-type-facet-constraints.md"
+    ],
+    "acceptable": [
+      "facet-coding-rules.md",
+      "implicit-vs-explicit-facets.md",
+      "foodex2-overview.md",
+      "process-facets.md",
+      "anses-codification-guidance.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "maintenance-*",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md",
+      "packaging-facets.md",
+      "process-validation-rules.md",
+      "domain-specific-validation.md"
+    ],
+    "reasoning": "1. Code-construction case: base-term-selection.md is must_have per rule 1. 2. No domain signal → all domain overlay pages (pesticides-foodex2.md, contaminants-foodex2.md, vmpr-foodex2.md, vmpr-legislative-mapping.md, additives-flavourings-foodex2.md, domoic-acid-scallops.md) are must_not, and chemical-monitoring-foodex2.md is must_not per rule 2. 3. The food is a composite/mixed dish (sausage stroganoff, homemade) → ingredient-facets.md is must_have per rule 5 ('mixed/composite food → ingredient-facets.md must-have'). A competent coder cannot correctly characterise ingredients/components of this dish without it. 4. Validation page: term-type-facet-constraints.md is must_have as the default validation page per rule 1; this is a composite/mixed food so knowing which facet families apply to composite base terms is essential. 5. facet-coding-rules.md is acceptable: the dish requires thinking about which facets add value, but ingredient-facets.md already covers the composite-specific decisions. implicit-vs-explicit-facets.md is acceptable: relevant for understanding what the composite base already carries. foodex2-overview.md is acceptable: composite dish classification is a classic first-coding challenge. process-facets.md is acceptable: 'homemade' (home preparation) may warrant a process facet but is not clearly mandatory. anses-codification-guidance.md is acceptable: mixed-product handling advice. 6. No packaging mentioned → packaging-facets.md must_not. No explicit process facet construction → process-validation-rules.md is not must_have (no process facet being built; drops to must_not as it would mislead). Maintenance and orientation pages are must_not per rules 3 and 4."
+  },
+  "SEL-0025": {
+    "must_have": [
+      "base-term-selection.md",
+      "facet-coding-rules.md",
+      "term-type-facet-constraints.md"
+    ],
+    "acceptable": [
+      "implicit-vs-explicit-facets.md",
+      "ingredient-facets.md",
+      "foodex2-overview.md",
+      "anses-codification-guidance.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "maintenance-*",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "Savoiardi (ladyfinger biscuits) is a composite bakery product with no explicit reporting domain. Rubric rule 1 mandates base-term-selection.md (code-construction case). Since it is a composite/bakery food — not a plain raw commodity — explicit facet decisions are likely needed (selecting among competing base terms for a biscuit category, deciding which descriptors are implicit vs. explicit), so facet-coding-rules.md rises to must_have rather than dropping to acceptable. term-type-facet-constraints.md is must_have as the default validation page for any code that will carry explicit facets. ingredient-facets.md is acceptable rather than must_have: ladyfinger biscuits are a named finished product (not primarily coded as a mixture/composite dish with named ingredient components), so a competent coder would not necessarily fail without it, but it is on-topic for a composite bakery food. implicit-vs-explicit-facets.md is acceptable because the biscuit's properties (e.g., baked, wheat-based) may already be implicit in a good base term. foodex2-overview.md and anses-codification-guidance.md are acceptable as general orientation/expert-convention aids. No domain signal exists, so all five exclusivity-bound overlay pages plus chemical-monitoring-foodex2.md are must_not per rubric rule 2. All maintenance and orientation pages are must_not per rules 3 and 4."
+  },
+  "SEL-0026": {
+    "must_have": [
+      "base-term-selection.md",
+      "facet-coding-rules.md",
+      "term-type-facet-constraints.md"
+    ],
+    "acceptable": [
+      "implicit-vs-explicit-facets.md",
+      "foodex2-overview.md",
+      "anses-codification-guidance.md",
+      "ingredient-facets.md",
+      "process-facets.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "maintenance-*",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "No domain signal is present (context is empty), so all domain overlay pages (pesticides-foodex2.md, contaminants-foodex2.md, vmpr-foodex2.md, vmpr-legislative-mapping.md, additives-flavourings-foodex2.md, domoic-acid-scallops.md) are must_not, and chemical-monitoring-foodex2.md is also must_not per rubric rule 2. Orientation and maintenance pages are always must_not per rules 3–4.\n\nFor base-term selection (rule 1, rubric): 'Saftsoppa' is a Swedish fruit-syrup-based drink/soup with no obvious exact term in the catalogue ('detailed base missing' noted in the query). This makes base-term-selection.md a clear must_have — the coder must decide raw vs derivative vs composite, and resolve a generic fallback with appropriate facets when the exact term is absent. This is a non-trivial decision that would be wrong without this page.\n\nFor facet-coding-rules.md: The food is a composite or derived product (fruit syrup plus liquid base, possibly with berry ingredients). The coder must map descriptors to the correct facet families. Without facet-coding-rules.md a competent coder would not reliably know which facet families apply or whether they add information beyond what the base term carries. Elevated to must_have.\n\nFor term-type-facet-constraints.md: Once a base term is tentatively chosen (likely a composite or derivative), the coder must verify which facet families that term type permits. This legality matrix is must_have per rubric rule 1 (at least one validation page).\n\nimplicit-vs-explicit-facets.md: Relevant because the food may have implicit fruit/berry character depending on the chosen base; the coder needs to decide whether to state a source facet explicitly. Acceptable rather than must_have because this is a secondary concern after base-term resolution.\n\nfoodex2-overview.md: Helpful given the unusual Swedish product where raw/derivative/composite classification is unclear, but not strictly required if the coder already knows the system — acceptable.\n\nanses-codification-guidance.md: Provides expert conventions on generic-fallback and missing-term handling, which is directly relevant to 'detailed base missing' — acceptable.\n\ningredient-facets.md: The product may be composite (berry cordial soup with multiple components), making ingredient facets potentially applicable — acceptable.\n\nprocess-facets.md: A syrup involves concentration/processing; acceptable in case the coder needs to decide whether processing steps are implicit in the base term or must be stated. Not must_have because the query does not call attention to a specific process decision, and no process facet page implies process-validation-rules.md is also not needed at must_have level (no explicit process facet construction confirmed)."
+  },
+  "SEL-0027": {
+    "must_have": [
+      "base-term-selection.md",
+      "facet-coding-rules.md",
+      "term-type-facet-constraints.md",
+      "packaging-facets.md"
+    ],
+    "acceptable": [
+      "implicit-vs-explicit-facets.md",
+      "process-facets.md",
+      "foodex2-overview.md",
+      "anses-codification-guidance.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "This is a code-construction case with no domain signal (context: {}), so all domain overlay pages are must_not per rule 2.\n\n**must_have reasoning:**\n- `base-term-selection.md`: Rule 1 — every code-construction case requires this. The coder must pick the right mussel base term (raw commodity vs. derivative vs. a specific species term).\n- `facet-coding-rules.md`: The food is 'mussels canned in liquid' — the liquid/packing medium and the 'canned' container detail require explicit facet decisions. The coder must decide which facet families apply (packaging, possibly process), making this more than a plain raw commodity with all-implicit facets. Without facet-coding-rules.md a competent coder could misassign or omit the liquid/packing descriptor.\n- `term-type-facet-constraints.md`: Rule 1 — the default validation page for any code-construction case. Needed to confirm which facet families the mussel base term permits.\n- `packaging-facets.md`: Rule 5 — 'på burk' (canned / in a can) explicitly mentions a container/packaging format. A competent coder cannot correctly handle the packaging dimension without this page; omitting it would yield an incomplete code (missing or wrongly placed packaging descriptor).\n\n**acceptable reasoning:**\n- `implicit-vs-explicit-facets.md`: Whether the packing liquid or 'canned' state is implicit in a specific mussel base term or must be stated explicitly is a genuine question here, but it is secondary to the facet mapping question.\n- `process-facets.md`: Canning may involve a heat-treatment process step; worth consulting but not essential if the coder treats 'canned' purely as packaging.\n- `foodex2-overview.md`: Useful orientation for shellfish/aquatic commodity classification, but not blocking.\n- `anses-codification-guidance.md`: Expert traps around aquatic products and mixed-liquid preparations could help, but not strictly required.\n\n**must_not reasoning:**\n- All domain overlays are must_not because context is empty (no domain signal).\n- `domoic-acid-scallops.md`: Niche overlay for scallops/domoic acid contaminants — not this case.\n- `chemical-monitoring-foodex2.md`: Must_not when no domain signal per rule 2.\n- All maintenance-* and orientation pages per rules 3 and 4."
+  },
+  "SEL-0028": {
+    "must_have": [
+      "base-term-selection.md",
+      "process-facets.md",
+      "process-validation-rules.md"
+    ],
+    "acceptable": [
+      "implicit-vs-explicit-facets.md",
+      "facet-coding-rules.md",
+      "term-type-facet-constraints.md",
+      "ingredient-facets.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "maintenance-*",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "1. BASE TERM (must_have: base-term-selection.md): Code-construction case — always required. The coder must decide between a raw plum base term versus a canned/preserved plum derivative, and must resolve whether the sugar-syrup packing medium changes the base-term choice or is handled via facets.\n\n2. DOMAIN OVERLAYS (all must_not): No domain signal exists (context: {}). All five exclusivity-bound overlay pages (pesticides-foodex2.md, contaminants-foodex2.md, vmpr-foodex2.md, vmpr-legislative-mapping.md, additives-flavourings-foodex2.md) plus domoic-acid-scallops.md are must_not. chemical-monitoring-foodex2.md is also must_not per rubric rule 2 (no domain signal).\n\n3. PROCESSING (must_have: process-facets.md): The food is explicitly canned — a preservation/processing step. Rubric rule 5 says processing/treatment mentioned → process-facets.md must-have. The coder must decide whether 'canned' belongs in the base-term choice or as an explicit process facet (e.g. sterilisation/heat treatment), and whether sugar syrup is a process descriptor or ingredient facet.\n\n4. PROCESS VALIDATION (must_have: process-validation-rules.md): Because the code will carry a process facet (canning/sterilisation), rubric rule 1 and rule 5 both direct to process-validation-rules.md as the validation page for processed foods. A competent coder needs to verify which processes may legally be applied to a fruit base (forbidden derivative-creating processes on raw bases, mutual exclusivity, etc.).\n\n5. IMPLICIT-VS-EXPLICIT (acceptable): The coder needs to judge whether canning is already implicit in a canned-plum derivative base term, or must be stated explicitly — but this is a secondary decision that supports rather than drives the code. Drops to acceptable (rubric rule 6: not wrong without it if process-facets.md is consulted).\n\n6. FACET-CODING-RULES (acceptable): Useful for deciding whether the sugar-syrup packing medium warrants a facet at all, and which facet family applies. Not strictly must_have because process-facets.md and implicit-vs-explicit-facets.md together cover the core decisions.\n\n7. TERM-TYPE-FACET-CONSTRAINTS (acceptable): Helpful to verify which facet families are legal on a canned fruit derivative. Not must_have because the main uncertainty is the process facet, not an exotic facet legality question.\n\n8. INGREDIENT-FACETS (acceptable): Sugar syrup as a packing medium could require an ingredient facet. Acceptable because it is plausibly on-topic but the primary coding challenge is the canning process facet, not ingredient characterisation of the syrup.\n\n9. MAINTENANCE pages and orientation pages: must_not per rubric rules 3 and 4."
+  },
+  "SEL-0029": {
+    "must_have": [
+      "structural-validation.md",
+      "base-term-selection.md",
+      "term-type-facet-constraints.md"
+    ],
+    "acceptable": [
+      "process-facets.md",
+      "process-validation-rules.md",
+      "facet-coding-rules.md",
+      "code-string-format.md",
+      "business-rules.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "The central issue here is a duplicate freezing facet (same F28 descriptor appearing twice) in a proposed code. This is precisely the 'duplicate or single-cardinality detection' use case described in structural-validation.md, making it must_have per the coverage-floor rule ('a duplicate or single-cardinality facet earns structural-validation.md'). base-term-selection.md is must_have because this is a code-construction case (rubric rule 1). term-type-facet-constraints.md is must_have because the candidate base term is type 'g' (hierarchy/group), and the facet legality matrix is needed to understand what facets are even permissible on this term type — and a competent coder would need it to handle facet attachment correctly. process-facets.md is acceptable because freezing is a process facet and understanding which process descriptor applies is relevant, but the core issue is duplication rather than selection. process-validation-rules.md is acceptable because it governs mutually-exclusive ordinal groups and forbidden process combinations, which is adjacent to the duplicate facet issue. facet-coding-rules.md is acceptable as general facet guidance relevant to the construction. code-string-format.md is acceptable because assembling a multi-facet code string is involved. business-rules.md is acceptable because some duplicate/cardinality issues also surface as business-rule warnings/errors. No domain signal is present (context is {}), so all domain overlay pages are must_not per rubric rule 2. Maintenance and orientation pages are must_not per rules 3 and 4."
+  },
+  "SEL-0031": {
+    "must_have": [
+      "base-term-selection.md",
+      "implicit-vs-explicit-facets.md",
+      "structural-validation.md",
+      "process-validation-rules.md"
+    ],
+    "acceptable": [
+      "facet-coding-rules.md",
+      "process-facets.md",
+      "term-type-facet-constraints.md",
+      "anses-codification-guidance.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "This case is explicitly about a dried derivative (termType 'd') where an explicit drying facet (F28) duplicates a process already implicit in the base term — the core question is implicit vs. explicit facet redundancy on a processed/derivative base.\n\n**must_have reasoning:**\n- `base-term-selection.md`: Rule 1 (code-construction case) — the coder must first confirm the derivative base term selection before addressing the redundant facet question.\n- `implicit-vs-explicit-facets.md`: Rule 5 / Rule 6 — this is the central issue of the case: the drying is already implicit in the derivative base, so the explicit F28 facet is redundant. A coder cannot correctly resolve this without the implicit-vs-explicit page; getting it wrong produces a wrong code.\n- `structural-validation.md`: Rule coverage floor + case fact: automatic removal of implicit facets is a structural gate function described in this page. The scenario describes exactly the situation where structural validation detects and removes a facet that duplicates an implicit property — the coder needs to know this will be auto-removed (or flagged) before business rules run.\n- `process-validation-rules.md`: Rule 1 (processed food) + Rule 5: the base term carries an implicit process (drying), and an explicit process facet is being evaluated. The rules about forbidden derivative-creating processes on bases and what is implicit in a derivative base versus what must be stated explicitly are in this page. Without it, the coder cannot determine whether attaching an explicit drying facet to a dried-derivative base is a violation.\n\n**acceptable reasoning:**\n- `facet-coding-rules.md`: Helpful for understanding facet-family assignment and the 'worth adding' decision, but the specific redundancy question is answered by implicit-vs-explicit-facets.md and process-validation-rules.md.\n- `process-facets.md`: Relevant because drying is a process facet, but the core issue is redundancy/implicitness, not which process descriptor to pick.\n- `term-type-facet-constraints.md`: The candidate base is termType 'd' (derivative); the legality matrix for which facets are permitted on derivatives is relevant background, but the specific implicit-drying redundancy question is answered elsewhere.\n- `anses-codification-guidance.md`: Covers common coding traps including facet economy and implicit facets on derivatives — useful expert guidance but not strictly required.\n\n**Domain overlays:** No domain signal in context (`{}`), so all domain overlay pages are must_not per Rule 2.\n\n**Maintenance/orientation pages:** must_not per Rules 3 and 4."
+  },
+  "SEL-0032": {
+    "must_have": [
+      "base-term-selection.md",
+      "contaminants-foodex2.md",
+      "packaging-facets.md",
+      "term-type-facet-constraints.md"
+    ],
+    "acceptable": [
+      "facet-coding-rules.md",
+      "implicit-vs-explicit-facets.md",
+      "domain-specific-validation.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "1. Code-construction case: base-term-selection.md is always must_have (rule 1). 2. Domain overlay exclusivity: domain is 'contaminants', so contaminants-foodex2.md is must_have; all other overlays (pesticides-foodex2.md, vmpr-foodex2.md, vmpr-legislative-mapping.md, additives-flavourings-foodex2.md, domoic-acid-scallops.md) are must_not. chemical-monitoring-foodex2.md is must_not when a specific domain overlay applies (contaminants covers this case). 3. Packaging is explicitly mentioned — a PET plastic bottle is the described container, with candidate hints for both packaging-format (F18, Bottle) and packaging-material (F19, Plastic) facet descriptors. Rule 5 says packaging mentioned → packaging-facets.md must_have. A competent coder would produce a wrong code (missing or wrong packaging facets) without it. 4. Facet legality: the hints are type 'f' (facet terms), and the coder needs to verify that packaging facets attach to the water base term and which facet families are permitted — so term-type-facet-constraints.md is must_have. 5. facet-coding-rules.md: knowing which facet family maps to bottle vs plastic and whether both are worth adding is on-topic but a competent coder armed with packaging-facets.md + term-type-facet-constraints.md could manage; acceptable. 6. implicit-vs-explicit-facets.md: bottled water may carry implicit packaging assumptions for some base terms, making this relevant but not strictly required; acceptable. 7. domain-specific-validation.md: contaminants domain activates packaging-material facet for migration monitoring context; useful supplement but not blocking; acceptable. 8. No processing step, no composite, no derivative needing source facet → process-facets.md, process-validation-rules.md, ingredient-facets.md not needed. 9. Maintenance and orientation pages: all must_not per rules 3 and 4."
+  },
+  "SEL-0033": {
+    "must_have": [
+      "base-term-selection.md",
+      "packaging-facets.md",
+      "term-type-facet-constraints.md"
+    ],
+    "acceptable": [
+      "facet-coding-rules.md",
+      "implicit-vs-explicit-facets.md",
+      "foodex2-overview.md",
+      "anses-codification-guidance.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "Rule 1 (code-construction case): base-term-selection.md is must_have for all DMT context-pack calls. The candidate hints are two facet descriptors (packaging-format Box A07NL and packaging-material Laminated material A07PN), making this explicitly a packaging case — rule 5 states packaging mentioned → packaging-facets.md must_have. The facet terms are of termType 'f', and we need term-type-facet-constraints.md to confirm legality of attaching F18/F19 facet families to the cereal base term (which is likely a derivative or raw/processed commodity), so that page is must_have as the validation page. Rule 2 (no domain signal): context is empty {}, so all domain overlays (pesticides-foodex2.md, contaminants-foodex2.md, vmpr-foodex2.md, vmpr-legislative-mapping.md, additives-flavourings-foodex2.md, domoic-acid-scallops.md) are must_not, and chemical-monitoring-foodex2.md is also must_not (only acceptable in domain cases). The food is a dry processed cereal in a box — no explicit processing step needs to be coded as a new facet (the dryness is characteristic of breakfast cereal base terms), so process-facets.md and process-validation-rules.md are not must_have. facet-coding-rules.md and implicit-vs-explicit-facets.md are acceptable as they help decide whether packaging details are worth adding and how to handle facet assignment, but a competent coder could derive this from packaging-facets.md alone. Maintenance and orientation pages are must_not per rules 3 and 4."
+  },
+  "SEL-0034": {
+    "must_have": [
+      "base-term-selection.md",
+      "process-facets.md",
+      "process-validation-rules.md"
+    ],
+    "acceptable": [
+      "implicit-vs-explicit-facets.md",
+      "facet-coding-rules.md",
+      "term-type-facet-constraints.md",
+      "business-rules.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "maintenance-*",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "1. BASE TERM: base-term-selection.md is must_have (rule 1) — the coder must determine whether dried stock powder is a derivative or composite, and which base term anchors it.\n\n2. PROCESS: The request explicitly centres on a reconstitution/dilution process being considered (candidate hints include reconstitution process descriptor F28 and drying process descriptor F28). process-facets.md is must_have per rule 5 (processing/treatment mentioned). Without it a coder cannot decide whether reconstitution belongs in the base term or as an explicit process facet, and which descriptor applies.\n\n3. PROCESS VALIDATION: process-validation-rules.md is must_have per rule 5 and rule 1 — any code carrying a process facet needs these rules. Critically, process-validation-rules.md contains the reconstitution limits rule (reconstitution/dilution is a specifically constrained process in FoodEx2, forbidden on certain derivative bases, and subject to mutual-exclusivity ordinal groups). A competent coder would produce a wrong code without this page.\n\n4. DOMAIN: No domain signal in context ({}), so all domain overlay pages are must_not (rule 2): pesticides-foodex2.md, contaminants-foodex2.md, vmpr-foodex2.md, vmpr-legislative-mapping.md, additives-flavourings-foodex2.md, domoic-acid-scallops.md. chemical-monitoring-foodex2.md is also must_not when no domain signal exists (rule 2).\n\n5. FACET PAGES: implicit-vs-explicit-facets.md is acceptable — drying may be implicit in a dried stock powder derivative base term, so the coder needs to check whether explicit drying facet is redundant, but this is a secondary check. facet-coding-rules.md is acceptable for mapping process descriptors to the correct family. term-type-facet-constraints.md is acceptable — candidate hints are facet terms (termType 'f'), confirming they cannot serve as bases, but the main coding question is process facet legality already covered by process-validation-rules.md. business-rules.md is acceptable — reconstitution limits may invoke specific numbered business rules, but process-validation-rules.md already covers the substantive content.\n\n6. MAINTENANCE/ORIENTATION: All must_not per rules 3 and 4."
+  },
+  "SEL-0035": {
+    "must_have": [
+      "base-term-selection.md",
+      "term-type-facet-constraints.md",
+      "structural-validation.md"
+    ],
+    "acceptable": [
+      "facet-coding-rules.md",
+      "implicit-vs-explicit-facets.md",
+      "validation-rules.md",
+      "anses-codification-guidance.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "The core challenge in this case is that the top search candidate is a deprecated term; the coder must recognise it as unusable and select the valid replacement. This makes base-term-selection.md must-have (rule 1: all code-construction cases; rule 6: without it a coder might not know how to rank or reject a deprecated term when choosing the anchoring base). structural-validation.md is must-have because the pre-business-rule structural gate explicitly covers base-term existence and reportability — a deprecated term fails here, and a competent coder needs to understand exactly why it is rejected before the policy layer. term-type-facet-constraints.md is must-have per rule 1 (validation page for any facet attachment to the eventual base term; both candidates are type 'r' raw commodities so the legality matrix is needed to attach facets correctly). No domain signal exists (context: {}), so all domain overlays are must_not per rule 2. The food is described as a raw commodity with no processing, packaging, composite, or derivative signals, so process-facets.md, process-validation-rules.md, packaging-facets.md, and ingredient-facets.md are not warranted even as acceptable. validation-rules.md is acceptable (helpful orientation to how deprecated-term rejection fits the two-layer model, but structural-validation.md already covers the specific gate). facet-coding-rules.md and implicit-vs-explicit-facets.md are acceptable (on-topic for raw commodity facet economy but not strictly necessary given no unusual facet complexity). anses-codification-guidance.md is acceptable (covers base-term workflow traps including missing/deprecated term fallbacks). Maintenance and orientation pages are must_not per rules 3–4."
+  },
+  "SEL-0036": {
+    "must_have": [
+      "base-term-selection.md",
+      "pesticides-foodex2.md",
+      "term-type-facet-constraints.md",
+      "process-validation-rules.md"
+    ],
+    "acceptable": [
+      "implicit-vs-explicit-facets.md",
+      "facet-coding-rules.md",
+      "business-rules.md"
+    ],
+    "must_not": [
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-*",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "1. base-term-selection.md: always must_have for code-construction cases (rubric rule 1). The raw spice base term (type 'r') selection is central here. 2. pesticides-foodex2.md: domain is explicitly 'pesticides', so the pesticides overlay is must_have (rubric rule 2); all other overlays are must_not. 3. term-type-facet-constraints.md: the question is whether an F03 physical-state facet (powder) is legally attachable to a raw commodity base (termType 'r') — this is exactly the legality matrix in term-type-facet-constraints.md, and a coder cannot correctly answer this without it (rubric rule 1, 6). 4. process-validation-rules.md: grinding to powder is a physical/process transformation; the question of whether this process step is allowed on a raw base (and whether it constitutes a 'forbidden derivative-creating process on raw bases') is squarely covered by process-validation-rules.md. A coder could produce a wrong answer without this page (rubric rules 1, 5, 6). 5. implicit-vs-explicit-facets.md: relevant because the coder must decide whether the powder state is implicit in the raw spice base term or must be stated explicitly — acceptable rather than must_have since term-type-facet-constraints.md and process-validation-rules.md are the primary authorities for the blocking/allowed question. 6. facet-coding-rules.md: acceptable — useful for mapping the 'powder' descriptor to the correct facet family (F03 physical-state) but not strictly required if the candidate hint already identifies it. 7. business-rules.md: acceptable — the question about whether F03 on a raw base is 'allowed' may touch specific numbered business rules (e.g. forbidden processes, disintegration physical-state), but process-validation-rules.md is the more targeted authority."
+  },
+  "SEL-0037": {
+    "must_have": [
+      "term-type-facet-constraints.md",
+      "structural-validation.md",
+      "base-term-selection.md"
+    ],
+    "acceptable": [
+      "facet-coding-rules.md",
+      "ingredient-facets.md",
+      "validation-rules.md",
+      "business-rules.md",
+      "implicit-vs-explicit-facets.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "The core question is whether an F27 source-commodity facet is legally attachable to a composite-type (termType=c) base term — a classic term-type/facet-legality question. Rule 1 applies: this is a code-construction/validation case, so base-term-selection.md is must_have. The facet legality matrix (term-type-facet-constraints.md) is the definitive source for which facet families each term type permits or forbids, and the candidate hint explicitly flags an F27 (source-commodity) applied to a composite — without this page a competent coder cannot answer whether the code is legal, making it must_have. The pre-business-rule structural gate (structural-validation.md) is must_have because the question is specifically 'would the code pass validation?' and facet-to-category membership errors are caught at the structural gate before business rules run. No domain signal exists, so all overlay pages (pesticides, contaminants, vmpr, vmpr-legislative-mapping, additives-flavourings, domoic-acid-scallops) are must_not; chemical-monitoring-foodex2.md is also must_not per the no-domain-signal rule. The food is a composite dish (pizza) so ingredient-facets.md is acceptable (relevant but the question is really about F27 legality not ingredient coding). facet-coding-rules.md, validation-rules.md, business-rules.md, and implicit-vs-explicit-facets.md are all on-topic and acceptable but not individually indispensable given the sharper focus of term-type-facet-constraints and structural-validation. Maintenance and orientation pages are must_not per rules 3 and 4."
+  },
+  "SEL-0038": {
+    "must_have": [
+      "base-term-selection.md",
+      "pesticides-foodex2.md",
+      "implicit-vs-explicit-facets.md",
+      "term-type-facet-constraints.md"
+    ],
+    "acceptable": [
+      "facet-coding-rules.md",
+      "ingredient-facets.md",
+      "chemical-monitoring-foodex2.md",
+      "validation-rules.md"
+    ],
+    "must_not": [
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "1. CODE-CONSTRUCTION (rule 1): base-term-selection.md is always must_have. The core question is which facet family (F27 source-commodity vs F01 source) to use — this turns directly on whether those details are already implicit in the chosen base term or must be stated explicitly, so implicit-vs-explicit-facets.md is must_have (rule 5: derivative needing a source facet / explicit facet decision). term-type-facet-constraints.md is must_have as the legality matrix governing which facet families are permitted for the base term type (rule 1 validation page; no process facets involved so process-validation-rules.md is not needed). 2. DOMAIN OVERLAY (rule 2): reporting_domain is 'pesticides', so pesticides-foodex2.md is must_have. All other overlay pages (contaminants-foodex2.md, vmpr-foodex2.md, vmpr-legislative-mapping.md, additives-flavourings-foodex2.md, domoic-acid-scallops.md) are must_not. chemical-monitoring-foodex2.md is acceptable (it is not exclusivity-bound per rubric, but no strong domain signal for it). 3. FACET ECONOMY (rule 5/6): facet-coding-rules.md is acceptable — the F27 vs F01 question is a facet-family selection question, helpful but a competent coder could resolve it primarily from implicit-vs-explicit-facets.md and term-type-facet-constraints.md. ingredient-facets.md is acceptable — the mixture is described as 'same-nature' (not a composite dish), so ingredient-facets.md is on-topic but not required; the F27/F01 question is more about source vs source-commodity than ingredient characterisation. 4. MAINTENANCE/ORIENTATION (rules 3, 4): all maintenance-* and orientation pages are must_not."
+  },
+  "SEL-0039": {
+    "must_have": [
+      "base-term-selection.md",
+      "implicit-vs-explicit-facets.md",
+      "term-type-facet-constraints.md"
+    ],
+    "acceptable": [
+      "facet-coding-rules.md",
+      "process-facets.md",
+      "foodex2-overview.md",
+      "anses-codification-guidance.md",
+      "structural-validation.md"
+    ],
+    "must_not": [
+      "pesticides-foodex2.md",
+      "contaminants-foodex2.md",
+      "vmpr-foodex2.md",
+      "vmpr-legislative-mapping.md",
+      "additives-flavourings-foodex2.md",
+      "domoic-acid-scallops.md",
+      "chemical-monitoring-foodex2.md",
+      "maintenance-2015.md",
+      "maintenance-2016-2018.md",
+      "maintenance-2019.md",
+      "maintenance-2020.md",
+      "maintenance-2021.md",
+      "maintenance-2022.md",
+      "maintenance-2023.md",
+      "maintenance-2024.md",
+      "maintenance-history.md",
+      "README.md",
+      "PROJECT_CONTEXT.md",
+      "KNOWLEDGE_ARCHITECTURE.md",
+      "WIKI_ARCHITECTURE_FOR_MODELS.md",
+      "INGEST_WORKFLOW.md",
+      "MAINTENANCE_WORKFLOW.md",
+      "SCHEMA.md",
+      "log.md"
+    ],
+    "reasoning": "This case is a code-construction question with a specific ambiguity: the herbal infusion term — does it encode the dry plant material or the reconstituted liquid beverage? This is fundamentally a question about what the base term represents and whether physical-state/reconstitution details are implicit in the chosen base or must be stated explicitly.\n\nRubric rule 1 applies (code-construction): must_have includes base-term-selection.md (essential to resolve which term — dry herb vs. beverage — is the correct anchor), at least one facet page, and at least one validation page.\n\nThe core ambiguity is precisely about implicit vs. explicit facets: does a herbal infusion base term already imply the reconstituted beverage state, or does the dry material need an explicit physical-state facet? This makes implicit-vs-explicit-facets.md a must_have — without it, a coder would almost certainly attach a redundant or missing physical-state descriptor, producing a wrong code (rubric rule 6 threshold met).\n\nterm-type-facet-constraints.md is must_have because coding this food requires attaching (or deciding not to attach) physical-state facets, and the legality matrix determines which facet families are permitted on the base term type — essential for validating any facet decision here.\n\nfacet-coding-rules.md is acceptable: it helps map the physical-state descriptor to the right facet family but is secondary once implicit-vs-explicit-facets.md is present. process-facets.md is acceptable because reconstitution/infusion could be treated as a process step; the coder may need to check whether the transformation is a process facet or is inherent to the base term. foodex2-overview.md is acceptable as background on raw/derivative distinctions. anses-codification-guidance.md is acceptable as it covers missing-term fallbacks and facet economy relevant to a borderline case like this. structural-validation.md is acceptable in case facet choices are validated.\n\nNo domain signal exists (context: {}), so all domain overlay pages are must_not per rubric rule 2. All maintenance and orientation pages are must_not per rules 3 and 4."
+  }
+}
