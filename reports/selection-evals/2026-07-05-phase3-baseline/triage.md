@@ -207,9 +207,11 @@ may want to re-tier them. No labels were changed in this run.
   David in favour of the drafts, cross-check-only must_haves folded into acceptable). The
   systematic misses all sit on new cases, so label-quality risk and ceiling evidence are
   correlated — the four label-review candidates above are exactly the places to spend
-  review time. That said, Patterns A and B each rest on 2–3 independent cases with
-  DMT-official codes or explicit wiki-text anchors; the gate answer does not hinge on any
-  single label.
+  review time. Robustness, stated precisely (per the audit): the GATE VERDICT survives any
+  single label falling — Pattern A (code-string-format) rests on 3 independently DMT-mined
+  cases and remains multi-case under any single removal. Pattern B (validation-rules) rests
+  on only 2 cases and would drop below page-recurrence if either SEL-0038 or SEL-0039 is
+  re-tiered; treat B as supporting evidence, A as the load-bearing pattern.
 - **Single-config, single-day run**: one selector model (claude-sonnet-4-6), one prompt
   configuration, 5 passes on one day. The systematic/stochastic split at 4/5 is robust for
   0/5-vs-5/5 pages (Patterns A and B are mostly 0/5 picks — as systematic as the instrument
