@@ -1,0 +1,603 @@
+{
+  "summary": {
+    "mean_must_have_recall": 0.711111111111111,
+    "mean_precision": 0.9233333333333333,
+    "leak_free_rate": 0.9333333333333333,
+    "case_count": 15,
+    "mean_pack_chars": 15766.933333333332
+  },
+  "cases": [
+    {
+      "id": "SEL-0001",
+      "reviewed": false,
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "index.md",
+        "pesticides-foodex2.md",
+        "base-term-selection.md",
+        "facet-coding-rules.md",
+        "process-facets.md"
+      ],
+      "pack_chars": 15193,
+      "selector_tokens": {
+        "model": "claude-sonnet-4-6",
+        "calls": 1,
+        "input_tokens": 3403,
+        "output_tokens": 141,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 3544,
+        "per_call": [
+          {
+            "stop_reason": "tool_use",
+            "input_tokens": 3403,
+            "output_tokens": 141,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3544
+          }
+        ]
+      },
+      "must_have_recall": 0.6666666666666666,
+      "precision": 0.75,
+      "missing": [
+        "term-type-facet-constraints.md"
+      ],
+      "leaks": [],
+      "unlabeled": [
+        "process-facets.md"
+      ]
+    },
+    {
+      "id": "SEL-0002",
+      "reviewed": false,
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "index.md",
+        "pesticides-foodex2.md",
+        "base-term-selection.md",
+        "process-facets.md",
+        "facet-coding-rules.md"
+      ],
+      "pack_chars": 15193,
+      "selector_tokens": {
+        "model": "claude-sonnet-4-6",
+        "calls": 1,
+        "input_tokens": 3405,
+        "output_tokens": 211,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 3616,
+        "per_call": [
+          {
+            "stop_reason": "tool_use",
+            "input_tokens": 3405,
+            "output_tokens": 211,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3616
+          }
+        ]
+      },
+      "must_have_recall": 0.6666666666666666,
+      "precision": 0.75,
+      "missing": [
+        "term-type-facet-constraints.md"
+      ],
+      "leaks": [],
+      "unlabeled": [
+        "process-facets.md"
+      ]
+    },
+    {
+      "id": "SEL-0003",
+      "reviewed": false,
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "index.md",
+        "base-term-selection.md",
+        "contaminants-foodex2.md",
+        "facet-coding-rules.md",
+        "process-facets.md"
+      ],
+      "pack_chars": 15479,
+      "selector_tokens": {
+        "model": "claude-sonnet-4-6",
+        "calls": 1,
+        "input_tokens": 3400,
+        "output_tokens": 200,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 3600,
+        "per_call": [
+          {
+            "stop_reason": "tool_use",
+            "input_tokens": 3400,
+            "output_tokens": 200,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3600
+          }
+        ]
+      },
+      "must_have_recall": 0.6666666666666666,
+      "precision": 0.75,
+      "missing": [
+        "term-type-facet-constraints.md"
+      ],
+      "leaks": [],
+      "unlabeled": [
+        "process-facets.md"
+      ]
+    },
+    {
+      "id": "SEL-0004",
+      "reviewed": false,
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "index.md",
+        "vmpr-foodex2.md",
+        "base-term-selection.md",
+        "facet-coding-rules.md",
+        "vmpr-legislative-mapping.md",
+        "process-facets.md"
+      ],
+      "pack_chars": 22318,
+      "selector_tokens": {
+        "model": "claude-sonnet-4-6",
+        "calls": 1,
+        "input_tokens": 3398,
+        "output_tokens": 182,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 3580,
+        "per_call": [
+          {
+            "stop_reason": "tool_use",
+            "input_tokens": 3398,
+            "output_tokens": 182,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3580
+          }
+        ]
+      },
+      "must_have_recall": 0.6666666666666666,
+      "precision": 0.8,
+      "missing": [
+        "term-type-facet-constraints.md"
+      ],
+      "leaks": [],
+      "unlabeled": [
+        "process-facets.md"
+      ]
+    },
+    {
+      "id": "SEL-0005",
+      "reviewed": false,
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "index.md",
+        "additives-flavourings-foodex2.md",
+        "base-term-selection.md",
+        "process-facets.md",
+        "facet-coding-rules.md",
+        "domain-specific-validation.md"
+      ],
+      "pack_chars": 16511,
+      "selector_tokens": {
+        "model": "claude-sonnet-4-6",
+        "calls": 1,
+        "input_tokens": 3411,
+        "output_tokens": 182,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 3593,
+        "per_call": [
+          {
+            "stop_reason": "tool_use",
+            "input_tokens": 3411,
+            "output_tokens": 182,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3593
+          }
+        ]
+      },
+      "must_have_recall": 0.75,
+      "precision": 1.0,
+      "missing": [
+        "process-validation-rules.md"
+      ],
+      "leaks": [],
+      "unlabeled": []
+    },
+    {
+      "id": "SEL-0006",
+      "reviewed": false,
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "index.md",
+        "additives-flavourings-foodex2.md",
+        "ingredient-facets.md",
+        "base-term-selection.md",
+        "facet-coding-rules.md"
+      ],
+      "pack_chars": 16307,
+      "selector_tokens": {
+        "model": "claude-sonnet-4-6",
+        "calls": 1,
+        "input_tokens": 3414,
+        "output_tokens": 182,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 3596,
+        "per_call": [
+          {
+            "stop_reason": "tool_use",
+            "input_tokens": 3414,
+            "output_tokens": 182,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3596
+          }
+        ]
+      },
+      "must_have_recall": 0.75,
+      "precision": 1.0,
+      "missing": [
+        "term-type-facet-constraints.md"
+      ],
+      "leaks": [],
+      "unlabeled": []
+    },
+    {
+      "id": "SEL-0007",
+      "reviewed": false,
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "index.md",
+        "base-term-selection.md",
+        "additives-flavourings-foodex2.md",
+        "facet-coding-rules.md",
+        "ingredient-facets.md"
+      ],
+      "pack_chars": 16307,
+      "selector_tokens": {
+        "model": "claude-sonnet-4-6",
+        "calls": 1,
+        "input_tokens": 3409,
+        "output_tokens": 178,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 3587,
+        "per_call": [
+          {
+            "stop_reason": "tool_use",
+            "input_tokens": 3409,
+            "output_tokens": 178,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3587
+          }
+        ]
+      },
+      "must_have_recall": 0.75,
+      "precision": 1.0,
+      "missing": [
+        "term-type-facet-constraints.md"
+      ],
+      "leaks": [],
+      "unlabeled": []
+    },
+    {
+      "id": "SEL-0008",
+      "reviewed": false,
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "index.md",
+        "vmpr-foodex2.md",
+        "vmpr-legislative-mapping.md",
+        "base-term-selection.md"
+      ],
+      "pack_chars": 15570,
+      "selector_tokens": {
+        "model": "claude-sonnet-4-6",
+        "calls": 1,
+        "input_tokens": 3412,
+        "output_tokens": 137,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 3549,
+        "per_call": [
+          {
+            "stop_reason": "tool_use",
+            "input_tokens": 3412,
+            "output_tokens": 137,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3549
+          }
+        ]
+      },
+      "must_have_recall": 0.5,
+      "precision": 1.0,
+      "missing": [
+        "facet-coding-rules.md",
+        "term-type-facet-constraints.md"
+      ],
+      "leaks": [],
+      "unlabeled": []
+    },
+    {
+      "id": "SEL-0009",
+      "reviewed": false,
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "index.md",
+        "vmpr-foodex2.md",
+        "base-term-selection.md",
+        "facet-coding-rules.md",
+        "vmpr-legislative-mapping.md",
+        "maintenance-2024.md"
+      ],
+      "pack_chars": 21856,
+      "selector_tokens": {
+        "model": "claude-sonnet-4-6",
+        "calls": 1,
+        "input_tokens": 3402,
+        "output_tokens": 157,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 3559,
+        "per_call": [
+          {
+            "stop_reason": "tool_use",
+            "input_tokens": 3402,
+            "output_tokens": 157,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3559
+          }
+        ]
+      },
+      "must_have_recall": 0.75,
+      "precision": 0.8,
+      "missing": [
+        "term-type-facet-constraints.md"
+      ],
+      "leaks": [
+        "maintenance-2024.md"
+      ],
+      "unlabeled": []
+    },
+    {
+      "id": "SEL-0010",
+      "reviewed": false,
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "index.md",
+        "vmpr-foodex2.md",
+        "base-term-selection.md",
+        "vmpr-legislative-mapping.md"
+      ],
+      "pack_chars": 15570,
+      "selector_tokens": {
+        "model": "claude-sonnet-4-6",
+        "calls": 1,
+        "input_tokens": 3402,
+        "output_tokens": 154,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 3556,
+        "per_call": [
+          {
+            "stop_reason": "tool_use",
+            "input_tokens": 3402,
+            "output_tokens": 154,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3556
+          }
+        ]
+      },
+      "must_have_recall": 0.5,
+      "precision": 1.0,
+      "missing": [
+        "facet-coding-rules.md",
+        "term-type-facet-constraints.md"
+      ],
+      "leaks": [],
+      "unlabeled": []
+    },
+    {
+      "id": "SEL-0011",
+      "reviewed": false,
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "index.md",
+        "base-term-selection.md",
+        "pesticides-foodex2.md",
+        "term-type-facet-constraints.md"
+      ],
+      "pack_chars": 10731,
+      "selector_tokens": {
+        "model": "claude-sonnet-4-6",
+        "calls": 1,
+        "input_tokens": 3475,
+        "output_tokens": 142,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 3617,
+        "per_call": [
+          {
+            "stop_reason": "tool_use",
+            "input_tokens": 3475,
+            "output_tokens": 142,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3617
+          }
+        ]
+      },
+      "must_have_recall": 0.75,
+      "precision": 1.0,
+      "missing": [
+        "implicit-vs-explicit-facets.md"
+      ],
+      "leaks": [],
+      "unlabeled": []
+    },
+    {
+      "id": "SEL-0012",
+      "reviewed": false,
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "index.md",
+        "vmpr-foodex2.md",
+        "base-term-selection.md",
+        "facet-coding-rules.md"
+      ],
+      "pack_chars": 16698,
+      "selector_tokens": {
+        "model": "claude-sonnet-4-6",
+        "calls": 1,
+        "input_tokens": 3473,
+        "output_tokens": 156,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 3629,
+        "per_call": [
+          {
+            "stop_reason": "tool_use",
+            "input_tokens": 3473,
+            "output_tokens": 156,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3629
+          }
+        ]
+      },
+      "must_have_recall": 0.75,
+      "precision": 1.0,
+      "missing": [
+        "term-type-facet-constraints.md"
+      ],
+      "leaks": [],
+      "unlabeled": []
+    },
+    {
+      "id": "SEL-0013",
+      "reviewed": false,
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "index.md",
+        "base-term-selection.md",
+        "contaminants-foodex2.md",
+        "ingredient-facets.md",
+        "term-type-facet-constraints.md"
+      ],
+      "pack_chars": 13189,
+      "selector_tokens": {
+        "model": "claude-sonnet-4-6",
+        "calls": 1,
+        "input_tokens": 3472,
+        "output_tokens": 161,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 3633,
+        "per_call": [
+          {
+            "stop_reason": "tool_use",
+            "input_tokens": 3472,
+            "output_tokens": 161,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3633
+          }
+        ]
+      },
+      "must_have_recall": 1.0,
+      "precision": 1.0,
+      "missing": [],
+      "leaks": [],
+      "unlabeled": []
+    },
+    {
+      "id": "SEL-0014",
+      "reviewed": false,
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "index.md",
+        "packaging-facets.md",
+        "contaminants-foodex2.md",
+        "facet-coding-rules.md",
+        "domain-specific-validation.md"
+      ],
+      "pack_chars": 14742,
+      "selector_tokens": {
+        "model": "claude-sonnet-4-6",
+        "calls": 1,
+        "input_tokens": 3507,
+        "output_tokens": 170,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 3677,
+        "per_call": [
+          {
+            "stop_reason": "tool_use",
+            "input_tokens": 3507,
+            "output_tokens": 170,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3677
+          }
+        ]
+      },
+      "must_have_recall": 0.5,
+      "precision": 1.0,
+      "missing": [
+        "base-term-selection.md",
+        "term-type-facet-constraints.md"
+      ],
+      "leaks": [],
+      "unlabeled": []
+    },
+    {
+      "id": "SEL-0015",
+      "reviewed": false,
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "index.md",
+        "base-term-selection.md",
+        "term-type-facet-constraints.md",
+        "implicit-vs-explicit-facets.md"
+      ],
+      "pack_chars": 10840,
+      "selector_tokens": {
+        "model": "claude-sonnet-4-6",
+        "calls": 1,
+        "input_tokens": 3427,
+        "output_tokens": 143,
+        "cache_creation_input_tokens": 0,
+        "cache_read_input_tokens": 0,
+        "total_tracked_tokens": 3570,
+        "per_call": [
+          {
+            "stop_reason": "tool_use",
+            "input_tokens": 3427,
+            "output_tokens": 143,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3570
+          }
+        ]
+      },
+      "must_have_recall": 1.0,
+      "precision": 1.0,
+      "missing": [],
+      "leaks": [],
+      "unlabeled": []
+    }
+  ]
+}
