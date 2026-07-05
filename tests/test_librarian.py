@@ -5,10 +5,12 @@ import json
 import re
 from pathlib import Path
 
+import wiki_api.librarian as librarian_module
 from wiki_api.librarian import (
     AnthropicFoodEx2Solver,
     AnthropicWikiLibrarian,
     AnthropicWikiPageSelector,
+    OpenAICompatibleMessagesClient,
     infer_model_provider,
 )
 from wiki_api.wiki_store import WikiStore
@@ -53,7 +55,15 @@ def test_infer_model_provider_for_ask_overrides() -> None:
     assert infer_model_provider("claude-haiku-4-5") == "anthropic"
     assert infer_model_provider("gemini-3.5-flash") == "gemini"
     assert infer_model_provider("gpt-5.4-mini") == "openai"
+    assert infer_model_provider("lmstudio:qwen2.5") == "lmstudio"
     assert infer_model_provider(None) == "anthropic"
+
+
+def test_global_lmstudio_provider_overrides_model_inference(monkeypatch) -> None:
+    monkeypatch.setenv("WIKI_LLM_PROVIDER", "lmstudio")
+
+    assert infer_model_provider("claude-sonnet-4-6") == "lmstudio"
+    assert infer_model_provider(None) == "lmstudio"
 
 
 def test_librarian_batches_page_reads() -> None:
@@ -311,6 +321,73 @@ def test_selector_falls_back_to_shared_model_env(monkeypatch) -> None:
     selector = AnthropicWikiPageSelector(store=_store(), client=client)
 
     assert selector.model == "shared-model"
+
+
+def test_lmstudio_global_model_is_used_for_runtime_components(monkeypatch) -> None:
+    monkeypatch.setenv("WIKI_LLM_PROVIDER", "lmstudio")
+    monkeypatch.setenv("WIKI_LMSTUDIO_MODEL", "local-foodex-model")
+    monkeypatch.setenv("WIKI_LIBRARIAN_MODEL", "claude-sonnet-4-6")
+    client = FakeAnthropicClient([])
+
+    selector = AnthropicWikiPageSelector(store=_store(), client=client)
+
+    assert selector.model == "local-foodex-model"
+
+
+def test_lmstudio_openai_compatible_client_maps_tool_calls(monkeypatch) -> None:
+    calls: list[dict[str, object]] = []
+
+    def fake_http_post_json(**kwargs: object) -> dict[str, object]:
+        calls.append(kwargs)
+        return {
+            "choices": [
+                {
+                    "finish_reason": "tool_calls",
+                    "message": {
+                        "tool_calls": [
+                            {
+                                "id": "call_1",
+                                "type": "function",
+                                "function": {
+                                    "name": "read_wiki_pages",
+                                    "arguments": json.dumps(
+                                        {"page_names": ["base-term-selection.md"]}
+                                    ),
+                                },
+                            }
+                        ]
+                    },
+                }
+            ],
+            "usage": {"prompt_tokens": 10, "completion_tokens": 5, "total_tokens": 15},
+        }
+
+    monkeypatch.setattr(librarian_module, "_http_post_json", fake_http_post_json)
+    client = OpenAICompatibleMessagesClient(base_url="http://127.0.0.1:1234/v1")
+
+    response = client.messages.create(
+        model="lmstudio:local-model",
+        max_tokens=100,
+        reasoning_effort="high",
+        system="system text",
+        tools=[
+            {
+                "name": "read_wiki_pages",
+                "description": "Read pages.",
+                "input_schema": {"type": "object", "properties": {}},
+            }
+        ],
+        messages=[{"role": "user", "content": "Pick pages."}],
+    )
+
+    assert calls[0]["url"] == "http://127.0.0.1:1234/v1/chat/completions"
+    payload = calls[0]["payload"]
+    assert payload["model"] == "local-model"
+    assert payload["reasoning_effort"] == "high"
+    assert payload["messages"][0] == {"role": "system", "content": "system text"}
+    assert payload["tools"][0]["function"]["name"] == "read_wiki_pages"
+    assert response["stop_reason"] == "tool_use"
+    assert response["content"][0]["input"] == {"page_names": ["base-term-selection.md"]}
 
 
 def test_store_extracts_guiding_principles_from_index() -> None:

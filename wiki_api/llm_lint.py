@@ -20,7 +20,7 @@ from .librarian import (
     _resolve_model,
     _response_text,
     _usage_dict,
-    build_anthropic_client,
+    build_messages_client,
 )
 from .wiki_store import (
     PROMPT_CONTEXT_OMITTED_SECTIONS,
@@ -158,12 +158,12 @@ class AnthropicWikiLinter:
         max_tokens: int = 4000,
         thinking_enabled: bool | None = None,
     ):
-        self.client = client or build_anthropic_client()
         self.model = model or _resolve_model(
             "WIKI_LINT_MODEL",
             "WIKI_LIBRARIAN_MODEL",
             default="claude-3-7-sonnet-latest",
         )
+        self.client = client or build_messages_client(self.model)
         self.max_tokens = max_tokens
         self.thinking_enabled = (
             _env_bool("WIKI_LINT_THINKING", default=True)

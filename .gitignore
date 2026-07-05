@@ -9,3 +9,6 @@ __pycache__/
 .claude/ralph-loop-budget.json
 foodex2_agent_app/
 reports/wiki-lint-*.md
+reports/dmt-foodex2-paper/
+reports/wiki-ask-evals/
+reports/wiki-judge-evals/

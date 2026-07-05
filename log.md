@@ -1,9 +1,28 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-06-10"
+last_updated: "2026-07-05"
 ---
 
 # Log
+
+## [2026-07-05] maintenance | Selection skeleton failsafe for context-pack
+
+- Added a selection-skeleton policy page defining the required page roles (base_term, facet, validation) as global structural invariants that apply to every code-construction pack, plus a deterministic maintenance/orientation drop rule, and registered it with the doctor so the policy block stays parseable and in sync with the wiki store. Domain overlays (e.g. reporting-domain-specific guidance) are deliberately excluded from the skeleton — that's selector judgment, queued as Phase 2, not a structural role.
+- Enforcement is now live on `POST /wiki/context-pack`: after the LLM selector picks pages, a deterministic pass backfills any missing required role and drops maintenance/orientation pages from coding packs. The response trace now carries `trace.skeleton_enforcement` (`policy_version`, `backfilled`, `dropped`, `selector_covered_roles`), and selector misses are logged for future tuning.
+- Extended `scripts/selection_eval.py` to report the new failsafe layer: per-case `backfilled`/`dropped` lists, and summary-level `backfill_case_rate` / `mean_backfills_per_case`.
+- Ran the Phase 1 eval (`reports/selection-evals/2026-07-05-phase1/`, 15 reviewed cases) against the enforcement-enabled build. Versus baseline (`reports/selection-evals/2026-07-05-baseline/`): mean must-have recall 0.7278 → 0.9667, mean precision 0.9144 → 0.9600, leak-free rate 0.9333 → 1.0000, mean pack chars 16,031 → 18,791. New scoreboard metric: backfill_case_rate 0.9333 (14/15 cases needed at least one backfill), mean_backfills_per_case 1.067 — confirming the skeleton floor is doing real work, not a no-op. Selector token cost unchanged (~3600/case) since enforcement adds no LLM call. Residual misses: SEL-0005 (`process-validation-rules.md`) and SEL-0011 (`implicit-vs-explicit-facets.md`) remain, as anticipated — both are Phase 2 candidate-signal evidence (selector needs to read candidate termTypes), not category-skeleton gaps, and are queued behind this work rather than chased here. Caveat, per the phase1 triage: SEL-0009's leak closure and part of SEL-0014's gain reflect selector run variance this run — the drop path is unit/integration-tested but was not exercised by this eval run, so the leak-free 1.0000 should not be read as fully mechanism-earned.
+
+## [2026-07-05] diagnostic | Page-selection gold set + baseline eval
+
+- Added a measurement layer for `/wiki/context-pack` page selection: deterministic scorer (`wiki_api/selection_scoring.py`), a 15-case reviewed gold set with must_have/acceptable/must_not labels (`evals/selection/`), and an eval runner (`scripts/selection_eval.py`). Plan: `docs/superpowers/plans/2026-07-05-page-selection-improvement.md`.
+- Baseline (`reports/selection-evals/2026-07-05-baseline/`): mean must-have recall 0.73, precision 0.91, leak-free 0.93. Dominant failure is a whole-category miss of the validation layer — `term-type-facet-constraints.md` absent from 10/15 packs. Triage opens Phase 1 (deterministic category skeleton) as top priority; Phase 2 (candidate-aware selector) queued for two residual candidate-signal misses.
+- This is a diagnostic baseline, not a guidance change; no wiki page semantics were altered.
+
+## [2026-07-04] maintenance | Add model-facing wiki architecture orientation
+
+- Added `WIKI_ARCHITECTURE_FOR_MODELS.md` as a first-class orientation page for models and maintainers that need the full architecture, structure, runtime endpoints, retrieval modes, source tiers, Qdrant role, and maintenance philosophy in one place.
+- Registered the page in the wiki store and index so it is served by the local wiki and checked by the deterministic doctor.
+- Linked the page from `README.md` and `SCHEMA.md` so future handoffs can use it as the canonical architecture briefing instead of reconstructing the system from scattered files.
 
 ## [2026-06-10] guidance | Clarify VMPR blood-related biological sample default
 

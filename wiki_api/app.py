@@ -28,6 +28,7 @@ from .rag_index import (
     DEFAULT_WIKI_CHUNK_MAX_CHARS,
     get_wiki_rag_status,
 )
+from .selection_policy import enforce_skeleton, load_selection_policy
 from .wiki_store import WikiPage, WikiStore
 
 
@@ -45,6 +46,10 @@ if not logging.getLogger().handlers:
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
 
 
+def _uses_messages_client(model: str | None) -> bool:
+    return infer_model_provider(model) in {"anthropic", "lmstudio"}
+
+
 def get_librarian_runner() -> AnthropicWikiLibrarian | Any:
     global librarian_runner
     if librarian_runner is None:
@@ -52,11 +57,30 @@ def get_librarian_runner() -> AnthropicWikiLibrarian | Any:
     return librarian_runner
 
 
-def get_selector_runner(*, model: str | None = None, max_pages: int | None = None) -> Any:
-    if model is not None:
-        if infer_model_provider(model) != "anthropic":
-            return JsonWikiPageSelector(store=store, model=model, max_pages=max_pages or 7)
-        return AnthropicWikiPageSelector(store=store, model=model, max_pages=max_pages or 7)
+def get_selector_runner(
+    *,
+    model: str | None = None,
+    max_pages: int | None = None,
+    reasoning_effort: str | None = None,
+) -> Any:
+    if model is not None or reasoning_effort is not None:
+        if _uses_messages_client(model):
+            kwargs: dict[str, Any] = {
+                "store": store,
+                "model": model,
+                "max_pages": max_pages or 7,
+            }
+            if reasoning_effort is not None:
+                kwargs["reasoning_effort"] = reasoning_effort
+            return AnthropicWikiPageSelector(**kwargs)
+        kwargs = {
+            "store": store,
+            "model": model,
+            "max_pages": max_pages or 7,
+        }
+        if reasoning_effort is not None:
+            kwargs["reasoning_effort"] = reasoning_effort
+        return JsonWikiPageSelector(**kwargs)
     global selector_runner
     if selector_runner is None:
         selector_runner = AnthropicWikiPageSelector(store=store)
@@ -70,11 +94,21 @@ def get_solver_runner() -> AnthropicFoodEx2Solver | Any:
     return solver_runner
 
 
-def get_answerer_runner(*, model: str | None = None) -> AnthropicFoodEx2Answerer | Any:
-    if model is not None:
-        if infer_model_provider(model) != "anthropic":
-            return JsonFoodEx2Answerer(model=model)
-        return AnthropicFoodEx2Answerer(model=model)
+def get_answerer_runner(
+    *,
+    model: str | None = None,
+    reasoning_effort: str | None = None,
+) -> AnthropicFoodEx2Answerer | Any:
+    if model is not None or reasoning_effort is not None:
+        if _uses_messages_client(model):
+            kwargs: dict[str, Any] = {"model": model}
+            if reasoning_effort is not None:
+                kwargs["reasoning_effort"] = reasoning_effort
+            return AnthropicFoodEx2Answerer(**kwargs)
+        kwargs = {"model": model}
+        if reasoning_effort is not None:
+            kwargs["reasoning_effort"] = reasoning_effort
+        return JsonFoodEx2Answerer(**kwargs)
     global answerer_runner
     if answerer_runner is None:
         answerer_runner = AnthropicFoodEx2Answerer()
@@ -257,15 +291,33 @@ class AskRequest(BaseModel):
     selector_model: str | None = Field(
         default=None,
         description=(
-            "Optional per-request Anthropic model override for wiki page selection. "
-            "If omitted, the service uses WIKI_CONTEXT_MODEL, then WIKI_LIBRARIAN_MODEL."
+            "Optional per-request model override for wiki page selection. "
+            "Use claude* for Anthropic, lmstudio:<model> for LM Studio, "
+            "or gpt*/gemini* for JSON-only hosted overrides. If omitted, "
+            "the service uses WIKI_CONTEXT_MODEL, then WIKI_LIBRARIAN_MODEL."
         ),
     )
     answerer_model: str | None = Field(
         default=None,
         description=(
-            "Optional per-request Anthropic model override for the synthesized answer. "
-            "If omitted, the service uses WIKI_ANSWERER_MODEL, then WIKI_LIBRARIAN_MODEL."
+            "Optional per-request model override for the synthesized answer. "
+            "Use claude* for Anthropic, lmstudio:<model> for LM Studio, "
+            "or gpt*/gemini* for JSON-only hosted overrides. If omitted, "
+            "the service uses WIKI_ANSWERER_MODEL, then WIKI_LIBRARIAN_MODEL."
+        ),
+    )
+    selector_reasoning_effort: Literal["low", "medium", "high"] | None = Field(
+        default=None,
+        description=(
+            "Optional reasoning effort for LM Studio/OpenAI-compatible selector calls. "
+            "Ignored by providers that do not support it."
+        ),
+    )
+    answerer_reasoning_effort: Literal["low", "medium", "high"] | None = Field(
+        default=None,
+        description=(
+            "Optional reasoning effort for LM Studio/OpenAI-compatible answerer calls. "
+            "Ignored by providers that do not support it."
         ),
     )
 
@@ -274,7 +326,12 @@ class AskRequest(BaseModel):
     def _normalize_model_overrides(cls, data: Any) -> Any:
         if isinstance(data, dict):
             normalized = dict(data)
-            for field_name in ("selector_model", "answerer_model"):
+            for field_name in (
+                "selector_model",
+                "answerer_model",
+                "selector_reasoning_effort",
+                "answerer_reasoning_effort",
+            ):
                 value = normalized.get(field_name)
                 if isinstance(value, str):
                     normalized[field_name] = value.strip() or None
@@ -1030,13 +1087,19 @@ def ask_question(request: AskRequest) -> AskResponse:
                 "use_graph_expansion": request.use_graph_expansion,
                 "selector_model": request.selector_model,
                 "answerer_model": request.answerer_model,
+                "selector_reasoning_effort": request.selector_reasoning_effort,
+                "answerer_reasoning_effort": request.answerer_reasoning_effort,
             },
             ensure_ascii=False,
         ),
     )
 
     selector_start = time.perf_counter()
-    selector = get_selector_runner(model=request.selector_model, max_pages=request.max_pages)
+    selector = get_selector_runner(
+        model=request.selector_model,
+        max_pages=request.max_pages,
+        reasoning_effort=request.selector_reasoning_effort,
+    )
     if request.max_pages != selector.max_pages:
         selector.max_pages = request.max_pages
     selector_payload = {
@@ -1110,7 +1173,10 @@ def ask_question(request: AskRequest) -> AskResponse:
             )
         )
 
-    answerer = get_answerer_runner(model=request.answerer_model)
+    answerer = get_answerer_runner(
+        model=request.answerer_model,
+        reasoning_effort=request.answerer_reasoning_effort,
+    )
     answerer_start = time.perf_counter()
     try:
         answer_result = answerer.run(question=request.question, pages=answerer_input_pages)
@@ -1130,6 +1196,7 @@ def ask_question(request: AskRequest) -> AskResponse:
             "selection_method": "service-owned llm page selector + answerer",
             "retrieval": {
                 "model": selector.model,
+                "reasoning_effort": request.selector_reasoning_effort,
                 "tool_trace": selection_result.tool_trace,
                 "token_summary": selection_result.token_summary,
                 "timing_summary": selection_result.timing_summary,
@@ -1141,6 +1208,7 @@ def ask_question(request: AskRequest) -> AskResponse:
             },
             "answerer": {
                 "model": answerer.model,
+                "reasoning_effort": request.answerer_reasoning_effort,
                 "token_summary": answer_result.token_summary,
                 "timing_summary": answer_result.timing_summary,
             },
@@ -1493,6 +1561,25 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
     except (RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
 
+    try:
+        selection_policy = load_selection_policy(store)
+    except ValueError as exc:
+        raise HTTPException(status_code=503, detail=f"selection policy unavailable: {exc}") from exc
+    skeleton = enforce_skeleton(selection_result.pages_used, selection_policy)
+    for backfill in skeleton.backfilled:
+        logger.info(
+            "selector_miss %s",
+            json.dumps(
+                {
+                    "surface": "context-pack",
+                    "search_term": request.search_term,
+                    "role": backfill["role"],
+                    "page": backfill["page"],
+                },
+                ensure_ascii=False,
+            ),
+        )
+
     pages = [
         PageSummary(
             page_name=page.name,
@@ -1504,11 +1591,11 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
             related=page.related,
             content=store.prompt_content_for_context_pack(page) if request.include_page_content else None,
         )
-        for page in [store.read_page(page_name) for page_name in selection_result.pages_used]
+        for page in [store.read_page(page_name) for page_name in skeleton.final_pages]
     ]
     final_pages_used, pages = _ensure_front_page(
         RUNTIME_RULES_PAGE_NAME,
-        selection_result.pages_used,
+        skeleton.final_pages,
         pages,
         include_content=request.include_page_content,
         content_for_page=store.prompt_content_for_context_pack,
@@ -1538,6 +1625,12 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
                     "Supporting Pages By Signal",
                     "Worked Examples",
                 ],
+            },
+            "skeleton_enforcement": {
+                "policy_version": selection_policy.skeleton_version,
+                "backfilled": skeleton.backfilled,
+                "dropped": skeleton.dropped,
+                "selector_covered_roles": skeleton.selector_covered_roles,
             },
             "token_summary": selection_result.token_summary,
             "timing_summary": {

@@ -17,6 +17,7 @@ from .rag_index import (
     DEFAULT_WIKI_CHUNK_MAX_CHARS,
     get_wiki_rag_status,
 )
+from .selection_policy import POLICY_PAGE_NAME, load_selection_policy
 from .wiki_store import (
     MARKDOWN_LINK_RE,
     PROMPT_CONTEXT_PAGE_CATEGORIES,
@@ -106,6 +107,7 @@ def run_doctor(
     issues.extend(_check_graph_connectivity(store))
     issues.extend(_check_source_tiers(pages.values()))
     issues.extend(_check_source_references(store, pages.values()))
+    issues.extend(_check_selection_policy(store))
     if check_rag_index:
         issues.extend(
             _check_rag_index(
@@ -565,6 +567,54 @@ def _check_source_tiers(pages: Iterable[WikiPage]) -> Iterable[DoctorIssue]:
             )
         )
     return issue_list
+
+
+def _check_selection_policy(store: WikiStore) -> Iterable[DoctorIssue]:
+    issues: list[DoctorIssue] = []
+    try:
+        policy = load_selection_policy(store)
+    except Exception as exc:
+        issues.append(
+            DoctorIssue(
+                severity="error",
+                check="selection_policy",
+                location=POLICY_PAGE_NAME,
+                message=f"policy block unreadable: {exc}",
+            )
+        )
+        return issues
+    served = store.allowed_page_names()
+    for role in policy.required_roles:
+        for member in role.members:
+            if member not in served:
+                issues.append(
+                    DoctorIssue(
+                        severity="error",
+                        check="selection_policy",
+                        location=POLICY_PAGE_NAME,
+                        message=f"role {role.name!r} member {member!r} is not a served page",
+                    )
+                )
+            elif store.page_category(member) not in PROMPT_CONTEXT_PAGE_CATEGORIES:
+                issues.append(
+                    DoctorIssue(
+                        severity="error",
+                        check="selection_policy",
+                        location=POLICY_PAGE_NAME,
+                        message=f"role {role.name!r} member {member!r} is not prompt-facing",
+                    )
+                )
+    for pattern in policy.drop_pages:
+        if "*" not in pattern and pattern not in served:
+            issues.append(
+                DoctorIssue(
+                    severity="error",
+                    check="selection_policy",
+                    location=POLICY_PAGE_NAME,
+                    message=f"drop_pages entry {pattern!r} is not a served page",
+                )
+            )
+    return issues
 
 
 def _known_source_files(root: Path) -> dict[str, Path]:

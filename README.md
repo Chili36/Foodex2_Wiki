@@ -4,7 +4,7 @@ This repository contains a structured markdown knowledge base for EFSA FoodEx2 g
 
 It follows the "LLM wiki" pattern: raw source documents stay immutable, while an LLM incrementally builds and maintains a topic-oriented markdown layer that is easier to read, search, cite, and update over time.
 
-See [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) for the project rationale and the connection to Andrej Karpathy's `llm-wiki` gist. See [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md) for the current architecture stance on compiled markdown knowledge, graph retrieval, long-source ingest, and why heavier RAG infrastructure is deferred. See [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md) for the deterministic and LLM-assisted maintenance loop.
+See [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md) for the project rationale and the connection to Andrej Karpathy's `llm-wiki` gist. See [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md) for the current architecture stance on compiled markdown knowledge, graph retrieval, long-source ingest, and why heavier RAG infrastructure is deferred. See [WIKI_ARCHITECTURE_FOR_MODELS.md](WIKI_ARCHITECTURE_FOR_MODELS.md) for a model-facing architecture map that explains the wiki layers, runtime endpoints, retrieval modes, and maintenance gates. See [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md) for the deterministic and LLM-assisted maintenance loop.
 
 ## Related Projects
 
@@ -41,6 +41,7 @@ At the moment, the repository contains:
 - LLM-maintained topic pages in [raw/efsa-guidance](raw/efsa-guidance)
 - A content index in [index.md](index.md)
 - A knowledge architecture decision page in [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md)
+- A model-facing architecture orientation in [WIKI_ARCHITECTURE_FOR_MODELS.md](WIKI_ARCHITECTURE_FOR_MODELS.md)
 - A maintenance workflow in [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md)
 - A chronological wiki log in [log.md](log.md)
 - A validator-rule layer distilled from the sibling `Foodex2 Code Validator` project
@@ -278,12 +279,30 @@ ANTHROPIC_API_KEY=...
 WIKI_LIBRARIAN_MODEL=claude-3-7-sonnet-latest
 ```
 
-Add these only when testing `/wiki/ask` with non-Anthropic per-request model overrides:
+Add these only when testing `/wiki/ask` with hosted non-Anthropic per-request model overrides:
 
 ```bash
 OPENAI_API_KEY=...
 GEMINI_API_KEY=...
 ```
+
+To route wiki LLM calls through a local LM Studio server instead of Anthropic, run an
+OpenAI-compatible LM Studio server and set:
+
+```bash
+WIKI_LLM_PROVIDER=lmstudio
+WIKI_LMSTUDIO_BASE_URL=http://127.0.0.1:1234/v1
+WIKI_LMSTUDIO_MODEL=your-local-model-id
+# Optional only if your LM Studio server requires a bearer token.
+WIKI_LMSTUDIO_API_KEY=...
+```
+
+With `WIKI_LLM_PROVIDER=lmstudio`, endpoint-specific model variables are ignored in
+favor of `WIKI_LMSTUDIO_MODEL`, so `context-pack`, `policy-pack`, `solve`, `ask`,
+lint, and source-intake can all run locally. The page-selection and policy-pack
+flows use tool calls; pick a local model that supports OpenAI-compatible tool
+calling for those endpoints. For per-request tests, `/wiki/ask` also accepts
+`selector_model` and `answerer_model` values like `lmstudio:your-local-model-id`.
 
 Optional overrides:
 
@@ -332,7 +351,7 @@ tail -f /tmp/foodex2_wiki_8010.out.log
 tail -f /tmp/foodex2_wiki_8010.err.log
 ```
 
-`context-pack`, `policy-pack`, and `solve` use Anthropic internally. `ask` uses the lighter page-selector path plus a compact answerer and can route per-request model overrides to Anthropic, OpenAI, or Gemini. The wiki API loads `ANTHROPIC_API_KEY`, `WIKI_LIBRARIAN_MODEL`, and the optional endpoint-specific overrides from `.env`. `POST /wiki/ask` accepts per-request `selector_model` and `answerer_model` overrides when a caller wants to trade cost, latency, and answer quality for a specific question without changing service defaults.
+`context-pack`, `policy-pack`, and `solve` use the messages-client path. By default that path is Anthropic; setting `WIKI_LLM_PROVIDER=lmstudio` routes it through the OpenAI-compatible LM Studio adapter instead. `ask` uses the lighter page-selector path plus a compact answerer and can route per-request model overrides to Anthropic, LM Studio, OpenAI, or Gemini. The wiki API loads `ANTHROPIC_API_KEY`, `WIKI_LIBRARIAN_MODEL`, LM Studio settings, and the optional endpoint-specific overrides from `.env`. `POST /wiki/ask` accepts per-request `selector_model` and `answerer_model` overrides when a caller wants to trade cost, latency, and answer quality for a specific question without changing service defaults.
 For the LLM-driven paths, the service injects `index.md` into the first prompt so the model can choose and batch follow-up wiki page reads without spending a separate LLM turn just to fetch the catalog.
 
 For alpha usage:
@@ -383,7 +402,9 @@ Example `POST /wiki/ask` body:
 }
 ```
 
-`selector_model` and `answerer_model` are optional per-request overrides. Omit them to use the configured defaults from `WIKI_CONTEXT_MODEL`, `WIKI_ANSWERER_MODEL`, or `WIKI_LIBRARIAN_MODEL`. Use `selector_model` for the page-selection step and `answerer_model` for the synthesized guidance answer. Model names beginning with `claude` use Anthropic, names beginning with `gpt` use OpenAI, and names beginning with `gemini` use the Gemini API.
+`selector_model` and `answerer_model` are optional per-request overrides. Omit them to use the configured defaults from `WIKI_CONTEXT_MODEL`, `WIKI_ANSWERER_MODEL`, or `WIKI_LIBRARIAN_MODEL` unless `WIKI_LLM_PROVIDER=lmstudio` is active, in which case `WIKI_LMSTUDIO_MODEL` is used. Use `selector_model` for the page-selection step and `answerer_model` for the synthesized guidance answer. Model names beginning with `claude` use Anthropic, names beginning with `lmstudio:` or `lm-studio:` use LM Studio, names beginning with `gpt` use OpenAI, and names beginning with `gemini` use the Gemini API.
+
+`selector_reasoning_effort` and `answerer_reasoning_effort` are optional per-request tuning fields with values `low`, `medium`, or `high`. They are mainly for LM Studio / OpenAI-compatible model experiments where reasoning-heavy local models need explicit effort control. Providers that do not support the setting ignore it; the response trace echoes the requested value so evaluation runs can compare cost, latency, and answer quality.
 
 `POST /wiki/ask` response includes:
 

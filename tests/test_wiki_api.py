@@ -831,6 +831,95 @@ def test_ask_routes_non_anthropic_model_overrides(monkeypatch) -> None:
     assert created["answerer"].model == "gemini-3.5-flash"
 
 
+def test_ask_routes_lmstudio_model_overrides_through_messages_client(monkeypatch) -> None:
+    created: dict[str, object] = {}
+
+    class OverrideSelector(FakeSelector):
+        def __init__(self, *, store: object, model: str, max_pages: int) -> None:
+            super().__init__()
+            self.model = model
+            self.max_pages = max_pages
+            created["selector"] = self
+
+    class OverrideAnswerer(FakeAnswerer):
+        def __init__(self, *, model: str) -> None:
+            super().__init__()
+            self.model = model
+            created["answerer"] = self
+
+    monkeypatch.setattr(app_module, "AnthropicWikiPageSelector", OverrideSelector)
+    monkeypatch.setattr(app_module, "AnthropicFoodEx2Answerer", OverrideAnswerer)
+
+    response = request(
+        "POST",
+        "/wiki/ask",
+        json={
+            "question": "What should I think about when reporting sheep urine?",
+            "selector_model": "lmstudio:qwen-local",
+            "answerer_model": "lmstudio:qwen-local",
+            "use_graph_expansion": False,
+        },
+    )
+
+    assert response.status_code == 200
+    assert created["selector"].model == "lmstudio:qwen-local"
+    assert created["answerer"].model == "lmstudio:qwen-local"
+
+
+def test_ask_passes_reasoning_effort_to_lmstudio_overrides(monkeypatch) -> None:
+    created: dict[str, object] = {}
+
+    class OverrideSelector(FakeSelector):
+        def __init__(
+            self,
+            *,
+            store: object,
+            model: str,
+            max_pages: int,
+            reasoning_effort: str | None = None,
+        ) -> None:
+            super().__init__()
+            self.model = model
+            self.max_pages = max_pages
+            self.reasoning_effort = reasoning_effort
+            created["selector"] = self
+
+    class OverrideAnswerer(FakeAnswerer):
+        def __init__(
+            self,
+            *,
+            model: str,
+            reasoning_effort: str | None = None,
+        ) -> None:
+            super().__init__()
+            self.model = model
+            self.reasoning_effort = reasoning_effort
+            created["answerer"] = self
+
+    monkeypatch.setattr(app_module, "AnthropicWikiPageSelector", OverrideSelector)
+    monkeypatch.setattr(app_module, "AnthropicFoodEx2Answerer", OverrideAnswerer)
+
+    response = request(
+        "POST",
+        "/wiki/ask",
+        json={
+            "question": "What should I think about when reporting sheep urine?",
+            "selector_model": "lmstudio:gpt-oss-120b",
+            "answerer_model": "lmstudio:gpt-oss-120b",
+            "selector_reasoning_effort": "high",
+            "answerer_reasoning_effort": "high",
+            "use_graph_expansion": False,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert created["selector"].reasoning_effort == "high"
+    assert created["answerer"].reasoning_effort == "high"
+    assert payload["trace"]["retrieval"]["reasoning_effort"] == "high"
+    assert payload["trace"]["answerer"]["reasoning_effort"] == "high"
+
+
 def test_ask_requires_question() -> None:
     response = request("POST", "/wiki/ask", json={"question": ""})
     assert response.status_code == 422
@@ -1036,6 +1125,53 @@ def test_context_pack_can_return_domoic_acid_scallop_overlay() -> None:
     assert "Pecten maximus, Hepatopancreas" in content
     assert "origFishAreaCode" in content
     assert app_module.selector_runner.calls[0]["context"] == {"reporting_domain": "contaminants"}
+
+
+class FakeLeakySelector(FakeSelector):
+    def run(self, payload: dict[str, object]) -> PageSelectionResult:
+        result = super().run(payload)
+        return PageSelectionResult(
+            pages_used=["index.md", "base-term-selection.md", "ingredient-facets.md", "maintenance-2024.md"],
+            tool_trace=result.tool_trace,
+            token_summary=result.token_summary,
+            timing_summary=result.timing_summary,
+        )
+
+
+def test_context_pack_backfills_missing_roles_and_drops_leaks() -> None:
+    app_module.selector_runner = FakeLeakySelector()
+    response = request(
+        "POST",
+        "/wiki/context-pack",
+        json={"search_term": "test skeleton enforcement"},
+    )
+    assert response.status_code == 200
+    payload = response.json()
+    pages_used = payload["pages_used"]
+    assert pages_used[0] == "RUNTIME_RULES.md"
+    assert "maintenance-2024.md" not in pages_used
+    assert "term-type-facet-constraints.md" in pages_used
+    enforcement = payload["trace"]["skeleton_enforcement"]
+    assert enforcement["backfilled"] == [
+        {"role": "validation", "page": "term-type-facet-constraints.md"}
+    ]
+    assert enforcement["dropped"] == ["maintenance-2024.md"]
+    assert enforcement["selector_covered_roles"] == ["base_term", "facet"]
+    page_names = [page["page_name"] for page in payload["pages"]]
+    assert "term-type-facet-constraints.md" in page_names
+    assert "maintenance-2024.md" not in page_names
+
+
+def test_context_pack_trace_reports_no_backfill_when_roles_covered() -> None:
+    response = request(
+        "POST",
+        "/wiki/context-pack",
+        json={"search_term": "test skeleton no-op"},
+    )
+    assert response.status_code == 200
+    enforcement = response.json()["trace"]["skeleton_enforcement"]
+    assert enforcement["backfilled"] == []
+    assert enforcement["dropped"] == []
 
 
 def test_policy_pack_accepts_legacy_scope_note_but_normalizes_to_coverage_text() -> None:
