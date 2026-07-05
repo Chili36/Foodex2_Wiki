@@ -67,3 +67,26 @@ def test_doctor_flags_corrupted_selection_policy(tmp_path):
 def test_doctor_passes_selection_policy_on_real_wiki():
     report = run_doctor(".")
     assert "selection_policy" not in {issue.check for issue in report.errors}
+
+
+def test_doctor_flags_missing_selector_guidance(tmp_path):
+    root = _copy_wiki_root(tmp_path)
+    policy_path = root / "raw" / "efsa-guidance" / "selection-policy.md"
+    policy_path.write_text(
+        "---\ntitle: \"Selection Skeleton Policy\"\nlast_updated: \"2026-07-05\"\n"
+        "source_tier: \"local_policy\"\n---\n\n# Selection Skeleton Policy\n\n"
+        "## Policy Block\n\n"
+        "```yaml\n"
+        "skeleton_version: 1\n"
+        "required_roles:\n"
+        "  base_term:\n"
+        "    members:\n"
+        "      - base-term-selection.md\n"
+        "    default: base-term-selection.md\n"
+        "drop_pages:\n"
+        "  - \"maintenance-*\"\n"
+        "```\n"
+    )
+    report = run_doctor(root)
+    checks = {issue.check for issue in report.errors}
+    assert "selection_policy" in checks

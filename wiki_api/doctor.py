@@ -17,7 +17,7 @@ from .rag_index import (
     DEFAULT_WIKI_CHUNK_MAX_CHARS,
     get_wiki_rag_status,
 )
-from .selection_policy import POLICY_PAGE_NAME, load_selection_policy
+from .selection_policy import POLICY_PAGE_NAME, load_selection_policy, load_selector_guidance
 from .wiki_store import (
     MARKDOWN_LINK_RE,
     PROMPT_CONTEXT_PAGE_CATEGORIES,
@@ -614,6 +614,17 @@ def _check_selection_policy(store: WikiStore) -> Iterable[DoctorIssue]:
                     message=f"drop_pages entry {pattern!r} is not a served page",
                 )
             )
+    try:
+        load_selector_guidance(store)
+    except ValueError as exc:
+        issues.append(
+            DoctorIssue(
+                severity="error",
+                check="selection_policy",
+                location=POLICY_PAGE_NAME,
+                message=f"selector guidance unavailable: {exc}",
+            )
+        )
     return issues
 
 
