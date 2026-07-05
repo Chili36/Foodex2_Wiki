@@ -72,24 +72,33 @@ def main() -> None:
             )
         pack_chars = sum(len(page.get("content") or "") for page in response.get("pages", []))
         score = score_case(case["labels"], pages_used)
-        rows.append(
-            {
-                "id": case["id"],
-                "reviewed": bool(case.get("reviewed")),
-                "pages_used": pages_used,
-                "pack_chars": pack_chars,
-                "selector_tokens": (response.get("trace") or {}).get("token_summary"),
-                **score,
-            }
-        )
+        enforcement = (response.get("trace") or {}).get("skeleton_enforcement") or {}
+        row = {
+            "id": case["id"],
+            "reviewed": bool(case.get("reviewed")),
+            "pages_used": pages_used,
+            "pack_chars": pack_chars,
+            "selector_tokens": (response.get("trace") or {}).get("token_summary"),
+            "backfilled": enforcement.get("backfilled", []),
+            "dropped": enforcement.get("dropped", []),
+            **score,
+        }
+        rows.append(row)
         print(
             f"{case['id']}: recall={score['must_have_recall']:.2f} "
-            f"leaks={score['leaks']} missing={score['missing']}"
+            f"leaks={score['leaks']} missing={score['missing']} "
+            f"backfilled={[item['page'] for item in row['backfilled']]}"
         )
 
     summary = aggregate(rows)
     summary["mean_pack_chars"] = (
         sum(row["pack_chars"] for row in rows) / len(rows) if rows else 0
+    )
+    summary["backfill_case_rate"] = (
+        len([row for row in rows if row["backfilled"]]) / len(rows) if rows else 0
+    )
+    summary["mean_backfills_per_case"] = (
+        sum(len(row["backfilled"]) for row in rows) / len(rows) if rows else 0
     )
     out_dir = (
         REPO_ROOT / "reports" / "selection-evals"
