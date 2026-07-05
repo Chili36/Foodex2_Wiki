@@ -5,6 +5,12 @@ last_updated: "2026-07-04"
 
 # Log
 
+## [2026-07-05] diagnostic | Page-selection gold set + baseline eval
+
+- Added a measurement layer for `/wiki/context-pack` page selection: deterministic scorer (`wiki_api/selection_scoring.py`), a 15-case reviewed gold set with must_have/acceptable/must_not labels (`evals/selection/`), and an eval runner (`scripts/selection_eval.py`). Plan: `docs/superpowers/plans/2026-07-05-page-selection-improvement.md`.
+- Baseline (`reports/selection-evals/2026-07-05-baseline/`): mean must-have recall 0.73, precision 0.91, leak-free 0.93. Dominant failure is a whole-category miss of the validation layer — `term-type-facet-constraints.md` absent from 10/15 packs. Triage opens Phase 1 (deterministic category skeleton) as top priority; Phase 2 (candidate-aware selector) queued for two residual candidate-signal misses.
+- This is a diagnostic baseline, not a guidance change; no wiki page semantics were altered.
+
 ## [2026-07-04] maintenance | Add model-facing wiki architecture orientation
 
 - Added `WIKI_ARCHITECTURE_FOR_MODELS.md` as a first-class orientation page for models and maintainers that need the full architecture, structure, runtime endpoints, retrieval modes, source tiers, Qdrant role, and maintenance philosophy in one place.
