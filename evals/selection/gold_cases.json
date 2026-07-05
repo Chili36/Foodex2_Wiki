@@ -4,7 +4,7 @@
     {
       "id": "SEL-0001",
       "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0001",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Bordsdruvor – färsk frukt (table grapes, fresh fruit)",
         "deconstructed_query": {
@@ -57,7 +57,7 @@
     {
       "id": "SEL-0002",
       "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0009",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Vetekärna – spannmålskärna (wheat grain, cereal kernel)",
         "deconstructed_query": {
@@ -110,7 +110,7 @@
     {
       "id": "SEL-0003",
       "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0047",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Paranötter – nötter (Brazil nuts, tree nuts)",
         "deconstructed_query": {
@@ -163,7 +163,7 @@
     {
       "id": "SEL-0004",
       "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0120",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Gris – lever (pig liver, edible offal)",
         "deconstructed_query": {
@@ -216,7 +216,7 @@
     {
       "id": "SEL-0005",
       "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0152",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Skivad ost med ytkonservering – ost (sliced cheese with surface preservative)",
         "deconstructed_query": {
@@ -271,7 +271,7 @@
     {
       "id": "SEL-0006",
       "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0160",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Glass med färg/smak – sammansatt produkt (ice cream with colour/flavour, composite)",
         "deconstructed_query": {
@@ -325,7 +325,7 @@
     {
       "id": "SEL-0007",
       "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0161",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Kanelbulle – bakverk (cinnamon bun, bakery)",
         "deconstructed_query": {
@@ -380,7 +380,7 @@
     {
       "id": "SEL-0008",
       "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0181",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Nötkreatur – blod/serum (cattle blood/serum, VMPR biological sample)",
         "deconstructed_query": {
@@ -433,7 +433,7 @@
     {
       "id": "SEL-0009",
       "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0184",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Nötkreatur – foder (cattle feed, VMPR feed matrix)",
         "deconstructed_query": {
@@ -486,7 +486,7 @@
     {
       "id": "SEL-0010",
       "source": "wiki_ask_10_tests_2026-06-19:EFSA-TD-0202",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Får – urin (sheep urine, VMPR biological sample)",
         "deconstructed_query": {
@@ -539,7 +539,7 @@
     {
       "id": "SEL-0011",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Quinoafmjöl – kvarnprodukt (quinoa flour, derivative; detailed term missing)",
         "deconstructed_query": {
@@ -604,7 +604,7 @@
     {
       "id": "SEL-0012",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Gris – blodserum (pig blood serum, VMPR biological sample)",
         "deconstructed_query": {
@@ -617,8 +617,8 @@
         "candidate_hints": [
           {
             "code": "A0C60",
-            "name": "Non-food animal-related matrices (base matrix term)",
-            "termType": "r"
+            "name": "Non-food animal-related matrices (generic/group term)",
+            "termType": "g"
           },
           {
             "code": "A0CEY",
@@ -662,13 +662,13 @@
           "contaminants-foodex2.md",
           "additives-flavourings-foodex2.md"
         ],
-        "notes": "Rubric 1+2: synthetic VMPR non-food biological matrix -> A0C60 with mandatory F01/F02; vmpr overlay and facet-coding-rules must_have (rule 6). candidate_hints A0C60 and F02.A0CEY (blood serum) are cited in vmpr-foodex2.md worked signals. A0C60 termType marked 'r' as a base matrix term (special non-food base; David: verify term type). A0CEY given termType 'f' (facet descriptor)."
+        "notes": "Rubric 1+2: synthetic VMPR non-food biological matrix. A0C60 is a generic/group term (termType 'g', scope note: group of non-food matrices of biological origin) that must NOT win base-term selection (BR23-BR24); the coder must descend to a specific reportable non-food matrix term and add mandatory F01/F02. This is exactly why base-term-selection.md and term-type-facet-constraints.md are must_have: the candidate set contains a group term the selector must teach the coder to reject. vmpr overlay and facet-coding-rules must_have (rule 6). A0CEY termType 'f' (F02 blood-serum descriptor). Both codes cited in vmpr-foodex2.md worked signals."
       }
     },
     {
       "id": "SEL-0013",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Blandad grönsakssallad – sammansatt (mixed vegetable salad, balanced composite)",
         "deconstructed_query": {
@@ -733,7 +733,7 @@
     {
       "id": "SEL-0014",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Pizza i laminerad avhämtningskartong (pizza in a laminated takeaway box; packaging matters)",
         "deconstructed_query": {
@@ -804,7 +804,7 @@
     {
       "id": "SEL-0015",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Äpple – färsk hel frukt (apple, fresh whole fruit; no reporting domain)",
         "deconstructed_query": {
@@ -814,7 +814,7 @@
         "context": {},
         "candidate_hints": [
           {
-            "code": "A01BQ",
+            "code": "A01DJ",
             "name": "Apple (raw commodity base term)",
             "termType": "r"
           }
