@@ -1,16 +1,16 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-07-04"
+last_updated: "2026-07-05"
 ---
 
 # Log
 
 ## [2026-07-05] maintenance | Selection skeleton failsafe for context-pack
 
-- Added a selection-skeleton policy page defining the required page roles (base_term, facet, validation) per reporting domain, plus a deterministic maintenance/orientation drop rule, and registered it with the doctor so the policy block stays parseable and in sync with the wiki store.
+- Added a selection-skeleton policy page defining the required page roles (base_term, facet, validation) as global structural invariants that apply to every code-construction pack, plus a deterministic maintenance/orientation drop rule, and registered it with the doctor so the policy block stays parseable and in sync with the wiki store. Domain overlays (e.g. reporting-domain-specific guidance) are deliberately excluded from the skeleton — that's selector judgment, queued as Phase 2, not a structural role.
 - Enforcement is now live on `POST /wiki/context-pack`: after the LLM selector picks pages, a deterministic pass backfills any missing required role and drops maintenance/orientation pages from coding packs. The response trace now carries `trace.skeleton_enforcement` (`policy_version`, `backfilled`, `dropped`, `selector_covered_roles`), and selector misses are logged for future tuning.
 - Extended `scripts/selection_eval.py` to report the new failsafe layer: per-case `backfilled`/`dropped` lists, and summary-level `backfill_case_rate` / `mean_backfills_per_case`.
-- Ran the Phase 1 eval (`reports/selection-evals/2026-07-05-phase1/`, 15 reviewed cases) against the enforcement-enabled build. Versus baseline (`reports/selection-evals/2026-07-05-baseline/`): mean must-have recall 0.7278 → 0.9667, mean precision 0.9144 → 0.9600, leak-free rate 0.9333 → 1.0000, mean pack chars 16,031 → 18,791. New scoreboard metric: backfill_case_rate 0.9333 (14/15 cases needed at least one backfill), mean_backfills_per_case 1.067 — confirming the skeleton floor is doing real work, not a no-op. Selector token cost unchanged (~3600/case) since enforcement adds no LLM call. Residual misses: SEL-0005 (`process-validation-rules.md`) and SEL-0011 (`implicit-vs-explicit-facets.md`) remain, as anticipated — both are Phase 2 candidate-signal evidence (selector needs to read candidate termTypes), not category-skeleton gaps, and are queued behind this work rather than chased here.
+- Ran the Phase 1 eval (`reports/selection-evals/2026-07-05-phase1/`, 15 reviewed cases) against the enforcement-enabled build. Versus baseline (`reports/selection-evals/2026-07-05-baseline/`): mean must-have recall 0.7278 → 0.9667, mean precision 0.9144 → 0.9600, leak-free rate 0.9333 → 1.0000, mean pack chars 16,031 → 18,791. New scoreboard metric: backfill_case_rate 0.9333 (14/15 cases needed at least one backfill), mean_backfills_per_case 1.067 — confirming the skeleton floor is doing real work, not a no-op. Selector token cost unchanged (~3600/case) since enforcement adds no LLM call. Residual misses: SEL-0005 (`process-validation-rules.md`) and SEL-0011 (`implicit-vs-explicit-facets.md`) remain, as anticipated — both are Phase 2 candidate-signal evidence (selector needs to read candidate termTypes), not category-skeleton gaps, and are queued behind this work rather than chased here. Caveat, per the phase1 triage: SEL-0009's leak closure and part of SEL-0014's gain reflect selector run variance this run — the drop path is unit/integration-tested but was not exercised by this eval run, so the leak-free 1.0000 should not be read as fully mechanism-earned.
 
 ## [2026-07-05] diagnostic | Page-selection gold set + baseline eval
 

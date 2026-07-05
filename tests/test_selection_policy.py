@@ -82,7 +82,7 @@ def test_drop_then_backfill_when_leak_was_only_coverage():
     ]
 
 
-def test_load_selection_policy_from_wiki(tmp_path=None):
+def test_load_selection_policy_from_wiki():
     store = WikiStore(".")
     policy = load_selection_policy(store)
     assert policy.skeleton_version == 1
@@ -106,4 +106,23 @@ def test_load_selection_policy_rejects_missing_block(tmp_path):
     )
     store = WikiStore(root)
     with pytest.raises(ValueError, match="policy block"):
+        load_selection_policy(store)
+
+
+def test_load_selection_policy_raises_value_error_when_page_missing(tmp_path):
+    # Same minimal scaffold as test_load_selection_policy_rejects_missing_block,
+    # but selection-policy.md is never created on disk. The guarantee under
+    # test is that load_selection_policy raises ValueError (so the
+    # context-pack endpoint's `except ValueError` catches it and returns
+    # 503), not any particular underlying exception type — WikiStore may
+    # raise FileNotFoundError from its registration/allowed-names path for
+    # an unregistered page rather than failing inside read_page itself.
+    root = tmp_path
+    (root / "raw" / "efsa-guidance").mkdir(parents=True)
+    for name in ("README.md", "PROJECT_CONTEXT.md", "KNOWLEDGE_ARCHITECTURE.md", "SCHEMA.md",
+                 "INGEST_WORKFLOW.md", "MAINTENANCE_WORKFLOW.md", "RUNTIME_RULES.md",
+                 "index.md", "log.md"):
+        (root / name).write_text("---\ntitle: x\n---\n# x\n")
+    store = WikiStore(root)
+    with pytest.raises(ValueError, match="could not be read"):
         load_selection_policy(store)

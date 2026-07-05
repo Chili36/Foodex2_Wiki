@@ -41,7 +41,12 @@ class SkeletonResult:
 
 
 def load_selection_policy(store: WikiStore) -> SelectionPolicy:
-    page = store.read_page(POLICY_PAGE_NAME)
+    # Re-read from the store on every call (no caching): matches the store's
+    # no-caching idiom and keeps the policy live-editable without a restart.
+    try:
+        page = store.read_page(POLICY_PAGE_NAME)
+    except (FileNotFoundError, OSError) as exc:
+        raise ValueError(f"{POLICY_PAGE_NAME} could not be read: {exc}") from exc
     match = _YAML_BLOCK_RE.search(page.content)
     if not match:
         raise ValueError(f"{POLICY_PAGE_NAME} has no fenced yaml policy block")

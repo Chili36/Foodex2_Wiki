@@ -72,7 +72,13 @@ def main() -> None:
             )
         pack_chars = sum(len(page.get("content") or "") for page in response.get("pages", []))
         score = score_case(case["labels"], pages_used)
-        enforcement = (response.get("trace") or {}).get("skeleton_enforcement") or {}
+        trace = response.get("trace") or {}
+        if "skeleton_enforcement" not in trace:
+            raise RuntimeError(
+                f"{case['id']}: response trace lacks skeleton_enforcement — "
+                "is the server running pre-enforcement code?"
+            )
+        enforcement = trace.get("skeleton_enforcement") or {}
         row = {
             "id": case["id"],
             "reviewed": bool(case.get("reviewed")),
