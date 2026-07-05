@@ -1,5 +1,11 @@
 # Gold cross-check 2026-07-05 (model: claude-sonnet-4-6)
 
+## Artifact note & resolution
+
+- The `must_not` deltas shown below for every case (all the `maintenance-2015.md`, `maintenance-2016-2018.md`, ... `maintenance-history.md` entries) are glob-expansion noise from a plain set-diff: the drafts encode this with the `maintenance-*` glob while the cross-check enumerated each concrete file. They are the same label, not a disagreement. Attention belongs on the `must_have` deltas only.
+- Once that noise is stripped out, there are 20 genuine disagreements (glob-aware), covering must_have additions/removals across SEL-0016 through SEL-0039 (with SEL-0030 erroring out on the cross-check side — see "Errors" below).
+- **David's resolution (2026-07-05):** drafts are kept on all must_have/must_not disputes — the drafts were produced with full-page grounding and had already passed independent review verification, which outweighs the hint-only cross-check (no direct page reads, working from descriptions/rubric only). Cross-check-only must_have additions are folded into `acceptable` instead of promoted, wherever not already present in some tier. SEL-0030 (the ERROR case, which the cross-check script failed to parse) has its draft accepted on the strength of the prior review verification. See `.superpowers/sdd/task-4-report.md` for the full per-case ledger of what was added vs. already present.
+
 Agreements (0): 
 
 ## Disagreements — David to resolve

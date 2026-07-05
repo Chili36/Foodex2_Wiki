@@ -861,7 +861,7 @@
     {
       "id": "SEL-0016",
       "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_29_sm_r_fett_80",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Smör fett 80% (butter, fat 80%)",
         "deconstructed_query": {
@@ -912,7 +912,7 @@
     {
       "id": "SEL-0017",
       "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_151_l_ttmj_lk_fett_0_5_berikad",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Lättmjölk fett 0,5% berikad (low-fat milk, fat 0.5%, fortified)",
         "deconstructed_query": {
@@ -963,7 +963,7 @@
     {
       "id": "SEL-0018",
       "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_995_lg_skav_r_frysvara",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Älg skav rå frysvara (moose shavings, raw, frozen)",
         "deconstructed_query": {
@@ -1016,7 +1016,7 @@
     {
       "id": "SEL-0019",
       "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_1535_korv_varmkorv_stekt",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Korv varmkorv stekt (hot-dog sausage, fried)",
         "deconstructed_query": {
@@ -1069,7 +1069,7 @@
     {
       "id": "SEL-0020",
       "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_1433_blodbr_d_paltbr_d_kokt_med_salt",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Blodbröd paltbröd kokt med salt (blood bread, boiled with salt)",
         "deconstructed_query": {
@@ -1095,7 +1095,9 @@
           "structural-validation.md",
           "business-rules.md",
           "domain-specific-validation.md",
-          "anses-codification-guidance.md"
+          "anses-codification-guidance.md",
+          "process-facets.md",
+          "process-validation-rules.md"
         ],
         "must_not": [
           "README.md",
@@ -1121,7 +1123,7 @@
     {
       "id": "SEL-0021",
       "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_262_potatissoppa_med_purjol_k",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Potatissoppa med purjolök (potato soup with leek)",
         "deconstructed_query": {
@@ -1173,7 +1175,7 @@
     {
       "id": "SEL-0022",
       "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_1848_mj_lkchoklad_med_hackade_hasseln_tter",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Mjölkchoklad med hackade hasselnötter (milk chocolate with chopped hazelnuts)",
         "deconstructed_query": {
@@ -1225,7 +1227,7 @@
     {
       "id": "SEL-0023",
       "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_1261_regnb_gslax_odlad_r",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Regnbågslax odlad rå (rainbow trout, farmed, raw)",
         "deconstructed_query": {
@@ -1276,7 +1278,7 @@
     {
       "id": "SEL-0024",
       "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_6462_korv_stroganoff_hemlagad",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Korv stroganoff hemlagad (sausage stroganoff, homemade dish)",
         "deconstructed_query": {
@@ -1328,7 +1330,7 @@
     {
       "id": "SEL-0025",
       "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_7175_savoiardikex",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Savoiardikex (savoiardi ladyfinger biscuits)",
         "deconstructed_query": {
@@ -1380,7 +1382,7 @@
     {
       "id": "SEL-0026",
       "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_1747_saftsoppa",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Saftsoppa (fruit-syrup soup / berry cordial soup)",
         "deconstructed_query": {
@@ -1431,7 +1433,7 @@
     {
       "id": "SEL-0027",
       "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_1389_mussla_p_burk_med_lag",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Mussla på burk med lag (mussels canned in liquid)",
         "deconstructed_query": {
@@ -1456,7 +1458,8 @@
           "structural-validation.md",
           "business-rules.md",
           "domain-specific-validation.md",
-          "anses-codification-guidance.md"
+          "anses-codification-guidance.md",
+          "packaging-facets.md"
         ],
         "must_not": [
           "README.md",
@@ -1482,7 +1485,7 @@
     {
       "id": "SEL-0028",
       "source": "dmt:foodex2_eval_cases_from_facet_review.json:facet_review_626_plommon_p_burk_med_sockerlag",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Plommon på burk med sockerlag (plums canned in sugar syrup)",
         "deconstructed_query": {
@@ -1507,7 +1510,9 @@
           "structural-validation.md",
           "business-rules.md",
           "domain-specific-validation.md",
-          "anses-codification-guidance.md"
+          "anses-codification-guidance.md",
+          "process-facets.md",
+          "process-validation-rules.md"
         ],
         "must_not": [
           "README.md",
@@ -1533,7 +1538,7 @@
     {
       "id": "SEL-0029",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Fryst produkt vars föreslagna kod har två identiska frysfasetter (frozen product whose proposed code repeats the same freezing facet)",
         "deconstructed_query": {
@@ -1595,7 +1600,7 @@
     {
       "id": "SEL-0030",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Fettprodukt kodad med två olika F07-fetthaltsvärden (fat spread coded with two different F07 fat-content descriptors)",
         "deconstructed_query": {
@@ -1657,7 +1662,7 @@
     {
       "id": "SEL-0031",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Torkat derivat där en explicit torkningsfasett upprepar den redan implicita processen (dried derivative where an explicit drying facet repeats the process already implicit in the base)",
         "deconstructed_query": {
@@ -1693,7 +1698,8 @@
           "business-rules.md",
           "term-type-facet-constraints.md",
           "domain-specific-validation.md",
-          "anses-codification-guidance.md"
+          "anses-codification-guidance.md",
+          "process-validation-rules.md"
         ],
         "must_not": [
           "README.md",
@@ -1719,7 +1725,7 @@
     {
       "id": "SEL-0032",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Flaskvatten i PET-plastflaska, migrationsstudie (bottled water in a PET plastic bottle, migration monitoring)",
         "deconstructed_query": {
@@ -1784,7 +1790,7 @@
     {
       "id": "SEL-0033",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Torra frukostflingor i laminerad kartong (dry breakfast cereal in a laminated carton box)",
         "deconstructed_query": {
@@ -1847,7 +1853,7 @@
     {
       "id": "SEL-0034",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Torkat buljongpulver där man överväger att lägga till en beredning/spädningsprocess (dried instant stock powder where a reconstitution/dilution process is being considered)",
         "deconstructed_query": {
@@ -1884,7 +1890,8 @@
           "structural-validation.md",
           "term-type-facet-constraints.md",
           "domain-specific-validation.md",
-          "anses-codification-guidance.md"
+          "anses-codification-guidance.md",
+          "process-validation-rules.md"
         ],
         "must_not": [
           "README.md",
@@ -1910,7 +1917,7 @@
     {
       "id": "SEL-0035",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Kandidatlistan innehåller en utgången (deprecated) term jämte en giltig term (candidate list contains a deprecated term alongside a valid one)",
         "deconstructed_query": {
@@ -1972,7 +1979,7 @@
     {
       "id": "SEL-0036",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Rå krydda malen till pulver — är F03 pulver tillåtet på den råa basen? (raw spice ground to a powder — is an F03 powder state allowed on the raw base?)",
         "deconstructed_query": {
@@ -2012,7 +2019,8 @@
           "structural-validation.md",
           "domain-specific-validation.md",
           "anses-codification-guidance.md",
-          "chemical-monitoring-foodex2.md"
+          "chemical-monitoring-foodex2.md",
+          "process-validation-rules.md"
         ],
         "must_not": [
           "README.md",
@@ -2036,7 +2044,7 @@
     {
       "id": "SEL-0037",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Sammansatt maträtt (t.ex. pizza) kodad med F27 källfasett — skulle koden gå igenom valideringen? (composite dish such as pizza coded with an F27 source facet — would the code pass validation?)",
         "deconstructed_query": {
@@ -2099,7 +2107,7 @@
     {
       "id": "SEL-0038",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Blandade bär av samma natur, rå — flera F27 källråvaror eller flera F01 källor? (mixed same-nature raw berries — multiple F27 source-commodities or multiple F01 sources?)",
         "deconstructed_query": {
@@ -2152,7 +2160,7 @@
     {
       "id": "SEL-0039",
       "source": "synthetic",
-      "reviewed": false,
+      "reviewed": true,
       "request": {
         "search_term": "Örtinfusion — beskriver koden det torra infusionsmaterialet eller den färdiga drycken? (herbal infusion — does the code describe the dry infusion material or the reconstituted beverage?)",
         "deconstructed_query": {
