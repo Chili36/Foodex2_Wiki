@@ -95,3 +95,7 @@ python scripts/selection_eval.py \
 context-pack-only `skeleton_enforcement`/backfill metrics (the ask endpoint
 has no skeleton enforcement or backfill pass). Results land in
 `reports/ask-evals/<date>-<label>/results.json`.
+
+## Scoring semantics: selector only
+
+All ask eval requests run with `use_graph_expansion: false` (set in the gold data AND forced by the runner's ask path): `/wiki/ask` otherwise merges graph-neighbor pages into `pages_used`, which would let a case pass because a neighbor was appended rather than because the selector picked the page. This eval guards the SELECTOR; graph expansion is a separate mechanism with no eval yet.

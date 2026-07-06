@@ -145,3 +145,27 @@ def test_effective_max_pages_falls_back_to_per_case_request():
 def test_effective_max_pages_handles_missing_values():
     cases = [{"request": {}}]
     assert effective_max_pages(cases, None) == {"min": None, "max": None}
+
+
+def test_call_ask_forces_graph_expansion_off(monkeypatch):
+    captured = {}
+
+    def fake_urlopen(req, timeout):
+        import io
+        import json as _json
+        captured["body"] = _json.loads(req.data.decode("utf-8"))
+
+        class _Resp(io.BytesIO):
+            def __enter__(self):
+                return self
+
+            def __exit__(self, *args):
+                return False
+
+        return _Resp(b'{"pages_used": [], "answer": "", "citations": []}')
+
+    monkeypatch.setattr("urllib.request.urlopen", fake_urlopen)
+    from scripts.selection_eval import call_ask
+
+    call_ask("http://x", {"question": "q", "use_graph_expansion": True})
+    assert captured["body"]["use_graph_expansion"] is False

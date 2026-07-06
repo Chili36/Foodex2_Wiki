@@ -56,6 +56,11 @@ def call_context_pack(base_url: str, request_payload: dict) -> dict:
 def call_ask(base_url: str, request_payload: dict) -> dict:
     body = dict(request_payload)
     body.setdefault("include_page_content", False)
+    # The ask eval scores the SELECTOR: /wiki/ask defaults use_graph_expansion
+    # to true and merges graph-neighbor pages into pages_used, which would let
+    # a case pass because a neighbor was appended rather than because the
+    # selector picked the page. Force it off regardless of the gold data.
+    body["use_graph_expansion"] = False
     req = urllib.request.Request(
         f"{base_url.rstrip('/')}/wiki/ask",
         data=json.dumps(body).encode("utf-8"),
