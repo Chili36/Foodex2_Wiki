@@ -5,6 +5,12 @@ last_updated: "2026-07-06"
 
 # Log
 
+## [2026-07-06] maintenance | Wording-control arm verdict, budget probe, max_pages=9 adoption
+
+- Wording-control arm (Phase 4): output-shape hint rewrites closed all 5 targeted systematic misses but displaced other pages under the fixed 7-page budget (11 new systematic pairs); the one permitted revision traded them back (oscillation confirmed — wording under a fixed budget is zero-sum).
+- Budget probe at `max_pages=9` with the strong wording: recall 0.8923 -> 0.9380, systematic pairs 9 -> 4, backfill 0.128, selector tokens flat, packs ~+1.1k tokens. Confirms the page budget was the binding constraint on displacement.
+- Adopted: context-pack `max_pages` default 7 -> 9 (David, 2026-07-06); gold-case requests aligned; run-1 wording kept. Selection work closes with a 4-pair accepted rump (two wording-immune sibling competitions, two term-type stragglers); no mechanism phase. `/wiki/ask` default unchanged.
+
 ## [2026-07-06] maintenance | Wording-control arm measured: NOT CLOSED, mechanism phase justified
 
 - Measured the Phase 4 wording-control arm (design: `docs/superpowers/specs/2026-07-05-wording-control-arm-design.md`) against the phase3 baseline: 39 reviewed cases × 5 passes per run, fresh instances (ports 8015/8016, `skeleton_enforcement` probed), both permitted configurations exercised — the Task-1 wording as merged (`phase4-wording-arm`) and the single allowed revision round (`phase4-wording-arm-rev1`: `code-string-format.md` gate tightened to multi-segment constructions, Completeness Rubric sentence softened to "in addition to — never instead of").

@@ -150,3 +150,30 @@ should be kept regardless.
 - The rubric-sentence soften and the csf-gate tighten were changed together in the one
   permitted round, so their individual contributions to the displacement reduction
   (11 → 3 pairs) are not separable from this data.
+
+## Addendum: budget probe & adoption (2026-07-06)
+
+David's hypothesis — that the fixed `max_pages=7` budget, not hint quality, drove the
+displacement — was tested directly: run-1 (strong) wording re-run at `max_pages=9`
+(`reports/selection-evals/2026-07-06-phase4-budget-probe9/`, 5 repeats, override verified
+via pack-size distribution).
+
+| median of 5 | phase3 baseline (7) | strong wording @7 | strong wording @9 |
+| --- | --- | --- | --- |
+| must-have recall | 0.8923 | 0.8731 | **0.9380** |
+| systematic pairs | 9 | 16 | **4** |
+| backfill_case_rate | 0.1795 | 0.2821 | **0.1282** |
+| precision | 0.9420 | 0.9524 | 0.9480 |
+| selector tokens | 3487 | 3560 | 3572 |
+| mean pack chars | ~18.8k | ~18.8k | ~23.2k |
+
+Verdict revision: the arm's NOT CLOSED stands for wording-at-budget-7, but the budget
+probe shows wording+budget together CLOSE the displacement dynamic: all 5 Pattern A/B
+targets remain closed with no displacement. Remaining rump: 4 pre-existing systematic
+pairs (SEL-0027/0039 ttfc; SEL-0029 fcr; SEL-0034 br — the wording-immune sibling
+competitions). **Decision (David, 2026-07-06): adopt `max_pages=9` as the context-pack
+default** (run-1 wording restored), accepting ~+1.1k tokens/pack downstream cost and the
+selector's observed drift toward cap−1 (packs typically carry 8 pages). Gold-case
+requests aligned to the new production default. The selection chapter closes here: no
+mechanism phase; the 4-pair rump is accepted (recall 0.938 with the deterministic
+failsafe floor). Next investment shifts to wiki content.
