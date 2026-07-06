@@ -18,7 +18,7 @@ related:
   - "[[process-validation-rules]]"
   - "[[domain-specific-validation]]"
   - "[[code-string-format]]"
-last_updated: "2026-06-12"
+last_updated: "2026-07-06"
 ---
 
 # Validation Rules Overview
@@ -29,13 +29,15 @@ last_updated: "2026-06-12"
 - The validator runs structural checks first, then business rules. Structural checks cover syntax, facet parsing, descriptor lookup, implicit-facet cleanup, and duplicate/cardinality issues. Business rules then apply `BR01-BR31` to term type, hierarchy, process, and lifecycle constraints. (Validation Rules Summary; Business Rules Overview)
 - A code can be syntactically clean but still fail policy rules such as `BR03`, `BR17`, or `BR20`. See [[structural-validation]] and [[term-type-facet-constraints]]. (Validation Rules Summary)
 
-<!-- Source: BUSINESS-RULES.md Severity Classification Overview; BUSINESS-RULES-COMPACT.json ruleSeverities -->
+<!-- Source: BUSINESS-RULES.md Severity Classification Overview; catalogue-browser warningMessages.txt (SemaphoreWarningLevel) -->
 ## Severity Model
+
+[[business-rules]] is the single authority for per-rule severity; this table mirrors it and should be updated only to track that page.
 
 | Severity | Effect | Typical rules |
 | --- | --- | --- |
-| `ERROR` | Validation fails immediately | `BR29-BR31` |
-| `HIGH` | Hard warning treated as invalid | `BR01`, `BR03-BR08`, `BR13`, `BR16-BR17`, `BR19-BR21`, `BR24-BR28` |
+| `ERROR` | Validation fails immediately | `BR17`, `BR19-BR21`, `BR25`, `BR29-BR31` |
+| `HIGH` | Hard warning treated as invalid | `BR01`, `BR03-BR08`, `BR13-BR14`, `BR16`, `BR24`, `BR26-BR28` |
 | `LOW` | Advisory only | `BR10-BR12`, `BR15`, `BR23` |
 | `NONE` | Informational only | `BR22` |
 
@@ -44,11 +46,12 @@ last_updated: "2026-06-12"
 - `BR19+` warnings can appear in the sibling validator when transparent local extension rows cover BR19 root/process gaps left by the stale upstream `BR_Data.csv`. (Business Rules `BR19`)
 - `BR26` has a known validator-silence divergence; process ordinal conflicts remain coding risks even when current validators do not emit BR26. (Business Rules `BR26`)
 
-<!-- Source: docs/VALIDATION_RULES_SUMMARY.md Quick Reference Table; BUSINESS-RULES.md BR03, BR04, BR17, BR20, BR21, BR29, BR30, BR31 -->
+<!-- Source: docs/VALIDATION_RULES_SUMMARY.md Quick Reference Table; BUSINESS-RULES.md BR03, BR04, BR17, BR19, BR20, BR21, BR29, BR30, BR31 -->
 ## High-Impact Blocking Rules
 
 - `BR03` and `BR04`: composite foods cannot use `F01` or `F27`; use `F04 ingredient` instead. See [[term-type-facet-constraints]]. (Business Rules `BR03-BR04`)
 - `BR17`: a facet term can never be the base term. (Business Rules `BR17`)
+- `BR19`: processes that create a new derivative nature cannot be applied to a raw commodity base term; use the existing derivative instead. See [[process-validation-rules]]. (Business Rules `BR19`)
 - `BR20` and `BR21`: deprecated and dismissed terms are always invalid, even if the code string is well formed. (Business Rules `BR20-BR21`)
 - `BR29-BR31`: the code must use valid syntax, a real facet category, and a descriptor that belongs to that category. See [[structural-validation]]. (Business Rules `BR29-BR31`)
 
