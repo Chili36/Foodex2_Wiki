@@ -177,7 +177,7 @@ def main() -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "results.json").write_text(
         json.dumps(
-            {"repeats": args.repeats, "passes": passes, "median_summary": medians, "miss_frequency": freq},
+            {"repeats": args.repeats, "max_pages_override": args.max_pages, "passes": passes, "median_summary": medians, "miss_frequency": freq},
             ensure_ascii=False,
             indent=2,
         )
