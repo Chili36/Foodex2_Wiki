@@ -5,6 +5,13 @@ last_updated: "2026-07-06"
 
 # Log
 
+## [2026-07-06] maintenance | Reconcile validation-rules severity table with business-rules authority
+
+- Fixed the `validation-rules.md` Severity Model table to mirror [[business-rules]], the single authority: moved `BR17`, `BR19`, `BR20`, `BR21`, `BR25` into the `ERROR` bucket (they were incorrectly in `HIGH`/omitted), restored `BR14` to `HIGH`, and added an explicit deferral note so the overview page tracks the canonical page instead of drifting from it (lint findings recorded in `reports/selection-evals/2026-07-05-phase2-r3/`).
+- Added the missing `BR19` callout to `validation-rules.md` High-Impact Blocking Rules prose so the forbidden-processes-on-raw ERROR rule is highlighted alongside `BR17`/`BR20`/`BR21`, matching its table severity.
+- Verified severities against the sibling validator (`Foodex2 Code Validator`): the runtime data file `data/warningMessages.txt` (`SemaphoreWarningLevel`) marks `BR17`, `BR19`, `BR20`, `BR21`, `BR25` as `ERROR` and `BR14` as `HIGH`, matching `business-rules.md`, which was already correct and left unchanged.
+- Checked the other validation-layer pages (`structural-validation.md`, `process-validation-rules.md`, `term-type-facet-constraints.md`) for contradicting severity statements: none assert a specific severity label for the affected rules (they describe blocking behaviour, not the severity bucket), so no changes were needed there.
+
 ## [2026-07-06] maintenance | Wording-control arm verdict, budget probe, max_pages=9 adoption
 
 - Wording-control arm (Phase 4): output-shape hint rewrites closed all 5 targeted systematic misses but displaced other pages under the fixed 7-page budget (11 new systematic pairs); the one permitted revision traded them back (oscillation confirmed — wording under a fixed budget is zero-sum).
