@@ -59,10 +59,15 @@ def check_gold_invariants(gold: dict) -> None:
                         )
 
 
-def run_pass(cases: list[dict], base_url: str, pass_number: int) -> tuple[list[dict], dict]:
+def run_pass(
+    cases: list[dict], base_url: str, pass_number: int, max_pages_override: int | None = None
+) -> tuple[list[dict], dict]:
     rows = []
     for case in cases:
-        response = call_context_pack(base_url, case["request"])
+        request = dict(case["request"])
+        if max_pages_override is not None:
+            request["max_pages"] = max_pages_override
+        response = call_context_pack(base_url, request)
         pages_used = response.get("pages_used")
         if not isinstance(pages_used, list):
             raise RuntimeError(
@@ -136,6 +141,10 @@ def main() -> None:
     parser.add_argument("--label", required=True, help="Report label, e.g. 'baseline'.")
     parser.add_argument("--only-reviewed", action="store_true")
     parser.add_argument("--repeats", type=int, default=1)
+    parser.add_argument(
+        "--max-pages", type=int, default=None,
+        help="Override every case request's max_pages (budget sensitivity probes).",
+    )
     args = parser.parse_args()
 
     gold = json.loads(pathlib.Path(args.gold_path).read_text())
@@ -147,7 +156,7 @@ def main() -> None:
 
     passes = []
     for pass_number in range(1, args.repeats + 1):
-        rows, summary = run_pass(cases, args.base_url, pass_number)
+        rows, summary = run_pass(cases, args.base_url, pass_number, args.max_pages)
         passes.append({"summary": summary, "cases": rows})
         print(f"\n[pass {pass_number}] SUMMARY:", json.dumps(summary, indent=2))
 
@@ -168,7 +177,7 @@ def main() -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "results.json").write_text(
         json.dumps(
-            {"repeats": args.repeats, "passes": passes, "median_summary": medians, "miss_frequency": freq},
+            {"repeats": args.repeats, "max_pages_override": args.max_pages, "passes": passes, "median_summary": medians, "miss_frequency": freq},
             ensure_ascii=False,
             indent=2,
         )
