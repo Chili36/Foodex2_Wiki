@@ -38,6 +38,18 @@ DEFAULT_LINT_PAGES = [
     "MAINTENANCE_WORKFLOW.md",
 ]
 
+# max_tokens is a ceiling on generated tokens, billed only on tokens actually
+# produced, so raising it when thinking is on is cost-neutral. Adaptive thinking
+# blocks count against this same ceiling, so a budget sized only for the report
+# text can be fully consumed by thinking, leaving no text (see WikiLintError below).
+DEFAULT_LINT_MAX_TOKENS = 4000
+DEFAULT_LINT_MAX_TOKENS_WITH_THINKING = 8000
+
+
+class WikiLintError(RuntimeError):
+    """Raised when the lint pass cannot produce a usable report."""
+
+
 LLM_LINT_SYSTEM_PROMPT = """You are the FoodEx2 wiki lint reviewer.
 
 Your job is to review the provided wiki context for semantic and maintenance risks. This is a supervised maintenance pass: produce a report only. Do not rewrite pages, do not invent source claims, and do not make final FoodEx2 coding decisions.
@@ -155,7 +167,7 @@ class AnthropicWikiLinter:
         *,
         client: AnthropicClientProtocol | None = None,
         model: str | None = None,
-        max_tokens: int = 4000,
+        max_tokens: int | None = None,
         thinking_enabled: bool | None = None,
     ):
         self.model = model or _resolve_model(
@@ -164,12 +176,17 @@ class AnthropicWikiLinter:
             default="claude-3-7-sonnet-latest",
         )
         self.client = client or build_messages_client(self.model)
-        self.max_tokens = max_tokens
         self.thinking_enabled = (
             _env_bool("WIKI_LINT_THINKING", default=True)
             if thinking_enabled is None
             else thinking_enabled
         )
+        if max_tokens is not None:
+            self.max_tokens = max_tokens
+        elif self.thinking_enabled:
+            self.max_tokens = DEFAULT_LINT_MAX_TOKENS_WITH_THINKING
+        else:
+            self.max_tokens = DEFAULT_LINT_MAX_TOKENS
 
     def run(self, payload: dict[str, Any]) -> WikiLintResult:
         started = time.perf_counter()
@@ -185,25 +202,29 @@ class AnthropicWikiLinter:
             messages=[message],
             **_anthropic_thinking_args(self.thinking_enabled),
         )
+        stop_reason = _get_block_value(response, "stop_reason")
+        report = _response_text(_get_block_value(response, "content", []))
+        if not report:
+            raise WikiLintError(self._empty_report_message(stop_reason))
         timing = [
             {
                 "call_number": 1,
                 "duration_ms": int((time.perf_counter() - llm_started) * 1000),
-                "stop_reason": _get_block_value(response, "stop_reason"),
+                "stop_reason": stop_reason,
             }
         ]
         token_summary = _aggregate_usage(
             [
                 _usage_dict(
                     _get_block_value(response, "usage"),
-                    stop_reason=_get_block_value(response, "stop_reason"),
+                    stop_reason=stop_reason,
                 )
             ],
             self.model,
         )
         token_summary["thinking_enabled"] = self.thinking_enabled
         return WikiLintResult(
-            report=_response_text(_get_block_value(response, "content", [])),
+            report=report,
             pages_linted=list(payload.get("selected_pages", [])),
             token_summary=token_summary,
             timing_summary={
@@ -211,6 +232,23 @@ class AnthropicWikiLinter:
                 "lint_wall_time_ms": int((time.perf_counter() - started) * 1000),
             },
         )
+
+    def _empty_report_message(self, stop_reason: Any) -> str:
+        base = (
+            "LLM lint produced no report text "
+            f"(stop_reason={stop_reason!r}, max_tokens={self.max_tokens})."
+        )
+        if stop_reason == "max_tokens":
+            if self.thinking_enabled:
+                return (
+                    base
+                    + " The output budget was likely consumed entirely by thinking"
+                    " before any report text was emitted. Raise --max-tokens"
+                    " or pass --no-thinking (or set WIKI_LINT_THINKING=0)"
+                    " and retry."
+                )
+            return base + " Raise --max-tokens and retry."
+        return base
 
 
 def _default_output_path(root: Path) -> Path:
@@ -247,7 +285,16 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--focus", default="", help="Optional review focus, e.g. 'F09 examples'.")
     parser.add_argument("--model", default=None, help="Override model. Defaults to WIKI_LINT_MODEL.")
-    parser.add_argument("--max-tokens", type=int, default=4000)
+    parser.add_argument(
+        "--max-tokens",
+        type=int,
+        default=None,
+        help=(
+            "Output token ceiling. Defaults to "
+            f"{DEFAULT_LINT_MAX_TOKENS_WITH_THINKING} when thinking is enabled, "
+            f"otherwise {DEFAULT_LINT_MAX_TOKENS}."
+        ),
+    )
     parser.add_argument("--max-page-chars", type=int, default=12000)
     parser.add_argument(
         "--thinking",
@@ -280,11 +327,15 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(payload, indent=2, ensure_ascii=False))
         return 0
 
-    result = AnthropicWikiLinter(
-        model=args.model,
-        max_tokens=args.max_tokens,
-        thinking_enabled=args.thinking,
-    ).run(payload)
+    try:
+        result = AnthropicWikiLinter(
+            model=args.model,
+            max_tokens=args.max_tokens,
+            thinking_enabled=args.thinking,
+        ).run(payload)
+    except WikiLintError as exc:
+        print(f"LLM lint failed: {exc}", file=sys.stderr)
+        return 1
     output_path = Path(args.output) if args.output else _default_output_path(root)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(_render_report(result), encoding="utf-8")

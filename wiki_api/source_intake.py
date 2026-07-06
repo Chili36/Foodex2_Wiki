@@ -27,6 +27,19 @@ from .librarian import (
 from .wiki_store import WikiStore
 
 
+# max_tokens is a ceiling on generated tokens, billed only on tokens actually
+# produced, so raising it when thinking is on is cost-neutral. Adaptive thinking
+# blocks count against this same ceiling, so a budget sized only for the report
+# text can be fully consumed by thinking, leaving no text (see SourceIntakeError
+# below).
+DEFAULT_SOURCE_INTAKE_MAX_TOKENS = 5000
+DEFAULT_SOURCE_INTAKE_MAX_TOKENS_WITH_THINKING = 9000
+
+
+class SourceIntakeError(RuntimeError):
+    """Raised when the source-intake pass cannot produce a usable report."""
+
+
 SOURCE_INTAKE_SYSTEM_PROMPT = """You are the FoodEx2 wiki source-intake reviewer.
 
 Your job is to write a pre-ingest source impact report. This is a maintainer decision aid, not an operational wiki rule and not a final FoodEx2 coding answer.
@@ -177,7 +190,7 @@ class AnthropicSourceIntakeReviewer:
         *,
         client: AnthropicClientProtocol | None = None,
         model: str | None = None,
-        max_tokens: int = 5000,
+        max_tokens: int | None = None,
         thinking_enabled: bool | None = None,
     ):
         self.model = model or _resolve_model(
@@ -187,12 +200,17 @@ class AnthropicSourceIntakeReviewer:
             default="claude-3-7-sonnet-latest",
         )
         self.client = client or build_messages_client(self.model)
-        self.max_tokens = max_tokens
         self.thinking_enabled = (
             _env_bool("WIKI_INTAKE_THINKING", default=True)
             if thinking_enabled is None
             else thinking_enabled
         )
+        if max_tokens is not None:
+            self.max_tokens = max_tokens
+        elif self.thinking_enabled:
+            self.max_tokens = DEFAULT_SOURCE_INTAKE_MAX_TOKENS_WITH_THINKING
+        else:
+            self.max_tokens = DEFAULT_SOURCE_INTAKE_MAX_TOKENS
 
     def run(self, payload: dict[str, Any]) -> SourceIntakeResult:
         started = time.perf_counter()
@@ -208,25 +226,29 @@ class AnthropicSourceIntakeReviewer:
             messages=[message],
             **_anthropic_thinking_args(self.thinking_enabled),
         )
+        stop_reason = _get_block_value(response, "stop_reason")
+        report = _response_text(_get_block_value(response, "content", []))
+        if not report:
+            raise SourceIntakeError(self._empty_report_message(stop_reason))
         timing = [
             {
                 "call_number": 1,
                 "duration_ms": int((time.perf_counter() - llm_started) * 1000),
-                "stop_reason": _get_block_value(response, "stop_reason"),
+                "stop_reason": stop_reason,
             }
         ]
         token_summary = _aggregate_usage(
             [
                 _usage_dict(
                     _get_block_value(response, "usage"),
-                    stop_reason=_get_block_value(response, "stop_reason"),
+                    stop_reason=stop_reason,
                 )
             ],
             self.model,
         )
         token_summary["thinking_enabled"] = self.thinking_enabled
         return SourceIntakeResult(
-            report=_response_text(_get_block_value(response, "content", [])),
+            report=report,
             source_file=str(payload.get("source", {}).get("file", "")),
             token_summary=token_summary,
             timing_summary={
@@ -234,6 +256,23 @@ class AnthropicSourceIntakeReviewer:
                 "source_intake_wall_time_ms": int((time.perf_counter() - started) * 1000),
             },
         )
+
+    def _empty_report_message(self, stop_reason: Any) -> str:
+        base = (
+            "Source intake produced no report text "
+            f"(stop_reason={stop_reason!r}, max_tokens={self.max_tokens})."
+        )
+        if stop_reason == "max_tokens":
+            if self.thinking_enabled:
+                return (
+                    base
+                    + " The output budget was likely consumed entirely by thinking"
+                    " before any report text was emitted. Raise --max-tokens"
+                    " or pass --no-thinking (or set WIKI_INTAKE_THINKING=0)"
+                    " and retry."
+                )
+            return base + " Raise --max-tokens and retry."
+        return base
 
 
 def _default_output_path(root: Path, source_file: str) -> Path:
@@ -276,7 +315,16 @@ def main(argv: list[str] | None = None) -> int:
         help="Existing wiki page likely affected by the source. May be repeated.",
     )
     parser.add_argument("--model", default=None, help="Override model. Defaults to WIKI_INTAKE_MODEL.")
-    parser.add_argument("--max-tokens", type=int, default=5000)
+    parser.add_argument(
+        "--max-tokens",
+        type=int,
+        default=None,
+        help=(
+            "Output token ceiling. Defaults to "
+            f"{DEFAULT_SOURCE_INTAKE_MAX_TOKENS_WITH_THINKING} when thinking is "
+            f"enabled, otherwise {DEFAULT_SOURCE_INTAKE_MAX_TOKENS}."
+        ),
+    )
     parser.add_argument("--max-source-chars", type=int, default=40000)
     parser.add_argument("--max-page-chars", type=int, default=10000)
     parser.add_argument(
@@ -313,11 +361,15 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(payload, indent=2, ensure_ascii=False))
         return 0
 
-    result = AnthropicSourceIntakeReviewer(
-        model=args.model,
-        max_tokens=args.max_tokens,
-        thinking_enabled=args.thinking,
-    ).run(payload)
+    try:
+        result = AnthropicSourceIntakeReviewer(
+            model=args.model,
+            max_tokens=args.max_tokens,
+            thinking_enabled=args.thinking,
+        ).run(payload)
+    except SourceIntakeError as exc:
+        print(f"Source intake failed: {exc}", file=sys.stderr)
+        return 1
     output_path = Path(args.output) if args.output else _default_output_path(root, args.source_file)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(_render_report(result), encoding="utf-8")

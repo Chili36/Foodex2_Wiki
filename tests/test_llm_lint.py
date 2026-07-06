@@ -3,9 +3,20 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from wiki_api.llm_lint import AnthropicWikiLinter, build_lint_payload
+import pytest
+
+from wiki_api.llm_lint import (
+    DEFAULT_LINT_MAX_TOKENS,
+    DEFAULT_LINT_MAX_TOKENS_WITH_THINKING,
+    AnthropicWikiLinter,
+    WikiLintError,
+    build_lint_payload,
+)
 from wiki_api.source_intake import (
+    DEFAULT_SOURCE_INTAKE_MAX_TOKENS,
+    DEFAULT_SOURCE_INTAKE_MAX_TOKENS_WITH_THINKING,
     AnthropicSourceIntakeReviewer,
+    SourceIntakeError,
     build_source_intake_payload,
 )
 
@@ -19,6 +30,20 @@ def _response(*, text: str, input_tokens: int = 100, output_tokens: int = 50) ->
         "content": [{"type": "text", "text": text}],
         "usage": {
             "input_tokens": input_tokens,
+            "output_tokens": output_tokens,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+        },
+    }
+
+
+def _thinking_only_response(*, output_tokens: int = 4000) -> dict[str, object]:
+    """A response where thinking consumed the whole budget, leaving no text."""
+    return {
+        "stop_reason": "max_tokens",
+        "content": [{"type": "thinking", "thinking": "still reasoning..."}],
+        "usage": {
+            "input_tokens": 100,
             "output_tokens": output_tokens,
             "cache_creation_input_tokens": 0,
             "cache_read_input_tokens": 0,
@@ -92,6 +117,48 @@ def test_linter_can_disable_thinking() -> None:
 
     call = client.messages.calls[0]
     assert "thinking" not in call
+    assert call["max_tokens"] == DEFAULT_LINT_MAX_TOKENS
+
+
+def test_thinking_enabled_uses_larger_default_max_tokens() -> None:
+    report = "## Verdict\n\nNo material findings."
+    client = FakeAnthropicClient(_response(text=report))
+    payload = build_lint_payload(root=REPO_ROOT, page_names=["facet-coding-rules.md"])
+
+    AnthropicWikiLinter(client=client, model="fake-lint-model").run(payload)
+
+    call = client.messages.calls[0]
+    assert call["max_tokens"] == DEFAULT_LINT_MAX_TOKENS_WITH_THINKING
+
+
+def test_explicit_max_tokens_overrides_thinking_default() -> None:
+    report = "## Verdict\n\nNo material findings."
+    client = FakeAnthropicClient(_response(text=report))
+    payload = build_lint_payload(root=REPO_ROOT, page_names=["facet-coding-rules.md"])
+
+    AnthropicWikiLinter(client=client, model="fake-lint-model", max_tokens=1234).run(payload)
+
+    assert client.messages.calls[0]["max_tokens"] == 1234
+
+
+def test_linter_fails_loudly_when_thinking_consumes_whole_budget() -> None:
+    client = FakeAnthropicClient(_thinking_only_response())
+    payload = build_lint_payload(root=REPO_ROOT, page_names=["facet-coding-rules.md"])
+
+    with pytest.raises(WikiLintError) as excinfo:
+        AnthropicWikiLinter(client=client, model="fake-lint-model").run(payload)
+
+    message = str(excinfo.value)
+    assert "max_tokens" in message
+    assert "--no-thinking" in message
+
+
+def test_linter_fails_loudly_on_whitespace_only_text() -> None:
+    client = FakeAnthropicClient(_response(text="   \n\t  "))
+    payload = build_lint_payload(root=REPO_ROOT, page_names=["facet-coding-rules.md"])
+
+    with pytest.raises(WikiLintError):
+        AnthropicWikiLinter(client=client, model="fake-lint-model").run(payload)
 
 
 def test_source_intake_payload_includes_source_and_existing_pages() -> None:
@@ -135,3 +202,58 @@ def test_source_intake_reviewer_uses_adaptive_thinking() -> None:
     call = client.messages.calls[0]
     assert call["thinking"] == {"type": "adaptive"}
     assert "source-intake reviewer" in str(call["system"])
+    assert call["max_tokens"] == DEFAULT_SOURCE_INTAKE_MAX_TOKENS_WITH_THINKING
+
+
+def test_source_intake_disables_thinking_uses_smaller_default_max_tokens() -> None:
+    report = "## Intake Verdict\n\nPatch existing pages."
+    client = FakeAnthropicClient(_response(text=report))
+    payload = build_source_intake_payload(
+        root=REPO_ROOT,
+        source_file="raw/efsa-guidance/base-term-selection.md",
+        page_names=["base-term-selection.md"],
+    )
+
+    AnthropicSourceIntakeReviewer(
+        client=client,
+        model="fake-intake-model",
+        thinking_enabled=False,
+    ).run(payload)
+
+    call = client.messages.calls[0]
+    assert "thinking" not in call
+    assert call["max_tokens"] == DEFAULT_SOURCE_INTAKE_MAX_TOKENS
+
+
+def test_source_intake_explicit_max_tokens_overrides_default() -> None:
+    report = "## Intake Verdict\n\nPatch existing pages."
+    client = FakeAnthropicClient(_response(text=report))
+    payload = build_source_intake_payload(
+        root=REPO_ROOT,
+        source_file="raw/efsa-guidance/base-term-selection.md",
+        page_names=["base-term-selection.md"],
+    )
+
+    AnthropicSourceIntakeReviewer(
+        client=client,
+        model="fake-intake-model",
+        max_tokens=4321,
+    ).run(payload)
+
+    assert client.messages.calls[0]["max_tokens"] == 4321
+
+
+def test_source_intake_fails_loudly_when_thinking_consumes_whole_budget() -> None:
+    client = FakeAnthropicClient(_thinking_only_response())
+    payload = build_source_intake_payload(
+        root=REPO_ROOT,
+        source_file="raw/efsa-guidance/base-term-selection.md",
+        page_names=["base-term-selection.md"],
+    )
+
+    with pytest.raises(SourceIntakeError) as excinfo:
+        AnthropicSourceIntakeReviewer(client=client, model="fake-intake-model").run(payload)
+
+    message = str(excinfo.value)
+    assert "max_tokens" in message
+    assert "--no-thinking" in message
