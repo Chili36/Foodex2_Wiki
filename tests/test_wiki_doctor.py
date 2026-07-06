@@ -4,7 +4,7 @@ import re
 import shutil
 from pathlib import Path
 
-from wiki_api.doctor import run_doctor
+from wiki_api.doctor import _check_log_chronology, run_doctor
 from wiki_api.wiki_store import WikiStore
 
 
@@ -51,6 +51,31 @@ def test_maintenance_workflow_is_registered_as_orientation() -> None:
 
     assert store.page_category(page.name) == "orientation"
     assert page.summary.startswith("Deterministic and LLM-assisted maintenance workflow")
+
+
+def test_log_chronology_check_flags_out_of_order_entries(tmp_path: Path) -> None:
+    (tmp_path / "log.md").write_text(
+        """---
+title: "Wiki Log"
+---
+
+# Log
+
+## [2026-06-10] maintenance | Older entry
+
+- Older.
+
+## [2026-06-12] ingest | Newer entry
+
+- Newer.
+""",
+        encoding="utf-8",
+    )
+
+    issues = list(_check_log_chronology(WikiStore(tmp_path)))
+
+    assert len(issues) == 1
+    assert issues[0].check == "log_chronology"
 
 
 def test_doctor_flags_corrupted_selection_policy(tmp_path):

@@ -25,6 +25,7 @@ from .wiki_store import (
     WIKILINK_RE,
     WikiPage,
     WikiStore,
+    split_frontmatter,
 )
 
 
@@ -34,6 +35,7 @@ SELECT_WHEN_MAX_CHARS = 400
 
 EXTERNAL_LINK_RE = re.compile(r"^[a-z][a-z0-9+.-]*:", re.IGNORECASE)
 INDEX_ENTRY_RE = re.compile(r"^- \[[^\]]+\]\(([^)]+)\):")
+LOG_ENTRY_RE = re.compile(r"^## \[(\d{4}-\d{2}-\d{2})\] ", re.MULTILINE)
 FENCED_CODE_RE = re.compile(r"(^|\n)(```|~~~).*?(?=\n\2|\Z)(?:\n\2)?", re.DOTALL)
 INLINE_CODE_RE = re.compile(r"`[^`\n]*`")
 VIRTUAL_SOURCE_PREFIXES = ("docs/",)
@@ -109,6 +111,7 @@ def run_doctor(
     issues.extend(_check_graph_connectivity(store))
     issues.extend(_check_source_tiers(pages.values()))
     issues.extend(_check_source_references(store, pages.values()))
+    issues.extend(_check_log_chronology(store))
     issues.extend(_check_selection_policy(store))
     issues.extend(_check_selection_metadata(store))
     if check_rag_index:
@@ -138,6 +141,29 @@ def run_doctor(
             )
 
     return DoctorReport(sorted(issues, key=lambda item: (item.severity, item.check, item.location)))
+
+
+def _check_log_chronology(store: WikiStore) -> Iterable[DoctorIssue]:
+    raw = store.log_path.read_text(encoding="utf-8")
+    _, body = split_frontmatter(raw)
+    dates = LOG_ENTRY_RE.findall(body)
+    issues: list[DoctorIssue] = []
+
+    for previous, current in zip(dates, dates[1:]):
+        if current > previous:
+            issues.append(
+                DoctorIssue(
+                    "error",
+                    "log_chronology",
+                    "log.md",
+                    (
+                        "Log entries must be ordered newest-first; "
+                        f"{current} appears after {previous}."
+                    ),
+                )
+            )
+
+    return issues
 
 
 def _check_rag_index(

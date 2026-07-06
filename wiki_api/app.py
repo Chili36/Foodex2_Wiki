@@ -997,7 +997,11 @@ STATIC_DIR = Path(__file__).resolve().parent / "static"
 
 @app.get("/wiki/view", include_in_schema=False)
 def wiki_viewer():
-    return FileResponse(STATIC_DIR / "viewer.html", media_type="text/html")
+    return FileResponse(
+        STATIC_DIR / "viewer.html",
+        media_type="text/html",
+        headers={"Cache-Control": "no-store, max-age=0"},
+    )
 
 
 @app.get("/wiki/graph-view", include_in_schema=False)

@@ -440,8 +440,16 @@ def test_wiki_viewer_builds_navigation_from_page_catalog() -> None:
     response = request("GET", "/wiki/view")
     assert response.status_code == 200
     assert "text/html" in response.headers["content-type"]
+    assert response.headers["cache-control"] == "no-store, max-age=0"
     assert "normalizePageList(data.pages || [])" in response.text
     assert "/wiki/search?q=" in response.text
+    assert "pageContentUrl(pageName)" in response.text
+    assert 'url.searchParams.set("_", Date.now().toString())' in response.text
+    assert "latestPageRequestId" in response.text
+    assert "requestId !== latestPageRequestId" in response.text
+    assert "redirectFileViewer()" in response.text
+    assert "This viewer must be opened through the wiki service" in response.text
+    assert "pageCache[pageName]" not in response.text
     assert "const sections = {" not in response.text
 
 
