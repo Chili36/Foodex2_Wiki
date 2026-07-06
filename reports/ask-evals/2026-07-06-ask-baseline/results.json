@@ -1,0 +1,734 @@
+{
+  "endpoint": "ask",
+  "repeats": 3,
+  "max_pages_override": null,
+  "effective_max_pages": {
+    "min": 6,
+    "max": 6
+  },
+  "passes": [
+    {
+      "summary": {
+        "mean_must_have_recall": 1.0,
+        "mean_precision": 0.49150224775224777,
+        "leak_free_rate": 0.75,
+        "case_count": 8
+      },
+      "cases": [
+        {
+          "id": "ASK-0001",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "maintenance-2024.md",
+            "maintenance-history.md",
+            "maintenance-2023.md",
+            "facet-coding-rules.md",
+            "foodex2-overview.md",
+            "maintenance-2015.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.6666666666666666,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "maintenance-2023.md",
+            "maintenance-2015.md"
+          ]
+        },
+        {
+          "id": "ASK-0002",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "maintenance-history.md",
+            "maintenance-2015.md",
+            "maintenance-2016-2018.md",
+            "maintenance-2019.md",
+            "maintenance-2020.md",
+            "foodex2-overview.md",
+            "maintenance-2024.md",
+            "maintenance-2021.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0003",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "INGEST_WORKFLOW.md",
+            "SCHEMA.md",
+            "KNOWLEDGE_ARCHITECTURE.md",
+            "MAINTENANCE_WORKFLOW.md",
+            "RUNTIME_RULES.md",
+            "PROJECT_CONTEXT.md",
+            "policy-contract.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.6666666666666666,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "PROJECT_CONTEXT.md",
+            "policy-contract.md"
+          ]
+        },
+        {
+          "id": "ASK-0004",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "implicit-vs-explicit-facets.md",
+            "foodex2-overview.md",
+            "facet-coding-rules.md",
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "code-string-format.md",
+            "process-facets.md",
+            "ingredient-facets.md",
+            "packaging-facets.md",
+            "policy-contract.md",
+            "term-type-facet-constraints.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.45454545454545453,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "code-string-format.md",
+            "process-facets.md",
+            "ingredient-facets.md",
+            "packaging-facets.md",
+            "policy-contract.md",
+            "business-rules.md"
+          ]
+        },
+        {
+          "id": "ASK-0005",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "packaging-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "business-rules.md",
+            "code-string-format.md",
+            "chemical-monitoring-foodex2.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "ingredient-facets.md",
+            "validation-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.4166666666666667,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "business-rules.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "ingredient-facets.md",
+            "validation-rules.md",
+            "structural-validation.md"
+          ]
+        },
+        {
+          "id": "ASK-0006",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "vmpr-foodex2.md",
+            "domain-specific-validation.md",
+            "chemical-monitoring-foodex2.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "maintenance-2024.md",
+            "business-rules.md",
+            "pesticides-foodex2.md",
+            "contaminants-foodex2.md",
+            "domoic-acid-scallops.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.2,
+          "missing": [],
+          "leaks": [
+            "maintenance-2024.md",
+            "pesticides-foodex2.md",
+            "contaminants-foodex2.md"
+          ],
+          "unlabeled": [
+            "domain-specific-validation.md",
+            "chemical-monitoring-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "business-rules.md",
+            "domoic-acid-scallops.md"
+          ]
+        },
+        {
+          "id": "ASK-0007",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "PROJECT_CONTEXT.md",
+            "WIKI_ARCHITECTURE_FOR_MODELS.md",
+            "KNOWLEDGE_ARCHITECTURE.md",
+            "INGEST_WORKFLOW.md",
+            "SCHEMA.md",
+            "MAINTENANCE_WORKFLOW.md",
+            "RUNTIME_RULES.md",
+            "policy-contract.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.14285714285714285,
+          "missing": [],
+          "leaks": [
+            "INGEST_WORKFLOW.md",
+            "MAINTENANCE_WORKFLOW.md"
+          ],
+          "unlabeled": [
+            "WIKI_ARCHITECTURE_FOR_MODELS.md",
+            "KNOWLEDGE_ARCHITECTURE.md",
+            "SCHEMA.md",
+            "policy-contract.md"
+          ]
+        },
+        {
+          "id": "ASK-0008",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "code-string-format.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "packaging-facets.md",
+            "business-rules.md",
+            "validation-rules.md",
+            "process-validation-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.38461538461538464,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "structural-validation.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "packaging-facets.md",
+            "business-rules.md",
+            "validation-rules.md",
+            "process-validation-rules.md"
+          ]
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 1.0,
+        "mean_precision": 0.5135756604506605,
+        "leak_free_rate": 0.75,
+        "case_count": 8
+      },
+      "cases": [
+        {
+          "id": "ASK-0001",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "maintenance-2024.md",
+            "maintenance-history.md",
+            "maintenance-2023.md",
+            "facet-coding-rules.md",
+            "foodex2-overview.md",
+            "maintenance-2015.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.6666666666666666,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "maintenance-2023.md",
+            "maintenance-2015.md"
+          ]
+        },
+        {
+          "id": "ASK-0002",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "maintenance-history.md",
+            "maintenance-2015.md",
+            "maintenance-2016-2018.md",
+            "maintenance-2019.md",
+            "maintenance-2020.md",
+            "foodex2-overview.md",
+            "maintenance-2024.md",
+            "maintenance-2021.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0003",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "INGEST_WORKFLOW.md",
+            "SCHEMA.md",
+            "KNOWLEDGE_ARCHITECTURE.md",
+            "MAINTENANCE_WORKFLOW.md",
+            "RUNTIME_RULES.md",
+            "PROJECT_CONTEXT.md",
+            "policy-contract.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.6666666666666666,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "PROJECT_CONTEXT.md",
+            "policy-contract.md"
+          ]
+        },
+        {
+          "id": "ASK-0004",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "implicit-vs-explicit-facets.md",
+            "foodex2-overview.md",
+            "RUNTIME_RULES.md",
+            "facet-coding-rules.md",
+            "base-term-selection.md",
+            "code-string-format.md",
+            "policy-contract.md",
+            "term-type-facet-constraints.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.625,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "code-string-format.md",
+            "policy-contract.md",
+            "business-rules.md"
+          ]
+        },
+        {
+          "id": "ASK-0005",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "packaging-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "process-validation-rules.md",
+            "code-string-format.md",
+            "chemical-monitoring-foodex2.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "ingredient-facets.md",
+            "business-rules.md",
+            "term-type-facet-constraints.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.38461538461538464,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "implicit-vs-explicit-facets.md",
+            "process-validation-rules.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "ingredient-facets.md",
+            "business-rules.md",
+            "term-type-facet-constraints.md",
+            "validation-rules.md"
+          ]
+        },
+        {
+          "id": "ASK-0006",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "vmpr-foodex2.md",
+            "domain-specific-validation.md",
+            "chemical-monitoring-foodex2.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "maintenance-2024.md",
+            "business-rules.md",
+            "pesticides-foodex2.md",
+            "contaminants-foodex2.md",
+            "domoic-acid-scallops.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.2,
+          "missing": [],
+          "leaks": [
+            "maintenance-2024.md",
+            "pesticides-foodex2.md",
+            "contaminants-foodex2.md"
+          ],
+          "unlabeled": [
+            "domain-specific-validation.md",
+            "chemical-monitoring-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "business-rules.md",
+            "domoic-acid-scallops.md"
+          ]
+        },
+        {
+          "id": "ASK-0007",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "PROJECT_CONTEXT.md",
+            "RUNTIME_RULES.md",
+            "KNOWLEDGE_ARCHITECTURE.md",
+            "INGEST_WORKFLOW.md",
+            "SCHEMA.md",
+            "policy-contract.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.1111111111111111,
+          "missing": [],
+          "leaks": [
+            "INGEST_WORKFLOW.md"
+          ],
+          "unlabeled": [
+            "KNOWLEDGE_ARCHITECTURE.md",
+            "SCHEMA.md",
+            "policy-contract.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "business-rules.md"
+          ]
+        },
+        {
+          "id": "ASK-0008",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "code-string-format.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "structural-validation.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "packaging-facets.md",
+            "validation-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.45454545454545453,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "structural-validation.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "packaging-facets.md",
+            "validation-rules.md"
+          ]
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 1.0,
+        "mean_precision": 0.491006216006216,
+        "leak_free_rate": 0.875,
+        "case_count": 8
+      },
+      "cases": [
+        {
+          "id": "ASK-0001",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "maintenance-2024.md",
+            "maintenance-history.md",
+            "maintenance-2023.md",
+            "facet-coding-rules.md",
+            "foodex2-overview.md",
+            "maintenance-2015.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.6666666666666666,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "maintenance-2023.md",
+            "maintenance-2015.md"
+          ]
+        },
+        {
+          "id": "ASK-0002",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "maintenance-history.md",
+            "maintenance-2015.md",
+            "maintenance-2016-2018.md",
+            "maintenance-2019.md",
+            "maintenance-2020.md",
+            "foodex2-overview.md",
+            "maintenance-2024.md",
+            "maintenance-2021.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0003",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "INGEST_WORKFLOW.md",
+            "SCHEMA.md",
+            "KNOWLEDGE_ARCHITECTURE.md",
+            "MAINTENANCE_WORKFLOW.md",
+            "RUNTIME_RULES.md",
+            "PROJECT_CONTEXT.md",
+            "policy-contract.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.6666666666666666,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "PROJECT_CONTEXT.md",
+            "policy-contract.md"
+          ]
+        },
+        {
+          "id": "ASK-0004",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "implicit-vs-explicit-facets.md",
+            "foodex2-overview.md",
+            "facet-coding-rules.md",
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "code-string-format.md",
+            "process-facets.md",
+            "ingredient-facets.md",
+            "packaging-facets.md",
+            "policy-contract.md",
+            "term-type-facet-constraints.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.45454545454545453,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "code-string-format.md",
+            "process-facets.md",
+            "ingredient-facets.md",
+            "packaging-facets.md",
+            "policy-contract.md",
+            "business-rules.md"
+          ]
+        },
+        {
+          "id": "ASK-0005",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "packaging-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "code-string-format.md",
+            "chemical-monitoring-foodex2.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "ingredient-facets.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.5555555555555556,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "ingredient-facets.md"
+          ]
+        },
+        {
+          "id": "ASK-0006",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "vmpr-foodex2.md",
+            "domain-specific-validation.md",
+            "chemical-monitoring-foodex2.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "maintenance-2024.md",
+            "business-rules.md",
+            "pesticides-foodex2.md",
+            "contaminants-foodex2.md",
+            "domoic-acid-scallops.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.2,
+          "missing": [],
+          "leaks": [
+            "maintenance-2024.md",
+            "pesticides-foodex2.md",
+            "contaminants-foodex2.md"
+          ],
+          "unlabeled": [
+            "domain-specific-validation.md",
+            "chemical-monitoring-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "business-rules.md",
+            "domoic-acid-scallops.md"
+          ]
+        },
+        {
+          "id": "ASK-0007",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "RUNTIME_RULES.md",
+            "policy-contract.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "policy-contract.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "business-rules.md"
+          ]
+        },
+        {
+          "id": "ASK-0008",
+          "reviewed": true,
+          "pages_used": [
+            "index.md",
+            "code-string-format.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "structural-validation.md",
+            "term-type-facet-constraints.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "packaging-facets.md",
+            "validation-rules.md",
+            "business-rules.md",
+            "process-validation-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "must_have_recall": 1.0,
+          "precision": 0.38461538461538464,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "structural-validation.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "packaging-facets.md",
+            "validation-rules.md",
+            "business-rules.md",
+            "process-validation-rules.md"
+          ]
+        }
+      ]
+    }
+  ],
+  "median_summary": {
+    "mean_must_have_recall": {
+      "median": 1.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "mean_precision": {
+      "median": 0.49150224775224777,
+      "min": 0.491006216006216,
+      "max": 0.5135756604506605
+    },
+    "leak_free_rate": {
+      "median": 0.75,
+      "min": 0.75,
+      "max": 0.875
+    },
+    "passes": 3
+  },
+  "miss_frequency": {
+    "counts": {},
+    "systematic": [],
+    "stochastic": []
+  }
+}
