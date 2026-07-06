@@ -1,4 +1,15 @@
-"""Run the page-selection gold set against /wiki/context-pack and score it."""
+"""Run the page-selection gold set against /wiki/context-pack or /wiki/ask and score it.
+
+Two endpoint modes, selected with --endpoint:
+- "context-pack" (default): mirrors the original selection eval. Requires the
+  response trace to carry `skeleton_enforcement` and reports backfill metrics.
+- "ask": POSTs /wiki/ask instead. The ask endpoint has no skeleton enforcement
+  or backfill pass, so those checks/metrics are skipped entirely for this mode.
+
+Both modes reuse the same shared plumbing (run_pass, median_summary,
+miss_frequency, score_case) -- only the HTTP call and the trace-dependent
+metrics differ.
+"""
 from __future__ import annotations
 
 import argparse
@@ -15,14 +26,17 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from wiki_api.selection_scoring import aggregate, score_case, miss_frequency  # noqa: E402
 
-MEDIAN_METRICS = [
-    "mean_must_have_recall",
-    "mean_precision",
-    "leak_free_rate",
+CONTEXT_PACK_ONLY_METRICS = [
     "mean_pack_chars",
     "backfill_case_rate",
     "mean_backfills_per_case",
     "mean_selector_tokens",
+]
+MEDIAN_METRICS = [
+    "mean_must_have_recall",
+    "mean_precision",
+    "leak_free_rate",
+    *CONTEXT_PACK_ONLY_METRICS,
 ]
 
 
@@ -37,6 +51,25 @@ def call_context_pack(base_url: str, request_payload: dict) -> dict:
     )
     with urllib.request.urlopen(req, timeout=180) as response:
         return json.loads(response.read().decode("utf-8"))
+
+
+def call_ask(base_url: str, request_payload: dict) -> dict:
+    body = dict(request_payload)
+    body.setdefault("include_page_content", False)
+    req = urllib.request.Request(
+        f"{base_url.rstrip('/')}/wiki/ask",
+        data=json.dumps(body).encode("utf-8"),
+        headers={"Content-Type": "application/json"},
+        method="POST",
+    )
+    with urllib.request.urlopen(req, timeout=180) as response:
+        return json.loads(response.read().decode("utf-8"))
+
+
+ENDPOINT_CALLERS = {
+    "context-pack": call_context_pack,
+    "ask": call_ask,
+}
 
 
 def check_gold_invariants(gold: dict) -> None:
@@ -59,71 +92,103 @@ def check_gold_invariants(gold: dict) -> None:
                         )
 
 
+def _build_context_pack_row(case: dict, response: dict, pages_used: list) -> dict:
+    pack_chars = sum(len(page.get("content") or "") for page in response.get("pages", []))
+    trace = response.get("trace") or {}
+    if "skeleton_enforcement" not in trace:
+        raise RuntimeError(
+            f"{case['id']}: response trace lacks skeleton_enforcement — "
+            "is the server running pre-enforcement code?"
+        )
+    enforcement = trace.get("skeleton_enforcement") or {}
+    return {
+        "pack_chars": pack_chars,
+        "selector_tokens": trace.get("token_summary"),
+        "backfilled": enforcement.get("backfilled", []),
+        "dropped": enforcement.get("dropped", []),
+    }
+
+
+def _build_ask_row(case: dict, response: dict, pages_used: list) -> dict:
+    # /wiki/ask has no skeleton_enforcement/backfill pass — the row carries
+    # none of the context-pack-only fields, and none are required.
+    return {}
+
+
+ROW_BUILDERS = {
+    "context-pack": _build_context_pack_row,
+    "ask": _build_ask_row,
+}
+
+
 def run_pass(
-    cases: list[dict], base_url: str, pass_number: int, max_pages_override: int | None = None
+    cases: list[dict],
+    base_url: str,
+    pass_number: int,
+    max_pages_override: int | None = None,
+    endpoint: str = "context-pack",
 ) -> tuple[list[dict], dict]:
+    caller = ENDPOINT_CALLERS[endpoint]
+    build_row_extra = ROW_BUILDERS[endpoint]
+    response_key = "malformed /wiki/context-pack response" if endpoint == "context-pack" else "malformed /wiki/ask response"
+
     rows = []
     for case in cases:
         request = dict(case["request"])
         if max_pages_override is not None:
             request["max_pages"] = max_pages_override
-        response = call_context_pack(base_url, request)
+        response = caller(base_url, request)
         pages_used = response.get("pages_used")
         if not isinstance(pages_used, list):
-            raise RuntimeError(
-                f"{case['id']}: malformed /wiki/context-pack response: missing pages_used"
-            )
-        pack_chars = sum(len(page.get("content") or "") for page in response.get("pages", []))
+            raise RuntimeError(f"{case['id']}: {response_key}: missing pages_used")
         score = score_case(case["labels"], pages_used)
-        trace = response.get("trace") or {}
-        if "skeleton_enforcement" not in trace:
-            raise RuntimeError(
-                f"{case['id']}: response trace lacks skeleton_enforcement — "
-                "is the server running pre-enforcement code?"
-            )
-        enforcement = trace.get("skeleton_enforcement") or {}
         row = {
             "id": case["id"],
             "reviewed": bool(case.get("reviewed")),
             "pages_used": pages_used,
-            "pack_chars": pack_chars,
-            "selector_tokens": (response.get("trace") or {}).get("token_summary"),
-            "backfilled": enforcement.get("backfilled", []),
-            "dropped": enforcement.get("dropped", []),
+            "max_pages_sent": request.get("max_pages"),
+            **build_row_extra(case, response, pages_used),
             **score,
         }
         rows.append(row)
+        backfilled_note = ""
+        if "backfilled" in row:
+            backfilled_note = f" backfilled={[item['page'] for item in row['backfilled']]}"
         print(
             f"[pass {pass_number}] {case['id']}: recall={score['must_have_recall']:.2f} "
-            f"leaks={score['leaks']} missing={score['missing']} "
-            f"backfilled={[item['page'] for item in row['backfilled']]}"
+            f"leaks={score['leaks']} missing={score['missing']}{backfilled_note}"
         )
 
     summary = aggregate(rows)
-    summary["mean_pack_chars"] = (
-        sum(row["pack_chars"] for row in rows) / len(rows) if rows else 0
-    )
-    summary["backfill_case_rate"] = (
-        len([row for row in rows if row["backfilled"]]) / len(rows) if rows else 0
-    )
-    summary["mean_backfills_per_case"] = (
-        sum(len(row["backfilled"]) for row in rows) / len(rows) if rows else 0
-    )
-    token_totals = [
-        (row["selector_tokens"] or {}).get("total_tracked_tokens")
-        for row in rows
-        if isinstance(row.get("selector_tokens"), dict)
-    ]
-    token_totals = [t for t in token_totals if isinstance(t, (int, float))]
-    summary["mean_selector_tokens"] = (
-        sum(token_totals) / len(token_totals) if token_totals else 0
-    )
+    if endpoint == "context-pack":
+        summary["mean_pack_chars"] = (
+            sum(row["pack_chars"] for row in rows) / len(rows) if rows else 0
+        )
+        summary["backfill_case_rate"] = (
+            len([row for row in rows if row["backfilled"]]) / len(rows) if rows else 0
+        )
+        summary["mean_backfills_per_case"] = (
+            sum(len(row["backfilled"]) for row in rows) / len(rows) if rows else 0
+        )
+        token_totals = [
+            (row["selector_tokens"] or {}).get("total_tracked_tokens")
+            for row in rows
+            if isinstance(row.get("selector_tokens"), dict)
+        ]
+        token_totals = [t for t in token_totals if isinstance(t, (int, float))]
+        summary["mean_selector_tokens"] = (
+            sum(token_totals) / len(token_totals) if token_totals else 0
+        )
     return rows, summary
 
 
 def median_summary(passes: list[dict]) -> dict:
     out = {}
     for metric in MEDIAN_METRICS:
+        if not all(metric in p["summary"] for p in passes):
+            # Endpoint modes (e.g. "ask") that skip context-pack-only metrics
+            # simply omit them here rather than erroring.
+            continue
         values = [p["summary"][metric] for p in passes]
         out[metric] = {
             "median": statistics.median(values),
@@ -134,9 +199,32 @@ def median_summary(passes: list[dict]) -> dict:
     return out
 
 
+def effective_max_pages(cases: list[dict], max_pages_override: int | None) -> dict:
+    """The max_pages actually sent per case, for results-payload provenance.
+
+    Replaces reliance on the CLI --max-pages override key alone: that key is
+    None whenever no override is passed, which silently hides the per-case
+    request max_pages actually used. This records the min/max actually sent
+    across all cases in the run, whether from an override or from each case's
+    own request payload.
+    """
+    sent = [
+        max_pages_override if max_pages_override is not None else case["request"].get("max_pages")
+        for case in cases
+    ]
+    sent = [value for value in sent if isinstance(value, int)]
+    if not sent:
+        return {"min": None, "max": None}
+    return {"min": min(sent), "max": max(sent)}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base-url", default="http://127.0.0.1:8010")
+    parser.add_argument(
+        "--endpoint", choices=["context-pack", "ask"], default="context-pack",
+        help="Which endpoint to evaluate against (default: context-pack, backward compatible).",
+    )
     parser.add_argument("--gold-path", default="evals/selection/gold_cases.json")
     parser.add_argument("--label", required=True, help="Report label, e.g. 'baseline'.")
     parser.add_argument("--only-reviewed", action="store_true")
@@ -156,7 +244,9 @@ def main() -> None:
 
     passes = []
     for pass_number in range(1, args.repeats + 1):
-        rows, summary = run_pass(cases, args.base_url, pass_number, args.max_pages)
+        rows, summary = run_pass(
+            cases, args.base_url, pass_number, args.max_pages, endpoint=args.endpoint
+        )
         passes.append({"summary": summary, "cases": rows})
         print(f"\n[pass {pass_number}] SUMMARY:", json.dumps(summary, indent=2))
 
@@ -170,14 +260,25 @@ def main() -> None:
     for entry in freq["stochastic"]:
         print(f"  stochastic {entry['case_id']}: {entry['page']} missed {entry['missed']}/{entry['repeats']}")
 
+    max_pages_summary = effective_max_pages(cases, args.max_pages)
+
+    report_root = "ask-evals" if args.endpoint == "ask" else "selection-evals"
     out_dir = (
-        REPO_ROOT / "reports" / "selection-evals"
+        REPO_ROOT / "reports" / report_root
         / f"{dt.date.today().isoformat()}-{args.label}"
     )
     out_dir.mkdir(parents=True, exist_ok=True)
     (out_dir / "results.json").write_text(
         json.dumps(
-            {"repeats": args.repeats, "max_pages_override": args.max_pages, "passes": passes, "median_summary": medians, "miss_frequency": freq},
+            {
+                "endpoint": args.endpoint,
+                "repeats": args.repeats,
+                "max_pages_override": args.max_pages,
+                "effective_max_pages": max_pages_summary,
+                "passes": passes,
+                "median_summary": medians,
+                "miss_frequency": freq,
+            },
             ensure_ascii=False,
             indent=2,
         )

@@ -1,0 +1,231 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "ASK-0001",
+      "source": "regression-anchor:PR-37",
+      "reviewed": true,
+      "request": {
+        "question": "What changed for FoodEx2 in the 2024 maintenance release?",
+        "max_pages": 6
+      },
+      "labels": {
+        "must_have": [
+          "maintenance-2024.md"
+        ],
+        "acceptable": [
+          "maintenance-history.md",
+          "vmpr-foodex2.md",
+          "facet-coding-rules.md",
+          "foodex2-overview.md"
+        ],
+        "must_not": [
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "additives-flavourings-foodex2.md",
+          "domoic-acid-scallops.md"
+        ],
+        "notes": "The canonical regression case for the ask-scope-narrowing bug (PR #37): /wiki/ask must be able to select maintenance-2024.md, a non-prompt-facing page that the coding-scope catalog correctly omits. Without this page the answer would have no grounding for what changed in the 2024 release (VetDrugRes hierarchy overhaul, new F33 category, 1094 new terms) and would either refuse or hallucinate. If the selector silently falls back to catalog scope 'coding', this page becomes unselectable and the case fails -- that is exactly the regression this eval exists to catch."
+      }
+    },
+    {
+      "id": "ASK-0002",
+      "source": "regression-anchor:PR-37",
+      "reviewed": true,
+      "request": {
+        "question": "Give me a year-by-year timeline of FoodEx2 maintenance changes since revision 2.",
+        "max_pages": 6
+      },
+      "labels": {
+        "must_have": [
+          "maintenance-history.md"
+        ],
+        "acceptable": [
+          "maintenance-2024.md",
+          "maintenance-2023.md",
+          "maintenance-2022.md",
+          "maintenance-2021.md",
+          "maintenance-2020.md",
+          "maintenance-2019.md",
+          "maintenance-2016-2018.md",
+          "maintenance-2015.md",
+          "foodex2-overview.md"
+        ],
+        "must_not": [
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "additives-flavourings-foodex2.md"
+        ],
+        "notes": "A second maintenance/history anchor distinct from ASK-0001: the question asks for the whole timeline, not a single year, so maintenance-history.md (the cross-year rollup table) is must_have; individual year pages are acceptable supporting detail, not required. Confirms the ask selector can reach the maintenance-* family generally, not just the 2024 page."
+      }
+    },
+    {
+      "id": "ASK-0003",
+      "source": "orientation-anchor",
+      "reviewed": true,
+      "request": {
+        "question": "How does the ingest process turn a raw PDF into a wiki page, and what checks does it have to pass?",
+        "max_pages": 6
+      },
+      "labels": {
+        "must_have": [
+          "INGEST_WORKFLOW.md"
+        ],
+        "acceptable": [
+          "SCHEMA.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "MAINTENANCE_WORKFLOW.md"
+        ],
+        "must_not": [
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "additives-flavourings-foodex2.md",
+          "base-term-selection.md"
+        ],
+        "notes": "Orientation/architecture question: the practical ingest playbook (chunked reads, page-writing rules, doctor checks) lives only in INGEST_WORKFLOW.md, which the coding-scope catalog excludes entirely. Without it the answer would be ungrounded speculation about how ingest works. SCHEMA.md and KNOWLEDGE_ARCHITECTURE.md are acceptable since they cover adjacent structural rules the answer may reasonably cite."
+      }
+    },
+    {
+      "id": "ASK-0004",
+      "source": "coding-flavored",
+      "reviewed": true,
+      "request": {
+        "question": "What is the difference between an implicit and an explicit facet when coding a FoodEx2 term?",
+        "max_pages": 6
+      },
+      "labels": {
+        "must_have": [
+          "implicit-vs-explicit-facets.md"
+        ],
+        "acceptable": [
+          "facet-coding-rules.md",
+          "base-term-selection.md",
+          "foodex2-overview.md",
+          "term-type-facet-constraints.md"
+        ],
+        "must_not": [
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "additives-flavourings-foodex2.md",
+          "maintenance-2024.md"
+        ],
+        "notes": "Coding-flavored ask question with a single, unambiguous answer page. Without implicit-vs-explicit-facets.md the response cannot correctly explain inherited-vs-stated facet detail, which is exactly what the page exists to teach (rubric: answer would be wrong/ungrounded without it)."
+      }
+    },
+    {
+      "id": "ASK-0005",
+      "source": "coding-flavored",
+      "reviewed": true,
+      "request": {
+        "question": "When should I use F18/F19 packaging facets instead of the F28 process facet?",
+        "max_pages": 6
+      },
+      "labels": {
+        "must_have": [
+          "packaging-facets.md"
+        ],
+        "acceptable": [
+          "process-facets.md",
+          "facet-coding-rules.md",
+          "code-string-format.md",
+          "chemical-monitoring-foodex2.md"
+        ],
+        "must_not": [
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "additives-flavourings-foodex2.md",
+          "maintenance-2024.md"
+        ],
+        "notes": "Coding-flavored ask question that hinges on the packaging-vs-process boundary; packaging-facets.md is must_have since it is the only page that states the F18/F19-vs-F28 distinction directly. process-facets.md is acceptable as the natural cross-reference, not required to ground a correct answer."
+      }
+    },
+    {
+      "id": "ASK-0006",
+      "source": "coding-flavored",
+      "reviewed": true,
+      "request": {
+        "question": "What does the VMPR overlay say about coding non-food biological matrices like blood or urine samples?",
+        "max_pages": 6
+      },
+      "labels": {
+        "must_have": [
+          "vmpr-foodex2.md"
+        ],
+        "acceptable": [
+          "facet-coding-rules.md",
+          "term-type-facet-constraints.md",
+          "vmpr-legislative-mapping.md",
+          "base-term-selection.md"
+        ],
+        "must_not": [
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "additives-flavourings-foodex2.md",
+          "maintenance-2024.md"
+        ],
+        "notes": "Coding-flavored ask question naming an explicit domain (VMPR); vmpr-foodex2.md is must_have as the only page describing non-food biological matrix coding (A0C60 + mandatory F01/F02). Mirrors the exclusivity intuition from the context-pack rubric even though /wiki/ask does not enforce a hard exclusivity rule."
+      }
+    },
+    {
+      "id": "ASK-0007",
+      "source": "no-clear-page",
+      "reviewed": true,
+      "request": {
+        "question": "What's your favorite FoodEx2 term and why?",
+        "max_pages": 6
+      },
+      "labels": {
+        "must_have": [],
+        "acceptable": [
+          "foodex2-overview.md",
+          "README.md",
+          "PROJECT_CONTEXT.md"
+        ],
+        "must_not": [
+          "maintenance-2024.md",
+          "maintenance-history.md",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "additives-flavourings-foodex2.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md"
+        ],
+        "notes": "No-clear-page probe: an off-topic/unanswerable question with no factual grounding need. must_have is empty by design. must_not catches overlays and maintenance/ingest pages that should never fire just because the ask-scope catalog makes them reachable -- if the selector starts pulling maintenance or domain-overlay pages for a question that has nothing to do with them, that is a distinct failure mode from the recall regression (over-eager selection rather than under-reach)."
+      }
+    },
+    {
+      "id": "ASK-0008",
+      "source": "coding-flavored",
+      "reviewed": true,
+      "request": {
+        "question": "How do I build the code string for a composite dish with several characterising ingredients -- what's the correct syntax for chaining multiple F04 facets?",
+        "max_pages": 6
+      },
+      "labels": {
+        "must_have": [
+          "code-string-format.md",
+          "ingredient-facets.md"
+        ],
+        "acceptable": [
+          "facet-coding-rules.md",
+          "base-term-selection.md",
+          "term-type-facet-constraints.md"
+        ],
+        "must_not": [
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "vmpr-foodex2.md",
+          "additives-flavourings-foodex2.md",
+          "maintenance-2024.md"
+        ],
+        "notes": "Coding-flavored ask question combining two must_have pages: code-string-format.md governs the #/$ syntax for chaining multiple facet segments, and ingredient-facets.md governs which F04 ingredient descriptors apply to a composite. An answer omitting either would be incomplete or syntactically wrong."
+      }
+    }
+  ]
+}
