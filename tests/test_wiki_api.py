@@ -621,6 +621,37 @@ def test_ask_returns_answer_with_citations_and_trace() -> None:
     assert "content" in first_page
 
 
+def test_ask_select_pages_runs_only_selector_and_records_usage() -> None:
+    response = request(
+        "POST",
+        "/wiki/ask/select-pages",
+        json={
+            "question": "What changed in the 2024 maintenance release?",
+            "max_pages": 6,
+            "include_page_content": False,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["pages_used"] == [
+        "index.md",
+        "base-term-selection.md",
+        "ingredient-facets.md",
+        "packaging-facets.md",
+        "term-type-facet-constraints.md",
+        "implicit-vs-explicit-facets.md",
+    ]
+    assert payload["trace"]["selection_method"] == "service-owned llm page selector"
+    assert payload["trace"]["total"] == {
+        "request_wall_time_ms": payload["trace"]["total"]["request_wall_time_ms"],
+        "total_llm_calls": 1,
+        "total_tracked_tokens": 115,
+    }
+    assert app_module.answerer_runner.calls == []
+    assert all(page["content"] is None for page in payload["pages"])
+
+
 def test_ask_rag_uses_qdrant_context_and_answerer(monkeypatch) -> None:
     calls: list[dict[str, object]] = []
 
@@ -1162,7 +1193,8 @@ def test_context_pack_can_return_domoic_acid_scallop_overlay() -> None:
 
     assert response.status_code == 200
     payload = response.json()
-    assert payload["pages_used"][:2] == ["RUNTIME_RULES.md", "index.md"]
+    assert payload["pages_used"][0] == "RUNTIME_RULES.md"
+    assert len(payload["pages_used"]) <= 7
     assert "domoic-acid-scallops.md" in payload["pages_used"]
     pages_by_name = {page["page_name"]: page for page in payload["pages"]}
     content = pages_by_name["domoic-acid-scallops.md"]["content"]
@@ -1219,6 +1251,28 @@ def test_context_pack_trace_reports_no_backfill_when_roles_covered() -> None:
     enforcement = response.json()["trace"]["skeleton_enforcement"]
     assert enforcement["backfilled"] == []
     assert enforcement["dropped"] == []
+    assert enforcement["trimmed"] == []
+
+
+def test_context_pack_max_pages_is_a_strict_final_response_cap() -> None:
+    response = request(
+        "POST",
+        "/wiki/context-pack",
+        json={"search_term": "strict cap", "max_pages": 4},
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert len(payload["pages_used"]) == 4
+    assert payload["pages_used"][0] == "RUNTIME_RULES.md"
+    assert "base-term-selection.md" in payload["pages_used"]
+    assert "ingredient-facets.md" in payload["pages_used"]
+    assert "term-type-facet-constraints.md" in payload["pages_used"]
+    assert payload["trace"]["skeleton_enforcement"]["trimmed"] == [
+        "index.md",
+        "implicit-vs-explicit-facets.md",
+        "packaging-facets.md",
+    ]
 
 
 def test_policy_pack_accepts_legacy_scope_note_but_normalizes_to_coverage_text() -> None:
@@ -1367,6 +1421,7 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     assert "policy_contract" in payload["components"]["schemas"]["PolicyPackResponse"]["properties"]
     assert "policy_contract" in payload["components"]["schemas"]["SolveResponse"]["properties"]
     assert "/wiki/ask" in payload["paths"]
+    assert "/wiki/ask/select-pages" in payload["paths"]
     assert "/wiki/ask-rag" in payload["paths"]
     assert "/wiki/search" in payload["paths"]
     assert "/wiki/graph" in payload["paths"]
@@ -1378,6 +1433,8 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     solve_description = payload["paths"]["/wiki/solve"]["post"]["description"]
 
     assert "`candidate_hints`" in context_description
+    assert context_props["max_pages"]["default"] == 7
+    assert context_props["max_pages"]["minimum"] == 4
     assert "choose and return prompt-ready context pages" in context_description
     assert "deterministically" not in context_description
     assert "`candidates_trimmed`" in policy_description

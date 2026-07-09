@@ -7,8 +7,7 @@
       "reviewed": true,
       "request": {
         "question": "What changed for FoodEx2 in the 2024 maintenance release?",
-        "max_pages": 6,
-        "use_graph_expansion": false
+        "max_pages": 6
       },
       "labels": {
         "must_have": [
@@ -35,8 +34,7 @@
       "reviewed": true,
       "request": {
         "question": "Give me a year-by-year timeline of FoodEx2 maintenance changes since revision 2.",
-        "max_pages": 6,
-        "use_graph_expansion": false
+        "max_pages": 6
       },
       "labels": {
         "must_have": [
@@ -68,8 +66,7 @@
       "reviewed": true,
       "request": {
         "question": "How does the ingest process turn a raw PDF into a wiki page, and what checks does it have to pass?",
-        "max_pages": 6,
-        "use_graph_expansion": false
+        "max_pages": 6
       },
       "labels": {
         "must_have": [
@@ -97,8 +94,7 @@
       "reviewed": true,
       "request": {
         "question": "What is the difference between an implicit and an explicit facet when coding a FoodEx2 term?",
-        "max_pages": 6,
-        "use_graph_expansion": false
+        "max_pages": 6
       },
       "labels": {
         "must_have": [
@@ -126,8 +122,7 @@
       "reviewed": true,
       "request": {
         "question": "When should I use F18/F19 packaging facets instead of the F28 process facet?",
-        "max_pages": 6,
-        "use_graph_expansion": false
+        "max_pages": 6
       },
       "labels": {
         "must_have": [
@@ -155,8 +150,7 @@
       "reviewed": true,
       "request": {
         "question": "What does the VMPR overlay say about coding non-food biological matrices like blood or urine samples?",
-        "max_pages": 6,
-        "use_graph_expansion": false
+        "max_pages": 6
       },
       "labels": {
         "must_have": [
@@ -183,8 +177,7 @@
       "reviewed": true,
       "request": {
         "question": "What's your favorite FoodEx2 term and why?",
-        "max_pages": 6,
-        "use_graph_expansion": false
+        "max_pages": 6
       },
       "labels": {
         "must_have": [],
@@ -212,8 +205,7 @@
       "reviewed": true,
       "request": {
         "question": "How do I build the code string for a composite dish with several characterising ingredients -- what's the correct syntax for chaining multiple F04 facets?",
-        "max_pages": 6,
-        "use_graph_expansion": false
+        "max_pages": 6
       },
       "labels": {
         "must_have": [

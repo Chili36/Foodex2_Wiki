@@ -1,10 +1,11 @@
-"""Run the page-selection gold set against /wiki/context-pack or /wiki/ask and score it.
+"""Run the page-selection gold set against context-pack or ask selection and score it.
 
 Two endpoint modes, selected with --endpoint:
 - "context-pack" (default): mirrors the original selection eval. Requires the
   response trace to carry `skeleton_enforcement` and reports backfill metrics.
-- "ask": POSTs /wiki/ask instead. The ask endpoint has no skeleton enforcement
-  or backfill pass, so those checks/metrics are skipped entirely for this mode.
+- "ask": POSTs /wiki/ask/select-pages instead. This uses the ask catalog scope
+  without paying for an answerer or graph expansion. The ask selector has no
+  skeleton enforcement or backfill pass, so those metrics are skipped.
 
 Both modes reuse the same shared plumbing (run_pass, median_summary,
 miss_frequency, score_case) -- only the HTTP call and the trace-dependent
@@ -30,14 +31,17 @@ CONTEXT_PACK_ONLY_METRICS = [
     "mean_pack_chars",
     "backfill_case_rate",
     "mean_backfills_per_case",
-    "mean_selector_tokens",
 ]
 MEDIAN_METRICS = [
     "mean_must_have_recall",
     "mean_precision",
     "leak_free_rate",
+    "mean_selector_tokens",
     *CONTEXT_PACK_ONLY_METRICS,
 ]
+
+DEFAULT_MAX_REPEATS = 3
+DEFAULT_MAX_ESTIMATED_CALLS = 200
 
 
 def call_context_pack(base_url: str, request_payload: dict) -> dict:
@@ -56,13 +60,16 @@ def call_context_pack(base_url: str, request_payload: dict) -> dict:
 def call_ask(base_url: str, request_payload: dict) -> dict:
     body = dict(request_payload)
     body.setdefault("include_page_content", False)
-    # The ask eval scores the SELECTOR: /wiki/ask defaults use_graph_expansion
-    # to true and merges graph-neighbor pages into pages_used, which would let
-    # a case pass because a neighbor was appended rather than because the
-    # selector picked the page. Force it off regardless of the gold data.
-    body["use_graph_expansion"] = False
+    # The selector-only endpoint does not accept or execute answerer/expansion
+    # controls. Strip legacy gold fields so the request records its real scope.
+    for field_name in (
+        "answerer_model",
+        "answerer_reasoning_effort",
+        "use_graph_expansion",
+    ):
+        body.pop(field_name, None)
     req = urllib.request.Request(
-        f"{base_url.rstrip('/')}/wiki/ask",
+        f"{base_url.rstrip('/')}/wiki/ask/select-pages",
         data=json.dumps(body).encode("utf-8"),
         headers={"Content-Type": "application/json"},
         method="POST",
@@ -111,13 +118,21 @@ def _build_context_pack_row(case: dict, response: dict, pages_used: list) -> dic
         "selector_tokens": trace.get("token_summary"),
         "backfilled": enforcement.get("backfilled", []),
         "dropped": enforcement.get("dropped", []),
+        "trimmed": enforcement.get("trimmed", []),
     }
 
 
 def _build_ask_row(case: dict, response: dict, pages_used: list) -> dict:
-    # /wiki/ask has no skeleton_enforcement/backfill pass — the row carries
-    # none of the context-pack-only fields, and none are required.
-    return {}
+    # Ask selection has no skeleton_enforcement/backfill pass — the row carries
+    # none of the context-pack-only fields. Selector usage is still recorded.
+    trace = response.get("trace") or {}
+    retrieval = trace.get("retrieval") or {}
+    token_summary = retrieval.get("token_summary")
+    if not isinstance(token_summary, dict):
+        raise RuntimeError(
+            f"{case['id']}: response trace lacks retrieval token_summary"
+        )
+    return {"selector_tokens": token_summary}
 
 
 ROW_BUILDERS = {
@@ -135,7 +150,11 @@ def run_pass(
 ) -> tuple[list[dict], dict]:
     caller = ENDPOINT_CALLERS[endpoint]
     build_row_extra = ROW_BUILDERS[endpoint]
-    response_key = "malformed /wiki/context-pack response" if endpoint == "context-pack" else "malformed /wiki/ask response"
+    response_key = (
+        "malformed /wiki/context-pack response"
+        if endpoint == "context-pack"
+        else "malformed /wiki/ask/select-pages response"
+    )
 
     rows = []
     for case in cases:
@@ -175,15 +194,15 @@ def run_pass(
         summary["mean_backfills_per_case"] = (
             sum(len(row["backfilled"]) for row in rows) / len(rows) if rows else 0
         )
-        token_totals = [
-            (row["selector_tokens"] or {}).get("total_tracked_tokens")
-            for row in rows
-            if isinstance(row.get("selector_tokens"), dict)
-        ]
-        token_totals = [t for t in token_totals if isinstance(t, (int, float))]
-        summary["mean_selector_tokens"] = (
-            sum(token_totals) / len(token_totals) if token_totals else 0
-        )
+    token_totals = [
+        (row["selector_tokens"] or {}).get("total_tracked_tokens")
+        for row in rows
+        if isinstance(row.get("selector_tokens"), dict)
+    ]
+    token_totals = [t for t in token_totals if isinstance(t, (int, float))]
+    summary["mean_selector_tokens"] = (
+        sum(token_totals) / len(token_totals) if token_totals else 0
+    )
     return rows, summary
 
 
@@ -223,6 +242,31 @@ def effective_max_pages(cases: list[dict], max_pages_override: int | None) -> di
     return {"min": min(sent), "max": max(sent)}
 
 
+def validate_eval_budget(
+    *,
+    case_count: int,
+    repeats: int,
+    max_estimated_calls: int = DEFAULT_MAX_ESTIMATED_CALLS,
+    allow_high_repeats: bool = False,
+) -> int:
+    """Validate and return the selector-call budget before any network request."""
+    if repeats < 1:
+        raise ValueError("--repeats must be at least 1")
+    if repeats > DEFAULT_MAX_REPEATS and not allow_high_repeats:
+        raise ValueError(
+            f"--repeats above {DEFAULT_MAX_REPEATS} requires --allow-high-repeats"
+        )
+    if max_estimated_calls < 1:
+        raise ValueError("--max-estimated-calls must be at least 1")
+    estimated_calls = case_count * repeats
+    if estimated_calls > max_estimated_calls:
+        raise ValueError(
+            f"estimated {estimated_calls} LLM calls exceeds --max-estimated-calls "
+            f"{max_estimated_calls}; narrow the case set or explicitly raise the cap"
+        )
+    return estimated_calls
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--base-url", default="http://127.0.0.1:8010")
@@ -235,6 +279,25 @@ def main() -> None:
     parser.add_argument("--only-reviewed", action="store_true")
     parser.add_argument("--repeats", type=int, default=1)
     parser.add_argument(
+        "--allow-high-repeats",
+        action="store_true",
+        help=f"Acknowledge runs above {DEFAULT_MAX_REPEATS} repeats.",
+    )
+    parser.add_argument(
+        "--max-estimated-calls",
+        type=int,
+        default=DEFAULT_MAX_ESTIMATED_CALLS,
+        help=(
+            "Abort before network calls when cases × repeats exceeds this cap "
+            f"(default: {DEFAULT_MAX_ESTIMATED_CALLS})."
+        ),
+    )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Validate and print the call budget without making requests or writing a report.",
+    )
+    parser.add_argument(
         "--max-pages", type=int, default=None,
         help="Override every case request's max_pages (budget sensitivity probes).",
     )
@@ -246,6 +309,29 @@ def main() -> None:
         case for case in gold["cases"]
         if case.get("reviewed") or not args.only_reviewed
     ]
+    try:
+        estimated_calls = validate_eval_budget(
+            case_count=len(cases),
+            repeats=args.repeats,
+            max_estimated_calls=args.max_estimated_calls,
+            allow_high_repeats=args.allow_high_repeats,
+        )
+    except ValueError as exc:
+        parser.error(str(exc))
+    print(
+        "EVAL BUDGET:",
+        json.dumps(
+            {
+                "endpoint": args.endpoint,
+                "cases": len(cases),
+                "repeats": args.repeats,
+                "estimated_llm_calls": estimated_calls,
+            },
+            indent=2,
+        ),
+    )
+    if args.dry_run:
+        return
 
     passes = []
     for pass_number in range(1, args.repeats + 1):
@@ -278,6 +364,7 @@ def main() -> None:
             {
                 "endpoint": args.endpoint,
                 "repeats": args.repeats,
+                "estimated_llm_calls": estimated_calls,
                 "max_pages_override": args.max_pages,
                 "effective_max_pages": max_pages_summary,
                 "passes": passes,

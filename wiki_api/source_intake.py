@@ -27,11 +27,9 @@ from .librarian import (
 from .wiki_store import WikiStore
 
 
-# max_tokens is a ceiling on generated tokens, billed only on tokens actually
-# produced, so raising it when thinking is on is cost-neutral. Adaptive thinking
-# blocks count against this same ceiling, so a budget sized only for the report
-# text can be fully consumed by thinking, leaving no text (see SourceIntakeError
-# below).
+# max_tokens is a ceiling, not a prepaid charge, but raising it can increase cost
+# by allowing more billed thinking/output tokens. Keep routine intake conservative;
+# the larger ceiling is used only when thinking is explicitly enabled.
 DEFAULT_SOURCE_INTAKE_MAX_TOKENS = 5000
 DEFAULT_SOURCE_INTAKE_MAX_TOKENS_WITH_THINKING = 9000
 
@@ -201,7 +199,7 @@ class AnthropicSourceIntakeReviewer:
         )
         self.client = client or build_messages_client(self.model)
         self.thinking_enabled = (
-            _env_bool("WIKI_INTAKE_THINKING", default=True)
+            _env_bool("WIKI_INTAKE_THINKING", default=False)
             if thinking_enabled is None
             else thinking_enabled
         )
@@ -331,7 +329,7 @@ def main(argv: list[str] | None = None) -> int:
         "--thinking",
         action=argparse.BooleanOptionalAction,
         default=None,
-        help="Enable Anthropic adaptive thinking. Defaults to WIKI_INTAKE_THINKING, or on.",
+        help="Enable Anthropic adaptive thinking. Defaults to WIKI_INTAKE_THINKING, or off.",
     )
     parser.add_argument(
         "--output",

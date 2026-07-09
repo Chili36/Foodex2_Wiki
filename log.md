@@ -1,9 +1,16 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-07-06"
+last_updated: "2026-07-09"
 ---
 
 # Log
+
+## [2026-07-09] maintenance | Add wiki LLM cost guardrails
+
+- Added `POST /wiki/ask/select-pages` for ask-scope selector evaluation without graph expansion or an answerer call; the shared eval runner now records selector tokens from this one-call path.
+- Made context-pack `max_pages` a strict final response cap, including `RUNTIME_RULES.md` and deterministic skeleton backfills. Required base-term, facet, and validation roles are protected while optional pages are trimmed. Restored the production and gold-set default from 9 to 7; callers can still opt into 9 explicitly.
+- Added preflight eval guards: more than 3 repeats requires `--allow-high-repeats`, estimated calls default to a hard cap of 200, and `--dry-run` validates the budget without network calls or report writes.
+- Made adaptive thinking opt-in for routine wiki lint and source intake. Explicit thinking still uses the larger 8k/9k ceilings; routine runs stay at 4k/5k and the code now states that a larger ceiling can permit more billed output rather than calling it cost-neutral.
 
 ## [2026-07-06] maintenance | Reconcile validation-rules severity table with business-rules authority
 
