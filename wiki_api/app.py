@@ -19,6 +19,7 @@ from .librarian import (
     AnthropicWikiPageSelector,
     JsonFoodEx2Answerer,
     JsonWikiPageSelector,
+    PageSelectionResult,
     infer_model_provider,
 )
 from .policy import build_policy_contract
@@ -222,7 +223,15 @@ class CommonRequestFields(BaseModel):
 
 
 class ContextPackRequest(CommonRequestFields):
-    max_pages: int = Field(default=9, ge=1, le=10)
+    max_pages: int = Field(
+        default=7,
+        ge=4,
+        le=10,
+        description=(
+            "Strict cap on pages returned, including RUNTIME_RULES.md and any "
+            "deterministic skeleton backfills."
+        ),
+    )
     candidate_hints: list[CandidateHint] = Field(
         default_factory=list,
         description=(
@@ -297,17 +306,10 @@ class WikiSearchResponse(BaseModel):
     results: list[WikiSearchResult] = Field(default_factory=list)
 
 
-class AskRequest(BaseModel):
+class AskSelectionRequest(BaseModel):
     question: str = Field(min_length=1, description="The user's FoodEx2 coding question.")
     max_pages: int = Field(default=7, ge=1, le=10)
     include_page_content: bool = True
-    use_graph_expansion: bool = Field(
-        default=True,
-        description=(
-            "If true, add summary-only context for curated related pages adjacent to the "
-            "selected pages."
-        ),
-    )
     selector_model: str | None = Field(
         default=None,
         description=(
@@ -317,6 +319,35 @@ class AskRequest(BaseModel):
             "the service uses WIKI_CONTEXT_MODEL, then WIKI_LIBRARIAN_MODEL."
         ),
     )
+    selector_reasoning_effort: Literal["low", "medium", "high"] | None = Field(
+        default=None,
+        description=(
+            "Optional reasoning effort for LM Studio/OpenAI-compatible selector calls. "
+            "Ignored by providers that do not support it."
+        ),
+    )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _normalize_selector_overrides(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            normalized = dict(data)
+            for field_name in ("selector_model", "selector_reasoning_effort"):
+                value = normalized.get(field_name)
+                if isinstance(value, str):
+                    normalized[field_name] = value.strip() or None
+            return normalized
+        return data
+
+
+class AskRequest(AskSelectionRequest):
+    use_graph_expansion: bool = Field(
+        default=True,
+        description=(
+            "If true, add summary-only context for curated related pages adjacent to the "
+            "selected pages."
+        ),
+    )
     answerer_model: str | None = Field(
         default=None,
         description=(
@@ -324,13 +355,6 @@ class AskRequest(BaseModel):
             "Use claude* for Anthropic, lmstudio:<model> for LM Studio, "
             "or gpt*/gemini* for JSON-only hosted overrides. If omitted, "
             "the service uses WIKI_ANSWERER_MODEL, then WIKI_LIBRARIAN_MODEL."
-        ),
-    )
-    selector_reasoning_effort: Literal["low", "medium", "high"] | None = Field(
-        default=None,
-        description=(
-            "Optional reasoning effort for LM Studio/OpenAI-compatible selector calls. "
-            "Ignored by providers that do not support it."
         ),
     )
     answerer_reasoning_effort: Literal["low", "medium", "high"] | None = Field(
@@ -343,15 +367,10 @@ class AskRequest(BaseModel):
 
     @model_validator(mode="before")
     @classmethod
-    def _normalize_model_overrides(cls, data: Any) -> Any:
+    def _normalize_answerer_overrides(cls, data: Any) -> Any:
         if isinstance(data, dict):
             normalized = dict(data)
-            for field_name in (
-                "selector_model",
-                "answerer_model",
-                "selector_reasoning_effort",
-                "answerer_reasoning_effort",
-            ):
+            for field_name in ("answerer_model", "answerer_reasoning_effort"):
                 value = normalized.get(field_name)
                 if isinstance(value, str):
                     normalized[field_name] = value.strip() or None
@@ -436,6 +455,12 @@ class WikiRagStatusResponse(BaseModel):
 class AskResponse(BaseModel):
     answer: str
     citations: list[str] = Field(default_factory=list)
+    pages_used: list[str] = Field(default_factory=list)
+    pages: list[PageSummary] = Field(default_factory=list)
+    trace: dict[str, Any]
+
+
+class AskSelectionResponse(BaseModel):
     pages_used: list[str] = Field(default_factory=list)
     pages: list[PageSummary] = Field(default_factory=list)
     trace: dict[str, Any]
@@ -1087,33 +1112,9 @@ def get_page(page_name: str, include_content: bool = Query(default=True)) -> dic
     }
 
 
-@app.post(
-    "/wiki/ask",
-    response_model=AskResponse,
-    summary="Ask a FoodEx2 guidance question",
-    description=(
-        "Send a natural language FoodEx2 coding question. The service selects relevant wiki "
-        "pages, answers from those pages, and returns citations plus a trace."
-    ),
-)
-def ask_question(request: AskRequest) -> AskResponse:
-    request_started = time.perf_counter()
-    logger.info(
-        "ask_request %s",
-        json.dumps(
-            {
-                "question": request.question,
-                "max_pages": request.max_pages,
-                "use_graph_expansion": request.use_graph_expansion,
-                "selector_model": request.selector_model,
-                "answerer_model": request.answerer_model,
-                "selector_reasoning_effort": request.selector_reasoning_effort,
-                "answerer_reasoning_effort": request.answerer_reasoning_effort,
-            },
-            ensure_ascii=False,
-        ),
-    )
-
+def _run_ask_page_selection(
+    request: AskSelectionRequest,
+) -> tuple[Any, PageSelectionResult, list[WikiPage], list[dict[str, Any]], int, int]:
     selector_start = time.perf_counter()
     selector = get_selector_runner(
         model=request.selector_model,
@@ -1145,6 +1146,146 @@ def ask_question(request: AskRequest) -> AskResponse:
         for page in selected_pages_raw
     ]
     page_read_ms = int((time.perf_counter() - page_read_start) * 1000)
+    return (
+        selector,
+        selection_result,
+        selected_pages_raw,
+        selected_page_contents,
+        selector_total_ms,
+        page_read_ms,
+    )
+
+
+def _ask_page_summaries(
+    selected_pages: list[WikiPage], *, include_content: bool
+) -> list[PageSummary]:
+    return [
+        PageSummary(
+            page_name=page.name,
+            title=page.title,
+            summary=page.summary,
+            category=store.page_category(page.name),
+            source_tier=page.source_tier,
+            sources=page.sources,
+            related=page.related,
+            content=store.clean_content_for_model(page) if include_content else None,
+        )
+        for page in selected_pages
+    ]
+
+
+@app.post(
+    "/wiki/ask/select-pages",
+    response_model=AskSelectionResponse,
+    summary="Select pages for a FoodEx2 guidance question without answering it",
+    description=(
+        "Run only the /wiki/ask page selector with the ask catalog scope. This endpoint is "
+        "intended for selector evaluation and diagnostics; it never invokes the answerer "
+        "or graph expansion."
+    ),
+)
+def select_ask_pages(request: AskSelectionRequest) -> AskSelectionResponse:
+    request_started = time.perf_counter()
+    logger.info(
+        "ask_selection_request %s",
+        json.dumps(
+            {
+                "question": request.question,
+                "max_pages": request.max_pages,
+                "selector_model": request.selector_model,
+                "selector_reasoning_effort": request.selector_reasoning_effort,
+            },
+            ensure_ascii=False,
+        ),
+    )
+    (
+        selector,
+        selection_result,
+        selected_pages_raw,
+        _,
+        selector_total_ms,
+        page_read_ms,
+    ) = _run_ask_page_selection(request)
+    request_wall_time_ms = int((time.perf_counter() - request_started) * 1000)
+    response = AskSelectionResponse(
+        pages_used=selection_result.pages_used,
+        pages=_ask_page_summaries(
+            selected_pages_raw,
+            include_content=request.include_page_content,
+        ),
+        trace={
+            "index_used": True,
+            "max_pages": request.max_pages,
+            "selection_method": "service-owned llm page selector",
+            "retrieval": {
+                "model": selector.model,
+                "reasoning_effort": request.selector_reasoning_effort,
+                "tool_trace": selection_result.tool_trace,
+                "token_summary": selection_result.token_summary,
+                "timing_summary": selection_result.timing_summary,
+            },
+            "total": {
+                "request_wall_time_ms": request_wall_time_ms,
+                "total_llm_calls": int(selection_result.token_summary["calls"]),
+                "total_tracked_tokens": int(
+                    selection_result.token_summary["total_tracked_tokens"]
+                ),
+            },
+            "phase_timings_ms": {
+                "selector_total": selector_total_ms,
+                "page_read": page_read_ms,
+            },
+        },
+    )
+    logger.info(
+        "ask_selection_response %s",
+        json.dumps(
+            {
+                "question": request.question,
+                "pages_used": response.pages_used,
+                "total_trace": response.trace["total"],
+            },
+            ensure_ascii=False,
+        ),
+    )
+    return response
+
+
+@app.post(
+    "/wiki/ask",
+    response_model=AskResponse,
+    summary="Ask a FoodEx2 guidance question",
+    description=(
+        "Send a natural language FoodEx2 coding question. The service selects relevant wiki "
+        "pages, answers from those pages, and returns citations plus a trace."
+    ),
+)
+def ask_question(request: AskRequest) -> AskResponse:
+    request_started = time.perf_counter()
+    logger.info(
+        "ask_request %s",
+        json.dumps(
+            {
+                "question": request.question,
+                "max_pages": request.max_pages,
+                "use_graph_expansion": request.use_graph_expansion,
+                "selector_model": request.selector_model,
+                "answerer_model": request.answerer_model,
+                "selector_reasoning_effort": request.selector_reasoning_effort,
+                "answerer_reasoning_effort": request.answerer_reasoning_effort,
+            },
+            ensure_ascii=False,
+        ),
+    )
+
+    (
+        selector,
+        selection_result,
+        selected_pages_raw,
+        selected_page_contents,
+        selector_total_ms,
+        page_read_ms,
+    ) = _run_ask_page_selection(request)
 
     graph_expansion_start = time.perf_counter()
     expansion_blocks: list[dict[str, Any]] = []
@@ -1161,19 +1302,10 @@ def ask_question(request: AskRequest) -> AskResponse:
     answerer_input_pages = selected_page_contents + expansion_blocks
 
     expansion_content_by_page = {block["page_name"]: block["content"] for block in expansion_blocks}
-    pages: list[PageSummary] = [
-        PageSummary(
-            page_name=page.name,
-            title=page.title,
-            summary=page.summary,
-            category=store.page_category(page.name),
-            source_tier=page.source_tier,
-            sources=page.sources,
-            related=page.related,
-            content=store.clean_content_for_model(page) if request.include_page_content else None,
-        )
-        for page in selected_pages_raw
-    ]
+    pages = _ask_page_summaries(
+        selected_pages_raw,
+        include_content=request.include_page_content,
+    )
     for page_name in expanded_page_names:
         try:
             page = store.read_page(page_name)
@@ -1586,7 +1718,13 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
         selection_policy = load_selection_policy(store)
     except ValueError as exc:
         raise HTTPException(status_code=503, detail=f"selection policy unavailable: {exc}") from exc
-    skeleton = enforce_skeleton(selection_result.pages_used, selection_policy)
+    # Reserve one slot for RUNTIME_RULES.md, which is injected below. The
+    # skeleton then owns the remaining strict response-page budget.
+    skeleton = enforce_skeleton(
+        selection_result.pages_used,
+        selection_policy,
+        max_pages=request.max_pages - 1,
+    )
     for backfill in skeleton.backfilled:
         logger.info(
             "selector_miss %s",
@@ -1651,6 +1789,7 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
                 "policy_version": selection_policy.skeleton_version,
                 "backfilled": skeleton.backfilled,
                 "dropped": skeleton.dropped,
+                "trimmed": skeleton.trimmed,
                 "selector_covered_roles": skeleton.selector_covered_roles,
             },
             "token_summary": selection_result.token_summary,

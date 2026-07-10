@@ -38,8 +38,9 @@ score only the trusted subset; the committed baseline and phase1 evals use it.
 
 Conventions:
 
-- `index.md` and `RUNTIME_RULES.md` are excluded from scoring (always present by
-  construction) — do **not** label them.
+- `index.md` and `RUNTIME_RULES.md` are selector/control pages and are excluded
+  from scoring — do **not** label them. `RUNTIME_RULES.md` is always returned;
+  `index.md` may be trimmed from the response when the strict final page cap is full.
 - `must_not` entries support `fnmatch` globs (e.g. `maintenance-*`).
 - A selected page that appears in no tier is counted as `unlabeled` (a label gap to
   triage), not an automatic error.
@@ -129,3 +130,10 @@ a long multi-segment code string earns `code-string-format.md`. Never paste a pa
   case (overlap makes scores silently confusing).
 - Every labeled non-glob page must exist as a served page (`raw/efsa-guidance/*.md` or a
   root `*.md`).
+
+## Cost guardrails
+
+The runner makes one selector call per case and repeat. It refuses more than 3
+repeats unless `--allow-high-repeats` is supplied, and aborts before network traffic
+when `cases × repeats` exceeds `--max-estimated-calls` (default 200). Run with
+`--dry-run` to validate the call budget without making requests or writing a report.

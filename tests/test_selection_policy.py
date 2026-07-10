@@ -41,6 +41,7 @@ def test_covered_roles_are_not_backfilled():
     assert result.final_pages == pages
     assert result.backfilled == []
     assert result.dropped == []
+    assert result.trimmed == []
     assert result.selector_covered_roles == ["base_term", "facet", "validation"]
 
 
@@ -81,6 +82,34 @@ def test_drop_then_backfill_when_leak_was_only_coverage():
         "facet-coding-rules.md",
         "term-type-facet-constraints.md",
     ]
+
+
+def test_strict_page_budget_trims_optional_pages_but_preserves_required_roles():
+    result = enforce_skeleton(
+        [
+            "index.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "packaging-facets.md",
+            "term-type-facet-constraints.md",
+            "process-facets.md",
+        ],
+        POLICY,
+        max_pages=3,
+    )
+
+    assert result.final_pages == [
+        "base-term-selection.md",
+        "ingredient-facets.md",
+        "term-type-facet-constraints.md",
+    ]
+    assert result.trimmed == ["index.md", "process-facets.md", "packaging-facets.md"]
+    assert result.backfilled == []
+
+
+def test_strict_page_budget_rejects_impossible_required_role_floor():
+    with pytest.raises(ValueError, match="required selection skeleton"):
+        enforce_skeleton(["index.md"], POLICY, max_pages=2)
 
 
 def test_load_selection_policy_from_wiki():

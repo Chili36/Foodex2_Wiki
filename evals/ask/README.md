@@ -90,12 +90,19 @@ python scripts/selection_eval.py \
   --repeats 3
 ```
 
-`--endpoint ask` POSTs `/wiki/ask` instead of `/wiki/context-pack`, scores
-`pages_used` against the same three-tier labels, and skips the
-context-pack-only `skeleton_enforcement`/backfill metrics (the ask endpoint
-has no skeleton enforcement or backfill pass). Results land in
+`--endpoint ask` POSTs `/wiki/ask/select-pages` instead of `/wiki/context-pack`,
+scores `pages_used` against the same three-tier labels, records selector token
+usage, and skips the context-pack-only `skeleton_enforcement`/backfill metrics.
+The selector-only endpoint never invokes graph expansion or the answerer. Results land in
 `reports/ask-evals/<date>-<label>/results.json`.
 
 ## Scoring semantics: selector only
 
-All ask eval requests run with `use_graph_expansion: false` (set in the gold data AND forced by the runner's ask path): `/wiki/ask` otherwise merges graph-neighbor pages into `pages_used`, which would let a case pass because a neighbor was appended rather than because the selector picked the page. This eval guards the SELECTOR; graph expansion is a separate mechanism with no eval yet.
+The runner uses `/wiki/ask/select-pages`, so `pages_used` contains only selector
+picks. Graph expansion and answer synthesis are separate mechanisms and incur no
+calls during this eval.
+
+The runner refuses more than 3 repeats unless `--allow-high-repeats` is supplied,
+and aborts before network traffic when `cases × repeats` exceeds
+`--max-estimated-calls` (default 200). Use `--dry-run` to inspect the budget without
+making calls or writing a report.

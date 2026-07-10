@@ -313,12 +313,16 @@ WIKI_ANSWERER_MODEL=claude-3-7-sonnet-latest
 WIKI_SOLVER_MODEL=claude-3-7-sonnet-latest
 WIKI_LINT_MODEL=claude-3-7-sonnet-latest
 WIKI_INTAKE_MODEL=claude-3-7-sonnet-latest
-WIKI_LINT_THINKING=1
-WIKI_INTAKE_THINKING=1
+# WIKI_LINT_THINKING=1
+# WIKI_INTAKE_THINKING=1
 ```
 
 If the endpoint-specific variables are unset, the service falls back to `WIKI_LIBRARIAN_MODEL`.
-`WIKI_LINT_THINKING` and `WIKI_INTAKE_THINKING` affect only offline maintenance commands; they do not enable thinking for `/wiki/ask`, `/wiki/context-pack`, or `/wiki/ask-rag`.
+Adaptive thinking is off by default for lint and source intake because thinking tokens are
+billed output. Set `WIKI_LINT_THINKING=1`, `WIKI_INTAKE_THINKING=1`, or pass
+`--thinking` only for a review that needs deeper reasoning. These settings affect only
+offline maintenance commands; they do not enable thinking for `/wiki/ask`,
+`/wiki/context-pack`, or `/wiki/ask-rag`.
 
 Run it locally with:
 
@@ -371,6 +375,7 @@ Main endpoints:
 - `GET /wiki/graph/compact`: compact graph payload intended for browser visualization
 - `GET /wiki/pages/{page_name}/backlinks`: generated incoming-link view for one page
 - `POST /wiki/ask`: returns a compact wiki-grounded answer, citations, selected pages, optional graph-expanded summaries, and trace metadata
+- `POST /wiki/ask/select-pages`: runs the ask-scope selector only, without graph expansion or an answerer; intended for evaluation and diagnostics
 - `POST /wiki/ask-rag`: returns the same compact answer shape using Qdrant retrieval over either curated wiki markdown or raw source documents
 - `POST /wiki/context-pack`: the main page-evidence endpoint; returns selected wiki pages plus trace metadata so a caller can build its own prompt
 - `POST /wiki/policy-pack`: runs the internal wiki librarian, returns selected pages plus a synthesized policy pack for a coding case
@@ -379,6 +384,7 @@ Main endpoints:
 Endpoint-specific request guidance:
 
 - `POST /wiki/ask`: send a natural-language question; use this for compact "what should I think about?" guidance rather than final code authority
+- `POST /wiki/ask/select-pages`: use only when measuring or diagnosing ask-scope page selection
 - `POST /wiki/ask-rag`: send the same kind of question with `retrieval_mode` set to `wiki` or `source`; use this for retrieval A/B tests, not as a new source of truth
 - `POST /wiki/context-pack`: prefer `candidate_hints` with only `code`, `name`, and `termType`
 - `POST /wiki/policy-pack`: prefer `candidates_trimmed` with `code`, `name`, `termType`, optional `coverageText`, and optional `implicitFacets`
@@ -388,6 +394,12 @@ Legacy compatibility:
 
 - `context-pack` and `policy-pack` still accept a full `candidates` list, but the service reduces that payload internally before selection or LLM retrieval
 - the canonical machine-readable contract is published at `GET /openapi.json`
+
+For `/wiki/context-pack`, `max_pages` is a strict final response cap. It includes
+`RUNTIME_RULES.md` and any deterministic skeleton backfills; required base-term,
+facet, and validation coverage takes priority over optional selector picks when the
+service must trim to the cap. The default is 7; callers may opt into a larger pack
+for difficult cases.
 
 Example `POST /wiki/ask` body:
 
@@ -659,7 +671,9 @@ python -m wiki_api.source_intake \
   --page facet-coding-rules.md
 ```
 
-The source-intake and lint commands use Anthropic adaptive thinking by default because they are offline review tasks. Add `--no-thinking` to either command for a cheaper comparison run.
+The source-intake and lint commands run without adaptive thinking by default. Add
+`--thinking` only when a difficult offline review needs deeper reasoning and the
+additional billed output is justified.
 
 ## Scope Notes
 

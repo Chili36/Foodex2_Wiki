@@ -13,6 +13,7 @@ from scripts.selection_eval import (
     effective_max_pages,
     median_summary,
     run_pass,
+    validate_eval_budget,
 )
 
 CASE = {"id": "T-0001", "reviewed": True, "labels": {"must_have": ["a.md"], "acceptable": [], "must_not": []}}
@@ -25,6 +26,7 @@ def test_build_context_pack_row_extracts_pack_chars_and_enforcement():
             "skeleton_enforcement": {
                 "backfilled": [{"page": "b.md"}],
                 "dropped": [{"page": "c.md"}],
+                "trimmed": ["index.md"],
             },
             "token_summary": {"total_tracked_tokens": 42},
         },
@@ -33,6 +35,7 @@ def test_build_context_pack_row_extracts_pack_chars_and_enforcement():
     assert row["pack_chars"] == 8
     assert row["backfilled"] == [{"page": "b.md"}]
     assert row["dropped"] == [{"page": "c.md"}]
+    assert row["trimmed"] == ["index.md"]
     assert row["selector_tokens"] == {"total_tracked_tokens": 42}
 
 
@@ -42,18 +45,25 @@ def test_build_context_pack_row_requires_skeleton_enforcement():
         _build_context_pack_row(CASE, response, ["a.md"])
 
 
-def test_build_ask_row_returns_no_context_pack_only_fields():
+def test_build_ask_row_records_selector_usage_without_context_pack_fields():
     response = {
         "answer": "some answer",
         "citations": [],
         "pages_used": ["a.md"],
-        "trace": {"index_used": True, "retrieval": {}, "answerer": {}},
+        "trace": {
+            "index_used": True,
+            "retrieval": {"token_summary": {"total_tracked_tokens": 42}},
+        },
     }
     row = _build_ask_row(CASE, response, ["a.md"])
-    assert row == {}
+    assert row == {"selector_tokens": {"total_tracked_tokens": 42}}
     assert "pack_chars" not in row
     assert "backfilled" not in row
-    assert "selector_tokens" not in row
+
+
+def test_build_ask_row_requires_selector_usage_trace():
+    with pytest.raises(RuntimeError, match="retrieval token_summary"):
+        _build_ask_row(CASE, {"trace": {}}, ["a.md"])
 
 
 class _FakeResponse:
@@ -79,7 +89,10 @@ def test_run_pass_ask_mode_skips_context_pack_only_metrics(monkeypatch):
                 "answer": "the answer",
                 "citations": [],
                 "pages_used": ["a.md"],
-                "trace": {"index_used": True},
+                "trace": {
+                    "index_used": True,
+                    "retrieval": {"token_summary": {"total_tracked_tokens": 42}},
+                },
             }
         )
 
@@ -93,7 +106,7 @@ def test_run_pass_ask_mode_skips_context_pack_only_metrics(monkeypatch):
     assert "pack_chars" not in rows[0]
     assert "mean_pack_chars" not in summary
     assert "backfill_case_rate" not in summary
-    assert "mean_selector_tokens" not in summary
+    assert summary["mean_selector_tokens"] == 42
     # Core recall/precision metrics are still present (shared aggregate()).
     assert "mean_must_have_recall" in summary
 
@@ -147,13 +160,14 @@ def test_effective_max_pages_handles_missing_values():
     assert effective_max_pages(cases, None) == {"min": None, "max": None}
 
 
-def test_call_ask_forces_graph_expansion_off(monkeypatch):
+def test_call_ask_uses_selector_only_endpoint_and_strips_answerer_fields(monkeypatch):
     captured = {}
 
     def fake_urlopen(req, timeout):
         import io
         import json as _json
         captured["body"] = _json.loads(req.data.decode("utf-8"))
+        captured["url"] = req.full_url
 
         class _Resp(io.BytesIO):
             def __enter__(self):
@@ -162,10 +176,38 @@ def test_call_ask_forces_graph_expansion_off(monkeypatch):
             def __exit__(self, *args):
                 return False
 
-        return _Resp(b'{"pages_used": [], "answer": "", "citations": []}')
+        return _Resp(b'{"pages_used": [], "trace": {}}')
 
     monkeypatch.setattr("urllib.request.urlopen", fake_urlopen)
     from scripts.selection_eval import call_ask
 
-    call_ask("http://x", {"question": "q", "use_graph_expansion": True})
-    assert captured["body"]["use_graph_expansion"] is False
+    call_ask(
+        "http://x",
+        {
+            "question": "q",
+            "use_graph_expansion": True,
+            "answerer_model": "claude-sonnet-4-6",
+        },
+    )
+    assert captured["url"] == "http://x/wiki/ask/select-pages"
+    assert "use_graph_expansion" not in captured["body"]
+    assert "answerer_model" not in captured["body"]
+
+
+def test_eval_budget_rejects_unacknowledged_high_repeats():
+    with pytest.raises(ValueError, match="allow-high-repeats"):
+        validate_eval_budget(case_count=39, repeats=5)
+
+
+def test_eval_budget_rejects_call_count_above_cap():
+    with pytest.raises(ValueError, match="estimated 240 LLM calls"):
+        validate_eval_budget(case_count=80, repeats=3, max_estimated_calls=200)
+
+
+def test_eval_budget_accepts_explicit_high_repeat_run_within_cap():
+    assert validate_eval_budget(
+        case_count=39,
+        repeats=5,
+        max_estimated_calls=200,
+        allow_high_repeats=True,
+    ) == 195

@@ -38,6 +38,7 @@ class SkeletonResult:
     final_pages: list[str]
     backfilled: list[dict[str, str]]
     dropped: list[str]
+    trimmed: list[str]
     selector_covered_roles: list[str]
 
 
@@ -110,13 +111,26 @@ def load_selector_guidance(store: WikiStore) -> str:
     return guidance
 
 
-def enforce_skeleton(pages_used: list[str], policy: SelectionPolicy) -> SkeletonResult:
+def enforce_skeleton(
+    pages_used: list[str],
+    policy: SelectionPolicy,
+    *,
+    max_pages: int | None = None,
+) -> SkeletonResult:
+    """Apply structural coverage and, optionally, a strict final-page budget.
+
+    ``max_pages`` applies to the pages returned by this function. The context-pack
+    endpoint reserves one additional slot for ``RUNTIME_RULES.md`` before calling
+    this function, so its public ``max_pages`` field remains a true response cap.
+    Required role coverage wins over optional selector picks when trimming is
+    necessary.
+    """
     dropped = [
         page
         for page in pages_used
         if any(fnmatch(page, pattern) for pattern in policy.drop_pages)
     ]
-    kept = [page for page in pages_used if page not in dropped]
+    kept = list(dict.fromkeys(page for page in pages_used if page not in dropped))
     backfilled: list[dict[str, str]] = []
     covered: list[str] = []
     for role in policy.required_roles:
@@ -125,9 +139,33 @@ def enforce_skeleton(pages_used: list[str], policy: SelectionPolicy) -> Skeleton
         else:
             kept.append(role.default)
             backfilled.append({"role": role.name, "page": role.default})
+
+    trimmed: list[str] = []
+    if max_pages is not None:
+        if max_pages < len(policy.required_roles):
+            raise ValueError(
+                "max_pages cannot preserve the required selection skeleton: "
+                f"need at least {len(policy.required_roles)}, got {max_pages}"
+            )
+
+        protected: set[str] = set()
+        for role in policy.required_roles:
+            protected.add(next(page for page in kept if page in role.members))
+
+        optional = [page for page in kept if page not in protected]
+        trim_count = max(len(kept) - max_pages, 0)
+        trim_order = [
+            *(["index.md"] if "index.md" in optional else []),
+            *reversed([page for page in optional if page != "index.md"]),
+        ]
+        trimmed = trim_order[:trim_count]
+        trimmed_set = set(trimmed)
+        kept = [page for page in kept if page not in trimmed_set]
+
     return SkeletonResult(
         final_pages=kept,
         backfilled=backfilled,
         dropped=dropped,
+        trimmed=trimmed,
         selector_covered_roles=covered,
     )

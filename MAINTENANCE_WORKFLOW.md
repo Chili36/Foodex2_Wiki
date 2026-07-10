@@ -142,7 +142,9 @@ python -m wiki_api.llm_lint --all-pages --max-page-chars 6000
 
 Reports are written under `reports/` by default. They are review artifacts, not source-of-truth wiki pages.
 
-LLM lint is an offline semantic review task, so it uses Anthropic adaptive thinking by default when run against Claude models. Disable it with `--no-thinking` for a cheaper comparison run, or set `WIKI_LINT_THINKING=0`.
+LLM lint is an offline semantic review task, but adaptive thinking is off by default
+because thinking tokens are billed output. Enable it for a difficult review with
+`--thinking` or `WIKI_LINT_THINKING=1`; routine passes use the smaller output ceiling.
 
 Use an LLM to read:
 
@@ -188,7 +190,10 @@ python -m wiki_api.source_intake \
   --page facet-coding-rules.md
 ```
 
-The source-intake runner writes a maintainer report under `reports/source-intake/` and uses `WIKI_INTAKE_MODEL`, falling back to `WIKI_LINT_MODEL` and then `WIKI_LIBRARIAN_MODEL`. It uses Anthropic adaptive thinking by default because the task is source evaluation, not runtime retrieval. Disable with `--no-thinking` or `WIKI_INTAKE_THINKING=0`.
+The source-intake runner writes a maintainer report under `reports/source-intake/` and
+uses `WIKI_INTAKE_MODEL`, falling back to `WIKI_LINT_MODEL` and then
+`WIKI_LIBRARIAN_MODEL`. Adaptive thinking is off by default; enable it only for a
+difficult source-authority review with `--thinking` or `WIKI_INTAKE_THINKING=1`.
 
 ## Do Not
 
