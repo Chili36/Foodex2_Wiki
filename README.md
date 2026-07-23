@@ -276,7 +276,7 @@ Set at least:
 
 ```bash
 ANTHROPIC_API_KEY=...
-WIKI_LIBRARIAN_MODEL=claude-3-7-sonnet-latest
+WIKI_LIBRARIAN_MODEL=claude-sonnet-4-6
 ```
 
 Add these only when testing `/wiki/ask` with hosted non-Anthropic per-request model overrides:
@@ -307,12 +307,12 @@ calling for those endpoints. For per-request tests, `/wiki/ask` also accepts
 Optional overrides:
 
 ```bash
-WIKI_CONTEXT_MODEL=claude-3-7-sonnet-latest
-WIKI_POLICY_MODEL=claude-3-7-sonnet-latest
-WIKI_ANSWERER_MODEL=claude-3-7-sonnet-latest
-WIKI_SOLVER_MODEL=claude-3-7-sonnet-latest
-WIKI_LINT_MODEL=claude-3-7-sonnet-latest
-WIKI_INTAKE_MODEL=claude-3-7-sonnet-latest
+WIKI_CONTEXT_MODEL=claude-sonnet-4-6
+WIKI_POLICY_MODEL=claude-sonnet-4-6
+WIKI_ANSWERER_MODEL=claude-sonnet-4-6
+WIKI_SOLVER_MODEL=claude-sonnet-4-6
+WIKI_LINT_MODEL=claude-sonnet-4-6
+WIKI_INTAKE_MODEL=claude-sonnet-4-6
 # WIKI_LINT_THINKING=1
 # WIKI_INTAKE_THINKING=1
 ```
@@ -409,8 +409,8 @@ Example `POST /wiki/ask` body:
   "max_pages": 5,
   "include_page_content": false,
   "use_graph_expansion": true,
-  "selector_model": "claude-3-7-sonnet-latest",
-  "answerer_model": "claude-3-7-sonnet-latest"
+  "selector_model": "claude-sonnet-4-6",
+  "answerer_model": "claude-sonnet-4-6"
 }
 ```
 
@@ -436,7 +436,7 @@ Example `POST /wiki/ask-rag` body:
   "retrieval_mode": "wiki",
   "limit": 7,
   "include_page_content": false,
-  "answerer_model": "claude-3-7-sonnet-latest"
+  "answerer_model": "claude-sonnet-4-6"
 }
 ```
 

@@ -75,7 +75,7 @@ def main() -> None:
     parser.add_argument("--model", default=None, help="Override; defaults to repo librarian model resolution.")
     args = parser.parse_args()
 
-    model = args.model or _resolve_model("WIKI_LIBRARIAN_MODEL", default="claude-3-7-sonnet-latest")
+    model = args.model or _resolve_model("WIKI_LIBRARIAN_MODEL", default="claude-sonnet-4-6")
     client = Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
     store = WikiStore(str(REPO_ROOT))
     rubric = (REPO_ROOT / "evals/selection/README.md").read_text()

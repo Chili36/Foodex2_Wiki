@@ -7,6 +7,7 @@ from pathlib import Path
 
 import wiki_api.librarian as librarian_module
 from wiki_api.librarian import (
+    AnthropicFoodEx2Answerer,
     AnthropicFoodEx2Solver,
     AnthropicWikiLibrarian,
     AnthropicWikiPageSelector,
@@ -622,6 +623,22 @@ def test_lmstudio_openai_compatible_client_maps_tool_calls(monkeypatch) -> None:
     assert payload["tools"][0]["function"]["name"] == "read_wiki_pages"
     assert response["stop_reason"] == "tool_use"
     assert response["content"][0]["input"] == {"page_names": ["base-term-selection.md"]}
+
+
+def test_runtime_components_default_to_current_sonnet(monkeypatch) -> None:
+    for name in (
+        "WIKI_CONTEXT_MODEL",
+        "WIKI_ANSWERER_MODEL",
+        "WIKI_LIBRARIAN_MODEL",
+    ):
+        monkeypatch.delenv(name, raising=False)
+    client = FakeAnthropicClient([])
+
+    selector = AnthropicWikiPageSelector(store=_store(), client=client)
+    answerer = AnthropicFoodEx2Answerer(client=client)
+
+    assert selector.model == "claude-sonnet-4-6"
+    assert answerer.model == "claude-sonnet-4-6"
 
 
 def test_store_extracts_guiding_principles_from_index() -> None:

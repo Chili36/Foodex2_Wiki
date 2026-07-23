@@ -914,7 +914,7 @@ class AnthropicWikiLibrarian:
         self.model = model or _resolve_model(
             "WIKI_POLICY_MODEL",
             "WIKI_LIBRARIAN_MODEL",
-            default="claude-3-7-sonnet-latest",
+            default="claude-sonnet-4-6",
         )
         self.client = client or build_messages_client(self.model)
         self.max_pages = max_pages
@@ -1051,7 +1051,7 @@ class AnthropicWikiPageSelector:
         self.model = model or _resolve_model(
             "WIKI_CONTEXT_MODEL",
             "WIKI_LIBRARIAN_MODEL",
-            default="claude-3-7-sonnet-latest",
+            default="claude-sonnet-4-6",
         )
         self.client = client or build_messages_client(self.model)
         self.max_pages = max_pages
@@ -1213,7 +1213,7 @@ class AnthropicFoodEx2Solver:
         self.model = model or _resolve_model(
             "WIKI_SOLVER_MODEL",
             "WIKI_LIBRARIAN_MODEL",
-            default="claude-3-7-sonnet-latest",
+            default="claude-sonnet-4-6",
         )
         self.client = client or build_messages_client(self.model)
         self.max_tokens = max_tokens
@@ -1278,7 +1278,7 @@ class AnthropicFoodEx2Answerer:
         self.model = model or _resolve_model(
             "WIKI_ANSWERER_MODEL",
             "WIKI_LIBRARIAN_MODEL",
-            default="claude-3-7-sonnet-latest",
+            default="claude-sonnet-4-6",
         )
         self.client = client or build_messages_client(self.model)
         self.max_tokens = max_tokens
