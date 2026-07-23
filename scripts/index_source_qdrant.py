@@ -107,11 +107,17 @@ def _should_ocr_pdf(pages: list[tuple[int, str]]) -> bool:
 
 def _pdf_pages(path: Path) -> list[tuple[int, str]]:
     pages = _pdf_text_layer_pages(path)
+    can_ocr = bool(shutil.which("pdftoppm") and shutil.which("tesseract"))
+    if not pages:
+        if not can_ocr:
+            return pages
+        try:
+            return _ocr_pdf_pages(path)
+        except (OSError, subprocess.CalledProcessError):
+            return pages
     if (
-        pages
-        and _should_ocr_pdf(pages)
-        and shutil.which("pdftoppm")
-        and shutil.which("tesseract")
+        _should_ocr_pdf(pages)
+        and can_ocr
     ):
         try:
             ocr_pages = _ocr_pdf_pages(path)

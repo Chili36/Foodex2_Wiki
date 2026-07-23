@@ -2,9 +2,12 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
+from scripts import index_source_qdrant as source_index
+from wiki_api import source_intake as source_intake_module
 from wiki_api.llm_lint import (
     DEFAULT_LINT_MAX_TOKENS,
     DEFAULT_LINT_MAX_TOKENS_WITH_THINKING,
@@ -192,6 +195,127 @@ def test_source_intake_payload_includes_source_and_existing_pages() -> None:
     assert "# FoodEx2 Wiki Ingest Workflow" in payload["ingest_workflow"]
 
 
+def test_source_intake_flags_sparse_pdf_text_layer(monkeypatch, tmp_path: Path) -> None:
+    pdf_path = tmp_path / "sparse.pdf"
+    pdf_path.write_bytes(b"%PDF-1.7 sparse test")
+
+    def fake_run(*args: object, **kwargs: object) -> SimpleNamespace:
+        return SimpleNamespace(stdout="\f".join(["title page only"] * 25))
+
+    monkeypatch.setattr(source_intake_module.subprocess, "run", fake_run)
+
+    payload = build_source_intake_payload(
+        root=REPO_ROOT,
+        source_file=pdf_path,
+        source_tier="expert_guidance",
+        max_source_chars=1000,
+    )
+
+    assert payload["source"]["extraction_warnings"]
+    assert "sparse" in payload["source"]["extraction_note"]
+    assert "--source-text-file" in payload["source"]["source_text"]
+
+
+def test_source_intake_flags_mixed_text_and_image_only_pdf_pages(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    pdf_path = tmp_path / "mixed.pdf"
+    pdf_path.write_bytes(b"%PDF-1.7 mixed text and scanned pages")
+
+    def fake_run(*args: object, **kwargs: object) -> SimpleNamespace:
+        pages = ["A" * 3000, "", "B" * 3000, ""]
+        return SimpleNamespace(stdout="\f".join(pages) + "\f")
+
+    monkeypatch.setattr(source_intake_module.subprocess, "run", fake_run)
+
+    payload = build_source_intake_payload(
+        root=REPO_ROOT,
+        source_file=pdf_path,
+        source_tier="expert_guidance",
+        max_source_chars=1000,
+    )
+
+    assert payload["source"]["extraction_warnings"]
+    assert "sparse" in payload["source"]["extraction_note"]
+    assert "--source-text-file" in payload["source"]["source_text"]
+
+
+def test_source_intake_accepts_complete_short_pdf_with_large_file_size(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    pdf_path = tmp_path / "complete.pdf"
+    pdf_path.write_bytes(b"%PDF-1.7" + b"x" * 250_000)
+
+    def fake_run(*args: object, **kwargs: object) -> SimpleNamespace:
+        pages = ["A" * 900] * 5
+        return SimpleNamespace(stdout="\f".join(pages) + "\f")
+
+    monkeypatch.setattr(source_intake_module.subprocess, "run", fake_run)
+
+    payload = build_source_intake_payload(
+        root=REPO_ROOT,
+        source_file=pdf_path,
+        source_tier="expert_guidance",
+        max_source_chars=5000,
+    )
+
+    assert payload["source"]["extraction_warnings"] == []
+    assert payload["source"]["extraction_note"] == (
+        "source text extracted directly from PDF text layer"
+    )
+
+
+def test_source_intake_flags_short_pdf_with_only_page_artifacts(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    pdf_path = tmp_path / "artifact-only.pdf"
+    pdf_path.write_bytes(b"%PDF-1.7 short artifact-only test")
+
+    def fake_run(*args: object, **kwargs: object) -> SimpleNamespace:
+        pages = ["Confidential"] * 10
+        return SimpleNamespace(stdout="\f".join(pages) + "\f")
+
+    monkeypatch.setattr(source_intake_module.subprocess, "run", fake_run)
+
+    payload = build_source_intake_payload(
+        root=REPO_ROOT,
+        source_file=pdf_path,
+        source_tier="expert_guidance",
+        max_source_chars=1000,
+    )
+
+    assert payload["source"]["extraction_warnings"]
+    assert "sparse" in payload["source"]["extraction_note"]
+
+
+def test_source_intake_rendered_report_includes_extraction_warnings() -> None:
+    report = "## Intake Verdict\n\nDo not ingest until OCR is available."
+    client = FakeAnthropicClient(_response(text=report))
+    payload = build_source_intake_payload(
+        root=REPO_ROOT,
+        source_file="raw/efsa-guidance/base-term-selection.md",
+    )
+    payload["source"]["extraction_warnings"] = [
+        "[PDF text extraction appears sparse or incomplete.]"
+    ]
+
+    result = AnthropicSourceIntakeReviewer(
+        client=client,
+        model="fake-intake-model",
+    ).run(payload)
+    rendered = source_intake_module._render_report(result)
+
+    assert result.extraction_warnings == (
+        "[PDF text extraction appears sparse or incomplete.]",
+    )
+    assert "## Extraction Warnings" in rendered
+    assert "- [PDF text extraction appears sparse or incomplete.]" in rendered
+    assert report in rendered
+
+
 def test_source_intake_reviewer_uses_adaptive_thinking() -> None:
     report = "## Intake Verdict\n\nPatch existing pages."
     client = FakeAnthropicClient(_response(text=report, input_tokens=500, output_tokens=100))
@@ -272,3 +396,31 @@ def test_source_intake_fails_loudly_when_thinking_consumes_whole_budget() -> Non
     message = str(excinfo.value)
     assert "max_tokens" in message
     assert "--no-thinking" in message
+
+
+
+def test_source_indexer_attempts_ocr_when_pdf_text_layer_empty(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    pdf_path = tmp_path / "scanned.pdf"
+    pdf_path.write_bytes(b"%PDF-1.7 scanned")
+
+    monkeypatch.setattr(source_index, "_pdf_text_layer_pages", lambda path: [])
+    monkeypatch.setattr(source_index.shutil, "which", lambda name: f"/usr/bin/{name}")
+    monkeypatch.setattr(source_index, "_ocr_pdf_pages", lambda path: [(1, "OCR page text")])
+
+    assert source_index._pdf_pages(pdf_path) == [(1, "OCR page text")]
+
+
+def test_source_indexer_returns_empty_pdf_pages_when_ocr_unavailable(
+    monkeypatch,
+    tmp_path: Path,
+) -> None:
+    pdf_path = tmp_path / "scanned.pdf"
+    pdf_path.write_bytes(b"%PDF-1.7 scanned")
+
+    monkeypatch.setattr(source_index, "_pdf_text_layer_pages", lambda path: [])
+    monkeypatch.setattr(source_index.shutil, "which", lambda name: None)
+
+    assert source_index._pdf_pages(pdf_path) == []

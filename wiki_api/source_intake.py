@@ -66,6 +66,7 @@ class SourceIntakeResult:
     source_file: str
     token_summary: dict[str, Any]
     timing_summary: dict[str, Any]
+    extraction_warnings: tuple[str, ...] = ()
     output_path: Path | None = None
 
 
@@ -80,7 +81,32 @@ def _slug(value: str) -> str:
     return normalized or "source-intake"
 
 
-def _read_text_source(path: Path, *, max_chars: int) -> str:
+def _pdf_text_appears_sparse(text: str) -> bool:
+    raw_pages = text.split("\f")
+    if text.endswith("\f"):
+        # pdftotext terminates the final page with a form feed. Remove only the
+        # resulting sentinel so empty segments for actual image-only pages remain.
+        raw_pages.pop()
+    pages = [_clean_text(raw_page) for raw_page in raw_pages]
+    if not pages or not any(pages):
+        return True
+    total_chars = sum(len(page) for page in pages)
+    empty_pages = sum(1 for page in pages if not page)
+    if empty_pages / len(pages) > 0.25:
+        return True
+    average_chars = total_chars / len(pages)
+    sparse_pages = sum(1 for page in pages if len(page) < 250)
+    return average_chars < 700 and sparse_pages / len(pages) > 0.25
+
+
+def _clean_text(text: str) -> str:
+    text = text.replace("\x00", " ")
+    text = re.sub(r"[ \t]+", " ", text)
+    text = re.sub(r"\n{4,}", "\n\n\n", text)
+    return text.strip()
+
+
+def _read_text_source(path: Path, *, max_chars: int) -> tuple[str, str, list[str]]:
     if path.suffix.lower() == ".pdf":
         try:
             completed = subprocess.run(
@@ -91,22 +117,47 @@ def _read_text_source(path: Path, *, max_chars: int) -> str:
                 timeout=120,
             )
         except (FileNotFoundError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
-            return (
+            warning = (
                 "[PDF text extraction unavailable. Provide --source-text-file with OCR or "
                 "curated extraction for deeper intake analysis.]"
             )
-        text = completed.stdout.strip()
-        if not text:
-            return (
+            return warning, "PDF text extraction unavailable", [warning]
+        text = completed.stdout.strip(" \t\r\n")
+        if not _clean_text(text.replace("\f", "\n")):
+            warning = (
                 "[PDF text extraction returned no text. Provide --source-text-file with OCR or "
                 "curated extraction for deeper intake analysis.]"
             )
-        return _truncate(text, max_chars)
+            return warning, "PDF text extraction returned no text", [warning]
+        if _pdf_text_appears_sparse(text):
+            warning = (
+                "[PDF text extraction appears sparse or incomplete. Provide --source-text-file "
+                "with OCR or curated extraction before relying on this intake report.]"
+            )
+            sparse_text = _truncate(text, max_chars)
+            return (
+                f"{warning}\n\nExtracted sparse text:\n{sparse_text}",
+                "PDF text extraction appears sparse; source-text-file recommended",
+                [warning],
+            )
+        return (
+            _truncate(text, max_chars),
+            "source text extracted directly from PDF text layer",
+            [],
+        )
 
     try:
-        return _truncate(path.read_text(encoding="utf-8"), max_chars)
+        return (
+            _truncate(path.read_text(encoding="utf-8"), max_chars),
+            "source text loaded directly from source file",
+            [],
+        )
     except UnicodeDecodeError:
-        return _truncate(path.read_text(encoding="latin-1"), max_chars)
+        return (
+            _truncate(path.read_text(encoding="latin-1"), max_chars),
+            "source text loaded directly from source file with latin-1 fallback",
+            [],
+        )
 
 
 def _resolve_pages(store: WikiStore, page_names: list[str]) -> list[str]:
@@ -146,9 +197,12 @@ def build_source_intake_payload(
             text_path = root_path / text_path
         source_text = _truncate(text_path.read_text(encoding="utf-8"), max_source_chars)
         extraction_note = f"source text loaded from {text_path}"
+        extraction_warnings: list[str] = []
     else:
-        source_text = _read_text_source(source_path, max_chars=max_source_chars)
-        extraction_note = "source text extracted directly from source file"
+        source_text, extraction_note, extraction_warnings = _read_text_source(
+            source_path,
+            max_chars=max_source_chars,
+        )
 
     selected_pages = _resolve_pages(store, page_names or [])
     return {
@@ -163,6 +217,7 @@ def build_source_intake_payload(
             "suffix": source_path.suffix.lower(),
             "source_tier": source_tier,
             "extraction_note": extraction_note,
+            "extraction_warnings": extraction_warnings,
             "source_text": source_text,
         },
         "doctor_report": run_doctor(root_path).as_dict(),
@@ -253,6 +308,11 @@ class AnthropicSourceIntakeReviewer:
                 **_aggregate_timing(timing),
                 "source_intake_wall_time_ms": int((time.perf_counter() - started) * 1000),
             },
+            extraction_warnings=tuple(
+                str(warning)
+                for warning in payload.get("source", {}).get("extraction_warnings", [])
+                if str(warning).strip()
+            ),
         )
 
     def _empty_report_message(self, stop_reason: Any) -> str:
@@ -288,7 +348,15 @@ def _render_report(result: SourceIntakeResult) -> str:
         "---",
         "",
     ]
-    return "\n".join(metadata) + result.report.strip() + "\n"
+    warnings = []
+    if result.extraction_warnings:
+        warnings = [
+            "## Extraction Warnings",
+            "",
+            *(f"- {warning}" for warning in result.extraction_warnings),
+            "",
+        ]
+    return "\n".join([*metadata, *warnings]) + result.report.strip() + "\n"
 
 
 def main(argv: list[str] | None = None) -> int:

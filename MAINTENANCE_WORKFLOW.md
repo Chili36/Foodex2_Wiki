@@ -194,6 +194,7 @@ The source-intake runner writes a maintainer report under `reports/source-intake
 uses `WIKI_INTAKE_MODEL`, falling back to `WIKI_LINT_MODEL` and then
 `WIKI_LIBRARIAN_MODEL`. Adaptive thinking is off by default; enable it only for a
 difficult source-authority review with `--thinking` or `WIKI_INTAKE_THINKING=1`.
+If a PDF has a sparse text layer, the runner warns instead of treating title-page scraps as complete source evidence; supply `--source-text-file` with OCR or curated extracted text.
 
 ## Do Not
 

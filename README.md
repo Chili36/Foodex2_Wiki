@@ -674,6 +674,7 @@ python -m wiki_api.source_intake \
 The source-intake and lint commands run without adaptive thinking by default. Add
 `--thinking` only when a difficult offline review needs deeper reasoning and the
 additional billed output is justified.
+If direct PDF extraction is sparse, source intake warns and should be rerun with `--source-text-file` containing OCR or curated extracted text.
 
 ## Scope Notes
 
