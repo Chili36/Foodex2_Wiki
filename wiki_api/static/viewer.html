@@ -337,17 +337,40 @@ const preferredOrder = [
   "domain-specific-validation.md", "maintenance-history.md"
 ];
 
-let pageCache = {};
 let pageTitles = {};
 let navPages = [];
 let findTimer = null;
 let activeFindQuery = "";
+let latestPageRequestId = 0;
+
+function redirectFileViewer() {
+  if (window.location.protocol !== "file:") return false;
+
+  const target = "http://127.0.0.1:8010/wiki/view" + window.location.hash;
+  const contentEl = document.getElementById("content");
+  contentEl.textContent = "";
+
+  const message = document.createElement("p");
+  message.textContent = "This viewer must be opened through the wiki service. Redirecting to ";
+  const link = document.createElement("a");
+  link.href = target;
+  link.textContent = target;
+  message.appendChild(link);
+  contentEl.appendChild(message);
+
+  window.setTimeout(function() {
+    window.location.replace(target);
+  }, 100);
+  return true;
+}
 
 function sanitize(html) {
   return DOMPurify.sanitize(html, { ADD_ATTR: ['onclick'] });
 }
 
 async function init() {
+  if (redirectFileViewer()) return;
+
   try {
     const res = await fetch("/wiki/pages");
     const data = await res.json();
@@ -445,6 +468,12 @@ function clearFindResults() {
   document.getElementById("find-results").textContent = "";
 }
 
+function pageContentUrl(pageName) {
+  const url = new URL("/wiki/pages/" + encodeURIComponent(pageName), window.location.origin);
+  url.searchParams.set("_", Date.now().toString());
+  return url.href;
+}
+
 async function runFind() {
   const input = document.getElementById("find-input");
   const query = input.value.trim();
@@ -522,18 +551,18 @@ function renderFindResults(data) {
 }
 
 async function loadPage(pageName) {
-  location.hash = pageName;
+  if (location.hash.replace("#", "") !== pageName) {
+    location.hash = pageName;
+    return;
+  }
+
+  const requestId = ++latestPageRequestId;
   document.querySelectorAll("nav a").forEach(function(a) {
     a.classList.toggle("active", a.dataset.page === pageName);
   });
 
   const contentEl = document.getElementById("content");
   const metaEl = document.getElementById("meta");
-
-  if (pageCache[pageName]) {
-    renderPage(pageCache[pageName]);
-    return;
-  }
 
   contentEl.textContent = "";
   const loadingDiv = document.createElement("div");
@@ -543,12 +572,14 @@ async function loadPage(pageName) {
   metaEl.style.display = "none";
 
   try {
-    const res = await fetch("/wiki/pages/" + encodeURIComponent(pageName));
+    const pageUrl = pageContentUrl(pageName);
+    const res = await fetch(pageUrl);
     if (!res.ok) throw new Error(res.statusText);
     const data = await res.json();
-    pageCache[pageName] = data;
+    if (requestId !== latestPageRequestId || location.hash.replace("#", "") !== pageName) return;
     renderPage(data);
   } catch(e) {
+    if (requestId !== latestPageRequestId || location.hash.replace("#", "") !== pageName) return;
     contentEl.textContent = "Failed to load " + pageName + ": " + e.message;
   }
 }
