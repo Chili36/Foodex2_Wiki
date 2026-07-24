@@ -735,6 +735,7 @@ def test_ask_rag_uses_qdrant_context_and_answerer(monkeypatch) -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["trace"]["selection_method"] == "qdrant wiki retrieval + answerer"
+    assert payload["trace"]["context_strategy"] == "chunks"
     assert payload["trace"]["retrieval"]["collection"] == "foodex2_wiki_markdown_v1"
     assert payload["trace"]["embedding"]["tracked_tokens"] == 12
     assert payload["trace"]["total"]["total_llm_calls"] == 1
@@ -745,6 +746,154 @@ def test_ask_rag_uses_qdrant_context_and_answerer(monkeypatch) -> None:
     assert calls[0]["retrieval_mode"] == "wiki"
     assert calls[0]["limit"] == 3
     assert app_module.answerer_runner.calls[0]["pages"][0]["page_name"] == "base-term-selection.md"
+
+
+def test_ask_rag_hybrid_deduplicates_and_hydrates_parent_pages(monkeypatch) -> None:
+    calls: list[dict[str, object]] = []
+
+    def fake_get_wiki_rag_status(**kwargs: object) -> dict[str, object]:
+        return {"ok": True, "collection": "foodex2_wiki_markdown_v1"}
+
+    def fake_retrieve_qdrant_ask_context(**kwargs: object) -> dict[str, object]:
+        calls.append(kwargs)
+        results = [
+            {
+                "score": 0.95,
+                "page_name": "base-term-selection.md",
+                "heading_path": "Base Term Selection > Decision Procedure",
+            },
+            {
+                "score": 0.93,
+                "page_name": "base-term-selection.md",
+                "heading_path": "Base Term Selection > Worked Examples",
+            },
+            {
+                "score": 0.90,
+                "page_name": "facet-coding-rules.md",
+                "heading_path": "Facet Coding Rules > Worked Examples",
+            },
+            {
+                "score": 0.87,
+                "page_name": "policy-contract.md",
+                "heading_path": "Policy Contract > Operational Rules",
+            },
+        ]
+        return {
+            "answerer_pages": [
+                {"page_name": result["page_name"], "content": "fake chunk"}
+                for result in results
+            ],
+            "page_summaries": [],
+            "pages_used": [
+                "base-term-selection.md",
+                "facet-coding-rules.md",
+                "policy-contract.md",
+            ],
+            "embedding": {
+                "provider": "voyage",
+                "model": "voyage-context-3",
+                "dimension": 1024,
+                "elapsed_ms": 20,
+                "usage": {"total_tokens": 12},
+                "tracked_tokens": 12,
+            },
+            "retrieval": {
+                "provider": "qdrant",
+                "retrieval_mode": "wiki",
+                "collection": "foodex2_wiki_markdown_v1",
+                "qdrant_url": "http://127.0.0.1:6333",
+                "elapsed_ms": 5,
+                "limit": 12,
+                "result_count": 4,
+                "results": results,
+            },
+        }
+
+    monkeypatch.setattr(app_module, "get_wiki_rag_status", fake_get_wiki_rag_status)
+    monkeypatch.setattr(app_module, "retrieve_qdrant_ask_context", fake_retrieve_qdrant_ask_context)
+
+    response = request(
+        "POST",
+        "/wiki/ask-rag",
+        json={
+            "question": "How should I choose a base term without duplicating facets?",
+            "retrieval_mode": "wiki",
+            "context_strategy": "hybrid",
+            "limit": 4,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert calls[0]["limit"] == 12
+    assert payload["pages_used"] == [
+        "RUNTIME_RULES.md",
+        "base-term-selection.md",
+        "facet-coding-rules.md",
+        "policy-contract.md",
+    ]
+    assert payload["trace"]["selection_method"] == "qdrant wiki hybrid retrieval + answerer"
+    assert payload["trace"]["index_status"]["ok"] is True
+    assert payload["trace"]["hydration"]["duplicate_chunks_removed"] == 1
+    assert payload["trace"]["hydration"]["candidate_unique_page_count"] == 3
+    assert payload["trace"]["hydration"]["hydrated_pages"] == payload["pages_used"]
+    assert payload["trace"]["hydration"]["context_chars"] <= 18_000
+    assert payload["trace"]["hydration"]["context_pages"][-1]["mode"] == "matched_chunk"
+    assert payload["trace"]["total"]["total_llm_calls"] == 1
+    answerer_pages = app_module.answerer_runner.calls[0]["pages"]
+    assert [page["page_name"] for page in answerer_pages] == payload["pages_used"]
+    assert "Core Decision Order" in answerer_pages[0]["content"]
+    assert "fake chunk" not in answerer_pages[1]["content"]
+    assert "Start With Food Type" in answerer_pages[1]["content"]
+    assert all(page["content"] is None for page in payload["pages"])
+
+
+def test_ask_rag_hybrid_rejects_a_stale_index_before_embedding(monkeypatch) -> None:
+    retrieval_called = False
+
+    def fake_get_wiki_rag_status(**kwargs: object) -> dict[str, object]:
+        return {"ok": False, "collection": "foodex2_wiki_markdown_v1"}
+
+    def fake_retrieve_qdrant_ask_context(**kwargs: object) -> dict[str, object]:
+        nonlocal retrieval_called
+        retrieval_called = True
+        return {}
+
+    monkeypatch.setattr(app_module, "get_wiki_rag_status", fake_get_wiki_rag_status)
+    monkeypatch.setattr(app_module, "retrieve_qdrant_ask_context", fake_retrieve_qdrant_ask_context)
+
+    response = request(
+        "POST",
+        "/wiki/ask-rag",
+        json={
+            "question": "How should I code this?",
+            "retrieval_mode": "wiki",
+            "context_strategy": "hybrid",
+            "limit": 4,
+        },
+    )
+
+    assert response.status_code == 503
+    assert "index is stale or unavailable" in response.json()["detail"]
+    assert retrieval_called is False
+    assert app_module.answerer_runner.calls == []
+
+
+def test_ask_rag_hybrid_requires_wiki_retrieval() -> None:
+    response = request(
+        "POST",
+        "/wiki/ask-rag",
+        json={
+            "question": "How should I code this?",
+            "retrieval_mode": "source",
+            "context_strategy": "hybrid",
+            "limit": 4,
+        },
+    )
+
+    assert response.status_code == 422
+    assert "requires retrieval_mode='wiki'" in response.text
+    assert app_module.answerer_runner.calls == []
 
 
 def test_ask_rag_can_return_source_rag_with_page_content(monkeypatch) -> None:

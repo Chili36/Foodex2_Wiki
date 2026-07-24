@@ -7,6 +7,8 @@ import time
 from typing import Any, Literal
 from urllib import error, request
 
+from .wiki_store import WikiStore
+
 try:
     import certifi
 except ImportError:  # pragma: no cover - certifi is installed with common HTTP clients.
@@ -17,6 +19,8 @@ DEFAULT_EMBEDDING_DIMENSION = 1024
 DEFAULT_EMBEDDING_MODEL = "voyage-context-3"
 DEFAULT_SOURCE_COLLECTION = "foodex2_source_docs_v1"
 DEFAULT_WIKI_COLLECTION = "foodex2_wiki_markdown_v1"
+HYBRID_CONTEXT_MAX_CHARS = 18_000
+HYBRID_SAFETY_PAGE = "RUNTIME_RULES.md"
 
 
 class QdrantAskError(RuntimeError):
@@ -177,6 +181,135 @@ def _search_qdrant(
 
 def _dedupe(values: list[str]) -> list[str]:
     return list(dict.fromkeys(value for value in values if value))
+
+
+def hydrate_qdrant_wiki_context(
+    context: dict[str, Any],
+    *,
+    store: WikiStore,
+    max_pages: int,
+    max_context_chars: int = HYBRID_CONTEXT_MAX_CHARS,
+    safety_page: str = HYBRID_SAFETY_PAGE,
+) -> dict[str, Any]:
+    """Replace repeated chunks with bounded page packets from the current wiki."""
+    result_metadata = context.get("retrieval", {}).get("results", [])
+    candidate_page_names = [
+        str(result.get("page_name"))
+        for result in result_metadata
+        if isinstance(result, dict) and result.get("page_name")
+    ]
+    if not candidate_page_names:
+        candidate_page_names = [
+            str(page_name) for page_name in context.get("pages_used", []) if page_name
+        ]
+    unique_candidate_pages = _dedupe(candidate_page_names)
+    duplicate_chunks_removed = len(candidate_page_names) - len(unique_candidate_pages)
+
+    ordered_candidates = [
+        page_name for page_name in unique_candidate_pages if page_name != safety_page
+    ]
+    matched_chunks_by_page: dict[str, list[str]] = {}
+    for answerer_page in context.get("answerer_pages", []):
+        if not isinstance(answerer_page, dict):
+            continue
+        page_name = answerer_page.get("page_name")
+        content = answerer_page.get("content")
+        if isinstance(page_name, str) and isinstance(content, str) and content:
+            matched_chunks_by_page.setdefault(page_name, []).append(content)
+
+    unavailable_pages: list[str] = []
+    hydrated_pages = []
+    context_chars = 0
+    context_page_trace: list[dict[str, Any]] = []
+
+    page_names_to_hydrate = [safety_page, *ordered_candidates]
+    for candidate_index, page_name in enumerate(page_names_to_hydrate):
+        if len(hydrated_pages) >= max_pages:
+            break
+        try:
+            page = store.read_page(page_name)
+        except FileNotFoundError:
+            unavailable_pages.append(page_name)
+            continue
+        content = store.prompt_content_for_context_pack(page)
+        if content is None:
+            content = store.clean_content_for_model(page)
+        mode = "local_page"
+
+        remaining_slots = min(
+            max_pages - len(hydrated_pages),
+            len(page_names_to_hydrate) - candidate_index,
+        )
+        remaining_budget = max_context_chars - context_chars
+        page_budget = max(1, remaining_budget // remaining_slots)
+        if page_name != safety_page and len(content) > page_budget:
+            matched_chunks = matched_chunks_by_page.get(page_name, [])
+            if matched_chunks:
+                content = matched_chunks[0]
+                mode = "matched_chunk"
+        if len(content) > page_budget:
+            content = _clip_context(content, max_chars=page_budget)
+            mode = f"{mode}_clipped"
+
+        hydrated_pages.append((page, content))
+        context_chars += len(content)
+        context_page_trace.append(
+            {
+                "page_name": page.name,
+                "mode": mode,
+                "chars": len(content),
+            }
+        )
+
+    if not hydrated_pages or hydrated_pages[0][0].name != safety_page:
+        raise QdrantAskError(
+            f"Required hybrid safety page {safety_page!r} is unavailable from the local wiki"
+        )
+
+    selected_page_names = [page.name for page, _ in hydrated_pages]
+    context["answerer_pages"] = [
+        {"page_name": page.name, "content": content}
+        for page, content in hydrated_pages
+    ]
+    context["page_summaries"] = [
+        {
+            "page_name": page.name,
+            "title": page.title,
+            "summary": page.summary,
+            "category": store.page_category(page.name),
+            "source_tier": page.source_tier,
+            "sources": page.sources,
+            "related": page.related,
+            "content": content,
+        }
+        for page, content in hydrated_pages
+    ]
+    context["pages_used"] = selected_page_names
+    context["hydration"] = {
+        "context_strategy": "hybrid",
+        "candidate_chunk_count": len(candidate_page_names),
+        "candidate_unique_page_count": len(unique_candidate_pages),
+        "candidate_unique_pages": unique_candidate_pages,
+        "duplicate_chunks_removed": duplicate_chunks_removed,
+        "safety_pages": [safety_page],
+        "hydrated_page_count": len(hydrated_pages),
+        "hydrated_pages": selected_page_names,
+        "context_char_budget": max_context_chars,
+        "context_chars": context_chars,
+        "context_pages": context_page_trace,
+        "unavailable_pages": unavailable_pages,
+    }
+    return context
+
+
+def _clip_context(content: str, *, max_chars: int) -> str:
+    marker = "\n\n[Context clipped to the hybrid page budget.]"
+    if len(content) <= max_chars:
+        return content
+    if max_chars <= len(marker):
+        return content[:max_chars]
+    clipped = content[: max_chars - len(marker)].rstrip()
+    return f"{clipped}{marker}"
 
 
 def _format_wiki_result(item: dict[str, Any]) -> dict[str, Any]:

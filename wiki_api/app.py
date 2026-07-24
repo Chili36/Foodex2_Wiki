@@ -23,7 +23,11 @@ from .librarian import (
     infer_model_provider,
 )
 from .policy import build_policy_contract
-from .qdrant_ask import QdrantAskError, retrieve_qdrant_ask_context
+from .qdrant_ask import (
+    QdrantAskError,
+    hydrate_qdrant_wiki_context,
+    retrieve_qdrant_ask_context,
+)
 from .rag_index import (
     DEFAULT_WIKI_CATEGORIES,
     DEFAULT_WIKI_CHUNK_MAX_CHARS,
@@ -387,7 +391,23 @@ class AskRagRequest(BaseModel):
             "markdown chunks or `source` for raw source-document chunks."
         ),
     )
-    limit: int = Field(default=7, ge=1, le=20)
+    context_strategy: Literal["chunks", "hybrid"] = Field(
+        default="chunks",
+        description=(
+            "Use `chunks` for the existing top-K chunk context. Use `hybrid` with the wiki "
+            "corpus to retrieve a wider candidate set, deduplicate it into parent pages, "
+            "hydrate those pages locally, and prepend the compact runtime safety rules."
+        ),
+    )
+    limit: int = Field(
+        default=7,
+        ge=1,
+        le=20,
+        description=(
+            "Top-K chunk count for `chunks`; maximum hydrated page count, including "
+            "RUNTIME_RULES.md, for `hybrid`."
+        ),
+    )
     include_page_content: bool = False
     answerer_model: str | None = Field(
         default=None,
@@ -434,6 +454,14 @@ class AskRagRequest(BaseModel):
                     normalized[field_name] = value.strip() or None
             return normalized
         return data
+
+    @model_validator(mode="after")
+    def _validate_context_strategy(self) -> AskRagRequest:
+        if self.context_strategy == "hybrid" and self.retrieval_mode != "wiki":
+            raise ValueError("context_strategy='hybrid' requires retrieval_mode='wiki'")
+        if self.context_strategy == "hybrid" and self.limit < 2:
+            raise ValueError("context_strategy='hybrid' requires limit >= 2")
+        return self
 
 
 class WikiRagStatusResponse(BaseModel):
@@ -1424,6 +1452,7 @@ def ask_question_rag(request: AskRagRequest) -> AskResponse:
             {
                 "question": request.question,
                 "retrieval_mode": request.retrieval_mode,
+                "context_strategy": request.context_strategy,
                 "limit": request.limit,
                 "answerer_model": request.answerer_model,
                 "collection": request.collection,
@@ -1432,18 +1461,54 @@ def ask_question_rag(request: AskRagRequest) -> AskResponse:
         ),
     )
 
+    index_status_trace: dict[str, Any] | None = None
+    if request.context_strategy == "hybrid":
+        index_check_start = time.perf_counter()
+        status = get_wiki_rag_status(
+            root=REPO_ROOT,
+            collection=request.collection,
+            qdrant_url=request.qdrant_url,
+            embedding_model=request.embedding_model,
+            embedding_dimension=request.embedding_dimension,
+            timeout=min(request.timeout_seconds, 30.0),
+        )
+        index_status_trace = {
+            "ok": bool(status.get("ok")),
+            "collection": status.get("collection"),
+            "checked_ms": int((time.perf_counter() - index_check_start) * 1000),
+        }
+        if not status.get("ok"):
+            raise HTTPException(
+                status_code=503,
+                detail=(
+                    "The wiki Qdrant index is stale or unavailable. "
+                    "Inspect /wiki/rag/status and align the derived index before using "
+                    "context_strategy='hybrid'."
+                ),
+            )
+
+    retrieval_limit = request.limit
+    if request.context_strategy == "hybrid":
+        retrieval_limit = min(max(request.limit * 3, 12), 50)
+
     retrieval_start = time.perf_counter()
     try:
         context = retrieve_qdrant_ask_context(
             question=request.question,
             retrieval_mode=request.retrieval_mode,
             collection=request.collection,
-            limit=request.limit,
+            limit=retrieval_limit,
             qdrant_url=request.qdrant_url,
             embedding_model=request.embedding_model,
             embedding_dimension=request.embedding_dimension,
             timeout=request.timeout_seconds,
         )
+        if request.context_strategy == "hybrid":
+            context = hydrate_qdrant_wiki_context(
+                context,
+                store=store,
+                max_pages=request.limit,
+            )
     except QdrantAskError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     retrieval_total_ms = int((time.perf_counter() - retrieval_start) * 1000)
@@ -1481,9 +1546,16 @@ def ask_question_rag(request: AskRagRequest) -> AskResponse:
         trace={
             "index_used": False,
             "max_pages": request.limit,
-            "selection_method": f"qdrant {request.retrieval_mode} retrieval + answerer",
+            "context_strategy": request.context_strategy,
+            "selection_method": (
+                f"qdrant {request.retrieval_mode} retrieval + answerer"
+                if request.context_strategy == "chunks"
+                else f"qdrant {request.retrieval_mode} hybrid retrieval + answerer"
+            ),
             "retrieval": context["retrieval"],
             "embedding": context["embedding"],
+            "index_status": index_status_trace,
+            "hydration": context.get("hydration"),
             "answerer": {
                 "model": answerer.model,
                 "token_summary": answer_result.token_summary,
