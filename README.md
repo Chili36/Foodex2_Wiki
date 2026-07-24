@@ -434,13 +434,16 @@ Example `POST /wiki/ask-rag` body:
 {
   "question": "What should I think about when reporting sheep urine?",
   "retrieval_mode": "wiki",
-  "limit": 7,
+  "context_strategy": "hybrid",
+  "limit": 5,
   "include_page_content": false,
   "answerer_model": "claude-sonnet-4-6"
 }
 ```
 
-Set `retrieval_mode` to `wiki` for `foodex2_wiki_markdown_v1` or `source` for `foodex2_source_docs_v1`. Optional overrides include `collection`, `qdrant_url`, `embedding_model`, and `embedding_dimension`. The response reuses the `/wiki/ask` shape and adds `trace.embedding` plus Qdrant retrieval metadata so callers can compare cost, latency, and retrieved evidence.
+Set `retrieval_mode` to `wiki` for `foodex2_wiki_markdown_v1` or `source` for `foodex2_source_docs_v1`. `context_strategy` defaults to `chunks`, preserving the original top-K chunk behavior. The opt-in `hybrid` strategy is available only for `wiki`: it retrieves a wider section candidate set, deduplicates the hits by parent page, prepends `RUNTIME_RULES.md`, hydrates compact parent-page content from the local wiki, and then makes one answerer call. An 18,000-character context budget prevents unusually large parent pages from recreating the token spike; when a complete projected page does not fit its share, the aligned top-matching section chunk is used for that page instead. Hybrid requests fail closed when `/wiki/rag/status` reports drift so an outdated Qdrant index cannot silently select the answer context. For `hybrid`, `limit` is the maximum number of hydrated pages including the runtime rules page.
+
+Optional overrides include `collection`, `qdrant_url`, `embedding_model`, and `embedding_dimension`. The response reuses the `/wiki/ask` shape and adds `trace.embedding`, `trace.hydration`, index-status, and Qdrant retrieval metadata so callers can compare cost, latency, and retrieved evidence.
 
 DMT can now model the four ask-condition tests with a small orchestration switch around the advisory-brief call; the downstream classifier prompt can stay the same:
 
