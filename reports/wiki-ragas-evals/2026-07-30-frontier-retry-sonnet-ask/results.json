@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "generated_at": "2026-07-30T08:28:34.236660+00:00",
+  "dataset": "/Users/davidfoster/Dev/LLM Knowledge Base/evals/wiki-rag/dmt_end_to_end_cases.json",
+  "configuration": {
+    "base_url": "http://127.0.0.1:8010",
+    "endpoints": [
+      "ask"
+    ],
+    "answerer_models": [
+      "claude-sonnet-5"
+    ],
+    "selector_model": "claude-sonnet-5",
+    "max_pages": 7,
+    "rag_limit": 7,
+    "rag_strategy": "diverse_pages",
+    "use_graph_expansion": true,
+    "repeats": 1,
+    "ragas_metrics": [],
+    "judge_model": null,
+    "judge_provider": null
+  },
+  "budget": {
+    "cases": 1,
+    "endpoint_variants": 1,
+    "answerer_models": 1,
+    "repeats": 1,
+    "estimated_endpoint_calls": 1,
+    "estimated_ragas_metric_invocations": 0
+  },
+  "summary": [
+    {
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5",
+      "case_count": 1,
+      "success_count": 0,
+      "success_rate": 0.0
+    }
+  ],
+  "rows": [
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-005",
+      "reviewed": false,
+      "question": "Anything I should think about when reporting Jambon de porc fumé sans nitrites?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": "claude-sonnet-5",
+      "request_payload": {
+        "question": "Anything I should think about when reporting Jambon de porc fumé sans nitrites?",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "selector_model": "claude-sonnet-5",
+        "max_pages": 7,
+        "use_graph_expansion": true
+      },
+      "status_code": 503,
+      "elapsed_ms": 34799,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "Could not extract JSON object from librarian response",
+      "deterministic": {},
+      "ragas": {}
+    }
+  ]
+}

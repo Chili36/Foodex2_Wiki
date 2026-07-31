@@ -154,7 +154,20 @@ def main() -> int:
     )
     parser.add_argument("--max-pages", type=int, default=7)
     parser.add_argument("--include-page-content", action="store_true")
-    parser.add_argument("--no-graph-expansion", action="store_true")
+    graph_expansion_group = parser.add_mutually_exclusive_group()
+    graph_expansion_group.add_argument(
+        "--graph-expansion",
+        dest="use_graph_expansion",
+        action="store_true",
+        help="Use remaining max-pages slots for ranked related-page summaries.",
+    )
+    graph_expansion_group.add_argument(
+        "--no-graph-expansion",
+        dest="use_graph_expansion",
+        action="store_false",
+        help=argparse.SUPPRESS,
+    )
+    parser.set_defaults(use_graph_expansion=False)
     parser.add_argument("--timeout", type=float, default=120.0)
     parser.add_argument(
         "--output",
@@ -182,7 +195,7 @@ def main() -> int:
             answerer_model=answerer_model,
             max_pages=args.max_pages,
             include_page_content=args.include_page_content,
-            use_graph_expansion=not args.no_graph_expansion,
+            use_graph_expansion=args.use_graph_expansion,
             timeout=args.timeout,
         )
         results.append(result)

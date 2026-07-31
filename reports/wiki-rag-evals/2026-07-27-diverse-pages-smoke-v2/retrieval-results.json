@@ -1,0 +1,3478 @@
+{
+  "version": 1,
+  "generated_at": "2026-07-27T20:40:00.585709+00:00",
+  "gold_path": "evals/wiki-rag/retrieval_cases.json",
+  "budget": {
+    "cases": 5,
+    "repeats": 1,
+    "estimated_embedding_calls": 5,
+    "limit": 7,
+    "candidate_limit": null
+  },
+  "passes": [
+    {
+      "summary": {
+        "case_count": 5,
+        "mean_must_have_recall": 0.55,
+        "mean_precision": 0.5428571428571429,
+        "leak_free_rate": 0.2,
+        "mean_unique_pages": 7.0,
+        "mean_candidate_duplicate_ratio": 0.7243697478991596,
+        "mean_preassembly_duplicate_slot_waste": 0.5714285714285714,
+        "mean_duplicate_slot_waste": 0.0,
+        "mean_role_coverage": 0.55,
+        "mean_retrieval_ms": 314.6,
+        "p95_retrieval_ms": 322.0
+      },
+      "cases": [
+        {
+          "id": "RAG-RET-0001",
+          "reviewed": true,
+          "question": "Bordsdruvor – färsk frukt (table grapes, fresh fruit); reporting domain: pesticides",
+          "context": {
+            "purpose": "code_construction",
+            "reporting_domain": "pesticides"
+          },
+          "raw_candidate_pages": [
+            "pesticides-foodex2.md",
+            "pesticides-foodex2.md",
+            "pesticides-foodex2.md",
+            "contaminants-foodex2.md",
+            "pesticides-foodex2.md",
+            "pesticides-foodex2.md",
+            "contaminants-foodex2.md",
+            "pesticides-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "contaminants-foodex2.md",
+            "contaminants-foodex2.md",
+            "contaminants-foodex2.md",
+            "contaminants-foodex2.md",
+            "contaminants-foodex2.md",
+            "domoic-acid-scallops.md",
+            "additives-flavourings-foodex2.md",
+            "domoic-acid-scallops.md",
+            "domoic-acid-scallops.md",
+            "chemical-monitoring-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "maintenance-2024.md",
+            "additives-flavourings-foodex2.md",
+            "domoic-acid-scallops.md",
+            "domoic-acid-scallops.md",
+            "domoic-acid-scallops.md",
+            "domoic-acid-scallops.md",
+            "domoic-acid-scallops.md",
+            "domoic-acid-scallops.md",
+            "domoic-acid-scallops.md",
+            "maintenance-2016-2018.md",
+            "chemical-monitoring-foodex2.md",
+            "additives-flavourings-foodex2.md",
+            "additives-flavourings-foodex2.md"
+          ],
+          "pages_used": [
+            "pesticides-foodex2.md",
+            "contaminants-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "domoic-acid-scallops.md",
+            "additives-flavourings-foodex2.md",
+            "maintenance-2024.md",
+            "maintenance-2016-2018.md"
+          ],
+          "retrieval_ms": 315,
+          "request_wall_time_ms": 315,
+          "embedding": {
+            "provider": "voyage",
+            "model": "voyage-context-3",
+            "dimension": 1024,
+            "elapsed_ms": 285,
+            "usage": {
+              "total_tokens": 21
+            },
+            "tracked_tokens": 21
+          },
+          "retrieval": {
+            "provider": "qdrant",
+            "retrieval_mode": "wiki",
+            "collection": "foodex2_wiki_markdown_v1",
+            "qdrant_url": "http://127.0.0.1:6333",
+            "elapsed_ms": 30,
+            "limit": 7,
+            "candidate_limit": 35,
+            "result_count": 35,
+            "selected_result_count": 7,
+            "results": [
+              {
+                "chunk_id": "pesticides-foodex2.md#002-00-foodex2-in-pesticide-residue-monitoring-domain-boundary",
+                "score": 0.43166777,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Domain Boundary",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#000-00-foodex2-in-pesticide-residue-monitoring",
+                "score": 0.41475987,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#004-00-foodex2-in-pesticide-residue-monitoring-worked-signals",
+                "score": 0.41425666,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Worked Signals",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#004-00-foodex2-in-contaminants-monitoring-pesticide-contrast",
+                "score": 0.41009355,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Pesticide Contrast",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#003-00-foodex2-in-pesticide-residue-monitoring-facet-consequences",
+                "score": 0.40282074,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Facet Consequences",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#001-00-foodex2-in-pesticide-residue-monitoring-use-only-when-pesticide-context-is-activ",
+                "score": 0.40186623,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Use Only When Pesticide Context Is Active",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#005-00-foodex2-in-contaminants-monitoring-worked-signals",
+                "score": 0.40175292,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Worked Signals",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#005-00-foodex2-in-pesticide-residue-monitoring-relevant-policy",
+                "score": 0.40115932,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#002-00-foodex2-in-chemical-monitoring-domain-pages",
+                "score": 0.38846338,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Domain Pages",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#006-00-foodex2-in-contaminants-monitoring-relevant-policy",
+                "score": 0.37993306,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#001-00-foodex2-in-contaminants-monitoring-use-only-when-contaminants-context-is-active",
+                "score": 0.36812794,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Use Only When Contaminants Context Is Active",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#003-00-foodex2-in-contaminants-monitoring-high-impact-rules",
+                "score": 0.35151047,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > High-Impact Rules",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#000-00-foodex2-in-contaminants-monitoring",
+                "score": 0.34938848,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#002-00-foodex2-in-contaminants-monitoring-domain-boundary",
+                "score": 0.3448553,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Domain Boundary",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#004-00-domoic-acid-in-scallops-retrieval-signals",
+                "score": 0.34338722,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Retrieval Signals",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "additives-flavourings-foodex2.md#005-00-foodex2-in-additives-and-flavourings-monitoring-worked-signals",
+                "score": 0.34099,
+                "page_name": "additives-flavourings-foodex2.md",
+                "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Worked Signals",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+                "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#005-00-domoic-acid-in-scallops-relevant-policy",
+                "score": 0.33233345,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#006-00-domoic-acid-in-scallops-relevant-business-rules",
+                "score": 0.3301702,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Relevant Business Rules",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#007-00-foodex2-in-chemical-monitoring-relevant-business-rules",
+                "score": 0.32684496,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Business Rules",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#001-00-foodex2-in-chemical-monitoring-scope",
+                "score": 0.3258599,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Scope",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#005-00-foodex2-in-chemical-monitoring-worked-examples",
+                "score": 0.32570496,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Worked Examples",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#000-00-foodex2-in-chemical-monitoring",
+                "score": 0.32439974,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "maintenance-2024.md#001-00-maintenance-2024-summary",
+                "score": 0.3231408,
+                "page_name": "maintenance-2024.md",
+                "heading_path": "Maintenance 2024 > Summary",
+                "category": "maintenance",
+                "source_tier": null,
+                "summary": "VetDrugRes overhaul and expanded legislative mapping.",
+                "source_path": "raw/efsa-guidance/maintenance-2024.md"
+              },
+              {
+                "chunk_id": "additives-flavourings-foodex2.md#004-00-foodex2-in-additives-and-flavourings-monitoring-matrix-terms-not-to-report-as-th",
+                "score": 0.32099378,
+                "page_name": "additives-flavourings-foodex2.md",
+                "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Matrix Terms Not To Report As The Sample",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+                "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#003-00-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                "score": 0.31390035,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#003-03-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                "score": 0.31345236,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#001-00-domoic-acid-in-scallops-use-only-for-domoic-acid-scallop-reporting",
+                "score": 0.30949038,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Use Only For Domoic Acid Scallop Reporting",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#002-00-domoic-acid-in-scallops-reporting-rule",
+                "score": 0.3081767,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Reporting Rule",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#003-02-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                "score": 0.30601868,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#003-01-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                "score": 0.30472732,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#000-00-domoic-acid-in-scallops",
+                "score": 0.3041339,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "maintenance-2016-2018.md#001-00-maintenance-2016-2018-summary",
+                "score": 0.30320424,
+                "page_name": "maintenance-2016-2018.md",
+                "heading_path": "Maintenance 2016-2018 > Summary",
+                "category": "maintenance",
+                "source_tier": null,
+                "summary": "Multi-year maintenance wave with major taxonomy and mapping work.",
+                "source_path": "raw/efsa-guidance/maintenance-2016-2018.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#006-00-foodex2-in-chemical-monitoring-relevant-policy",
+                "score": 0.3015989,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "additives-flavourings-foodex2.md#002-00-foodex2-in-additives-and-flavourings-monitoring-f33-legislative-class",
+                "score": 0.29891443,
+                "page_name": "additives-flavourings-foodex2.md",
+                "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > F33 Legislative Class",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+                "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md"
+              },
+              {
+                "chunk_id": "additives-flavourings-foodex2.md#006-00-foodex2-in-additives-and-flavourings-monitoring-relevant-policy",
+                "score": 0.29758513,
+                "page_name": "additives-flavourings-foodex2.md",
+                "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+                "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md"
+              }
+            ],
+            "assembly": {
+              "strategy": "highest_ranked_chunk_per_unique_page",
+              "candidate_chunk_count": 35,
+              "candidate_unique_page_count": 7,
+              "selected_page_count": 7,
+              "duplicate_chunk_count": 28,
+              "candidate_duplicate_ratio": 0.8,
+              "preassembly_duplicate_slot_waste": 0.7142857142857143,
+              "duplicate_slot_waste": 0.0,
+              "selected_pages": [
+                "pesticides-foodex2.md",
+                "contaminants-foodex2.md",
+                "chemical-monitoring-foodex2.md",
+                "domoic-acid-scallops.md",
+                "additives-flavourings-foodex2.md",
+                "maintenance-2024.md",
+                "maintenance-2016-2018.md"
+              ],
+              "dropped_duplicate_chunks": [
+                {
+                  "rank": 2,
+                  "page_name": "pesticides-foodex2.md",
+                  "chunk_id": "pesticides-foodex2.md#000-00-foodex2-in-pesticide-residue-monitoring",
+                  "heading_path": "FoodEx2 In Pesticide Residue Monitoring",
+                  "score": 0.41475987,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 3,
+                  "page_name": "pesticides-foodex2.md",
+                  "chunk_id": "pesticides-foodex2.md#004-00-foodex2-in-pesticide-residue-monitoring-worked-signals",
+                  "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Worked Signals",
+                  "score": 0.41425666,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 5,
+                  "page_name": "pesticides-foodex2.md",
+                  "chunk_id": "pesticides-foodex2.md#003-00-foodex2-in-pesticide-residue-monitoring-facet-consequences",
+                  "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Facet Consequences",
+                  "score": 0.40282074,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 6,
+                  "page_name": "pesticides-foodex2.md",
+                  "chunk_id": "pesticides-foodex2.md#001-00-foodex2-in-pesticide-residue-monitoring-use-only-when-pesticide-context-is-activ",
+                  "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Use Only When Pesticide Context Is Active",
+                  "score": 0.40186623,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 7,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#005-00-foodex2-in-contaminants-monitoring-worked-signals",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring > Worked Signals",
+                  "score": 0.40175292,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 8,
+                  "page_name": "pesticides-foodex2.md",
+                  "chunk_id": "pesticides-foodex2.md#005-00-foodex2-in-pesticide-residue-monitoring-relevant-policy",
+                  "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Relevant Policy",
+                  "score": 0.40115932,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 10,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#006-00-foodex2-in-contaminants-monitoring-relevant-policy",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring > Relevant Policy",
+                  "score": 0.37993306,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 11,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#001-00-foodex2-in-contaminants-monitoring-use-only-when-contaminants-context-is-active",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring > Use Only When Contaminants Context Is Active",
+                  "score": 0.36812794,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 12,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#003-00-foodex2-in-contaminants-monitoring-high-impact-rules",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring > High-Impact Rules",
+                  "score": 0.35151047,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 13,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#000-00-foodex2-in-contaminants-monitoring",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring",
+                  "score": 0.34938848,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 14,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#002-00-foodex2-in-contaminants-monitoring-domain-boundary",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring > Domain Boundary",
+                  "score": 0.3448553,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 17,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#005-00-domoic-acid-in-scallops-relevant-policy",
+                  "heading_path": "Domoic Acid In Scallops > Relevant Policy",
+                  "score": 0.33233345,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 18,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#006-00-domoic-acid-in-scallops-relevant-business-rules",
+                  "heading_path": "Domoic Acid In Scallops > Relevant Business Rules",
+                  "score": 0.3301702,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 19,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#007-00-foodex2-in-chemical-monitoring-relevant-business-rules",
+                  "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Business Rules",
+                  "score": 0.32684496,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 20,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#001-00-foodex2-in-chemical-monitoring-scope",
+                  "heading_path": "FoodEx2 In Chemical Monitoring > Scope",
+                  "score": 0.3258599,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 21,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#005-00-foodex2-in-chemical-monitoring-worked-examples",
+                  "heading_path": "FoodEx2 In Chemical Monitoring > Worked Examples",
+                  "score": 0.32570496,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 22,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#000-00-foodex2-in-chemical-monitoring",
+                  "heading_path": "FoodEx2 In Chemical Monitoring",
+                  "score": 0.32439974,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 24,
+                  "page_name": "additives-flavourings-foodex2.md",
+                  "chunk_id": "additives-flavourings-foodex2.md#004-00-foodex2-in-additives-and-flavourings-monitoring-matrix-terms-not-to-report-as-th",
+                  "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Matrix Terms Not To Report As The Sample",
+                  "score": 0.32099378,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 25,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#003-00-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                  "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                  "score": 0.31390035,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 26,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#003-03-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                  "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                  "score": 0.31345236,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 27,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#001-00-domoic-acid-in-scallops-use-only-for-domoic-acid-scallop-reporting",
+                  "heading_path": "Domoic Acid In Scallops > Use Only For Domoic Acid Scallop Reporting",
+                  "score": 0.30949038,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 28,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#002-00-domoic-acid-in-scallops-reporting-rule",
+                  "heading_path": "Domoic Acid In Scallops > Reporting Rule",
+                  "score": 0.3081767,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 29,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#003-02-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                  "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                  "score": 0.30601868,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 30,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#003-01-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                  "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                  "score": 0.30472732,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 31,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#000-00-domoic-acid-in-scallops",
+                  "heading_path": "Domoic Acid In Scallops",
+                  "score": 0.3041339,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 33,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#006-00-foodex2-in-chemical-monitoring-relevant-policy",
+                  "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Policy",
+                  "score": 0.3015989,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 34,
+                  "page_name": "additives-flavourings-foodex2.md",
+                  "chunk_id": "additives-flavourings-foodex2.md#002-00-foodex2-in-additives-and-flavourings-monitoring-f33-legislative-class",
+                  "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > F33 Legislative Class",
+                  "score": 0.29891443,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 35,
+                  "page_name": "additives-flavourings-foodex2.md",
+                  "chunk_id": "additives-flavourings-foodex2.md#006-00-foodex2-in-additives-and-flavourings-monitoring-relevant-policy",
+                  "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Relevant Policy",
+                  "score": 0.29758513,
+                  "reason": "duplicate_page"
+                }
+              ],
+              "unselected_candidate_pages": [],
+              "elapsed_ms": 0
+            }
+          },
+          "must_have_recall": 0.3333333333333333,
+          "precision": 0.2857142857142857,
+          "missing": [
+            "base-term-selection.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [
+            "contaminants-foodex2.md",
+            "additives-flavourings-foodex2.md",
+            "maintenance-2024.md",
+            "maintenance-2016-2018.md"
+          ],
+          "unlabeled": [
+            "domoic-acid-scallops.md"
+          ],
+          "raw_chunk_count": 35,
+          "raw_unique_page_count": 7,
+          "final_unique_page_count": 7,
+          "candidate_duplicate_chunk_count": 28,
+          "candidate_duplicate_ratio": 0.8,
+          "preassembly_duplicate_slot_waste": 0.7142857142857143,
+          "final_duplicate_page_count": 0,
+          "duplicate_slot_waste": 0.0,
+          "covered_roles": [
+            "domain_overlay"
+          ],
+          "missing_roles": [
+            "base_term",
+            "validation"
+          ],
+          "role_coverage": 0.3333333333333333
+        },
+        {
+          "id": "RAG-RET-0002",
+          "reviewed": true,
+          "question": "Skivad ost med ytkonservering – ost (sliced cheese with surface preservative); reporting domain: additives",
+          "context": {
+            "purpose": "code_construction",
+            "reporting_domain": "additives"
+          },
+          "raw_candidate_pages": [
+            "additives-flavourings-foodex2.md",
+            "contaminants-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "additives-flavourings-foodex2.md",
+            "additives-flavourings-foodex2.md",
+            "additives-flavourings-foodex2.md",
+            "pesticides-foodex2.md",
+            "contaminants-foodex2.md",
+            "pesticides-foodex2.md",
+            "additives-flavourings-foodex2.md",
+            "contaminants-foodex2.md",
+            "additives-flavourings-foodex2.md",
+            "pesticides-foodex2.md",
+            "pesticides-foodex2.md",
+            "pesticides-foodex2.md",
+            "pesticides-foodex2.md",
+            "contaminants-foodex2.md",
+            "process-facets.md",
+            "chemical-monitoring-foodex2.md",
+            "domain-specific-validation.md",
+            "process-facets.md",
+            "additives-flavourings-foodex2.md",
+            "contaminants-foodex2.md",
+            "contaminants-foodex2.md",
+            "maintenance-2023.md",
+            "chemical-monitoring-foodex2.md",
+            "maintenance-2020.md",
+            "chemical-monitoring-foodex2.md",
+            "domoic-acid-scallops.md",
+            "chemical-monitoring-foodex2.md",
+            "domoic-acid-scallops.md",
+            "facet-coding-rules.md",
+            "maintenance-2023.md",
+            "contaminants-foodex2.md",
+            "chemical-monitoring-foodex2.md"
+          ],
+          "pages_used": [
+            "additives-flavourings-foodex2.md",
+            "contaminants-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "pesticides-foodex2.md",
+            "process-facets.md",
+            "domain-specific-validation.md",
+            "maintenance-2023.md"
+          ],
+          "retrieval_ms": 314,
+          "request_wall_time_ms": 315,
+          "embedding": {
+            "provider": "voyage",
+            "model": "voyage-context-3",
+            "dimension": 1024,
+            "elapsed_ms": 281,
+            "usage": {
+              "total_tokens": 24
+            },
+            "tracked_tokens": 24
+          },
+          "retrieval": {
+            "provider": "qdrant",
+            "retrieval_mode": "wiki",
+            "collection": "foodex2_wiki_markdown_v1",
+            "qdrant_url": "http://127.0.0.1:6333",
+            "elapsed_ms": 33,
+            "limit": 7,
+            "candidate_limit": 35,
+            "result_count": 35,
+            "selected_result_count": 7,
+            "results": [
+              {
+                "chunk_id": "additives-flavourings-foodex2.md#005-00-foodex2-in-additives-and-flavourings-monitoring-worked-signals",
+                "score": 0.40929005,
+                "page_name": "additives-flavourings-foodex2.md",
+                "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Worked Signals",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+                "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#005-00-foodex2-in-contaminants-monitoring-worked-signals",
+                "score": 0.39620638,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Worked Signals",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#002-00-foodex2-in-chemical-monitoring-domain-pages",
+                "score": 0.39146549,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Domain Pages",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "additives-flavourings-foodex2.md#000-00-foodex2-in-additives-and-flavourings-monitoring",
+                "score": 0.3841254,
+                "page_name": "additives-flavourings-foodex2.md",
+                "heading_path": "FoodEx2 In Additives And Flavourings Monitoring",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+                "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md"
+              },
+              {
+                "chunk_id": "additives-flavourings-foodex2.md#004-00-foodex2-in-additives-and-flavourings-monitoring-matrix-terms-not-to-report-as-th",
+                "score": 0.3839135,
+                "page_name": "additives-flavourings-foodex2.md",
+                "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Matrix Terms Not To Report As The Sample",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+                "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md"
+              },
+              {
+                "chunk_id": "additives-flavourings-foodex2.md#002-00-foodex2-in-additives-and-flavourings-monitoring-f33-legislative-class",
+                "score": 0.3828348,
+                "page_name": "additives-flavourings-foodex2.md",
+                "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > F33 Legislative Class",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+                "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#003-00-foodex2-in-pesticide-residue-monitoring-facet-consequences",
+                "score": 0.37895596,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Facet Consequences",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#003-00-foodex2-in-contaminants-monitoring-high-impact-rules",
+                "score": 0.37889647,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > High-Impact Rules",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#005-00-foodex2-in-pesticide-residue-monitoring-relevant-policy",
+                "score": 0.37571275,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "additives-flavourings-foodex2.md#006-00-foodex2-in-additives-and-flavourings-monitoring-relevant-policy",
+                "score": 0.3755329,
+                "page_name": "additives-flavourings-foodex2.md",
+                "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+                "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#004-00-foodex2-in-contaminants-monitoring-pesticide-contrast",
+                "score": 0.37299135,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Pesticide Contrast",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "additives-flavourings-foodex2.md#001-00-foodex2-in-additives-and-flavourings-monitoring-use-only-when-additives-or-flavo",
+                "score": 0.36753803,
+                "page_name": "additives-flavourings-foodex2.md",
+                "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Use Only When Additives Or Flavourings Context Is Active",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+                "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#004-00-foodex2-in-pesticide-residue-monitoring-worked-signals",
+                "score": 0.36667126,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Worked Signals",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#001-00-foodex2-in-pesticide-residue-monitoring-use-only-when-pesticide-context-is-activ",
+                "score": 0.36610317,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Use Only When Pesticide Context Is Active",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#000-00-foodex2-in-pesticide-residue-monitoring",
+                "score": 0.36304924,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#002-00-foodex2-in-pesticide-residue-monitoring-domain-boundary",
+                "score": 0.36287344,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Domain Boundary",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#006-00-foodex2-in-contaminants-monitoring-relevant-policy",
+                "score": 0.36227888,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "process-facets.md#002-01-process-facets-appendix-a2-codes",
+                "score": 0.3558833,
+                "page_name": "process-facets.md",
+                "heading_path": "Process Facets > Appendix A2 Codes",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Compact reference for Appendix A2 process facet codes and when to use them.",
+                "source_path": "raw/efsa-guidance/process-facets.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#005-00-foodex2-in-chemical-monitoring-worked-examples",
+                "score": 0.35234886,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Worked Examples",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "domain-specific-validation.md#002-00-domain-specific-validation-common-mandatory-or-recommended-facets",
+                "score": 0.35207713,
+                "page_name": "domain-specific-validation.md",
+                "heading_path": "Domain-Specific Validation > Common Mandatory Or Recommended Facets",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+                "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+              },
+              {
+                "chunk_id": "process-facets.md#003-00-process-facets-worked-examples",
+                "score": 0.35108426,
+                "page_name": "process-facets.md",
+                "heading_path": "Process Facets > Worked Examples",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Compact reference for Appendix A2 process facet codes and when to use them.",
+                "source_path": "raw/efsa-guidance/process-facets.md"
+              },
+              {
+                "chunk_id": "additives-flavourings-foodex2.md#003-00-foodex2-in-additives-and-flavourings-monitoring-additional-facets",
+                "score": 0.35107845,
+                "page_name": "additives-flavourings-foodex2.md",
+                "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Additional Facets",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+                "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#000-00-foodex2-in-contaminants-monitoring",
+                "score": 0.35056663,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#001-00-foodex2-in-contaminants-monitoring-use-only-when-contaminants-context-is-active",
+                "score": 0.3468674,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Use Only When Contaminants Context Is Active",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "maintenance-2023.md#001-00-maintenance-2023-summary",
+                "score": 0.34009066,
+                "page_name": "maintenance-2023.md",
+                "heading_path": "Maintenance 2023 > Summary",
+                "category": "maintenance",
+                "source_tier": null,
+                "summary": "F34 Host-sampled, exposure-hierarchy redesign, and additives/flavourings mapping.",
+                "source_path": "raw/efsa-guidance/maintenance-2023.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#006-00-foodex2-in-chemical-monitoring-relevant-policy",
+                "score": 0.33788002,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "maintenance-2020.md#002-00-maintenance-2020-project-driven-changes",
+                "score": 0.33552566,
+                "page_name": "maintenance-2020.md",
+                "heading_path": "Maintenance 2020 > Project-Driven Changes",
+                "category": "maintenance",
+                "source_tier": null,
+                "summary": "Honey bees, birds, SIGMA, scallops, and reportability changes.",
+                "source_path": "raw/efsa-guidance/maintenance-2020.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#001-00-foodex2-in-chemical-monitoring-scope",
+                "score": 0.33301392,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Scope",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#005-00-domoic-acid-in-scallops-relevant-policy",
+                "score": 0.33230424,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#000-00-foodex2-in-chemical-monitoring",
+                "score": 0.32786107,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#006-00-domoic-acid-in-scallops-relevant-business-rules",
+                "score": 0.32653415,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Relevant Business Rules",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "facet-coding-rules.md#003-00-facet-coding-rules-high-value-facets",
+                "score": 0.32536906,
+                "page_name": "facet-coding-rules.md",
+                "heading_path": "Facet Coding Rules > High-Value Facets",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.",
+                "source_path": "raw/efsa-guidance/facet-coding-rules.md"
+              },
+              {
+                "chunk_id": "maintenance-2023.md#000-00-maintenance-2023",
+                "score": 0.32488537,
+                "page_name": "maintenance-2023.md",
+                "heading_path": "Maintenance 2023",
+                "category": "maintenance",
+                "source_tier": null,
+                "summary": "F34 Host-sampled, exposure-hierarchy redesign, and additives/flavourings mapping.",
+                "source_path": "raw/efsa-guidance/maintenance-2023.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#002-00-foodex2-in-contaminants-monitoring-domain-boundary",
+                "score": 0.3242736,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Domain Boundary",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#007-00-foodex2-in-chemical-monitoring-relevant-business-rules",
+                "score": 0.32293373,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Business Rules",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              }
+            ],
+            "assembly": {
+              "strategy": "highest_ranked_chunk_per_unique_page",
+              "candidate_chunk_count": 35,
+              "candidate_unique_page_count": 10,
+              "selected_page_count": 7,
+              "duplicate_chunk_count": 25,
+              "candidate_duplicate_ratio": 0.7142857142857143,
+              "preassembly_duplicate_slot_waste": 0.42857142857142855,
+              "duplicate_slot_waste": 0.0,
+              "selected_pages": [
+                "additives-flavourings-foodex2.md",
+                "contaminants-foodex2.md",
+                "chemical-monitoring-foodex2.md",
+                "pesticides-foodex2.md",
+                "process-facets.md",
+                "domain-specific-validation.md",
+                "maintenance-2023.md"
+              ],
+              "dropped_duplicate_chunks": [
+                {
+                  "rank": 4,
+                  "page_name": "additives-flavourings-foodex2.md",
+                  "chunk_id": "additives-flavourings-foodex2.md#000-00-foodex2-in-additives-and-flavourings-monitoring",
+                  "heading_path": "FoodEx2 In Additives And Flavourings Monitoring",
+                  "score": 0.3841254,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 5,
+                  "page_name": "additives-flavourings-foodex2.md",
+                  "chunk_id": "additives-flavourings-foodex2.md#004-00-foodex2-in-additives-and-flavourings-monitoring-matrix-terms-not-to-report-as-th",
+                  "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Matrix Terms Not To Report As The Sample",
+                  "score": 0.3839135,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 6,
+                  "page_name": "additives-flavourings-foodex2.md",
+                  "chunk_id": "additives-flavourings-foodex2.md#002-00-foodex2-in-additives-and-flavourings-monitoring-f33-legislative-class",
+                  "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > F33 Legislative Class",
+                  "score": 0.3828348,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 8,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#003-00-foodex2-in-contaminants-monitoring-high-impact-rules",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring > High-Impact Rules",
+                  "score": 0.37889647,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 9,
+                  "page_name": "pesticides-foodex2.md",
+                  "chunk_id": "pesticides-foodex2.md#005-00-foodex2-in-pesticide-residue-monitoring-relevant-policy",
+                  "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Relevant Policy",
+                  "score": 0.37571275,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 10,
+                  "page_name": "additives-flavourings-foodex2.md",
+                  "chunk_id": "additives-flavourings-foodex2.md#006-00-foodex2-in-additives-and-flavourings-monitoring-relevant-policy",
+                  "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Relevant Policy",
+                  "score": 0.3755329,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 11,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#004-00-foodex2-in-contaminants-monitoring-pesticide-contrast",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring > Pesticide Contrast",
+                  "score": 0.37299135,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 12,
+                  "page_name": "additives-flavourings-foodex2.md",
+                  "chunk_id": "additives-flavourings-foodex2.md#001-00-foodex2-in-additives-and-flavourings-monitoring-use-only-when-additives-or-flavo",
+                  "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Use Only When Additives Or Flavourings Context Is Active",
+                  "score": 0.36753803,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 13,
+                  "page_name": "pesticides-foodex2.md",
+                  "chunk_id": "pesticides-foodex2.md#004-00-foodex2-in-pesticide-residue-monitoring-worked-signals",
+                  "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Worked Signals",
+                  "score": 0.36667126,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 14,
+                  "page_name": "pesticides-foodex2.md",
+                  "chunk_id": "pesticides-foodex2.md#001-00-foodex2-in-pesticide-residue-monitoring-use-only-when-pesticide-context-is-activ",
+                  "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Use Only When Pesticide Context Is Active",
+                  "score": 0.36610317,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 15,
+                  "page_name": "pesticides-foodex2.md",
+                  "chunk_id": "pesticides-foodex2.md#000-00-foodex2-in-pesticide-residue-monitoring",
+                  "heading_path": "FoodEx2 In Pesticide Residue Monitoring",
+                  "score": 0.36304924,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 16,
+                  "page_name": "pesticides-foodex2.md",
+                  "chunk_id": "pesticides-foodex2.md#002-00-foodex2-in-pesticide-residue-monitoring-domain-boundary",
+                  "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Domain Boundary",
+                  "score": 0.36287344,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 17,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#006-00-foodex2-in-contaminants-monitoring-relevant-policy",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring > Relevant Policy",
+                  "score": 0.36227888,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 19,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#005-00-foodex2-in-chemical-monitoring-worked-examples",
+                  "heading_path": "FoodEx2 In Chemical Monitoring > Worked Examples",
+                  "score": 0.35234886,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 21,
+                  "page_name": "process-facets.md",
+                  "chunk_id": "process-facets.md#003-00-process-facets-worked-examples",
+                  "heading_path": "Process Facets > Worked Examples",
+                  "score": 0.35108426,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 22,
+                  "page_name": "additives-flavourings-foodex2.md",
+                  "chunk_id": "additives-flavourings-foodex2.md#003-00-foodex2-in-additives-and-flavourings-monitoring-additional-facets",
+                  "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Additional Facets",
+                  "score": 0.35107845,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 23,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#000-00-foodex2-in-contaminants-monitoring",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring",
+                  "score": 0.35056663,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 24,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#001-00-foodex2-in-contaminants-monitoring-use-only-when-contaminants-context-is-active",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring > Use Only When Contaminants Context Is Active",
+                  "score": 0.3468674,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 26,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#006-00-foodex2-in-chemical-monitoring-relevant-policy",
+                  "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Policy",
+                  "score": 0.33788002,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 28,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#001-00-foodex2-in-chemical-monitoring-scope",
+                  "heading_path": "FoodEx2 In Chemical Monitoring > Scope",
+                  "score": 0.33301392,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 30,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#000-00-foodex2-in-chemical-monitoring",
+                  "heading_path": "FoodEx2 In Chemical Monitoring",
+                  "score": 0.32786107,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 31,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#006-00-domoic-acid-in-scallops-relevant-business-rules",
+                  "heading_path": "Domoic Acid In Scallops > Relevant Business Rules",
+                  "score": 0.32653415,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 33,
+                  "page_name": "maintenance-2023.md",
+                  "chunk_id": "maintenance-2023.md#000-00-maintenance-2023",
+                  "heading_path": "Maintenance 2023",
+                  "score": 0.32488537,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 34,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#002-00-foodex2-in-contaminants-monitoring-domain-boundary",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring > Domain Boundary",
+                  "score": 0.3242736,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 35,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#007-00-foodex2-in-chemical-monitoring-relevant-business-rules",
+                  "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Business Rules",
+                  "score": 0.32293373,
+                  "reason": "duplicate_page"
+                }
+              ],
+              "unselected_candidate_pages": [
+                "maintenance-2020.md",
+                "domoic-acid-scallops.md",
+                "facet-coding-rules.md"
+              ],
+              "elapsed_ms": 0
+            }
+          },
+          "must_have_recall": 0.5,
+          "precision": 0.42857142857142855,
+          "missing": [
+            "base-term-selection.md",
+            "process-validation-rules.md"
+          ],
+          "leaks": [
+            "contaminants-foodex2.md",
+            "pesticides-foodex2.md",
+            "maintenance-2023.md"
+          ],
+          "unlabeled": [
+            "chemical-monitoring-foodex2.md"
+          ],
+          "raw_chunk_count": 35,
+          "raw_unique_page_count": 10,
+          "final_unique_page_count": 7,
+          "candidate_duplicate_chunk_count": 25,
+          "candidate_duplicate_ratio": 0.7142857142857143,
+          "preassembly_duplicate_slot_waste": 0.42857142857142855,
+          "final_duplicate_page_count": 0,
+          "duplicate_slot_waste": 0.0,
+          "covered_roles": [
+            "facet",
+            "domain_overlay"
+          ],
+          "missing_roles": [
+            "base_term",
+            "validation"
+          ],
+          "role_coverage": 0.5
+        },
+        {
+          "id": "RAG-RET-0003",
+          "reviewed": true,
+          "question": "Får – urin (sheep urine, VMPR biological sample); reporting domain: vmpr",
+          "context": {
+            "purpose": "code_construction",
+            "reporting_domain": "vmpr"
+          },
+          "raw_candidate_pages": [
+            "vmpr-foodex2.md",
+            "vmpr-foodex2.md",
+            "vmpr-foodex2.md",
+            "vmpr-foodex2.md",
+            "vmpr-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "vmpr-foodex2.md",
+            "vmpr-foodex2.md",
+            "vmpr-foodex2.md",
+            "vmpr-legislative-mapping.md",
+            "vmpr-legislative-mapping.md",
+            "vmpr-legislative-mapping.md",
+            "vmpr-legislative-mapping.md",
+            "vmpr-legislative-mapping.md",
+            "vmpr-legislative-mapping.md",
+            "vmpr-legislative-mapping.md",
+            "domain-specific-validation.md",
+            "vmpr-legislative-mapping.md",
+            "domain-specific-validation.md",
+            "vmpr-legislative-mapping.md",
+            "chemical-monitoring-foodex2.md",
+            "maintenance-2024.md",
+            "maintenance-2024.md",
+            "vmpr-legislative-mapping.md",
+            "chemical-monitoring-foodex2.md",
+            "domain-specific-validation.md",
+            "domain-specific-validation.md",
+            "chemical-monitoring-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "facet-coding-rules.md",
+            "chemical-monitoring-foodex2.md",
+            "pesticides-foodex2.md",
+            "maintenance-2024.md",
+            "domoic-acid-scallops.md"
+          ],
+          "pages_used": [
+            "vmpr-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "vmpr-legislative-mapping.md",
+            "domain-specific-validation.md",
+            "maintenance-2024.md",
+            "facet-coding-rules.md",
+            "pesticides-foodex2.md"
+          ],
+          "retrieval_ms": 319,
+          "request_wall_time_ms": 324,
+          "embedding": {
+            "provider": "voyage",
+            "model": "voyage-context-3",
+            "dimension": 1024,
+            "elapsed_ms": 287,
+            "usage": {
+              "total_tokens": 20
+            },
+            "tracked_tokens": 20
+          },
+          "retrieval": {
+            "provider": "qdrant",
+            "retrieval_mode": "wiki",
+            "collection": "foodex2_wiki_markdown_v1",
+            "qdrant_url": "http://127.0.0.1:6333",
+            "elapsed_ms": 32,
+            "limit": 7,
+            "candidate_limit": 35,
+            "result_count": 35,
+            "selected_result_count": 7,
+            "results": [
+              {
+                "chunk_id": "vmpr-foodex2.md#006-00-foodex2-in-vmpr-monitoring-worked-signals",
+                "score": 0.53915066,
+                "page_name": "vmpr-foodex2.md",
+                "heading_path": "FoodEx2 In VMPR Monitoring > Worked Signals",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+                "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+              },
+              {
+                "chunk_id": "vmpr-foodex2.md#003-00-foodex2-in-vmpr-monitoring-non-food-biological-sample-boundary",
+                "score": 0.52040607,
+                "page_name": "vmpr-foodex2.md",
+                "heading_path": "FoodEx2 In VMPR Monitoring > Non-Food Biological Sample Boundary",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+                "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+              },
+              {
+                "chunk_id": "vmpr-foodex2.md#000-00-foodex2-in-vmpr-monitoring",
+                "score": 0.5096497,
+                "page_name": "vmpr-foodex2.md",
+                "heading_path": "FoodEx2 In VMPR Monitoring",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+                "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+              },
+              {
+                "chunk_id": "vmpr-foodex2.md#004-00-foodex2-in-vmpr-monitoring-feed-and-water",
+                "score": 0.49455965,
+                "page_name": "vmpr-foodex2.md",
+                "heading_path": "FoodEx2 In VMPR Monitoring > Feed And Water",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+                "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+              },
+              {
+                "chunk_id": "vmpr-foodex2.md#002-00-foodex2-in-vmpr-monitoring-core-vmpr-requirements",
+                "score": 0.47788888,
+                "page_name": "vmpr-foodex2.md",
+                "heading_path": "FoodEx2 In VMPR Monitoring > Core VMPR Requirements",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+                "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#004-00-foodex2-in-chemical-monitoring-vmpr-specific-rules",
+                "score": 0.47277907,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > VMPR-Specific Rules",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#005-00-foodex2-in-chemical-monitoring-worked-examples",
+                "score": 0.45799246,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Worked Examples",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "vmpr-foodex2.md#001-00-foodex2-in-vmpr-monitoring-use-only-when-vmpr-context-is-active",
+                "score": 0.45409492,
+                "page_name": "vmpr-foodex2.md",
+                "heading_path": "FoodEx2 In VMPR Monitoring > Use Only When VMPR Context Is Active",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+                "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+              },
+              {
+                "chunk_id": "vmpr-foodex2.md#007-00-foodex2-in-vmpr-monitoring-relevant-policy",
+                "score": 0.44528002,
+                "page_name": "vmpr-foodex2.md",
+                "heading_path": "FoodEx2 In VMPR Monitoring > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+                "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+              },
+              {
+                "chunk_id": "vmpr-foodex2.md#005-00-foodex2-in-vmpr-monitoring-processed-products-and-f33",
+                "score": 0.43722236,
+                "page_name": "vmpr-foodex2.md",
+                "heading_path": "FoodEx2 In VMPR Monitoring > Processed Products And F33",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+                "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+              },
+              {
+                "chunk_id": "vmpr-legislative-mapping.md#006-00-vmpr-legislative-mapping-final-legislative-commodity-mapping",
+                "score": 0.42319113,
+                "page_name": "vmpr-legislative-mapping.md",
+                "heading_path": "VMPR Legislative Mapping > Final Legislative Commodity Mapping",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+                "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+              },
+              {
+                "chunk_id": "vmpr-legislative-mapping.md#003-00-vmpr-legislative-mapping-game-flag",
+                "score": 0.41665053,
+                "page_name": "vmpr-legislative-mapping.md",
+                "heading_path": "VMPR Legislative Mapping > Game Flag",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+                "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+              },
+              {
+                "chunk_id": "vmpr-legislative-mapping.md#007-00-vmpr-legislative-mapping-practical-consequences-for-coding",
+                "score": 0.4165526,
+                "page_name": "vmpr-legislative-mapping.md",
+                "heading_path": "VMPR Legislative Mapping > Practical Consequences For Coding",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+                "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+              },
+              {
+                "chunk_id": "vmpr-legislative-mapping.md#005-00-vmpr-legislative-mapping-wild-flag",
+                "score": 0.40998757,
+                "page_name": "vmpr-legislative-mapping.md",
+                "heading_path": "VMPR Legislative Mapping > Wild Flag",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+                "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+              },
+              {
+                "chunk_id": "vmpr-legislative-mapping.md#000-00-vmpr-legislative-mapping",
+                "score": 0.40717965,
+                "page_name": "vmpr-legislative-mapping.md",
+                "heading_path": "VMPR Legislative Mapping",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+                "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+              },
+              {
+                "chunk_id": "vmpr-legislative-mapping.md#004-00-vmpr-legislative-mapping-foodclassvmpr-classifier",
+                "score": 0.39785635,
+                "page_name": "vmpr-legislative-mapping.md",
+                "heading_path": "VMPR Legislative Mapping > FoodClassVMPR Classifier",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+                "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+              },
+              {
+                "chunk_id": "vmpr-legislative-mapping.md#001-00-vmpr-legislative-mapping-scope",
+                "score": 0.38695648,
+                "page_name": "vmpr-legislative-mapping.md",
+                "heading_path": "VMPR Legislative Mapping > Scope",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+                "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+              },
+              {
+                "chunk_id": "domain-specific-validation.md#002-00-domain-specific-validation-common-mandatory-or-recommended-facets",
+                "score": 0.381918,
+                "page_name": "domain-specific-validation.md",
+                "heading_path": "Domain-Specific Validation > Common Mandatory Or Recommended Facets",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+                "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+              },
+              {
+                "chunk_id": "vmpr-legislative-mapping.md#002-00-vmpr-legislative-mapping-mapping-stages",
+                "score": 0.37849027,
+                "page_name": "vmpr-legislative-mapping.md",
+                "heading_path": "VMPR Legislative Mapping > Mapping Stages",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+                "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+              },
+              {
+                "chunk_id": "domain-specific-validation.md#003-00-domain-specific-validation-worked-examples",
+                "score": 0.36251408,
+                "page_name": "domain-specific-validation.md",
+                "heading_path": "Domain-Specific Validation > Worked Examples",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+                "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+              },
+              {
+                "chunk_id": "vmpr-legislative-mapping.md#009-00-vmpr-legislative-mapping-relevant-business-rules",
+                "score": 0.35898206,
+                "page_name": "vmpr-legislative-mapping.md",
+                "heading_path": "VMPR Legislative Mapping > Relevant Business Rules",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+                "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#002-00-foodex2-in-chemical-monitoring-domain-pages",
+                "score": 0.35820675,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Domain Pages",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "maintenance-2024.md#001-00-maintenance-2024-summary",
+                "score": 0.35665378,
+                "page_name": "maintenance-2024.md",
+                "heading_path": "Maintenance 2024 > Summary",
+                "category": "maintenance",
+                "source_tier": null,
+                "summary": "VetDrugRes overhaul and expanded legislative mapping.",
+                "source_path": "raw/efsa-guidance/maintenance-2024.md"
+              },
+              {
+                "chunk_id": "maintenance-2024.md#002-00-maintenance-2024-why-this-is-important",
+                "score": 0.3485803,
+                "page_name": "maintenance-2024.md",
+                "heading_path": "Maintenance 2024 > Why This Is Important",
+                "category": "maintenance",
+                "source_tier": null,
+                "summary": "VetDrugRes overhaul and expanded legislative mapping.",
+                "source_path": "raw/efsa-guidance/maintenance-2024.md"
+              },
+              {
+                "chunk_id": "vmpr-legislative-mapping.md#008-00-vmpr-legislative-mapping-relevant-policy",
+                "score": 0.34578228,
+                "page_name": "vmpr-legislative-mapping.md",
+                "heading_path": "VMPR Legislative Mapping > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+                "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#001-00-foodex2-in-chemical-monitoring-scope",
+                "score": 0.33017585,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Scope",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "domain-specific-validation.md#000-00-domain-specific-validation",
+                "score": 0.3151058,
+                "page_name": "domain-specific-validation.md",
+                "heading_path": "Domain-Specific Validation",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+                "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+              },
+              {
+                "chunk_id": "domain-specific-validation.md#001-00-domain-specific-validation-these-rules-are-contextual",
+                "score": 0.31053245,
+                "page_name": "domain-specific-validation.md",
+                "heading_path": "Domain-Specific Validation > These Rules Are Contextual",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+                "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#000-00-foodex2-in-chemical-monitoring",
+                "score": 0.30783582,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#007-00-foodex2-in-chemical-monitoring-relevant-business-rules",
+                "score": 0.29963005,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Business Rules",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "facet-coding-rules.md#004-00-facet-coding-rules-worked-examples",
+                "score": 0.2994818,
+                "page_name": "facet-coding-rules.md",
+                "heading_path": "Facet Coding Rules > Worked Examples",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.",
+                "source_path": "raw/efsa-guidance/facet-coding-rules.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#003-00-foodex2-in-chemical-monitoring-general-rules",
+                "score": 0.29748186,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > General Rules",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#002-00-foodex2-in-pesticide-residue-monitoring-domain-boundary",
+                "score": 0.29328427,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Domain Boundary",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "maintenance-2024.md#000-00-maintenance-2024",
+                "score": 0.288455,
+                "page_name": "maintenance-2024.md",
+                "heading_path": "Maintenance 2024",
+                "category": "maintenance",
+                "source_tier": null,
+                "summary": "VetDrugRes overhaul and expanded legislative mapping.",
+                "source_path": "raw/efsa-guidance/maintenance-2024.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#003-01-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                "score": 0.2806515,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              }
+            ],
+            "assembly": {
+              "strategy": "highest_ranked_chunk_per_unique_page",
+              "candidate_chunk_count": 35,
+              "candidate_unique_page_count": 8,
+              "selected_page_count": 7,
+              "duplicate_chunk_count": 27,
+              "candidate_duplicate_ratio": 0.7714285714285715,
+              "preassembly_duplicate_slot_waste": 0.7142857142857143,
+              "duplicate_slot_waste": 0.0,
+              "selected_pages": [
+                "vmpr-foodex2.md",
+                "chemical-monitoring-foodex2.md",
+                "vmpr-legislative-mapping.md",
+                "domain-specific-validation.md",
+                "maintenance-2024.md",
+                "facet-coding-rules.md",
+                "pesticides-foodex2.md"
+              ],
+              "dropped_duplicate_chunks": [
+                {
+                  "rank": 2,
+                  "page_name": "vmpr-foodex2.md",
+                  "chunk_id": "vmpr-foodex2.md#003-00-foodex2-in-vmpr-monitoring-non-food-biological-sample-boundary",
+                  "heading_path": "FoodEx2 In VMPR Monitoring > Non-Food Biological Sample Boundary",
+                  "score": 0.52040607,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 3,
+                  "page_name": "vmpr-foodex2.md",
+                  "chunk_id": "vmpr-foodex2.md#000-00-foodex2-in-vmpr-monitoring",
+                  "heading_path": "FoodEx2 In VMPR Monitoring",
+                  "score": 0.5096497,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 4,
+                  "page_name": "vmpr-foodex2.md",
+                  "chunk_id": "vmpr-foodex2.md#004-00-foodex2-in-vmpr-monitoring-feed-and-water",
+                  "heading_path": "FoodEx2 In VMPR Monitoring > Feed And Water",
+                  "score": 0.49455965,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 5,
+                  "page_name": "vmpr-foodex2.md",
+                  "chunk_id": "vmpr-foodex2.md#002-00-foodex2-in-vmpr-monitoring-core-vmpr-requirements",
+                  "heading_path": "FoodEx2 In VMPR Monitoring > Core VMPR Requirements",
+                  "score": 0.47788888,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 7,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#005-00-foodex2-in-chemical-monitoring-worked-examples",
+                  "heading_path": "FoodEx2 In Chemical Monitoring > Worked Examples",
+                  "score": 0.45799246,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 8,
+                  "page_name": "vmpr-foodex2.md",
+                  "chunk_id": "vmpr-foodex2.md#001-00-foodex2-in-vmpr-monitoring-use-only-when-vmpr-context-is-active",
+                  "heading_path": "FoodEx2 In VMPR Monitoring > Use Only When VMPR Context Is Active",
+                  "score": 0.45409492,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 9,
+                  "page_name": "vmpr-foodex2.md",
+                  "chunk_id": "vmpr-foodex2.md#007-00-foodex2-in-vmpr-monitoring-relevant-policy",
+                  "heading_path": "FoodEx2 In VMPR Monitoring > Relevant Policy",
+                  "score": 0.44528002,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 10,
+                  "page_name": "vmpr-foodex2.md",
+                  "chunk_id": "vmpr-foodex2.md#005-00-foodex2-in-vmpr-monitoring-processed-products-and-f33",
+                  "heading_path": "FoodEx2 In VMPR Monitoring > Processed Products And F33",
+                  "score": 0.43722236,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 12,
+                  "page_name": "vmpr-legislative-mapping.md",
+                  "chunk_id": "vmpr-legislative-mapping.md#003-00-vmpr-legislative-mapping-game-flag",
+                  "heading_path": "VMPR Legislative Mapping > Game Flag",
+                  "score": 0.41665053,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 13,
+                  "page_name": "vmpr-legislative-mapping.md",
+                  "chunk_id": "vmpr-legislative-mapping.md#007-00-vmpr-legislative-mapping-practical-consequences-for-coding",
+                  "heading_path": "VMPR Legislative Mapping > Practical Consequences For Coding",
+                  "score": 0.4165526,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 14,
+                  "page_name": "vmpr-legislative-mapping.md",
+                  "chunk_id": "vmpr-legislative-mapping.md#005-00-vmpr-legislative-mapping-wild-flag",
+                  "heading_path": "VMPR Legislative Mapping > Wild Flag",
+                  "score": 0.40998757,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 15,
+                  "page_name": "vmpr-legislative-mapping.md",
+                  "chunk_id": "vmpr-legislative-mapping.md#000-00-vmpr-legislative-mapping",
+                  "heading_path": "VMPR Legislative Mapping",
+                  "score": 0.40717965,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 16,
+                  "page_name": "vmpr-legislative-mapping.md",
+                  "chunk_id": "vmpr-legislative-mapping.md#004-00-vmpr-legislative-mapping-foodclassvmpr-classifier",
+                  "heading_path": "VMPR Legislative Mapping > FoodClassVMPR Classifier",
+                  "score": 0.39785635,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 17,
+                  "page_name": "vmpr-legislative-mapping.md",
+                  "chunk_id": "vmpr-legislative-mapping.md#001-00-vmpr-legislative-mapping-scope",
+                  "heading_path": "VMPR Legislative Mapping > Scope",
+                  "score": 0.38695648,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 19,
+                  "page_name": "vmpr-legislative-mapping.md",
+                  "chunk_id": "vmpr-legislative-mapping.md#002-00-vmpr-legislative-mapping-mapping-stages",
+                  "heading_path": "VMPR Legislative Mapping > Mapping Stages",
+                  "score": 0.37849027,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 20,
+                  "page_name": "domain-specific-validation.md",
+                  "chunk_id": "domain-specific-validation.md#003-00-domain-specific-validation-worked-examples",
+                  "heading_path": "Domain-Specific Validation > Worked Examples",
+                  "score": 0.36251408,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 21,
+                  "page_name": "vmpr-legislative-mapping.md",
+                  "chunk_id": "vmpr-legislative-mapping.md#009-00-vmpr-legislative-mapping-relevant-business-rules",
+                  "heading_path": "VMPR Legislative Mapping > Relevant Business Rules",
+                  "score": 0.35898206,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 22,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#002-00-foodex2-in-chemical-monitoring-domain-pages",
+                  "heading_path": "FoodEx2 In Chemical Monitoring > Domain Pages",
+                  "score": 0.35820675,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 24,
+                  "page_name": "maintenance-2024.md",
+                  "chunk_id": "maintenance-2024.md#002-00-maintenance-2024-why-this-is-important",
+                  "heading_path": "Maintenance 2024 > Why This Is Important",
+                  "score": 0.3485803,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 25,
+                  "page_name": "vmpr-legislative-mapping.md",
+                  "chunk_id": "vmpr-legislative-mapping.md#008-00-vmpr-legislative-mapping-relevant-policy",
+                  "heading_path": "VMPR Legislative Mapping > Relevant Policy",
+                  "score": 0.34578228,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 26,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#001-00-foodex2-in-chemical-monitoring-scope",
+                  "heading_path": "FoodEx2 In Chemical Monitoring > Scope",
+                  "score": 0.33017585,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 27,
+                  "page_name": "domain-specific-validation.md",
+                  "chunk_id": "domain-specific-validation.md#000-00-domain-specific-validation",
+                  "heading_path": "Domain-Specific Validation",
+                  "score": 0.3151058,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 28,
+                  "page_name": "domain-specific-validation.md",
+                  "chunk_id": "domain-specific-validation.md#001-00-domain-specific-validation-these-rules-are-contextual",
+                  "heading_path": "Domain-Specific Validation > These Rules Are Contextual",
+                  "score": 0.31053245,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 29,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#000-00-foodex2-in-chemical-monitoring",
+                  "heading_path": "FoodEx2 In Chemical Monitoring",
+                  "score": 0.30783582,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 30,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#007-00-foodex2-in-chemical-monitoring-relevant-business-rules",
+                  "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Business Rules",
+                  "score": 0.29963005,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 32,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#003-00-foodex2-in-chemical-monitoring-general-rules",
+                  "heading_path": "FoodEx2 In Chemical Monitoring > General Rules",
+                  "score": 0.29748186,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 34,
+                  "page_name": "maintenance-2024.md",
+                  "chunk_id": "maintenance-2024.md#000-00-maintenance-2024",
+                  "heading_path": "Maintenance 2024",
+                  "score": 0.288455,
+                  "reason": "duplicate_page"
+                }
+              ],
+              "unselected_candidate_pages": [
+                "domoic-acid-scallops.md"
+              ],
+              "elapsed_ms": 0
+            }
+          },
+          "must_have_recall": 0.5,
+          "precision": 0.7142857142857143,
+          "missing": [
+            "base-term-selection.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [
+            "maintenance-2024.md",
+            "pesticides-foodex2.md"
+          ],
+          "unlabeled": [],
+          "raw_chunk_count": 35,
+          "raw_unique_page_count": 8,
+          "final_unique_page_count": 7,
+          "candidate_duplicate_chunk_count": 27,
+          "candidate_duplicate_ratio": 0.7714285714285715,
+          "preassembly_duplicate_slot_waste": 0.7142857142857143,
+          "final_duplicate_page_count": 0,
+          "duplicate_slot_waste": 0.0,
+          "covered_roles": [
+            "facet",
+            "domain_overlay"
+          ],
+          "missing_roles": [
+            "base_term",
+            "validation"
+          ],
+          "role_coverage": 0.5
+        },
+        {
+          "id": "RAG-RET-0004",
+          "reviewed": true,
+          "question": "Pizza i laminerad avhämtningskartong (pizza in a laminated takeaway box; packaging matters); reporting domain: contaminants",
+          "context": {
+            "purpose": "code_construction",
+            "reporting_domain": "contaminants"
+          },
+          "raw_candidate_pages": [
+            "contaminants-foodex2.md",
+            "contaminants-foodex2.md",
+            "packaging-facets.md",
+            "contaminants-foodex2.md",
+            "contaminants-foodex2.md",
+            "contaminants-foodex2.md",
+            "contaminants-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "contaminants-foodex2.md",
+            "domain-specific-validation.md",
+            "domain-specific-validation.md",
+            "domoic-acid-scallops.md",
+            "domoic-acid-scallops.md",
+            "domain-specific-validation.md",
+            "packaging-facets.md",
+            "domoic-acid-scallops.md",
+            "domoic-acid-scallops.md",
+            "domoic-acid-scallops.md",
+            "domoic-acid-scallops.md",
+            "pesticides-foodex2.md",
+            "domain-specific-validation.md",
+            "domoic-acid-scallops.md",
+            "domoic-acid-scallops.md",
+            "term-type-facet-constraints.md",
+            "additives-flavourings-foodex2.md",
+            "domoic-acid-scallops.md",
+            "pesticides-foodex2.md",
+            "domain-specific-validation.md",
+            "domoic-acid-scallops.md",
+            "pesticides-foodex2.md",
+            "chemical-monitoring-foodex2.md",
+            "packaging-facets.md",
+            "pesticides-foodex2.md",
+            "RUNTIME_RULES.md",
+            "packaging-facets.md"
+          ],
+          "pages_used": [
+            "contaminants-foodex2.md",
+            "packaging-facets.md",
+            "chemical-monitoring-foodex2.md",
+            "domain-specific-validation.md",
+            "domoic-acid-scallops.md",
+            "pesticides-foodex2.md",
+            "term-type-facet-constraints.md"
+          ],
+          "retrieval_ms": 303,
+          "request_wall_time_ms": 304,
+          "embedding": {
+            "provider": "voyage",
+            "model": "voyage-context-3",
+            "dimension": 1024,
+            "elapsed_ms": 280,
+            "usage": {
+              "total_tokens": 27
+            },
+            "tracked_tokens": 27
+          },
+          "retrieval": {
+            "provider": "qdrant",
+            "retrieval_mode": "wiki",
+            "collection": "foodex2_wiki_markdown_v1",
+            "qdrant_url": "http://127.0.0.1:6333",
+            "elapsed_ms": 23,
+            "limit": 7,
+            "candidate_limit": 35,
+            "result_count": 35,
+            "selected_result_count": 7,
+            "results": [
+              {
+                "chunk_id": "contaminants-foodex2.md#005-00-foodex2-in-contaminants-monitoring-worked-signals",
+                "score": 0.39896178,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Worked Signals",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#003-00-foodex2-in-contaminants-monitoring-high-impact-rules",
+                "score": 0.38324428,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > High-Impact Rules",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "packaging-facets.md#004-00-packaging-facets-worked-examples",
+                "score": 0.38270676,
+                "page_name": "packaging-facets.md",
+                "heading_path": "Packaging Facets > Worked Examples",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "When to use `F18` packaging-format and `F19` packaging-material, and how they differ from `F28` process.",
+                "source_path": "raw/efsa-guidance/packaging-facets.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#001-00-foodex2-in-contaminants-monitoring-use-only-when-contaminants-context-is-active",
+                "score": 0.37956914,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Use Only When Contaminants Context Is Active",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#000-00-foodex2-in-contaminants-monitoring",
+                "score": 0.37057194,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#004-00-foodex2-in-contaminants-monitoring-pesticide-contrast",
+                "score": 0.36495274,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Pesticide Contrast",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#006-00-foodex2-in-contaminants-monitoring-relevant-policy",
+                "score": 0.35012105,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#002-00-foodex2-in-chemical-monitoring-domain-pages",
+                "score": 0.32411426,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Domain Pages",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "contaminants-foodex2.md#002-00-foodex2-in-contaminants-monitoring-domain-boundary",
+                "score": 0.3181674,
+                "page_name": "contaminants-foodex2.md",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Domain Boundary",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+              },
+              {
+                "chunk_id": "domain-specific-validation.md#002-00-domain-specific-validation-common-mandatory-or-recommended-facets",
+                "score": 0.31576046,
+                "page_name": "domain-specific-validation.md",
+                "heading_path": "Domain-Specific Validation > Common Mandatory Or Recommended Facets",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+                "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+              },
+              {
+                "chunk_id": "domain-specific-validation.md#003-00-domain-specific-validation-worked-examples",
+                "score": 0.3021224,
+                "page_name": "domain-specific-validation.md",
+                "heading_path": "Domain-Specific Validation > Worked Examples",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+                "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#001-00-domoic-acid-in-scallops-use-only-for-domoic-acid-scallop-reporting",
+                "score": 0.3006119,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Use Only For Domoic Acid Scallop Reporting",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#004-00-domoic-acid-in-scallops-retrieval-signals",
+                "score": 0.2999129,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Retrieval Signals",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "domain-specific-validation.md#001-00-domain-specific-validation-these-rules-are-contextual",
+                "score": 0.29807162,
+                "page_name": "domain-specific-validation.md",
+                "heading_path": "Domain-Specific Validation > These Rules Are Contextual",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+                "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+              },
+              {
+                "chunk_id": "packaging-facets.md#002-00-packaging-facets-f18-vs-f19",
+                "score": 0.2912451,
+                "page_name": "packaging-facets.md",
+                "heading_path": "Packaging Facets > F18 Vs F19",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "When to use `F18` packaging-format and `F19` packaging-material, and how they differ from `F28` process.",
+                "source_path": "raw/efsa-guidance/packaging-facets.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#003-03-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                "score": 0.28694695,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#005-00-domoic-acid-in-scallops-relevant-policy",
+                "score": 0.28379577,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#000-00-domoic-acid-in-scallops",
+                "score": 0.2832619,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#006-00-domoic-acid-in-scallops-relevant-business-rules",
+                "score": 0.28313655,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Relevant Business Rules",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#001-00-foodex2-in-pesticide-residue-monitoring-use-only-when-pesticide-context-is-activ",
+                "score": 0.2827418,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Use Only When Pesticide Context Is Active",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "domain-specific-validation.md#000-00-domain-specific-validation",
+                "score": 0.28130278,
+                "page_name": "domain-specific-validation.md",
+                "heading_path": "Domain-Specific Validation",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+                "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#003-00-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                "score": 0.27821732,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#002-00-domoic-acid-in-scallops-reporting-rule",
+                "score": 0.27813858,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Reporting Rule",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "term-type-facet-constraints.md#003-00-term-type-and-facet-constraints-worked-examples",
+                "score": 0.27687368,
+                "page_name": "term-type-facet-constraints.md",
+                "heading_path": "Term Type And Facet Constraints > Worked Examples",
+                "category": "validation",
+                "source_tier": null,
+                "summary": "Allowed and forbidden facets by FoodEx2 term type, including the distinction between BR13 disintegration `F03` values and permitted non-disintegration physical states on raw commodities.",
+                "source_path": "raw/efsa-guidance/term-type-facet-constraints.md"
+              },
+              {
+                "chunk_id": "additives-flavourings-foodex2.md#004-00-foodex2-in-additives-and-flavourings-monitoring-matrix-terms-not-to-report-as-th",
+                "score": 0.2752515,
+                "page_name": "additives-flavourings-foodex2.md",
+                "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Matrix Terms Not To Report As The Sample",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+                "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#003-01-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                "score": 0.2707364,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#003-00-foodex2-in-pesticide-residue-monitoring-facet-consequences",
+                "score": 0.27013934,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Facet Consequences",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "domain-specific-validation.md#004-00-domain-specific-validation-relevant-policy",
+                "score": 0.26988053,
+                "page_name": "domain-specific-validation.md",
+                "heading_path": "Domain-Specific Validation > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+                "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+              },
+              {
+                "chunk_id": "domoic-acid-scallops.md#003-02-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                "score": 0.2696443,
+                "page_name": "domoic-acid-scallops.md",
+                "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+                "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#005-00-foodex2-in-pesticide-residue-monitoring-relevant-policy",
+                "score": 0.26639253,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#005-00-foodex2-in-chemical-monitoring-worked-examples",
+                "score": 0.265631,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Worked Examples",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              },
+              {
+                "chunk_id": "packaging-facets.md#000-00-packaging-facets",
+                "score": 0.26491436,
+                "page_name": "packaging-facets.md",
+                "heading_path": "Packaging Facets",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "When to use `F18` packaging-format and `F19` packaging-material, and how they differ from `F28` process.",
+                "source_path": "raw/efsa-guidance/packaging-facets.md"
+              },
+              {
+                "chunk_id": "pesticides-foodex2.md#000-00-foodex2-in-pesticide-residue-monitoring",
+                "score": 0.26474082,
+                "page_name": "pesticides-foodex2.md",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+                "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+              },
+              {
+                "chunk_id": "RUNTIME_RULES.md#003-00-runtime-rules-supporting-pages-by-signal",
+                "score": 0.26454014,
+                "page_name": "RUNTIME_RULES.md",
+                "heading_path": "Runtime Rules > Supporting Pages By Signal",
+                "category": "runtime",
+                "source_tier": null,
+                "summary": "Compact prompt-facing rules file attached by context-pack before supporting guidance pages.",
+                "source_path": "RUNTIME_RULES.md"
+              },
+              {
+                "chunk_id": "packaging-facets.md#005-00-packaging-facets-relevant-policy",
+                "score": 0.2603877,
+                "page_name": "packaging-facets.md",
+                "heading_path": "Packaging Facets > Relevant Policy",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "When to use `F18` packaging-format and `F19` packaging-material, and how they differ from `F28` process.",
+                "source_path": "raw/efsa-guidance/packaging-facets.md"
+              }
+            ],
+            "assembly": {
+              "strategy": "highest_ranked_chunk_per_unique_page",
+              "candidate_chunk_count": 35,
+              "candidate_unique_page_count": 9,
+              "selected_page_count": 7,
+              "duplicate_chunk_count": 26,
+              "candidate_duplicate_ratio": 0.7428571428571429,
+              "preassembly_duplicate_slot_waste": 0.7142857142857143,
+              "duplicate_slot_waste": 0.0,
+              "selected_pages": [
+                "contaminants-foodex2.md",
+                "packaging-facets.md",
+                "chemical-monitoring-foodex2.md",
+                "domain-specific-validation.md",
+                "domoic-acid-scallops.md",
+                "pesticides-foodex2.md",
+                "term-type-facet-constraints.md"
+              ],
+              "dropped_duplicate_chunks": [
+                {
+                  "rank": 2,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#003-00-foodex2-in-contaminants-monitoring-high-impact-rules",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring > High-Impact Rules",
+                  "score": 0.38324428,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 4,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#001-00-foodex2-in-contaminants-monitoring-use-only-when-contaminants-context-is-active",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring > Use Only When Contaminants Context Is Active",
+                  "score": 0.37956914,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 5,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#000-00-foodex2-in-contaminants-monitoring",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring",
+                  "score": 0.37057194,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 6,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#004-00-foodex2-in-contaminants-monitoring-pesticide-contrast",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring > Pesticide Contrast",
+                  "score": 0.36495274,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 7,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#006-00-foodex2-in-contaminants-monitoring-relevant-policy",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring > Relevant Policy",
+                  "score": 0.35012105,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 9,
+                  "page_name": "contaminants-foodex2.md",
+                  "chunk_id": "contaminants-foodex2.md#002-00-foodex2-in-contaminants-monitoring-domain-boundary",
+                  "heading_path": "FoodEx2 In Contaminants Monitoring > Domain Boundary",
+                  "score": 0.3181674,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 11,
+                  "page_name": "domain-specific-validation.md",
+                  "chunk_id": "domain-specific-validation.md#003-00-domain-specific-validation-worked-examples",
+                  "heading_path": "Domain-Specific Validation > Worked Examples",
+                  "score": 0.3021224,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 13,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#004-00-domoic-acid-in-scallops-retrieval-signals",
+                  "heading_path": "Domoic Acid In Scallops > Retrieval Signals",
+                  "score": 0.2999129,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 14,
+                  "page_name": "domain-specific-validation.md",
+                  "chunk_id": "domain-specific-validation.md#001-00-domain-specific-validation-these-rules-are-contextual",
+                  "heading_path": "Domain-Specific Validation > These Rules Are Contextual",
+                  "score": 0.29807162,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 15,
+                  "page_name": "packaging-facets.md",
+                  "chunk_id": "packaging-facets.md#002-00-packaging-facets-f18-vs-f19",
+                  "heading_path": "Packaging Facets > F18 Vs F19",
+                  "score": 0.2912451,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 16,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#003-03-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                  "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                  "score": 0.28694695,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 17,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#005-00-domoic-acid-in-scallops-relevant-policy",
+                  "heading_path": "Domoic Acid In Scallops > Relevant Policy",
+                  "score": 0.28379577,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 18,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#000-00-domoic-acid-in-scallops",
+                  "heading_path": "Domoic Acid In Scallops",
+                  "score": 0.2832619,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 19,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#006-00-domoic-acid-in-scallops-relevant-business-rules",
+                  "heading_path": "Domoic Acid In Scallops > Relevant Business Rules",
+                  "score": 0.28313655,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 21,
+                  "page_name": "domain-specific-validation.md",
+                  "chunk_id": "domain-specific-validation.md#000-00-domain-specific-validation",
+                  "heading_path": "Domain-Specific Validation",
+                  "score": 0.28130278,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 22,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#003-00-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                  "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                  "score": 0.27821732,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 23,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#002-00-domoic-acid-in-scallops-reporting-rule",
+                  "heading_path": "Domoic Acid In Scallops > Reporting Rule",
+                  "score": 0.27813858,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 26,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#003-01-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                  "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                  "score": 0.2707364,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 27,
+                  "page_name": "pesticides-foodex2.md",
+                  "chunk_id": "pesticides-foodex2.md#003-00-foodex2-in-pesticide-residue-monitoring-facet-consequences",
+                  "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Facet Consequences",
+                  "score": 0.27013934,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 28,
+                  "page_name": "domain-specific-validation.md",
+                  "chunk_id": "domain-specific-validation.md#004-00-domain-specific-validation-relevant-policy",
+                  "heading_path": "Domain-Specific Validation > Relevant Policy",
+                  "score": 0.26988053,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 29,
+                  "page_name": "domoic-acid-scallops.md",
+                  "chunk_id": "domoic-acid-scallops.md#003-02-domoic-acid-in-scallops-reportable-scallop-matrix-lookup",
+                  "heading_path": "Domoic Acid In Scallops > Reportable Scallop Matrix Lookup",
+                  "score": 0.2696443,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 30,
+                  "page_name": "pesticides-foodex2.md",
+                  "chunk_id": "pesticides-foodex2.md#005-00-foodex2-in-pesticide-residue-monitoring-relevant-policy",
+                  "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Relevant Policy",
+                  "score": 0.26639253,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 31,
+                  "page_name": "chemical-monitoring-foodex2.md",
+                  "chunk_id": "chemical-monitoring-foodex2.md#005-00-foodex2-in-chemical-monitoring-worked-examples",
+                  "heading_path": "FoodEx2 In Chemical Monitoring > Worked Examples",
+                  "score": 0.265631,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 32,
+                  "page_name": "packaging-facets.md",
+                  "chunk_id": "packaging-facets.md#000-00-packaging-facets",
+                  "heading_path": "Packaging Facets",
+                  "score": 0.26491436,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 33,
+                  "page_name": "pesticides-foodex2.md",
+                  "chunk_id": "pesticides-foodex2.md#000-00-foodex2-in-pesticide-residue-monitoring",
+                  "heading_path": "FoodEx2 In Pesticide Residue Monitoring",
+                  "score": 0.26474082,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 35,
+                  "page_name": "packaging-facets.md",
+                  "chunk_id": "packaging-facets.md#005-00-packaging-facets-relevant-policy",
+                  "heading_path": "Packaging Facets > Relevant Policy",
+                  "score": 0.2603877,
+                  "reason": "duplicate_page"
+                }
+              ],
+              "unselected_candidate_pages": [
+                "additives-flavourings-foodex2.md",
+                "RUNTIME_RULES.md"
+              ],
+              "elapsed_ms": 0
+            }
+          },
+          "must_have_recall": 0.75,
+          "precision": 0.7142857142857143,
+          "missing": [
+            "base-term-selection.md"
+          ],
+          "leaks": [
+            "pesticides-foodex2.md"
+          ],
+          "unlabeled": [
+            "domoic-acid-scallops.md"
+          ],
+          "raw_chunk_count": 34,
+          "raw_unique_page_count": 8,
+          "final_unique_page_count": 7,
+          "candidate_duplicate_chunk_count": 26,
+          "candidate_duplicate_ratio": 0.7647058823529411,
+          "preassembly_duplicate_slot_waste": 0.7142857142857143,
+          "final_duplicate_page_count": 0,
+          "duplicate_slot_waste": 0.0,
+          "covered_roles": [
+            "facet",
+            "validation",
+            "domain_overlay"
+          ],
+          "missing_roles": [
+            "base_term"
+          ],
+          "role_coverage": 0.75
+        },
+        {
+          "id": "RAG-RET-0005",
+          "reviewed": true,
+          "question": "Fryst produkt vars föreslagna kod har två identiska frysfasetter (frozen product whose proposed code repeats the same freezing facet)",
+          "context": {
+            "purpose": "code_construction"
+          },
+          "raw_candidate_pages": [
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "process-facets.md",
+            "structural-validation.md",
+            "policy-contract.md",
+            "policy-contract.md",
+            "code-string-format.md",
+            "policy-contract.md",
+            "term-type-facet-constraints.md",
+            "facet-coding-rules.md",
+            "code-string-format.md",
+            "anses-codification-guidance.md",
+            "code-string-format.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "code-string-format.md",
+            "process-facets.md",
+            "policy-contract.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "process-validation-rules.md",
+            "domain-specific-validation.md",
+            "packaging-facets.md",
+            "facet-coding-rules.md",
+            "facet-coding-rules.md",
+            "business-rules.md",
+            "structural-validation.md",
+            "validation-rules.md",
+            "process-facets.md",
+            "validation-rules.md",
+            "facet-coding-rules.md",
+            "policy-contract.md",
+            "business-rules.md",
+            "chemical-monitoring-foodex2.md"
+          ],
+          "pages_used": [
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "process-facets.md",
+            "policy-contract.md",
+            "code-string-format.md",
+            "facet-coding-rules.md",
+            "anses-codification-guidance.md"
+          ],
+          "retrieval_ms": 322,
+          "request_wall_time_ms": 322,
+          "embedding": {
+            "provider": "voyage",
+            "model": "voyage-context-3",
+            "dimension": 1024,
+            "elapsed_ms": 286,
+            "usage": {
+              "total_tokens": 30
+            },
+            "tracked_tokens": 30
+          },
+          "retrieval": {
+            "provider": "qdrant",
+            "retrieval_mode": "wiki",
+            "collection": "foodex2_wiki_markdown_v1",
+            "qdrant_url": "http://127.0.0.1:6333",
+            "elapsed_ms": 36,
+            "limit": 7,
+            "candidate_limit": 35,
+            "result_count": 35,
+            "selected_result_count": 7,
+            "results": [
+              {
+                "chunk_id": "term-type-facet-constraints.md#003-00-term-type-and-facet-constraints-worked-examples",
+                "score": 0.4106282,
+                "page_name": "term-type-facet-constraints.md",
+                "heading_path": "Term Type And Facet Constraints > Worked Examples",
+                "category": "validation",
+                "source_tier": null,
+                "summary": "Allowed and forbidden facets by FoodEx2 term type, including the distinction between BR13 disintegration `F03` values and permitted non-disintegration physical states on raw commodities.",
+                "source_path": "raw/efsa-guidance/term-type-facet-constraints.md"
+              },
+              {
+                "chunk_id": "structural-validation.md#004-00-structural-validation-worked-examples",
+                "score": 0.4103077,
+                "page_name": "structural-validation.md",
+                "heading_path": "Structural Validation > Worked Examples",
+                "category": "validation",
+                "source_tier": null,
+                "summary": "Syntax, descriptor existence, implicit-facet cleanup, duplicates, and single-cardinality checks.",
+                "source_path": "raw/efsa-guidance/structural-validation.md"
+              },
+              {
+                "chunk_id": "process-facets.md#002-03-process-facets-appendix-a2-codes",
+                "score": 0.38629812,
+                "page_name": "process-facets.md",
+                "heading_path": "Process Facets > Appendix A2 Codes",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Compact reference for Appendix A2 process facet codes and when to use them.",
+                "source_path": "raw/efsa-guidance/process-facets.md"
+              },
+              {
+                "chunk_id": "structural-validation.md#002-00-structural-validation-descriptor-and-facet-checks",
+                "score": 0.3862238,
+                "page_name": "structural-validation.md",
+                "heading_path": "Structural Validation > Descriptor And Facet Checks",
+                "category": "validation",
+                "source_tier": null,
+                "summary": "Syntax, descriptor existence, implicit-facet cleanup, duplicates, and single-cardinality checks.",
+                "source_path": "raw/efsa-guidance/structural-validation.md"
+              },
+              {
+                "chunk_id": "policy-contract.md#009-00-policy-contract-operational-rules",
+                "score": 0.38443184,
+                "page_name": "policy-contract.md",
+                "heading_path": "Policy Contract > Operational Rules",
+                "category": "runtime",
+                "source_tier": null,
+                "summary": "Richer control-layer page defining decision order, binding rules, tie-breaks, and anti-patterns for structured and solver-oriented flows.",
+                "source_path": "raw/efsa-guidance/policy-contract.md"
+              },
+              {
+                "chunk_id": "policy-contract.md#005-01-policy-contract-binding-rules",
+                "score": 0.37335274,
+                "page_name": "policy-contract.md",
+                "heading_path": "Policy Contract > Binding Rules",
+                "category": "runtime",
+                "source_tier": null,
+                "summary": "Richer control-layer page defining decision order, binding rules, tie-breaks, and anti-patterns for structured and solver-oriented flows.",
+                "source_path": "raw/efsa-guidance/policy-contract.md"
+              },
+              {
+                "chunk_id": "code-string-format.md#001-00-code-string-format-syntax",
+                "score": 0.37120545,
+                "page_name": "code-string-format.md",
+                "heading_path": "Code String Format > Syntax",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Exact FoodEx2 code syntax, separators, and ordering conventions.",
+                "source_path": "raw/efsa-guidance/code-string-format.md"
+              },
+              {
+                "chunk_id": "policy-contract.md#005-02-policy-contract-binding-rules",
+                "score": 0.36294833,
+                "page_name": "policy-contract.md",
+                "heading_path": "Policy Contract > Binding Rules",
+                "category": "runtime",
+                "source_tier": null,
+                "summary": "Richer control-layer page defining decision order, binding rules, tie-breaks, and anti-patterns for structured and solver-oriented flows.",
+                "source_path": "raw/efsa-guidance/policy-contract.md"
+              },
+              {
+                "chunk_id": "term-type-facet-constraints.md#004-00-term-type-and-facet-constraints-relevant-policy",
+                "score": 0.35862762,
+                "page_name": "term-type-facet-constraints.md",
+                "heading_path": "Term Type And Facet Constraints > Relevant Policy",
+                "category": "validation",
+                "source_tier": null,
+                "summary": "Allowed and forbidden facets by FoodEx2 term type, including the distinction between BR13 disintegration `F03` values and permitted non-disintegration physical states on raw commodities.",
+                "source_path": "raw/efsa-guidance/term-type-facet-constraints.md"
+              },
+              {
+                "chunk_id": "facet-coding-rules.md#004-00-facet-coding-rules-worked-examples",
+                "score": 0.3582703,
+                "page_name": "facet-coding-rules.md",
+                "heading_path": "Facet Coding Rules > Worked Examples",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.",
+                "source_path": "raw/efsa-guidance/facet-coding-rules.md"
+              },
+              {
+                "chunk_id": "code-string-format.md#004-00-code-string-format-relevant-business-rules",
+                "score": 0.35731357,
+                "page_name": "code-string-format.md",
+                "heading_path": "Code String Format > Relevant Business Rules",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Exact FoodEx2 code syntax, separators, and ordering conventions.",
+                "source_path": "raw/efsa-guidance/code-string-format.md"
+              },
+              {
+                "chunk_id": "anses-codification-guidance.md#009-00-anses-foodex2-codification-guidance-extracted-guidance-special-cases-and-checks",
+                "score": 0.3566898,
+                "page_name": "anses-codification-guidance.md",
+                "heading_path": "ANSES FoodEx2 Codification Guidance > Extracted Guidance > Special Cases And Checks",
+                "category": "guidance",
+                "source_tier": "expert_guidance",
+                "summary": "Extracted `expert_guidance` from the ANSES FoodEx2 codification guidance v3, covering workflow, missing-term conventions, mixed-product handling, range values, and dataset QC checks without overriding authoritative EFSA or validator sources.",
+                "source_path": "raw/efsa-guidance/anses-codification-guidance.md"
+              },
+              {
+                "chunk_id": "code-string-format.md#002-00-code-string-format-worked-examples",
+                "score": 0.3537623,
+                "page_name": "code-string-format.md",
+                "heading_path": "Code String Format > Worked Examples",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Exact FoodEx2 code syntax, separators, and ordering conventions.",
+                "source_path": "raw/efsa-guidance/code-string-format.md"
+              },
+              {
+                "chunk_id": "process-facets.md#003-00-process-facets-worked-examples",
+                "score": 0.35324675,
+                "page_name": "process-facets.md",
+                "heading_path": "Process Facets > Worked Examples",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Compact reference for Appendix A2 process facet codes and when to use them.",
+                "source_path": "raw/efsa-guidance/process-facets.md"
+              },
+              {
+                "chunk_id": "process-validation-rules.md#003-00-process-validation-rules-worked-examples",
+                "score": 0.35118023,
+                "page_name": "process-validation-rules.md",
+                "heading_path": "Process Validation Rules > Worked Examples",
+                "category": "validation",
+                "source_tier": null,
+                "summary": "Ordinal-group process conflicts, raw-vs-derivative process boundaries, BR19/BR19+ behaviour, and the BR26 known divergence.",
+                "source_path": "raw/efsa-guidance/process-validation-rules.md"
+              },
+              {
+                "chunk_id": "code-string-format.md#003-00-code-string-format-relevant-policy",
+                "score": 0.34994307,
+                "page_name": "code-string-format.md",
+                "heading_path": "Code String Format > Relevant Policy",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Exact FoodEx2 code syntax, separators, and ordering conventions.",
+                "source_path": "raw/efsa-guidance/code-string-format.md"
+              },
+              {
+                "chunk_id": "process-facets.md#004-00-process-facets-relevant-policy",
+                "score": 0.34976864,
+                "page_name": "process-facets.md",
+                "heading_path": "Process Facets > Relevant Policy",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Compact reference for Appendix A2 process facet codes and when to use them.",
+                "source_path": "raw/efsa-guidance/process-facets.md"
+              },
+              {
+                "chunk_id": "policy-contract.md#007-00-policy-contract-anti-patterns",
+                "score": 0.3494788,
+                "page_name": "policy-contract.md",
+                "heading_path": "Policy Contract > Anti-Patterns",
+                "category": "runtime",
+                "source_tier": null,
+                "summary": "Richer control-layer page defining decision order, binding rules, tie-breaks, and anti-patterns for structured and solver-oriented flows.",
+                "source_path": "raw/efsa-guidance/policy-contract.md"
+              },
+              {
+                "chunk_id": "foodex2-overview.md#005-00-foodex2-overview-worked-examples",
+                "score": 0.3484148,
+                "page_name": "foodex2-overview.md",
+                "heading_path": "FoodEx2 Overview > Worked Examples",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "High-level explanation of FoodEx2 purpose, hierarchy model, and coding philosophy.",
+                "source_path": "raw/efsa-guidance/foodex2-overview.md"
+              },
+              {
+                "chunk_id": "implicit-vs-explicit-facets.md#003-00-implicit-vs-explicit-facets-worked-examples",
+                "score": 0.3427292,
+                "page_name": "implicit-vs-explicit-facets.md",
+                "heading_path": "Implicit vs Explicit Facets > Worked Examples",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Distinguishes inherited facet information from coder-supplied facet detail.",
+                "source_path": "raw/efsa-guidance/implicit-vs-explicit-facets.md"
+              },
+              {
+                "chunk_id": "facet-coding-rules.md#006-00-facet-coding-rules-relevant-business-rules",
+                "score": 0.3394227,
+                "page_name": "facet-coding-rules.md",
+                "heading_path": "Facet Coding Rules > Relevant Business Rules",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.",
+                "source_path": "raw/efsa-guidance/facet-coding-rules.md"
+              },
+              {
+                "chunk_id": "process-validation-rules.md#001-00-process-validation-rules-ordinal-groups",
+                "score": 0.33921278,
+                "page_name": "process-validation-rules.md",
+                "heading_path": "Process Validation Rules > Ordinal Groups",
+                "category": "validation",
+                "source_tier": null,
+                "summary": "Ordinal-group process conflicts, raw-vs-derivative process boundaries, BR19/BR19+ behaviour, and the BR26 known divergence.",
+                "source_path": "raw/efsa-guidance/process-validation-rules.md"
+              },
+              {
+                "chunk_id": "domain-specific-validation.md#004-00-domain-specific-validation-relevant-policy",
+                "score": 0.33909965,
+                "page_name": "domain-specific-validation.md",
+                "heading_path": "Domain-Specific Validation > Relevant Policy",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+                "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+              },
+              {
+                "chunk_id": "packaging-facets.md#004-00-packaging-facets-worked-examples",
+                "score": 0.338623,
+                "page_name": "packaging-facets.md",
+                "heading_path": "Packaging Facets > Worked Examples",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "When to use `F18` packaging-format and `F19` packaging-material, and how they differ from `F28` process.",
+                "source_path": "raw/efsa-guidance/packaging-facets.md"
+              },
+              {
+                "chunk_id": "facet-coding-rules.md#005-00-facet-coding-rules-relevant-policy",
+                "score": 0.33808428,
+                "page_name": "facet-coding-rules.md",
+                "heading_path": "Facet Coding Rules > Relevant Policy",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.",
+                "source_path": "raw/efsa-guidance/facet-coding-rules.md"
+              },
+              {
+                "chunk_id": "facet-coding-rules.md#002-03-facet-coding-rules-facet-category-reference",
+                "score": 0.33736977,
+                "page_name": "facet-coding-rules.md",
+                "heading_path": "Facet Coding Rules > Facet Category Reference",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.",
+                "source_path": "raw/efsa-guidance/facet-coding-rules.md"
+              },
+              {
+                "chunk_id": "business-rules.md#025-00-business-rules-br26-mutually-exclusive-processes",
+                "score": 0.33353144,
+                "page_name": "business-rules.md",
+                "heading_path": "Business Rules > BR26: Mutually Exclusive Processes",
+                "category": "validation",
+                "source_tier": null,
+                "summary": "Canonical wiki target for `BR01`-`BR31`, including MTX 17.1 validator status, BR13's seven-code disintegration boundary, BR19/BR19+ stale-data coverage, and BR26's known validator-silence divergence.",
+                "source_path": "raw/efsa-guidance/business-rules.md"
+              },
+              {
+                "chunk_id": "structural-validation.md#005-00-structural-validation-relevant-policy",
+                "score": 0.33212018,
+                "page_name": "structural-validation.md",
+                "heading_path": "Structural Validation > Relevant Policy",
+                "category": "validation",
+                "source_tier": null,
+                "summary": "Syntax, descriptor existence, implicit-facet cleanup, duplicates, and single-cardinality checks.",
+                "source_path": "raw/efsa-guidance/structural-validation.md"
+              },
+              {
+                "chunk_id": "validation-rules.md#004-00-validation-rules-overview-practical-dataset-checks",
+                "score": 0.33201382,
+                "page_name": "validation-rules.md",
+                "heading_path": "Validation Rules Overview > Practical Dataset Checks",
+                "category": "validation",
+                "source_tier": null,
+                "summary": "Overview of the validator's two-layer model, severities, and the most important blocking rules.",
+                "source_path": "raw/efsa-guidance/validation-rules.md"
+              },
+              {
+                "chunk_id": "process-facets.md#002-01-process-facets-appendix-a2-codes",
+                "score": 0.32962912,
+                "page_name": "process-facets.md",
+                "heading_path": "Process Facets > Appendix A2 Codes",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Compact reference for Appendix A2 process facet codes and when to use them.",
+                "source_path": "raw/efsa-guidance/process-facets.md"
+              },
+              {
+                "chunk_id": "validation-rules.md#007-00-validation-rules-overview-worked-examples",
+                "score": 0.32682386,
+                "page_name": "validation-rules.md",
+                "heading_path": "Validation Rules Overview > Worked Examples",
+                "category": "validation",
+                "source_tier": null,
+                "summary": "Overview of the validator's two-layer model, severities, and the most important blocking rules.",
+                "source_path": "raw/efsa-guidance/validation-rules.md"
+              },
+              {
+                "chunk_id": "facet-coding-rules.md#003-00-facet-coding-rules-high-value-facets",
+                "score": 0.3257463,
+                "page_name": "facet-coding-rules.md",
+                "heading_path": "Facet Coding Rules > High-Value Facets",
+                "category": "guidance",
+                "source_tier": null,
+                "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.",
+                "source_path": "raw/efsa-guidance/facet-coding-rules.md"
+              },
+              {
+                "chunk_id": "policy-contract.md#003-00-policy-contract-constitution",
+                "score": 0.32552588,
+                "page_name": "policy-contract.md",
+                "heading_path": "Policy Contract > Constitution",
+                "category": "runtime",
+                "source_tier": null,
+                "summary": "Richer control-layer page defining decision order, binding rules, tie-breaks, and anti-patterns for structured and solver-oriented flows.",
+                "source_path": "raw/efsa-guidance/policy-contract.md"
+              },
+              {
+                "chunk_id": "business-rules.md#029-00-business-rules-br30-invalid-facet-category",
+                "score": 0.32353383,
+                "page_name": "business-rules.md",
+                "heading_path": "Business Rules > BR30: Invalid Facet Category",
+                "category": "validation",
+                "source_tier": null,
+                "summary": "Canonical wiki target for `BR01`-`BR31`, including MTX 17.1 validator status, BR13's seven-code disintegration boundary, BR19/BR19+ stale-data coverage, and BR26's known validator-silence divergence.",
+                "source_path": "raw/efsa-guidance/business-rules.md"
+              },
+              {
+                "chunk_id": "chemical-monitoring-foodex2.md#005-00-foodex2-in-chemical-monitoring-worked-examples",
+                "score": 0.32345742,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Worked Examples",
+                "category": "domain_overlay",
+                "source_tier": null,
+                "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+                "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+              }
+            ],
+            "assembly": {
+              "strategy": "highest_ranked_chunk_per_unique_page",
+              "candidate_chunk_count": 35,
+              "candidate_unique_page_count": 15,
+              "selected_page_count": 7,
+              "duplicate_chunk_count": 20,
+              "candidate_duplicate_ratio": 0.5714285714285714,
+              "preassembly_duplicate_slot_waste": 0.2857142857142857,
+              "duplicate_slot_waste": 0.0,
+              "selected_pages": [
+                "term-type-facet-constraints.md",
+                "structural-validation.md",
+                "process-facets.md",
+                "policy-contract.md",
+                "code-string-format.md",
+                "facet-coding-rules.md",
+                "anses-codification-guidance.md"
+              ],
+              "dropped_duplicate_chunks": [
+                {
+                  "rank": 4,
+                  "page_name": "structural-validation.md",
+                  "chunk_id": "structural-validation.md#002-00-structural-validation-descriptor-and-facet-checks",
+                  "heading_path": "Structural Validation > Descriptor And Facet Checks",
+                  "score": 0.3862238,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 6,
+                  "page_name": "policy-contract.md",
+                  "chunk_id": "policy-contract.md#005-01-policy-contract-binding-rules",
+                  "heading_path": "Policy Contract > Binding Rules",
+                  "score": 0.37335274,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 8,
+                  "page_name": "policy-contract.md",
+                  "chunk_id": "policy-contract.md#005-02-policy-contract-binding-rules",
+                  "heading_path": "Policy Contract > Binding Rules",
+                  "score": 0.36294833,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 9,
+                  "page_name": "term-type-facet-constraints.md",
+                  "chunk_id": "term-type-facet-constraints.md#004-00-term-type-and-facet-constraints-relevant-policy",
+                  "heading_path": "Term Type And Facet Constraints > Relevant Policy",
+                  "score": 0.35862762,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 11,
+                  "page_name": "code-string-format.md",
+                  "chunk_id": "code-string-format.md#004-00-code-string-format-relevant-business-rules",
+                  "heading_path": "Code String Format > Relevant Business Rules",
+                  "score": 0.35731357,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 13,
+                  "page_name": "code-string-format.md",
+                  "chunk_id": "code-string-format.md#002-00-code-string-format-worked-examples",
+                  "heading_path": "Code String Format > Worked Examples",
+                  "score": 0.3537623,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 14,
+                  "page_name": "process-facets.md",
+                  "chunk_id": "process-facets.md#003-00-process-facets-worked-examples",
+                  "heading_path": "Process Facets > Worked Examples",
+                  "score": 0.35324675,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 16,
+                  "page_name": "code-string-format.md",
+                  "chunk_id": "code-string-format.md#003-00-code-string-format-relevant-policy",
+                  "heading_path": "Code String Format > Relevant Policy",
+                  "score": 0.34994307,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 17,
+                  "page_name": "process-facets.md",
+                  "chunk_id": "process-facets.md#004-00-process-facets-relevant-policy",
+                  "heading_path": "Process Facets > Relevant Policy",
+                  "score": 0.34976864,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 18,
+                  "page_name": "policy-contract.md",
+                  "chunk_id": "policy-contract.md#007-00-policy-contract-anti-patterns",
+                  "heading_path": "Policy Contract > Anti-Patterns",
+                  "score": 0.3494788,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 21,
+                  "page_name": "facet-coding-rules.md",
+                  "chunk_id": "facet-coding-rules.md#006-00-facet-coding-rules-relevant-business-rules",
+                  "heading_path": "Facet Coding Rules > Relevant Business Rules",
+                  "score": 0.3394227,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 22,
+                  "page_name": "process-validation-rules.md",
+                  "chunk_id": "process-validation-rules.md#001-00-process-validation-rules-ordinal-groups",
+                  "heading_path": "Process Validation Rules > Ordinal Groups",
+                  "score": 0.33921278,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 25,
+                  "page_name": "facet-coding-rules.md",
+                  "chunk_id": "facet-coding-rules.md#005-00-facet-coding-rules-relevant-policy",
+                  "heading_path": "Facet Coding Rules > Relevant Policy",
+                  "score": 0.33808428,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 26,
+                  "page_name": "facet-coding-rules.md",
+                  "chunk_id": "facet-coding-rules.md#002-03-facet-coding-rules-facet-category-reference",
+                  "heading_path": "Facet Coding Rules > Facet Category Reference",
+                  "score": 0.33736977,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 28,
+                  "page_name": "structural-validation.md",
+                  "chunk_id": "structural-validation.md#005-00-structural-validation-relevant-policy",
+                  "heading_path": "Structural Validation > Relevant Policy",
+                  "score": 0.33212018,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 30,
+                  "page_name": "process-facets.md",
+                  "chunk_id": "process-facets.md#002-01-process-facets-appendix-a2-codes",
+                  "heading_path": "Process Facets > Appendix A2 Codes",
+                  "score": 0.32962912,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 31,
+                  "page_name": "validation-rules.md",
+                  "chunk_id": "validation-rules.md#007-00-validation-rules-overview-worked-examples",
+                  "heading_path": "Validation Rules Overview > Worked Examples",
+                  "score": 0.32682386,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 32,
+                  "page_name": "facet-coding-rules.md",
+                  "chunk_id": "facet-coding-rules.md#003-00-facet-coding-rules-high-value-facets",
+                  "heading_path": "Facet Coding Rules > High-Value Facets",
+                  "score": 0.3257463,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 33,
+                  "page_name": "policy-contract.md",
+                  "chunk_id": "policy-contract.md#003-00-policy-contract-constitution",
+                  "heading_path": "Policy Contract > Constitution",
+                  "score": 0.32552588,
+                  "reason": "duplicate_page"
+                },
+                {
+                  "rank": 34,
+                  "page_name": "business-rules.md",
+                  "chunk_id": "business-rules.md#029-00-business-rules-br30-invalid-facet-category",
+                  "heading_path": "Business Rules > BR30: Invalid Facet Category",
+                  "score": 0.32353383,
+                  "reason": "duplicate_page"
+                }
+              ],
+              "unselected_candidate_pages": [
+                "process-validation-rules.md",
+                "foodex2-overview.md",
+                "implicit-vs-explicit-facets.md",
+                "domain-specific-validation.md",
+                "packaging-facets.md",
+                "business-rules.md",
+                "validation-rules.md",
+                "chemical-monitoring-foodex2.md"
+              ],
+              "elapsed_ms": 0
+            }
+          },
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.5714285714285714,
+          "missing": [
+            "base-term-selection.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "policy-contract.md",
+            "code-string-format.md",
+            "anses-codification-guidance.md"
+          ],
+          "raw_chunk_count": 35,
+          "raw_unique_page_count": 15,
+          "final_unique_page_count": 7,
+          "candidate_duplicate_chunk_count": 20,
+          "candidate_duplicate_ratio": 0.5714285714285714,
+          "preassembly_duplicate_slot_waste": 0.2857142857142857,
+          "final_duplicate_page_count": 0,
+          "duplicate_slot_waste": 0.0,
+          "covered_roles": [
+            "facet",
+            "validation"
+          ],
+          "missing_roles": [
+            "base_term"
+          ],
+          "role_coverage": 0.6666666666666666
+        }
+      ]
+    }
+  ],
+  "median_summary": {
+    "mean_must_have_recall": 0.55,
+    "mean_precision": 0.5428571428571429,
+    "leak_free_rate": 0.2,
+    "mean_unique_pages": 7.0,
+    "mean_candidate_duplicate_ratio": 0.7243697478991596,
+    "mean_preassembly_duplicate_slot_waste": 0.5714285714285714,
+    "mean_duplicate_slot_waste": 0.0,
+    "mean_role_coverage": 0.55,
+    "mean_retrieval_ms": 314.6,
+    "p95_retrieval_ms": 322.0
+  }
+}

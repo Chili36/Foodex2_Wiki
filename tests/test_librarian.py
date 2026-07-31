@@ -7,6 +7,7 @@ from pathlib import Path
 
 import wiki_api.librarian as librarian_module
 from wiki_api.librarian import (
+    ANSWERER_OUTPUT_SCHEMA,
     AnthropicFoodEx2Answerer,
     AnthropicFoodEx2Solver,
     AnthropicWikiLibrarian,
@@ -16,6 +17,7 @@ from wiki_api.librarian import (
     build_selection_system_prompt,
     build_selection_user_content,
     infer_model_provider,
+    resolve_answerer_model,
 )
 from wiki_api.selection_policy import load_selector_guidance
 from wiki_api.wiki_store import WikiStore
@@ -62,6 +64,61 @@ def test_infer_model_provider_for_ask_overrides() -> None:
     assert infer_model_provider("gpt-5.4-mini") == "openai"
     assert infer_model_provider("lmstudio:qwen2.5") == "lmstudio"
     assert infer_model_provider(None) == "anthropic"
+
+
+def test_answerer_builtin_default_is_terra(monkeypatch) -> None:
+    monkeypatch.delenv("WIKI_ANSWERER_MODEL", raising=False)
+    monkeypatch.delenv("WIKI_LIBRARIAN_MODEL", raising=False)
+    monkeypatch.delenv("WIKI_LLM_PROVIDER", raising=False)
+    monkeypatch.delenv("WIKI_LMSTUDIO_MODEL", raising=False)
+    monkeypatch.delenv("LMSTUDIO_MODEL", raising=False)
+
+    assert resolve_answerer_model() == "gpt-5.6-terra"
+
+
+def test_anthropic_answerer_enforces_structured_output() -> None:
+    client = FakeAnthropicClient(
+        [
+            _response(
+                stop_reason="end_turn",
+                content=[
+                    {
+                        "type": "text",
+                        "text": json.dumps(
+                            {
+                                "answer": "Use the evidence.",
+                                "citations": ["base-term-selection.md"],
+                            }
+                        ),
+                    }
+                ],
+                input_tokens=100,
+                output_tokens=25,
+            )
+        ]
+    )
+    answerer = AnthropicFoodEx2Answerer(
+        client=client,
+        model="claude-sonnet-5",
+    )
+
+    result = answerer.run(
+        question="What should I consider?",
+        pages=[
+            {
+                "page_name": "base-term-selection.md",
+                "content": "Choose the food type first.",
+            }
+        ],
+    )
+
+    assert result.answer == "Use the evidence."
+    assert client.messages.calls[0]["output_config"] == {
+        "format": {
+            "type": "json_schema",
+            "schema": ANSWERER_OUTPUT_SCHEMA,
+        }
+    }
 
 
 def test_global_lmstudio_provider_overrides_model_inference(monkeypatch) -> None:
@@ -308,6 +365,53 @@ def test_page_selector_accepts_direct_json_page_names_without_tool() -> None:
     assert result.token_summary["calls"] == 1
 
 
+def test_page_selector_ask_scope_uses_full_budget_without_index() -> None:
+    client = FakeAnthropicClient(
+        [
+            _response(
+                stop_reason="tool_use",
+                content=[
+                    {
+                        "type": "tool_use",
+                        "id": "tool_1",
+                        "name": "read_wiki_pages",
+                        "input": {
+                            "page_names": [
+                                "base-term-selection.md",
+                                "packaging-facets.md",
+                            ]
+                        },
+                    }
+                ],
+                input_tokens=100,
+                output_tokens=25,
+            )
+        ]
+    )
+    selector = AnthropicWikiPageSelector(
+        store=_store(),
+        client=client,
+        model="fake-model",
+        max_pages=2,
+        catalog_scope="ask",
+    )
+
+    result = selector.run(
+        {
+            "search_term": "test",
+            "deconstructed_query": {},
+            "candidates": [],
+            "context": {},
+        }
+    )
+
+    assert result.pages_used == [
+        "base-term-selection.md",
+        "packaging-facets.md",
+    ]
+    assert "at most 2 additional wiki pages" in client.messages.calls[0]["system"]
+
+
 def test_build_selection_system_prompt_embeds_selector_guidance() -> None:
     store = _store()
     guidance = load_selector_guidance(store)
@@ -507,8 +611,11 @@ def test_json_selector_ask_scope_includes_maintenance_pages(monkeypatch) -> None
     def fake_create_json_completion(
         *, model, system, user_content, max_tokens, reasoning_effort=None
     ):
+        captured["system"] = system
         captured["user_content"] = user_content
-        return json.dumps({"page_names": []}), {
+        return json.dumps(
+            {"page_names": ["base-term-selection.md", "packaging-facets.md"]}
+        ), {
             "stop_reason": "end_turn",
             "input_tokens": 10,
             "output_tokens": 5,
@@ -522,9 +629,9 @@ def test_json_selector_ask_scope_includes_maintenance_pages(monkeypatch) -> None
     )
 
     selector = JsonWikiPageSelector(
-        store=_store(), model="fake-model", max_pages=6, catalog_scope="ask"
+        store=_store(), model="fake-model", max_pages=2, catalog_scope="ask"
     )
-    selector.run(
+    result = selector.run(
         {
             "search_term": "test",
             "deconstructed_query": {},
@@ -536,6 +643,11 @@ def test_json_selector_ask_scope_includes_maintenance_pages(monkeypatch) -> None
     user_payload = json.loads(captured["user_content"])
     assert "maintenance-2024.md" in user_payload["selector_catalog"]
     assert "RUNTIME_RULES.md" in user_payload["selector_catalog"]
+    assert "at most 2 additional wiki pages" in captured["system"]
+    assert result.pages_used == [
+        "base-term-selection.md",
+        "packaging-facets.md",
+    ]
 
 
 def test_librarian_prefers_policy_model_env(monkeypatch) -> None:
@@ -625,7 +737,7 @@ def test_lmstudio_openai_compatible_client_maps_tool_calls(monkeypatch) -> None:
     assert response["content"][0]["input"] == {"page_names": ["base-term-selection.md"]}
 
 
-def test_runtime_components_default_to_current_sonnet(monkeypatch) -> None:
+def test_runtime_components_use_role_specific_defaults(monkeypatch) -> None:
     for name in (
         "WIKI_CONTEXT_MODEL",
         "WIKI_ANSWERER_MODEL",
@@ -637,8 +749,8 @@ def test_runtime_components_default_to_current_sonnet(monkeypatch) -> None:
     selector = AnthropicWikiPageSelector(store=_store(), client=client)
     answerer = AnthropicFoodEx2Answerer(client=client)
 
-    assert selector.model == "claude-sonnet-4-6"
-    assert answerer.model == "claude-sonnet-4-6"
+    assert selector.model == "claude-sonnet-5"
+    assert answerer.model == "gpt-5.6-terra"
 
 
 def test_store_extracts_guiding_principles_from_index() -> None:

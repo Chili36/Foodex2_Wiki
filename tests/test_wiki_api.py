@@ -609,7 +609,6 @@ def test_ask_returns_answer_with_citations_and_trace() -> None:
     assert "classifying the item as a derivative" in payload["answer"]
     assert payload["citations"] == ["base-term-selection.md", "implicit-vs-explicit-facets.md"]
     assert payload["pages_used"] == [
-        "index.md",
         "base-term-selection.md",
         "ingredient-facets.md",
         "packaging-facets.md",
@@ -625,8 +624,85 @@ def test_ask_returns_answer_with_citations_and_trace() -> None:
         "How should I think about coding fresh cheese made from milk?"
     )
     first_page = app_module.answerer_runner.calls[0]["pages"][0]
-    assert first_page["page_name"] == "index.md"
+    assert first_page["page_name"] == "base-term-selection.md"
     assert "content" in first_page
+
+
+def test_ask_disables_graph_expansion_by_default() -> None:
+    response = request(
+        "POST",
+        "/wiki/ask",
+        json={
+            "question": "How should I think about coding fresh cheese made from milk?",
+            "max_pages": 7,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert len(payload["pages_used"]) == 5
+    assert payload["trace"]["graph_expansion"] == {
+        "enabled": False,
+        "ranking": "question lexical relevance",
+        "remaining_slots": 2,
+        "neighbors_added": [],
+        "neighbors_count": 0,
+    }
+    assert len(app_module.answerer_runner.calls[0]["pages"]) == 5
+
+
+def test_ask_graph_expansion_uses_only_slots_inside_max_pages() -> None:
+    response = request(
+        "POST",
+        "/wiki/ask",
+        json={
+            "question": "How should I construct the FoodEx2 code string syntax?",
+            "max_pages": 7,
+            "use_graph_expansion": True,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    expansion = payload["trace"]["graph_expansion"]
+    assert len(payload["pages_used"]) == 7
+    assert expansion["remaining_slots"] == 2
+    assert expansion["neighbors_count"] == 2
+    assert expansion["neighbors_added"] == [
+        "code-string-format.md",
+        "business-rules.md",
+    ]
+    assert len(app_module.answerer_runner.calls[0]["pages"]) == 7
+
+
+def test_related_summary_expansion_ranks_against_question() -> None:
+    blocks = app_module._expand_related_summaries(
+        ["packaging-facets.md"],
+        query="How should I construct the FoodEx2 code string syntax?",
+        max_neighbors=1,
+        max_total_chars=8000,
+    )
+
+    assert [block["page_name"] for block in blocks] == ["code-string-format.md"]
+
+
+def test_related_summary_expansion_never_introduces_domain_overlays() -> None:
+    blocks = app_module._expand_related_summaries(
+        ["pesticides-foodex2.md", "base-term-selection.md"],
+        query="Anything to consider? Reporting domain: pesticides.",
+        max_neighbors=5,
+        max_total_chars=8000,
+    )
+
+    assert blocks
+    assert all(
+        app_module.store.page_category(block["page_name"])
+        in {"runtime", "guidance", "validation"}
+        for block in blocks
+    )
+    assert "contaminants-foodex2.md" not in {
+        block["page_name"] for block in blocks
+    }
 
 
 def test_ask_select_pages_runs_only_selector_and_records_usage() -> None:
@@ -643,7 +719,6 @@ def test_ask_select_pages_runs_only_selector_and_records_usage() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["pages_used"] == [
-        "index.md",
         "base-term-selection.md",
         "ingredient-facets.md",
         "packaging-facets.md",
@@ -728,6 +803,7 @@ def test_ask_rag_uses_qdrant_context_and_answerer(monkeypatch) -> None:
         json={
             "question": "What should I think about when coding dried chili?",
             "retrieval_mode": "wiki",
+            "retrieval_strategy": "diverse_pages",
             "limit": 3,
         },
     )
@@ -743,6 +819,7 @@ def test_ask_rag_uses_qdrant_context_and_answerer(monkeypatch) -> None:
     assert payload["citations"] == ["base-term-selection.md", "implicit-vs-explicit-facets.md"]
     assert payload["pages"][0]["content"] is None
     assert calls[0]["retrieval_mode"] == "wiki"
+    assert calls[0]["retrieval_strategy"] == "diverse_pages"
     assert calls[0]["limit"] == 3
     assert app_module.answerer_runner.calls[0]["pages"][0]["page_name"] == "base-term-selection.md"
 
@@ -867,6 +944,27 @@ def test_ask_accepts_per_request_model_overrides(monkeypatch) -> None:
     assert payload["trace"]["answerer"]["model"] == "answerer-test-model"
     assert created["selector"].max_pages == 5
     assert created["selector"].catalog_scope == "ask"
+
+
+def test_default_answerer_routes_configured_terra_through_json_client(
+    monkeypatch,
+) -> None:
+    created: dict[str, object] = {}
+
+    class TerraAnswerer(FakeAnswerer):
+        def __init__(self, *, model: str) -> None:
+            super().__init__()
+            self.model = model
+            created["answerer"] = self
+
+    monkeypatch.setenv("WIKI_ANSWERER_MODEL", "gpt-5.6-terra")
+    monkeypatch.setattr(app_module, "answerer_runner", None)
+    monkeypatch.setattr(app_module, "JsonFoodEx2Answerer", TerraAnswerer)
+
+    answerer = app_module.get_answerer_runner()
+
+    assert answerer.model == "gpt-5.6-terra"
+    assert created["answerer"] is answerer
 
 
 def test_ask_routes_non_anthropic_model_overrides(monkeypatch) -> None:
@@ -1061,7 +1159,7 @@ def test_policy_pack_uses_librarian_response() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
-    assert payload["policy_contract"]["policy_version"] == "2026-06-07-v0.6"
+    assert payload["policy_contract"]["policy_version"] == "2026-07-28-v0.7"
     assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["policy_contract"]["anti_patterns"][0]["id"] == "AP-001"
     assert "business-rules.md BR19" in payload["policy_contract"]["binding_rules"][0]["derived_from"]
@@ -1120,12 +1218,11 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
-    assert payload["policy_contract"]["policy_version"] == "2026-06-07-v0.6"
+    assert payload["policy_contract"]["policy_version"] == "2026-07-28-v0.7"
     assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["guiding_principles"][2].startswith("FoodEx2 prefers modular description")
     assert payload["pages_used"] == [
         "RUNTIME_RULES.md",
-        "index.md",
         "base-term-selection.md",
         "ingredient-facets.md",
         "packaging-facets.md",
@@ -1146,7 +1243,7 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert payload["trace"]["tool_trace"][0]["page_name"] == "base-term-selection.md"
     assert payload["trace"]["prompt_projection"]["content_mode"] == "classification_prompt"
     pages_by_name = {page["page_name"]: page for page in payload["pages"]}
-    assert pages_by_name["index.md"]["content"] is None
+    assert "index.md" not in pages_by_name
     runtime_content = pages_by_name["RUNTIME_RULES.md"]["content"]
     assert runtime_content is not None
     assert not runtime_content.startswith("# Runtime Rules")
@@ -1242,7 +1339,7 @@ def test_context_pack_backfills_missing_roles_and_drops_leaks() -> None:
     assert enforcement["backfilled"] == [
         {"role": "validation", "page": "term-type-facet-constraints.md"}
     ]
-    assert enforcement["dropped"] == ["maintenance-2024.md"]
+    assert enforcement["dropped"] == ["index.md", "maintenance-2024.md"]
     assert enforcement["selector_covered_roles"] == ["base_term", "facet"]
     page_names = [page["page_name"] for page in payload["pages"]]
     assert "term-type-facet-constraints.md" in page_names
@@ -1258,7 +1355,7 @@ def test_context_pack_trace_reports_no_backfill_when_roles_covered() -> None:
     assert response.status_code == 200
     enforcement = response.json()["trace"]["skeleton_enforcement"]
     assert enforcement["backfilled"] == []
-    assert enforcement["dropped"] == []
+    assert enforcement["dropped"] == ["index.md"]
     assert enforcement["trimmed"] == []
 
 
@@ -1276,8 +1373,8 @@ def test_context_pack_max_pages_is_a_strict_final_response_cap() -> None:
     assert "base-term-selection.md" in payload["pages_used"]
     assert "ingredient-facets.md" in payload["pages_used"]
     assert "term-type-facet-constraints.md" in payload["pages_used"]
+    assert payload["trace"]["skeleton_enforcement"]["dropped"] == ["index.md"]
     assert payload["trace"]["skeleton_enforcement"]["trimmed"] == [
-        "index.md",
         "implicit-vs-explicit-facets.md",
         "packaging-facets.md",
     ]
@@ -1354,7 +1451,7 @@ def test_solve_returns_final_code_and_stage_traces() -> None:
     )
     assert response.status_code == 200
     payload = response.json()
-    assert payload["policy_contract"]["policy_version"] == "2026-06-07-v0.6"
+    assert payload["policy_contract"]["policy_version"] == "2026-07-28-v0.7"
     assert payload["solution"]["constructedCode"] == "A044C#F04.A00VV$F04.A00GZ$F18.A07NN$F19.A07PF"
     assert payload["solution"]["validationCheck"]["passes"] is True
     assert payload["solution"]["confidence"] == 5
@@ -1411,6 +1508,7 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     payload = response.json()
 
     context_props = payload["components"]["schemas"]["ContextPackRequest"]["properties"]
+    ask_props = payload["components"]["schemas"]["AskRequest"]["properties"]
     policy_props = payload["components"]["schemas"]["PolicyPackRequest"]["properties"]
     solve_props = payload["components"]["schemas"]["SolveRequest"]["properties"]
     trimmed_props = payload["components"]["schemas"]["CandidateTrimmed"]["properties"]
@@ -1443,6 +1541,9 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
     assert "`candidate_hints`" in context_description
     assert context_props["max_pages"]["default"] == 7
     assert context_props["max_pages"]["minimum"] == 4
+    assert ask_props["max_pages"]["default"] == 7
+    assert ask_props["use_graph_expansion"]["default"] is False
+    assert "remaining" in ask_props["use_graph_expansion"]["description"]
     assert "choose and return prompt-ready context pages" in context_description
     assert "deterministically" not in context_description
     assert "`candidates_trimmed`" in policy_description
@@ -1453,15 +1554,17 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
 
 def test_policy_contract_is_loaded_from_markdown_source() -> None:
     contract = build_policy_contract()
-    assert contract["policy_version"] == "2026-06-07-v0.6"
+    assert contract["policy_version"] == "2026-07-28-v0.7"
     assert contract["constitution"][0]["id"] == "C01"
     assert contract["decision_procedure"][0]["name"] == "determine_food_type"
     assert contract["anti_patterns"][0]["id"] == "AP-001"
     assert contract["binding_rules"][0]["id"] == "R-DERIV-001"
-    assert contract["binding_rules"][8]["id"] == "R-DESC-001"
     assert "business-rules.md BR19" in contract["constitution"][2]["derived_from"]
     assert "execution-layer" in contract["constitution"][4]["derived_from"]
     binding_rules_by_id = {rule["id"]: rule for rule in contract["binding_rules"]}
+    assert "R-DESC-001" in binding_rules_by_id
+    assert "R-ORIGIN-004" in binding_rules_by_id
+    assert "R-INGREDIENT-001" in binding_rules_by_id
     assert binding_rules_by_id["R-PROC-001"]["should"].startswith(
         "keep at most one process per ordinal group"
     )

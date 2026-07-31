@@ -21,6 +21,7 @@ from .librarian import (
     JsonWikiPageSelector,
     PageSelectionResult,
     infer_model_provider,
+    resolve_answerer_model,
 )
 from .policy import build_policy_contract
 from .qdrant_ask import QdrantAskError, retrieve_qdrant_ask_context
@@ -120,19 +121,24 @@ def get_answerer_runner(
     model: str | None = None,
     reasoning_effort: str | None = None,
 ) -> AnthropicFoodEx2Answerer | Any:
-    if model is not None or reasoning_effort is not None:
-        if _uses_messages_client(model):
-            kwargs: dict[str, Any] = {"model": model}
+    resolved_model = resolve_answerer_model(model)
+
+    def create_answerer() -> AnthropicFoodEx2Answerer | Any:
+        if _uses_messages_client(resolved_model):
+            kwargs: dict[str, Any] = {"model": resolved_model}
             if reasoning_effort is not None:
                 kwargs["reasoning_effort"] = reasoning_effort
             return AnthropicFoodEx2Answerer(**kwargs)
-        kwargs = {"model": model}
+        kwargs = {"model": resolved_model}
         if reasoning_effort is not None:
             kwargs["reasoning_effort"] = reasoning_effort
         return JsonFoodEx2Answerer(**kwargs)
+
+    if model is not None or reasoning_effort is not None:
+        return create_answerer()
     global answerer_runner
     if answerer_runner is None:
-        answerer_runner = AnthropicFoodEx2Answerer()
+        answerer_runner = create_answerer()
     return answerer_runner
 
 
@@ -342,10 +348,10 @@ class AskSelectionRequest(BaseModel):
 
 class AskRequest(AskSelectionRequest):
     use_graph_expansion: bool = Field(
-        default=True,
+        default=False,
         description=(
-            "If true, add summary-only context for curated related pages adjacent to the "
-            "selected pages."
+            "If true, use any slots remaining inside max_pages for question-ranked, "
+            "summary-only context from curated related pages. Disabled by default."
         ),
     )
     answerer_model: str | None = Field(
@@ -353,8 +359,8 @@ class AskRequest(AskSelectionRequest):
         description=(
             "Optional per-request model override for the synthesized answer. "
             "Use claude* for Anthropic, lmstudio:<model> for LM Studio, "
-            "or gpt*/gemini* for JSON-only hosted overrides. If omitted, "
-            "the service uses WIKI_ANSWERER_MODEL, then WIKI_LIBRARIAN_MODEL."
+            "or gpt*/gemini* for JSON-only hosted overrides. If omitted, the "
+            "service uses WIKI_ANSWERER_MODEL; the built-in default is gpt-5.6-terra."
         ),
     )
     answerer_reasoning_effort: Literal["low", "medium", "high"] | None = Field(
@@ -388,12 +394,22 @@ class AskRagRequest(BaseModel):
         ),
     )
     limit: int = Field(default=7, ge=1, le=20)
+    retrieval_strategy: Literal["legacy_topk", "diverse_pages"] | None = Field(
+        default=None,
+        description=(
+            "Optional wiki-mode retrieval strategy. `legacy_topk` returns the "
+            "nearest chunks; `diverse_pages` oversamples candidates and keeps "
+            "the highest-ranked chunk from each unique page. If omitted, "
+            "WIKI_RAG_RETRIEVAL_STRATEGY or `legacy_topk` is used."
+        ),
+    )
     include_page_content: bool = False
     answerer_model: str | None = Field(
         default=None,
         description=(
             "Optional per-request model override for the synthesized answer. "
-            "If omitted, the service uses WIKI_ANSWERER_MODEL, then WIKI_LIBRARIAN_MODEL."
+            "If omitted, the service uses WIKI_ANSWERER_MODEL; the built-in "
+            "default is gpt-5.6-terra."
         ),
     )
     collection: str | None = Field(
@@ -879,10 +895,14 @@ def _ensure_front_page(
 def _expand_related_summaries(
     selected_page_names: list[str],
     *,
+    query: str,
     max_neighbors: int,
     max_total_chars: int,
 ) -> list[dict[str, Any]]:
-    """Return short context blocks for curated related neighbors of selected pages."""
+    """Return question-ranked related summaries within an explicit slot budget."""
+    if max_neighbors <= 0:
+        return []
+
     already_selected = set(selected_page_names)
     allowed = store.allowed_page_names()
     candidates: list[str] = []
@@ -903,15 +923,30 @@ def _expand_related_summaries(
             seen_candidates.add(target)
             candidates.append(target)
 
-    blocks: list[dict[str, Any]] = []
-    total_chars = 0
-    for candidate in candidates:
-        if len(blocks) >= max_neighbors:
-            break
+    terms = _parse_search_terms(query)
+    ranked_candidates: list[tuple[int, int, int, WikiPage]] = []
+    for position, candidate in enumerate(candidates):
         try:
             neighbor = store.read_page(candidate)
         except FileNotFoundError:
             continue
+        if store.page_category(neighbor.name) not in {
+            "runtime",
+            "guidance",
+            "validation",
+        }:
+            continue
+        score, matches, _ = _search_score(neighbor, terms)
+        if terms and not matches:
+            continue
+        ranked_candidates.append((-len(matches), -score, position, neighbor))
+    ranked_candidates.sort(key=lambda item: item[:3])
+
+    blocks: list[dict[str, Any]] = []
+    total_chars = 0
+    for _, _, _, neighbor in ranked_candidates:
+        if len(blocks) >= max_neighbors:
+            break
         summary_text = neighbor.summary or "(no summary available; see full page for details)"
         content = (
             "[RELATED CONTEXT - summary-only neighbor page.]\n"
@@ -1138,6 +1173,18 @@ def _run_ask_page_selection(
         selection_result = selector.run(selector_payload)
     except (RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
+    selected_page_names = [
+        page_name
+        for page_name in dict.fromkeys(selection_result.pages_used)
+        if page_name != "index.md"
+    ][: request.max_pages]
+    if selected_page_names != selection_result.pages_used:
+        selection_result = PageSelectionResult(
+            pages_used=selected_page_names,
+            tool_trace=selection_result.tool_trace,
+            token_summary=selection_result.token_summary,
+            timing_summary=selection_result.timing_summary,
+        )
     selector_total_ms = int((time.perf_counter() - selector_start) * 1000)
 
     page_read_start = time.perf_counter()
@@ -1293,16 +1340,27 @@ def ask_question(request: AskRequest) -> AskResponse:
 
     graph_expansion_start = time.perf_counter()
     expansion_blocks: list[dict[str, Any]] = []
-    if request.use_graph_expansion:
+    selected_page_count = len(dict.fromkeys(selection_result.pages_used))
+    remaining_page_slots = max(request.max_pages - selected_page_count, 0)
+    if request.use_graph_expansion and remaining_page_slots:
         expansion_blocks = _expand_related_summaries(
             selection_result.pages_used,
-            max_neighbors=8,
+            query=request.question,
+            max_neighbors=remaining_page_slots,
             max_total_chars=8000,
         )
     graph_expansion_ms = int((time.perf_counter() - graph_expansion_start) * 1000)
 
     expanded_page_names = [block["page_name"] for block in expansion_blocks]
-    pages_used = list(dict.fromkeys([*selection_result.pages_used, *expanded_page_names]))
+    pages_used = list(
+        dict.fromkeys([*selection_result.pages_used, *expanded_page_names])
+    )[: request.max_pages]
+    expanded_page_names = [
+        page_name for page_name in expanded_page_names if page_name in pages_used
+    ]
+    expansion_blocks = [
+        block for block in expansion_blocks if block["page_name"] in expanded_page_names
+    ]
     answerer_input_pages = selected_page_contents + expansion_blocks
 
     expansion_content_by_page = {block["page_name"]: block["content"] for block in expansion_blocks}
@@ -1360,6 +1418,8 @@ def ask_question(request: AskRequest) -> AskResponse:
             },
             "graph_expansion": {
                 "enabled": request.use_graph_expansion,
+                "ranking": "question lexical relevance",
+                "remaining_slots": remaining_page_slots,
                 "neighbors_added": expanded_page_names,
                 "neighbors_count": len(expansion_blocks),
             },
@@ -1442,6 +1502,7 @@ def ask_question_rag(request: AskRagRequest) -> AskResponse:
             qdrant_url=request.qdrant_url,
             embedding_model=request.embedding_model,
             embedding_dimension=request.embedding_dimension,
+            retrieval_strategy=request.retrieval_strategy,
             timeout=request.timeout_seconds,
         )
     except QdrantAskError as exc:

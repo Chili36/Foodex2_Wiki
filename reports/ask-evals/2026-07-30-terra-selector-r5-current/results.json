@@ -1,0 +1,1565 @@
+{
+  "endpoint": "ask",
+  "repeats": 5,
+  "estimated_llm_calls": 40,
+  "max_pages_override": null,
+  "selector_model_override": "gpt-5.6-terra",
+  "effective_max_pages": {
+    "min": 6,
+    "max": 6
+  },
+  "passes": [
+    {
+      "summary": {
+        "mean_must_have_recall": 1.0,
+        "mean_precision": 0.9,
+        "leak_free_rate": 1.0,
+        "case_count": 8,
+        "mean_selector_tokens": 2919.25,
+        "mean_selector_wall_time_ms": 3116.5
+      },
+      "cases": [
+        {
+          "id": "ASK-0001",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-2024.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2796,
+            "output_tokens": 18,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2814,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2796,
+                "output_tokens": 18,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2814
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2206,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0002",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-history.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2804,
+            "output_tokens": 117,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2921,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2804,
+                "output_tokens": 117,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2921
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2967,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0003",
+          "reviewed": true,
+          "pages_used": [
+            "INGEST_WORKFLOW.md",
+            "SCHEMA.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2814,
+            "output_tokens": 100,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2914,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2814,
+                "output_tokens": 100,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2914
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2410,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0004",
+          "reviewed": true,
+          "pages_used": [
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2806,
+            "output_tokens": 118,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2924,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2806,
+                "output_tokens": 118,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2924
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2531,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0005",
+          "reviewed": true,
+          "pages_used": [
+            "packaging-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "process-validation-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2804,
+            "output_tokens": 196,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3000,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2804,
+                "output_tokens": 196,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3000
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4926,
+          "must_have_recall": 1.0,
+          "precision": 0.6,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "process-validation-rules.md",
+            "structural-validation.md"
+          ]
+        },
+        {
+          "id": "ASK-0006",
+          "reviewed": true,
+          "pages_used": [
+            "vmpr-foodex2.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2806,
+            "output_tokens": 147,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2953,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2806,
+                "output_tokens": 147,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2953
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2686,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0007",
+          "reviewed": true,
+          "pages_used": [],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2788,
+            "output_tokens": 31,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2819,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2788,
+                "output_tokens": 31,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2819
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1434,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "ingredient-facets.md",
+            "code-string-format.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2824,
+            "output_tokens": 185,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3009,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2824,
+                "output_tokens": 185,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3009
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5772,
+          "must_have_recall": 1.0,
+          "precision": 0.6,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "structural-validation.md",
+            "business-rules.md"
+          ]
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 1.0,
+        "mean_precision": 0.8625,
+        "leak_free_rate": 1.0,
+        "case_count": 8,
+        "mean_selector_tokens": 2946.875,
+        "mean_selector_wall_time_ms": 2568.875
+      },
+      "cases": [
+        {
+          "id": "ASK-0001",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-2024.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2796,
+            "output_tokens": 76,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2872,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2796,
+                "output_tokens": 76,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2872
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1811,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0002",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-history.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2804,
+            "output_tokens": 143,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2947,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2804,
+                "output_tokens": 143,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2947
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2238,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0003",
+          "reviewed": true,
+          "pages_used": [
+            "INGEST_WORKFLOW.md",
+            "SCHEMA.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2814,
+            "output_tokens": 141,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2955,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2814,
+                "output_tokens": 141,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2955
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2267,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0004",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2806,
+            "output_tokens": 189,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2995,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2806,
+                "output_tokens": 189,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2995
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2986,
+          "must_have_recall": 1.0,
+          "precision": 0.75,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "structural-validation.md"
+          ]
+        },
+        {
+          "id": "ASK-0005",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "packaging-facets.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2804,
+            "output_tokens": 323,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3127,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2804,
+                "output_tokens": 323,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3127
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4818,
+          "must_have_recall": 1.0,
+          "precision": 0.4,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ]
+        },
+        {
+          "id": "ASK-0006",
+          "reviewed": true,
+          "pages_used": [
+            "vmpr-foodex2.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2806,
+            "output_tokens": 132,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2938,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2806,
+                "output_tokens": 132,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2938
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2343,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0007",
+          "reviewed": true,
+          "pages_used": [],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2788,
+            "output_tokens": 12,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2800,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2788,
+                "output_tokens": 12,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2800
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1555,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "code-string-format.md",
+            "ingredient-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2824,
+            "output_tokens": 117,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2941,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2824,
+                "output_tokens": 117,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2941
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2533,
+          "must_have_recall": 1.0,
+          "precision": 0.75,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "structural-validation.md"
+          ]
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 1.0,
+        "mean_precision": 0.91875,
+        "leak_free_rate": 1.0,
+        "case_count": 8,
+        "mean_selector_tokens": 2900.625,
+        "mean_selector_wall_time_ms": 2149.375
+      },
+      "cases": [
+        {
+          "id": "ASK-0001",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-2024.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2796,
+            "output_tokens": 45,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2841,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2796,
+                "output_tokens": 45,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2841
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1518,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0002",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-history.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2804,
+            "output_tokens": 89,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2893,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2804,
+                "output_tokens": 89,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2893
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2285,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0003",
+          "reviewed": true,
+          "pages_used": [
+            "INGEST_WORKFLOW.md",
+            "SCHEMA.md",
+            "KNOWLEDGE_ARCHITECTURE.md",
+            "MAINTENANCE_WORKFLOW.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2814,
+            "output_tokens": 92,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2906,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2814,
+                "output_tokens": 92,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2906
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2149,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0004",
+          "reviewed": true,
+          "pages_used": [
+            "implicit-vs-explicit-facets.md",
+            "foodex2-overview.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2806,
+            "output_tokens": 82,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2888,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2806,
+                "output_tokens": 82,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2888
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1996,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0005",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "packaging-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2804,
+            "output_tokens": 185,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2989,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2804,
+                "output_tokens": 185,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2989
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3514,
+          "must_have_recall": 1.0,
+          "precision": 0.6,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md"
+          ]
+        },
+        {
+          "id": "ASK-0006",
+          "reviewed": true,
+          "pages_used": [
+            "vmpr-foodex2.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2806,
+            "output_tokens": 78,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2884,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2806,
+                "output_tokens": 78,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2884
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1720,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0007",
+          "reviewed": true,
+          "pages_used": [],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2788,
+            "output_tokens": 81,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2869,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2788,
+                "output_tokens": 81,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2869
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1974,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "code-string-format.md",
+            "ingredient-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2824,
+            "output_tokens": 111,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2935,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2824,
+                "output_tokens": 111,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2935
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2039,
+          "must_have_recall": 1.0,
+          "precision": 0.75,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "structural-validation.md"
+          ]
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 1.0,
+        "mean_precision": 0.8375,
+        "leak_free_rate": 1.0,
+        "case_count": 8,
+        "mean_selector_tokens": 2942.75,
+        "mean_selector_wall_time_ms": 2908.5
+      },
+      "cases": [
+        {
+          "id": "ASK-0001",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-2024.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2796,
+            "output_tokens": 65,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2861,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2796,
+                "output_tokens": 65,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2861
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1489,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0002",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-history.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2804,
+            "output_tokens": 147,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2951,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2804,
+                "output_tokens": 147,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2951
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3121,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0003",
+          "reviewed": true,
+          "pages_used": [
+            "INGEST_WORKFLOW.md",
+            "SCHEMA.md",
+            "MAINTENANCE_WORKFLOW.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2814,
+            "output_tokens": 88,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2902,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2814,
+                "output_tokens": 88,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2902
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2006,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0004",
+          "reviewed": true,
+          "pages_used": [
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2806,
+            "output_tokens": 85,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2891,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2806,
+                "output_tokens": 85,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2891
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2147,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0005",
+          "reviewed": true,
+          "pages_used": [
+            "packaging-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2804,
+            "output_tokens": 268,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3072,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2804,
+                "output_tokens": 268,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3072
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5727,
+          "must_have_recall": 1.0,
+          "precision": 0.5,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ]
+        },
+        {
+          "id": "ASK-0006",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "vmpr-foodex2.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2806,
+            "output_tokens": 219,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3025,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2806,
+                "output_tokens": 219,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3025
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3532,
+          "must_have_recall": 1.0,
+          "precision": 0.6,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "structural-validation.md",
+            "domain-specific-validation.md"
+          ]
+        },
+        {
+          "id": "ASK-0007",
+          "reviewed": true,
+          "pages_used": [],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2788,
+            "output_tokens": 33,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2821,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2788,
+                "output_tokens": 33,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2821
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1955,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "ingredient-facets.md",
+            "code-string-format.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2824,
+            "output_tokens": 195,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3019,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2824,
+                "output_tokens": 195,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3019
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3291,
+          "must_have_recall": 1.0,
+          "precision": 0.6,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "structural-validation.md",
+            "business-rules.md"
+          ]
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 1.0,
+        "mean_precision": 0.84375,
+        "leak_free_rate": 1.0,
+        "case_count": 8,
+        "mean_selector_tokens": 2918.875,
+        "mean_selector_wall_time_ms": 2630.375
+      },
+      "cases": [
+        {
+          "id": "ASK-0001",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-2024.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2796,
+            "output_tokens": 59,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2855,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2796,
+                "output_tokens": 59,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2855
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1539,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0002",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-history.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2804,
+            "output_tokens": 91,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2895,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2804,
+                "output_tokens": 91,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2895
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1715,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0003",
+          "reviewed": true,
+          "pages_used": [
+            "INGEST_WORKFLOW.md",
+            "SCHEMA.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2814,
+            "output_tokens": 69,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2883,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2814,
+                "output_tokens": 69,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2883
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1455,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0004",
+          "reviewed": true,
+          "pages_used": [
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2806,
+            "output_tokens": 104,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2910,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2806,
+                "output_tokens": 104,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2910
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2395,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0005",
+          "reviewed": true,
+          "pages_used": [
+            "packaging-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "process-validation-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2804,
+            "output_tokens": 150,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2954,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2804,
+                "output_tokens": 150,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2954
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2549,
+          "must_have_recall": 1.0,
+          "precision": 0.5,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "implicit-vs-explicit-facets.md",
+            "process-validation-rules.md",
+            "structural-validation.md"
+          ]
+        },
+        {
+          "id": "ASK-0006",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "domain-specific-validation.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2806,
+            "output_tokens": 226,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3032,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2806,
+                "output_tokens": 226,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3032
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4747,
+          "must_have_recall": 1.0,
+          "precision": 0.5,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "domain-specific-validation.md",
+            "structural-validation.md"
+          ]
+        },
+        {
+          "id": "ASK-0007",
+          "reviewed": true,
+          "pages_used": [],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2788,
+            "output_tokens": 29,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2817,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2788,
+                "output_tokens": 29,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2817
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1699,
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "code-string-format.md",
+            "ingredient-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "gpt-5.6-terra",
+          "selector_tokens": {
+            "model": "gpt-5.6-terra",
+            "calls": 1,
+            "input_tokens": 2824,
+            "output_tokens": 181,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3005,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2824,
+                "output_tokens": 181,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3005
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4944,
+          "must_have_recall": 1.0,
+          "precision": 0.75,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "structural-validation.md"
+          ]
+        }
+      ]
+    }
+  ],
+  "median_summary": {
+    "mean_must_have_recall": {
+      "median": 1.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "mean_precision": {
+      "median": 0.8625,
+      "min": 0.8375,
+      "max": 0.91875
+    },
+    "leak_free_rate": {
+      "median": 1.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "mean_selector_tokens": {
+      "median": 2919.25,
+      "min": 2900.625,
+      "max": 2946.875
+    },
+    "mean_selector_wall_time_ms": {
+      "median": 2630.375,
+      "min": 2149.375,
+      "max": 3116.5
+    },
+    "passes": 5
+  },
+  "miss_frequency": {
+    "counts": {},
+    "systematic": [],
+    "stochastic": []
+  }
+}

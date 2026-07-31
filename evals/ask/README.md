@@ -86,9 +86,13 @@ python scripts/selection_eval.py \
   --endpoint ask \
   --gold-path evals/ask/gold_cases.json \
   --label ask-baseline \
+  --selector-model claude-sonnet-5 \
   --only-reviewed \
   --repeats 3
 ```
+
+Use `--selector-model` to run a same-gold model comparison without restarting
+the service or changing its configured default.
 
 `--endpoint ask` POSTs `/wiki/ask/select-pages` instead of `/wiki/context-pack`,
 scores `pages_used` against the same three-tier labels, records selector token

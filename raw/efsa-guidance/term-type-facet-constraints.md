@@ -17,7 +17,7 @@ related:
   - "[[facet-coding-rules]]"
   - "[[validation-rules]]"
   - "[[process-validation-rules]]"
-last_updated: "2026-06-07"
+last_updated: "2026-07-28"
 ---
 
 # Term Type And Facet Constraints
@@ -27,8 +27,8 @@ last_updated: "2026-06-07"
 
 | Term type | Use as base term | Typical explicit facets | Main restrictions |
 | --- | --- | --- | --- |
-| `r` raw commodity | Yes | `F27`, allowed `F03`, allowed `F28` | No `F01` or `F04`; `F27` must refine the base (`BR01`); BR13 blocks only the disintegration-family `F03` descriptors; some processes are forbidden (`BR19`) |
-| `d` derivative | Yes | `F01`, `F27`, `F28`, `F03` | `F01` only with exactly one `F27` (`BR06-BR07`); `F27` must be more specific than implicit (`BR05`) and should describe the constitutive source commodity, not later-added ingredients |
+| `r` raw commodity | Yes | `F01` when narrowing a generic implicit source, `F27`, minor-ingredient `F04`, allowed `F03`, allowed `F28` | Do not use `F01` merely to repeat the selected raw commodity; `F04` is only for minor added ingredients (`BR12`), never the constitutive source; `F27` must refine the base (`BR01`); BR13 blocks only the disintegration-family `F03` descriptors; some processes are forbidden (`BR19`) |
+| `d` derivative | Yes | `F01`, `F27`, minor-ingredient `F04`, `F28`, `F03` | `F01` only with exactly one `F27` (`BR06-BR07`); `F27` must be more specific than implicit (`BR05`) and should describe the constitutive source commodity; `F04` is only for minor later-added ingredients (`BR12`) |
 | `c` / `s` composite | Yes | `F04`, `F28` | No `F01` or `F27` (`BR03-BR04`) |
 | `h` / `g` hierarchy or group | Avoid | None by default | Discouraged or invalid as reporting bases (`BR23-BR24`) |
 | `f` facet term | No | None | Cannot be a base term (`BR17`) |
@@ -37,7 +37,7 @@ last_updated: "2026-06-07"
 <!-- Source: BUSINESS-RULES.md BR01, BR03, BR04, BR05, BR06, BR07, BR12, BR13, BR17, BR23, BR24; EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p19-20, p56 -->
 ## Practical Reading
 
-- Raw terms are anchored on the commodity itself. `BR13` does not block all `F03 physical state` descriptors on raw commodities; it blocks the seven disintegration-family descriptors that turn the raw structure into powder, paste, or puree. Non-disintegration physical states can be valid on raw terms when the descriptor is otherwise legal. Some `F28` processes are also blocked because they create derivatives; see [[process-validation-rules]]. (Business Rules `BR01`, `BR13`)
+- Raw terms are anchored on the commodity itself and normally carry their `F01 Source` implicitly. Add explicit `F01` only as a restriction when a generic raw base must be narrowed to a known, more detailed source; never add it merely to repeat the selected commodity. A raw term may also carry `F04` for a genuinely minor added ingredient, coating, or flavouring under `BR12`; `F04` must not replace source logic. `BR13` does not block all `F03 physical state` descriptors on raw commodities; it blocks the seven disintegration-family descriptors that turn the raw structure into powder, paste, or puree. Non-disintegration physical states can be valid on raw terms when the descriptor is otherwise legal. Some `F28` processes are also blocked because they create derivatives; see [[process-validation-rules]]. (EFSA guidance p19-20, p54-56; Business Rules `BR01`, `BR12`, `BR13`)
 - Derivatives use the source-commodity model. Read `F27` as "from what primary commodity was this derivative obtained?" If `F01 source` is needed, the derivative must already resolve to exactly one `F27`. Later-added flavouring or characterising ingredients belong in `F04`, not `F27`; the origin-chain explanation is in [[implicit-vs-explicit-facets]] and the operational use of `F04` is in [[ingredient-facets]]. (EFSA guidance p19-20, p56; Business Rules `BR05-BR07`)
 - Composites use ingredient logic, not source logic. Reach for `F04`, not `F01` or `F27`, after [[base-term-selection]] has already established that the food is composite. (Business Rules `BR03-BR04`, `BR12`)
 - Facet terms and most hierarchy/group terms may appear in search results, but they should not win base-term selection. For the blocking and advisory effects of those mistakes, see [[validation-rules]]. (Business Rules `BR17`, `BR23-BR24`)

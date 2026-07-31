@@ -45,6 +45,22 @@ def test_wiki_doctor_passes_with_no_errors() -> None:
     assert report.errors == []
 
 
+def test_raw_facet_guidance_preserves_f01_and_f04_exceptions() -> None:
+    constraints = (
+        REPO_ROOT / "raw" / "efsa-guidance" / "term-type-facet-constraints.md"
+    ).read_text(encoding="utf-8")
+    policy = (
+        REPO_ROOT / "raw" / "efsa-guidance" / "policy-contract.md"
+    ).read_text(encoding="utf-8")
+
+    assert "No `F01` or `F04`" not in constraints
+    assert "Do not use `F01` on raw commodities." not in policy
+    assert "`F01` when narrowing a generic implicit source" in constraints
+    assert "`F04` is only for minor added ingredients (`BR12`)" in constraints
+    assert "may add explicit `F01` as a restriction" in policy
+    assert "must use `F04` only for a minor later-added ingredient" in policy
+
+
 def test_maintenance_workflow_is_registered_as_orientation() -> None:
     store = WikiStore(REPO_ROOT)
     page = store.read_page("MAINTENANCE_WORKFLOW.md")

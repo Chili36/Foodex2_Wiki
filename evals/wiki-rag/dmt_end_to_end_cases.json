@@ -1,0 +1,251 @@
+{
+  "version": 1,
+  "description": "Ten DMT questions supplied 2026-07-30 for /wiki/ask versus /wiki/ask-rag evaluation. The first four reuse reviewed page gold from evals/selection/gold_cases.json. Cases 5-10 are intentionally unreviewed until independent reference answers and page labels are added.",
+  "cases": [
+    {
+      "id": "DMT-ASK-001",
+      "reviewed": true,
+      "source": "EFSA-TD-0001",
+      "domain": "pesticides",
+      "shape": "dmt_standard",
+      "question": "Anything I should think about when reporting Bordsdruvor – färsk frukt?",
+      "request_question": "Anything I should think about when reporting Bordsdruvor – färsk frukt? Reporting domain: pesticides.",
+      "reference_pages": [
+        "base-term-selection.md",
+        "pesticides-foodex2.md",
+        "term-type-facet-constraints.md"
+      ],
+      "acceptable_pages": [
+        "RUNTIME_RULES.md",
+        "foodex2-overview.md",
+        "facet-coding-rules.md",
+        "implicit-vs-explicit-facets.md",
+        "code-string-format.md",
+        "validation-rules.md",
+        "structural-validation.md",
+        "business-rules.md",
+        "domain-specific-validation.md",
+        "anses-codification-guidance.md",
+        "chemical-monitoring-foodex2.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "contaminants-foodex2.md",
+        "vmpr-foodex2.md",
+        "vmpr-legislative-mapping.md",
+        "additives-flavourings-foodex2.md",
+        "domoic-acid-scallops.md",
+        "maintenance-*"
+      ],
+      "required_answer_terms": [],
+      "forbidden_answer_terms": [],
+      "notes": "Page gold reused from SEL-0001. Reference answer still needs independent review, so answer-accuracy metrics will be skipped."
+    },
+    {
+      "id": "DMT-ASK-002",
+      "reviewed": true,
+      "source": "EFSA-TD-0047",
+      "domain": "contaminants",
+      "shape": "dmt_standard",
+      "question": "Anything I should think about when reporting Paranötter – nötter?",
+      "request_question": "Anything I should think about when reporting Paranötter – nötter? Reporting domain: contaminants.",
+      "reference_pages": [
+        "base-term-selection.md",
+        "contaminants-foodex2.md",
+        "term-type-facet-constraints.md"
+      ],
+      "acceptable_pages": [
+        "RUNTIME_RULES.md",
+        "foodex2-overview.md",
+        "facet-coding-rules.md",
+        "implicit-vs-explicit-facets.md",
+        "code-string-format.md",
+        "validation-rules.md",
+        "structural-validation.md",
+        "business-rules.md",
+        "domain-specific-validation.md",
+        "anses-codification-guidance.md",
+        "chemical-monitoring-foodex2.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "vmpr-foodex2.md",
+        "vmpr-legislative-mapping.md",
+        "additives-flavourings-foodex2.md",
+        "domoic-acid-scallops.md",
+        "maintenance-*"
+      ],
+      "required_answer_terms": [],
+      "forbidden_answer_terms": [],
+      "notes": "Page gold reused from SEL-0003. Reference answer still needs independent review, so answer-accuracy metrics will be skipped."
+    },
+    {
+      "id": "DMT-ASK-003",
+      "reviewed": true,
+      "source": "EFSA-TD-0202",
+      "domain": "vmpr",
+      "shape": "dmt_standard",
+      "question": "Anything I should think about when reporting Får – urin?",
+      "request_question": "Anything I should think about when reporting Får – urin? Reporting domain: VMPR.",
+      "reference_pages": [
+        "base-term-selection.md",
+        "vmpr-foodex2.md",
+        "facet-coding-rules.md",
+        "term-type-facet-constraints.md"
+      ],
+      "acceptable_pages": [
+        "RUNTIME_RULES.md",
+        "foodex2-overview.md",
+        "implicit-vs-explicit-facets.md",
+        "code-string-format.md",
+        "validation-rules.md",
+        "structural-validation.md",
+        "business-rules.md",
+        "domain-specific-validation.md",
+        "anses-codification-guidance.md",
+        "chemical-monitoring-foodex2.md",
+        "vmpr-legislative-mapping.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "contaminants-foodex2.md",
+        "additives-flavourings-foodex2.md",
+        "domoic-acid-scallops.md",
+        "maintenance-*"
+      ],
+      "required_answer_terms": [
+        "A0C60",
+        "F01",
+        "F02"
+      ],
+      "forbidden_answer_terms": [],
+      "notes": "Page gold reused from SEL-0010. The deterministic terms are explicit in the VMPR wiki guidance; a prose reference answer still needs independent review."
+    },
+    {
+      "id": "DMT-ASK-004",
+      "reviewed": true,
+      "source": "EFSA-TD-0160",
+      "domain": "additives",
+      "shape": "dmt_standard",
+      "question": "Anything I should think about when reporting Glass med färg/smak – sammansatt produkt?",
+      "request_question": "Anything I should think about when reporting Glass med färg/smak – sammansatt produkt? Reporting domain: additives.",
+      "reference_pages": [
+        "base-term-selection.md",
+        "ingredient-facets.md",
+        "additives-flavourings-foodex2.md",
+        "term-type-facet-constraints.md"
+      ],
+      "acceptable_pages": [
+        "RUNTIME_RULES.md",
+        "foodex2-overview.md",
+        "facet-coding-rules.md",
+        "implicit-vs-explicit-facets.md",
+        "code-string-format.md",
+        "validation-rules.md",
+        "structural-validation.md",
+        "business-rules.md",
+        "domain-specific-validation.md",
+        "anses-codification-guidance.md",
+        "chemical-monitoring-foodex2.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "contaminants-foodex2.md",
+        "vmpr-foodex2.md",
+        "vmpr-legislative-mapping.md",
+        "domoic-acid-scallops.md",
+        "maintenance-*"
+      ],
+      "required_answer_terms": [],
+      "forbidden_answer_terms": [],
+      "notes": "Page gold reused from SEL-0006. Reference answer still needs independent review, so answer-accuracy metrics will be skipped."
+    },
+    {
+      "id": "DMT-ASK-005",
+      "reviewed": false,
+      "source": "USR-FR-12",
+      "domain": "none",
+      "shape": "dmt_standard",
+      "question": "Anything I should think about when reporting Jambon de porc fumé sans nitrites?",
+      "reference_pages": [],
+      "acceptable_pages": [],
+      "must_not_pages": [],
+      "required_answer_terms": [],
+      "forbidden_answer_terms": [],
+      "notes": "Question supplied by DMT. Independent answer and retrieval gold are pending."
+    },
+    {
+      "id": "DMT-ASK-006",
+      "reviewed": false,
+      "source": "USR-FR-05",
+      "domain": "none",
+      "shape": "dmt_standard",
+      "question": "Anything I should think about when reporting Lait infantile 1er âge en poudre dans une boîte en métal conventionnel?",
+      "reference_pages": [],
+      "acceptable_pages": [],
+      "must_not_pages": [],
+      "required_answer_terms": [],
+      "forbidden_answer_terms": [],
+      "notes": "Question supplied by DMT. Independent answer and retrieval gold are pending."
+    },
+    {
+      "id": "DMT-ASK-007",
+      "reviewed": false,
+      "source": "USR-ADV-01",
+      "domain": "none",
+      "shape": "dmt_standard",
+      "question": "Anything I should think about when reporting bicycle tyre?",
+      "reference_pages": [],
+      "acceptable_pages": [],
+      "must_not_pages": [],
+      "required_answer_terms": [],
+      "forbidden_answer_terms": [],
+      "notes": "Out-of-domain negative control. Independent refusal criteria and retrieval gold are pending."
+    },
+    {
+      "id": "DMT-ASK-008",
+      "reviewed": false,
+      "source": "agent-authored",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "For organic skimmed cow milk, is base A02MA (Cow milk, skimmed) with explicit F21.A07SE (organic production) correct, given skimmed is already implicit?",
+      "reference_pages": [],
+      "acceptable_pages": [],
+      "must_not_pages": [],
+      "required_answer_terms": [],
+      "forbidden_answer_terms": [],
+      "notes": "Agent-authored draft-code question. Independent answer and retrieval gold are pending."
+    },
+    {
+      "id": "DMT-ASK-009",
+      "reviewed": false,
+      "source": "agent-authored",
+      "domain": "contaminants",
+      "shape": "agent_specific",
+      "question": "For \"roasted nut covered in chickpea flour\" (a snack food, tree nuts coated with chickpea flour and roasted), should I use base term A014C (Tree nuts) with F28 roasted process and F04 chickpea flour ingredient facet? Is this the right approach for contaminants reporting?",
+      "reference_pages": [],
+      "acceptable_pages": [],
+      "must_not_pages": [],
+      "required_answer_terms": [],
+      "forbidden_answer_terms": [],
+      "notes": "Agent-authored draft-code question. Independent answer and retrieval gold are pending."
+    },
+    {
+      "id": "DMT-ASK-010",
+      "reviewed": false,
+      "source": "agent-authored",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "How should I code \"roasted nut covered in chickpea flour\" in FoodEx2 — which base term and facets?",
+      "reference_pages": [],
+      "acceptable_pages": [],
+      "must_not_pages": [],
+      "required_answer_terms": [],
+      "forbidden_answer_terms": [],
+      "notes": "Agent-authored open coding question. Paired with DMT-ASK-009 to test domain-context sensitivity; independent answer and retrieval gold are pending."
+    }
+  ]
+}

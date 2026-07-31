@@ -29,6 +29,7 @@ def test_build_context_pack_row_extracts_pack_chars_and_enforcement():
                 "trimmed": ["index.md"],
             },
             "token_summary": {"total_tracked_tokens": 42},
+            "timing_summary": {"request_wall_time_ms": 1234},
         },
     }
     row = _build_context_pack_row(CASE, response, ["a.md"])
@@ -37,6 +38,7 @@ def test_build_context_pack_row_extracts_pack_chars_and_enforcement():
     assert row["dropped"] == [{"page": "c.md"}]
     assert row["trimmed"] == ["index.md"]
     assert row["selector_tokens"] == {"total_tracked_tokens": 42}
+    assert row["selector_wall_time_ms"] == 1234
 
 
 def test_build_context_pack_row_requires_skeleton_enforcement():
@@ -53,10 +55,14 @@ def test_build_ask_row_records_selector_usage_without_context_pack_fields():
         "trace": {
             "index_used": True,
             "retrieval": {"token_summary": {"total_tracked_tokens": 42}},
+            "total": {"request_wall_time_ms": 1234},
         },
     }
     row = _build_ask_row(CASE, response, ["a.md"])
-    assert row == {"selector_tokens": {"total_tracked_tokens": 42}}
+    assert row == {
+        "selector_tokens": {"total_tracked_tokens": 42},
+        "selector_wall_time_ms": 1234,
+    }
     assert "pack_chars" not in row
     assert "backfilled" not in row
 
@@ -83,7 +89,12 @@ class _FakeResponse:
 
 
 def test_run_pass_ask_mode_skips_context_pack_only_metrics(monkeypatch):
+    captured = {}
+
     def fake_urlopen(req, timeout=180):
+        import json
+
+        captured["body"] = json.loads(req.data.decode("utf-8"))
         return _FakeResponse(
             {
                 "answer": "the answer",
@@ -92,6 +103,7 @@ def test_run_pass_ask_mode_skips_context_pack_only_metrics(monkeypatch):
                 "trace": {
                     "index_used": True,
                     "retrieval": {"token_summary": {"total_tracked_tokens": 42}},
+                    "total": {"request_wall_time_ms": 1234},
                 },
             }
         )
@@ -99,14 +111,23 @@ def test_run_pass_ask_mode_skips_context_pack_only_metrics(monkeypatch):
     monkeypatch.setattr("scripts.selection_eval.urllib.request.urlopen", fake_urlopen)
 
     cases = [{**CASE, "request": {"question": "q", "max_pages": 6}}]
-    rows, summary = run_pass(cases, "http://fake", 1, endpoint="ask")
+    rows, summary = run_pass(
+        cases,
+        "http://fake",
+        1,
+        endpoint="ask",
+        selector_model_override="gpt-5.6-terra",
+    )
 
     assert rows[0]["pages_used"] == ["a.md"]
+    assert rows[0]["selector_model_sent"] == "gpt-5.6-terra"
+    assert captured["body"]["selector_model"] == "gpt-5.6-terra"
     assert "backfilled" not in rows[0]
     assert "pack_chars" not in rows[0]
     assert "mean_pack_chars" not in summary
     assert "backfill_case_rate" not in summary
     assert summary["mean_selector_tokens"] == 42
+    assert summary["mean_selector_wall_time_ms"] == 1234
     # Core recall/precision metrics are still present (shared aggregate()).
     assert "mean_must_have_recall" in summary
 

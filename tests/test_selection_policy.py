@@ -31,12 +31,12 @@ POLICY = SelectionPolicy(
             default="term-type-facet-constraints.md",
         ),
     ),
-    drop_pages=("maintenance-*", "README.md"),
+    drop_pages=("index.md", "maintenance-*", "README.md"),
 )
 
 
 def test_covered_roles_are_not_backfilled():
-    pages = ["index.md", "base-term-selection.md", "ingredient-facets.md", "process-validation-rules.md"]
+    pages = ["base-term-selection.md", "ingredient-facets.md", "process-validation-rules.md"]
     result = enforce_skeleton(pages, POLICY)
     assert result.final_pages == pages
     assert result.backfilled == []
@@ -48,7 +48,6 @@ def test_covered_roles_are_not_backfilled():
 def test_missing_roles_backfilled_in_role_order():
     result = enforce_skeleton(["index.md", "base-term-selection.md"], POLICY)
     assert result.final_pages == [
-        "index.md",
         "base-term-selection.md",
         "facet-coding-rules.md",
         "term-type-facet-constraints.md",
@@ -57,6 +56,7 @@ def test_missing_roles_backfilled_in_role_order():
         {"role": "facet", "page": "facet-coding-rules.md"},
         {"role": "validation", "page": "term-type-facet-constraints.md"},
     ]
+    assert result.dropped == ["index.md"]
     assert result.selector_covered_roles == ["base_term"]
 
 
@@ -66,7 +66,8 @@ def test_drop_list_literal_and_glob():
          "ingredient-facets.md", "term-type-facet-constraints.md"],
         POLICY,
     )
-    assert result.dropped == ["maintenance-2024.md", "README.md"]
+    assert result.dropped == ["index.md", "maintenance-2024.md", "README.md"]
+    assert "index.md" not in result.final_pages
     assert "maintenance-2024.md" not in result.final_pages
     assert "README.md" not in result.final_pages
     assert result.backfilled == []
@@ -74,10 +75,9 @@ def test_drop_list_literal_and_glob():
 
 def test_drop_then_backfill_when_leak_was_only_coverage():
     result = enforce_skeleton(["index.md", "maintenance-2024.md"], POLICY)
-    assert result.dropped == ["maintenance-2024.md"]
+    assert result.dropped == ["index.md", "maintenance-2024.md"]
     assert [item["role"] for item in result.backfilled] == ["base_term", "facet", "validation"]
     assert result.final_pages == [
-        "index.md",
         "base-term-selection.md",
         "facet-coding-rules.md",
         "term-type-facet-constraints.md",
@@ -103,7 +103,8 @@ def test_strict_page_budget_trims_optional_pages_but_preserves_required_roles():
         "ingredient-facets.md",
         "term-type-facet-constraints.md",
     ]
-    assert result.trimmed == ["index.md", "process-facets.md", "packaging-facets.md"]
+    assert result.dropped == ["index.md"]
+    assert result.trimmed == ["process-facets.md", "packaging-facets.md"]
     assert result.backfilled == []
 
 
@@ -121,6 +122,7 @@ def test_load_selection_policy_from_wiki():
     for role in policy.required_roles:
         assert role.default in role.members
     assert "maintenance-*" in policy.drop_pages
+    assert "index.md" in policy.drop_pages
     assert "selection-policy.md" in policy.drop_pages
 
 

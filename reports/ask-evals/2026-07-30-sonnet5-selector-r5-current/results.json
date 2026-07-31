@@ -1,0 +1,1495 @@
+{
+  "endpoint": "ask",
+  "repeats": 5,
+  "estimated_llm_calls": 40,
+  "max_pages_override": null,
+  "selector_model_override": "claude-sonnet-5",
+  "effective_max_pages": {
+    "min": 6,
+    "max": 6
+  },
+  "passes": [
+    {
+      "summary": {
+        "mean_must_have_recall": 1.0,
+        "mean_precision": 0.90625,
+        "leak_free_rate": 1.0,
+        "case_count": 8,
+        "mean_selector_tokens": 5313.375
+      },
+      "cases": [
+        {
+          "id": "ASK-0001",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-2024.md",
+            "maintenance-history.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5125,
+            "output_tokens": 138,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5263,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5125,
+                "output_tokens": 138,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5263
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0002",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-history.md",
+            "maintenance-2015.md",
+            "maintenance-2016-2018.md",
+            "maintenance-2019.md",
+            "maintenance-2020.md",
+            "maintenance-2021.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5142,
+            "output_tokens": 161,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5303,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5142,
+                "output_tokens": 161,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5303
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0003",
+          "reviewed": true,
+          "pages_used": [
+            "INGEST_WORKFLOW.md",
+            "SCHEMA.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5145,
+            "output_tokens": 303,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5448,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5145,
+                "output_tokens": 303,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5448
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0004",
+          "reviewed": true,
+          "pages_used": [
+            "implicit-vs-explicit-facets.md",
+            "foodex2-overview.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5139,
+            "output_tokens": 220,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5359,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5139,
+                "output_tokens": 220,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5359
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0005",
+          "reviewed": true,
+          "pages_used": [
+            "packaging-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5131,
+            "output_tokens": 84,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5215,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5131,
+                "output_tokens": 84,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5215
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0006",
+          "reviewed": true,
+          "pages_used": [
+            "vmpr-foodex2.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5141,
+            "output_tokens": 159,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5300,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5141,
+                "output_tokens": 159,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5300
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 0.5,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "domain-specific-validation.md"
+          ]
+        },
+        {
+          "id": "ASK-0007",
+          "reviewed": true,
+          "pages_used": [],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5113,
+            "output_tokens": 10,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5123,
+            "per_call": [
+              {
+                "stop_reason": "end_turn",
+                "input_tokens": 5113,
+                "output_tokens": 10,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5123
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0008",
+          "reviewed": true,
+          "pages_used": [
+            "code-string-format.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "structural-validation.md",
+            "RUNTIME_RULES.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5169,
+            "output_tokens": 327,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5496,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5169,
+                "output_tokens": 327,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5496
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 0.75,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "structural-validation.md"
+          ]
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 1.0,
+        "mean_precision": 0.90625,
+        "leak_free_rate": 1.0,
+        "case_count": 8,
+        "mean_selector_tokens": 5312.125
+      },
+      "cases": [
+        {
+          "id": "ASK-0001",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-2024.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5125,
+            "output_tokens": 105,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5230,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5125,
+                "output_tokens": 105,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5230
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0002",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-history.md",
+            "maintenance-2015.md",
+            "maintenance-2016-2018.md",
+            "maintenance-2019.md",
+            "maintenance-2020.md",
+            "maintenance-2021.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5142,
+            "output_tokens": 178,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5320,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5142,
+                "output_tokens": 178,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5320
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0003",
+          "reviewed": true,
+          "pages_used": [
+            "INGEST_WORKFLOW.md",
+            "SCHEMA.md",
+            "KNOWLEDGE_ARCHITECTURE.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5145,
+            "output_tokens": 283,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5428,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5145,
+                "output_tokens": 283,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5428
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0004",
+          "reviewed": true,
+          "pages_used": [
+            "implicit-vs-explicit-facets.md",
+            "foodex2-overview.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5139,
+            "output_tokens": 160,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5299,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5139,
+                "output_tokens": 160,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5299
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0005",
+          "reviewed": true,
+          "pages_used": [
+            "packaging-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5131,
+            "output_tokens": 84,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5215,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5131,
+                "output_tokens": 84,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5215
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0006",
+          "reviewed": true,
+          "pages_used": [
+            "vmpr-foodex2.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5141,
+            "output_tokens": 155,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5296,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5141,
+                "output_tokens": 155,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5296
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 0.5,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "domain-specific-validation.md"
+          ]
+        },
+        {
+          "id": "ASK-0007",
+          "reviewed": true,
+          "pages_used": [],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5113,
+            "output_tokens": 10,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5123,
+            "per_call": [
+              {
+                "stop_reason": "end_turn",
+                "input_tokens": 5113,
+                "output_tokens": 10,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5123
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "code-string-format.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5169,
+            "output_tokens": 417,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5586,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5169,
+                "output_tokens": 417,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5586
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 0.75,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "structural-validation.md"
+          ]
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 1.0,
+        "mean_precision": 0.90625,
+        "leak_free_rate": 1.0,
+        "case_count": 8,
+        "mean_selector_tokens": 5356.875
+      },
+      "cases": [
+        {
+          "id": "ASK-0001",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-2024.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5125,
+            "output_tokens": 22,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5147,
+            "per_call": [
+              {
+                "stop_reason": "end_turn",
+                "input_tokens": 5125,
+                "output_tokens": 22,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5147
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0002",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-history.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5142,
+            "output_tokens": 107,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5249,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5142,
+                "output_tokens": 107,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5249
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0003",
+          "reviewed": true,
+          "pages_used": [
+            "INGEST_WORKFLOW.md",
+            "SCHEMA.md",
+            "KNOWLEDGE_ARCHITECTURE.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5145,
+            "output_tokens": 392,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5537,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5145,
+                "output_tokens": 392,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5537
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0004",
+          "reviewed": true,
+          "pages_used": [
+            "implicit-vs-explicit-facets.md",
+            "foodex2-overview.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5139,
+            "output_tokens": 282,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5421,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5139,
+                "output_tokens": 282,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5421
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0005",
+          "reviewed": true,
+          "pages_used": [
+            "facet-coding-rules.md",
+            "packaging-facets.md",
+            "process-facets.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5131,
+            "output_tokens": 280,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5411,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5131,
+                "output_tokens": 280,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5411
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0006",
+          "reviewed": true,
+          "pages_used": [
+            "vmpr-foodex2.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5141,
+            "output_tokens": 79,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5220,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5141,
+                "output_tokens": 79,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5220
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 0.5,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "domain-specific-validation.md"
+          ]
+        },
+        {
+          "id": "ASK-0007",
+          "reviewed": true,
+          "pages_used": [],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5113,
+            "output_tokens": 10,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5123,
+            "per_call": [
+              {
+                "stop_reason": "end_turn",
+                "input_tokens": 5113,
+                "output_tokens": 10,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5123
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0008",
+          "reviewed": true,
+          "pages_used": [
+            "code-string-format.md",
+            "ingredient-facets.md",
+            "structural-validation.md",
+            "facet-coding-rules.md",
+            "RUNTIME_RULES.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5169,
+            "output_tokens": 578,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5747,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5169,
+                "output_tokens": 578,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5747
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 0.75,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "structural-validation.md"
+          ]
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 1.0,
+        "mean_precision": 0.9125,
+        "leak_free_rate": 1.0,
+        "case_count": 8,
+        "mean_selector_tokens": 5343.5
+      },
+      "cases": [
+        {
+          "id": "ASK-0001",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-2024.md",
+            "maintenance-history.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5125,
+            "output_tokens": 131,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5256,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5125,
+                "output_tokens": 131,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5256
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0002",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-history.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5142,
+            "output_tokens": 110,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5252,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5142,
+                "output_tokens": 110,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5252
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0003",
+          "reviewed": true,
+          "pages_used": [
+            "INGEST_WORKFLOW.md",
+            "SCHEMA.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5145,
+            "output_tokens": 236,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5381,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5145,
+                "output_tokens": 236,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5381
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0004",
+          "reviewed": true,
+          "pages_used": [
+            "implicit-vs-explicit-facets.md",
+            "foodex2-overview.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5139,
+            "output_tokens": 204,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5343,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5139,
+                "output_tokens": 204,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5343
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0005",
+          "reviewed": true,
+          "pages_used": [
+            "packaging-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5131,
+            "output_tokens": 323,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5454,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5131,
+                "output_tokens": 323,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5454
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0006",
+          "reviewed": true,
+          "pages_used": [
+            "vmpr-foodex2.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5141,
+            "output_tokens": 243,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5384,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5141,
+                "output_tokens": 243,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5384
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 0.5,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "domain-specific-validation.md"
+          ]
+        },
+        {
+          "id": "ASK-0007",
+          "reviewed": true,
+          "pages_used": [],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5113,
+            "output_tokens": 10,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5123,
+            "per_call": [
+              {
+                "stop_reason": "end_turn",
+                "input_tokens": 5113,
+                "output_tokens": 10,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5123
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0008",
+          "reviewed": true,
+          "pages_used": [
+            "code-string-format.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "RUNTIME_RULES.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5169,
+            "output_tokens": 386,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5555,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5169,
+                "output_tokens": 386,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5555
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 0.8,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "structural-validation.md"
+          ]
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 1.0,
+        "mean_precision": 0.90625,
+        "leak_free_rate": 1.0,
+        "case_count": 8,
+        "mean_selector_tokens": 5338.375
+      },
+      "cases": [
+        {
+          "id": "ASK-0001",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-2024.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5125,
+            "output_tokens": 116,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5241,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5125,
+                "output_tokens": 116,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5241
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0002",
+          "reviewed": true,
+          "pages_used": [
+            "maintenance-history.md",
+            "maintenance-2015.md",
+            "maintenance-2016-2018.md",
+            "maintenance-2019.md",
+            "maintenance-2020.md",
+            "maintenance-2021.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5142,
+            "output_tokens": 163,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5305,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5142,
+                "output_tokens": 163,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5305
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0003",
+          "reviewed": true,
+          "pages_used": [
+            "INGEST_WORKFLOW.md",
+            "SCHEMA.md",
+            "KNOWLEDGE_ARCHITECTURE.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5145,
+            "output_tokens": 313,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5458,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5145,
+                "output_tokens": 313,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5458
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0004",
+          "reviewed": true,
+          "pages_used": [
+            "implicit-vs-explicit-facets.md",
+            "foodex2-overview.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5139,
+            "output_tokens": 187,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5326,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5139,
+                "output_tokens": 187,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5326
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0005",
+          "reviewed": true,
+          "pages_used": [
+            "packaging-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5131,
+            "output_tokens": 210,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5341,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5131,
+                "output_tokens": 210,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5341
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0006",
+          "reviewed": true,
+          "pages_used": [
+            "vmpr-foodex2.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5141,
+            "output_tokens": 160,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5301,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5141,
+                "output_tokens": 160,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5301
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 0.5,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "domain-specific-validation.md"
+          ]
+        },
+        {
+          "id": "ASK-0007",
+          "reviewed": true,
+          "pages_used": [],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5113,
+            "output_tokens": 10,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5123,
+            "per_call": [
+              {
+                "stop_reason": "end_turn",
+                "input_tokens": 5113,
+                "output_tokens": 10,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5123
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "ASK-0008",
+          "reviewed": true,
+          "pages_used": [
+            "code-string-format.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "structural-validation.md",
+            "RUNTIME_RULES.md"
+          ],
+          "max_pages_sent": 6,
+          "selector_model_sent": "claude-sonnet-5",
+          "selector_tokens": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5169,
+            "output_tokens": 443,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5612,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5169,
+                "output_tokens": 443,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5612
+              }
+            ]
+          },
+          "must_have_recall": 1.0,
+          "precision": 0.75,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "structural-validation.md"
+          ]
+        }
+      ]
+    }
+  ],
+  "median_summary": {
+    "mean_must_have_recall": {
+      "median": 1.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "mean_precision": {
+      "median": 0.90625,
+      "min": 0.90625,
+      "max": 0.9125
+    },
+    "leak_free_rate": {
+      "median": 1.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "mean_selector_tokens": {
+      "median": 5338.375,
+      "min": 5312.125,
+      "max": 5356.875
+    },
+    "passes": 5
+  },
+  "miss_frequency": {
+    "counts": {},
+    "systematic": [],
+    "stochastic": []
+  }
+}
