@@ -194,22 +194,56 @@ def _wiki_candidate_limit(final_page_limit: int) -> int:
     )
 
 
+_INDEXED_WIKI_HEADER_FIELDS = {
+    "Page",
+    "File",
+    "Category",
+    "Source tier",
+    "Summary",
+    "Section",
+}
+
+
+def _strip_indexed_wiki_header(content: object) -> str:
+    """Remove the metadata envelope stored ahead of an indexed wiki chunk."""
+    text = str(content or "").strip()
+    header, separator, body = text.partition("\n\n")
+    if not separator:
+        return text
+
+    header_lines = header.splitlines()
+    if any(":" not in line for line in header_lines):
+        return text
+    header_fields = {line.partition(":")[0] for line in header_lines}
+    if not {"Page", "File", "Section"}.issubset(header_fields):
+        return text
+    if not header_fields.issubset(_INDEXED_WIKI_HEADER_FIELDS):
+        return text
+    return body.strip()
+
+
 def _format_wiki_result(item: dict[str, Any]) -> dict[str, Any]:
     payload = item.get("payload", {})
     page_name = str(payload.get("page_name") or "wiki-result")
     title = str(payload.get("title") or page_name)
     heading = str(payload.get("heading_path") or "")
     score = item.get("score")
-    content = (
-        f"Qdrant score: {score}\n"
-        f"Page: {title}\n"
-        f"File: {page_name}\n"
-        f"Category: {payload.get('category')}\n"
-        f"Source tier: {payload.get('source_tier')}\n"
-        f"Section: {heading}\n"
-        f"Summary: {payload.get('summary')}\n\n"
-        f"{payload.get('content', '')}"
-    )
+    header = [
+        f"Page: {title}",
+        f"File: {page_name}",
+    ]
+    for label, value in (
+        ("Category", payload.get("category")),
+        ("Source tier", payload.get("source_tier")),
+        ("Section", heading),
+        ("Summary", payload.get("summary")),
+    ):
+        if value not in (None, ""):
+            header.append(f"{label}: {value}")
+    body = _strip_indexed_wiki_header(payload.get("content"))
+    content = "\n".join(header)
+    if body:
+        content = f"{content}\n\n{body}"
     return {
         "answerer_page": {"page_name": page_name, "content": content},
         "page_summary": {

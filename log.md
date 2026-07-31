@@ -1,9 +1,15 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-07-30"
+last_updated: "2026-07-31"
 ---
 
 # Log
+
+## [2026-07-31] service | Deduplicate wiki-RAG chunk metadata
+
+- Removed the second `Page` / `File` / `Category` / `Section` / `Summary` envelope that `/wiki/ask-rag` added around chunks whose indexed content already carried the same metadata.
+- Kept one canonical authority-aware header for the answerer, omitted empty `Source tier: None` fields, and moved the Qdrant similarity score out of the prompt while preserving it in retrieval trace metadata.
+- Added backward-compatible normalization for the existing Qdrant collection, so the prompt shrinks immediately without requiring a reindex.
 
 ## [2026-07-30] evaluation | Add end-to-end Ragas endpoint/model harness
 
