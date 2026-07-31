@@ -120,7 +120,7 @@ def build_endpoint_payload(
     use_graph_expansion: bool,
 ) -> dict[str, Any]:
     common = {
-        "question": case.get("request_question") or case["question"],
+        "question": case_question(case),
         "answerer_model": answerer_model,
         "include_page_content": True,
     }
@@ -139,6 +139,11 @@ def build_endpoint_payload(
             "limit": rag_limit,
         }
     raise ValueError(f"unsupported endpoint: {endpoint}")
+
+
+def case_question(case: dict[str, Any]) -> str:
+    """Return the exact question used for endpoint calls and evaluation."""
+    return str(case.get("request_question") or case["question"])
 
 
 def post_json(
@@ -315,7 +320,7 @@ async def score_with_ragas(
         InstanceSpecificRubrics,
     )
 
-    question = case["question"]
+    question = case_question(case)
     answer = str(response.get("answer") or "")
     contexts = response_contexts(response)
     reference = case.get("reference_answer")

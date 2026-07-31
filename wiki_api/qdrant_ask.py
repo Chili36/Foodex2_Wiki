@@ -364,12 +364,6 @@ def retrieve_qdrant_ask_context(
     embedding_model = embedding_model or default_embedding_model(retrieval_mode)
     embedding_dimension = embedding_dimension or default_embedding_dimension(retrieval_mode)
 
-    vector, usage, embed_ms = _query_embedding(
-        query=question,
-        model=embedding_model,
-        dimension=embedding_dimension,
-        timeout=timeout,
-    )
     configured_strategy = (
         retrieval_strategy
         or os.getenv("WIKI_RAG_RETRIEVAL_STRATEGY")
@@ -382,6 +376,12 @@ def retrieve_qdrant_ask_context(
         )
     effective_strategy: WikiRetrievalStrategy = (
         configured_strategy if retrieval_mode == "wiki" else "legacy_topk"
+    )
+    vector, usage, embed_ms = _query_embedding(
+        query=question,
+        model=embedding_model,
+        dimension=embedding_dimension,
+        timeout=timeout,
     )
     effective_candidate_limit = (
         max(limit, min(candidate_limit, MAX_WIKI_CANDIDATES))

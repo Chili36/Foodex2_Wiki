@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Any
 
+import pytest
+
 import wiki_api.qdrant_ask as qdrant_ask
 
 
@@ -179,3 +181,26 @@ def test_wiki_context_defaults_to_legacy_top_k(monkeypatch) -> None:
     assert context["pages_used"] == ["pesticides-foodex2.md"]
     assert context["retrieval"]["strategy"] == "legacy_topk"
     assert "assembly" not in context["retrieval"]
+
+
+def test_invalid_retrieval_strategy_fails_before_embedding(monkeypatch) -> None:
+    embedding_calls = 0
+    monkeypatch.setenv("WIKI_RAG_RETRIEVAL_STRATEGY", "diverse-page")
+
+    def fake_embedding(**kwargs: Any) -> tuple[list[float], dict[str, Any], int]:
+        nonlocal embedding_calls
+        embedding_calls += 1
+        return [0.1, 0.2], {}, 7
+
+    monkeypatch.setattr(qdrant_ask, "_query_embedding", fake_embedding)
+
+    with pytest.raises(
+        qdrant_ask.QdrantAskError,
+        match="WIKI_RAG_RETRIEVAL_STRATEGY",
+    ):
+        qdrant_ask.retrieve_qdrant_ask_context(
+            question="Fresh grapes",
+            retrieval_mode="wiki",
+        )
+
+    assert embedding_calls == 0

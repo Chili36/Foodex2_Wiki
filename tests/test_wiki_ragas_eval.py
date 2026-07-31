@@ -1,15 +1,19 @@
 from __future__ import annotations
 
+import asyncio
 import json
+from types import SimpleNamespace
 
 import pytest
 
 from scripts.wiki_ragas_eval import (
     build_endpoint_payload,
+    case_question,
     deterministic_scores,
     estimated_budget,
     load_cases,
     response_contexts,
+    score_with_ragas,
     summarize,
 )
 
@@ -91,6 +95,58 @@ def test_build_payload_uses_explicit_request_question() -> None:
     )
 
     assert payload["question"].endswith("Reporting domain: pesticides.")
+
+
+def test_case_question_matches_endpoint_question() -> None:
+    case = {
+        "question": "Anything I should think about when reporting grapes?",
+        "request_question": (
+            "Anything I should think about when reporting grapes? "
+            "Reporting domain: pesticides."
+        ),
+    }
+
+    assert case_question(case) == case["request_question"]
+
+
+def test_ragas_scores_the_exact_endpoint_question(monkeypatch) -> None:
+    from ragas.metrics import collections
+
+    calls: list[dict[str, object]] = []
+    judge = object()
+
+    class FakeFaithfulness:
+        def __init__(self, *, llm: object) -> None:
+            assert llm is judge
+
+        async def ascore(self, **kwargs: object) -> SimpleNamespace:
+            calls.append(kwargs)
+            return SimpleNamespace(value=1.0, reason="grounded")
+
+    monkeypatch.setattr(collections, "Faithfulness", FakeFaithfulness)
+    case = {
+        "question": "Anything I should think about when reporting grapes?",
+        "request_question": (
+            "Anything I should think about when reporting grapes? "
+            "Reporting domain: pesticides."
+        ),
+    }
+    response = {
+        "answer": "Use the pesticides reporting overlay.",
+        "pages": [{"page_name": "pesticides-foodex2.md", "content": "Evidence"}],
+    }
+
+    result = asyncio.run(
+        score_with_ragas(
+            case=case,
+            response=response,
+            metric_names=["faithfulness"],
+            judge_llm=judge,
+        )
+    )
+
+    assert result["faithfulness"]["score"] == 1.0
+    assert calls[0]["user_input"] == case["request_question"]
 
 
 def test_build_ask_rag_payload_uses_same_answerer() -> None:
