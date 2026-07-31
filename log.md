@@ -1,9 +1,21 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-07-30"
+last_updated: "2026-07-31"
 ---
 
 # Log
+
+## [2026-07-31] runtime | Cache the stable Sonnet selector prefix
+
+- Split the Anthropic page-selector request into a stable catalog block and a per-case block, with an explicit five-minute cache breakpoint after the catalog. The cached prefix includes the tool schema, selector instructions, selection guidance, and complete scope-specific page catalog; only the current coding case remains uncached.
+- Kept non-Anthropic selectors on their existing prompt format and retained cache creation/read token accounting in the selector trace.
+- Verified against live Sonnet 5 calls: the first request created a 4,110-token cache entry and a second request with a different coding case read the same 4,110 tokens from cache with zero cache creation tokens.
+
+## [2026-07-31] service | Deduplicate wiki-RAG chunk metadata
+
+- Removed the second `Page` / `File` / `Category` / `Section` / `Summary` envelope that `/wiki/ask-rag` added around chunks whose indexed content already carried the same metadata.
+- Kept one canonical authority-aware header for the answerer, omitted empty `Source tier: None` fields, and moved the Qdrant similarity score out of the prompt while preserving it in retrieval trace metadata.
+- Added backward-compatible normalization for the existing Qdrant collection, so the prompt shrinks immediately without requiring a reindex.
 
 ## [2026-07-30] evaluation | Add end-to-end Ragas endpoint/model harness
 

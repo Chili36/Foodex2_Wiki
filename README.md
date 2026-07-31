@@ -321,6 +321,11 @@ WIKI_INTAKE_MODEL=claude-sonnet-4-6
 Terra is the default answerer for both `/wiki/ask` and `/wiki/ask-rag`.
 Per-request `answerer_model` values still override it. Other unset
 endpoint-specific model variables fall back to `WIKI_LIBRARIAN_MODEL`.
+When the page selector uses Anthropic, the service explicitly caches the stable
+tool, instruction, guidance, and page-catalog prefix for five minutes; only the
+current case remains uncached. Cache hits refresh that prefix, and selector
+token traces expose `cache_creation_input_tokens` and
+`cache_read_input_tokens` for billing verification.
 Adaptive thinking is off by default for lint and source intake because thinking tokens are
 billed output. Set `WIKI_LINT_THINKING=1`, `WIKI_INTAKE_THINKING=1`, or pass
 `--thinking` only for a review that needs deeper reasoning. These settings affect only

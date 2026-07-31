@@ -87,6 +87,27 @@ def build_selection_user_content(
         ensure_ascii=False,
     )
 
+
+def build_cached_anthropic_selection_content(
+    *, store: WikiStore, payload: dict[str, Any], scope: str = "coding"
+) -> list[dict[str, Any]]:
+    """Place the stable selector catalog before the uncached per-case payload."""
+    return [
+        {
+            "type": "text",
+            "text": json.dumps(
+                {"selector_catalog": store.selector_catalog(scope)},
+                ensure_ascii=False,
+            ),
+            "cache_control": {"type": "ephemeral"},
+        },
+        {
+            "type": "text",
+            "text": json.dumps({"case": payload}, ensure_ascii=False),
+        },
+    ]
+
+
 POLICY_PACK_SYSTEM_PROMPT = """You are the FoodEx2 wiki librarian.
 
 Your only job is to read the local FoodEx2 wiki and return the smallest useful knowledge packet for the current coding case.
@@ -1091,14 +1112,21 @@ class AnthropicWikiPageSelector:
                 0,
             ),
         )
-        messages = [
-            {
-                "role": "user",
-                "content": build_selection_user_content(
-                    store=self.store, payload=payload, scope=self.catalog_scope
-                ),
-            }
-        ]
+        if infer_model_provider(self.model) == "anthropic":
+            user_content: str | list[dict[str, Any]] = (
+                build_cached_anthropic_selection_content(
+                    store=self.store,
+                    payload=payload,
+                    scope=self.catalog_scope,
+                )
+            )
+        else:
+            user_content = build_selection_user_content(
+                store=self.store,
+                payload=payload,
+                scope=self.catalog_scope,
+            )
+        messages = [{"role": "user", "content": user_content}]
         llm_started = time.perf_counter()
         _log_prompt(
             "context_pack",

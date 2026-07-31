@@ -14,6 +14,7 @@ from wiki_api.librarian import (
     AnthropicWikiPageSelector,
     JsonWikiPageSelector,
     OpenAICompatibleMessagesClient,
+    build_cached_anthropic_selection_content,
     build_selection_system_prompt,
     build_selection_user_content,
     infer_model_provider,
@@ -473,6 +474,25 @@ def test_build_selection_user_content_coding_scope_excludes_maintenance_and_runt
     assert "RUNTIME_RULES.md" not in data["selector_catalog"]
 
 
+def test_cached_anthropic_selection_content_keeps_case_after_cache_breakpoint() -> None:
+    payload = {
+        "search_term": "test",
+        "deconstructed_query": {},
+        "candidates": [],
+        "context": {},
+    }
+
+    content = build_cached_anthropic_selection_content(
+        store=_store(), payload=payload
+    )
+
+    assert len(content) == 2
+    assert content[0]["cache_control"] == {"type": "ephemeral"}
+    assert json.loads(content[0]["text"])["selector_catalog"]
+    assert json.loads(content[1]["text"]) == {"case": payload}
+    assert "cache_control" not in content[1]
+
+
 def test_anthropic_selector_prompt_carries_guidance_and_catalog() -> None:
     client = FakeAnthropicClient(
         [
@@ -499,10 +519,13 @@ def test_anthropic_selector_prompt_carries_guidance_and_catalog() -> None:
     assert "Reading The Candidate List" in call["system"]
 
     user_content = call["messages"][0]["content"]
-    assert isinstance(user_content, str)
-    user_payload = json.loads(user_content)
-    assert "wiki_index" not in user_payload
-    assert "- base-term-selection.md — " in user_payload["selector_catalog"]
+    assert isinstance(user_content, list)
+    catalog_payload = json.loads(user_content[0]["text"])
+    case_payload = json.loads(user_content[1]["text"])
+    assert user_content[0]["cache_control"] == {"type": "ephemeral"}
+    assert "wiki_index" not in catalog_payload
+    assert "- base-term-selection.md — " in catalog_payload["selector_catalog"]
+    assert case_payload["case"]["search_term"] == "test"
 
 
 def test_anthropic_selector_ask_scope_includes_maintenance_pages() -> None:
@@ -534,9 +557,9 @@ def test_anthropic_selector_ask_scope_includes_maintenance_pages() -> None:
     )
 
     user_content = client.messages.calls[0]["messages"][0]["content"]
-    user_payload = json.loads(user_content)
-    assert "maintenance-2024.md" in user_payload["selector_catalog"]
-    assert "RUNTIME_RULES.md" in user_payload["selector_catalog"]
+    catalog_payload = json.loads(user_content[0]["text"])
+    assert "maintenance-2024.md" in catalog_payload["selector_catalog"]
+    assert "RUNTIME_RULES.md" in catalog_payload["selector_catalog"]
 
 
 def test_anthropic_selector_default_catalog_scope_is_coding() -> None:
@@ -563,9 +586,9 @@ def test_anthropic_selector_default_catalog_scope_is_coding() -> None:
     )
 
     user_content = client.messages.calls[0]["messages"][0]["content"]
-    user_payload = json.loads(user_content)
-    assert "maintenance-2024.md" not in user_payload["selector_catalog"]
-    assert "RUNTIME_RULES.md" not in user_payload["selector_catalog"]
+    catalog_payload = json.loads(user_content[0]["text"])
+    assert "maintenance-2024.md" not in catalog_payload["selector_catalog"]
+    assert "RUNTIME_RULES.md" not in catalog_payload["selector_catalog"]
 
 
 def test_json_selector_prompt_carries_guidance_and_catalog(monkeypatch) -> None:

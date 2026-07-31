@@ -52,6 +52,33 @@ def test_assemble_wiki_results_replaces_duplicate_page_slots() -> None:
     assert len(trace["dropped_duplicate_chunks"]) == 2
 
 
+def test_format_wiki_result_emits_one_metadata_header() -> None:
+    item = _wiki_result("base-term-selection.md", 1, "Tie-Break Rules")
+    item["payload"]["content"] = (
+        "Page: Base Term Selection Rules\n"
+        "File: base-term-selection.md\n"
+        "Category: guidance\n"
+        "Summary: Choose the correct base term.\n"
+        "Section: Base Term Selection > Tie-Break Rules\n\n"
+        "## Tie-Break Rules\n\nPrefer the documented priority order."
+    )
+
+    formatted = qdrant_ask._format_wiki_result(item)
+    content = formatted["answerer_page"]["content"]
+
+    assert content.count("Page:") == 1
+    assert content.count("File:") == 1
+    assert content.count("Category:") == 1
+    assert content.count("Source tier:") == 1
+    assert content.count("Section:") == 1
+    assert content.count("Summary:") == 1
+    assert "Qdrant score:" not in content
+    assert formatted["metadata"]["score"] == 0.99
+    assert content.endswith(
+        "## Tie-Break Rules\n\nPrefer the documented priority order."
+    )
+
+
 def test_retrieve_wiki_context_oversamples_and_returns_unique_pages(
     monkeypatch,
 ) -> None:
