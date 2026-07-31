@@ -1,9 +1,104 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-07-09"
+last_updated: "2026-07-30"
 ---
 
 # Log
+
+## [2026-07-30] evaluation | Add end-to-end Ragas endpoint/model harness
+
+- Added `scripts/wiki_ragas_eval.py` to compare `/wiki/ask` and wiki-mode
+  `/wiki/ask-rag` over the same reviewed DMT questions and answer models.
+- Kept Sonnet 5 fixed as the default `/wiki/ask` selector so answer-model
+  comparisons do not silently change retrieval policy.
+- Added deterministic answer assertions and reference-page coverage alongside
+  optional Ragas answer-accuracy, faithfulness, factual-correctness,
+  context-precision, context-recall, and per-case rubric metrics.
+- Added a call-budget dry run, full response and trace capture, a reviewed case
+  schema, unit tests, and result summaries grouped by endpoint and answer model.
+- Added the ten supplied DMT questions as an end-to-end pilot dataset, reusing
+  existing reviewed selector gold for four cases without inventing answer gold
+  for the other six.
+- Ran Claude Sonnet 4.6 and local Gemma 4 12B over both endpoints. The pilot
+  exposed complete but over-expanded `/wiki/ask` contexts, 41.7% must-have
+  recall plus wrong-domain leakage from `/wiki/ask-rag`, and an 8192-token local
+  context limit that caused eight of ten Gemma `/wiki/ask` calls to fail.
+
+## [2026-07-30] evaluation | Run frontier ask and RAG model matrix
+
+- Ran the ten DMT questions through `/wiki/ask` and `/wiki/ask-rag` with Claude
+  Sonnet 5, Claude Haiku 4.5, GPT-5.6 Terra, and GPT-5.6 Luna.
+- Added Anthropic JSON-schema structured output for answer synthesis after the
+  initial Sonnet run exposed repeatable malformed-JSON integration failures.
+- Added `scripts/wiki_ragas_score_results.py` so Ragas can judge frozen endpoint
+  outputs without rerunning stochastic retrieval or page selection.
+- Scored the canonical 80 successful answers for reference-free faithfulness
+  with Claude Sonnet 4.6 as judge. Terra was the strongest `/ask-rag` answerer
+  and Luna had the highest `/ask` faithfulness, while manual review rejected
+  Haiku as a default because of internal answer contradictions.
+- Confirmed that answer-model choice does not repair retrieval: `/wiki/ask-rag`
+  retained only 41.7% reviewed must-have page recall, while `/wiki/ask` expanded
+  a seven-page selection budget to roughly thirteen pages on average.
+
+## [2026-07-30] retrieval | Enforce the ask page budget
+
+- Changed `/wiki/ask` so `max_pages` is a strict cap on the final answer
+  context, rather than only a cap on the initial selector output.
+- Disabled related-page graph expansion by default.
+- When explicitly enabled, expansion now ranks curated neighbours against the
+  question, can fill only slots left inside `max_pages`, and cannot introduce
+  domain overlays that the selector did not choose.
+- Removed the legacy `index.md` placeholder from `/wiki/ask`; the selector
+  already receives the catalog separately, so the index no longer consumes a
+  page slot or leaks into answer context.
+- Updated model-sweep, endpoint-comparison, and Ragas evaluation defaults so
+  diagnostic scripts no longer silently re-enable expansion.
+- On the four reviewed DMT questions, the default minimal mode returned 4.75
+  pages on average with 70.8% required-page recall, 100% precision, and no
+  prohibited pages. Explicit safe expansion returned exactly seven pages with
+  93.8% recall, 100% precision, and no prohibited pages.
+
+## [2026-07-30] runtime | Make Terra the default ask answerer
+
+- Set `gpt-5.6-terra` as the default answer model for both `/wiki/ask` and
+  `/wiki/ask-rag`, based on the frontier-model evaluation.
+- Kept Sonnet 5 as the `/wiki/ask` page selector and preserved per-request
+  answer-model overrides.
+- Updated default answerer construction so a configured OpenAI model routes
+  through the JSON completion client instead of the Anthropic messages client.
+
+## [2026-07-30] evaluation | Retest Terra as ask page selector
+
+- Extended `scripts/selection_eval.py` with a recorded `--selector-model`
+  override and per-call selector wall-time scoring.
+- Ran Sonnet 5 and GPT-5.6 Terra over the current eight-case ask gold at five
+  repeats each.
+- Both models achieved 100% must-have recall and 100% leak-free selection in
+  all 40 calls. Sonnet had higher median precision (90.6% versus 86.3%); Terra
+  reduced mean selector latency by 29.2% (3.778 seconds to 2.675 seconds).
+
+## [2026-07-29] correction | Stop index.md leaking into context packs
+
+- Added `index.md` to the deterministic context-pack drop policy. It remains available as internal selector trace metadata but can no longer consume a prompt page slot or appear as coding guidance.
+- Added regression coverage for dropping it before skeleton backfills and optional-page trimming.
+
+## [2026-07-28] correction | Fix raw-term F01 and F04 facet guidance
+
+- Removed the overbroad matrix prohibition on `F01` and `F04` for raw commodities. The corrected rule permits explicit `F01` to narrow a generic implicit raw source while still forbidding redundant restatement, and permits `F04` on raw or derivative terms only for minor later-added ingredients, coatings, flavourings, or decorations under `BR12`.
+- Updated the policy contract and term-type matrix together, and added regression coverage for both general rules so future distillation does not restore either blanket prohibition.
+- Resynced the curated Qdrant wiki collection after the correction: 266 chunks across 33 pages, with zero missing, stale, or orphaned chunks. Fixed the incremental indexer so an existing collection is reused instead of failing with `409 Conflict`.
+
+## [2026-07-28] maintenance | Upgrade the hosted page selector to Sonnet 5
+
+- Updated the page-selector role (`WIKI_CONTEXT_MODEL`) from `claude-sonnet-4-6` to the official Sonnet 5 API identifier, `claude-sonnet-5`.
+- Updated the selector's code fallback and configuration/request examples. Other wiki roles remain on their existing model assignments.
+
+## [2026-07-27] maintenance | Add page-diverse wiki-RAG retrieval and evaluation
+
+- Split wiki-RAG candidate retrieval from final evidence assembly: the opt-in `diverse_pages` strategy oversamples Qdrant candidates and fills the requested page budget with the highest-ranked chunk from each unique page, while the production default remains `legacy_topk` and source-document RAG retains its existing top-K chunk behavior.
+- Added retrieval trace metrics for candidate limits, candidate duplication pressure, pre-assembly top-K waste, final page-slot waste, selected pages, and dropped duplicate chunks.
+- Added a deterministic wiki-RAG scoring module, five reviewed retrieval seed cases, and a retrieval-only eval runner that makes embedding/search calls without invoking an answerer.
+- On the five-case smoke comparison, page diversification raised mean must-have recall from 0.333 to 0.550 and mean unique pages from 3.0 to 7.0 with essentially flat retrieval latency (~316 ms). Leak-free rate fell from 0.60 to 0.20 because the newly available slots exposed the already-known lack of domain and maintenance filtering; that is the next evidence-gated phase after the wiki update.
 
 ## [2026-07-09] maintenance | Add wiki LLM cost guardrails
 

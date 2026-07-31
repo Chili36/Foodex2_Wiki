@@ -17,6 +17,10 @@ DEFAULT_EMBEDDING_DIMENSION = 1024
 DEFAULT_EMBEDDING_MODEL = "voyage-context-3"
 DEFAULT_SOURCE_COLLECTION = "foodex2_source_docs_v1"
 DEFAULT_WIKI_COLLECTION = "foodex2_wiki_markdown_v1"
+DEFAULT_WIKI_CANDIDATE_FLOOR = 30
+DEFAULT_WIKI_CANDIDATE_MULTIPLIER = 5
+MAX_WIKI_CANDIDATES = 100
+WikiRetrievalStrategy = Literal["legacy_topk", "diverse_pages"]
 
 
 class QdrantAskError(RuntimeError):
@@ -97,6 +101,7 @@ def _payload_fields(retrieval_mode: Literal["wiki", "source"]) -> list[str]:
             "content",
         ]
     return [
+        "chunk_id",
         "page_name",
         "title",
         "category",
@@ -179,6 +184,16 @@ def _dedupe(values: list[str]) -> list[str]:
     return list(dict.fromkeys(value for value in values if value))
 
 
+def _wiki_candidate_limit(final_page_limit: int) -> int:
+    return min(
+        MAX_WIKI_CANDIDATES,
+        max(
+            DEFAULT_WIKI_CANDIDATE_FLOOR,
+            final_page_limit * DEFAULT_WIKI_CANDIDATE_MULTIPLIER,
+        ),
+    )
+
+
 def _format_wiki_result(item: dict[str, Any]) -> dict[str, Any]:
     payload = item.get("payload", {})
     page_name = str(payload.get("page_name") or "wiki-result")
@@ -209,6 +224,7 @@ def _format_wiki_result(item: dict[str, Any]) -> dict[str, Any]:
         },
         "pages_used": page_name,
         "metadata": {
+            "chunk_id": payload.get("chunk_id"),
             "score": score,
             "page_name": page_name,
             "heading_path": heading,
@@ -217,6 +233,79 @@ def _format_wiki_result(item: dict[str, Any]) -> dict[str, Any]:
             "summary": payload.get("summary"),
             "source_path": payload.get("source_path"),
         },
+    }
+
+
+def _assemble_wiki_results(
+    results: list[dict[str, Any]], *, page_limit: int
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Select the highest-ranked chunk from each unique wiki page.
+
+    Qdrant ranks chunks. The ask endpoint promises a page-oriented evidence
+    surface, so repeated chunks from one page must not consume final page slots.
+    The highest-ranked chunk represents each page in this first diversity pass;
+    later phases may add more chunks under an explicit context budget.
+    """
+    selected_items: list[dict[str, Any]] = []
+    seen_pages: set[str] = set()
+    candidate_pages: list[str] = []
+    dropped_duplicate_chunks: list[dict[str, Any]] = []
+
+    for rank, item in enumerate(results, start=1):
+        payload = item.get("payload")
+        if not isinstance(payload, dict):
+            payload = {}
+        page_name = str(payload.get("page_name") or "wiki-result")
+        if page_name not in candidate_pages:
+            candidate_pages.append(page_name)
+        if page_name in seen_pages:
+            dropped_duplicate_chunks.append(
+                {
+                    "rank": rank,
+                    "page_name": page_name,
+                    "chunk_id": payload.get("chunk_id"),
+                    "heading_path": payload.get("heading_path"),
+                    "score": item.get("score"),
+                    "reason": "duplicate_page",
+                }
+            )
+            continue
+        seen_pages.add(page_name)
+        if len(selected_items) < page_limit:
+            selected_items.append(item)
+
+    candidate_count = len(results)
+    unique_candidate_count = len(candidate_pages)
+    preassembly_slots = [
+        str((item.get("payload") or {}).get("page_name") or "wiki-result")
+        for item in results[:page_limit]
+    ]
+    preassembly_duplicate_count = len(preassembly_slots) - len(
+        set(preassembly_slots)
+    )
+    return [(_format_wiki_result(item)) for item in selected_items], {
+        "strategy": "highest_ranked_chunk_per_unique_page",
+        "candidate_chunk_count": candidate_count,
+        "candidate_unique_page_count": unique_candidate_count,
+        "selected_page_count": len(selected_items),
+        "duplicate_chunk_count": candidate_count - unique_candidate_count,
+        "candidate_duplicate_ratio": (
+            (candidate_count - unique_candidate_count) / candidate_count
+            if candidate_count
+            else 0.0
+        ),
+        "preassembly_duplicate_slot_waste": (
+            preassembly_duplicate_count / len(preassembly_slots)
+            if preassembly_slots
+            else 0.0
+        ),
+        "duplicate_slot_waste": 0.0,
+        "selected_pages": [
+            str((item.get("payload") or {}).get("page_name") or "wiki-result")
+            for item in selected_items
+        ],
+        "dropped_duplicate_chunks": dropped_duplicate_chunks,
+        "unselected_candidate_pages": candidate_pages[page_limit:],
     }
 
 
@@ -266,6 +355,8 @@ def retrieve_qdrant_ask_context(
     qdrant_url: str | None = None,
     embedding_model: str | None = None,
     embedding_dimension: int | None = None,
+    candidate_limit: int | None = None,
+    retrieval_strategy: WikiRetrievalStrategy | None = None,
     timeout: float = 180.0,
 ) -> dict[str, Any]:
     qdrant_url = qdrant_url or os.getenv("QDRANT_URL", "http://127.0.0.1:6333")
@@ -279,18 +370,65 @@ def retrieve_qdrant_ask_context(
         dimension=embedding_dimension,
         timeout=timeout,
     )
+    configured_strategy = (
+        retrieval_strategy
+        or os.getenv("WIKI_RAG_RETRIEVAL_STRATEGY")
+        or "legacy_topk"
+    )
+    if configured_strategy not in {"legacy_topk", "diverse_pages"}:
+        raise QdrantAskError(
+            "WIKI_RAG_RETRIEVAL_STRATEGY must be 'legacy_topk' or "
+            f"'diverse_pages', got {configured_strategy!r}"
+        )
+    effective_strategy: WikiRetrievalStrategy = (
+        configured_strategy if retrieval_mode == "wiki" else "legacy_topk"
+    )
+    effective_candidate_limit = (
+        max(limit, min(candidate_limit, MAX_WIKI_CANDIDATES))
+        if effective_strategy == "diverse_pages" and candidate_limit is not None
+        else _wiki_candidate_limit(limit)
+        if effective_strategy == "diverse_pages"
+        else limit
+    )
     results, search_ms = _search_qdrant(
         qdrant_url=qdrant_url,
         collection=collection,
         retrieval_mode=retrieval_mode,
         vector=vector,
-        limit=limit,
+        limit=effective_candidate_limit,
         timeout=timeout,
     )
 
-    formatter = _format_source_result if retrieval_mode == "source" else _format_wiki_result
-    formatted = [formatter(item) for item in results]
+    assembly: dict[str, Any] | None = None
+    if effective_strategy == "diverse_pages":
+        assembly_started = time.perf_counter()
+        formatted, assembly = _assemble_wiki_results(results, page_limit=limit)
+        assembly["elapsed_ms"] = int(
+            (time.perf_counter() - assembly_started) * 1000
+        )
+        raw_metadata = [_format_wiki_result(item)["metadata"] for item in results]
+    elif retrieval_mode == "source":
+        formatted = [_format_source_result(item) for item in results]
+        raw_metadata = [item["metadata"] for item in formatted]
+    else:
+        formatted = [_format_wiki_result(item) for item in results]
+        raw_metadata = [item["metadata"] for item in formatted]
     embedding_tokens = _known_embedding_tokens(usage)
+    retrieval_trace: dict[str, Any] = {
+        "provider": "qdrant",
+        "retrieval_mode": retrieval_mode,
+        "strategy": effective_strategy,
+        "collection": collection,
+        "qdrant_url": qdrant_url,
+        "elapsed_ms": search_ms,
+        "limit": limit,
+        "candidate_limit": effective_candidate_limit,
+        "result_count": len(results),
+        "selected_result_count": len(formatted),
+        "results": raw_metadata,
+    }
+    if assembly is not None:
+        retrieval_trace["assembly"] = assembly
     return {
         "answerer_pages": [item["answerer_page"] for item in formatted],
         "page_summaries": [item["page_summary"] for item in formatted],
@@ -303,14 +441,5 @@ def retrieve_qdrant_ask_context(
             "usage": usage,
             "tracked_tokens": embedding_tokens,
         },
-        "retrieval": {
-            "provider": "qdrant",
-            "retrieval_mode": retrieval_mode,
-            "collection": collection,
-            "qdrant_url": qdrant_url,
-            "elapsed_ms": search_ms,
-            "limit": limit,
-            "result_count": len(results),
-            "results": [item["metadata"] for item in formatted],
-        },
+        "retrieval": retrieval_trace,
     }

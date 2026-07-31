@@ -1,0 +1,5920 @@
+{
+  "endpoint": "context-pack",
+  "repeats": 3,
+  "estimated_llm_calls": 117,
+  "max_pages_override": null,
+  "selector_model_override": null,
+  "effective_max_pages": {
+    "min": 7,
+    "max": 7
+  },
+  "passes": [
+    {
+      "summary": {
+        "mean_must_have_recall": 0.8418803418803419,
+        "mean_precision": 0.964957264957265,
+        "leak_free_rate": 1.0,
+        "case_count": 39,
+        "mean_pack_chars": 18348.897435897437,
+        "backfill_case_rate": 0.10256410256410256,
+        "mean_backfills_per_case": 0.1282051282051282,
+        "mean_selector_tokens": 2771.6153846153848,
+        "mean_selector_wall_time_ms": 5681.205128205128
+      },
+      "cases": [
+        {
+          "id": "SEL-0001",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "pesticides-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15593,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2296,
+            "output_tokens": 399,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2695,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2296,
+                "output_tokens": 399,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2695
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6192,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0002",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "structural-validation.md",
+            "domain-specific-validation.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17956,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2298,
+            "output_tokens": 428,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2726,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2298,
+                "output_tokens": 428,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2726
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5616,
+          "backfilled": [
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0003",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "domain-specific-validation.md",
+            "code-string-format.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15581,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2294,
+            "output_tokens": 486,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2780,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2294,
+                "output_tokens": 486,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2780
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6361,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0004",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "vmpr-foodex2.md",
+            "vmpr-legislative-mapping.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20506,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2290,
+            "output_tokens": 448,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2738,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2290,
+                "output_tokens": 448,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2738
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5101,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0005",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14013,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2303,
+            "output_tokens": 570,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2873,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2303,
+                "output_tokens": 570,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2873
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6674,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0006",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14957,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2305,
+            "output_tokens": 569,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2874,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2305,
+                "output_tokens": 569,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2874
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6844,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0007",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14957,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2296,
+            "output_tokens": 1087,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3383,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2296,
+                "output_tokens": 1087,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3383
+              }
+            ]
+          },
+          "selector_wall_time_ms": 13125,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "vmpr-foodex2.md",
+            "vmpr-legislative-mapping.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20506,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2307,
+            "output_tokens": 391,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2698,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2307,
+                "output_tokens": 391,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2698
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4784,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0009",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21634,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2297,
+            "output_tokens": 405,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2702,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2297,
+                "output_tokens": 405,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2702
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5118,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0010",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21634,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2295,
+            "output_tokens": 378,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2673,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2295,
+                "output_tokens": 378,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2673
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4818,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0011",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "process-validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17829,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2360,
+            "output_tokens": 572,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2932,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2360,
+                "output_tokens": 572,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2932
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6670,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 0.8333333333333334,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "process-validation-rules.md"
+          ]
+        },
+        {
+          "id": "SEL-0012",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "domain-specific-validation.md",
+            "structural-validation.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17262,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2357,
+            "output_tokens": 463,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2820,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2357,
+                "output_tokens": 463,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2820
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6483,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0013",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "code-string-format.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15581,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2358,
+            "output_tokens": 491,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2849,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2358,
+                "output_tokens": 491,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2849
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5985,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0014",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "packaging-facets.md",
+            "contaminants-foodex2.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14928,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2387,
+            "output_tokens": 379,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2766,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2387,
+                "output_tokens": 379,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2766
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4951,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0015",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "structural-validation.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15818,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2317,
+            "output_tokens": 316,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2633,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2317,
+                "output_tokens": 316,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2633
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4557,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0016",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19776,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2288,
+            "output_tokens": 472,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2760,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2288,
+                "output_tokens": 472,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2760
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5485,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0017",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 22487,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2307,
+            "output_tokens": 319,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2626,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2307,
+                "output_tokens": 319,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2626
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4476,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0018",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20249,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2295,
+            "output_tokens": 572,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2867,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2295,
+                "output_tokens": 572,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2867
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6719,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0019",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "process-validation-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15274,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2285,
+            "output_tokens": 294,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2579,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2285,
+                "output_tokens": 294,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2579
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4014,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0020",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 12903,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2295,
+            "output_tokens": 378,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2673,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2295,
+                "output_tokens": 378,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2673
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4979,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0021",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 18822,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2289,
+            "output_tokens": 462,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2751,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2289,
+                "output_tokens": 462,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2751
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5432,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0022",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 18822,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2296,
+            "output_tokens": 284,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2580,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2296,
+                "output_tokens": 284,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2580
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3423,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0023",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19776,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2292,
+            "output_tokens": 334,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2626,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2292,
+                "output_tokens": 334,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2626
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4260,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0024",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 22709,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2294,
+            "output_tokens": 557,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2851,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2294,
+                "output_tokens": 557,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2851
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6613,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "code-string-format.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0025",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 16838,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2286,
+            "output_tokens": 398,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2684,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2286,
+                "output_tokens": 398,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2684
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4849,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "code-string-format.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0026",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 25179,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2293,
+            "output_tokens": 565,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2858,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2293,
+                "output_tokens": 565,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2858
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6433,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "implicit-vs-explicit-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0027",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17878,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2292,
+            "output_tokens": 567,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2859,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2292,
+                "output_tokens": 567,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2859
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6263,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 0.6666666666666666,
+          "missing": [
+            "implicit-vs-explicit-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md",
+            "process-validation-rules.md"
+          ]
+        },
+        {
+          "id": "SEL-0028",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "process-validation-rules.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14718,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2294,
+            "output_tokens": 339,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2633,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2294,
+                "output_tokens": 339,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2633
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4634,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0029",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "structural-validation.md",
+            "process-validation-rules.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md",
+            "base-term-selection.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 12903,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2369,
+            "output_tokens": 550,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2919,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2369,
+                "output_tokens": 550,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2919
+              }
+            ]
+          },
+          "selector_wall_time_ms": 8072,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.6666666666666666,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-validation-rules.md",
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0030",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19776,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2360,
+            "output_tokens": 259,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2619,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2360,
+                "output_tokens": 259,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2619
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3448,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0031",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19622,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2379,
+            "output_tokens": 198,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2577,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2379,
+                "output_tokens": 198,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2577
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3104,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.8,
+          "missing": [
+            "structural-validation.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0032",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "packaging-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15531,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2368,
+            "output_tokens": 1086,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3454,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2368,
+                "output_tokens": 1086,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3454
+              }
+            ]
+          },
+          "selector_wall_time_ms": 12859,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0033",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "packaging-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17911,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2357,
+            "output_tokens": 266,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2623,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2357,
+                "output_tokens": 266,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2623
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5389,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0034",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 12903,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2374,
+            "output_tokens": 354,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2728,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2374,
+                "output_tokens": 354,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2728
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3825,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "business-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0035",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "anses-codification-guidance.md",
+            "structural-validation.md",
+            "validation-rules.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 25056,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2373,
+            "output_tokens": 279,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2652,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2373,
+                "output_tokens": 279,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2652
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4081,
+          "backfilled": [
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.3333333333333333,
+          "precision": 1.0,
+          "missing": [
+            "business-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0036",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "pesticides-foodex2.md",
+            "term-type-facet-constraints.md",
+            "process-validation-rules.md",
+            "business-rules.md",
+            "code-string-format.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 22676,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2379,
+            "output_tokens": 511,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2890,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2379,
+                "output_tokens": 511,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2890
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6053,
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [
+            "structural-validation.md"
+          ],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0037",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "business-rules.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 24424,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2390,
+            "output_tokens": 187,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2577,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2390,
+                "output_tokens": 187,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2577
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3670,
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            },
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "validation-rules.md",
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0038",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "pesticides-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "validation-rules.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19218,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2332,
+            "output_tokens": 508,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2840,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2332,
+                "output_tokens": 508,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2840
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5836,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0039",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21401,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2323,
+            "output_tokens": 402,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2725,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2323,
+                "output_tokens": 402,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2725
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4371,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.6666666666666666,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md",
+            "process-validation-rules.md"
+          ]
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 0.873931623931624,
+        "mean_precision": 0.964957264957265,
+        "leak_free_rate": 1.0,
+        "case_count": 39,
+        "mean_pack_chars": 17700.589743589742,
+        "backfill_case_rate": 0.05128205128205128,
+        "mean_backfills_per_case": 0.05128205128205128,
+        "mean_selector_tokens": 2751.4358974358975,
+        "mean_selector_wall_time_ms": 5637.4358974358975
+      },
+      "cases": [
+        {
+          "id": "SEL-0001",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "pesticides-foodex2.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "structural-validation.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 18835,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2296,
+            "output_tokens": 570,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2866,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2296,
+                "output_tokens": 570,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2866
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7162,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0002",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 24281,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2298,
+            "output_tokens": 571,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2869,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2298,
+                "output_tokens": 571,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2869
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6402,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0003",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15581,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2294,
+            "output_tokens": 566,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2860,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2294,
+                "output_tokens": 566,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2860
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6419,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0004",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "vmpr-foodex2.md",
+            "vmpr-legislative-mapping.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20506,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2290,
+            "output_tokens": 271,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2561,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2290,
+                "output_tokens": 271,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2561
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3208,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0005",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14013,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2303,
+            "output_tokens": 570,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2873,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2303,
+                "output_tokens": 570,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2873
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6139,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0006",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14957,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2305,
+            "output_tokens": 468,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2773,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2305,
+                "output_tokens": 468,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2773
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5487,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0007",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14108,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2296,
+            "output_tokens": 570,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2866,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2296,
+                "output_tokens": 570,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2866
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5950,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 22237,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2307,
+            "output_tokens": 519,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2826,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2307,
+                "output_tokens": 519,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2826
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5425,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0009",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "vmpr-legislative-mapping.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21109,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2297,
+            "output_tokens": 569,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2866,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2297,
+                "output_tokens": 569,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2866
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6263,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0010",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "vmpr-legislative-mapping.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 26037,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2295,
+            "output_tokens": 371,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2666,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2295,
+                "output_tokens": 371,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2666
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4965,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0011",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15658,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2360,
+            "output_tokens": 572,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2932,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2360,
+                "output_tokens": 572,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2932
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6395,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0012",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "facet-coding-rules.md",
+            "structural-validation.md",
+            "vmpr-legislative-mapping.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 26037,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2357,
+            "output_tokens": 370,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2727,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2357,
+                "output_tokens": 370,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2727
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4458,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0013",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "domain-specific-validation.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15581,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2358,
+            "output_tokens": 367,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2725,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2358,
+                "output_tokens": 367,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2725
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5285,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0014",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "packaging-facets.md",
+            "contaminants-foodex2.md",
+            "code-string-format.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14928,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2387,
+            "output_tokens": 455,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2842,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2387,
+                "output_tokens": 455,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2842
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5134,
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [
+            "business-rules.md"
+          ],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0015",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14666,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2317,
+            "output_tokens": 324,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2641,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2317,
+                "output_tokens": 324,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2641
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4054,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0016",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19776,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2288,
+            "output_tokens": 316,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2604,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2288,
+                "output_tokens": 316,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2604
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4227,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0017",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19776,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2307,
+            "output_tokens": 307,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2614,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2307,
+                "output_tokens": 307,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2614
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4989,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0018",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "process-facets.md",
+            "code-string-format.md",
+            "structural-validation.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17112,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2295,
+            "output_tokens": 566,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2861,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2295,
+                "output_tokens": 566,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2861
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6832,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "process-validation-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0019",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 12903,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2285,
+            "output_tokens": 194,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2479,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2285,
+                "output_tokens": 194,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2479
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2999,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0020",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 13764,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2295,
+            "output_tokens": 566,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2861,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2295,
+                "output_tokens": 566,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2861
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6564,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0021",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 18822,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2289,
+            "output_tokens": 307,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2596,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2289,
+                "output_tokens": 307,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2596
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3580,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0022",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15662,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2296,
+            "output_tokens": 418,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2714,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2296,
+                "output_tokens": 418,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2714
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4550,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0023",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19776,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2292,
+            "output_tokens": 342,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2634,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2292,
+                "output_tokens": 342,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2634
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4715,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0024",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "anses-codification-guidance.md",
+            "ingredient-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 23812,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2294,
+            "output_tokens": 566,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2860,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2294,
+                "output_tokens": 566,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2860
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6758,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "code-string-format.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0025",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "process-facets.md",
+            "structural-validation.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15326,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2286,
+            "output_tokens": 254,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2540,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2286,
+                "output_tokens": 254,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2540
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4118,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "code-string-format.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0026",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "ingredient-facets.md",
+            "structural-validation.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14864,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2293,
+            "output_tokens": 418,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2711,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2293,
+                "output_tokens": 418,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2711
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5818,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.3333333333333333,
+          "precision": 0.8,
+          "missing": [
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "ingredient-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0027",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "process-validation-rules.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17878,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2292,
+            "output_tokens": 567,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2859,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2292,
+                "output_tokens": 567,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2859
+              }
+            ]
+          },
+          "selector_wall_time_ms": 12353,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 0.6666666666666666,
+          "missing": [
+            "implicit-vs-explicit-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md",
+            "process-validation-rules.md"
+          ]
+        },
+        {
+          "id": "SEL-0028",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14718,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2294,
+            "output_tokens": 517,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2811,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2294,
+                "output_tokens": 517,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2811
+              }
+            ]
+          },
+          "selector_wall_time_ms": 18106,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0029",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "structural-validation.md",
+            "term-type-facet-constraints.md",
+            "base-term-selection.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 10364,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2369,
+            "output_tokens": 287,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2656,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2369,
+                "output_tokens": 287,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2656
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3677,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0030",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 16650,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2360,
+            "output_tokens": 225,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2585,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2360,
+                "output_tokens": 225,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2585
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2926,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0031",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "business-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20933,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2379,
+            "output_tokens": 295,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2674,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2379,
+                "output_tokens": 295,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2674
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4292,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 0.8333333333333334,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0032",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "packaging-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14928,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2368,
+            "output_tokens": 568,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2936,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2368,
+                "output_tokens": 568,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2936
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6785,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0033",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "packaging-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17911,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2357,
+            "output_tokens": 422,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2779,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2357,
+                "output_tokens": 422,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2779
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4537,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0034",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 12903,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2374,
+            "output_tokens": 334,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2708,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2374,
+                "output_tokens": 334,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2708
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4181,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "business-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0035",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "structural-validation.md",
+            "anses-codification-guidance.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21034,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2373,
+            "output_tokens": 254,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2627,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2373,
+                "output_tokens": 254,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2627
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4038,
+          "backfilled": [
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.3333333333333333,
+          "precision": 1.0,
+          "missing": [
+            "business-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0036",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "pesticides-foodex2.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14609,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2379,
+            "output_tokens": 568,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2947,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2379,
+                "output_tokens": 568,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2947
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6438,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "business-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0037",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "ingredient-facets.md",
+            "code-string-format.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21065,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2390,
+            "output_tokens": 391,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2781,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2390,
+                "output_tokens": 391,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2781
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4810,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "validation-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0038",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "validation-rules.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19218,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2332,
+            "output_tokens": 366,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2698,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2332,
+                "output_tokens": 366,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2698
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4300,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0039",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17985,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2323,
+            "output_tokens": 555,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2878,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2323,
+                "output_tokens": 555,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2878
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5521,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 0.6666666666666666,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md",
+            "process-validation-rules.md"
+          ]
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 0.8653846153846154,
+        "mean_precision": 0.9700854700854702,
+        "leak_free_rate": 1.0,
+        "case_count": 39,
+        "mean_pack_chars": 18261.46153846154,
+        "backfill_case_rate": 0.07692307692307693,
+        "mean_backfills_per_case": 0.07692307692307693,
+        "mean_selector_tokens": 2768.846153846154,
+        "mean_selector_wall_time_ms": 5661.666666666667
+      },
+      "cases": [
+        {
+          "id": "SEL-0001",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17666,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2296,
+            "output_tokens": 545,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2841,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2296,
+                "output_tokens": 545,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2841
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6407,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0002",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20843,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2298,
+            "output_tokens": 379,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2677,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2298,
+                "output_tokens": 379,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2677
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4642,
+          "backfilled": [
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [
+            "domain-specific-validation.md"
+          ],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0003",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "domain-specific-validation.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15581,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2294,
+            "output_tokens": 428,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2722,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2294,
+                "output_tokens": 428,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2722
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5339,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0004",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "vmpr-foodex2.md",
+            "vmpr-legislative-mapping.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 23217,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2290,
+            "output_tokens": 832,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3122,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2290,
+                "output_tokens": 832,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3122
+              }
+            ]
+          },
+          "selector_wall_time_ms": 8486,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0005",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "structural-validation.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 12454,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2303,
+            "output_tokens": 656,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2959,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2303,
+                "output_tokens": 656,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2959
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7295,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0006",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15560,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2305,
+            "output_tokens": 552,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2857,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2305,
+                "output_tokens": 552,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2857
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6407,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0007",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14108,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2296,
+            "output_tokens": 570,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2866,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2296,
+                "output_tokens": 570,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2866
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6380,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "vmpr-legislative-mapping.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 26037,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2307,
+            "output_tokens": 518,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2825,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2307,
+                "output_tokens": 518,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2825
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6009,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0009",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md",
+            "vmpr-legislative-mapping.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20506,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2297,
+            "output_tokens": 474,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2771,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2297,
+                "output_tokens": 474,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2771
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5529,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0010",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "vmpr-legislative-mapping.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20506,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2295,
+            "output_tokens": 326,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2621,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2295,
+                "output_tokens": 326,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2621
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5229,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0011",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 16214,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2360,
+            "output_tokens": 572,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2932,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2360,
+                "output_tokens": 572,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2932
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6516,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0012",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "domain-specific-validation.md",
+            "structural-validation.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17262,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2357,
+            "output_tokens": 528,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2885,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2357,
+                "output_tokens": 528,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2885
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7496,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0013",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "contaminants-foodex2.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15839,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2358,
+            "output_tokens": 567,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2925,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2358,
+                "output_tokens": 567,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2925
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7163,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0014",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "packaging-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14928,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2387,
+            "output_tokens": 499,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2886,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2387,
+                "output_tokens": 499,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2886
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6137,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0015",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20952,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2317,
+            "output_tokens": 282,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2599,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2317,
+                "output_tokens": 282,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2599
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3461,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0016",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19776,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2288,
+            "output_tokens": 570,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2858,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2288,
+                "output_tokens": 570,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2858
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6267,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0017",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 22487,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2307,
+            "output_tokens": 333,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2640,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2307,
+                "output_tokens": 333,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2640
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4486,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0018",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 12903,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2295,
+            "output_tokens": 462,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2757,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2295,
+                "output_tokens": 462,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2757
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5421,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0019",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "process-validation-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15274,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2285,
+            "output_tokens": 460,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2745,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2285,
+                "output_tokens": 460,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2745
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4990,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0020",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 12903,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2295,
+            "output_tokens": 509,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2804,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2295,
+                "output_tokens": 509,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2804
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5653,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0021",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 18822,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2289,
+            "output_tokens": 441,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2730,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2289,
+                "output_tokens": 441,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2730
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4886,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0022",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 18822,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2296,
+            "output_tokens": 342,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2638,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2296,
+                "output_tokens": 342,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2638
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5585,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0023",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19776,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2292,
+            "output_tokens": 497,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2789,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2292,
+                "output_tokens": 497,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2789
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5779,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0024",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "structural-validation.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21150,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2294,
+            "output_tokens": 451,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2745,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2294,
+                "output_tokens": 451,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2745
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5883,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "code-string-format.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0025",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "structural-validation.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17990,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2286,
+            "output_tokens": 314,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2600,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2286,
+                "output_tokens": 314,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2600
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5452,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "code-string-format.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0026",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20672,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2293,
+            "output_tokens": 446,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2739,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2293,
+                "output_tokens": 446,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2739
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5080,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "implicit-vs-explicit-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0027",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15274,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2292,
+            "output_tokens": 570,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2862,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2292,
+                "output_tokens": 570,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2862
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6029,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 0.6666666666666666,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md",
+            "process-validation-rules.md"
+          ]
+        },
+        {
+          "id": "SEL-0028",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 12903,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2294,
+            "output_tokens": 408,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2702,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2294,
+                "output_tokens": 408,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2702
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4528,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0029",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "structural-validation.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "base-term-selection.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 12903,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2369,
+            "output_tokens": 334,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2703,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2369,
+                "output_tokens": 334,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2703
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4045,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.6666666666666666,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md",
+            "process-validation-rules.md"
+          ]
+        },
+        {
+          "id": "SEL-0030",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "code-string-format.md",
+            "structural-validation.md",
+            "term-type-facet-constraints.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20672,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2360,
+            "output_tokens": 380,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2740,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2360,
+                "output_tokens": 380,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2740
+              }
+            ]
+          },
+          "selector_wall_time_ms": 8265,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0031",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "business-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20933,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2379,
+            "output_tokens": 415,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2794,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2379,
+                "output_tokens": 415,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2794
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4965,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 0.8333333333333334,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0032",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "packaging-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14928,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2368,
+            "output_tokens": 390,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2758,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2368,
+                "output_tokens": 390,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2758
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7709,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0033",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "packaging-facets.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 18167,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2357,
+            "output_tokens": 312,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2669,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2357,
+                "output_tokens": 312,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2669
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4597,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0034",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 12903,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2374,
+            "output_tokens": 270,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2644,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2374,
+                "output_tokens": 270,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2644
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3325,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "business-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0035",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "anses-codification-guidance.md",
+            "structural-validation.md",
+            "validation-rules.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 25056,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2373,
+            "output_tokens": 258,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2631,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2373,
+                "output_tokens": 258,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2631
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3713,
+          "backfilled": [
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.3333333333333333,
+          "precision": 1.0,
+          "missing": [
+            "business-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0036",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "pesticides-foodex2.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "process-validation-rules.md",
+            "business-rules.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 22676,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2379,
+            "output_tokens": 536,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2915,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2379,
+                "output_tokens": 536,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2915
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5959,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0037",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "business-rules.md",
+            "validation-rules.md",
+            "code-string-format.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 22915,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2390,
+            "output_tokens": 238,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2628,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2390,
+                "output_tokens": 238,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2628
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3218,
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0038",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "pesticides-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19218,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2332,
+            "output_tokens": 338,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2670,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2332,
+                "output_tokens": 338,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2670
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7444,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0039",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21401,
+          "selector_tokens": {
+            "model": "gpt-5.6-luna",
+            "calls": 1,
+            "input_tokens": 2323,
+            "output_tokens": 413,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2736,
+            "per_call": [
+              {
+                "stop_reason": "completed",
+                "input_tokens": 2323,
+                "output_tokens": 413,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2736
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5030,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.6666666666666666,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md",
+            "process-validation-rules.md"
+          ]
+        }
+      ]
+    }
+  ],
+  "median_summary": {
+    "mean_must_have_recall": {
+      "median": 0.8653846153846154,
+      "min": 0.8418803418803419,
+      "max": 0.873931623931624
+    },
+    "mean_precision": {
+      "median": 0.964957264957265,
+      "min": 0.964957264957265,
+      "max": 0.9700854700854702
+    },
+    "leak_free_rate": {
+      "median": 1.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "mean_selector_tokens": {
+      "median": 2768.846153846154,
+      "min": 2751.4358974358975,
+      "max": 2771.6153846153848
+    },
+    "mean_selector_wall_time_ms": {
+      "median": 5661.666666666667,
+      "min": 5637.4358974358975,
+      "max": 5681.205128205128
+    },
+    "mean_pack_chars": {
+      "median": 18261.46153846154,
+      "min": 17700.589743589742,
+      "max": 18348.897435897437
+    },
+    "backfill_case_rate": {
+      "median": 0.07692307692307693,
+      "min": 0.05128205128205128,
+      "max": 0.10256410256410256
+    },
+    "mean_backfills_per_case": {
+      "median": 0.07692307692307693,
+      "min": 0.05128205128205128,
+      "max": 0.1282051282051282
+    },
+    "passes": 3
+  },
+  "miss_frequency": {
+    "counts": {
+      "SEL-0001": {
+        "term-type-facet-constraints.md": 2
+      },
+      "SEL-0002": {
+        "term-type-facet-constraints.md": 1
+      },
+      "SEL-0008": {
+        "facet-coding-rules.md": 1
+      },
+      "SEL-0012": {
+        "facet-coding-rules.md": 2
+      },
+      "SEL-0013": {
+        "ingredient-facets.md": 2
+      },
+      "SEL-0015": {
+        "term-type-facet-constraints.md": 1
+      },
+      "SEL-0020": {
+        "ingredient-facets.md": 2
+      },
+      "SEL-0024": {
+        "code-string-format.md": 3,
+        "term-type-facet-constraints.md": 1
+      },
+      "SEL-0025": {
+        "code-string-format.md": 3,
+        "term-type-facet-constraints.md": 2
+      },
+      "SEL-0026": {
+        "implicit-vs-explicit-facets.md": 3,
+        "term-type-facet-constraints.md": 1
+      },
+      "SEL-0027": {
+        "implicit-vs-explicit-facets.md": 2,
+        "facet-coding-rules.md": 1
+      },
+      "SEL-0028": {
+        "facet-coding-rules.md": 3
+      },
+      "SEL-0029": {
+        "facet-coding-rules.md": 3
+      },
+      "SEL-0031": {
+        "structural-validation.md": 1
+      },
+      "SEL-0034": {
+        "business-rules.md": 3
+      },
+      "SEL-0035": {
+        "business-rules.md": 3,
+        "term-type-facet-constraints.md": 3
+      },
+      "SEL-0037": {
+        "validation-rules.md": 2,
+        "ingredient-facets.md": 2
+      },
+      "SEL-0039": {
+        "term-type-facet-constraints.md": 2
+      },
+      "SEL-0009": {
+        "facet-coding-rules.md": 2
+      },
+      "SEL-0018": {
+        "process-validation-rules.md": 1
+      },
+      "SEL-0036": {
+        "business-rules.md": 1
+      },
+      "SEL-0010": {
+        "facet-coding-rules.md": 1
+      },
+      "SEL-0033": {
+        "term-type-facet-constraints.md": 1
+      }
+    },
+    "systematic": [
+      {
+        "case_id": "SEL-0001",
+        "page": "term-type-facet-constraints.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0009",
+        "page": "facet-coding-rules.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0012",
+        "page": "facet-coding-rules.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0013",
+        "page": "ingredient-facets.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0020",
+        "page": "ingredient-facets.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0024",
+        "page": "code-string-format.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0025",
+        "page": "code-string-format.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0025",
+        "page": "term-type-facet-constraints.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0026",
+        "page": "implicit-vs-explicit-facets.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0027",
+        "page": "implicit-vs-explicit-facets.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0028",
+        "page": "facet-coding-rules.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0029",
+        "page": "facet-coding-rules.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0034",
+        "page": "business-rules.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0035",
+        "page": "business-rules.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0035",
+        "page": "term-type-facet-constraints.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0037",
+        "page": "ingredient-facets.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0037",
+        "page": "validation-rules.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0039",
+        "page": "term-type-facet-constraints.md",
+        "missed": 2,
+        "repeats": 3
+      }
+    ],
+    "stochastic": [
+      {
+        "case_id": "SEL-0002",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0008",
+        "page": "facet-coding-rules.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0010",
+        "page": "facet-coding-rules.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0015",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0018",
+        "page": "process-validation-rules.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0024",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0026",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0027",
+        "page": "facet-coding-rules.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0031",
+        "page": "structural-validation.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0033",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0036",
+        "page": "business-rules.md",
+        "missed": 1,
+        "repeats": 3
+      }
+    ]
+  }
+}

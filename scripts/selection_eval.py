@@ -37,6 +37,7 @@ MEDIAN_METRICS = [
     "mean_precision",
     "leak_free_rate",
     "mean_selector_tokens",
+    "mean_selector_wall_time_ms",
     *CONTEXT_PACK_ONLY_METRICS,
 ]
 
@@ -113,9 +114,16 @@ def _build_context_pack_row(case: dict, response: dict, pages_used: list) -> dic
             "is the server running pre-enforcement code?"
         )
     enforcement = trace.get("skeleton_enforcement") or {}
+    timing_summary = trace.get("timing_summary") or {}
+    selector_wall_time_ms = timing_summary.get("request_wall_time_ms")
+    if not isinstance(selector_wall_time_ms, (int, float)):
+        raise RuntimeError(
+            f"{case['id']}: response trace lacks timing_summary.request_wall_time_ms"
+        )
     return {
         "pack_chars": pack_chars,
         "selector_tokens": trace.get("token_summary"),
+        "selector_wall_time_ms": selector_wall_time_ms,
         "backfilled": enforcement.get("backfilled", []),
         "dropped": enforcement.get("dropped", []),
         "trimmed": enforcement.get("trimmed", []),
@@ -132,7 +140,16 @@ def _build_ask_row(case: dict, response: dict, pages_used: list) -> dict:
         raise RuntimeError(
             f"{case['id']}: response trace lacks retrieval token_summary"
         )
-    return {"selector_tokens": token_summary}
+    total = trace.get("total") or {}
+    selector_wall_time_ms = total.get("request_wall_time_ms")
+    if not isinstance(selector_wall_time_ms, (int, float)):
+        raise RuntimeError(
+            f"{case['id']}: response trace lacks total request_wall_time_ms"
+        )
+    return {
+        "selector_tokens": token_summary,
+        "selector_wall_time_ms": selector_wall_time_ms,
+    }
 
 
 ROW_BUILDERS = {
@@ -147,6 +164,7 @@ def run_pass(
     pass_number: int,
     max_pages_override: int | None = None,
     endpoint: str = "context-pack",
+    selector_model_override: str | None = None,
 ) -> tuple[list[dict], dict]:
     caller = ENDPOINT_CALLERS[endpoint]
     build_row_extra = ROW_BUILDERS[endpoint]
@@ -161,6 +179,8 @@ def run_pass(
         request = dict(case["request"])
         if max_pages_override is not None:
             request["max_pages"] = max_pages_override
+        if selector_model_override is not None:
+            request["selector_model"] = selector_model_override
         response = caller(base_url, request)
         pages_used = response.get("pages_used")
         if not isinstance(pages_used, list):
@@ -171,6 +191,7 @@ def run_pass(
             "reviewed": bool(case.get("reviewed")),
             "pages_used": pages_used,
             "max_pages_sent": request.get("max_pages"),
+            "selector_model_sent": request.get("selector_model"),
             **build_row_extra(case, response, pages_used),
             **score,
         }
@@ -203,6 +224,15 @@ def run_pass(
     summary["mean_selector_tokens"] = (
         sum(token_totals) / len(token_totals) if token_totals else 0
     )
+    selector_wall_times = [
+        row["selector_wall_time_ms"]
+        for row in rows
+        if isinstance(row.get("selector_wall_time_ms"), (int, float))
+    ]
+    if selector_wall_times:
+        summary["mean_selector_wall_time_ms"] = (
+            sum(selector_wall_times) / len(selector_wall_times)
+        )
     return rows, summary
 
 
@@ -301,6 +331,11 @@ def main() -> None:
         "--max-pages", type=int, default=None,
         help="Override every case request's max_pages (budget sensitivity probes).",
     )
+    parser.add_argument(
+        "--selector-model",
+        default=None,
+        help="Override the selector model for every case in the run.",
+    )
     args = parser.parse_args()
 
     gold = json.loads(pathlib.Path(args.gold_path).read_text())
@@ -326,6 +361,7 @@ def main() -> None:
                 "cases": len(cases),
                 "repeats": args.repeats,
                 "estimated_llm_calls": estimated_calls,
+                "selector_model": args.selector_model,
             },
             indent=2,
         ),
@@ -336,7 +372,12 @@ def main() -> None:
     passes = []
     for pass_number in range(1, args.repeats + 1):
         rows, summary = run_pass(
-            cases, args.base_url, pass_number, args.max_pages, endpoint=args.endpoint
+            cases,
+            args.base_url,
+            pass_number,
+            args.max_pages,
+            endpoint=args.endpoint,
+            selector_model_override=args.selector_model,
         )
         passes.append({"summary": summary, "cases": rows})
         print(f"\n[pass {pass_number}] SUMMARY:", json.dumps(summary, indent=2))
@@ -366,6 +407,7 @@ def main() -> None:
                 "repeats": args.repeats,
                 "estimated_llm_calls": estimated_calls,
                 "max_pages_override": args.max_pages,
+                "selector_model_override": args.selector_model,
                 "effective_max_pages": max_pages_summary,
                 "passes": passes,
                 "median_summary": medians,

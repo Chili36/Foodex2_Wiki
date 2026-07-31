@@ -1,0 +1,2229 @@
+{
+  "version": 1,
+  "generated_at": "2026-07-30T10:24:22.775518+00:00",
+  "dataset": "/Users/davidfoster/Dev/LLM Knowledge Base/evals/wiki-rag/dmt_end_to_end_cases.json",
+  "configuration": {
+    "base_url": "http://127.0.0.1:8010",
+    "endpoints": [
+      "ask",
+      "ask-rag"
+    ],
+    "answerer_models": [
+      "claude-sonnet-5"
+    ],
+    "selector_model": "claude-sonnet-5",
+    "max_pages": 7,
+    "rag_limit": 7,
+    "rag_strategy": "diverse_pages",
+    "use_graph_expansion": true,
+    "repeats": 1,
+    "ragas_metrics": [],
+    "judge_model": null,
+    "judge_provider": null
+  },
+  "budget": {
+    "cases": 10,
+    "endpoint_variants": 2,
+    "answerer_models": 1,
+    "repeats": 1,
+    "estimated_endpoint_calls": 20,
+    "estimated_ragas_metric_invocations": 0
+  },
+  "summary": [
+    {
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5",
+      "case_count": 10,
+      "success_count": 2,
+      "success_rate": 0.2,
+      "mean_elapsed_ms": 24157.0,
+      "median_elapsed_ms": 24157.0,
+      "mean_reference_page_precision": 0.6378205128205128,
+      "mean_reference_page_recall": 1.0,
+      "mean_prohibited_page_pass": 0.0
+    },
+    {
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5",
+      "case_count": 10,
+      "success_count": 1,
+      "success_rate": 0.1,
+      "mean_elapsed_ms": 12792.0,
+      "median_elapsed_ms": 12792,
+      "mean_reference_page_precision": 0.5714285714285714,
+      "mean_reference_page_recall": 0.3333333333333333,
+      "mean_prohibited_page_pass": 0.0
+    }
+  ],
+  "rows": [
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-001",
+      "reviewed": true,
+      "question": "Anything I should think about when reporting Bordsdruvor – färsk frukt?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": "claude-sonnet-5",
+      "request_payload": {
+        "question": "Anything I should think about when reporting Bordsdruvor – färsk frukt? Reporting domain: pesticides.",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "selector_model": "claude-sonnet-5",
+        "max_pages": 7,
+        "use_graph_expansion": true
+      },
+      "status_code": 200,
+      "elapsed_ms": 21899,
+      "answer": "Treat this as a pesticide-domain (Regulation (EC) No 396/2005 / MATRIX) case since pesticides context is explicit. Start from ordinary FoodEx2 type/base-term selection: 'Bordsdruvor – färsk frukt' (table grapes, fresh fruit) is a raw commodity, so pick the most specific reportable non-hierarchy raw-commodity term for table grapes rather than a hierarchy or group term. Because grapes are an Annex I regulated raw commodity, that raw-commodity branch is normally the correct one for pesticide MRL mapping to MATRIX; don't shift to a processed/derivative or composite base just because of the domain. If the exact grape variety/species is not itself a valid pesticide-domain MATRIX term, don't invent a code — use the nearest valid pesticide-domain candidate for table grapes and keep any extra varietal detail as free text where the workflow allows it. Don't add an explicit F01 (origin) facet just to restate the raw base commodity, and don't duplicate anything already implicit in the chosen term. Since this is a raw, unprocessed sample, it fits the pesticide Legal Limits database scope (limited to raw/unprocessed samples), so no F27 source-commodity facet or derivative reconstruction is expected here — F27 only becomes decisive if you were coding a processed/composite grape product. Finally, check that facets/process descriptors used are legal for this term type and that the code is reportable per validation rules before finalizing.",
+      "citations": [
+        "pesticides-foodex2.md",
+        "base-term-selection.md",
+        "RUNTIME_RULES.md"
+      ],
+      "pages_used": [
+        "index.md",
+        "RUNTIME_RULES.md",
+        "pesticides-foodex2.md",
+        "base-term-selection.md",
+        "policy-contract.md",
+        "term-type-facet-constraints.md",
+        "implicit-vs-explicit-facets.md",
+        "business-rules.md",
+        "chemical-monitoring-foodex2.md",
+        "contaminants-foodex2.md",
+        "maintenance-2016-2018.md",
+        "maintenance-2024.md"
+      ],
+      "pages": [
+        {
+          "page_name": "index.md",
+          "title": "Wiki Index",
+          "summary": "Top-level catalog for the FoodEx2 wiki layer.",
+          "category": "orientation",
+          "source_tier": null,
+          "sources": [],
+          "related": [],
+          "content": "# Index\n\nThis is the content-oriented catalog for the FoodEx2 markdown wiki layer.\n\n## Orientation\n\n- [README.md](README.md): Repo overview, current status, API runtime modes, directory layout, and working conventions.\n- [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md): What this wiki is for, why it exists, and the LLM-wiki operating model behind it.\n- [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md): Architecture stance for compiled markdown knowledge, guidance briefs, page-evidence retrieval, graph retrieval, long-source ingest, and when not to add heavier RAG infrastructure.\n- [WIKI_ARCHITECTURE_FOR_MODELS.md](WIKI_ARCHITECTURE_FOR_MODELS.md): Model-facing architecture orientation covering knowledge layers, page types, runtime endpoints, retrieval modes, Qdrant, maintenance gates, and operating assumptions.\n- [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md): Practical playbook for turning raw PDFs into stable topic pages without collapsing into one-shot summarization.\n- [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md): Deterministic and LLM-assisted maintenance workflow for link checks, source checks, retrieval-health checks, and supervised wiki linting.\n- [SCHEMA.md](SCHEMA.md): Page types, frontmatter fields, section conventions, and ingest schema for the FoodEx2 wiki.\n- [RUNTIME_RULES.md](RUNTIME_RULES.md): Compact prompt-facing rules file always attached by `context-pack` and page-evidence prompt contexts before supporting guidance pages.\n- [log.md](log.md): Chronological record of ingests and maintenance work.\n- [policy-contract.md](raw/efsa-guidance/policy-contract.md): Richer control-layer page defining decision order, binding rules, tie-breaks, and anti-patterns for structured and solver-oriented flows.\n- [selection-policy.md](raw/efsa-guidance/selection-policy.md): Deterministic skeleton failsafe for context-pack assembly: required base-term/facet/validation roles, backfill defaults, drop rules, and the structural-invariants-only bright line.\n\n## Guiding Principles\n\n- FoodEx2 is a common scientific reporting language across food-safety domains, not a marketing or culinary description system. Code the food objectively by its nature, source, and treatment rather than by local commercial assumptions.\n- FoodEx2 is built top-down. Choose the correct reportable base term first, then refine it with facets. Do not try to assemble the food bottom-up from arbitrary components if a standard FoodEx2 term already captures its identity.\n- FoodEx2 prefers modular description over term proliferation. Use explicit facets to add meaningful detail, but only when that detail is not already implicit in the base term and is relevant to the coding purpose.\n- Coding is an input/reporting task, not an analysis task. Describe the sample in front of you at the most specific reportable level available; downstream hierarchies and legislative mappings handle aggregation later.\n- When in doubt, prefer the most specific objective biological/food-identity term available, add only the necessary modular refinements, and avoid encoding unnecessary commercial wording.\n\n## FoodEx2 Guidance\n\n- [foodex2-overview.md](raw/efsa-guidance/foodex2-overview.md): High-level explanation of FoodEx2 purpose, hierarchy model, and coding philosophy.\n- [base-term-selection.md](raw/efsa-guidance/base-term-selection.md): Rules for choosing the right base term, including tie-breaks and missing-term handling.\n- [facet-coding-rules.md](raw/efsa-guidance/facet-coding-rules.md): Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.\n- [implicit-vs-explicit-facets.md](raw/efsa-guidance/implicit-vs-explicit-facets.md): Distinguishes inherited facet information from coder-supplied facet detail.\n- [code-string-format.md](raw/efsa-guidance/code-string-format.md): Exact FoodEx2 code syntax, separators, and ordering conventions.\n- [process-facets.md](raw/efsa-guidance/process-facets.md): Compact reference for Appendix A2 process facet codes and when to use them.\n- [ingredient-facets.md](raw/efsa-guidance/ingredient-facets.md): Rules for characterising ingredients, mixed foods, composite coding, and minor flavouring/added-ingredient use on derivatives.\n- [packaging-facets.md](raw/efsa-guidance/packaging-facets.md): When to use `F18` packaging-format and `F19` packaging-material, and how they differ from `F28` process.\n- [anses-codification-guidance.md](raw/efsa-guidance/anses-codification-guidance.md): Extracted `expert_guidance` from the ANSES FoodEx2 codification guidance v3, covering workflow, missing-term conventions, mixed-product handling, range values, and dataset QC checks without overriding authoritative EFSA or validator sources.\n- [chemical-monitoring-foodex2.md](raw/efsa-guidance/chemical-monitoring-foodex2.md): Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.\n- [pesticides-foodex2.md](raw/efsa-guidance/pesticides-foodex2.md): Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.\n- [contaminants-foodex2.md](raw/efsa-guidance/contaminants-foodex2.md): Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.\n- [domoic-acid-scallops.md](raw/efsa-guidance/domoic-acid-scallops.md): Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.\n- [vmpr-foodex2.md](raw/efsa-guidance/vmpr-foodex2.md): VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.\n- [vmpr-legislative-mapping.md](raw/efsa-guidance/vmpr-legislative-mapping.md): Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.\n- [additives-flavourings-foodex2.md](raw/efsa-guidance/additives-flavourings-foodex2.md): Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.\n\n## Validation Layer\n\n- [business-rules.md](raw/efsa-guidance/business-rules.md): Canonical wiki target for `BR01`-`BR31`, including MTX 17.1 validator status, BR13's seven-code disintegration boundary, BR19/BR19+ stale-data coverage, and BR26's known validator-silence divergence.\n- [validation-rules.md](raw/efsa-guidance/validation-rules.md): Overview of the validator's two-layer model, severities, and the most important blocking rules.\n- [structural-validation.md](raw/efsa-guidance/structural-validation.md): Syntax, descriptor existence, implicit-facet cleanup, duplicates, and single-cardinality checks.\n- [term-type-facet-constraints.md](raw/efsa-guidance/term-type-facet-constraints.md): Allowed and forbidden facets by FoodEx2 term type, including the distinction between BR13 disintegration `F03` values and permitted non-disintegration physical states on raw commodities.\n- [process-validation-rules.md](raw/efsa-guidance/process-validation-rules.md): Ordinal-group process conflicts, raw-vs-derivative process boundaries, BR19/BR19+ behaviour, and the BR26 known divergence.\n- [domain-specific-validation.md](raw/efsa-guidance/domain-specific-validation.md): Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.\n\n## Maintenance History\n\n- [maintenance-history.md](raw/efsa-guidance/maintenance-history.md): Cross-year timeline of FoodEx2 changes after revision 2.\n- [maintenance-2015.md](raw/efsa-guidance/maintenance-2015.md): First annual maintenance after revision 2.\n- [maintenance-2016-2018.md](raw/efsa-guidance/maintenance-2016-2018.md): Multi-year maintenance wave with major taxonomy and mapping work.\n- [maintenance-2019.md](raw/efsa-guidance/maintenance-2019.md): Feed-focused revision plus bird and implicit-facet changes.\n- [maintenance-2020.md](raw/efsa-guidance/maintenance-2020.md): Honey bees, birds, SIGMA, scallops, and reportability changes.\n- [maintenance-2021.md](raw/efsa-guidance/maintenance-2021.md): EPPO plant mapping, matrix-code updates, and bird/F02 changes.\n- [maintenance-2022.md](raw/efsa-guidance/maintenance-2022.md): PRIMo introduction and major feed/plant revisions.\n- [maintenance-2023.md](raw/efsa-guidance/maintenance-2023.md): F34 Host-sampled, exposure-hierarchy redesign, and additives/flavourings mapping.\n- [maintenance-2024.md](raw/efsa-guidance/maintenance-2024.md): VetDrugRes overhaul and expanded legislative mapping.\n\n## Source Layer\n\n- [foodex2_docs](foodex2_docs): Immutable EFSA PDF source collection used to build and verify the wiki."
+        },
+        {
+          "page_name": "RUNTIME_RULES.md",
+          "title": "Runtime Rules",
+          "summary": "Compact prompt-facing rules file attached by context-pack before supporting guidance pages.",
+          "category": "runtime",
+          "source_tier": null,
+          "sources": [
+            "raw/efsa-guidance/policy-contract.md",
+            "raw/efsa-guidance/base-term-selection.md",
+            "raw/efsa-guidance/term-type-facet-constraints.md",
+            "raw/efsa-guidance/implicit-vs-explicit-facets.md",
+            "raw/efsa-guidance/business-rules.md"
+          ],
+          "related": [
+            "[[policy-contract]]",
+            "[[base-term-selection]]",
+            "[[term-type-facet-constraints]]",
+            "[[implicit-vs-explicit-facets]]",
+            "[[business-rules]]"
+          ],
+          "content": "# Runtime Rules\n\nThis is the compact prompt-facing rules file for `context-pack`.\n\nUse it as the always-on runtime layer before the supporting guidance pages.\n\n## Core Decision Order\n\n1. Determine food type first: raw commodity, derivative, or composite.\n2. Choose the best reportable non-hierarchy base term within that food type.\n3. If FoodEx2 already has a derivative or composite base that captures the processed state, use it instead of reconstructing the food from a raw base plus explicit facets.\n4. Add only explicit facets that contribute information not already implicit in the chosen base term.\n5. Validate the construction against facet legality, process rules, hierarchy/reportability limits, and code syntax.\n\n## Always-On Rules\n\n- Prefer a reportable non-hierarchy base term over a hierarchy, group, or facet term.\n- Evaluate specificity within the selected food type, not across raw-vs-derivative candidates.\n- For derivatives, origin normally uses `F27`.\n- For composites, characterising ingredients normally use `F04`.\n- Do not use explicit `F01` merely to restate a raw base commodity.\n- Do not duplicate implicit facets explicitly.\n- Do not reconstruct a standard derivative group from a raw base plus `F28` when the derivative group already exists.\n- For raw commodities, `BR13` blocks the disintegration-family `F03` descriptors such as powder, paste, and puree; it is not a blanket ban on every `F03` descriptor.\n- Treat reporting-domain overlays as opt-in; do not infer a domain unless context or domain-filtered candidates identify it.\n- Treat returned wiki pages as coding knowledge, not merely background. The candidate list is retrieval evidence, but it can be incomplete.\n- Do not invent FoodEx2 codes from memory. Prefer candidates, but a code explicitly named in returned wiki pages, catalogue data, or validator evidence may be used when that evidence shows the retrieved candidate list is incomplete.\n- If the wiki establishes a required base or facet concept but no explicit code is present in candidates or returned evidence, mark the candidate set incomplete instead of forcing a misleading near-match.\n\n## Supporting Pages By Signal\n\n- Base-term choice or mixed term types: `base-term-selection.md`\n- Raw-vs-derivative or facet legality questions: `term-type-facet-constraints.md`\n- Implicit vs explicit detail: `implicit-vs-explicit-facets.md`\n- Processing: `process-facets.md` and `process-validation-rules.md`\n- Ingredients or composites: `ingredient-facets.md`\n- Packaging: `packaging-facets.md`\n- Reporting-domain overlays are conditional. Use them only when the domain is explicit or the candidate set is domain-filtered: `pesticides-foodex2.md`, `contaminants-foodex2.md`, `vmpr-foodex2.md`, `additives-flavourings-foodex2.md`, and `domain-specific-validation.md`\n\n## Authority\n\n- `policy-contract.md` is the richer execution-order page.\n- `business-rules.md` is the canonical validator-rule page for `BRxx` constraints.\n- Supporting guidance pages explain how to apply those authorities to a coding case."
+        },
+        {
+          "page_name": "pesticides-foodex2.md",
+          "title": "FoodEx2 In Pesticide Residue Monitoring",
+          "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf",
+            "EFSA Supporting Publications - 2019 -  - FoodEx2 maintenance 2016-2018.pdf"
+          ],
+          "related": [
+            "[[chemical-monitoring-foodex2]]",
+            "[[contaminants-foodex2]]",
+            "[[base-term-selection]]",
+            "[[implicit-vs-explicit-facets]]",
+            "[[maintenance-2016-2018]]",
+            "[[maintenance-2024]]"
+          ],
+          "content": "# FoodEx2 In Pesticide Residue Monitoring\n\n## Use Only When Pesticide Context Is Active\n\n- This page is a conditional domain overlay. Use it when the request, reporting context, legal reference, parameter hierarchy, or candidate collection indicates pesticide residue monitoring.\n- Typical activation signals include pesticide residues, Regulation (EC) No 396/2005, `PEST`, `pestParam`, `MATRIX`, MRL, PRIMo, EUCP, or a pesticide-domain FoodEx2 candidate set.\n- Do not apply pesticide MATRIX constraints to ordinary all-domain FoodEx2 coding, or to a contaminants case merely because the same substance could also be relevant to pesticides.\n\n## Domain Boundary\n\n- Pesticide monitoring still starts from the MTX reporting hierarchy and ordinary FoodEx2 base-term selection. The domain overlay affects whether the selected code maps to the pesticide legislative MATRIX catalogue.\n- EFSA applies FoodEx2-to-MATRIX mapping downstream. Data providers report the correct FoodEx2 code; EFSA uses the mapping recorded in the FoodEx2/Catalogue Browser for pesticide legislative grouping.\n- If the exact botanical variety or species is not a valid pesticide-domain matrix term, do not invent a FoodEx2 code. Use the most appropriate valid candidate returned for the domain and preserve additional botanical detail outside the code where the reporting workflow allows free text.\n- The Legal Limits database for pesticide MRL evaluation is limited to raw, unprocessed samples. Processed or composite foods may still need FoodEx2 coding, but the legal-limit mapping is not the same as for raw commodities.\n\n## Facet Consequences\n\n- Source-commodity facets can be decisive for processed foods. Maintenance 2016-2018 removed broad pesticide matrix codes from many RPC derivatives and simple composites, so matches to raw primary commodities may depend on `F27 Source-commodities`.\n- Do not fall back to a raw base term merely to satisfy a pesticide matrix idea. Keep the correct FoodEx2 food type, then add legally meaningful source facets when the chosen derivative or composite term requires them.\n- Pesticide and contaminants contexts can require different preparation assumptions for the same matrix. For copper, pesticide-residue examples include with-peel, with-shell, with-stone, with-cob, green coffee beans, muscle after removal of trimmable fat, and unwashed plant products where the contaminants examples differ.\n\n## Worked Signals\n\n- A search term naming a regulated raw commodity in Annex I normally stays in the raw commodity branch and should use the pesticide-valid FoodEx2 candidate that maps to `MATRIX`.\n- A processed cereal, dried pulse, juice, oil, or composite should not be recoded as a raw commodity just because pesticide legislation ultimately refers to raw primary commodities. Use the correct FoodEx2 base term and, where needed, `F27` to identify the source commodity.\n- A plant name missing from the pesticide candidate set should be coded to the nearest valid pesticide-domain generic candidate rather than to an invented species-specific code.\n\n## Relevant Policy\n\n- [[base-term-selection]] remains the base-term authority. This page only adds the pesticide MATRIX constraint after the ordinary FoodEx2 type decision.\n- [[contaminants-foodex2]] is a separate overlay. The two domains may produce different facet requirements for the same literal food text.\n- [[implicit-vs-explicit-facets]] controls whether a source detail is already implicit or must be added explicitly."
+        },
+        {
+          "page_name": "base-term-selection.md",
+          "title": "Base Term Selection Rules",
+          "summary": "Rules for choosing the right base term, including tie-breaks and missing-term handling.",
+          "category": "guidance",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf",
+            "FoodEx2 codification guidance_2025_12_v3.pdf"
+          ],
+          "related": [
+            "[[foodex2-overview]]",
+            "[[implicit-vs-explicit-facets]]",
+            "[[ingredient-facets]]",
+            "[[process-facets]]"
+          ],
+          "content": "# Base Term Selection\n\n## Start With Food Type\n\n- First ask: `What type of food is this?` Choose among raw commodity, derivative, or composite. The base-term decision is the main coding decision; often the base term alone is enough. For the top-down mental model behind this step, start with [[foodex2-overview]].\n- Do not confuse food type with origin. `What type of food is this?` is a different question from `what is it made from?`; answer the type question before choosing `F01`, `F27`, or `F04`. (ANSES guidance p25)\n- Never start from a hierarchy term if a reportable non-hierarchy term exists. If poor source data makes that unavoidable, prefer an exposure-hierarchy term.\n- Know the reporting or exposure hierarchy before coding. Stopping at the first search hit can lead to the wrong branch.\n\n## Choose The Base-Term Class\n\n- Use a raw-commodity base term for primary plant or animal products. Add only treatments that do not create a new nature; if the treatment question becomes ambiguous, read this together with [[process-facets]] and [[process-validation-rules]].\n- Use a derivative base term when a nature-changing process already defines a standard group. The process list here is illustrative, not exhaustive: this includes cases such as milling, drying, curing, fermentation, pickling/marinating, canning/jarring or smoking whenever FoodEx2 already has the processed group. Do not rebuild these from a raw term plus `F28` if the derivative group exists. The origin chain that follows from that choice is explained in [[implicit-vs-explicit-facets]].\n- When raw-versus-derivative status is unclear, inspect the processed or preserved branch for the commodity before accepting a raw base plus `F28`. The existence of a derivative branch is evidence that the process belongs in the base-term choice. (ANSES guidance p27-30)\n- Use a composite base term for foods made by combining ingredients in a recipe. For same-nature mixtures, stay on a generic raw/derivative base term and add multiple `F27`. For balanced mixed natures, move to a composite base term, then describe the characterising recipe components with [[ingredient-facets]].\n\n## Tie-Break Rules\n\n- If several preservation processes apply, choose the processed base term top-down: puree/textured, then marinated/pickled/fermented, then in vinegar/brine, in alcohol, salted, candied/sugar-preserved, dried, canned/jarred, smoked. Read this as a precedence rule among processed-base options, not as permission to fall back to a raw base just because the more specific raw commodity exists.\n- Follow the documented priority order, not the visual order in the catalogue browser; browser order can reflect term creation history rather than coding precedence. (ANSES guidance p30, p33)\n- If a composite has no clear dominant ingredient, use this priority: meat, fish, cheese/dairy, egg, legume, potato, cereal, fruit, vegetable.\n- If the exact term is missing, choose the nearest generic non-hierarchy base term, add the correct origin facet, and add `F26.A07XE` (`other`). If even the origin term is missing, keep the generic base term and record the detail in text. Use [[implicit-vs-explicit-facets]] and [[term-type-facet-constraints]] to pick the correct origin facet for the chosen term type.\n- For detail level within a suitable food type, prefer extended or core terms when they fit; use non-specific or generic terms as fallbacks only when the detailed term is missing or source detail is unavailable. (ANSES guidance p35)\n\n## Worked Examples\n\n- Before: `kangaroo fresh fat tissue`. After: `A0F3G#F01.A0F2G$F26.A07XE`. Generic raw base term plus `F01` because the detailed commodity is missing but the source exists.\n- Before: `quinoa flour`. After: `A04KS#F26.A07XE$F27.A000R`. Generic derivative base term plus `F27` because the detailed derivative is missing but the source raw commodity exists.\n- Before: `mixed vegetable salad` with balanced different-nature ingredients. After: `A042D#F04.A00QH$F04.A015L$F04.A00KV$F04.A00LN$F04.A00LB$F04.A00LG`. Because no single nature dominates, the starting point becomes a composite salad term.\n\n## Relevant Policy\n\n- [[policy-contract]] `C01`, `C02`, `C03`, `C06`, and `C09` govern this page directly: determine food type first, read candidate wording and any available coverage text, prefer reportable non-hierarchy terms, and apply specificity only within the selected food type.\n- [[policy-contract]] Decision Procedure steps 1 to 3 are the operative order here: classify the food, compare candidates within that type, then resolve origin and tie-break questions before composing facets.\n\n## Relevant Business Rules\n\n- `BR08`: the selected base term must be reportable. See [[business-rules]].\n- `BR10`: non-specific base terms are only weak fallbacks when a more precise reportable term exists. See [[business-rules]].\n- `BR19`: derivative-creating processes on raw bases are not an acceptable fallback when the derivative group exists. See [[business-rules]].\n- `BR23` and `BR24`: hierarchy terms are discouraged or invalid as coding bases, depending on hierarchy/reporting status. See [[business-rules]]."
+        },
+        {
+          "page_name": "policy-contract.md",
+          "title": "Policy Contract",
+          "summary": "Richer control-layer page defining decision order, binding rules, tie-breaks, and anti-patterns for structured and solver-oriented flows.",
+          "category": "runtime",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
+          ],
+          "related": [
+            "[[foodex2-overview]]",
+            "[[base-term-selection]]",
+            "[[process-facets]]",
+            "[[implicit-vs-explicit-facets]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: Policy Contract\nRicher control-layer page defining decision order, binding rules, tie-breaks, and anti-patterns for structured and solver-oriented flows."
+        },
+        {
+          "page_name": "term-type-facet-constraints.md",
+          "title": "Term Type And Facet Constraints",
+          "summary": "Allowed and forbidden facets by FoodEx2 term type, including the distinction between BR13 disintegration `F03` values and permitted non-disintegration physical states on raw commodities.",
+          "category": "validation",
+          "source_tier": null,
+          "sources": [
+            "BUSINESS-RULES.md",
+            "BUSINESS-RULES-COMPACT.json",
+            "docs/VALIDATION_RULES_SUMMARY.md",
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+          ],
+          "related": [
+            "[[base-term-selection]]",
+            "[[business-rules]]",
+            "[[facet-coding-rules]]",
+            "[[validation-rules]]",
+            "[[process-validation-rules]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: Term Type And Facet Constraints\nAllowed and forbidden facets by FoodEx2 term type, including the distinction between BR13 disintegration `F03` values and permitted non-disintegration physical states on raw commodities."
+        },
+        {
+          "page_name": "implicit-vs-explicit-facets.md",
+          "title": "Implicit vs Explicit Facets",
+          "summary": "Distinguishes inherited facet information from coder-supplied facet detail.",
+          "category": "guidance",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "FoodEx2 codification guidance_2025_12_v3.pdf"
+          ],
+          "related": [
+            "[[foodex2-overview]]",
+            "[[facet-coding-rules]]",
+            "[[base-term-selection]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: Implicit vs Explicit Facets\nDistinguishes inherited facet information from coder-supplied facet detail."
+        },
+        {
+          "page_name": "business-rules.md",
+          "title": "Business Rules",
+          "summary": "Canonical wiki target for `BR01`-`BR31`, including MTX 17.1 validator status, BR13's seven-code disintegration boundary, BR19/BR19+ stale-data coverage, and BR26's known validator-silence divergence.",
+          "category": "validation",
+          "source_tier": null,
+          "sources": [
+            "BUSINESS-RULES.md",
+            "BUSINESS-RULES-COMPACT.json",
+            "foodex2_docs/business_rules.md"
+          ],
+          "related": [
+            "[[validation-rules]]",
+            "[[structural-validation]]",
+            "[[term-type-facet-constraints]]",
+            "[[process-validation-rules]]",
+            "[[domain-specific-validation]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: Business Rules\nCanonical wiki target for `BR01`-`BR31`, including MTX 17.1 validator status, BR13's seven-code disintegration boundary, BR19/BR19+ stale-data coverage, and BR26's known validator-silence divergence."
+        },
+        {
+          "page_name": "chemical-monitoring-foodex2.md",
+          "title": "FoodEx2 In Chemical Monitoring",
+          "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "Guidance VMPR mapping to legislative products.pdf",
+            "EFSA Supporting Publications - 2022 -  - FoodEx2 maintenance 2021.pdf"
+          ],
+          "related": [
+            "[[foodex2-overview]]",
+            "[[facet-coding-rules]]",
+            "[[implicit-vs-explicit-facets]]",
+            "[[pesticides-foodex2]]",
+            "[[contaminants-foodex2]]",
+            "[[domoic-acid-scallops]]",
+            "[[vmpr-foodex2]]",
+            "[[additives-flavourings-foodex2]]",
+            "[[maintenance-2024]]",
+            "[[domain-specific-validation]]",
+            "[[vmpr-legislative-mapping]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: FoodEx2 In Chemical Monitoring\nEntry point for conditional chemical-monitoring overlays and routing to reporting-domain pages."
+        },
+        {
+          "page_name": "contaminants-foodex2.md",
+          "title": "FoodEx2 In Contaminants Monitoring",
+          "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "Reportable Scallops list of FoodEx2 codes - MTX.xlsx"
+          ],
+          "related": [
+            "[[chemical-monitoring-foodex2]]",
+            "[[pesticides-foodex2]]",
+            "[[domoic-acid-scallops]]",
+            "[[domain-specific-validation]]",
+            "[[facet-coding-rules]]",
+            "[[implicit-vs-explicit-facets]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: FoodEx2 In Contaminants Monitoring\nContaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions."
+        },
+        {
+          "page_name": "maintenance-2016-2018.md",
+          "title": "FoodEx2 Maintenance 2016-2018",
+          "summary": "Multi-year maintenance wave with major taxonomy and mapping work.",
+          "category": "maintenance",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2019 -  - FoodEx2 maintenance 2016‐2018.pdf"
+          ],
+          "related": [
+            "[[maintenance-history]]",
+            "[[maintenance-2015]]",
+            "[[maintenance-2019]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: FoodEx2 Maintenance 2016-2018\nMulti-year maintenance wave with major taxonomy and mapping work."
+        },
+        {
+          "page_name": "maintenance-2024.md",
+          "title": "FoodEx2 Maintenance 2024",
+          "summary": "VetDrugRes overhaul and expanded legislative mapping.",
+          "category": "maintenance",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf"
+          ],
+          "related": [
+            "[[maintenance-history]]",
+            "[[maintenance-2023]]",
+            "[[facet-coding-rules]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: FoodEx2 Maintenance 2024\nVetDrugRes overhaul and expanded legislative mapping."
+        }
+      ],
+      "trace": {
+        "index_used": true,
+        "max_pages": 7,
+        "selection_method": "service-owned llm page selector + answerer",
+        "retrieval": {
+          "model": "claude-sonnet-5",
+          "reasoning_effort": null,
+          "tool_trace": [
+            {
+              "page_name": "RUNTIME_RULES.md",
+              "order": 1,
+              "chars": 3857,
+              "synthetic": false
+            },
+            {
+              "page_name": "pesticides-foodex2.md",
+              "order": 2,
+              "chars": 4574,
+              "synthetic": false
+            },
+            {
+              "page_name": "base-term-selection.md",
+              "order": 3,
+              "chars": 6923,
+              "synthetic": false
+            }
+          ],
+          "token_summary": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5156,
+            "output_tokens": 468,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5624,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5156,
+                "output_tokens": 468,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5624
+              }
+            ]
+          },
+          "timing_summary": {
+            "calls": 1,
+            "llm_time_ms": 5364,
+            "per_call": [
+              {
+                "call_number": 1,
+                "duration_ms": 5364,
+                "stop_reason": "tool_use"
+              }
+            ],
+            "selector_wall_time_ms": 5424
+          }
+        },
+        "graph_expansion": {
+          "enabled": true,
+          "neighbors_added": [
+            "policy-contract.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "business-rules.md",
+            "chemical-monitoring-foodex2.md",
+            "contaminants-foodex2.md",
+            "maintenance-2016-2018.md",
+            "maintenance-2024.md"
+          ],
+          "neighbors_count": 8
+        },
+        "answerer": {
+          "model": "claude-sonnet-5",
+          "reasoning_effort": null,
+          "token_summary": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 9757,
+            "output_tokens": 1028,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 10785,
+            "per_call": [
+              {
+                "stop_reason": "end_turn",
+                "input_tokens": 9757,
+                "output_tokens": 1028,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 10785
+              }
+            ]
+          },
+          "timing_summary": {
+            "calls": 1,
+            "llm_time_ms": 16368,
+            "per_call": [
+              {
+                "call_number": 1,
+                "duration_ms": 16368,
+                "stop_reason": "end_turn"
+              }
+            ],
+            "answerer_wall_time_ms": 16368
+          }
+        },
+        "total": {
+          "request_wall_time_ms": 21884,
+          "total_llm_calls": 2,
+          "total_tracked_tokens": 16409
+        },
+        "phase_timings_ms": {
+          "selector_total": 5479,
+          "page_read": 3,
+          "graph_expansion": 8,
+          "answerer_total": 16368
+        }
+      },
+      "error": null,
+      "deterministic": {
+        "page_count": 12,
+        "prohibited_page_hits": [
+          "contaminants-foodex2.md",
+          "index.md",
+          "maintenance-2016-2018.md",
+          "maintenance-2024.md"
+        ],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "prohibited_page_pass": false,
+        "reference_page_precision": 0.5833333333333334,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-001",
+      "reviewed": true,
+      "question": "Anything I should think about when reporting Bordsdruvor – färsk frukt?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": null,
+      "request_payload": {
+        "question": "Anything I should think about when reporting Bordsdruvor – färsk frukt? Reporting domain: pesticides.",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "retrieval_mode": "wiki",
+        "retrieval_strategy": "diverse_pages",
+        "limit": 7
+      },
+      "status_code": 200,
+      "elapsed_ms": 12792,
+      "answer": "For a fresh-fruit table grape sample under a pesticides reporting domain, the main things to check are: keep the correct FoodEx2 food type for the fruit itself rather than substituting a different base term just to match a pesticide matrix idea (pesticides-foodex2.md); if the sample is a derivative or composite rather than the raw primary commodity, you may need to add `F27 Source-commodities`, since 2016-2018 maintenance removed broad pesticide matrix codes from many RPC derivatives and simple composites, making the source-commodity facet decisive for correct matrix matching (pesticides-foodex2.md); confirm the sample-preparation assumption matches the pesticide context rather than the contaminants context—pesticide examples explicitly include unwashed plant products, whereas contaminants examples use washed plant products for the same type of matrix, so do not carry over a 'washed' assumption from a contaminants mindset (pesticides-foodex2.md, contaminants-foodex2.md); apply this preparation/domain overlay only after the ordinary FoodEx2 base term and facet structure has already been settled, per the general domain-overlay sequencing guidance (domain-specific-validation.md). The provided pages do not give a specific base term or code for table grapes, so no code is asserted here.",
+      "citations": [
+        "pesticides-foodex2.md",
+        "contaminants-foodex2.md",
+        "domain-specific-validation.md"
+      ],
+      "pages_used": [
+        "pesticides-foodex2.md",
+        "contaminants-foodex2.md",
+        "chemical-monitoring-foodex2.md",
+        "validation-rules.md",
+        "additives-flavourings-foodex2.md",
+        "domoic-acid-scallops.md",
+        "domain-specific-validation.md"
+      ],
+      "pages": [
+        {
+          "page_name": "pesticides-foodex2.md",
+          "title": "FoodEx2 In Pesticide Residue Monitoring",
+          "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf",
+            "EFSA Supporting Publications - 2019 -  - FoodEx2 maintenance 2016-2018.pdf"
+          ],
+          "related": [
+            "[[chemical-monitoring-foodex2]]",
+            "[[contaminants-foodex2]]",
+            "[[base-term-selection]]",
+            "[[implicit-vs-explicit-facets]]",
+            "[[maintenance-2016-2018]]",
+            "[[maintenance-2024]]"
+          ],
+          "content": "Qdrant score: 0.44957495\nPage: FoodEx2 In Pesticide Residue Monitoring\nFile: pesticides-foodex2.md\nCategory: domain_overlay\nSource tier: None\nSection: FoodEx2 In Pesticide Residue Monitoring > Facet Consequences\nSummary: Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.\n\nPage: FoodEx2 In Pesticide Residue Monitoring\nFile: pesticides-foodex2.md\nCategory: domain_overlay\nSummary: Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.\nSection: FoodEx2 In Pesticide Residue Monitoring > Facet Consequences\n\n## Facet Consequences\n\n- Source-commodity facets can be decisive for processed foods. Maintenance 2016-2018 removed broad pesticide matrix codes from many RPC derivatives and simple composites, so matches to raw primary commodities may depend on `F27 Source-commodities`.\n- Do not fall back to a raw base term merely to satisfy a pesticide matrix idea. Keep the correct FoodEx2 food type, then add legally meaningful source facets when the chosen derivative or composite term requires them.\n- Pesticide and contaminants contexts can require different preparation assumptions for the same matrix. For copper, pesticide-residue examples include with-peel, with-shell, with-stone, with-cob, green coffee beans, muscle after removal of trimmable fat, and unwashed plant products where the contaminants examples differ."
+        },
+        {
+          "page_name": "contaminants-foodex2.md",
+          "title": "FoodEx2 In Contaminants Monitoring",
+          "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "Reportable Scallops list of FoodEx2 codes - MTX.xlsx"
+          ],
+          "related": [
+            "[[chemical-monitoring-foodex2]]",
+            "[[pesticides-foodex2]]",
+            "[[domoic-acid-scallops]]",
+            "[[domain-specific-validation]]",
+            "[[facet-coding-rules]]",
+            "[[implicit-vs-explicit-facets]]"
+          ],
+          "content": "Qdrant score: 0.44506466\nPage: FoodEx2 In Contaminants Monitoring\nFile: contaminants-foodex2.md\nCategory: domain_overlay\nSource tier: None\nSection: FoodEx2 In Contaminants Monitoring > Pesticide Contrast\nSummary: Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.\n\nPage: FoodEx2 In Contaminants Monitoring\nFile: contaminants-foodex2.md\nCategory: domain_overlay\nSummary: Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.\nSection: FoodEx2 In Contaminants Monitoring > Pesticide Contrast\n\n## Pesticide Contrast\n\n- Some contaminant and pesticide cases use different sample-preparation facets for the same matrix. For copper, contaminants examples include without peel, without shell, without stone, kernels without cob, roasted coffee beans, muscle with fat, and washed plant products.\n- These contrasts are domain-specific. If the domain is contaminants, do not borrow pesticide preparation assumptions merely because the substance also appears in pesticide legislation."
+        },
+        {
+          "page_name": "chemical-monitoring-foodex2.md",
+          "title": "FoodEx2 In Chemical Monitoring",
+          "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "Guidance VMPR mapping to legislative products.pdf",
+            "EFSA Supporting Publications - 2022 -  - FoodEx2 maintenance 2021.pdf"
+          ],
+          "related": [
+            "[[foodex2-overview]]",
+            "[[facet-coding-rules]]",
+            "[[implicit-vs-explicit-facets]]",
+            "[[pesticides-foodex2]]",
+            "[[contaminants-foodex2]]",
+            "[[domoic-acid-scallops]]",
+            "[[vmpr-foodex2]]",
+            "[[additives-flavourings-foodex2]]",
+            "[[maintenance-2024]]",
+            "[[domain-specific-validation]]",
+            "[[vmpr-legislative-mapping]]"
+          ],
+          "content": "Qdrant score: 0.37472808\nPage: FoodEx2 In Chemical Monitoring\nFile: chemical-monitoring-foodex2.md\nCategory: domain_overlay\nSource tier: None\nSection: FoodEx2 In Chemical Monitoring > Domain Pages\nSummary: Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.\n\nPage: FoodEx2 In Chemical Monitoring\nFile: chemical-monitoring-foodex2.md\nCategory: domain_overlay\nSummary: Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.\nSection: FoodEx2 In Chemical Monitoring > Domain Pages\n\n## Domain Pages\n\n- Use [[pesticides-foodex2]] for pesticide residue monitoring, Regulation (EC) No 396/2005, `PEST`, `pestParam`, or `MATRIX` contexts.\n- Use [[contaminants-foodex2]] for contaminants or occurrence monitoring, `OCC`, `chemAnalysis`, acrylamide, domoic acid, pyrrolizidine alkaloids, metals, packaging migrants, and similar contaminant contexts.\n- Use [[domoic-acid-scallops]] when the contaminant is domoic acid and the matrix is scallop; that overlay carries the source-provided `sampMatCode` / `sampMatText` lookup and the `origFishAreaCode` recommendation.\n- Use [[vmpr-foodex2]] for veterinary medicinal product residues, `VMPR`, `VETDRUG`, `vmprParam`, `vmprCls`, VetDrugRes, and Plan 3 contexts.\n- Use [[additives-flavourings-foodex2]] for additive and flavouring monitoring, `ADD`, `FLAV`, `addAnalysis`, `flavAnalysis`, and Regulation (EC) No 1333/2008 contexts.\n- If no reporting domain is known, stay with all-domain FoodEx2 pages and the returned candidate list. Do not guess a domain from the food name alone."
+        },
+        {
+          "page_name": "validation-rules.md",
+          "title": "Validation Rules Overview",
+          "summary": "Overview of the validator's two-layer model, severities, and the most important blocking rules.",
+          "category": "validation",
+          "source_tier": null,
+          "sources": [
+            "BUSINESS-RULES.md",
+            "BUSINESS-RULES-COMPACT.json",
+            "docs/VALIDATION_RULES_SUMMARY.md",
+            "FoodEx2 codification guidance_2025_12_v3.pdf"
+          ],
+          "related": [
+            "[[business-rules]]",
+            "[[structural-validation]]",
+            "[[term-type-facet-constraints]]",
+            "[[process-validation-rules]]",
+            "[[domain-specific-validation]]",
+            "[[code-string-format]]"
+          ],
+          "content": "Qdrant score: 0.35548756\nPage: Validation Rules Overview\nFile: validation-rules.md\nCategory: validation\nSource tier: None\nSection: Validation Rules Overview > Practical Dataset Checks\nSummary: Overview of the validator's two-layer model, severities, and the most important blocking rules.\n\nPage: Validation Rules Overview\nFile: validation-rules.md\nCategory: validation\nSummary: Overview of the validator's two-layer model, severities, and the most important blocking rules.\nSection: Validation Rules Overview > Practical Dataset Checks\n\n## Practical Dataset Checks\n\nThese checks come from ANSES expert guidance and are useful for batch review. They are not replacements for the validator.\n\n- Feed/food mismatches: feed entries should use feed terms, and food entries should not be coded with feed terms unless the source text genuinely identifies animal feed. (ANSES guidance p89)\n- Hierarchy bases: filter for hierarchy detail levels used as base terms, then replace them with reportable non-hierarchy terms where the source detail allows it. (ANSES guidance p89)\n- Raw base plus derivative-creating process: filter raw base terms with process facets such as milling, drying, curing, fermentation, pickling, canning/jarring, or smoking because a derivative base probably exists. See [[process-validation-rules]] for the validator side of this rule. (ANSES guidance p90)\n- Flavouring review: check whether a flavoured product uses a food ingredient, a regulated flavouring, or both; incomplete ingredient reporting is common. See [[ingredient-facets]]. (ANSES guidance p91)\n- Infusion ambiguity: check whether the code describes the dry infusion material or the final reconstituted beverage. (ANSES guidance p91)\n- `F04` on raw or derivative bases: review whether it is a legitimate minor ingredient/coating/flavour, or whether the code incorrectly used `F04` where `F01` or `F27` should describe source. (ANSES guidance p92)\n- Multiple `F01` sources on raw bases: same-nature mixed raw commodities should usually use multiple `F27 Source-commodities`, not multiple `F01 Source` descriptors. (ANSES guidance p92)"
+        },
+        {
+          "page_name": "additives-flavourings-foodex2.md",
+          "title": "FoodEx2 In Additives And Flavourings Monitoring",
+          "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf",
+            "EFSA Supporting Publications - 2024 -  - FoodEx2 maintenance 2023.pdf"
+          ],
+          "related": [
+            "[[chemical-monitoring-foodex2]]",
+            "[[domain-specific-validation]]",
+            "[[facet-coding-rules]]",
+            "[[implicit-vs-explicit-facets]]",
+            "[[maintenance-2023]]",
+            "[[maintenance-2024]]"
+          ],
+          "content": "Qdrant score: 0.34424087\nPage: FoodEx2 In Additives And Flavourings Monitoring\nFile: additives-flavourings-foodex2.md\nCategory: domain_overlay\nSource tier: None\nSection: FoodEx2 In Additives And Flavourings Monitoring > Matrix Terms Not To Report As The Sample\nSummary: Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.\n\nPage: FoodEx2 In Additives And Flavourings Monitoring\nFile: additives-flavourings-foodex2.md\nCategory: domain_overlay\nSummary: Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.\nSection: FoodEx2 In Additives And Flavourings Monitoring > Matrix Terms Not To Report As The Sample\n\n## Matrix Terms Not To Report As The Sample\n\n- The following additive/flavouring substance or preparation terms should not be reported as `sampMatCode` for additive or flavouring result reporting: `A047N`, `A047Q`, `A047R`, `A047A`, `A047P`, and `A0F3T`.\n- Choose the food matrix that contains the additive or flavouring, then add the legislative class facet when required."
+        },
+        {
+          "page_name": "domoic-acid-scallops.md",
+          "title": "Domoic Acid In Scallops",
+          "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "Reportable Scallops list of FoodEx2 codes - MTX.xlsx",
+            "domoic_acid_scallops_mtx.csv"
+          ],
+          "related": [
+            "[[chemical-monitoring-foodex2]]",
+            "[[contaminants-foodex2]]",
+            "[[domain-specific-validation]]",
+            "[[facet-coding-rules]]",
+            "[[implicit-vs-explicit-facets]]"
+          ],
+          "content": "Qdrant score: 0.34211373\nPage: Domoic Acid In Scallops\nFile: domoic-acid-scallops.md\nCategory: domain_overlay\nSource tier: None\nSection: Domoic Acid In Scallops > Relevant Policy\nSummary: Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.\n\nPage: Domoic Acid In Scallops\nFile: domoic-acid-scallops.md\nCategory: domain_overlay\nSummary: Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.\nSection: Domoic Acid In Scallops > Relevant Policy\n\n## Relevant Policy\n\n- [[policy-contract]] Decision Procedure step 5 governs this page: apply domain-specific reporting overlays only after the ordinary FoodEx2 base and facet structure is understood.\n- [[policy-contract]] `C09` applies when the needed exact mapping is not present in the candidate list or source data: do not invent a code."
+        },
+        {
+          "page_name": "domain-specific-validation.md",
+          "title": "Domain-Specific Validation",
+          "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "docs/DOMAIN_SPECIFIC_RULES.md",
+            "docs/CONTEXT_SPECIFIC_RULES.md",
+            "BUSINESS-RULES-COMPACT.json",
+            "Guidance VMPR mapping to legislative products.pdf",
+            "Reportable Scallops list of FoodEx2 codes - MTX.xlsx"
+          ],
+          "related": [
+            "[[business-rules]]",
+            "[[chemical-monitoring-foodex2]]",
+            "[[pesticides-foodex2]]",
+            "[[contaminants-foodex2]]",
+            "[[domoic-acid-scallops]]",
+            "[[vmpr-foodex2]]",
+            "[[additives-flavourings-foodex2]]",
+            "[[facet-coding-rules]]",
+            "[[validation-rules]]",
+            "[[vmpr-legislative-mapping]]"
+          ],
+          "content": "Qdrant score: 0.34147277\nPage: Domain-Specific Validation\nFile: domain-specific-validation.md\nCategory: domain_overlay\nSource tier: None\nSection: Domain-Specific Validation > Relevant Policy\nSummary: Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.\n\nPage: Domain-Specific Validation\nFile: domain-specific-validation.md\nCategory: domain_overlay\nSummary: Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.\nSection: Domain-Specific Validation > Relevant Policy\n\n## Relevant Policy\n\n- [[policy-contract]] `C07` and `C08` still govern domain overlays: even when a workflow requires explicit facets, the facet family and duplication logic must stay consistent with the chosen food type.\n- [[policy-contract]] Decision Procedure step 5 is the main hook for this page. Apply these checks as a final domain overlay after ordinary FoodEx2 coding decisions have already been made."
+        }
+      ],
+      "trace": {
+        "index_used": false,
+        "max_pages": 7,
+        "selection_method": "qdrant wiki retrieval + answerer",
+        "retrieval": {
+          "provider": "qdrant",
+          "retrieval_mode": "wiki",
+          "strategy": "diverse_pages",
+          "collection": "foodex2_wiki_markdown_v1",
+          "qdrant_url": "http://127.0.0.1:6333",
+          "elapsed_ms": 47,
+          "limit": 7,
+          "candidate_limit": 35,
+          "result_count": 35,
+          "selected_result_count": 7,
+          "results": [
+            {
+              "chunk_id": "pesticides-foodex2.md#003-00-foodex2-in-pesticide-residue-monitoring-facet-consequences",
+              "score": 0.44957495,
+              "page_name": "pesticides-foodex2.md",
+              "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Facet Consequences",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+            },
+            {
+              "chunk_id": "pesticides-foodex2.md#002-00-foodex2-in-pesticide-residue-monitoring-domain-boundary",
+              "score": 0.44585127,
+              "page_name": "pesticides-foodex2.md",
+              "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Domain Boundary",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+            },
+            {
+              "chunk_id": "contaminants-foodex2.md#004-00-foodex2-in-contaminants-monitoring-pesticide-contrast",
+              "score": 0.44506466,
+              "page_name": "contaminants-foodex2.md",
+              "heading_path": "FoodEx2 In Contaminants Monitoring > Pesticide Contrast",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+            },
+            {
+              "chunk_id": "pesticides-foodex2.md#004-00-foodex2-in-pesticide-residue-monitoring-worked-signals",
+              "score": 0.44207004,
+              "page_name": "pesticides-foodex2.md",
+              "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Worked Signals",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+            },
+            {
+              "chunk_id": "pesticides-foodex2.md#001-00-foodex2-in-pesticide-residue-monitoring-use-only-when-pesticide-context-is-activ",
+              "score": 0.43659598,
+              "page_name": "pesticides-foodex2.md",
+              "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Use Only When Pesticide Context Is Active",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+            },
+            {
+              "chunk_id": "contaminants-foodex2.md#005-00-foodex2-in-contaminants-monitoring-worked-signals",
+              "score": 0.4276572,
+              "page_name": "contaminants-foodex2.md",
+              "heading_path": "FoodEx2 In Contaminants Monitoring > Worked Signals",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+            },
+            {
+              "chunk_id": "contaminants-foodex2.md#006-00-foodex2-in-contaminants-monitoring-relevant-policy",
+              "score": 0.4249406,
+              "page_name": "contaminants-foodex2.md",
+              "heading_path": "FoodEx2 In Contaminants Monitoring > Relevant Policy",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+            },
+            {
+              "chunk_id": "pesticides-foodex2.md#005-00-foodex2-in-pesticide-residue-monitoring-relevant-policy",
+              "score": 0.42391294,
+              "page_name": "pesticides-foodex2.md",
+              "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Relevant Policy",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+            },
+            {
+              "chunk_id": "contaminants-foodex2.md#001-00-foodex2-in-contaminants-monitoring-use-only-when-contaminants-context-is-active",
+              "score": 0.4106633,
+              "page_name": "contaminants-foodex2.md",
+              "heading_path": "FoodEx2 In Contaminants Monitoring > Use Only When Contaminants Context Is Active",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+            },
+            {
+              "chunk_id": "contaminants-foodex2.md#003-00-foodex2-in-contaminants-monitoring-high-impact-rules",
+              "score": 0.39869633,
+              "page_name": "contaminants-foodex2.md",
+              "heading_path": "FoodEx2 In Contaminants Monitoring > High-Impact Rules",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+            },
+            {
+              "chunk_id": "contaminants-foodex2.md#002-00-foodex2-in-contaminants-monitoring-domain-boundary",
+              "score": 0.3958403,
+              "page_name": "contaminants-foodex2.md",
+              "heading_path": "FoodEx2 In Contaminants Monitoring > Domain Boundary",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+            },
+            {
+              "chunk_id": "pesticides-foodex2.md#000-00-foodex2-in-pesticide-residue-monitoring",
+              "score": 0.3930274,
+              "page_name": "pesticides-foodex2.md",
+              "heading_path": "FoodEx2 In Pesticide Residue Monitoring",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/pesticides-foodex2.md"
+            },
+            {
+              "chunk_id": "chemical-monitoring-foodex2.md#002-00-foodex2-in-chemical-monitoring-domain-pages",
+              "score": 0.37472808,
+              "page_name": "chemical-monitoring-foodex2.md",
+              "heading_path": "FoodEx2 In Chemical Monitoring > Domain Pages",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+              "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+            },
+            {
+              "chunk_id": "chemical-monitoring-foodex2.md#007-00-foodex2-in-chemical-monitoring-relevant-business-rules",
+              "score": 0.36260998,
+              "page_name": "chemical-monitoring-foodex2.md",
+              "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Business Rules",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+              "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+            },
+            {
+              "chunk_id": "chemical-monitoring-foodex2.md#006-00-foodex2-in-chemical-monitoring-relevant-policy",
+              "score": 0.35786188,
+              "page_name": "chemical-monitoring-foodex2.md",
+              "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Policy",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+              "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+            },
+            {
+              "chunk_id": "chemical-monitoring-foodex2.md#001-00-foodex2-in-chemical-monitoring-scope",
+              "score": 0.3564566,
+              "page_name": "chemical-monitoring-foodex2.md",
+              "heading_path": "FoodEx2 In Chemical Monitoring > Scope",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+              "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+            },
+            {
+              "chunk_id": "validation-rules.md#004-00-validation-rules-overview-practical-dataset-checks",
+              "score": 0.35548756,
+              "page_name": "validation-rules.md",
+              "heading_path": "Validation Rules Overview > Practical Dataset Checks",
+              "category": "validation",
+              "source_tier": null,
+              "summary": "Overview of the validator's two-layer model, severities, and the most important blocking rules.",
+              "source_path": "raw/efsa-guidance/validation-rules.md"
+            },
+            {
+              "chunk_id": "contaminants-foodex2.md#000-00-foodex2-in-contaminants-monitoring",
+              "score": 0.34988165,
+              "page_name": "contaminants-foodex2.md",
+              "heading_path": "FoodEx2 In Contaminants Monitoring",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+            },
+            {
+              "chunk_id": "additives-flavourings-foodex2.md#004-00-foodex2-in-additives-and-flavourings-monitoring-matrix-terms-not-to-report-as-th",
+              "score": 0.34424087,
+              "page_name": "additives-flavourings-foodex2.md",
+              "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Matrix Terms Not To Report As The Sample",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+              "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md"
+            },
+            {
+              "chunk_id": "domoic-acid-scallops.md#005-00-domoic-acid-in-scallops-relevant-policy",
+              "score": 0.34211373,
+              "page_name": "domoic-acid-scallops.md",
+              "heading_path": "Domoic Acid In Scallops > Relevant Policy",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+              "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+            },
+            {
+              "chunk_id": "domain-specific-validation.md#004-00-domain-specific-validation-relevant-policy",
+              "score": 0.34147277,
+              "page_name": "domain-specific-validation.md",
+              "heading_path": "Domain-Specific Validation > Relevant Policy",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+              "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+            },
+            {
+              "chunk_id": "domain-specific-validation.md#001-00-domain-specific-validation-these-rules-are-contextual",
+              "score": 0.3390336,
+              "page_name": "domain-specific-validation.md",
+              "heading_path": "Domain-Specific Validation > These Rules Are Contextual",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+              "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+            },
+            {
+              "chunk_id": "maintenance-2023.md#005-00-maintenance-2023-relevant-business-rules",
+              "score": 0.33853605,
+              "page_name": "maintenance-2023.md",
+              "heading_path": "Maintenance 2023 > Relevant Business Rules",
+              "category": "maintenance",
+              "source_tier": null,
+              "summary": "F34 Host-sampled, exposure-hierarchy redesign, and additives/flavourings mapping.",
+              "source_path": "raw/efsa-guidance/maintenance-2023.md"
+            },
+            {
+              "chunk_id": "chemical-monitoring-foodex2.md#004-00-foodex2-in-chemical-monitoring-vmpr-specific-rules",
+              "score": 0.3353827,
+              "page_name": "chemical-monitoring-foodex2.md",
+              "heading_path": "FoodEx2 In Chemical Monitoring > VMPR-Specific Rules",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+              "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+            },
+            {
+              "chunk_id": "chemical-monitoring-foodex2.md#003-00-foodex2-in-chemical-monitoring-general-rules",
+              "score": 0.33344936,
+              "page_name": "chemical-monitoring-foodex2.md",
+              "heading_path": "FoodEx2 In Chemical Monitoring > General Rules",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+              "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+            },
+            {
+              "chunk_id": "maintenance-2020.md#005-00-maintenance-2020-relevant-business-rules",
+              "score": 0.33112845,
+              "page_name": "maintenance-2020.md",
+              "heading_path": "Maintenance 2020 > Relevant Business Rules",
+              "category": "maintenance",
+              "source_tier": null,
+              "summary": "Honey bees, birds, SIGMA, scallops, and reportability changes.",
+              "source_path": "raw/efsa-guidance/maintenance-2020.md"
+            },
+            {
+              "chunk_id": "maintenance-2024.md#005-00-maintenance-2024-relevant-business-rules",
+              "score": 0.32956865,
+              "page_name": "maintenance-2024.md",
+              "heading_path": "Maintenance 2024 > Relevant Business Rules",
+              "category": "maintenance",
+              "source_tier": null,
+              "summary": "VetDrugRes overhaul and expanded legislative mapping.",
+              "source_path": "raw/efsa-guidance/maintenance-2024.md"
+            },
+            {
+              "chunk_id": "additives-flavourings-foodex2.md#006-00-foodex2-in-additives-and-flavourings-monitoring-relevant-policy",
+              "score": 0.32866207,
+              "page_name": "additives-flavourings-foodex2.md",
+              "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Relevant Policy",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+              "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md"
+            },
+            {
+              "chunk_id": "domoic-acid-scallops.md#002-00-domoic-acid-in-scallops-reporting-rule",
+              "score": 0.3259816,
+              "page_name": "domoic-acid-scallops.md",
+              "heading_path": "Domoic Acid In Scallops > Reporting Rule",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+              "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+            },
+            {
+              "chunk_id": "domoic-acid-scallops.md#006-00-domoic-acid-in-scallops-relevant-business-rules",
+              "score": 0.32479405,
+              "page_name": "domoic-acid-scallops.md",
+              "heading_path": "Domoic Acid In Scallops > Relevant Business Rules",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+              "source_path": "raw/efsa-guidance/domoic-acid-scallops.md"
+            },
+            {
+              "chunk_id": "additives-flavourings-foodex2.md#002-00-foodex2-in-additives-and-flavourings-monitoring-f33-legislative-class",
+              "score": 0.32286042,
+              "page_name": "additives-flavourings-foodex2.md",
+              "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > F33 Legislative Class",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.",
+              "source_path": "raw/efsa-guidance/additives-flavourings-foodex2.md"
+            },
+            {
+              "chunk_id": "maintenance-2016-2018.md#005-00-maintenance-2016-2018-relevant-business-rules",
+              "score": 0.32261762,
+              "page_name": "maintenance-2016-2018.md",
+              "heading_path": "Maintenance 2016-2018 > Relevant Business Rules",
+              "category": "maintenance",
+              "source_tier": null,
+              "summary": "Multi-year maintenance wave with major taxonomy and mapping work.",
+              "source_path": "raw/efsa-guidance/maintenance-2016-2018.md"
+            },
+            {
+              "chunk_id": "facet-coding-rules.md#002-03-facet-coding-rules-facet-category-reference",
+              "score": 0.32071295,
+              "page_name": "facet-coding-rules.md",
+              "heading_path": "Facet Coding Rules > Facet Category Reference",
+              "category": "guidance",
+              "source_tier": null,
+              "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.",
+              "source_path": "raw/efsa-guidance/facet-coding-rules.md"
+            },
+            {
+              "chunk_id": "chemical-monitoring-foodex2.md#005-00-foodex2-in-chemical-monitoring-worked-examples",
+              "score": 0.32041866,
+              "page_name": "chemical-monitoring-foodex2.md",
+              "heading_path": "FoodEx2 In Chemical Monitoring > Worked Examples",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+              "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+            },
+            {
+              "chunk_id": "domain-specific-validation.md#002-00-domain-specific-validation-common-mandatory-or-recommended-facets",
+              "score": 0.3202783,
+              "page_name": "domain-specific-validation.md",
+              "heading_path": "Domain-Specific Validation > Common Mandatory Or Recommended Facets",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+              "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+            }
+          ],
+          "assembly": {
+            "strategy": "highest_ranked_chunk_per_unique_page",
+            "candidate_chunk_count": 35,
+            "candidate_unique_page_count": 12,
+            "selected_page_count": 7,
+            "duplicate_chunk_count": 23,
+            "candidate_duplicate_ratio": 0.6571428571428571,
+            "preassembly_duplicate_slot_waste": 0.7142857142857143,
+            "duplicate_slot_waste": 0.0,
+            "selected_pages": [
+              "pesticides-foodex2.md",
+              "contaminants-foodex2.md",
+              "chemical-monitoring-foodex2.md",
+              "validation-rules.md",
+              "additives-flavourings-foodex2.md",
+              "domoic-acid-scallops.md",
+              "domain-specific-validation.md"
+            ],
+            "dropped_duplicate_chunks": [
+              {
+                "rank": 2,
+                "page_name": "pesticides-foodex2.md",
+                "chunk_id": "pesticides-foodex2.md#002-00-foodex2-in-pesticide-residue-monitoring-domain-boundary",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Domain Boundary",
+                "score": 0.44585127,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 4,
+                "page_name": "pesticides-foodex2.md",
+                "chunk_id": "pesticides-foodex2.md#004-00-foodex2-in-pesticide-residue-monitoring-worked-signals",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Worked Signals",
+                "score": 0.44207004,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 5,
+                "page_name": "pesticides-foodex2.md",
+                "chunk_id": "pesticides-foodex2.md#001-00-foodex2-in-pesticide-residue-monitoring-use-only-when-pesticide-context-is-activ",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Use Only When Pesticide Context Is Active",
+                "score": 0.43659598,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 6,
+                "page_name": "contaminants-foodex2.md",
+                "chunk_id": "contaminants-foodex2.md#005-00-foodex2-in-contaminants-monitoring-worked-signals",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Worked Signals",
+                "score": 0.4276572,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 7,
+                "page_name": "contaminants-foodex2.md",
+                "chunk_id": "contaminants-foodex2.md#006-00-foodex2-in-contaminants-monitoring-relevant-policy",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Relevant Policy",
+                "score": 0.4249406,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 8,
+                "page_name": "pesticides-foodex2.md",
+                "chunk_id": "pesticides-foodex2.md#005-00-foodex2-in-pesticide-residue-monitoring-relevant-policy",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring > Relevant Policy",
+                "score": 0.42391294,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 9,
+                "page_name": "contaminants-foodex2.md",
+                "chunk_id": "contaminants-foodex2.md#001-00-foodex2-in-contaminants-monitoring-use-only-when-contaminants-context-is-active",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Use Only When Contaminants Context Is Active",
+                "score": 0.4106633,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 10,
+                "page_name": "contaminants-foodex2.md",
+                "chunk_id": "contaminants-foodex2.md#003-00-foodex2-in-contaminants-monitoring-high-impact-rules",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > High-Impact Rules",
+                "score": 0.39869633,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 11,
+                "page_name": "contaminants-foodex2.md",
+                "chunk_id": "contaminants-foodex2.md#002-00-foodex2-in-contaminants-monitoring-domain-boundary",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Domain Boundary",
+                "score": 0.3958403,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 12,
+                "page_name": "pesticides-foodex2.md",
+                "chunk_id": "pesticides-foodex2.md#000-00-foodex2-in-pesticide-residue-monitoring",
+                "heading_path": "FoodEx2 In Pesticide Residue Monitoring",
+                "score": 0.3930274,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 14,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "chunk_id": "chemical-monitoring-foodex2.md#007-00-foodex2-in-chemical-monitoring-relevant-business-rules",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Business Rules",
+                "score": 0.36260998,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 15,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "chunk_id": "chemical-monitoring-foodex2.md#006-00-foodex2-in-chemical-monitoring-relevant-policy",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Policy",
+                "score": 0.35786188,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 16,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "chunk_id": "chemical-monitoring-foodex2.md#001-00-foodex2-in-chemical-monitoring-scope",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Scope",
+                "score": 0.3564566,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 18,
+                "page_name": "contaminants-foodex2.md",
+                "chunk_id": "contaminants-foodex2.md#000-00-foodex2-in-contaminants-monitoring",
+                "heading_path": "FoodEx2 In Contaminants Monitoring",
+                "score": 0.34988165,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 22,
+                "page_name": "domain-specific-validation.md",
+                "chunk_id": "domain-specific-validation.md#001-00-domain-specific-validation-these-rules-are-contextual",
+                "heading_path": "Domain-Specific Validation > These Rules Are Contextual",
+                "score": 0.3390336,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 24,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "chunk_id": "chemical-monitoring-foodex2.md#004-00-foodex2-in-chemical-monitoring-vmpr-specific-rules",
+                "heading_path": "FoodEx2 In Chemical Monitoring > VMPR-Specific Rules",
+                "score": 0.3353827,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 25,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "chunk_id": "chemical-monitoring-foodex2.md#003-00-foodex2-in-chemical-monitoring-general-rules",
+                "heading_path": "FoodEx2 In Chemical Monitoring > General Rules",
+                "score": 0.33344936,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 28,
+                "page_name": "additives-flavourings-foodex2.md",
+                "chunk_id": "additives-flavourings-foodex2.md#006-00-foodex2-in-additives-and-flavourings-monitoring-relevant-policy",
+                "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > Relevant Policy",
+                "score": 0.32866207,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 29,
+                "page_name": "domoic-acid-scallops.md",
+                "chunk_id": "domoic-acid-scallops.md#002-00-domoic-acid-in-scallops-reporting-rule",
+                "heading_path": "Domoic Acid In Scallops > Reporting Rule",
+                "score": 0.3259816,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 30,
+                "page_name": "domoic-acid-scallops.md",
+                "chunk_id": "domoic-acid-scallops.md#006-00-domoic-acid-in-scallops-relevant-business-rules",
+                "heading_path": "Domoic Acid In Scallops > Relevant Business Rules",
+                "score": 0.32479405,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 31,
+                "page_name": "additives-flavourings-foodex2.md",
+                "chunk_id": "additives-flavourings-foodex2.md#002-00-foodex2-in-additives-and-flavourings-monitoring-f33-legislative-class",
+                "heading_path": "FoodEx2 In Additives And Flavourings Monitoring > F33 Legislative Class",
+                "score": 0.32286042,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 34,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "chunk_id": "chemical-monitoring-foodex2.md#005-00-foodex2-in-chemical-monitoring-worked-examples",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Worked Examples",
+                "score": 0.32041866,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 35,
+                "page_name": "domain-specific-validation.md",
+                "chunk_id": "domain-specific-validation.md#002-00-domain-specific-validation-common-mandatory-or-recommended-facets",
+                "heading_path": "Domain-Specific Validation > Common Mandatory Or Recommended Facets",
+                "score": 0.3202783,
+                "reason": "duplicate_page"
+              }
+            ],
+            "unselected_candidate_pages": [
+              "maintenance-2023.md",
+              "maintenance-2020.md",
+              "maintenance-2024.md",
+              "maintenance-2016-2018.md",
+              "facet-coding-rules.md"
+            ],
+            "elapsed_ms": 0
+          }
+        },
+        "embedding": {
+          "provider": "voyage",
+          "model": "voyage-context-3",
+          "dimension": 1024,
+          "elapsed_ms": 309,
+          "usage": {
+            "total_tokens": 23
+          },
+          "tracked_tokens": 23
+        },
+        "answerer": {
+          "model": "claude-sonnet-5",
+          "token_summary": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 4836,
+            "output_tokens": 881,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5717,
+            "per_call": [
+              {
+                "stop_reason": "end_turn",
+                "input_tokens": 4836,
+                "output_tokens": 881,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5717
+              }
+            ]
+          },
+          "timing_summary": {
+            "calls": 1,
+            "llm_time_ms": 12406,
+            "per_call": [
+              {
+                "call_number": 1,
+                "duration_ms": 12406,
+                "stop_reason": "end_turn"
+              }
+            ],
+            "answerer_wall_time_ms": 12406
+          }
+        },
+        "total": {
+          "request_wall_time_ms": 12786,
+          "total_llm_calls": 1,
+          "total_embedding_calls": 1,
+          "total_model_calls": 2,
+          "total_tracked_tokens": 5740,
+          "answerer_tracked_tokens": 5717,
+          "embedding_tracked_tokens": 23
+        },
+        "phase_timings_ms": {
+          "retrieval_total": 358,
+          "embedding": 309,
+          "qdrant_search": 47,
+          "answerer_total": 12406
+        }
+      },
+      "error": null,
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [
+          "additives-flavourings-foodex2.md",
+          "contaminants-foodex2.md",
+          "domoic-acid-scallops.md"
+        ],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "prohibited_page_pass": false,
+        "reference_page_precision": 0.5714285714285714,
+        "reference_page_recall": 0.3333333333333333,
+        "missing_reference_pages": [
+          "base-term-selection.md",
+          "term-type-facet-constraints.md"
+        ]
+      },
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-002",
+      "reviewed": true,
+      "question": "Anything I should think about when reporting Paranötter – nötter?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": "claude-sonnet-5",
+      "request_payload": {
+        "question": "Anything I should think about when reporting Paranötter – nötter? Reporting domain: contaminants.",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "selector_model": "claude-sonnet-5",
+        "max_pages": 7,
+        "use_graph_expansion": true
+      },
+      "status_code": 200,
+      "elapsed_ms": 26415,
+      "answer": "Coding path for 'Paranötter – nötter' (Brazil nut) under contaminants: 1) Treat it as a raw commodity first — determine food type before picking any facet, and look for the most specific reportable nut term available rather than starting from a hierarchy term (base-term-selection.md). 2) If no exact 'Brazil nut' non-hierarchy term is found, fall back to the nearest generic nut base term, add the correct explicit F01 source facet, and mark it with F26 'other' so the missing specificity is flagged rather than silently lost (base-term-selection.md). 3) Contaminants coding still starts from ordinary FoodEx2 base-term selection in the MTX reporting hierarchy — the contaminants domain does not change how you pick the base term, only what additional substance-specific reporting details may be layered on top (contaminants-foodex2.md). 4) Check whether any ChemMon substance-specific rule is actually active for this sample: examples in the provided material include explicit F33 for acrylamide, F17 cooking-extent for heat-treated/furan or acrylamide cases, F19 packaging-material for bisphenol/phthalate testing, F07 fat-content when the result basis needs it, and F23 target-consumer for infant/baby-food reporting — none of these should be added unless the actual analyte or reporting rule calls for it (contaminants-foodex2.md). 5) Contaminants sample-preparation assumptions can differ from pesticide-domain assumptions for the same matrix (e.g. with/without shell), so don't borrow a pesticide-residue preparation default just because the substance may also be pesticide-relevant — use the contaminants-context preparation facet only if it matters for this nut sample (contaminants-foodex2.md). 6) Only add facets that are not already implicit in the base term (implicit-vs-explicit-facets.md, facet-coding-rules.md), and run the result through domain-specific-validation.md for any contaminants-context blocking/warning checks. Note: the provided pages do not contain an aflatoxin/mycotoxin-specific nut rule or an explicit FoodEx2 code for Brazil nut, so I can't confirm the exact base-term code or a mycotoxin-specific facet requirement from this material alone.",
+      "citations": [
+        "contaminants-foodex2.md",
+        "base-term-selection.md",
+        "facet-coding-rules.md",
+        "implicit-vs-explicit-facets.md",
+        "domain-specific-validation.md"
+      ],
+      "pages_used": [
+        "index.md",
+        "RUNTIME_RULES.md",
+        "contaminants-foodex2.md",
+        "base-term-selection.md",
+        "facet-coding-rules.md",
+        "policy-contract.md",
+        "term-type-facet-constraints.md",
+        "implicit-vs-explicit-facets.md",
+        "business-rules.md",
+        "chemical-monitoring-foodex2.md",
+        "pesticides-foodex2.md",
+        "domoic-acid-scallops.md",
+        "domain-specific-validation.md"
+      ],
+      "pages": [
+        {
+          "page_name": "index.md",
+          "title": "Wiki Index",
+          "summary": "Top-level catalog for the FoodEx2 wiki layer.",
+          "category": "orientation",
+          "source_tier": null,
+          "sources": [],
+          "related": [],
+          "content": "# Index\n\nThis is the content-oriented catalog for the FoodEx2 markdown wiki layer.\n\n## Orientation\n\n- [README.md](README.md): Repo overview, current status, API runtime modes, directory layout, and working conventions.\n- [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md): What this wiki is for, why it exists, and the LLM-wiki operating model behind it.\n- [KNOWLEDGE_ARCHITECTURE.md](KNOWLEDGE_ARCHITECTURE.md): Architecture stance for compiled markdown knowledge, guidance briefs, page-evidence retrieval, graph retrieval, long-source ingest, and when not to add heavier RAG infrastructure.\n- [WIKI_ARCHITECTURE_FOR_MODELS.md](WIKI_ARCHITECTURE_FOR_MODELS.md): Model-facing architecture orientation covering knowledge layers, page types, runtime endpoints, retrieval modes, Qdrant, maintenance gates, and operating assumptions.\n- [INGEST_WORKFLOW.md](INGEST_WORKFLOW.md): Practical playbook for turning raw PDFs into stable topic pages without collapsing into one-shot summarization.\n- [MAINTENANCE_WORKFLOW.md](MAINTENANCE_WORKFLOW.md): Deterministic and LLM-assisted maintenance workflow for link checks, source checks, retrieval-health checks, and supervised wiki linting.\n- [SCHEMA.md](SCHEMA.md): Page types, frontmatter fields, section conventions, and ingest schema for the FoodEx2 wiki.\n- [RUNTIME_RULES.md](RUNTIME_RULES.md): Compact prompt-facing rules file always attached by `context-pack` and page-evidence prompt contexts before supporting guidance pages.\n- [log.md](log.md): Chronological record of ingests and maintenance work.\n- [policy-contract.md](raw/efsa-guidance/policy-contract.md): Richer control-layer page defining decision order, binding rules, tie-breaks, and anti-patterns for structured and solver-oriented flows.\n- [selection-policy.md](raw/efsa-guidance/selection-policy.md): Deterministic skeleton failsafe for context-pack assembly: required base-term/facet/validation roles, backfill defaults, drop rules, and the structural-invariants-only bright line.\n\n## Guiding Principles\n\n- FoodEx2 is a common scientific reporting language across food-safety domains, not a marketing or culinary description system. Code the food objectively by its nature, source, and treatment rather than by local commercial assumptions.\n- FoodEx2 is built top-down. Choose the correct reportable base term first, then refine it with facets. Do not try to assemble the food bottom-up from arbitrary components if a standard FoodEx2 term already captures its identity.\n- FoodEx2 prefers modular description over term proliferation. Use explicit facets to add meaningful detail, but only when that detail is not already implicit in the base term and is relevant to the coding purpose.\n- Coding is an input/reporting task, not an analysis task. Describe the sample in front of you at the most specific reportable level available; downstream hierarchies and legislative mappings handle aggregation later.\n- When in doubt, prefer the most specific objective biological/food-identity term available, add only the necessary modular refinements, and avoid encoding unnecessary commercial wording.\n\n## FoodEx2 Guidance\n\n- [foodex2-overview.md](raw/efsa-guidance/foodex2-overview.md): High-level explanation of FoodEx2 purpose, hierarchy model, and coding philosophy.\n- [base-term-selection.md](raw/efsa-guidance/base-term-selection.md): Rules for choosing the right base term, including tie-breaks and missing-term handling.\n- [facet-coding-rules.md](raw/efsa-guidance/facet-coding-rules.md): Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.\n- [implicit-vs-explicit-facets.md](raw/efsa-guidance/implicit-vs-explicit-facets.md): Distinguishes inherited facet information from coder-supplied facet detail.\n- [code-string-format.md](raw/efsa-guidance/code-string-format.md): Exact FoodEx2 code syntax, separators, and ordering conventions.\n- [process-facets.md](raw/efsa-guidance/process-facets.md): Compact reference for Appendix A2 process facet codes and when to use them.\n- [ingredient-facets.md](raw/efsa-guidance/ingredient-facets.md): Rules for characterising ingredients, mixed foods, composite coding, and minor flavouring/added-ingredient use on derivatives.\n- [packaging-facets.md](raw/efsa-guidance/packaging-facets.md): When to use `F18` packaging-format and `F19` packaging-material, and how they differ from `F28` process.\n- [anses-codification-guidance.md](raw/efsa-guidance/anses-codification-guidance.md): Extracted `expert_guidance` from the ANSES FoodEx2 codification guidance v3, covering workflow, missing-term conventions, mixed-product handling, range values, and dataset QC checks without overriding authoritative EFSA or validator sources.\n- [chemical-monitoring-foodex2.md](raw/efsa-guidance/chemical-monitoring-foodex2.md): Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.\n- [pesticides-foodex2.md](raw/efsa-guidance/pesticides-foodex2.md): Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.\n- [contaminants-foodex2.md](raw/efsa-guidance/contaminants-foodex2.md): Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.\n- [domoic-acid-scallops.md](raw/efsa-guidance/domoic-acid-scallops.md): Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.\n- [vmpr-foodex2.md](raw/efsa-guidance/vmpr-foodex2.md): VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.\n- [vmpr-legislative-mapping.md](raw/efsa-guidance/vmpr-legislative-mapping.md): Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.\n- [additives-flavourings-foodex2.md](raw/efsa-guidance/additives-flavourings-foodex2.md): Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.\n\n## Validation Layer\n\n- [business-rules.md](raw/efsa-guidance/business-rules.md): Canonical wiki target for `BR01`-`BR31`, including MTX 17.1 validator status, BR13's seven-code disintegration boundary, BR19/BR19+ stale-data coverage, and BR26's known validator-silence divergence.\n- [validation-rules.md](raw/efsa-guidance/validation-rules.md): Overview of the validator's two-layer model, severities, and the most important blocking rules.\n- [structural-validation.md](raw/efsa-guidance/structural-validation.md): Syntax, descriptor existence, implicit-facet cleanup, duplicates, and single-cardinality checks.\n- [term-type-facet-constraints.md](raw/efsa-guidance/term-type-facet-constraints.md): Allowed and forbidden facets by FoodEx2 term type, including the distinction between BR13 disintegration `F03` values and permitted non-disintegration physical states on raw commodities.\n- [process-validation-rules.md](raw/efsa-guidance/process-validation-rules.md): Ordinal-group process conflicts, raw-vs-derivative process boundaries, BR19/BR19+ behaviour, and the BR26 known divergence.\n- [domain-specific-validation.md](raw/efsa-guidance/domain-specific-validation.md): Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.\n\n## Maintenance History\n\n- [maintenance-history.md](raw/efsa-guidance/maintenance-history.md): Cross-year timeline of FoodEx2 changes after revision 2.\n- [maintenance-2015.md](raw/efsa-guidance/maintenance-2015.md): First annual maintenance after revision 2.\n- [maintenance-2016-2018.md](raw/efsa-guidance/maintenance-2016-2018.md): Multi-year maintenance wave with major taxonomy and mapping work.\n- [maintenance-2019.md](raw/efsa-guidance/maintenance-2019.md): Feed-focused revision plus bird and implicit-facet changes.\n- [maintenance-2020.md](raw/efsa-guidance/maintenance-2020.md): Honey bees, birds, SIGMA, scallops, and reportability changes.\n- [maintenance-2021.md](raw/efsa-guidance/maintenance-2021.md): EPPO plant mapping, matrix-code updates, and bird/F02 changes.\n- [maintenance-2022.md](raw/efsa-guidance/maintenance-2022.md): PRIMo introduction and major feed/plant revisions.\n- [maintenance-2023.md](raw/efsa-guidance/maintenance-2023.md): F34 Host-sampled, exposure-hierarchy redesign, and additives/flavourings mapping.\n- [maintenance-2024.md](raw/efsa-guidance/maintenance-2024.md): VetDrugRes overhaul and expanded legislative mapping.\n\n## Source Layer\n\n- [foodex2_docs](foodex2_docs): Immutable EFSA PDF source collection used to build and verify the wiki."
+        },
+        {
+          "page_name": "RUNTIME_RULES.md",
+          "title": "Runtime Rules",
+          "summary": "Compact prompt-facing rules file attached by context-pack before supporting guidance pages.",
+          "category": "runtime",
+          "source_tier": null,
+          "sources": [
+            "raw/efsa-guidance/policy-contract.md",
+            "raw/efsa-guidance/base-term-selection.md",
+            "raw/efsa-guidance/term-type-facet-constraints.md",
+            "raw/efsa-guidance/implicit-vs-explicit-facets.md",
+            "raw/efsa-guidance/business-rules.md"
+          ],
+          "related": [
+            "[[policy-contract]]",
+            "[[base-term-selection]]",
+            "[[term-type-facet-constraints]]",
+            "[[implicit-vs-explicit-facets]]",
+            "[[business-rules]]"
+          ],
+          "content": "# Runtime Rules\n\nThis is the compact prompt-facing rules file for `context-pack`.\n\nUse it as the always-on runtime layer before the supporting guidance pages.\n\n## Core Decision Order\n\n1. Determine food type first: raw commodity, derivative, or composite.\n2. Choose the best reportable non-hierarchy base term within that food type.\n3. If FoodEx2 already has a derivative or composite base that captures the processed state, use it instead of reconstructing the food from a raw base plus explicit facets.\n4. Add only explicit facets that contribute information not already implicit in the chosen base term.\n5. Validate the construction against facet legality, process rules, hierarchy/reportability limits, and code syntax.\n\n## Always-On Rules\n\n- Prefer a reportable non-hierarchy base term over a hierarchy, group, or facet term.\n- Evaluate specificity within the selected food type, not across raw-vs-derivative candidates.\n- For derivatives, origin normally uses `F27`.\n- For composites, characterising ingredients normally use `F04`.\n- Do not use explicit `F01` merely to restate a raw base commodity.\n- Do not duplicate implicit facets explicitly.\n- Do not reconstruct a standard derivative group from a raw base plus `F28` when the derivative group already exists.\n- For raw commodities, `BR13` blocks the disintegration-family `F03` descriptors such as powder, paste, and puree; it is not a blanket ban on every `F03` descriptor.\n- Treat reporting-domain overlays as opt-in; do not infer a domain unless context or domain-filtered candidates identify it.\n- Treat returned wiki pages as coding knowledge, not merely background. The candidate list is retrieval evidence, but it can be incomplete.\n- Do not invent FoodEx2 codes from memory. Prefer candidates, but a code explicitly named in returned wiki pages, catalogue data, or validator evidence may be used when that evidence shows the retrieved candidate list is incomplete.\n- If the wiki establishes a required base or facet concept but no explicit code is present in candidates or returned evidence, mark the candidate set incomplete instead of forcing a misleading near-match.\n\n## Supporting Pages By Signal\n\n- Base-term choice or mixed term types: `base-term-selection.md`\n- Raw-vs-derivative or facet legality questions: `term-type-facet-constraints.md`\n- Implicit vs explicit detail: `implicit-vs-explicit-facets.md`\n- Processing: `process-facets.md` and `process-validation-rules.md`\n- Ingredients or composites: `ingredient-facets.md`\n- Packaging: `packaging-facets.md`\n- Reporting-domain overlays are conditional. Use them only when the domain is explicit or the candidate set is domain-filtered: `pesticides-foodex2.md`, `contaminants-foodex2.md`, `vmpr-foodex2.md`, `additives-flavourings-foodex2.md`, and `domain-specific-validation.md`\n\n## Authority\n\n- `policy-contract.md` is the richer execution-order page.\n- `business-rules.md` is the canonical validator-rule page for `BRxx` constraints.\n- Supporting guidance pages explain how to apply those authorities to a coding case."
+        },
+        {
+          "page_name": "contaminants-foodex2.md",
+          "title": "FoodEx2 In Contaminants Monitoring",
+          "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "Reportable Scallops list of FoodEx2 codes - MTX.xlsx"
+          ],
+          "related": [
+            "[[chemical-monitoring-foodex2]]",
+            "[[pesticides-foodex2]]",
+            "[[domoic-acid-scallops]]",
+            "[[domain-specific-validation]]",
+            "[[facet-coding-rules]]",
+            "[[implicit-vs-explicit-facets]]"
+          ],
+          "content": "# FoodEx2 In Contaminants Monitoring\n\n## Use Only When Contaminants Context Is Active\n\n- This page is a conditional domain overlay. Use it when the request, reporting context, legal reference, parameter hierarchy, or candidate collection indicates contaminants monitoring.\n- Typical activation signals include contaminants, occurrence, `OCC`, `chemAnalysis`, pyrrolizidine alkaloids, acrylamide, domoic acid, furans, bisphenols, phthalates, heavy metals, or a contaminants-domain candidate set.\n- Do not apply pesticide MATRIX constraints to contaminants cases unless the request explicitly says the result is also being reported in the pesticide domain.\n\n## Domain Boundary\n\n- Contaminants coding still starts with ordinary FoodEx2 base-term selection from the MTX reporting hierarchy.\n- Contaminants workflows can add substance-specific mandatory or recommended details. These requirements are updated in ChemMon guidance and should be treated as reporting overlays, not as universal FoodEx2 syntax.\n- If a contaminant case names a botanical species or variety that is not available as a returned FoodEx2 candidate, use the best valid FoodEx2 candidate for the contaminants context and preserve the extra detail outside the code where the reporting workflow allows free text.\n\n## High-Impact Rules\n\n- Acrylamide monitoring is the clearest exception to normal implicit-facet cleanup: CHEMMON12 requires explicit `F33 Legislative-classes` for acrylamide results, even when the base term already has the relevant legislative class implicitly.\n- Domoic acid in scallops has a source-provided matrix lookup. Use [[domoic-acid-scallops]] to select the exact `sampMatCode` and `sampMatText`, and include `origFishAreaCode` from FAREA wherever possible.\n- Heat-treatment reporting for furans or acrylamide can require or recommend `F17 Cooking extent`.\n- Bisphenol or phthalate analysis can require or recommend `F19 Packaging-material`.\n- Fat-weight expression can require or recommend `F07 Fat-content`.\n- Infant or baby-food reporting can require or recommend `F23 Target-consumer` when the base term does not already make the target consumer clear.\n\n## Pesticide Contrast\n\n- Some contaminant and pesticide cases use different sample-preparation facets for the same matrix. For copper, contaminants examples include without peel, without shell, without stone, kernels without cob, roasted coffee beans, muscle with fat, and washed plant products.\n- These contrasts are domain-specific. If the domain is contaminants, do not borrow pesticide preparation assumptions merely because the substance also appears in pesticide legislation.\n\n## Worked Signals\n\n- Acrylamide on french fries should include the explicit acrylamide legislative class facet, such as `A0BYV#F33.A169H`, when the acrylamide reporting rule is active.\n- Domoic acid in scallops should use the species-and-part row from [[domoic-acid-scallops]] instead of a generic scallop code when the source sample identifies the analysed matrix.\n- Copper in citrus fruit under contaminants should follow the contaminants preparation assumption, not the pesticide-residue with-peel assumption.\n- Pyrrolizidine alkaloids in herbal infusion material should use the contaminants-context candidate set. Do not force the term into a pesticide Annex I MATRIX result unless pesticide reporting is explicit.\n\n## Relevant Policy\n\n- [[domain-specific-validation]] lists the contextual validation checks that turn these recommendations into blocking or warning behavior.\n- [[pesticides-foodex2]] is separate because legal MATRIX mapping and sample-preparation assumptions can differ.\n- [[implicit-vs-explicit-facets]] still applies unless a contaminants rule explicitly overrides it."
+        },
+        {
+          "page_name": "base-term-selection.md",
+          "title": "Base Term Selection Rules",
+          "summary": "Rules for choosing the right base term, including tie-breaks and missing-term handling.",
+          "category": "guidance",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf",
+            "FoodEx2 codification guidance_2025_12_v3.pdf"
+          ],
+          "related": [
+            "[[foodex2-overview]]",
+            "[[implicit-vs-explicit-facets]]",
+            "[[ingredient-facets]]",
+            "[[process-facets]]"
+          ],
+          "content": "# Base Term Selection\n\n## Start With Food Type\n\n- First ask: `What type of food is this?` Choose among raw commodity, derivative, or composite. The base-term decision is the main coding decision; often the base term alone is enough. For the top-down mental model behind this step, start with [[foodex2-overview]].\n- Do not confuse food type with origin. `What type of food is this?` is a different question from `what is it made from?`; answer the type question before choosing `F01`, `F27`, or `F04`. (ANSES guidance p25)\n- Never start from a hierarchy term if a reportable non-hierarchy term exists. If poor source data makes that unavoidable, prefer an exposure-hierarchy term.\n- Know the reporting or exposure hierarchy before coding. Stopping at the first search hit can lead to the wrong branch.\n\n## Choose The Base-Term Class\n\n- Use a raw-commodity base term for primary plant or animal products. Add only treatments that do not create a new nature; if the treatment question becomes ambiguous, read this together with [[process-facets]] and [[process-validation-rules]].\n- Use a derivative base term when a nature-changing process already defines a standard group. The process list here is illustrative, not exhaustive: this includes cases such as milling, drying, curing, fermentation, pickling/marinating, canning/jarring or smoking whenever FoodEx2 already has the processed group. Do not rebuild these from a raw term plus `F28` if the derivative group exists. The origin chain that follows from that choice is explained in [[implicit-vs-explicit-facets]].\n- When raw-versus-derivative status is unclear, inspect the processed or preserved branch for the commodity before accepting a raw base plus `F28`. The existence of a derivative branch is evidence that the process belongs in the base-term choice. (ANSES guidance p27-30)\n- Use a composite base term for foods made by combining ingredients in a recipe. For same-nature mixtures, stay on a generic raw/derivative base term and add multiple `F27`. For balanced mixed natures, move to a composite base term, then describe the characterising recipe components with [[ingredient-facets]].\n\n## Tie-Break Rules\n\n- If several preservation processes apply, choose the processed base term top-down: puree/textured, then marinated/pickled/fermented, then in vinegar/brine, in alcohol, salted, candied/sugar-preserved, dried, canned/jarred, smoked. Read this as a precedence rule among processed-base options, not as permission to fall back to a raw base just because the more specific raw commodity exists.\n- Follow the documented priority order, not the visual order in the catalogue browser; browser order can reflect term creation history rather than coding precedence. (ANSES guidance p30, p33)\n- If a composite has no clear dominant ingredient, use this priority: meat, fish, cheese/dairy, egg, legume, potato, cereal, fruit, vegetable.\n- If the exact term is missing, choose the nearest generic non-hierarchy base term, add the correct origin facet, and add `F26.A07XE` (`other`). If even the origin term is missing, keep the generic base term and record the detail in text. Use [[implicit-vs-explicit-facets]] and [[term-type-facet-constraints]] to pick the correct origin facet for the chosen term type.\n- For detail level within a suitable food type, prefer extended or core terms when they fit; use non-specific or generic terms as fallbacks only when the detailed term is missing or source detail is unavailable. (ANSES guidance p35)\n\n## Worked Examples\n\n- Before: `kangaroo fresh fat tissue`. After: `A0F3G#F01.A0F2G$F26.A07XE`. Generic raw base term plus `F01` because the detailed commodity is missing but the source exists.\n- Before: `quinoa flour`. After: `A04KS#F26.A07XE$F27.A000R`. Generic derivative base term plus `F27` because the detailed derivative is missing but the source raw commodity exists.\n- Before: `mixed vegetable salad` with balanced different-nature ingredients. After: `A042D#F04.A00QH$F04.A015L$F04.A00KV$F04.A00LN$F04.A00LB$F04.A00LG`. Because no single nature dominates, the starting point becomes a composite salad term.\n\n## Relevant Policy\n\n- [[policy-contract]] `C01`, `C02`, `C03`, `C06`, and `C09` govern this page directly: determine food type first, read candidate wording and any available coverage text, prefer reportable non-hierarchy terms, and apply specificity only within the selected food type.\n- [[policy-contract]] Decision Procedure steps 1 to 3 are the operative order here: classify the food, compare candidates within that type, then resolve origin and tie-break questions before composing facets.\n\n## Relevant Business Rules\n\n- `BR08`: the selected base term must be reportable. See [[business-rules]].\n- `BR10`: non-specific base terms are only weak fallbacks when a more precise reportable term exists. See [[business-rules]].\n- `BR19`: derivative-creating processes on raw bases are not an acceptable fallback when the derivative group exists. See [[business-rules]].\n- `BR23` and `BR24`: hierarchy terms are discouraged or invalid as coding bases, depending on hierarchy/reporting status. See [[business-rules]]."
+        },
+        {
+          "page_name": "facet-coding-rules.md",
+          "title": "Facet Coding Rules",
+          "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.",
+          "category": "guidance",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "FoodEx2 codification guidance_2025_12_v3.pdf"
+          ],
+          "related": [
+            "[[foodex2-overview]]",
+            "[[implicit-vs-explicit-facets]]",
+            "[[process-facets]]",
+            "[[ingredient-facets]]",
+            "[[packaging-facets]]"
+          ],
+          "content": "# Facet Coding Rules\n\n## General Rule\n\n- Add facets only when they refine the chosen base term in a way that matters for coding or reporting. If the base term already carries the detail implicitly, do not repeat it explicitly; the default logic is spelled out in [[implicit-vs-explicit-facets]].\n- In practice, only a few facets are needed. The number of possible facets is not the target; focus on descriptors that define a meaningful subgroup or retain source information that would otherwise be lost.\n- `F13` to `F16` are largely deprecated; use `F28 process` instead, following [[process-facets]].\n- Use implicit facets as evidence. They should usually not be repeated, but they can show which facet family should be used to narrow a generic or insufficient base term. (ANSES guidance p36, p39-41)\n\n## Facet Category Reference\n\nUse this table to map an explicit descriptor candidate to the correct `Fxx` family. It is a category guide, not a descriptor catalog; exact descriptor membership should still come from the candidate or validator data.\n\n| Facet | Meaning | Use |\n| --- | --- | --- |\n| `F01` | Source | Biological source where explicit source is permitted or required; do not add it merely to restate a raw base commodity. |\n| `F02` | Part-nature | Part or sample-matrix nature, especially when a generic matrix needs an explicit part. |\n| `F03` | Physical state | Physical form or state. On raw commodities, BR13 blocks only disintegration-family physical states such as powder, paste, and puree; non-disintegration states such as solid can be valid when otherwise legal. |\n| `F04` | Ingredient | Characterising recipe ingredient for composites, or a minor later-added ingredient on otherwise raw or derivative foods. |\n| `F06` | Surrounding medium | Packing or surrounding medium such as liquid, brine, oil, or sauce when it matters separately from packaging. |\n| `F07` | Fat content | Fat-content expression when the reporting context or result basis needs it. |\n| `F09` | Fortification component | Added enrichment or fortification component, such as calcium in a fortified product. |\n| `F10` | Qualitative information | Qualitative descriptors such as light, sugar-free, lactose-free, or similar non-process attributes. |\n| `F11` | Alcohol content | Alcohol-content expression for alcoholic beverages when the exact or labelled alcohol percentage matters. |\n| `F17` | Cooking extent | Heat-treatment or cooking-extent detail when a domain rule asks for it, for example furans or acrylamide reporting. |\n| `F18` | Packaging format | Container or presentation format such as jar, bottle, can, box, or wrapper. |\n| `F19` | Packaging material | Contact material such as glass, plastic, paper, or metal. |\n| `F20` | Part consumed or analysed | Analysed or consumed part detail when downstream classification needs it. |\n| `F21` | Production method or growing condition | Production or husbandry method such as organic, wild, aquaculture, indoor, greenhouse, or under-glass growing. |\n| `F23` | Target consumer | Intended consumer group, including infant products and animal feed target categories. |\n| `F24-F25` | Microbiology-specific facets | Specialist microbiological reporting descriptors; use only in microbiology contexts. |\n| `F26` | Other or missing-detail marker | Add when the exact detailed term is missing and the generic base or origin facet needs an `other` marker. |\n| `F27` | Source commodity | Constitutive source commodity for derivatives or same-nature raw/derivative mixtures. |\n| `F28` | Process | Treatment or processing detail that is not already implicit in the selected base term. |\n| `F29-F32` | Animal-domain facets | Specialist animal-domain descriptors; use only when the reporting domain activates them. |\n| `F33` | Legislative class | Legislation-oriented reporting class, mainly in chemical monitoring, VMPR, additives, and flavourings contexts. |\n| `F34` | Host sampled | Host-sampled descriptor introduced for relevant host/vector reporting contexts. |\n\n- If a candidate is a facet descriptor, it still cannot be the base term. First choose the base term, then attach the descriptor under the correct `Fxx` family only if it adds non-implicit information.\n- A descriptor such as `Indoor/under glass growing condition` belongs under `F21` because it describes production or growing method. In a raw commodity case such as greenhouse cherry tomatoes, the base remains the raw commodity and the greenhouse detail is an optional explicit `F21` when that detail matters.\n- A descriptor such as `Powder`, `Fine powder`, `Coarse powder`, `Paste`, `Fine paste`, `coarse paste/minced`, or `Puree-type` belongs to the BR13 disintegration boundary when attached as `F03` to a raw commodity. Do not generalise that into a ban on every `F03` descriptor for raw commodities; verify the actual descriptor and rule result.\n- Numeric content facets such as `F07` fat content and `F11` alcohol content are single-cardinality. When the source gives a range, do not attach both endpoints; choose the reporting-context convention for reducing the range to one descriptor or leave the range in text if no exact FoodEx2 descriptor is defensible. (ANSES guidance p58)\n- When similar information is available as both a process and a qualitative product claim, prefer the descriptor that matches the source meaning. For example, a labelled low/reduced-lactose product is normally better expressed as qualitative information than as a manufacturing-process fact. (ANSES guidance p45)\n\n## High-Value Facets\n\n| Facet | Use |\n| --- | --- |\n| `F01` / `F27` / `F04` | Origin facets for raw commodities, derivatives, and composites respectively. |\n| `F28` | Important treatment not already implicit in the base term. |\n| `F06` | Surrounding medium for canned or packed foods. |\n| `F10` | Qualitative info such as light, sugar free, lactose free. |\n| `F21` | Production method such as organic, aquaculture, wild. |\n| `F26` | Required when coding from a generic term because the exact detailed term is missing. |\n\n- Specialist facets are domain-bound: `F24-F25` for microbiology, `F29-F32` for animal-domain coding, `F33` for legislation-oriented reporting. When those domain overlays matter, continue with [[chemical-monitoring-foodex2]], the relevant reporting-domain page, and [[domain-specific-validation]].\n\n## Worked Examples\n\n- Before: `orange nectar`. After: `A03BG`. No extra facets are needed when the base term already captures the intended level of detail.\n- Before: `orange nectar, calcium-fortified, sugar free, organic`. After: `A03BG#F09.A0EXH$F10.A077L$F21.A07SE`. Add only the extra descriptors that are not implicit in `A03BG`.\n- Before: `cow hair sample` in VMPR. After: `A0C60#F02.A0ESP$F01.A057E`. In this special domain case, explicit `F02` and `F01` are required because the base term is intentionally generic.\n\n## Relevant Policy\n\n- [[policy-contract]] `C07` and `C08` are the main policy layer for this page: pick the facet family that matches the chosen food type and add only information that is not already implicit in the base term.\n- [[policy-contract]] `R-FACET-001` and `R-DESC-001` explain the main coding discipline here: remove redundant explicit detail, but keep descriptive facets such as `F10` and `F21` when they add real information.\n\n## Relevant Business Rules\n\n- `BR12`: `F04` on raw or derivative terms is limited to minor added ingredients. See [[business-rules]].\n- `BR25`: single-cardinality facet families can only appear once. See [[business-rules]].\n- `BR30` and `BR31`: every explicit facet must use a valid category and a descriptor that belongs to that category. See [[business-rules]]."
+        },
+        {
+          "page_name": "policy-contract.md",
+          "title": "Policy Contract",
+          "summary": "Richer control-layer page defining decision order, binding rules, tie-breaks, and anti-patterns for structured and solver-oriented flows.",
+          "category": "runtime",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
+          ],
+          "related": [
+            "[[foodex2-overview]]",
+            "[[base-term-selection]]",
+            "[[process-facets]]",
+            "[[implicit-vs-explicit-facets]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: Policy Contract\nRicher control-layer page defining decision order, binding rules, tie-breaks, and anti-patterns for structured and solver-oriented flows."
+        },
+        {
+          "page_name": "term-type-facet-constraints.md",
+          "title": "Term Type And Facet Constraints",
+          "summary": "Allowed and forbidden facets by FoodEx2 term type, including the distinction between BR13 disintegration `F03` values and permitted non-disintegration physical states on raw commodities.",
+          "category": "validation",
+          "source_tier": null,
+          "sources": [
+            "BUSINESS-RULES.md",
+            "BUSINESS-RULES-COMPACT.json",
+            "docs/VALIDATION_RULES_SUMMARY.md",
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+          ],
+          "related": [
+            "[[base-term-selection]]",
+            "[[business-rules]]",
+            "[[facet-coding-rules]]",
+            "[[validation-rules]]",
+            "[[process-validation-rules]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: Term Type And Facet Constraints\nAllowed and forbidden facets by FoodEx2 term type, including the distinction between BR13 disintegration `F03` values and permitted non-disintegration physical states on raw commodities."
+        },
+        {
+          "page_name": "implicit-vs-explicit-facets.md",
+          "title": "Implicit vs Explicit Facets",
+          "summary": "Distinguishes inherited facet information from coder-supplied facet detail.",
+          "category": "guidance",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "FoodEx2 codification guidance_2025_12_v3.pdf"
+          ],
+          "related": [
+            "[[foodex2-overview]]",
+            "[[facet-coding-rules]]",
+            "[[base-term-selection]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: Implicit vs Explicit Facets\nDistinguishes inherited facet information from coder-supplied facet detail."
+        },
+        {
+          "page_name": "business-rules.md",
+          "title": "Business Rules",
+          "summary": "Canonical wiki target for `BR01`-`BR31`, including MTX 17.1 validator status, BR13's seven-code disintegration boundary, BR19/BR19+ stale-data coverage, and BR26's known validator-silence divergence.",
+          "category": "validation",
+          "source_tier": null,
+          "sources": [
+            "BUSINESS-RULES.md",
+            "BUSINESS-RULES-COMPACT.json",
+            "foodex2_docs/business_rules.md"
+          ],
+          "related": [
+            "[[validation-rules]]",
+            "[[structural-validation]]",
+            "[[term-type-facet-constraints]]",
+            "[[process-validation-rules]]",
+            "[[domain-specific-validation]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: Business Rules\nCanonical wiki target for `BR01`-`BR31`, including MTX 17.1 validator status, BR13's seven-code disintegration boundary, BR19/BR19+ stale-data coverage, and BR26's known validator-silence divergence."
+        },
+        {
+          "page_name": "chemical-monitoring-foodex2.md",
+          "title": "FoodEx2 In Chemical Monitoring",
+          "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "Guidance VMPR mapping to legislative products.pdf",
+            "EFSA Supporting Publications - 2022 -  - FoodEx2 maintenance 2021.pdf"
+          ],
+          "related": [
+            "[[foodex2-overview]]",
+            "[[facet-coding-rules]]",
+            "[[implicit-vs-explicit-facets]]",
+            "[[pesticides-foodex2]]",
+            "[[contaminants-foodex2]]",
+            "[[domoic-acid-scallops]]",
+            "[[vmpr-foodex2]]",
+            "[[additives-flavourings-foodex2]]",
+            "[[maintenance-2024]]",
+            "[[domain-specific-validation]]",
+            "[[vmpr-legislative-mapping]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: FoodEx2 In Chemical Monitoring\nEntry point for conditional chemical-monitoring overlays and routing to reporting-domain pages."
+        },
+        {
+          "page_name": "pesticides-foodex2.md",
+          "title": "FoodEx2 In Pesticide Residue Monitoring",
+          "summary": "Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf",
+            "EFSA Supporting Publications - 2019 -  - FoodEx2 maintenance 2016-2018.pdf"
+          ],
+          "related": [
+            "[[chemical-monitoring-foodex2]]",
+            "[[contaminants-foodex2]]",
+            "[[base-term-selection]]",
+            "[[implicit-vs-explicit-facets]]",
+            "[[maintenance-2016-2018]]",
+            "[[maintenance-2024]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: FoodEx2 In Pesticide Residue Monitoring\nPesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions."
+        },
+        {
+          "page_name": "domoic-acid-scallops.md",
+          "title": "Domoic Acid In Scallops",
+          "summary": "Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "Reportable Scallops list of FoodEx2 codes - MTX.xlsx",
+            "domoic_acid_scallops_mtx.csv"
+          ],
+          "related": [
+            "[[chemical-monitoring-foodex2]]",
+            "[[contaminants-foodex2]]",
+            "[[domain-specific-validation]]",
+            "[[facet-coding-rules]]",
+            "[[implicit-vs-explicit-facets]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: Domoic Acid In Scallops\nDomoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation."
+        },
+        {
+          "page_name": "domain-specific-validation.md",
+          "title": "Domain-Specific Validation",
+          "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "docs/DOMAIN_SPECIFIC_RULES.md",
+            "docs/CONTEXT_SPECIFIC_RULES.md",
+            "BUSINESS-RULES-COMPACT.json",
+            "Guidance VMPR mapping to legislative products.pdf",
+            "Reportable Scallops list of FoodEx2 codes - MTX.xlsx"
+          ],
+          "related": [
+            "[[business-rules]]",
+            "[[chemical-monitoring-foodex2]]",
+            "[[pesticides-foodex2]]",
+            "[[contaminants-foodex2]]",
+            "[[domoic-acid-scallops]]",
+            "[[vmpr-foodex2]]",
+            "[[additives-flavourings-foodex2]]",
+            "[[facet-coding-rules]]",
+            "[[validation-rules]]",
+            "[[vmpr-legislative-mapping]]"
+          ],
+          "content": "[RELATED CONTEXT - summary-only neighbor page.]\nTitle: Domain-Specific Validation\nContext-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays."
+        }
+      ],
+      "trace": {
+        "index_used": true,
+        "max_pages": 7,
+        "selection_method": "service-owned llm page selector + answerer",
+        "retrieval": {
+          "model": "claude-sonnet-5",
+          "reasoning_effort": null,
+          "tool_trace": [
+            {
+              "page_name": "RUNTIME_RULES.md",
+              "order": 1,
+              "chars": 3857,
+              "synthetic": false
+            },
+            {
+              "page_name": "contaminants-foodex2.md",
+              "order": 2,
+              "chars": 4788,
+              "synthetic": false
+            },
+            {
+              "page_name": "base-term-selection.md",
+              "order": 3,
+              "chars": 6923,
+              "synthetic": false
+            },
+            {
+              "page_name": "facet-coding-rules.md",
+              "order": 4,
+              "chars": 9623,
+              "synthetic": false
+            }
+          ],
+          "token_summary": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5144,
+            "output_tokens": 449,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 5593,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 5144,
+                "output_tokens": 449,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 5593
+              }
+            ]
+          },
+          "timing_summary": {
+            "calls": 1,
+            "llm_time_ms": 5498,
+            "per_call": [
+              {
+                "call_number": 1,
+                "duration_ms": 5498,
+                "stop_reason": "tool_use"
+              }
+            ],
+            "selector_wall_time_ms": 5544
+          }
+        },
+        "graph_expansion": {
+          "enabled": true,
+          "neighbors_added": [
+            "policy-contract.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "business-rules.md",
+            "chemical-monitoring-foodex2.md",
+            "pesticides-foodex2.md",
+            "domoic-acid-scallops.md",
+            "domain-specific-validation.md"
+          ],
+          "neighbors_count": 8
+        },
+        "answerer": {
+          "model": "claude-sonnet-5",
+          "reasoning_effort": null,
+          "token_summary": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 12725,
+            "output_tokens": 1817,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 14542,
+            "per_call": [
+              {
+                "stop_reason": "end_turn",
+                "input_tokens": 12725,
+                "output_tokens": 1817,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 14542
+              }
+            ]
+          },
+          "timing_summary": {
+            "calls": 1,
+            "llm_time_ms": 20781,
+            "per_call": [
+              {
+                "call_number": 1,
+                "duration_ms": 20781,
+                "stop_reason": "end_turn"
+              }
+            ],
+            "answerer_wall_time_ms": 20781
+          }
+        },
+        "total": {
+          "request_wall_time_ms": 26407,
+          "total_llm_calls": 2,
+          "total_tracked_tokens": 20135
+        },
+        "phase_timings_ms": {
+          "selector_total": 5578,
+          "page_read": 13,
+          "graph_expansion": 11,
+          "answerer_total": 20781
+        }
+      },
+      "error": null,
+      "deterministic": {
+        "page_count": 13,
+        "prohibited_page_hits": [
+          "domoic-acid-scallops.md",
+          "index.md",
+          "pesticides-foodex2.md"
+        ],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "prohibited_page_pass": false,
+        "reference_page_precision": 0.6923076923076923,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-002",
+      "reviewed": true,
+      "question": "Anything I should think about when reporting Paranötter – nötter?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": null,
+      "request_payload": {
+        "question": "Anything I should think about when reporting Paranötter – nötter? Reporting domain: contaminants.",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "retrieval_mode": "wiki",
+        "retrieval_strategy": "diverse_pages",
+        "limit": 7
+      },
+      "status_code": 598,
+      "elapsed_ms": 240005,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "request timed out after 240.0s: timed out",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-003",
+      "reviewed": true,
+      "question": "Anything I should think about when reporting Får – urin?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": "claude-sonnet-5",
+      "request_payload": {
+        "question": "Anything I should think about when reporting Får – urin? Reporting domain: VMPR.",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "selector_model": "claude-sonnet-5",
+        "max_pages": 7,
+        "use_graph_expansion": true
+      },
+      "status_code": 500,
+      "elapsed_ms": 1673,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "Internal Server Error",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-003",
+      "reviewed": true,
+      "question": "Anything I should think about when reporting Får – urin?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": null,
+      "request_payload": {
+        "question": "Anything I should think about when reporting Får – urin? Reporting domain: VMPR.",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "retrieval_mode": "wiki",
+        "retrieval_strategy": "diverse_pages",
+        "limit": 7
+      },
+      "status_code": 503,
+      "elapsed_ms": 51,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "https://api.voyageai.com/v1/contextualizedembeddings could not be reached: [Errno 8] nodename nor servname provided, or not known",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-004",
+      "reviewed": true,
+      "question": "Anything I should think about when reporting Glass med färg/smak – sammansatt produkt?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": "claude-sonnet-5",
+      "request_payload": {
+        "question": "Anything I should think about when reporting Glass med färg/smak – sammansatt produkt? Reporting domain: additives.",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "selector_model": "claude-sonnet-5",
+        "max_pages": 7,
+        "use_graph_expansion": true
+      },
+      "status_code": 500,
+      "elapsed_ms": 1790,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "Internal Server Error",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-004",
+      "reviewed": true,
+      "question": "Anything I should think about when reporting Glass med färg/smak – sammansatt produkt?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": null,
+      "request_payload": {
+        "question": "Anything I should think about when reporting Glass med färg/smak – sammansatt produkt? Reporting domain: additives.",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "retrieval_mode": "wiki",
+        "retrieval_strategy": "diverse_pages",
+        "limit": 7
+      },
+      "status_code": 503,
+      "elapsed_ms": 55,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "https://api.voyageai.com/v1/contextualizedembeddings could not be reached: [Errno 8] nodename nor servname provided, or not known",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-005",
+      "reviewed": false,
+      "question": "Anything I should think about when reporting Jambon de porc fumé sans nitrites?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": "claude-sonnet-5",
+      "request_payload": {
+        "question": "Anything I should think about when reporting Jambon de porc fumé sans nitrites?",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "selector_model": "claude-sonnet-5",
+        "max_pages": 7,
+        "use_graph_expansion": true
+      },
+      "status_code": 500,
+      "elapsed_ms": 1744,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "Internal Server Error",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-005",
+      "reviewed": false,
+      "question": "Anything I should think about when reporting Jambon de porc fumé sans nitrites?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": null,
+      "request_payload": {
+        "question": "Anything I should think about when reporting Jambon de porc fumé sans nitrites?",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "retrieval_mode": "wiki",
+        "retrieval_strategy": "diverse_pages",
+        "limit": 7
+      },
+      "status_code": 503,
+      "elapsed_ms": 29,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "https://api.voyageai.com/v1/contextualizedembeddings could not be reached: [Errno 8] nodename nor servname provided, or not known",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-006",
+      "reviewed": false,
+      "question": "Anything I should think about when reporting Lait infantile 1er âge en poudre dans une boîte en métal conventionnel?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": "claude-sonnet-5",
+      "request_payload": {
+        "question": "Anything I should think about when reporting Lait infantile 1er âge en poudre dans une boîte en métal conventionnel?",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "selector_model": "claude-sonnet-5",
+        "max_pages": 7,
+        "use_graph_expansion": true
+      },
+      "status_code": 500,
+      "elapsed_ms": 1616,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "Internal Server Error",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-006",
+      "reviewed": false,
+      "question": "Anything I should think about when reporting Lait infantile 1er âge en poudre dans une boîte en métal conventionnel?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": null,
+      "request_payload": {
+        "question": "Anything I should think about when reporting Lait infantile 1er âge en poudre dans une boîte en métal conventionnel?",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "retrieval_mode": "wiki",
+        "retrieval_strategy": "diverse_pages",
+        "limit": 7
+      },
+      "status_code": 503,
+      "elapsed_ms": 44,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "https://api.voyageai.com/v1/contextualizedembeddings could not be reached: [Errno 8] nodename nor servname provided, or not known",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-007",
+      "reviewed": false,
+      "question": "Anything I should think about when reporting bicycle tyre?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": "claude-sonnet-5",
+      "request_payload": {
+        "question": "Anything I should think about when reporting bicycle tyre?",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "selector_model": "claude-sonnet-5",
+        "max_pages": 7,
+        "use_graph_expansion": true
+      },
+      "status_code": 500,
+      "elapsed_ms": 1686,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "Internal Server Error",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-007",
+      "reviewed": false,
+      "question": "Anything I should think about when reporting bicycle tyre?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": null,
+      "request_payload": {
+        "question": "Anything I should think about when reporting bicycle tyre?",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "retrieval_mode": "wiki",
+        "retrieval_strategy": "diverse_pages",
+        "limit": 7
+      },
+      "status_code": 503,
+      "elapsed_ms": 33,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "https://api.voyageai.com/v1/contextualizedembeddings could not be reached: [Errno 8] nodename nor servname provided, or not known",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-008",
+      "reviewed": false,
+      "question": "For organic skimmed cow milk, is base A02MA (Cow milk, skimmed) with explicit F21.A07SE (organic production) correct, given skimmed is already implicit?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": "claude-sonnet-5",
+      "request_payload": {
+        "question": "For organic skimmed cow milk, is base A02MA (Cow milk, skimmed) with explicit F21.A07SE (organic production) correct, given skimmed is already implicit?",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "selector_model": "claude-sonnet-5",
+        "max_pages": 7,
+        "use_graph_expansion": true
+      },
+      "status_code": 500,
+      "elapsed_ms": 1652,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "Internal Server Error",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-008",
+      "reviewed": false,
+      "question": "For organic skimmed cow milk, is base A02MA (Cow milk, skimmed) with explicit F21.A07SE (organic production) correct, given skimmed is already implicit?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": null,
+      "request_payload": {
+        "question": "For organic skimmed cow milk, is base A02MA (Cow milk, skimmed) with explicit F21.A07SE (organic production) correct, given skimmed is already implicit?",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "retrieval_mode": "wiki",
+        "retrieval_strategy": "diverse_pages",
+        "limit": 7
+      },
+      "status_code": 503,
+      "elapsed_ms": 92,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "https://api.voyageai.com/v1/contextualizedembeddings could not be reached: [Errno 8] nodename nor servname provided, or not known",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-009",
+      "reviewed": false,
+      "question": "For \"roasted nut covered in chickpea flour\" (a snack food, tree nuts coated with chickpea flour and roasted), should I use base term A014C (Tree nuts) with F28 roasted process and F04 chickpea flour ingredient facet? Is this the right approach for contaminants reporting?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": "claude-sonnet-5",
+      "request_payload": {
+        "question": "For \"roasted nut covered in chickpea flour\" (a snack food, tree nuts coated with chickpea flour and roasted), should I use base term A014C (Tree nuts) with F28 roasted process and F04 chickpea flour ingredient facet? Is this the right approach for contaminants reporting?",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "selector_model": "claude-sonnet-5",
+        "max_pages": 7,
+        "use_graph_expansion": true
+      },
+      "status_code": 500,
+      "elapsed_ms": 1452,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "Internal Server Error",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-009",
+      "reviewed": false,
+      "question": "For \"roasted nut covered in chickpea flour\" (a snack food, tree nuts coated with chickpea flour and roasted), should I use base term A014C (Tree nuts) with F28 roasted process and F04 chickpea flour ingredient facet? Is this the right approach for contaminants reporting?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": null,
+      "request_payload": {
+        "question": "For \"roasted nut covered in chickpea flour\" (a snack food, tree nuts coated with chickpea flour and roasted), should I use base term A014C (Tree nuts) with F28 roasted process and F04 chickpea flour ingredient facet? Is this the right approach for contaminants reporting?",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "retrieval_mode": "wiki",
+        "retrieval_strategy": "diverse_pages",
+        "limit": 7
+      },
+      "status_code": 503,
+      "elapsed_ms": 46,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "https://api.voyageai.com/v1/contextualizedembeddings could not be reached: [Errno 8] nodename nor servname provided, or not known",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-010",
+      "reviewed": false,
+      "question": "How should I code \"roasted nut covered in chickpea flour\" in FoodEx2 — which base term and facets?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": "claude-sonnet-5",
+      "request_payload": {
+        "question": "How should I code \"roasted nut covered in chickpea flour\" in FoodEx2 — which base term and facets?",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "selector_model": "claude-sonnet-5",
+        "max_pages": 7,
+        "use_graph_expansion": true
+      },
+      "status_code": 500,
+      "elapsed_ms": 1576,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "Internal Server Error",
+      "deterministic": {},
+      "ragas": {}
+    },
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-010",
+      "reviewed": false,
+      "question": "How should I code \"roasted nut covered in chickpea flour\" in FoodEx2 — which base term and facets?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": null,
+      "request_payload": {
+        "question": "How should I code \"roasted nut covered in chickpea flour\" in FoodEx2 — which base term and facets?",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "retrieval_mode": "wiki",
+        "retrieval_strategy": "diverse_pages",
+        "limit": 7
+      },
+      "status_code": 503,
+      "elapsed_ms": 34,
+      "answer": "",
+      "citations": [],
+      "pages_used": [],
+      "pages": [],
+      "trace": {},
+      "error": "https://api.voyageai.com/v1/contextualizedembeddings could not be reached: [Errno 8] nodename nor servname provided, or not known",
+      "deterministic": {},
+      "ragas": {}
+    }
+  ]
+}

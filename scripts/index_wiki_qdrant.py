@@ -254,6 +254,13 @@ def _create_collection(
         except RuntimeError as exc:
             if "404" not in str(exc):
                 raise
+    else:
+        try:
+            _http_json(method="GET", url=f"{qdrant_url}/collections/{collection}")
+            return
+        except RuntimeError as exc:
+            if "404" not in str(exc):
+                raise
     _http_json(
         method="PUT",
         url=f"{qdrant_url}/collections/{collection}",

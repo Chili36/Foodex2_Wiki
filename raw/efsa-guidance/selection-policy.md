@@ -1,6 +1,6 @@
 ---
 title: "Selection Skeleton Policy"
-last_updated: "2026-07-05"
+last_updated: "2026-07-29"
 source_tier: "local_policy"
 sources:
   - "docs/superpowers/specs/2026-07-05-selection-skeleton-design.md"
@@ -72,6 +72,7 @@ required_roles:
       - process-validation-rules.md
     default: term-type-facet-constraints.md
 drop_pages:
+  - "index.md"
   - "maintenance-*"
   - "README.md"
   - "PROJECT_CONTEXT.md"

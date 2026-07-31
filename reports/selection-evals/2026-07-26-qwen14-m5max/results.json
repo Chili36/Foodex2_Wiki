@@ -1,0 +1,2248 @@
+{
+  "endpoint": "context-pack",
+  "repeats": 1,
+  "estimated_llm_calls": 39,
+  "max_pages_override": null,
+  "effective_max_pages": {
+    "min": 7,
+    "max": 7
+  },
+  "passes": [
+    {
+      "summary": {
+        "mean_must_have_recall": 0.7311965811965812,
+        "mean_precision": 0.9192307692307693,
+        "leak_free_rate": 1.0,
+        "case_count": 39,
+        "mean_pack_chars": 15078.102564102564,
+        "backfill_case_rate": 0.6410256410256411,
+        "mean_backfills_per_case": 0.7948717948717948,
+        "mean_selector_tokens": 2756.897435897436
+      },
+      "cases": [
+        {
+          "id": "SEL-0001",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 17126,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2496,
+            "output_tokens": 51,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2547,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2496,
+                "output_tokens": 51,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2547
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "pesticides-foodex2.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0002",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "packaging-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 16092,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2500,
+            "output_tokens": 140,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2640,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2500,
+                "output_tokens": 140,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2640
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "trimmed": [
+            "index.md"
+          ],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.6666666666666666,
+          "missing": [
+            "pesticides-foodex2.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "packaging-facets.md",
+            "process-validation-rules.md"
+          ]
+        },
+        {
+          "id": "SEL-0003",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 14000,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2495,
+            "output_tokens": 91,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2586,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2495,
+                "output_tokens": 91,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2586
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "contaminants-foodex2.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0004",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "vmpr-foodex2.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 15824,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2490,
+            "output_tokens": 49,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2539,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2490,
+                "output_tokens": 49,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2539
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0005",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "packaging-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 18849,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2504,
+            "output_tokens": 543,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3047,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2504,
+                "output_tokens": 543,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3047
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [
+            "index.md",
+            "domain-specific-validation.md"
+          ],
+          "must_have_recall": 0.5,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "process-validation-rules.md",
+            "additives-flavourings-foodex2.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "packaging-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0006",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "process-validation-rules.md",
+            "domain-specific-validation.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 18746,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2506,
+            "output_tokens": 756,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3262,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2506,
+                "output_tokens": 756,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3262
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "trimmed": [
+            "index.md"
+          ],
+          "must_have_recall": 0.5,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "ingredient-facets.md",
+            "additives-flavourings-foodex2.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-validation-rules.md"
+          ]
+        },
+        {
+          "id": "SEL-0007",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 10348,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2497,
+            "output_tokens": 104,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2601,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2497,
+                "output_tokens": 104,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2601
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "additives-flavourings-foodex2.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "vmpr-foodex2.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 20898,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2509,
+            "output_tokens": 934,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3443,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2509,
+                "output_tokens": 934,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3443
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0009",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 22110,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2498,
+            "output_tokens": 405,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2903,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2498,
+                "output_tokens": 405,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2903
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0010",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 14000,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2497,
+            "output_tokens": 24,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2521,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2497,
+                "output_tokens": 24,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2521
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            },
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            },
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "vmpr-foodex2.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0011",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "process-validation-rules.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 16077,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2565,
+            "output_tokens": 47,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2612,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2565,
+                "output_tokens": 47,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2612
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 0.75,
+          "missing": [
+            "implicit-vs-explicit-facets.md",
+            "pesticides-foodex2.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-validation-rules.md"
+          ]
+        },
+        {
+          "id": "SEL-0012",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "vmpr-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 15824,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2561,
+            "output_tokens": 410,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2971,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2561,
+                "output_tokens": 410,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2971
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0013",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 14143,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2559,
+            "output_tokens": 50,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2609,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2559,
+                "output_tokens": 50,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2609
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0014",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "packaging-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 18387,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2593,
+            "output_tokens": 116,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2709,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2593,
+                "output_tokens": 116,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2709
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "contaminants-foodex2.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0015",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 10840,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2519,
+            "output_tokens": 41,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2560,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2519,
+                "output_tokens": 41,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2560
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0016",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 10631,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2492,
+            "output_tokens": 89,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2581,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2492,
+                "output_tokens": 89,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2581
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.3333333333333333,
+          "precision": 0.6666666666666666,
+          "missing": [
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-validation-rules.md"
+          ]
+        },
+        {
+          "id": "SEL-0017",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 17588,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2508,
+            "output_tokens": 56,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2564,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2508,
+                "output_tokens": 56,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2564
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 0.8,
+          "missing": [
+            "code-string-format.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0018",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 12917,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2496,
+            "output_tokens": 267,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2763,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2496,
+                "output_tokens": 267,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2763
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "process-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0019",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 11302,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2487,
+            "output_tokens": 51,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2538,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2487,
+                "output_tokens": 51,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2538
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "process-validation-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0020",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 17588,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2497,
+            "output_tokens": 275,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2772,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2497,
+                "output_tokens": 275,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2772
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0021",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "ingredient-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 13012,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2489,
+            "output_tokens": 82,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2571,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2489,
+                "output_tokens": 82,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2571
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0022",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 16172,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2499,
+            "output_tokens": 46,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2545,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2499,
+                "output_tokens": 46,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2545
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0023",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "facet-coding-rules.md",
+            "process-validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 16077,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2495,
+            "output_tokens": 363,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2858,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2495,
+                "output_tokens": 363,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2858
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 0.75,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "process-validation-rules.md"
+          ]
+        },
+        {
+          "id": "SEL-0024",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 13012,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2497,
+            "output_tokens": 330,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2827,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2497,
+                "output_tokens": 330,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2827
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "code-string-format.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0025",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "process-facets.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 13487,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2487,
+            "output_tokens": 182,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2669,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2487,
+                "output_tokens": 182,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2669
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.25,
+          "precision": 0.75,
+          "missing": [
+            "ingredient-facets.md",
+            "code-string-format.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0026",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 17126,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2494,
+            "output_tokens": 846,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3340,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2494,
+                "output_tokens": 846,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3340
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0027",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "packaging-facets.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "domain-specific-validation.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 14477,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2492,
+            "output_tokens": 1499,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3991,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2492,
+                "output_tokens": 1499,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3991
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [
+            "index.md"
+          ],
+          "must_have_recall": 0.75,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0028",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "packaging-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 18849,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2494,
+            "output_tokens": 129,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2623,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2494,
+                "output_tokens": 129,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2623
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [
+            "index.md"
+          ],
+          "must_have_recall": 1.0,
+          "precision": 0.8333333333333334,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "packaging-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0029",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "facet-coding-rules.md",
+            "process-validation-rules.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 13791,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2573,
+            "output_tokens": 44,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2617,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2573,
+                "output_tokens": 44,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2617
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.6666666666666666,
+          "missing": [
+            "structural-validation.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-validation-rules.md"
+          ]
+        },
+        {
+          "id": "SEL-0030",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 14000,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2573,
+            "output_tokens": 121,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2694,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2573,
+                "output_tokens": 121,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2694
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            },
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            },
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "structural-validation.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0031",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 12917,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2586,
+            "output_tokens": 57,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2643,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2586,
+                "output_tokens": 57,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2643
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "structural-validation.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0032",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "packaging-facets.md",
+            "contaminants-foodex2.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 18564,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2574,
+            "output_tokens": 65,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2639,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2574,
+                "output_tokens": 65,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2639
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0033",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "packaging-facets.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 8975,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2565,
+            "output_tokens": 35,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2600,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2565,
+                "output_tokens": 35,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2600
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            },
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0034",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 17588,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2582,
+            "output_tokens": 118,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2700,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2582,
+                "output_tokens": 118,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2700
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "business-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0035",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "validation-rules.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 18022,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2578,
+            "output_tokens": 46,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2624,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2578,
+                "output_tokens": 46,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2624
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "business-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0036",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "domain-specific-validation.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 13216,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2586,
+            "output_tokens": 299,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2885,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2586,
+                "output_tokens": 299,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2885
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 0.8,
+          "missing": [
+            "business-rules.md",
+            "pesticides-foodex2.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0037",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "term-type-facet-constraints.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 14000,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2596,
+            "output_tokens": 164,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2760,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2596,
+                "output_tokens": 164,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2760
+              }
+            ]
+          },
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            },
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "validation-rules.md",
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0038",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 10840,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2539,
+            "output_tokens": 50,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2589,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2539,
+                "output_tokens": 50,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2589
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.6,
+          "precision": 1.0,
+          "missing": [
+            "validation-rules.md",
+            "pesticides-foodex2.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0039",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "index.md",
+            "implicit-vs-explicit-facets.md",
+            "process-validation-rules.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "pack_chars": 10631,
+          "selector_tokens": {
+            "model": "foodex2-qwen3-14b-v2-mlx",
+            "calls": 1,
+            "input_tokens": 2528,
+            "output_tokens": 48,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 2576,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 2528,
+                "output_tokens": 48,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 2576
+              }
+            ]
+          },
+          "backfilled": [],
+          "dropped": [],
+          "trimmed": [],
+          "must_have_recall": 0.3333333333333333,
+          "precision": 0.6666666666666666,
+          "missing": [
+            "validation-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-validation-rules.md"
+          ]
+        }
+      ]
+    }
+  ],
+  "median_summary": {
+    "mean_must_have_recall": {
+      "median": 0.7311965811965812,
+      "min": 0.7311965811965812,
+      "max": 0.7311965811965812
+    },
+    "mean_precision": {
+      "median": 0.9192307692307693,
+      "min": 0.9192307692307693,
+      "max": 0.9192307692307693
+    },
+    "leak_free_rate": {
+      "median": 1.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "mean_selector_tokens": {
+      "median": 2756.897435897436,
+      "min": 2756.897435897436,
+      "max": 2756.897435897436
+    },
+    "mean_pack_chars": {
+      "median": 15078.102564102564,
+      "min": 15078.102564102564,
+      "max": 15078.102564102564
+    },
+    "backfill_case_rate": {
+      "median": 0.6410256410256411,
+      "min": 0.6410256410256411,
+      "max": 0.6410256410256411
+    },
+    "mean_backfills_per_case": {
+      "median": 0.7948717948717948,
+      "min": 0.7948717948717948,
+      "max": 0.7948717948717948
+    },
+    "passes": 1
+  },
+  "miss_frequency": {
+    "counts": {
+      "SEL-0001": {
+        "pesticides-foodex2.md": 1
+      },
+      "SEL-0002": {
+        "pesticides-foodex2.md": 1
+      },
+      "SEL-0003": {
+        "contaminants-foodex2.md": 1
+      },
+      "SEL-0005": {
+        "process-validation-rules.md": 1,
+        "additives-flavourings-foodex2.md": 1
+      },
+      "SEL-0006": {
+        "ingredient-facets.md": 1,
+        "additives-flavourings-foodex2.md": 1
+      },
+      "SEL-0007": {
+        "additives-flavourings-foodex2.md": 1
+      },
+      "SEL-0010": {
+        "vmpr-foodex2.md": 1
+      },
+      "SEL-0011": {
+        "implicit-vs-explicit-facets.md": 1,
+        "pesticides-foodex2.md": 1
+      },
+      "SEL-0012": {
+        "facet-coding-rules.md": 1
+      },
+      "SEL-0013": {
+        "ingredient-facets.md": 1
+      },
+      "SEL-0014": {
+        "contaminants-foodex2.md": 1
+      },
+      "SEL-0016": {
+        "facet-coding-rules.md": 1,
+        "term-type-facet-constraints.md": 1
+      },
+      "SEL-0017": {
+        "code-string-format.md": 1
+      },
+      "SEL-0018": {
+        "process-facets.md": 1
+      },
+      "SEL-0019": {
+        "process-validation-rules.md": 1
+      },
+      "SEL-0020": {
+        "ingredient-facets.md": 1
+      },
+      "SEL-0024": {
+        "code-string-format.md": 1
+      },
+      "SEL-0025": {
+        "ingredient-facets.md": 1,
+        "code-string-format.md": 1,
+        "term-type-facet-constraints.md": 1
+      },
+      "SEL-0027": {
+        "facet-coding-rules.md": 1
+      },
+      "SEL-0029": {
+        "structural-validation.md": 1
+      },
+      "SEL-0030": {
+        "structural-validation.md": 1
+      },
+      "SEL-0031": {
+        "structural-validation.md": 1
+      },
+      "SEL-0034": {
+        "business-rules.md": 1
+      },
+      "SEL-0035": {
+        "business-rules.md": 1
+      },
+      "SEL-0036": {
+        "business-rules.md": 1,
+        "pesticides-foodex2.md": 1
+      },
+      "SEL-0037": {
+        "validation-rules.md": 1,
+        "ingredient-facets.md": 1
+      },
+      "SEL-0038": {
+        "validation-rules.md": 1,
+        "pesticides-foodex2.md": 1
+      },
+      "SEL-0039": {
+        "validation-rules.md": 1,
+        "term-type-facet-constraints.md": 1
+      }
+    },
+    "systematic": [
+      {
+        "case_id": "SEL-0001",
+        "page": "pesticides-foodex2.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0002",
+        "page": "pesticides-foodex2.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0003",
+        "page": "contaminants-foodex2.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0005",
+        "page": "additives-flavourings-foodex2.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0005",
+        "page": "process-validation-rules.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0006",
+        "page": "additives-flavourings-foodex2.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0006",
+        "page": "ingredient-facets.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0007",
+        "page": "additives-flavourings-foodex2.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0010",
+        "page": "vmpr-foodex2.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0011",
+        "page": "implicit-vs-explicit-facets.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0011",
+        "page": "pesticides-foodex2.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0012",
+        "page": "facet-coding-rules.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0013",
+        "page": "ingredient-facets.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0014",
+        "page": "contaminants-foodex2.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0016",
+        "page": "facet-coding-rules.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0016",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0017",
+        "page": "code-string-format.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0018",
+        "page": "process-facets.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0019",
+        "page": "process-validation-rules.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0020",
+        "page": "ingredient-facets.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0024",
+        "page": "code-string-format.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0025",
+        "page": "code-string-format.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0025",
+        "page": "ingredient-facets.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0025",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0027",
+        "page": "facet-coding-rules.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0029",
+        "page": "structural-validation.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0030",
+        "page": "structural-validation.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0031",
+        "page": "structural-validation.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0034",
+        "page": "business-rules.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0035",
+        "page": "business-rules.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0036",
+        "page": "business-rules.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0036",
+        "page": "pesticides-foodex2.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0037",
+        "page": "ingredient-facets.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0037",
+        "page": "validation-rules.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0038",
+        "page": "pesticides-foodex2.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0038",
+        "page": "validation-rules.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0039",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 1
+      },
+      {
+        "case_id": "SEL-0039",
+        "page": "validation-rules.md",
+        "missed": 1,
+        "repeats": 1
+      }
+    ],
+    "stochastic": []
+  }
+}

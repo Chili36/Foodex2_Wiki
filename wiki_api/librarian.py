@@ -214,6 +214,19 @@ If you cannot answer from the provided pages, return:
 }
 """
 
+ANSWERER_OUTPUT_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "answer": {"type": "string"},
+        "citations": {
+            "type": "array",
+            "items": {"type": "string"},
+        },
+    },
+    "required": ["answer", "citations"],
+    "additionalProperties": False,
+}
+
 
 class AnthropicMessagesClient(Protocol):
     def create(self, **kwargs: Any) -> Any: ...
@@ -387,11 +400,12 @@ def _read_pages_payload(
     max_pages: int,
     pages_read: list[str],
     tool_trace: list[dict[str, Any]],
+    include_index: bool = True,
 ) -> dict[str, Any]:
     pages: list[dict[str, Any]] = []
     skipped: list[dict[str, Any]] = []
     errors: list[dict[str, Any]] = []
-    max_followup_pages = max(max_pages - 1, 0)
+    max_followup_pages = max(max_pages - (1 if include_index else 0), 0)
     seen_in_request: set[str] = set()
 
     for raw_name in requested_page_names:
@@ -887,6 +901,14 @@ def _resolve_model(*env_keys: str, default: str) -> str:
     return default
 
 
+def resolve_answerer_model(model: str | None = None) -> str:
+    return model or _resolve_model(
+        "WIKI_ANSWERER_MODEL",
+        "WIKI_LIBRARIAN_MODEL",
+        default="gpt-5.6-terra",
+    )
+
+
 def _env_bool(name: str, default: bool = False) -> bool:
     value = os.getenv(name)
     if value is None:
@@ -1051,7 +1073,7 @@ class AnthropicWikiPageSelector:
         self.model = model or _resolve_model(
             "WIKI_CONTEXT_MODEL",
             "WIKI_LIBRARIAN_MODEL",
-            default="claude-sonnet-4-6",
+            default="claude-sonnet-5",
         )
         self.client = client or build_messages_client(self.model)
         self.max_pages = max_pages
@@ -1061,9 +1083,13 @@ class AnthropicWikiPageSelector:
 
     def run(self, payload: dict[str, Any]) -> PageSelectionResult:
         selector_started = time.perf_counter()
+        include_index = self.catalog_scope != "ask"
         selection_system_prompt = build_selection_system_prompt_for_store(
             store=self.store,
-            additional_page_limit=max(self.max_pages - 1, 0),
+            additional_page_limit=max(
+                self.max_pages - (1 if include_index else 0),
+                0,
+            ),
         )
         messages = [
             {
@@ -1115,9 +1141,12 @@ class AnthropicWikiPageSelector:
             max_pages=self.max_pages,
             pages_read=pages_read,
             tool_trace=tool_trace,
+            include_index=include_index,
         )
         return PageSelectionResult(
-            pages_used=list(dict.fromkeys(["index.md", *pages_read])),
+            pages_used=list(
+                dict.fromkeys(["index.md", *pages_read] if include_index else pages_read)
+            ),
             tool_trace=tool_trace,
             token_summary=_aggregate_usage(usage_trace, self.model),
             timing_summary={
@@ -1147,9 +1176,13 @@ class JsonWikiPageSelector:
 
     def run(self, payload: dict[str, Any]) -> PageSelectionResult:
         selector_started = time.perf_counter()
+        include_index = self.catalog_scope != "ask"
         selection_system_prompt = build_selection_system_prompt_for_store(
             store=self.store,
-            additional_page_limit=max(self.max_pages - 1, 0),
+            additional_page_limit=max(
+                self.max_pages - (1 if include_index else 0),
+                0,
+            ),
         )
         user_content = build_selection_user_content(
             store=self.store, payload=payload, scope=self.catalog_scope
@@ -1182,9 +1215,12 @@ class JsonWikiPageSelector:
             max_pages=self.max_pages,
             pages_read=pages_read,
             tool_trace=tool_trace,
+            include_index=include_index,
         )
         return PageSelectionResult(
-            pages_used=list(dict.fromkeys(["index.md", *pages_read])),
+            pages_used=list(
+                dict.fromkeys(["index.md", *pages_read] if include_index else pages_read)
+            ),
             tool_trace=tool_trace,
             token_summary=_aggregate_usage([usage], self.model),
             timing_summary={
@@ -1275,11 +1311,7 @@ class AnthropicFoodEx2Answerer:
         max_tokens: int = 2500,
         reasoning_effort: str | None = None,
     ):
-        self.model = model or _resolve_model(
-            "WIKI_ANSWERER_MODEL",
-            "WIKI_LIBRARIAN_MODEL",
-            default="claude-sonnet-4-6",
-        )
+        self.model = resolve_answerer_model(model)
         self.client = client or build_messages_client(self.model)
         self.max_tokens = max_tokens
         self.reasoning_effort = reasoning_effort
@@ -1312,6 +1344,13 @@ class AnthropicFoodEx2Answerer:
             "system": ANSWERER_SYSTEM_PROMPT,
             "messages": messages,
         }
+        if infer_model_provider(self.model) == "anthropic":
+            create_kwargs["output_config"] = {
+                "format": {
+                    "type": "json_schema",
+                    "schema": ANSWERER_OUTPUT_SCHEMA,
+                }
+            }
         if self.reasoning_effort and infer_model_provider(self.model) == "lmstudio":
             create_kwargs["reasoning_effort"] = self.reasoning_effort
         response = self.client.messages.create(**create_kwargs)

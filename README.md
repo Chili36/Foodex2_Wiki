@@ -276,13 +276,14 @@ Set at least:
 
 ```bash
 ANTHROPIC_API_KEY=...
+OPENAI_API_KEY=...
 WIKI_LIBRARIAN_MODEL=claude-sonnet-4-6
+WIKI_ANSWERER_MODEL=gpt-5.6-terra
 ```
 
-Add these only when testing `/wiki/ask` with hosted non-Anthropic per-request model overrides:
+Add a Gemini key only when testing Gemini per-request model overrides:
 
 ```bash
-OPENAI_API_KEY=...
 GEMINI_API_KEY=...
 ```
 
@@ -307,9 +308,9 @@ calling for those endpoints. For per-request tests, `/wiki/ask` also accepts
 Optional overrides:
 
 ```bash
-WIKI_CONTEXT_MODEL=claude-sonnet-4-6
+WIKI_CONTEXT_MODEL=claude-sonnet-5
 WIKI_POLICY_MODEL=claude-sonnet-4-6
-WIKI_ANSWERER_MODEL=claude-sonnet-4-6
+WIKI_ANSWERER_MODEL=gpt-5.6-terra
 WIKI_SOLVER_MODEL=claude-sonnet-4-6
 WIKI_LINT_MODEL=claude-sonnet-4-6
 WIKI_INTAKE_MODEL=claude-sonnet-4-6
@@ -317,7 +318,9 @@ WIKI_INTAKE_MODEL=claude-sonnet-4-6
 # WIKI_INTAKE_THINKING=1
 ```
 
-If the endpoint-specific variables are unset, the service falls back to `WIKI_LIBRARIAN_MODEL`.
+Terra is the default answerer for both `/wiki/ask` and `/wiki/ask-rag`.
+Per-request `answerer_model` values still override it. Other unset
+endpoint-specific model variables fall back to `WIKI_LIBRARIAN_MODEL`.
 Adaptive thinking is off by default for lint and source intake because thinking tokens are
 billed output. Set `WIKI_LINT_THINKING=1`, `WIKI_INTAKE_THINKING=1`, or pass
 `--thinking` only for a review that needs deeper reasoning. These settings affect only
@@ -355,8 +358,9 @@ tail -f /tmp/foodex2_wiki_8010.out.log
 tail -f /tmp/foodex2_wiki_8010.err.log
 ```
 
-`context-pack`, `policy-pack`, and `solve` use the messages-client path. By default that path is Anthropic; setting `WIKI_LLM_PROVIDER=lmstudio` routes it through the OpenAI-compatible LM Studio adapter instead. `ask` uses the lighter page-selector path plus a compact answerer and can route per-request model overrides to Anthropic, LM Studio, OpenAI, or Gemini. The wiki API loads `ANTHROPIC_API_KEY`, `WIKI_LIBRARIAN_MODEL`, LM Studio settings, and the optional endpoint-specific overrides from `.env`. `POST /wiki/ask` accepts per-request `selector_model` and `answerer_model` overrides when a caller wants to trade cost, latency, and answer quality for a specific question without changing service defaults.
-For the LLM-driven paths, the service injects `index.md` into the first prompt so the model can choose and batch follow-up wiki page reads without spending a separate LLM turn just to fetch the catalog.
+`context-pack`, `policy-pack`, and `solve` use the messages-client path. By default that path is Anthropic; setting `WIKI_LLM_PROVIDER=lmstudio` routes it through the OpenAI-compatible LM Studio adapter instead. `ask` uses the lighter page-selector path plus a compact answerer, with GPT-5.6 Terra as the default answerer for both `ask` endpoints. The wiki API loads its provider keys, model settings, and optional endpoint-specific overrides from `.env`. `POST /wiki/ask` and `/wiki/ask-rag` accept per-request `answerer_model` overrides when a caller wants a different cost, latency, or answer-quality point without changing service defaults.
+The page selector receives the page catalog directly. `index.md` is not included
+in `/wiki/ask` answer context.
 
 For alpha usage:
 
@@ -401,6 +405,16 @@ facet, and validation coverage takes priority over optional selector picks when 
 service must trim to the cap. The default is 7; callers may opt into a larger pack
 for difficult cases.
 
+For `/wiki/ask`, `max_pages` is also a strict cap on the complete answer context.
+Related-page graph expansion is disabled by default. When explicitly enabled, it
+ranks curated runtime, guidance, and validation neighbours against the question
+and may fill only slots left unused by the selector; it never introduces a domain
+overlay or increases the response beyond `max_pages`.
+
+Use the default for the smallest selector-authored brief. Enable
+`use_graph_expansion` when broader supporting-rule recall matters more than
+minimal context; the final page budget remains unchanged in either mode.
+
 Example `POST /wiki/ask` body:
 
 ```json
@@ -408,13 +422,18 @@ Example `POST /wiki/ask` body:
   "question": "If I want to code fresh cheese made from milk with rennet and a minimum of 20% fat, what should I think about?",
   "max_pages": 5,
   "include_page_content": false,
-  "use_graph_expansion": true,
-  "selector_model": "claude-sonnet-4-6",
-  "answerer_model": "claude-sonnet-4-6"
+  "use_graph_expansion": false,
+  "selector_model": "claude-sonnet-5"
 }
 ```
 
-`selector_model` and `answerer_model` are optional per-request overrides. Omit them to use the configured defaults from `WIKI_CONTEXT_MODEL`, `WIKI_ANSWERER_MODEL`, or `WIKI_LIBRARIAN_MODEL` unless `WIKI_LLM_PROVIDER=lmstudio` is active, in which case `WIKI_LMSTUDIO_MODEL` is used. Use `selector_model` for the page-selection step and `answerer_model` for the synthesized guidance answer. Model names beginning with `claude` use Anthropic, names beginning with `lmstudio:` or `lm-studio:` use LM Studio, names beginning with `gpt` use OpenAI, and names beginning with `gemini` use the Gemini API.
+`selector_model` and `answerer_model` are optional per-request overrides. The
+configured selector default is used when `selector_model` is omitted; the
+answerer defaults to `gpt-5.6-terra`. Use `selector_model` for page selection
+and `answerer_model` for synthesized guidance. Model names beginning with
+`claude` use Anthropic, names beginning with `lmstudio:` or `lm-studio:` use LM
+Studio, names beginning with `gpt` use OpenAI, and names beginning with `gemini`
+use the Gemini API.
 
 `selector_reasoning_effort` and `answerer_reasoning_effort` are optional per-request tuning fields with values `low`, `medium`, or `high`. They are mainly for LM Studio / OpenAI-compatible model experiments where reasoning-heavy local models need explicit effort control. Providers that do not support the setting ignore it; the response trace echoes the requested value so evaluation runs can compare cost, latency, and answer quality.
 
@@ -422,7 +441,8 @@ Example `POST /wiki/ask` body:
 
 - `answer`: a concise wiki-grounded guidance answer
 - `citations`: wiki pages cited by the answer
-- `pages_used`: selected pages plus graph-expanded neighbor pages when enabled
+- `pages_used`: selected pages plus any explicitly enabled, question-ranked
+  non-overlay neighbours, always capped by `max_pages`
 - `pages`: selected page metadata and optional page content
 - `trace`: selector, graph-expansion, answerer, token, and timing metadata
 
@@ -435,12 +455,20 @@ Example `POST /wiki/ask-rag` body:
   "question": "What should I think about when reporting sheep urine?",
   "retrieval_mode": "wiki",
   "limit": 7,
-  "include_page_content": false,
-  "answerer_model": "claude-sonnet-4-6"
+  "include_page_content": false
 }
 ```
 
 Set `retrieval_mode` to `wiki` for `foodex2_wiki_markdown_v1` or `source` for `foodex2_source_docs_v1`. Optional overrides include `collection`, `qdrant_url`, `embedding_model`, and `embedding_dimension`. The response reuses the `/wiki/ask` shape and adds `trace.embedding` plus Qdrant retrieval metadata so callers can compare cost, latency, and retrieved evidence.
+
+For `retrieval_mode: "wiki"`, set `retrieval_strategy` to `diverse_pages` to
+treat `limit` as the final unique-page limit. That strategy retrieves a larger
+candidate pool, keeps the highest-ranked chunk from each distinct page, and
+reports candidate duplication plus final assembly in
+`trace.retrieval.assembly`. The default remains `legacy_topk` until
+policy-filtering work is complete. It can also be selected with
+`WIKI_RAG_RETRIEVAL_STRATEGY`. For `retrieval_mode: "source"`, `limit` retains
+its original meaning as the number of source chunks returned.
 
 DMT can now model the four ask-condition tests with a small orchestration switch around the advisory-brief call; the downstream classifier prompt can stay the same:
 
@@ -459,6 +487,14 @@ To compare `/wiki/ask` model choices against the same question, run:
   --models claude-sonnet-4-6,claude-haiku-4-5,gpt-5.4-mini,gemini-3.1-flash-lite,gemini-3.5-flash \
   --max-pages 7
 ```
+
+To compare `/wiki/ask` and wiki-mode `/wiki/ask-rag` across a reviewed DMT
+question set, use `scripts/wiki_ragas_eval.py`. It records full answers,
+citations, pages, timings, deterministic assertions, and optional Ragas scores.
+The dataset schema and methodology are documented in
+[`evals/wiki-rag/README.md`](evals/wiki-rag/README.md). Always run `--dry-run`
+first: ten questions across two endpoints and two answer models means 40 answer
+calls before any judge-model work.
 
 The sweep script reports status, selected/answerer models, token totals, elapsed time, pages, citations, and the returned answers. Use `--selector-model ... --answerer-models ...` when you want to hold page selection fixed and compare only answer synthesis.
 

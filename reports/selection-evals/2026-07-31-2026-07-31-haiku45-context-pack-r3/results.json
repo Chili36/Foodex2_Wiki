@@ -1,0 +1,6127 @@
+{
+  "endpoint": "context-pack",
+  "repeats": 3,
+  "estimated_llm_calls": 117,
+  "max_pages_override": null,
+  "selector_model_override": null,
+  "effective_max_pages": {
+    "min": 7,
+    "max": 7
+  },
+  "passes": [
+    {
+      "summary": {
+        "mean_must_have_recall": 0.7995726495726496,
+        "mean_precision": 0.9658119658119657,
+        "leak_free_rate": 1.0,
+        "case_count": 39,
+        "mean_pack_chars": 22084.97435897436,
+        "backfill_case_rate": 0.1794871794871795,
+        "mean_backfills_per_case": 0.1794871794871795,
+        "mean_selector_tokens": 3716.641025641026,
+        "mean_selector_wall_time_ms": 6184.538461538462
+      },
+      "cases": [
+        {
+          "id": "SEL-0001",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 24281,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3186,
+            "output_tokens": 528,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3714,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3186,
+                "output_tokens": 528,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3714
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7455,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0002",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "domain-specific-validation.md",
+            "structural-validation.md",
+            "business-rules.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 26485,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3188,
+            "output_tokens": 533,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3721,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3188,
+                "output_tokens": 533,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3721
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6718,
+          "backfilled": [
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0003",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 13168,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3183,
+            "output_tokens": 96,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3279,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3183,
+                "output_tokens": 96,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3279
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1270,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0004",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "vmpr-legislative-mapping.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 22877,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3181,
+            "output_tokens": 620,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3801,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3181,
+                "output_tokens": 620,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3801
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7231,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0005",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "additives-flavourings-foodex2.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20593,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3194,
+            "output_tokens": 605,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3799,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3194,
+                "output_tokens": 605,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3799
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7456,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "process-validation-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0006",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 22303,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3197,
+            "output_tokens": 460,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3657,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3197,
+                "output_tokens": 460,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3657
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5367,
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [
+            "code-string-format.md"
+          ],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0007",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "additives-flavourings-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20744,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3192,
+            "output_tokens": 117,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3309,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3192,
+                "output_tokens": 117,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3309
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1682,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "vmpr-legislative-mapping.md",
+            "implicit-vs-explicit-facets.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21566,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3195,
+            "output_tokens": 559,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3754,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3195,
+                "output_tokens": 559,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3754
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6384,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0009",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "business-rules.md",
+            "vmpr-legislative-mapping.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 33511,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3185,
+            "output_tokens": 514,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3699,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3185,
+                "output_tokens": 514,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3699
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5273,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0010",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20430,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3185,
+            "output_tokens": 107,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3292,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3185,
+                "output_tokens": 107,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3292
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1613,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0011",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "pesticides-foodex2.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 18925,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3258,
+            "output_tokens": 502,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3760,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3258,
+                "output_tokens": 502,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3760
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5929,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0012",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "domain-specific-validation.md",
+            "implicit-vs-explicit-facets.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 18322,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3257,
+            "output_tokens": 554,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3811,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3257,
+                "output_tokens": 554,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3811
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7242,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0013",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "contaminants-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21626,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3255,
+            "output_tokens": 114,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3369,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3255,
+                "output_tokens": 114,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3369
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1408,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0014",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "contaminants-foodex2.md",
+            "packaging-facets.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "implicit-vs-explicit-facets.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17299,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3290,
+            "output_tokens": 586,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3876,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3290,
+                "output_tokens": 586,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3876
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6823,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0015",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 12735,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3209,
+            "output_tokens": 399,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3608,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3209,
+                "output_tokens": 399,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3608
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5289,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0016",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 27550,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3177,
+            "output_tokens": 590,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3767,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3177,
+                "output_tokens": 590,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3767
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6699,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0017",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19776,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3202,
+            "output_tokens": 429,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3631,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3202,
+                "output_tokens": 429,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3631
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4997,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0018",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md",
+            "facet-coding-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19483,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3190,
+            "output_tokens": 691,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3881,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3190,
+                "output_tokens": 691,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3881
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7861,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "process-validation-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0019",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "process-validation-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 18690,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3181,
+            "output_tokens": 635,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3816,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3181,
+                "output_tokens": 635,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3816
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6944,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0020",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 26611,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3188,
+            "output_tokens": 406,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3594,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3188,
+                "output_tokens": 406,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3594
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4617,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.3333333333333333,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0021",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "structural-validation.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21193,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3177,
+            "output_tokens": 478,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3655,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3177,
+                "output_tokens": 478,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3655
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5486,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0022",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "code-string-format.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20637,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3186,
+            "output_tokens": 629,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3815,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3186,
+                "output_tokens": 629,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3815
+              }
+            ]
+          },
+          "selector_wall_time_ms": 13584,
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [
+            "foodex2-overview.md"
+          ],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0023",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 22019,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3185,
+            "output_tokens": 589,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3774,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3185,
+                "output_tokens": 589,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3774
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6659,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0024",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21813,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3187,
+            "output_tokens": 543,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3730,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3187,
+                "output_tokens": 543,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3730
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6436,
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [
+            "anses-codification-guidance.md"
+          ],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "code-string-format.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0025",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "code-string-format.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 26055,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3184,
+            "output_tokens": 480,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3664,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3184,
+                "output_tokens": 480,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3664
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5875,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0026",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 27472,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3184,
+            "output_tokens": 479,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3663,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3184,
+                "output_tokens": 479,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3663
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6267,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "ingredient-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0027",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "packaging-facets.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14458,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3187,
+            "output_tokens": 686,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3873,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3187,
+                "output_tokens": 686,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3873
+              }
+            ]
+          },
+          "selector_wall_time_ms": 8343,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0028",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "packaging-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19433,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3187,
+            "output_tokens": 451,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3638,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3187,
+                "output_tokens": 451,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3638
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5709,
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 0.8333333333333334,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "packaging-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0029",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "structural-validation.md",
+            "implicit-vs-explicit-facets.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "business-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21726,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3267,
+            "output_tokens": 641,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3908,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3267,
+                "output_tokens": 641,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3908
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7447,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0030",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "business-rules.md",
+            "facet-coding-rules.md",
+            "structural-validation.md",
+            "term-type-facet-constraints.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 27550,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3262,
+            "output_tokens": 594,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3856,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3262,
+                "output_tokens": 594,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3856
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7232,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0031",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "base-term-selection.md",
+            "business-rules.md",
+            "process-validation-rules.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 25908,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3281,
+            "output_tokens": 538,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3819,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3281,
+                "output_tokens": 538,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3819
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5824,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "structural-validation.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0032",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "packaging-facets.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15988,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3269,
+            "output_tokens": 608,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3877,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3269,
+                "output_tokens": 608,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3877
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6674,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0033",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "packaging-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19655,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3259,
+            "output_tokens": 415,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3674,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3259,
+                "output_tokens": 415,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3674
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6383,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0034",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "business-rules.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20377,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3275,
+            "output_tokens": 617,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3892,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3275,
+                "output_tokens": 617,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3892
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7665,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0035",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "business-rules.md",
+            "anses-codification-guidance.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 28252,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3270,
+            "output_tokens": 447,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3717,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3270,
+                "output_tokens": 447,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3717
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6621,
+          "backfilled": [
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0036",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "business-rules.md",
+            "process-facets.md",
+            "pesticides-foodex2.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 23432,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3281,
+            "output_tokens": 551,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3832,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3281,
+                "output_tokens": 551,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3832
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6128,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 0.8333333333333334,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0037",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "term-type-facet-constraints.md",
+            "business-rules.md",
+            "structural-validation.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 27550,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3290,
+            "output_tokens": 466,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3756,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3290,
+                "output_tokens": 466,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3756
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5862,
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "validation-rules.md",
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0038",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "pesticides-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "business-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 27697,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3226,
+            "output_tokens": 575,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3801,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3226,
+                "output_tokens": 575,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3801
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7493,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6,
+          "precision": 1.0,
+          "missing": [
+            "validation-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0039",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "validation-rules.md",
+            "anses-codification-guidance.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 23124,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3222,
+            "output_tokens": 645,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3867,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3222,
+                "output_tokens": 645,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3867
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7251,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.6666666666666666,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md",
+            "process-validation-rules.md"
+          ]
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 0.8418803418803419,
+        "mean_precision": 0.9606837606837607,
+        "leak_free_rate": 1.0,
+        "case_count": 39,
+        "mean_pack_chars": 19738.846153846152,
+        "backfill_case_rate": 0.1794871794871795,
+        "mean_backfills_per_case": 0.1794871794871795,
+        "mean_selector_tokens": 3709.7179487179487,
+        "mean_selector_wall_time_ms": 6153.333333333333
+      },
+      "cases": [
+        {
+          "id": "SEL-0001",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 27697,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3186,
+            "output_tokens": 514,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3700,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3186,
+                "output_tokens": 514,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3700
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5967,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0002",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15752,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3188,
+            "output_tokens": 563,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3751,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3188,
+                "output_tokens": 563,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3751
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6937,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0003",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "structural-validation.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20060,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3183,
+            "output_tokens": 443,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3626,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3183,
+                "output_tokens": 443,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3626
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5557,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0004",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "foodex2-overview.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 18339,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3181,
+            "output_tokens": 594,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3775,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3181,
+                "output_tokens": 594,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3775
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7236,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0005",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "additives-flavourings-foodex2.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15618,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3194,
+            "output_tokens": 508,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3702,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3194,
+                "output_tokens": 508,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3702
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5976,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "process-validation-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0006",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 22303,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3197,
+            "output_tokens": 144,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3341,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3197,
+                "output_tokens": 144,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3341
+              }
+            ]
+          },
+          "selector_wall_time_ms": 2540,
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [
+            "code-string-format.md"
+          ],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0007",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15156,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3192,
+            "output_tokens": 400,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3592,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3192,
+                "output_tokens": 400,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3592
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5468,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 22810,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3195,
+            "output_tokens": 475,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3670,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3195,
+                "output_tokens": 475,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3670
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5045,
+          "backfilled": [
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [
+            "domain-specific-validation.md"
+          ],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0009",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "facet-coding-rules.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 29408,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3185,
+            "output_tokens": 112,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3297,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3185,
+                "output_tokens": 112,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3297
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1437,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0010",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "foodex2-overview.md",
+            "domain-specific-validation.md",
+            "implicit-vs-explicit-facets.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20253,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3185,
+            "output_tokens": 665,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3850,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3185,
+                "output_tokens": 665,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3850
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7068,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0011",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 16214,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3258,
+            "output_tokens": 652,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3910,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3258,
+                "output_tokens": 652,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3910
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7803,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0012",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "domain-specific-validation.md",
+            "implicit-vs-explicit-facets.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19633,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3257,
+            "output_tokens": 701,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3958,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3257,
+                "output_tokens": 701,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3958
+              }
+            ]
+          },
+          "selector_wall_time_ms": 10186,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0013",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "ingredient-facets.md",
+            "contaminants-foodex2.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 16899,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3255,
+            "output_tokens": 417,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3672,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3255,
+                "output_tokens": 417,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3672
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6103,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0014",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "contaminants-foodex2.md",
+            "packaging-facets.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "code-string-format.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 16743,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3290,
+            "output_tokens": 707,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3997,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3290,
+                "output_tokens": 707,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3997
+              }
+            ]
+          },
+          "selector_wall_time_ms": 8123,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0015",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "implicit-vs-explicit-facets.md",
+            "base-term-selection.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 9865,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3209,
+            "output_tokens": 489,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3698,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3209,
+                "output_tokens": 489,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3698
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6344,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0016",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17710,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3177,
+            "output_tokens": 470,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3647,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3177,
+                "output_tokens": 470,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3647
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5806,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0017",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "process-facets.md",
+            "code-string-format.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 24586,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3202,
+            "output_tokens": 432,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3634,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3202,
+                "output_tokens": 432,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3634
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5365,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0018",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 18927,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3190,
+            "output_tokens": 525,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3715,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3190,
+                "output_tokens": 525,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3715
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5766,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "process-validation-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0019",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14718,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3181,
+            "output_tokens": 590,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3771,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3181,
+                "output_tokens": 590,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3771
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6690,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0020",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "ingredient-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20344,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3188,
+            "output_tokens": 480,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3668,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3188,
+                "output_tokens": 480,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3668
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7796,
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [
+            "code-string-format.md"
+          ],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0021",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 16838,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3177,
+            "output_tokens": 558,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3735,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3177,
+                "output_tokens": 558,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3735
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6618,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0022",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "foodex2-overview.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 16838,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3186,
+            "output_tokens": 537,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3723,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3186,
+                "output_tokens": 537,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3723
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6467,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0023",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "foodex2-overview.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14666,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3185,
+            "output_tokens": 541,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3726,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3185,
+                "output_tokens": 541,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3726
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6657,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0024",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "facet-coding-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21193,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3187,
+            "output_tokens": 535,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3722,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3187,
+                "output_tokens": 535,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3722
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6348,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "code-string-format.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0025",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 23195,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3184,
+            "output_tokens": 515,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3699,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3184,
+                "output_tokens": 515,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3699
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5946,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md",
+            "code-string-format.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0026",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20254,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3184,
+            "output_tokens": 506,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3690,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3184,
+                "output_tokens": 506,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3690
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7084,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "ingredient-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0027",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "packaging-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "process-facets.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14458,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3187,
+            "output_tokens": 534,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3721,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3187,
+                "output_tokens": 534,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3721
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6642,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0028",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "packaging-facets.md",
+            "facet-coding-rules.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20585,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3187,
+            "output_tokens": 332,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3519,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3187,
+                "output_tokens": 332,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3519
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5818,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "packaging-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0029",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "structural-validation.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 15274,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3267,
+            "output_tokens": 430,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3697,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3267,
+                "output_tokens": 430,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3697
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6447,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.6666666666666666,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md",
+            "process-validation-rules.md"
+          ]
+        },
+        {
+          "id": "SEL-0030",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "structural-validation.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "business-rules.md",
+            "anses-codification-guidance.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 32689,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3262,
+            "output_tokens": 539,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3801,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3262,
+                "output_tokens": 539,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3801
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6493,
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0031",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "business-rules.md",
+            "base-term-selection.md",
+            "process-validation-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20933,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3281,
+            "output_tokens": 509,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3790,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3281,
+                "output_tokens": 509,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3790
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6746,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 0.8333333333333334,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0032",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "packaging-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 22702,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3269,
+            "output_tokens": 499,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3768,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3269,
+                "output_tokens": 499,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3768
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6403,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0033",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "packaging-facets.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20154,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3259,
+            "output_tokens": 490,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3749,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3259,
+                "output_tokens": 490,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3749
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5427,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0034",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "process-validation-rules.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19622,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3275,
+            "output_tokens": 551,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3826,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3275,
+                "output_tokens": 551,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3826
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6468,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0035",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "anses-codification-guidance.md",
+            "structural-validation.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21034,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3270,
+            "output_tokens": 377,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3647,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3270,
+                "output_tokens": 377,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3647
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5242,
+          "backfilled": [
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.3333333333333333,
+          "precision": 1.0,
+          "missing": [
+            "business-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0036",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "business-rules.md",
+            "pesticides-foodex2.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 23432,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3281,
+            "output_tokens": 296,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3577,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3281,
+                "output_tokens": 296,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3577
+              }
+            ]
+          },
+          "selector_wall_time_ms": 3737,
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 0.8333333333333334,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0037",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "term-type-facet-constraints.md",
+            "business-rules.md",
+            "structural-validation.md",
+            "implicit-vs-explicit-facets.md",
+            "foodex2-overview.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 23195,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3290,
+            "output_tokens": 551,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3841,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3290,
+                "output_tokens": 551,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3841
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6178,
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "validation-rules.md",
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0038",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "pesticides-foodex2.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 24749,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3226,
+            "output_tokens": 560,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3786,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3226,
+                "output_tokens": 560,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3786
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6752,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0039",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "validation-rules.md",
+            "foodex2-overview.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 14969,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3222,
+            "output_tokens": 466,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3688,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3222,
+                "output_tokens": 466,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3688
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5294,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.8,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        }
+      ]
+    },
+    {
+      "summary": {
+        "mean_must_have_recall": 0.7897435897435897,
+        "mean_precision": 0.9700854700854702,
+        "leak_free_rate": 1.0,
+        "case_count": 39,
+        "mean_pack_chars": 21126.05128205128,
+        "backfill_case_rate": 0.15384615384615385,
+        "mean_backfills_per_case": 0.15384615384615385,
+        "mean_selector_tokens": 3744.3333333333335,
+        "mean_selector_wall_time_ms": 7009.025641025641
+      },
+      "cases": [
+        {
+          "id": "SEL-0001",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "pesticides-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21411,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3186,
+            "output_tokens": 438,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3624,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3186,
+                "output_tokens": 438,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3624
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6092,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0002",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "pesticides-foodex2.md",
+            "base-term-selection.md",
+            "validation-rules.md",
+            "domain-specific-validation.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20667,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3188,
+            "output_tokens": 436,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3624,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3188,
+                "output_tokens": 436,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3624
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6114,
+          "backfilled": [
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0003",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "term-type-facet-constraints.md",
+            "domain-specific-validation.md",
+            "implicit-vs-explicit-facets.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 16641,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3183,
+            "output_tokens": 454,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3637,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3183,
+                "output_tokens": 454,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3637
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5293,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0004",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "vmpr-legislative-mapping.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21566,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3181,
+            "output_tokens": 621,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3802,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3181,
+                "output_tokens": 621,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3802
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6799,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0005",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20593,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3194,
+            "output_tokens": 514,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3708,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3194,
+                "output_tokens": 514,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3708
+              }
+            ]
+          },
+          "selector_wall_time_ms": 12427,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "process-validation-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0006",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "code-string-format.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 16531,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3197,
+            "output_tokens": 586,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3783,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3197,
+                "output_tokens": 586,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3783
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7721,
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [
+            "domain-specific-validation.md"
+          ],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0007",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "additives-flavourings-foodex2.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "ingredient-facets.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19639,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3192,
+            "output_tokens": 628,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3820,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3192,
+                "output_tokens": 628,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3820
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6749,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0008",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "domain-specific-validation.md",
+            "vmpr-legislative-mapping.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 23480,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3195,
+            "output_tokens": 407,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3602,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3195,
+                "output_tokens": 407,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3602
+              }
+            ]
+          },
+          "selector_wall_time_ms": 4819,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0009",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20253,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3185,
+            "output_tokens": 550,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3735,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3185,
+                "output_tokens": 550,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3735
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6667,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0010",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "vmpr-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "structural-validation.md",
+            "domain-specific-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 16763,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3185,
+            "output_tokens": 104,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3289,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3185,
+                "output_tokens": 104,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3289
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1691,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0011",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "pesticides-foodex2.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md",
+            "process-validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 16980,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3258,
+            "output_tokens": 531,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3789,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3258,
+                "output_tokens": 531,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3789
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6560,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 0.8333333333333334,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "process-validation-rules.md"
+          ]
+        },
+        {
+          "id": "SEL-0012",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "vmpr-foodex2.md",
+            "term-type-facet-constraints.md",
+            "domain-specific-validation.md",
+            "implicit-vs-explicit-facets.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 18322,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3257,
+            "output_tokens": 616,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3873,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3257,
+                "output_tokens": 616,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3873
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6741,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0013",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21013,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3255,
+            "output_tokens": 491,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3746,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3255,
+                "output_tokens": 491,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3746
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6453,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0014",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "contaminants-foodex2.md",
+            "packaging-facets.md",
+            "base-term-selection.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19903,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3290,
+            "output_tokens": 587,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3877,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3290,
+                "output_tokens": 587,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3877
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7536,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0015",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 18394,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3209,
+            "output_tokens": 388,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3597,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3209,
+                "output_tokens": 388,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3597
+              }
+            ]
+          },
+          "selector_wall_time_ms": 9555,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0016",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 27550,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3177,
+            "output_tokens": 635,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3812,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3177,
+                "output_tokens": 635,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3812
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7671,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0017",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "term-type-facet-constraints.md",
+            "code-string-format.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19776,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3202,
+            "output_tokens": 574,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3776,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3202,
+                "output_tokens": 574,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3776
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6826,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0018",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "business-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 25142,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3190,
+            "output_tokens": 588,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3778,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3190,
+                "output_tokens": 588,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3778
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7035,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "process-validation-rules.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0019",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "anses-codification-guidance.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21206,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3181,
+            "output_tokens": 541,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3722,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3181,
+                "output_tokens": 541,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3722
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6323,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "process-validation-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0020",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21496,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3188,
+            "output_tokens": 536,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3724,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3188,
+                "output_tokens": 536,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3724
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6560,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0021",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "ingredient-facets.md",
+            "structural-validation.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 16838,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3177,
+            "output_tokens": 642,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3819,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3177,
+                "output_tokens": 642,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3819
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7987,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0022",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "ingredient-facets.md",
+            "facet-coding-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20254,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3186,
+            "output_tokens": 480,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3666,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3186,
+                "output_tokens": 480,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3666
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6207,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0023",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "facet-coding-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 20952,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3185,
+            "output_tokens": 468,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3653,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3185,
+                "output_tokens": 468,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3653
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6358,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0024",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "ingredient-facets.md",
+            "foodex2-overview.md",
+            "implicit-vs-explicit-facets.md",
+            "business-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 22497,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3187,
+            "output_tokens": 671,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3858,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3187,
+                "output_tokens": 671,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3858
+              }
+            ]
+          },
+          "selector_wall_time_ms": 8670,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "code-string-format.md",
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0025",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "facet-coding-rules.md",
+            "structural-validation.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 26355,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3184,
+            "output_tokens": 636,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3820,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3184,
+                "output_tokens": 636,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3820
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7472,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "ingredient-facets.md",
+            "code-string-format.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0026",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "foodex2-overview.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "anses-codification-guidance.md",
+            "term-type-facet-constraints.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21364,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3184,
+            "output_tokens": 694,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3878,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3184,
+                "output_tokens": 694,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3878
+              }
+            ]
+          },
+          "selector_wall_time_ms": 8557,
+          "backfilled": [
+            {
+              "role": "validation",
+              "page": "term-type-facet-constraints.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0027",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "packaging-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 18018,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3187,
+            "output_tokens": 586,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3773,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3187,
+                "output_tokens": 586,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3773
+              }
+            ]
+          },
+          "selector_wall_time_ms": 8923,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.75,
+          "precision": 1.0,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0028",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "packaging-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17169,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3187,
+            "output_tokens": 515,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3702,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3187,
+                "output_tokens": 515,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3702
+              }
+            ]
+          },
+          "selector_wall_time_ms": 10979,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "packaging-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0029",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "structural-validation.md",
+            "term-type-facet-constraints.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "business-rules.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21726,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3267,
+            "output_tokens": 581,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3848,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3267,
+                "output_tokens": 581,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3848
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6872,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "facet-coding-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0030",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md",
+            "business-rules.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 27550,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3262,
+            "output_tokens": 401,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3663,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3262,
+                "output_tokens": 401,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3663
+              }
+            ]
+          },
+          "selector_wall_time_ms": 5017,
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [
+            "code-string-format.md"
+          ],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0031",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "process-validation-rules.md",
+            "business-rules.md",
+            "facet-coding-rules.md",
+            "base-term-selection.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 25908,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3281,
+            "output_tokens": 611,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3892,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3281,
+                "output_tokens": 611,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3892
+              }
+            ]
+          },
+          "selector_wall_time_ms": 8070,
+          "backfilled": [
+            {
+              "role": "base_term",
+              "page": "base-term-selection.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "structural-validation.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0032",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "contaminants-foodex2.md",
+            "packaging-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "term-type-facet-constraints.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17299,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3269,
+            "output_tokens": 396,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3665,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3269,
+                "output_tokens": 396,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3665
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6151,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0033",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "packaging-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "facet-coding-rules.md",
+            "structural-validation.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 17412,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3259,
+            "output_tokens": 516,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3775,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3259,
+                "output_tokens": 516,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3775
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7817,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 1.0,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0034",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "process-facets.md",
+            "implicit-vs-explicit-facets.md",
+            "process-validation-rules.md",
+            "business-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 19622,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3275,
+            "output_tokens": 573,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3848,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3275,
+                "output_tokens": 573,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3848
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6741,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0035",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "term-type-facet-constraints.md",
+            "business-rules.md",
+            "foodex2-overview.md",
+            "anses-codification-guidance.md",
+            "facet-coding-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 33053,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3270,
+            "output_tokens": 475,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3745,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3270,
+                "output_tokens": 475,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3745
+              }
+            ]
+          },
+          "selector_wall_time_ms": 6073,
+          "backfilled": [
+            {
+              "role": "facet",
+              "page": "facet-coding-rules.md"
+            }
+          ],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 1.0,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0036",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "process-facets.md",
+            "term-type-facet-constraints.md",
+            "business-rules.md",
+            "pesticides-foodex2.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 23432,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3281,
+            "output_tokens": 115,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3396,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3281,
+                "output_tokens": 115,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3396
+              }
+            ]
+          },
+          "selector_wall_time_ms": 1871,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 1.0,
+          "precision": 0.8333333333333334,
+          "missing": [],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0037",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "term-type-facet-constraints.md",
+            "business-rules.md",
+            "structural-validation.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21264,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3290,
+            "output_tokens": 616,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3906,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3290,
+                "output_tokens": 616,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3906
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7287,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.5,
+          "precision": 1.0,
+          "missing": [
+            "validation-rules.md",
+            "ingredient-facets.md"
+          ],
+          "leaks": [],
+          "unlabeled": []
+        },
+        {
+          "id": "SEL-0038",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "pesticides-foodex2.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "ingredient-facets.md",
+            "term-type-facet-constraints.md",
+            "anses-codification-guidance.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 24622,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3226,
+            "output_tokens": 687,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3913,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3226,
+                "output_tokens": 687,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3913
+              }
+            ]
+          },
+          "selector_wall_time_ms": 9103,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.8,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "validation-rules.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "ingredient-facets.md"
+          ]
+        },
+        {
+          "id": "SEL-0039",
+          "reviewed": true,
+          "pages_used": [
+            "RUNTIME_RULES.md",
+            "base-term-selection.md",
+            "implicit-vs-explicit-facets.md",
+            "foodex2-overview.md",
+            "process-facets.md",
+            "facet-coding-rules.md",
+            "validation-rules.md"
+          ],
+          "max_pages_sent": 7,
+          "selector_model_sent": null,
+          "pack_chars": 21255,
+          "selector_tokens": {
+            "model": "claude-haiku-4-5-20251001",
+            "calls": 1,
+            "input_tokens": 3222,
+            "output_tokens": 669,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 3891,
+            "per_call": [
+              {
+                "stop_reason": "tool_use",
+                "input_tokens": 3222,
+                "output_tokens": 669,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 3891
+              }
+            ]
+          },
+          "selector_wall_time_ms": 7565,
+          "backfilled": [],
+          "dropped": [
+            "index.md"
+          ],
+          "trimmed": [],
+          "must_have_recall": 0.6666666666666666,
+          "precision": 0.8333333333333334,
+          "missing": [
+            "term-type-facet-constraints.md"
+          ],
+          "leaks": [],
+          "unlabeled": [
+            "process-facets.md"
+          ]
+        }
+      ]
+    }
+  ],
+  "median_summary": {
+    "mean_must_have_recall": {
+      "median": 0.7995726495726496,
+      "min": 0.7897435897435897,
+      "max": 0.8418803418803419
+    },
+    "mean_precision": {
+      "median": 0.9658119658119657,
+      "min": 0.9606837606837607,
+      "max": 0.9700854700854702
+    },
+    "leak_free_rate": {
+      "median": 1.0,
+      "min": 1.0,
+      "max": 1.0
+    },
+    "mean_selector_tokens": {
+      "median": 3716.641025641026,
+      "min": 3709.7179487179487,
+      "max": 3744.3333333333335
+    },
+    "mean_selector_wall_time_ms": {
+      "median": 6184.538461538462,
+      "min": 6153.333333333333,
+      "max": 7009.025641025641
+    },
+    "mean_pack_chars": {
+      "median": 21126.05128205128,
+      "min": 19738.846153846152,
+      "max": 22084.97435897436
+    },
+    "backfill_case_rate": {
+      "median": 0.1794871794871795,
+      "min": 0.15384615384615385,
+      "max": 0.1794871794871795
+    },
+    "mean_backfills_per_case": {
+      "median": 0.1794871794871795,
+      "min": 0.15384615384615385,
+      "max": 0.1794871794871795
+    },
+    "passes": 3
+  },
+  "miss_frequency": {
+    "counts": {
+      "SEL-0002": {
+        "term-type-facet-constraints.md": 2
+      },
+      "SEL-0003": {
+        "term-type-facet-constraints.md": 1
+      },
+      "SEL-0005": {
+        "process-validation-rules.md": 3
+      },
+      "SEL-0007": {
+        "term-type-facet-constraints.md": 1,
+        "ingredient-facets.md": 1
+      },
+      "SEL-0008": {
+        "facet-coding-rules.md": 2
+      },
+      "SEL-0009": {
+        "term-type-facet-constraints.md": 1,
+        "facet-coding-rules.md": 1
+      },
+      "SEL-0010": {
+        "facet-coding-rules.md": 3,
+        "term-type-facet-constraints.md": 1
+      },
+      "SEL-0012": {
+        "facet-coding-rules.md": 3
+      },
+      "SEL-0013": {
+        "term-type-facet-constraints.md": 1,
+        "ingredient-facets.md": 1
+      },
+      "SEL-0018": {
+        "process-validation-rules.md": 3,
+        "term-type-facet-constraints.md": 1
+      },
+      "SEL-0019": {
+        "term-type-facet-constraints.md": 1,
+        "process-validation-rules.md": 1
+      },
+      "SEL-0020": {
+        "ingredient-facets.md": 1,
+        "term-type-facet-constraints.md": 2
+      },
+      "SEL-0023": {
+        "facet-coding-rules.md": 2
+      },
+      "SEL-0024": {
+        "code-string-format.md": 3,
+        "term-type-facet-constraints.md": 1
+      },
+      "SEL-0025": {
+        "ingredient-facets.md": 3,
+        "term-type-facet-constraints.md": 1,
+        "code-string-format.md": 2
+      },
+      "SEL-0026": {
+        "term-type-facet-constraints.md": 2
+      },
+      "SEL-0027": {
+        "facet-coding-rules.md": 3
+      },
+      "SEL-0029": {
+        "facet-coding-rules.md": 3
+      },
+      "SEL-0031": {
+        "structural-validation.md": 2
+      },
+      "SEL-0033": {
+        "term-type-facet-constraints.md": 2
+      },
+      "SEL-0035": {
+        "term-type-facet-constraints.md": 2,
+        "business-rules.md": 1
+      },
+      "SEL-0037": {
+        "validation-rules.md": 3,
+        "ingredient-facets.md": 3
+      },
+      "SEL-0038": {
+        "validation-rules.md": 2,
+        "term-type-facet-constraints.md": 1
+      },
+      "SEL-0039": {
+        "term-type-facet-constraints.md": 3
+      },
+      "SEL-0001": {
+        "term-type-facet-constraints.md": 2
+      },
+      "SEL-0015": {
+        "term-type-facet-constraints.md": 2
+      },
+      "SEL-0017": {
+        "term-type-facet-constraints.md": 1
+      },
+      "SEL-0028": {
+        "term-type-facet-constraints.md": 1,
+        "facet-coding-rules.md": 1
+      },
+      "SEL-0006": {
+        "ingredient-facets.md": 1
+      },
+      "SEL-0022": {
+        "term-type-facet-constraints.md": 1
+      }
+    },
+    "systematic": [
+      {
+        "case_id": "SEL-0001",
+        "page": "term-type-facet-constraints.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0002",
+        "page": "term-type-facet-constraints.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0005",
+        "page": "process-validation-rules.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0008",
+        "page": "facet-coding-rules.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0010",
+        "page": "facet-coding-rules.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0012",
+        "page": "facet-coding-rules.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0015",
+        "page": "term-type-facet-constraints.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0018",
+        "page": "process-validation-rules.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0020",
+        "page": "term-type-facet-constraints.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0023",
+        "page": "facet-coding-rules.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0024",
+        "page": "code-string-format.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0025",
+        "page": "code-string-format.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0025",
+        "page": "ingredient-facets.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0026",
+        "page": "term-type-facet-constraints.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0027",
+        "page": "facet-coding-rules.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0029",
+        "page": "facet-coding-rules.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0031",
+        "page": "structural-validation.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0033",
+        "page": "term-type-facet-constraints.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0035",
+        "page": "term-type-facet-constraints.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0037",
+        "page": "ingredient-facets.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0037",
+        "page": "validation-rules.md",
+        "missed": 3,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0038",
+        "page": "validation-rules.md",
+        "missed": 2,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0039",
+        "page": "term-type-facet-constraints.md",
+        "missed": 3,
+        "repeats": 3
+      }
+    ],
+    "stochastic": [
+      {
+        "case_id": "SEL-0003",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0006",
+        "page": "ingredient-facets.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0007",
+        "page": "ingredient-facets.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0007",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0009",
+        "page": "facet-coding-rules.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0009",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0010",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0013",
+        "page": "ingredient-facets.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0013",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0017",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0018",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0019",
+        "page": "process-validation-rules.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0019",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0020",
+        "page": "ingredient-facets.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0022",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0024",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0025",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0028",
+        "page": "facet-coding-rules.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0028",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0035",
+        "page": "business-rules.md",
+        "missed": 1,
+        "repeats": 3
+      },
+      {
+        "case_id": "SEL-0038",
+        "page": "term-type-facet-constraints.md",
+        "missed": 1,
+        "repeats": 3
+      }
+    ]
+  }
+}

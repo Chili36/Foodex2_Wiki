@@ -1,0 +1,923 @@
+{
+  "version": 1,
+  "generated_at": "2026-07-30T11:22:48.525527+00:00",
+  "dataset": "/Users/davidfoster/Dev/LLM Knowledge Base/evals/wiki-rag/dmt_end_to_end_cases.json",
+  "configuration": {
+    "base_url": "http://127.0.0.1:8010",
+    "endpoints": [
+      "ask-rag"
+    ],
+    "answerer_models": [
+      "claude-sonnet-5"
+    ],
+    "selector_model": "claude-sonnet-5",
+    "max_pages": 7,
+    "rag_limit": 7,
+    "rag_strategy": "diverse_pages",
+    "use_graph_expansion": true,
+    "repeats": 1,
+    "ragas_metrics": [],
+    "judge_model": null,
+    "judge_provider": null
+  },
+  "budget": {
+    "cases": 1,
+    "endpoint_variants": 1,
+    "answerer_models": 1,
+    "repeats": 1,
+    "estimated_endpoint_calls": 1,
+    "estimated_ragas_metric_invocations": 0
+  },
+  "summary": [
+    {
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5",
+      "case_count": 1,
+      "success_count": 1,
+      "success_rate": 1.0,
+      "mean_elapsed_ms": 13228.0,
+      "median_elapsed_ms": 13228,
+      "mean_reference_page_precision": 0.8571428571428571,
+      "mean_reference_page_recall": 0.5,
+      "mean_deterministic_answer_pass": 1.0,
+      "mean_prohibited_page_pass": 0.0
+    }
+  ],
+  "rows": [
+    {
+      "repeat": 1,
+      "case_id": "DMT-ASK-003",
+      "reviewed": true,
+      "question": "Anything I should think about when reporting Får – urin?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5",
+      "selector_model": null,
+      "request_payload": {
+        "question": "Anything I should think about when reporting Får – urin? Reporting domain: VMPR.",
+        "answerer_model": "claude-sonnet-5",
+        "include_page_content": true,
+        "retrieval_mode": "wiki",
+        "retrieval_strategy": "diverse_pages",
+        "limit": 7
+      },
+      "status_code": 200,
+      "elapsed_ms": 13228,
+      "answer": "Sheep urine (Får – urin) falls under the VMPR non-food animal matrix rule, so it should use the generic base term A0C60 rather than a species-specific urine term, per vmpr-foodex2.md and chemical-monitoring-foodex2.md. Because the base term is intentionally generic, you must add explicit F01 Source (sheep) and explicit F02 Part-nature (urine) — this pairing is mandatory for A0C60 non-food matrices per domain-specific-validation.md, and the cow-hair worked example in facet-coding-rules.md shows the same pattern (A0C60#F02...$F01...). If the sheep is wild/hunted, also add explicit F21.A07RY, since VMPR wild samples require it to trigger the correct downstream 'Wild' classification (chemical-monitoring-foodex2.md, domain-specific-validation.md, vmpr-legislative-mapping.md). Note that whole blood is called out as a structural grey area in FoodEx2 (food-chain vs non-food blood terms), but urine itself is listed cleanly among the non-food biological samples (urine, retina, hair, blood, serum, plasma) covered by this A0C60+F01+F02 rule (vmpr-foodex2.md, chemical-monitoring-foodex2.md). Finally, run the standard VMPR checks: confirm F01/F02 are both present (blocking validation), and be aware that any F33, F23, or F21 values you add can affect EFSA's downstream legislative mapping even though urine itself isn't a feed/water or processed-product case (vmpr-legislative-mapping.md).",
+      "citations": [
+        "vmpr-foodex2.md",
+        "chemical-monitoring-foodex2.md",
+        "domain-specific-validation.md",
+        "facet-coding-rules.md",
+        "vmpr-legislative-mapping.md"
+      ],
+      "pages_used": [
+        "vmpr-foodex2.md",
+        "chemical-monitoring-foodex2.md",
+        "domain-specific-validation.md",
+        "vmpr-legislative-mapping.md",
+        "maintenance-2024.md",
+        "validation-rules.md",
+        "facet-coding-rules.md"
+      ],
+      "pages": [
+        {
+          "page_name": "vmpr-foodex2.md",
+          "title": "FoodEx2 In VMPR Monitoring",
+          "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf",
+            "EFSA Supporting Publications - 2022 -  - FoodEx2 maintenance 2021.pdf"
+          ],
+          "related": [
+            "[[chemical-monitoring-foodex2]]",
+            "[[domain-specific-validation]]",
+            "[[term-type-facet-constraints]]",
+            "[[implicit-vs-explicit-facets]]",
+            "[[maintenance-2024]]"
+          ],
+          "content": "Qdrant score: 0.48317295\nPage: FoodEx2 In VMPR Monitoring\nFile: vmpr-foodex2.md\nCategory: domain_overlay\nSource tier: None\nSection: FoodEx2 In VMPR Monitoring > Feed And Water\nSummary: VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.\n\nPage: FoodEx2 In VMPR Monitoring\nFile: vmpr-foodex2.md\nCategory: domain_overlay\nSummary: VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.\nSection: FoodEx2 In VMPR Monitoring > Feed And Water\n\n## Feed And Water\n\n- VMPR feed and water cases are exceptions to the ordinary animal-product pattern.\n- Feed should use terms from the feed section and must contain implicit or explicit `F23 Target-consumer` for the relevant animal category where VMPR mapping needs it.\n- Generic `F23.A07TV Animal feed` can classify to `Other`; a species-specific `F23` can map to a specific VMPR category.\n- Conflicting target-consumer facets can force classification to `Other`.\n- Water intended for farmed animals should use the relevant non-food environmental matrix with `F23 Target-consumer`."
+        },
+        {
+          "page_name": "chemical-monitoring-foodex2.md",
+          "title": "FoodEx2 In Chemical Monitoring",
+          "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf",
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "Guidance VMPR mapping to legislative products.pdf",
+            "EFSA Supporting Publications - 2022 -  - FoodEx2 maintenance 2021.pdf"
+          ],
+          "related": [
+            "[[foodex2-overview]]",
+            "[[facet-coding-rules]]",
+            "[[implicit-vs-explicit-facets]]",
+            "[[pesticides-foodex2]]",
+            "[[contaminants-foodex2]]",
+            "[[domoic-acid-scallops]]",
+            "[[vmpr-foodex2]]",
+            "[[additives-flavourings-foodex2]]",
+            "[[maintenance-2024]]",
+            "[[domain-specific-validation]]",
+            "[[vmpr-legislative-mapping]]"
+          ],
+          "content": "Qdrant score: 0.47605377\nPage: FoodEx2 In Chemical Monitoring\nFile: chemical-monitoring-foodex2.md\nCategory: domain_overlay\nSource tier: None\nSection: FoodEx2 In Chemical Monitoring > VMPR-Specific Rules\nSummary: Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.\n\nPage: FoodEx2 In Chemical Monitoring\nFile: chemical-monitoring-foodex2.md\nCategory: domain_overlay\nSummary: Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.\nSection: FoodEx2 In Chemical Monitoring > VMPR-Specific Rules\n\n## VMPR-Specific Rules\n\n- For VMPR, `F01 Source` and `F02 Part-nature` must be present, except for the feed/water and processed-composite cases described by ChemMon. That overlays the normal term-type rules in [[term-type-facet-constraints]].\n- For processed derivatives under VMPR, `F01` may need to be added explicitly because it is not always implicit on processed terms such as dried egg or milk powder. This is a ChemMon exception to the default implicit logic in [[implicit-vs-explicit-facets]].\n- Wild-animal VMPR samples require `F21.A07RY` (`Wild, gathered or hunted`). In the downstream ETL mapping this sets `Wild=1`, and that wild route supersedes the ordinary game route in the final legislative grouping. See [[vmpr-legislative-mapping]].\n- Feed and water VMPR coding depends on `F23 Target-consumer`; conflicting explicit `F23` values can force classification to `Other`.\n- Non-food animal matrices use the generic base term `A0C60` plus explicit `F02` and `F01`; this includes non-food VMPR biological samples such as urine, retina, hair, blood, blood serum, and plasma. Whole blood remains a structural grey area because FoodEx2 also has food-chain blood terms; see [[vmpr-foodex2]] for the context-dependent boundary.\n- `F33 Legislative-classes` is also important for VMPR processed products and for additives/flavourings workflows. In VMPR it is one of the classifier inputs EFSA uses downstream for legislative matrix assignment, not just a validation check. The corresponding blocking checks live in [[domain-specific-validation]], and the mapping flow is summarised in [[vmpr-legislative-mapping]].\n- EFSA's downstream VMPR mapping derives `Game`, `Wild`, `FoodClassVMPR`, and `FoodClassVMPR_report` from the final `sampMatCode`. In that layer, `F21.A07RY`, `F23`, `F20.A0F4V`, and explicit `F33` can change the legislative outcome even when the FoodEx2 code already passes normal syntax checks. See [[vmpr-legislative-mapping]]."
+        },
+        {
+          "page_name": "domain-specific-validation.md",
+          "title": "Domain-Specific Validation",
+          "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "docs/DOMAIN_SPECIFIC_RULES.md",
+            "docs/CONTEXT_SPECIFIC_RULES.md",
+            "BUSINESS-RULES-COMPACT.json",
+            "Guidance VMPR mapping to legislative products.pdf",
+            "Reportable Scallops list of FoodEx2 codes - MTX.xlsx"
+          ],
+          "related": [
+            "[[business-rules]]",
+            "[[chemical-monitoring-foodex2]]",
+            "[[pesticides-foodex2]]",
+            "[[contaminants-foodex2]]",
+            "[[domoic-acid-scallops]]",
+            "[[vmpr-foodex2]]",
+            "[[additives-flavourings-foodex2]]",
+            "[[facet-coding-rules]]",
+            "[[validation-rules]]",
+            "[[vmpr-legislative-mapping]]"
+          ],
+          "content": "Qdrant score: 0.44597203\nPage: Domain-Specific Validation\nFile: domain-specific-validation.md\nCategory: domain_overlay\nSource tier: None\nSection: Domain-Specific Validation > Common Mandatory Or Recommended Facets\nSummary: Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.\n\nPage: Domain-Specific Validation\nFile: domain-specific-validation.md\nCategory: domain_overlay\nSummary: Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.\nSection: Domain-Specific Validation > Common Mandatory Or Recommended Facets\n\n## Common Mandatory Or Recommended Facets\n\n| Context | Rule |\n| --- | --- |\n| VMPR standard animal products | `F01` and `F02` mandatory |\n| VMPR processed or derivative products | explicit `F01` mandatory |\n| VMPR wild or hunted samples | explicit `F21.A07RY` needed to trigger the `Wild` mapping |\n| Base term `A0C60` non-food animal matrices | `F01` and `F02` mandatory |\n| VMPR Plan 3 processed imports | one `F33` mandatory |\n| Food additives monitoring | `F33` mandatory, `F03` highly recommended |\n| Acrylamide monitoring (paramCode `RF-00000410-ORG`) | `F33` mandatory per CHEMMON12, even if the base term already carries an implicit `F33`. Legal basis: Commission Regulation (EU) 2017/2158 and Recommendation (EU) 2019/1888 |\n| Domoic acid in scallops | select `sampMatCode` and `sampMatText` from the source-provided [[domoic-acid-scallops]] lookup; include `origFishAreaCode` from FAREA wherever possible |\n| Furans or acrylamide heat-treatment reporting | `F17` should be present |\n| Bisphenol or phthalates analysis | `F19` packaging should be present |\n| Fat-weight expression | `F07` should be present |\n| Infant products | `F23` target-consumer recommended |"
+        },
+        {
+          "page_name": "vmpr-legislative-mapping.md",
+          "title": "VMPR Legislative Mapping",
+          "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+          "category": "domain_overlay",
+          "source_tier": null,
+          "sources": [
+            "Guidance VMPR mapping to legislative products.pdf"
+          ],
+          "related": [
+            "[[chemical-monitoring-foodex2]]",
+            "[[domain-specific-validation]]",
+            "[[maintenance-2024]]",
+            "[[facet-coding-rules]]"
+          ],
+          "content": "Qdrant score: 0.40353143\nPage: VMPR Legislative Mapping\nFile: vmpr-legislative-mapping.md\nCategory: domain_overlay\nSource tier: None\nSection: VMPR Legislative Mapping > Practical Consequences For Coding\nSummary: Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.\n\nPage: VMPR Legislative Mapping\nFile: vmpr-legislative-mapping.md\nCategory: domain_overlay\nSummary: Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.\nSection: VMPR Legislative Mapping > Practical Consequences For Coding\n\n## Practical Consequences For Coding\n\n- `F21.A07RY` is not optional color in VMPR when the sample is wild or hunted. It drives the `Wild` flag, and `Wild` overrides the ordinary `Game` route in the final mapping.\n- `F33 Legislative-classes` on processed VMPR products is not only a validation artifact. It is one of the classifier inputs EFSA uses to decide the downstream legislative matrix.\n- `F23 Target-consumer` matters for feed and water, and `F20.A0F4V` matters for meat as muscle. If those details are present in the reporting context, omitting them can change the downstream VMPR classifier result even when the FoodEx2 code still looks superficially plausible.\n- This page is downstream reporting logic, not base-term policy. Use [[base-term-selection]] and [[facet-coding-rules]] to build the FoodEx2 code first; use this page to understand how EFSA later aggregates that code for VMPR legislation."
+        },
+        {
+          "page_name": "maintenance-2024.md",
+          "title": "FoodEx2 Maintenance 2024",
+          "summary": "VetDrugRes overhaul and expanded legislative mapping.",
+          "category": "maintenance",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf"
+          ],
+          "related": [
+            "[[maintenance-history]]",
+            "[[maintenance-2023]]",
+            "[[facet-coding-rules]]"
+          ],
+          "content": "Qdrant score: 0.38690782\nPage: FoodEx2 Maintenance 2024\nFile: maintenance-2024.md\nCategory: maintenance\nSource tier: None\nSection: Maintenance 2024 > Why This Is Important\nSummary: VetDrugRes overhaul and expanded legislative mapping.\n\nPage: FoodEx2 Maintenance 2024\nFile: maintenance-2024.md\nCategory: maintenance\nSummary: VetDrugRes overhaul and expanded legislative mapping.\nSection: Maintenance 2024 > Why This Is Important\n\n## Why This Is Important\n\n- The `VetDrugRes` hierarchy reorganisation changes how VMPR-related reporting is structured and mapped, not just term count.\n- The bird section in `F01 Source` was revised again; avian-taxonomy support remains a recurring maintenance theme.\n- Reportability changed: 1 term deprecated, 3 dismissed."
+        },
+        {
+          "page_name": "validation-rules.md",
+          "title": "Validation Rules Overview",
+          "summary": "Overview of the validator's two-layer model, severities, and the most important blocking rules.",
+          "category": "validation",
+          "source_tier": null,
+          "sources": [
+            "BUSINESS-RULES.md",
+            "BUSINESS-RULES-COMPACT.json",
+            "docs/VALIDATION_RULES_SUMMARY.md",
+            "FoodEx2 codification guidance_2025_12_v3.pdf"
+          ],
+          "related": [
+            "[[business-rules]]",
+            "[[structural-validation]]",
+            "[[term-type-facet-constraints]]",
+            "[[process-validation-rules]]",
+            "[[domain-specific-validation]]",
+            "[[code-string-format]]"
+          ],
+          "content": "Qdrant score: 0.36662927\nPage: Validation Rules Overview\nFile: validation-rules.md\nCategory: validation\nSource tier: None\nSection: Validation Rules Overview > Practical Dataset Checks\nSummary: Overview of the validator's two-layer model, severities, and the most important blocking rules.\n\nPage: Validation Rules Overview\nFile: validation-rules.md\nCategory: validation\nSummary: Overview of the validator's two-layer model, severities, and the most important blocking rules.\nSection: Validation Rules Overview > Practical Dataset Checks\n\n## Practical Dataset Checks\n\nThese checks come from ANSES expert guidance and are useful for batch review. They are not replacements for the validator.\n\n- Feed/food mismatches: feed entries should use feed terms, and food entries should not be coded with feed terms unless the source text genuinely identifies animal feed. (ANSES guidance p89)\n- Hierarchy bases: filter for hierarchy detail levels used as base terms, then replace them with reportable non-hierarchy terms where the source detail allows it. (ANSES guidance p89)\n- Raw base plus derivative-creating process: filter raw base terms with process facets such as milling, drying, curing, fermentation, pickling, canning/jarring, or smoking because a derivative base probably exists. See [[process-validation-rules]] for the validator side of this rule. (ANSES guidance p90)\n- Flavouring review: check whether a flavoured product uses a food ingredient, a regulated flavouring, or both; incomplete ingredient reporting is common. See [[ingredient-facets]]. (ANSES guidance p91)\n- Infusion ambiguity: check whether the code describes the dry infusion material or the final reconstituted beverage. (ANSES guidance p91)\n- `F04` on raw or derivative bases: review whether it is a legitimate minor ingredient/coating/flavour, or whether the code incorrectly used `F04` where `F01` or `F27` should describe source. (ANSES guidance p92)\n- Multiple `F01` sources on raw bases: same-nature mixed raw commodities should usually use multiple `F27 Source-commodities`, not multiple `F01 Source` descriptors. (ANSES guidance p92)"
+        },
+        {
+          "page_name": "facet-coding-rules.md",
+          "title": "Facet Coding Rules",
+          "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.",
+          "category": "guidance",
+          "source_tier": null,
+          "sources": [
+            "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+            "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf",
+            "FoodEx2 codification guidance_2025_12_v3.pdf"
+          ],
+          "related": [
+            "[[foodex2-overview]]",
+            "[[implicit-vs-explicit-facets]]",
+            "[[process-facets]]",
+            "[[ingredient-facets]]",
+            "[[packaging-facets]]"
+          ],
+          "content": "Qdrant score: 0.3543216\nPage: Facet Coding Rules\nFile: facet-coding-rules.md\nCategory: guidance\nSource tier: None\nSection: Facet Coding Rules > Worked Examples\nSummary: Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.\n\nPage: Facet Coding Rules\nFile: facet-coding-rules.md\nCategory: guidance\nSummary: Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.\nSection: Facet Coding Rules > Worked Examples\n\n## Worked Examples\n\n- Before: `orange nectar`. After: `A03BG`. No extra facets are needed when the base term already captures the intended level of detail.\n- Before: `orange nectar, calcium-fortified, sugar free, organic`. After: `A03BG#F09.A0EXH$F10.A077L$F21.A07SE`. Add only the extra descriptors that are not implicit in `A03BG`.\n- Before: `cow hair sample` in VMPR. After: `A0C60#F02.A0ESP$F01.A057E`. In this special domain case, explicit `F02` and `F01` are required because the base term is intentionally generic."
+        }
+      ],
+      "trace": {
+        "index_used": false,
+        "max_pages": 7,
+        "selection_method": "qdrant wiki retrieval + answerer",
+        "retrieval": {
+          "provider": "qdrant",
+          "retrieval_mode": "wiki",
+          "strategy": "diverse_pages",
+          "collection": "foodex2_wiki_markdown_v1",
+          "qdrant_url": "http://127.0.0.1:6333",
+          "elapsed_ms": 39,
+          "limit": 7,
+          "candidate_limit": 35,
+          "result_count": 35,
+          "selected_result_count": 7,
+          "results": [
+            {
+              "chunk_id": "vmpr-foodex2.md#004-00-foodex2-in-vmpr-monitoring-feed-and-water",
+              "score": 0.48317295,
+              "page_name": "vmpr-foodex2.md",
+              "heading_path": "FoodEx2 In VMPR Monitoring > Feed And Water",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+              "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+            },
+            {
+              "chunk_id": "vmpr-foodex2.md#003-00-foodex2-in-vmpr-monitoring-non-food-biological-sample-boundary",
+              "score": 0.48286194,
+              "page_name": "vmpr-foodex2.md",
+              "heading_path": "FoodEx2 In VMPR Monitoring > Non-Food Biological Sample Boundary",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+              "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+            },
+            {
+              "chunk_id": "vmpr-foodex2.md#002-00-foodex2-in-vmpr-monitoring-core-vmpr-requirements",
+              "score": 0.4778707,
+              "page_name": "vmpr-foodex2.md",
+              "heading_path": "FoodEx2 In VMPR Monitoring > Core VMPR Requirements",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+              "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+            },
+            {
+              "chunk_id": "chemical-monitoring-foodex2.md#004-00-foodex2-in-chemical-monitoring-vmpr-specific-rules",
+              "score": 0.47605377,
+              "page_name": "chemical-monitoring-foodex2.md",
+              "heading_path": "FoodEx2 In Chemical Monitoring > VMPR-Specific Rules",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+              "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+            },
+            {
+              "chunk_id": "vmpr-foodex2.md#001-00-foodex2-in-vmpr-monitoring-use-only-when-vmpr-context-is-active",
+              "score": 0.47082198,
+              "page_name": "vmpr-foodex2.md",
+              "heading_path": "FoodEx2 In VMPR Monitoring > Use Only When VMPR Context Is Active",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+              "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+            },
+            {
+              "chunk_id": "vmpr-foodex2.md#006-00-foodex2-in-vmpr-monitoring-worked-signals",
+              "score": 0.46037486,
+              "page_name": "vmpr-foodex2.md",
+              "heading_path": "FoodEx2 In VMPR Monitoring > Worked Signals",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+              "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+            },
+            {
+              "chunk_id": "vmpr-foodex2.md#007-00-foodex2-in-vmpr-monitoring-relevant-policy",
+              "score": 0.4554085,
+              "page_name": "vmpr-foodex2.md",
+              "heading_path": "FoodEx2 In VMPR Monitoring > Relevant Policy",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+              "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+            },
+            {
+              "chunk_id": "vmpr-foodex2.md#000-00-foodex2-in-vmpr-monitoring",
+              "score": 0.4532324,
+              "page_name": "vmpr-foodex2.md",
+              "heading_path": "FoodEx2 In VMPR Monitoring",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+              "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+            },
+            {
+              "chunk_id": "domain-specific-validation.md#002-00-domain-specific-validation-common-mandatory-or-recommended-facets",
+              "score": 0.44597203,
+              "page_name": "domain-specific-validation.md",
+              "heading_path": "Domain-Specific Validation > Common Mandatory Or Recommended Facets",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+              "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+            },
+            {
+              "chunk_id": "chemical-monitoring-foodex2.md#005-00-foodex2-in-chemical-monitoring-worked-examples",
+              "score": 0.4196509,
+              "page_name": "chemical-monitoring-foodex2.md",
+              "heading_path": "FoodEx2 In Chemical Monitoring > Worked Examples",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+              "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+            },
+            {
+              "chunk_id": "domain-specific-validation.md#003-00-domain-specific-validation-worked-examples",
+              "score": 0.41152722,
+              "page_name": "domain-specific-validation.md",
+              "heading_path": "Domain-Specific Validation > Worked Examples",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+              "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+            },
+            {
+              "chunk_id": "vmpr-legislative-mapping.md#007-00-vmpr-legislative-mapping-practical-consequences-for-coding",
+              "score": 0.40353143,
+              "page_name": "vmpr-legislative-mapping.md",
+              "heading_path": "VMPR Legislative Mapping > Practical Consequences For Coding",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+              "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+            },
+            {
+              "chunk_id": "vmpr-foodex2.md#005-00-foodex2-in-vmpr-monitoring-processed-products-and-f33",
+              "score": 0.4034629,
+              "page_name": "vmpr-foodex2.md",
+              "heading_path": "FoodEx2 In VMPR Monitoring > Processed Products And F33",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.",
+              "source_path": "raw/efsa-guidance/vmpr-foodex2.md"
+            },
+            {
+              "chunk_id": "domain-specific-validation.md#001-00-domain-specific-validation-these-rules-are-contextual",
+              "score": 0.39535964,
+              "page_name": "domain-specific-validation.md",
+              "heading_path": "Domain-Specific Validation > These Rules Are Contextual",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+              "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+            },
+            {
+              "chunk_id": "maintenance-2024.md#002-00-maintenance-2024-why-this-is-important",
+              "score": 0.38690782,
+              "page_name": "maintenance-2024.md",
+              "heading_path": "Maintenance 2024 > Why This Is Important",
+              "category": "maintenance",
+              "source_tier": null,
+              "summary": "VetDrugRes overhaul and expanded legislative mapping.",
+              "source_path": "raw/efsa-guidance/maintenance-2024.md"
+            },
+            {
+              "chunk_id": "chemical-monitoring-foodex2.md#007-00-foodex2-in-chemical-monitoring-relevant-business-rules",
+              "score": 0.36773205,
+              "page_name": "chemical-monitoring-foodex2.md",
+              "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Business Rules",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+              "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+            },
+            {
+              "chunk_id": "validation-rules.md#004-00-validation-rules-overview-practical-dataset-checks",
+              "score": 0.36662927,
+              "page_name": "validation-rules.md",
+              "heading_path": "Validation Rules Overview > Practical Dataset Checks",
+              "category": "validation",
+              "source_tier": null,
+              "summary": "Overview of the validator's two-layer model, severities, and the most important blocking rules.",
+              "source_path": "raw/efsa-guidance/validation-rules.md"
+            },
+            {
+              "chunk_id": "vmpr-legislative-mapping.md#009-00-vmpr-legislative-mapping-relevant-business-rules",
+              "score": 0.36302808,
+              "page_name": "vmpr-legislative-mapping.md",
+              "heading_path": "VMPR Legislative Mapping > Relevant Business Rules",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+              "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+            },
+            {
+              "chunk_id": "chemical-monitoring-foodex2.md#002-00-foodex2-in-chemical-monitoring-domain-pages",
+              "score": 0.35988098,
+              "page_name": "chemical-monitoring-foodex2.md",
+              "heading_path": "FoodEx2 In Chemical Monitoring > Domain Pages",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+              "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+            },
+            {
+              "chunk_id": "chemical-monitoring-foodex2.md#001-00-foodex2-in-chemical-monitoring-scope",
+              "score": 0.35784924,
+              "page_name": "chemical-monitoring-foodex2.md",
+              "heading_path": "FoodEx2 In Chemical Monitoring > Scope",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+              "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+            },
+            {
+              "chunk_id": "chemical-monitoring-foodex2.md#003-00-foodex2-in-chemical-monitoring-general-rules",
+              "score": 0.35773736,
+              "page_name": "chemical-monitoring-foodex2.md",
+              "heading_path": "FoodEx2 In Chemical Monitoring > General Rules",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.",
+              "source_path": "raw/efsa-guidance/chemical-monitoring-foodex2.md"
+            },
+            {
+              "chunk_id": "facet-coding-rules.md#004-00-facet-coding-rules-worked-examples",
+              "score": 0.3543216,
+              "page_name": "facet-coding-rules.md",
+              "heading_path": "Facet Coding Rules > Worked Examples",
+              "category": "guidance",
+              "source_tier": null,
+              "summary": "Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.",
+              "source_path": "raw/efsa-guidance/facet-coding-rules.md"
+            },
+            {
+              "chunk_id": "vmpr-legislative-mapping.md#005-00-vmpr-legislative-mapping-wild-flag",
+              "score": 0.35393918,
+              "page_name": "vmpr-legislative-mapping.md",
+              "heading_path": "VMPR Legislative Mapping > Wild Flag",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+              "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+            },
+            {
+              "chunk_id": "domain-specific-validation.md#000-00-domain-specific-validation",
+              "score": 0.34832424,
+              "page_name": "domain-specific-validation.md",
+              "heading_path": "Domain-Specific Validation",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.",
+              "source_path": "raw/efsa-guidance/domain-specific-validation.md"
+            },
+            {
+              "chunk_id": "maintenance-2024.md#001-00-maintenance-2024-summary",
+              "score": 0.34206933,
+              "page_name": "maintenance-2024.md",
+              "heading_path": "Maintenance 2024 > Summary",
+              "category": "maintenance",
+              "source_tier": null,
+              "summary": "VetDrugRes overhaul and expanded legislative mapping.",
+              "source_path": "raw/efsa-guidance/maintenance-2024.md"
+            },
+            {
+              "chunk_id": "maintenance-2024.md#005-00-maintenance-2024-relevant-business-rules",
+              "score": 0.34059873,
+              "page_name": "maintenance-2024.md",
+              "heading_path": "Maintenance 2024 > Relevant Business Rules",
+              "category": "maintenance",
+              "source_tier": null,
+              "summary": "VetDrugRes overhaul and expanded legislative mapping.",
+              "source_path": "raw/efsa-guidance/maintenance-2024.md"
+            },
+            {
+              "chunk_id": "contaminants-foodex2.md#003-00-foodex2-in-contaminants-monitoring-high-impact-rules",
+              "score": 0.33845568,
+              "page_name": "contaminants-foodex2.md",
+              "heading_path": "FoodEx2 In Contaminants Monitoring > High-Impact Rules",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+            },
+            {
+              "chunk_id": "vmpr-legislative-mapping.md#006-00-vmpr-legislative-mapping-final-legislative-commodity-mapping",
+              "score": 0.3384173,
+              "page_name": "vmpr-legislative-mapping.md",
+              "heading_path": "VMPR Legislative Mapping > Final Legislative Commodity Mapping",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+              "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+            },
+            {
+              "chunk_id": "vmpr-legislative-mapping.md#003-00-vmpr-legislative-mapping-game-flag",
+              "score": 0.3352158,
+              "page_name": "vmpr-legislative-mapping.md",
+              "heading_path": "VMPR Legislative Mapping > Game Flag",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+              "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+            },
+            {
+              "chunk_id": "vmpr-legislative-mapping.md#008-00-vmpr-legislative-mapping-relevant-policy",
+              "score": 0.33111605,
+              "page_name": "vmpr-legislative-mapping.md",
+              "heading_path": "VMPR Legislative Mapping > Relevant Policy",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+              "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+            },
+            {
+              "chunk_id": "vmpr-legislative-mapping.md#004-00-vmpr-legislative-mapping-foodclassvmpr-classifier",
+              "score": 0.3288294,
+              "page_name": "vmpr-legislative-mapping.md",
+              "heading_path": "VMPR Legislative Mapping > FoodClassVMPR Classifier",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+              "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+            },
+            {
+              "chunk_id": "contaminants-foodex2.md#001-00-foodex2-in-contaminants-monitoring-use-only-when-contaminants-context-is-active",
+              "score": 0.3261524,
+              "page_name": "contaminants-foodex2.md",
+              "heading_path": "FoodEx2 In Contaminants Monitoring > Use Only When Contaminants Context Is Active",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+            },
+            {
+              "chunk_id": "contaminants-foodex2.md#002-00-foodex2-in-contaminants-monitoring-domain-boundary",
+              "score": 0.3257975,
+              "page_name": "contaminants-foodex2.md",
+              "heading_path": "FoodEx2 In Contaminants Monitoring > Domain Boundary",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.",
+              "source_path": "raw/efsa-guidance/contaminants-foodex2.md"
+            },
+            {
+              "chunk_id": "vmpr-legislative-mapping.md#001-00-vmpr-legislative-mapping-scope",
+              "score": 0.3236821,
+              "page_name": "vmpr-legislative-mapping.md",
+              "heading_path": "VMPR Legislative Mapping > Scope",
+              "category": "domain_overlay",
+              "source_tier": null,
+              "summary": "Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.",
+              "source_path": "raw/efsa-guidance/vmpr-legislative-mapping.md"
+            },
+            {
+              "chunk_id": "maintenance-2024.md#004-00-maintenance-2024-relevant-policy",
+              "score": 0.3184591,
+              "page_name": "maintenance-2024.md",
+              "heading_path": "Maintenance 2024 > Relevant Policy",
+              "category": "maintenance",
+              "source_tier": null,
+              "summary": "VetDrugRes overhaul and expanded legislative mapping.",
+              "source_path": "raw/efsa-guidance/maintenance-2024.md"
+            }
+          ],
+          "assembly": {
+            "strategy": "highest_ranked_chunk_per_unique_page",
+            "candidate_chunk_count": 35,
+            "candidate_unique_page_count": 8,
+            "selected_page_count": 7,
+            "duplicate_chunk_count": 27,
+            "candidate_duplicate_ratio": 0.7714285714285715,
+            "preassembly_duplicate_slot_waste": 0.7142857142857143,
+            "duplicate_slot_waste": 0.0,
+            "selected_pages": [
+              "vmpr-foodex2.md",
+              "chemical-monitoring-foodex2.md",
+              "domain-specific-validation.md",
+              "vmpr-legislative-mapping.md",
+              "maintenance-2024.md",
+              "validation-rules.md",
+              "facet-coding-rules.md"
+            ],
+            "dropped_duplicate_chunks": [
+              {
+                "rank": 2,
+                "page_name": "vmpr-foodex2.md",
+                "chunk_id": "vmpr-foodex2.md#003-00-foodex2-in-vmpr-monitoring-non-food-biological-sample-boundary",
+                "heading_path": "FoodEx2 In VMPR Monitoring > Non-Food Biological Sample Boundary",
+                "score": 0.48286194,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 3,
+                "page_name": "vmpr-foodex2.md",
+                "chunk_id": "vmpr-foodex2.md#002-00-foodex2-in-vmpr-monitoring-core-vmpr-requirements",
+                "heading_path": "FoodEx2 In VMPR Monitoring > Core VMPR Requirements",
+                "score": 0.4778707,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 5,
+                "page_name": "vmpr-foodex2.md",
+                "chunk_id": "vmpr-foodex2.md#001-00-foodex2-in-vmpr-monitoring-use-only-when-vmpr-context-is-active",
+                "heading_path": "FoodEx2 In VMPR Monitoring > Use Only When VMPR Context Is Active",
+                "score": 0.47082198,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 6,
+                "page_name": "vmpr-foodex2.md",
+                "chunk_id": "vmpr-foodex2.md#006-00-foodex2-in-vmpr-monitoring-worked-signals",
+                "heading_path": "FoodEx2 In VMPR Monitoring > Worked Signals",
+                "score": 0.46037486,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 7,
+                "page_name": "vmpr-foodex2.md",
+                "chunk_id": "vmpr-foodex2.md#007-00-foodex2-in-vmpr-monitoring-relevant-policy",
+                "heading_path": "FoodEx2 In VMPR Monitoring > Relevant Policy",
+                "score": 0.4554085,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 8,
+                "page_name": "vmpr-foodex2.md",
+                "chunk_id": "vmpr-foodex2.md#000-00-foodex2-in-vmpr-monitoring",
+                "heading_path": "FoodEx2 In VMPR Monitoring",
+                "score": 0.4532324,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 10,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "chunk_id": "chemical-monitoring-foodex2.md#005-00-foodex2-in-chemical-monitoring-worked-examples",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Worked Examples",
+                "score": 0.4196509,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 11,
+                "page_name": "domain-specific-validation.md",
+                "chunk_id": "domain-specific-validation.md#003-00-domain-specific-validation-worked-examples",
+                "heading_path": "Domain-Specific Validation > Worked Examples",
+                "score": 0.41152722,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 13,
+                "page_name": "vmpr-foodex2.md",
+                "chunk_id": "vmpr-foodex2.md#005-00-foodex2-in-vmpr-monitoring-processed-products-and-f33",
+                "heading_path": "FoodEx2 In VMPR Monitoring > Processed Products And F33",
+                "score": 0.4034629,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 14,
+                "page_name": "domain-specific-validation.md",
+                "chunk_id": "domain-specific-validation.md#001-00-domain-specific-validation-these-rules-are-contextual",
+                "heading_path": "Domain-Specific Validation > These Rules Are Contextual",
+                "score": 0.39535964,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 16,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "chunk_id": "chemical-monitoring-foodex2.md#007-00-foodex2-in-chemical-monitoring-relevant-business-rules",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Relevant Business Rules",
+                "score": 0.36773205,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 18,
+                "page_name": "vmpr-legislative-mapping.md",
+                "chunk_id": "vmpr-legislative-mapping.md#009-00-vmpr-legislative-mapping-relevant-business-rules",
+                "heading_path": "VMPR Legislative Mapping > Relevant Business Rules",
+                "score": 0.36302808,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 19,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "chunk_id": "chemical-monitoring-foodex2.md#002-00-foodex2-in-chemical-monitoring-domain-pages",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Domain Pages",
+                "score": 0.35988098,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 20,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "chunk_id": "chemical-monitoring-foodex2.md#001-00-foodex2-in-chemical-monitoring-scope",
+                "heading_path": "FoodEx2 In Chemical Monitoring > Scope",
+                "score": 0.35784924,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 21,
+                "page_name": "chemical-monitoring-foodex2.md",
+                "chunk_id": "chemical-monitoring-foodex2.md#003-00-foodex2-in-chemical-monitoring-general-rules",
+                "heading_path": "FoodEx2 In Chemical Monitoring > General Rules",
+                "score": 0.35773736,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 23,
+                "page_name": "vmpr-legislative-mapping.md",
+                "chunk_id": "vmpr-legislative-mapping.md#005-00-vmpr-legislative-mapping-wild-flag",
+                "heading_path": "VMPR Legislative Mapping > Wild Flag",
+                "score": 0.35393918,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 24,
+                "page_name": "domain-specific-validation.md",
+                "chunk_id": "domain-specific-validation.md#000-00-domain-specific-validation",
+                "heading_path": "Domain-Specific Validation",
+                "score": 0.34832424,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 25,
+                "page_name": "maintenance-2024.md",
+                "chunk_id": "maintenance-2024.md#001-00-maintenance-2024-summary",
+                "heading_path": "Maintenance 2024 > Summary",
+                "score": 0.34206933,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 26,
+                "page_name": "maintenance-2024.md",
+                "chunk_id": "maintenance-2024.md#005-00-maintenance-2024-relevant-business-rules",
+                "heading_path": "Maintenance 2024 > Relevant Business Rules",
+                "score": 0.34059873,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 28,
+                "page_name": "vmpr-legislative-mapping.md",
+                "chunk_id": "vmpr-legislative-mapping.md#006-00-vmpr-legislative-mapping-final-legislative-commodity-mapping",
+                "heading_path": "VMPR Legislative Mapping > Final Legislative Commodity Mapping",
+                "score": 0.3384173,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 29,
+                "page_name": "vmpr-legislative-mapping.md",
+                "chunk_id": "vmpr-legislative-mapping.md#003-00-vmpr-legislative-mapping-game-flag",
+                "heading_path": "VMPR Legislative Mapping > Game Flag",
+                "score": 0.3352158,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 30,
+                "page_name": "vmpr-legislative-mapping.md",
+                "chunk_id": "vmpr-legislative-mapping.md#008-00-vmpr-legislative-mapping-relevant-policy",
+                "heading_path": "VMPR Legislative Mapping > Relevant Policy",
+                "score": 0.33111605,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 31,
+                "page_name": "vmpr-legislative-mapping.md",
+                "chunk_id": "vmpr-legislative-mapping.md#004-00-vmpr-legislative-mapping-foodclassvmpr-classifier",
+                "heading_path": "VMPR Legislative Mapping > FoodClassVMPR Classifier",
+                "score": 0.3288294,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 32,
+                "page_name": "contaminants-foodex2.md",
+                "chunk_id": "contaminants-foodex2.md#001-00-foodex2-in-contaminants-monitoring-use-only-when-contaminants-context-is-active",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Use Only When Contaminants Context Is Active",
+                "score": 0.3261524,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 33,
+                "page_name": "contaminants-foodex2.md",
+                "chunk_id": "contaminants-foodex2.md#002-00-foodex2-in-contaminants-monitoring-domain-boundary",
+                "heading_path": "FoodEx2 In Contaminants Monitoring > Domain Boundary",
+                "score": 0.3257975,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 34,
+                "page_name": "vmpr-legislative-mapping.md",
+                "chunk_id": "vmpr-legislative-mapping.md#001-00-vmpr-legislative-mapping-scope",
+                "heading_path": "VMPR Legislative Mapping > Scope",
+                "score": 0.3236821,
+                "reason": "duplicate_page"
+              },
+              {
+                "rank": 35,
+                "page_name": "maintenance-2024.md",
+                "chunk_id": "maintenance-2024.md#004-00-maintenance-2024-relevant-policy",
+                "heading_path": "Maintenance 2024 > Relevant Policy",
+                "score": 0.3184591,
+                "reason": "duplicate_page"
+              }
+            ],
+            "unselected_candidate_pages": [
+              "contaminants-foodex2.md"
+            ],
+            "elapsed_ms": 0
+          }
+        },
+        "embedding": {
+          "provider": "voyage",
+          "model": "voyage-context-3",
+          "dimension": 1024,
+          "elapsed_ms": 380,
+          "usage": {
+            "total_tokens": 19
+          },
+          "tracked_tokens": 19
+        },
+        "answerer": {
+          "model": "claude-sonnet-5",
+          "token_summary": {
+            "model": "claude-sonnet-5",
+            "calls": 1,
+            "input_tokens": 5486,
+            "output_tokens": 994,
+            "cache_creation_input_tokens": 0,
+            "cache_read_input_tokens": 0,
+            "total_tracked_tokens": 6480,
+            "per_call": [
+              {
+                "stop_reason": "end_turn",
+                "input_tokens": 5486,
+                "output_tokens": 994,
+                "cache_creation_input_tokens": 0,
+                "cache_read_input_tokens": 0,
+                "total_tracked_tokens": 6480
+              }
+            ]
+          },
+          "timing_summary": {
+            "calls": 1,
+            "llm_time_ms": 12753,
+            "per_call": [
+              {
+                "call_number": 1,
+                "duration_ms": 12753,
+                "stop_reason": "end_turn"
+              }
+            ],
+            "answerer_wall_time_ms": 12753
+          }
+        },
+        "total": {
+          "request_wall_time_ms": 13213,
+          "total_llm_calls": 1,
+          "total_embedding_calls": 1,
+          "total_model_calls": 2,
+          "total_tracked_tokens": 6499,
+          "answerer_tracked_tokens": 6480,
+          "embedding_tracked_tokens": 19
+        },
+        "phase_timings_ms": {
+          "retrieval_total": 420,
+          "embedding": 380,
+          "qdrant_search": 39,
+          "answerer_total": 12753
+        }
+      },
+      "error": null,
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [
+          "maintenance-2024.md"
+        ],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": false,
+        "reference_page_precision": 0.8571428571428571,
+        "reference_page_recall": 0.5,
+        "missing_reference_pages": [
+          "base-term-selection.md",
+          "term-type-facet-constraints.md"
+        ]
+      },
+      "ragas": {}
+    }
+  ]
+}

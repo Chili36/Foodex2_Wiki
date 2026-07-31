@@ -105,7 +105,7 @@ def _run_markdown_ask(
         "question": question,
         "max_pages": max_pages,
         "include_page_content": False,
-        "use_graph_expansion": True,
+        "use_graph_expansion": False,
     }
     started = time.perf_counter()
     status_code, response_data = _post_json(ask_url, payload, timeout)

@@ -13,7 +13,7 @@ related:
   - "[[base-term-selection]]"
   - "[[process-facets]]"
   - "[[implicit-vs-explicit-facets]]"
-last_updated: "2026-06-07"
+last_updated: "2026-07-28"
 ---
 
 # Policy Contract
@@ -44,7 +44,7 @@ Use the cited business rules and guidance pages as the controlling sources under
 
 ## Policy Version
 
-`2026-06-07-v0.6`
+`2026-07-28-v0.7`
 
 ## Constitution
 
@@ -54,7 +54,7 @@ Use the cited business rules and guidance pages as the controlling sources under
 - `C04` [priority 90]: Do not restate a process already implicit in the chosen base term. {derived_from: implicit-vs-explicit-facets.md; process-facets.md; business-rules.md BR16}
 - `C05` [priority 85]: Examples illustrate rules and never override higher-priority binding rules. {derived_from: execution-layer}
 - `C06` [priority 92]: Always use the most detailed reportable non-hierarchy term available as the base term; do not code with hierarchy terms when a reportable entry exists. {derived_from: base-term-selection.md; business-rules.md BR08; business-rules.md BR23; business-rules.md BR24}
-- `C07` [priority 92]: Specify origin with the facet family that matches the chosen food type: `F27` for derivatives, `F04` for composites, and no explicit `F01` when the selected base is already a raw primary commodity. {derived_from: term-type-facet-constraints.md; implicit-vs-explicit-facets.md; ingredient-facets.md; business-rules.md BR03; business-rules.md BR04; business-rules.md BR05; business-rules.md BR06; business-rules.md BR07}
+- `C07` [priority 92]: Specify origin with the facet family that matches the chosen food type: raw commodities normally carry `F01` implicitly and may use explicit `F01` to narrow a generic source; derivatives use `F27` for constitutive source; composites use `F04` for characterising ingredients. `F04` may also describe only minor later-added ingredients on raw or derivative terms under `BR12`. {derived_from: term-type-facet-constraints.md; implicit-vs-explicit-facets.md; ingredient-facets.md; business-rules.md BR03; business-rules.md BR04; business-rules.md BR05; business-rules.md BR06; business-rules.md BR07; business-rules.md BR12}
 - `C08` [priority 90]: Add only explicit facets that contribute information not already implicit in the chosen base term. {derived_from: implicit-vs-explicit-facets.md; facet-coding-rules.md}
 - `C09` [priority 94]: Read the candidate wording and any available coverage text before finalising the base term and reject terms that do not truly cover the product. {derived_from: base-term-selection.md}
 
@@ -74,6 +74,8 @@ Use the cited business rules and guidance pages as the controlling sources under
 - `R-ORIGIN-001` when `food_type=derivative`: must express origin with `F27` rather than `F04` or `F01`, unless a separate minor added ingredient rule explicitly applies. {derived_from: term-type-facet-constraints.md; implicit-vs-explicit-facets.md; ingredient-facets.md; business-rules.md BR05; business-rules.md BR06; business-rules.md BR07}
 - `R-ORIGIN-002` when `food_type=composite`: must express characterising origin with `F04` rather than `F27` or `F01`. {derived_from: ingredient-facets.md; term-type-facet-constraints.md; business-rules.md BR03; business-rules.md BR04}
 - `R-ORIGIN-003` when `food_type=raw_primary_commodity`: must not add explicit `F01` merely to restate the selected raw base commodity. {derived_from: implicit-vs-explicit-facets.md; term-type-facet-constraints.md}
+- `R-ORIGIN-004` when `food_type=raw_primary_commodity and the selected raw base has a generic implicit source and a narrower source is known`: may add explicit `F01` as a restriction to the more detailed source. {derived_from: implicit-vs-explicit-facets.md; base-term-selection.md; term-type-facet-constraints.md}
+- `R-INGREDIENT-001` when `food_type=raw_primary_commodity or food_type=derivative and explicit F04 is present`: must use `F04` only for a minor later-added ingredient, coating, flavouring, or decoration; it must not encode the constitutive source. {derived_from: ingredient-facets.md; term-type-facet-constraints.md; business-rules.md BR12}
 - `R-FACET-001` when `an explicit facet only repeats an implicit property of the chosen base`: must not keep that explicit facet in the final code. {derived_from: implicit-vs-explicit-facets.md; facet-coding-rules.md}
 - `R-SCOPE-001` when `candidate wording or any available coverage text excludes the described product or narrows it away from the query`: must not select that candidate as the base term. {derived_from: base-term-selection.md}
 - `R-DESC-001` when `F10 or F21 information is present and not already implicit in a reportable base term`: may add the descriptive facet explicitly. {derived_from: facet-coding-rules.md}
@@ -110,8 +112,8 @@ These are the practical ground rules the solver should always keep in view:
 - Select the most specific existing reportable code within the chosen food type. Use groups only when explicitly asked or when no reportable non-hierarchy term exists.
 - Processed term priority is binding: if a derivative or composite term already captures the processed state, use that term instead of reconstructing the product from a raw commodity plus `F28`.
 - Apply term-type-specific facet focus:
-  - `r`: focus on the most specific raw base term and only simple allowed treatments.
-  - `d`: focus on constitutive source with `F27` and on new treatments not already implicit.
+  - `r`: focus on the most specific raw base term; use explicit `F01` only to narrow a generic implicit source, and `F04` only for minor later-added ingredients.
+  - `d`: focus on constitutive source with `F27`, minor later-added ingredients with `F04`, and new treatments not already implicit.
   - `c` / `s`: focus on characterising recipe ingredients with `F04` and relevant treatments.
   - `h` / `g`: do not use as coding base terms when a reportable term exists.
 - `F10 qualitative-info` and `F21 production-method` are descriptive facets and may be used on reportable base terms when the information is present and not already implicit.
@@ -120,7 +122,8 @@ These are the practical ground rules the solver should always keep in view:
 - Single-cardinality facet families allow only one value: `F01`, `F02`, `F03`, `F07`, `F11`, `F22`, `F24`, `F26`, `F30`, `F32`, and `F34`.
 - `F27` must refine or equal the implicit/source commodity chain.
 - On raw commodities, do not use the BR13 disintegration-family `F03` descriptors: `A06JD`, `A06JE`, `A06JF`, `A06JG`, `A07Y2`, `A07Y3`, or `A07Y4`. Non-disintegration physical-state descriptors are not blocked by BR13 merely because they are `F03`.
-- Do not use `F01` on raw commodities. On derivatives, use `F01` only when the derivative rules permit it.
+- On raw commodities, use explicit `F01` only to narrow a generic implicit source; do not use it merely to restate the selected raw commodity. On derivatives, use `F01` only when the derivative rules permit it.
+- On raw or derivative terms, use `F04` only for minor later-added ingredients such as coatings, flavourings, or decorations; do not use it for the constitutive source.
 - Code syntax is `base#facetType.code($facetType2.code2...)`.
 - The full facet string must stay within the SSD2 limit of 256 characters.
 
