@@ -1,6 +1,6 @@
 ---
 title: "ANSES FoodEx2 Codification Guidance"
-last_updated: "2026-06-12"
+last_updated: "2026-08-01"
 source_tier: "expert_guidance"
 select_when: >-
   The case benefits from experienced-coder conventions and common coding traps
@@ -105,7 +105,7 @@ This ingest keeps the ANSES document as `expert_guidance`. The points below are 
 - The document was written for food-database interoperability and harmonised codification. It is not itself a monitoring-domain reporting specification.
 - The document cites MTX 15.0 as the current catalogue at the time of writing. This wiki currently tracks newer MTX and validator behaviour where available.
 - Some ANSES examples and OCR text contain typographic or extraction noise. Use the PDF page reference and the current catalogue/validator before promoting any example into an operational rule.
-- The section on spices and herbal infusion materials should be handled carefully: ANSES describes a dried-by-default convention for spices and infusion materials, but current catalogue terms and validator rules can still provide specific dried derivative terms for particular commodities. Do not use that convention to override a current valid derivative base term.
+- The dried-by-default convention remains valid for spices and non-tea herbal infusion materials: their normally marketed dried form remains raw. Do not generalise the convention to *Camellia sinensis*, whose fresh leaves follow the raw branch and whose dried or fermented leaves follow the derivative branch. Use the candidate scope and the authoritative boundary in [[base-term-selection]] rather than treating any nearby dried-tea derivative as applicable to all infusion materials.
 
 ## Relevant Pages
 

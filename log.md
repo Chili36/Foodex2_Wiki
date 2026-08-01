@@ -1,9 +1,15 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-07-31"
+last_updated: "2026-08-01"
 ---
 
 # Log
+
+## [2026-08-01] correction | Preserve the marketed-dry infusion exception
+
+- Added the EFSA rule that spices and non-tea herbal infusion materials remain raw commodities in their normally marketed dried state, while *Camellia sinensis* follows the fresh-raw to dried/fermented-derivative path established in the 2015 maintenance.
+- Clarified that `A04KK` is scoped to *Camellia sinensis* and that a `BR19` rejection of explicit drying does not by itself prove that a nearby derivative candidate covers the product.
+- Kept the exception out of the always-attached runtime rules, placed one compact canonical statement in prompt-visible base-term guidance, and added varied regression coverage outside runtime prompts.
 
 ## [2026-07-31] runtime | Cache the stable Sonnet selector prefix
 

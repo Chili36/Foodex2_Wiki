@@ -7,6 +7,7 @@ select_when: >-
   a generic fallback plus origin facet when the exact term is missing.
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+  - "EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf"
   - "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
   - "FoodEx2 codification guidance_2025_12_v3.pdf"
 related:
@@ -14,7 +15,7 @@ related:
   - "[[implicit-vs-explicit-facets]]"
   - "[[ingredient-facets]]"
   - "[[process-facets]]"
-last_updated: "2026-06-12"
+last_updated: "2026-08-01"
 ---
 
 # Base Term Selection
@@ -34,6 +35,11 @@ last_updated: "2026-06-12"
 - Use a derivative base term when a nature-changing process already defines a standard group. The process list here is illustrative, not exhaustive: this includes cases such as milling, drying, curing, fermentation, pickling/marinating, canning/jarring or smoking whenever FoodEx2 already has the processed group. Do not rebuild these from a raw term plus `F28` if the derivative group exists. The origin chain that follows from that choice is explained in [[implicit-vs-explicit-facets]]. (EFSA guidance p15-17, p44, p58)
 - When raw-versus-derivative status is unclear, inspect the processed or preserved branch for the commodity before accepting a raw base plus `F28`. The existence of a derivative branch is evidence that the process belongs in the base-term choice. (ANSES guidance p27-30)
 - Use a composite base term for foods made by combining ingredients in a recipe. For same-nature mixtures, stay on a generic raw/derivative base term and add multiple `F27`. For balanced mixed natures, move to a composite base term, then describe the characterising recipe components with [[ingredient-facets]]. (EFSA guidance p45, p49-50; Training p6)
+
+<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p42-43; EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf p15 -->
+## Marketed-Dry Plant Exception
+
+- Drying normally creates a derivative, but spices and herbal infusion materials remain raw commodities regardless of drying because the dried form is their market default; do not add drying merely to restate that default. *Camellia sinensis* does not follow this exception: fresh tea leaves are raw, while dried or fermented tea leaves are derivatives. `A04KK` is scoped to *Camellia sinensis*, not non-tea herbal infusion materials. (EFSA guidance p42-43; 2015 maintenance p15)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p18-19, p47-49 -->
 ## Tie-Break Rules

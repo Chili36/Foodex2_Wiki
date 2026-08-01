@@ -1,0 +1,138 @@
+{
+  "version": 1,
+  "description": "Reviewed FoodEx2 ontology-exception cases. These examples test transfer and negative controls outside runtime prompts; they are not prompt demonstrations.",
+  "cases": [
+    {
+      "id": "ONTOLOGY-DRY-001",
+      "reviewed": true,
+      "source": "EFSA revision 2 p42-43; maintenance 2015 p15",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "For dried non-tea herbal infusion material made from leaves, should I use raw A03JK without an explicit drying facet, or derivative A04KK?",
+      "reference_answer": "Use the appropriate raw herbal-infusion-material base, such as A03JK when its scope fits, without adding drying merely to restate the normally marketed dried state. Herbal infusion materials retain the marketed-dry raw exception. A04KK is a derivative scoped to dried or fermented Camellia sinensis tea leaves and does not cover non-tea herbal infusion materials.",
+      "reference_pages": [
+        "base-term-selection.md"
+      ],
+      "acceptable_pages": [
+        "process-validation-rules.md",
+        "process-facets.md",
+        "implicit-vs-explicit-facets.md",
+        "validation-rules.md",
+        "term-type-facet-constraints.md",
+        "maintenance-2015.md",
+        "anses-codification-guidance.md",
+        "RUNTIME_RULES.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "contaminants-foodex2.md",
+        "vmpr-foodex2.md",
+        "vmpr-legislative-mapping.md",
+        "additives-flavourings-foodex2.md",
+        "domoic-acid-scallops.md"
+      ],
+      "required_answer_terms": [
+        "A03JK",
+        "A04KK",
+        "Camellia sinensis",
+        "raw"
+      ],
+      "forbidden_answer_terms": []
+    },
+    {
+      "id": "ONTOLOGY-DRY-002",
+      "reviewed": true,
+      "source": "EFSA revision 2 p42-43",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "Does ordinary drying turn a marketed dried spice into a FoodEx2 derivative?",
+      "reference_answer": "No. Spices are a marketed-dry exception and remain raw commodities irrespective of drying. Do not add an explicit drying facet merely to restate their default dried state. If the spice is fresh, the non-default unprocessed status may be reported when relevant.",
+      "reference_pages": [
+        "base-term-selection.md"
+      ],
+      "acceptable_pages": [
+        "process-facets.md",
+        "process-validation-rules.md",
+        "implicit-vs-explicit-facets.md",
+        "maintenance-2015.md",
+        "RUNTIME_RULES.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "contaminants-foodex2.md",
+        "vmpr-foodex2.md",
+        "additives-flavourings-foodex2.md"
+      ],
+      "required_answer_terms": [
+        "raw",
+        "spice"
+      ],
+      "forbidden_answer_terms": []
+    },
+    {
+      "id": "ONTOLOGY-DRY-003",
+      "reviewed": true,
+      "source": "EFSA annual maintenance 2015 p15",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "Should dried or fermented Camellia sinensis tea leaves use the same raw-by-default treatment as herbal infusion materials?",
+      "reference_answer": "No. The 2015 split removed Camellia sinensis from the marketed-dry exception. Fresh Camellia sinensis leaves are raw; dried or fermented tea leaves follow the derivative path, for which A04KK is the relevant scoped group when the candidate coverage fits.",
+      "reference_pages": [
+        "base-term-selection.md"
+      ],
+      "acceptable_pages": [
+        "maintenance-2015.md",
+        "process-facets.md",
+        "process-validation-rules.md",
+        "implicit-vs-explicit-facets.md",
+        "RUNTIME_RULES.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "contaminants-foodex2.md",
+        "vmpr-foodex2.md",
+        "additives-flavourings-foodex2.md"
+      ],
+      "required_answer_terms": [
+        "Camellia sinensis",
+        "A04KK",
+        "derivative"
+      ],
+      "forbidden_answer_terms": []
+    },
+    {
+      "id": "ONTOLOGY-DRY-004",
+      "reviewed": true,
+      "source": "EFSA annual maintenance 2015 p15-16",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "Is a prepared herbal infusion beverage coded as the same raw material as the dried leaves used to brew it?",
+      "reference_answer": "No. First distinguish the dry herbal infusion material from the prepared beverage. The marketed-dry exception governs the dry material; a brewed herbal infusion is a beverage product and should use the appropriate beverage base rather than the raw dry-material base.",
+      "reference_pages": [
+        "validation-rules.md",
+        "base-term-selection.md"
+      ],
+      "acceptable_pages": [
+        "maintenance-2015.md",
+        "process-facets.md",
+        "implicit-vs-explicit-facets.md",
+        "RUNTIME_RULES.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "contaminants-foodex2.md",
+        "vmpr-foodex2.md",
+        "additives-flavourings-foodex2.md"
+      ],
+      "required_answer_terms": [
+        "beverage",
+        "dry"
+      ],
+      "forbidden_answer_terms": []
+    }
+  ]
+}

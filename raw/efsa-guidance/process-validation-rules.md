@@ -10,12 +10,14 @@ sources:
   - "BUSINESS-RULES.md"
   - "BUSINESS-RULES-COMPACT.json"
   - "docs/VALIDATION_RULES_SUMMARY.md"
+  - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+  - "EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf"
 related:
   - "[[business-rules]]"
   - "[[process-facets]]"
   - "[[term-type-facet-constraints]]"
   - "[[validation-rules]]"
-last_updated: "2026-06-07"
+last_updated: "2026-08-01"
 ---
 
 # Process Validation Rules
@@ -38,6 +40,7 @@ last_updated: "2026-06-07"
 
 - `BR16`: an explicit process should not be less specific than the process already implicit in the base term. Check the underlying implicit-process logic in [[process-facets]]. (Business Rules `BR16`)
 - `BR19`: raw commodities cannot take processes that create a derivative; pick the derivative base term instead, following [[base-term-selection]]. Official BR19 coverage comes from `BR_Data.csv`, but the sibling validator may emit transparent `BR19+` warnings from `BR_Data.extension.csv` for clear data-freshness gaps. (Business Rules `BR19`)
+- A `BR19` rejection proves that the explicit process is invalid on that raw base; it does not prove that every nearby derivative candidate covers the product. For marketed-dry spices and herbal infusion materials, the correct repair can be to keep the raw base and remove redundant drying. Read the candidate scope and the exception in [[base-term-selection]] before switching bases. (EFSA guidance p42-43; 2015 maintenance p15)
 - `BR26`: two processes from the same ordinal group conflict semantically, but current validators can be silent because of the known divergence described in [[business-rules]]. (Business Rules `BR26`)
 - `BR27`: decimal ordinals in the same process family also conflict; they represent alternative derivative paths. The term-type consequences of those choices are summarised in [[term-type-facet-constraints]]. (Business Rules `BR27`)
 - `BR28`: reconstitution or dilution cannot be added to already dehydrated, dried, powdered, or concentrated products; use the reconstituted product term instead. (Business Rules `BR28`)

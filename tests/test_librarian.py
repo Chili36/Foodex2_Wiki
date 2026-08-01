@@ -849,6 +849,9 @@ def test_context_pack_projection_omits_examples_and_large_reference_catalogs() -
     base_page = store.read_page("base-term-selection.md")
     projected_base = store.prompt_content_for_context_pack(base_page)
     assert projected_base is not None
+    assert "## Marketed-Dry Plant Exception" in projected_base
+    assert "spices and herbal infusion materials remain raw commodities" in projected_base
+    assert "`A04KK` is scoped to *Camellia sinensis*" in projected_base
     assert "## Worked Examples" not in projected_base
     assert "kangaroo fresh fat tissue" not in projected_base
 

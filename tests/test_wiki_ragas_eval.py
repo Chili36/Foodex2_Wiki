@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -16,6 +17,9 @@ from scripts.wiki_ragas_eval import (
     score_with_ragas,
     summarize,
 )
+
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
 
 
 def test_load_cases_validates_and_filters_reviewed(tmp_path) -> None:
@@ -52,6 +56,21 @@ def test_load_cases_rejects_duplicate_ids(tmp_path) -> None:
 
     with pytest.raises(ValueError, match="duplicate case id"):
         load_cases(path)
+
+
+def test_ontology_exception_cases_are_reviewed_and_loadable() -> None:
+    cases = load_cases(
+        REPO_ROOT / "evals" / "wiki-rag" / "ontology_exception_cases.json",
+        only_reviewed=True,
+    )
+
+    assert [case["id"] for case in cases] == [
+        "ONTOLOGY-DRY-001",
+        "ONTOLOGY-DRY-002",
+        "ONTOLOGY-DRY-003",
+        "ONTOLOGY-DRY-004",
+    ]
+    assert all(case.get("reference_answer") for case in cases)
 
 
 def test_build_ask_payload_holds_selector_fixed() -> None:
