@@ -2207,6 +2207,71 @@
         ],
         "notes": "Rubric 1+6: the case turns on an infusion ambiguity — the same words can mean the dry infusion material or the final reconstituted beverage, and the two map to different base terms. validation-rules is must_have because its practical dataset-review guidance explicitly flags this infusion-ambiguity check (decide whether the code describes the dry material or the reconstituted beverage); a coder who skips it can pick the wrong base and produce a code for the wrong product. term-type validation must_have for base-term legality. No facet page is must_have because the decision is base selection, not facet construction (same shape as SEL-0015 / SEL-0035). Rubric 2: no domain -> all overlays must_not."
       }
+    },
+    {
+      "id": "SEL-0040",
+      "source": "EFSA FoodEx2 revision 2 p42-43 and annual maintenance 2015 p15",
+      "reviewed": true,
+      "request": {
+        "search_term": "Dried herbal infusion material from leaves: raw A03JK without drying, or derivative A04KK?",
+        "deconstructed_query": {
+          "food": "non-tea herbal infusion material from leaves",
+          "process": "normally marketed dried state",
+          "boundary": "A03JK raw herbal infusion material versus A04KK Camellia sinensis derivative"
+        },
+        "context": {},
+        "candidate_hints": [
+          {
+            "code": "A03JK",
+            "name": "Herbal infusion materials from leaves and herbs",
+            "termType": "r"
+          },
+          {
+            "code": "A04KK",
+            "name": "Teas leaves, dry and/or fermented, and similar",
+            "termType": "d"
+          }
+        ],
+        "max_pages": 7
+      },
+      "labels": {
+        "must_have": [
+          "base-term-selection.md",
+          "process-validation-rules.md"
+        ],
+        "acceptable": [
+          "process-facets.md",
+          "implicit-vs-explicit-facets.md",
+          "validation-rules.md",
+          "term-type-facet-constraints.md",
+          "business-rules.md",
+          "anses-codification-guidance.md",
+          "foodex2-overview.md",
+          "facet-coding-rules.md",
+          "code-string-format.md",
+          "structural-validation.md"
+        ],
+        "must_not": [
+          "README.md",
+          "PROJECT_CONTEXT.md",
+          "KNOWLEDGE_ARCHITECTURE.md",
+          "WIKI_ARCHITECTURE_FOR_MODELS.md",
+          "INGEST_WORKFLOW.md",
+          "MAINTENANCE_WORKFLOW.md",
+          "SCHEMA.md",
+          "log.md",
+          "maintenance-*",
+          "pesticides-foodex2.md",
+          "contaminants-foodex2.md",
+          "domoic-acid-scallops.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md",
+          "additives-flavourings-foodex2.md",
+          "chemical-monitoring-foodex2.md",
+          "domain-specific-validation.md"
+        ],
+        "notes": "This case tests a source-defined ontology exception rather than a memorized food example. base-term-selection is the canonical prompt-visible rule; process-validation-rules is required because BR19 rejection must not be misread as proof that A04KK covers non-tea herbal materials. Maintenance pages are excluded from coding-scope context packs, so the operational pages must carry the rule. No reporting domain is supplied, so all domain overlays remain prohibited."
+      }
     }
   ]
 }

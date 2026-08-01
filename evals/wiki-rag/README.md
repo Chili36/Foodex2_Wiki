@@ -136,3 +136,22 @@ reports/wiki-ragas-evals/<date>-<label>/results.json
 Interpret Ragas scores as comparative judge signals, not ground truth. Inspect
 the stored answers, citations, page sets, deterministic failures, and per-case
 judge reasons before choosing an endpoint or model.
+
+## Ontology-exception regressions
+
+[`ontology_exception_cases.json`](ontology_exception_cases.json) contains
+reviewed transfer cases and negative controls for source-defined FoodEx2
+exceptions. Keep these examples in evaluation data rather than runtime prompts.
+For example, dry spices and non-tea herbal infusion materials retain raw status,
+while dried or fermented *Camellia sinensis* follows the derivative path.
+
+Run the set through the same harness:
+
+```bash
+.venv/bin/python scripts/wiki_ragas_eval.py \
+  --cases evals/wiki-rag/ontology_exception_cases.json \
+  --label ontology-exceptions \
+  --answerer-models gpt-5.6-terra \
+  --only-reviewed \
+  --dry-run
+```

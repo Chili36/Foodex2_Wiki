@@ -60,7 +60,7 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 ## Maintenance History
 
 - [maintenance-history.md](raw/efsa-guidance/maintenance-history.md): Cross-year timeline of FoodEx2 changes after revision 2.
-- [maintenance-2015.md](raw/efsa-guidance/maintenance-2015.md): First annual maintenance after revision 2.
+- [maintenance-2015.md](raw/efsa-guidance/maintenance-2015.md): Tea and herbal-infusion restructuring, including the marketed-dry raw exception and the Camellia sinensis derivative split.
 - [maintenance-2016-2018.md](raw/efsa-guidance/maintenance-2016-2018.md): Multi-year maintenance wave with major taxonomy and mapping work.
 - [maintenance-2019.md](raw/efsa-guidance/maintenance-2019.md): Feed-focused revision plus bird and implicit-facet changes.
 - [maintenance-2020.md](raw/efsa-guidance/maintenance-2020.md): Honey bees, birds, SIGMA, scallops, and reportability changes.
