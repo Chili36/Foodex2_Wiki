@@ -866,7 +866,14 @@ def _create_json_completion(
                 {"role": "user", "content": f"Return JSON only.\n\n{user_content}"},
             ],
             "max_tokens": max_tokens,
-            "response_format": {"type": "json_object"},
+            "response_format": {
+                "type": "json_schema",
+                "json_schema": {
+                    "name": "wiki_response",
+                    "strict": False,
+                    "schema": {"type": "object", "additionalProperties": True},
+                },
+            },
         }
         if reasoning_effort:
             payload["reasoning_effort"] = reasoning_effort

@@ -1,0 +1,82 @@
+version: 1
+testset_id: efsa-core-v1
+source_manifest: evals/coverage/sources/manifest.yaml
+source_ids:
+  - efsa-foodex2-revision-2
+  - efsa-foodex2-maintenance-2015
+  - efsa-foodex2-maintenance-2016-2018
+  - efsa-foodex2-maintenance-2019
+  - efsa-foodex2-maintenance-2020
+  - efsa-foodex2-maintenance-2021
+  - efsa-foodex2-maintenance-2022
+  - efsa-foodex2-maintenance-2023
+  - efsa-foodex2-maintenance-2024
+
+generation:
+  chunk_max_chars: 6000
+  questions_per_chunk: 1
+  num_evolutions: 1
+  quality_threshold: 0.5
+  quality_retries: 2
+  evolutions:
+    reasoning: 0.25
+    multi-hop: 0.25
+    concretising: 0.25
+    comparative: 0.25
+
+qualification:
+  eligible_categories:
+    - operational
+    - structural
+    - exception
+  max_claims_per_chunk: 3
+  min_evidence_chars: 24
+  completeness_audit: true
+  max_tokens: 1536
+
+retrieval:
+  path: context-pack
+  wiki_url: http://127.0.0.1:8010
+  max_pages: 7
+  timeout_seconds: 240
+
+models:
+  auditor:
+    provider: lmstudio
+    model: env:COVERAGE_AUDITOR_MODEL
+    base_url: env:COVERAGE_LMSTUDIO_BASE_URL
+    temperature: 0
+    seed: 42
+    max_tokens: 512
+  generator:
+    provider: lmstudio
+    model: env:COVERAGE_GENERATOR_MODEL
+    base_url: env:COVERAGE_LMSTUDIO_BASE_URL
+    temperature: 0
+    seed: 42
+    max_tokens: 2048
+  selector:
+    provider: lmstudio
+    model: env:COVERAGE_SELECTOR_MODEL
+    base_url: env:COVERAGE_LMSTUDIO_BASE_URL
+  answerer:
+    provider: lmstudio
+    model: env:COVERAGE_DMT_ANSWERER_MODEL
+    base_url: env:COVERAGE_LMSTUDIO_BASE_URL
+    temperature: 0
+    seed: 42
+    max_tokens: 2048
+  judge:
+    provider: lmstudio
+    model: env:COVERAGE_JUDGE_MODEL
+    base_url: env:COVERAGE_LMSTUDIO_BASE_URL
+    temperature: 0
+    seed: 42
+    max_tokens: 512
+  escalation_judge:
+    provider: openai
+    model: env:COVERAGE_ESCALATION_MODEL
+    base_url: https://api.openai.com/v1
+    api_key_env: OPENAI_API_KEY
+    temperature: 0
+    max_tokens: 512

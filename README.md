@@ -168,6 +168,11 @@ Compare `/wiki/ask` with `/wiki/ask-rag` on reviewed DMT questions:
 
 Always inspect the dry run before removing `--dry-run`; endpoint calls and judge-model calls multiply across cases, endpoints, and models. See [evals/wiki-rag/README.md](evals/wiki-rag/README.md) for dataset rules, scoring, and result interpretation.
 
+Source-driven coverage evaluation is separate from these witness tests. It generates
+versioned questions from authoritative EFSA documents, treats gaps as the output rather
+than a merge failure, and defaults to local LM Studio models. See
+[evals/coverage/README.md](evals/coverage/README.md).
+
 ## Local Models
 
 The API can route LLM work through an OpenAI-compatible LM Studio server:

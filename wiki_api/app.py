@@ -253,6 +253,26 @@ class ContextPackRequest(CommonRequestFields):
         ),
         deprecated=True,
     )
+    selector_model: str | None = Field(
+        default=None,
+        description=(
+            "Optional per-request selector override. Coverage evaluation uses this "
+            "to keep the full retrieval path on a local LM Studio model."
+        ),
+    )
+    selector_reasoning_effort: Literal["low", "medium", "high"] | None = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def _normalize_selector_overrides(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            normalized = dict(data)
+            for field_name in ("selector_model", "selector_reasoning_effort"):
+                value = normalized.get(field_name)
+                if isinstance(value, str):
+                    normalized[field_name] = value.strip() or None
+            return normalized
+        return data
 
 
 class PolicyPackRequest(CommonRequestFields):
@@ -1761,11 +1781,18 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
                 "candidate_count": len(effective_candidates),
                 "context": request.context,
                 "max_pages": request.max_pages,
+                "selector_model": request.selector_model,
+                "selector_reasoning_effort": request.selector_reasoning_effort,
             },
             ensure_ascii=False,
         ),
     )
-    runner = get_selector_runner(scope="coding")
+    runner = get_selector_runner(
+        model=request.selector_model,
+        max_pages=request.max_pages,
+        reasoning_effort=request.selector_reasoning_effort,
+        scope="coding",
+    )
     if request.max_pages != runner.max_pages:
         runner.max_pages = request.max_pages
     payload = {

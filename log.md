@@ -1,9 +1,34 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-08-01"
+last_updated: "2026-08-02"
 ---
 
 # Log
+
+## [2026-08-02] correction | Restore F24 intended-use applicability
+
+- Corrected the overbroad statement that grouped `F24` and `F25` as microbiology-only: EFSA defines `F24 Intended-use` as single-cardinality and applicable to all food types, while `F25 Risky-ingredient` is repeatable and applies to composites.
+- Added the operational F24 boundary from the 2016-2018 maintenance: represent intended use when the distinction is required; a physical-state phrase in an extended name can accompany that need but does not independently trigger F24.
+- Added positive and negative reviewed regression cases around the general decision boundary rather than encoding a pasta-specific rule. Tracked as GitHub issue #51.
+
+## [2026-08-01] correction | Restore direct-on-raw process applicability
+
+- Added the FoodEx2 revision 2 Table 22 rule that non-nature-changing treatments, including physical division and dimension reduction, can be applied directly to raw commodities as `F28`, subject to the table's derivative exceptions.
+- Clarified the physical-state/process boundary from section 5.9: rejecting a disintegration-family `F03` under BR13 does not discard the treatment evidence; the coder must still choose between a specific derivative and a permitted direct-on-raw process.
+- Recorded the primary EFSA IDATA answer for turmeric powder, `A01AC#F28.A07LA`, as traceable source material and regression evidence.
+
+## [2026-08-01] correction | Preserve the additives physical-state collection-year boundary
+
+- Clarified that ChemMon 2026 requires an additives/flavourings `F33` category but recommends missing `F03` only for its named legislative categories; it does not make physical state universal.
+- Recorded the collection-year change: ChemMon 2025 illustrated red wine as `A03MX#F03.A06JL`, whereas the official 2026 red-wine example is bare `A03MX` with implicit category `14.2.2` `F33`.
+- Added reviewed positive and negative regression cases so future guidance does not incorrectly promote the obsolete 2025 wine illustration into a universal rule.
+
+## [2026-08-01] evaluation | Add source-driven coverage harness
+
+- Added a separate non-blocking coverage suite that chunks hash-verified EFSA sources, generates versioned DeepEval questions through local LM Studio, answers through the production context-pack path, and emits three-way source-grounded gap verdicts.
+- Added automated source-claim qualification, exact-evidence validation, a second completeness audit, and question screening so coverage measures transferable key facts rather than quotations, footnotes, or source-replication trivia without requiring human review.
+- Added no-model source-to-test coverage indexing and source-revision staleness analysis without changing existing witness-test schemas.
+- The first mechanical index found explicit page-level witness coverage on 5 of 257 authoritative pages (1.95%); local-model coverage generation remains deliberate and versioned rather than automatic in CI.
 
 ## [2026-08-01] correction | Preserve the marketed-dry infusion exception
 

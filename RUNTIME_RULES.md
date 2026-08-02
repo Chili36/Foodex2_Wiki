@@ -6,11 +6,12 @@ select_when: >-
   term, use the origin-facet family that matches that type, and add only
   explicit facets that are not already implicit. It anchors every FoodEx2
   coding decision.
-last_updated: "2026-06-07"
+last_updated: "2026-08-01"
 sources:
   - "raw/efsa-guidance/policy-contract.md"
   - "raw/efsa-guidance/base-term-selection.md"
   - "raw/efsa-guidance/term-type-facet-constraints.md"
+  - "raw/efsa-guidance/process-facets.md"
   - "raw/efsa-guidance/implicit-vs-explicit-facets.md"
   - "raw/efsa-guidance/business-rules.md"
 related:
@@ -45,6 +46,7 @@ Use it as the always-on runtime layer before the supporting guidance pages.
 - Do not duplicate implicit facets explicitly.
 - Do not reconstruct a standard derivative group from a raw base plus `F28` when the derivative group already exists.
 - For raw commodities, `BR13` blocks the disintegration-family `F03` descriptors such as powder, paste, and puree; it is not a blanket ban on every `F03` descriptor.
+- A blocked raw-commodity `F03` does not erase the treatment: check whether words such as ground, milled, crushed, minced, sliced, or diced denote a Table-22 `F28` process applied directly to the raw base, while still using a derivative base when a specific one exists. (EFSA guidance p43-44 Table 22, p52 section 5.9)
 - Treat reporting-domain overlays as opt-in; do not infer a domain unless context or domain-filtered candidates identify it.
 - Treat returned wiki pages as coding knowledge, not merely background. The candidate list is retrieval evidence, but it can be incomplete.
 - Do not invent FoodEx2 codes from memory. Prefer candidates, but a code explicitly named in returned wiki pages, catalogue data, or validator evidence may be used when that evidence shows the retrieved candidate list is incomplete.

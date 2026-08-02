@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "description": "Reviewed cases for direct-on-raw Table 22 processes and the F03/F28 boundary.",
+  "cases": [
+    {
+      "id": "PROCESS-DIRECT-RAW-001",
+      "reviewed": true,
+      "source": "EFSA FoodEx2 revision 2 p43-44 Table 22; EFSA IDATA reply - turmeric powder",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "How should I code Tumeric powder in FoodEx2? The available base candidate is A01AC Turmeric roots.",
+      "reference_answer": "Use A01AC#F28.A07LA. Keep the raw turmeric-roots base and express powder as the grinding/milling/crushing process. Do not add an F03 powder descriptor; the marketed-dry spice rule and the direct-on-raw Table 22 process rule compose rather than cancelling the grinding information.",
+      "reference_pages": [
+        "process-facets.md"
+      ],
+      "acceptable_pages": [
+        "base-term-selection.md",
+        "term-type-facet-constraints.md",
+        "facet-coding-rules.md",
+        "process-validation-rules.md",
+        "RUNTIME_RULES.md"
+      ],
+      "must_not_pages": [
+        "index.md"
+      ],
+      "required_answer_terms": [
+        "A01AC#F28.A07LA",
+        "grinding"
+      ],
+      "forbidden_answer_terms": [
+        "powder is only a physical state",
+        "drop the process"
+      ]
+    },
+    {
+      "id": "PROCESS-DIRECT-RAW-002",
+      "reviewed": true,
+      "source": "EFSA FoodEx2 revision 2 p43-44 Table 22",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "If no specific roasted-nut derivative exists, should roasted tree nuts use raw base A014C with F28.A07GY roasting?",
+      "reference_answer": "Yes. Table 22 normally permits cooking and thermal-preparation processes directly on raw commodities, with named derivative exceptions for frying or roasting potatoes, cooking eggs, and caramelisation or browning in foods such as sugar and milk. Those exceptions do not make roasting tree nuts a derivative by default, so A014C#F28.A07GY is the supported construction when no specific derivative exists. Any minor coating ingredient is a separate F04 decision.",
+      "reference_pages": [
+        "process-facets.md"
+      ],
+      "acceptable_pages": [
+        "base-term-selection.md",
+        "ingredient-facets.md",
+        "process-validation-rules.md",
+        "RUNTIME_RULES.md"
+      ],
+      "must_not_pages": [
+        "index.md"
+      ],
+      "required_answer_terms": [
+        "A014C#F28.A07GY",
+        "Table 22"
+      ],
+      "forbidden_answer_terms": [
+        "roasting always creates a derivative"
+      ]
+    },
+    {
+      "id": "PROCESS-DIRECT-RAW-003",
+      "reviewed": true,
+      "source": "EFSA FoodEx2 revision 2 p52 section 5.9",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "When a mechanical treatment changes a food's physical state and both F03 and F28 seem possible, which representation should I prioritise?",
+      "reference_answer": "First use a specific base term if one exists. Otherwise, when in doubt, FoodEx2 guidance gives priority to the treatment represented by F28. In the relatively few cases where both the treatment and new physical state add information and are legal, it suggests reporting both.",
+      "reference_pages": [
+        "process-facets.md"
+      ],
+      "acceptable_pages": [
+        "facet-coding-rules.md",
+        "term-type-facet-constraints.md",
+        "base-term-selection.md",
+        "RUNTIME_RULES.md"
+      ],
+      "must_not_pages": [
+        "index.md"
+      ],
+      "required_answer_terms": [
+        "treatment",
+        "F28"
+      ],
+      "forbidden_answer_terms": [
+        "always use F03"
+      ]
+    }
+  ]
+}

@@ -1275,6 +1275,35 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     ]
 
 
+def test_context_pack_accepts_per_request_local_selector_override(monkeypatch) -> None:
+    runner = FakeSelector()
+    runner.model = "lmstudio:fixture-selector"
+    captured: dict[str, object] = {}
+
+    def fake_get_selector_runner(**kwargs: object) -> FakeSelector:
+        captured.update(kwargs)
+        return runner
+
+    monkeypatch.setattr(app_module, "get_selector_runner", fake_get_selector_runner)
+    response = request(
+        "POST",
+        "/wiki/context-pack",
+        json={
+            "search_term": "local coverage query",
+            "selector_model": "lmstudio:fixture-selector",
+            "selector_reasoning_effort": "low",
+        },
+    )
+    assert response.status_code == 200
+    assert captured == {
+        "model": "lmstudio:fixture-selector",
+        "max_pages": 7,
+        "reasoning_effort": "low",
+        "scope": "coding",
+    }
+    assert response.json()["trace"]["model"] == "lmstudio:fixture-selector"
+
+
 def test_context_pack_can_return_domoic_acid_scallop_overlay() -> None:
     app_module.selector_runner = FakeDomoicAcidScallopSelector()
 
