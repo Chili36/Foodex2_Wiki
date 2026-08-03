@@ -1,0 +1,99 @@
+version: 1
+testset_id: efsa-core-v1-audited
+generation_date: '2026-08-01T18:59:57.917129+00:00'
+source_manifest: evals/coverage/sources/manifest.yaml
+sources:
+- id: efsa-foodex2-revision-2
+  version: revision-2
+  sha256: 26fb6badf3855c8fa885b527b896250a86d7c305ad782adedd446a7af1ce49d5
+- id: efsa-foodex2-maintenance-2015
+  version: '2015'
+  sha256: bafaf3776dfb17e3532a016d00c687c56710ac13214fa4227a9448ca285cad10
+- id: efsa-foodex2-maintenance-2016-2018
+  version: 2016-2018
+  sha256: 4803f77332f109eef1e858aa327e997628fa40869d52898d017b8357d2d40879
+- id: efsa-foodex2-maintenance-2019
+  version: '2019'
+  sha256: 926509bd2012c459cb46f01c004adc5de638e990b9262b5d1cb25feaecff9fd6
+- id: efsa-foodex2-maintenance-2020
+  version: '2020'
+  sha256: 4a4f3954fc7b31bebfe89bf0da60b1767794b44c88ce8417a2044944126ebee7
+- id: efsa-foodex2-maintenance-2021
+  version: '2021'
+  sha256: f8a7e804bb91e3bc5bce0bfd503b6e1ad2f702f251eaaf887c9bae690c9704b3
+- id: efsa-foodex2-maintenance-2022
+  version: '2022'
+  sha256: cd8a4c47d857c1966606e7dfd1cfc0fa65ee503c5029356757791b5b6fc0b559
+- id: efsa-foodex2-maintenance-2023
+  version: '2023'
+  sha256: dd2b9eba2f54a26ce23155f92968c83330b52388fa97e9a0c9b43233c496a509
+- id: efsa-foodex2-maintenance-2024
+  version: '2024'
+  sha256: 3cbdefb949ba89e599cb88d2a148cc8eb0fcf9b4bd1882e41b93a586bd794c9e
+generator:
+  provider: lmstudio
+  model: foodex2-qwen3-14b-v2-mlx
+  base_url: http://127.0.0.1:1234/v1
+  temperature: 0
+  seed: 42
+  questions_per_chunk: 1
+  chunk_max_chars: 6000
+  chunk_ids: []
+  max_chunks: null
+  evolutions:
+    reasoning: 0.25
+    multi-hop: 0.25
+    concretising: 0.25
+    comparative: 0.25
+  num_evolutions: 1
+qualification:
+  model: foodex2-qwen3-14b-v2-mlx
+  eligible_categories:
+  - exception
+  - operational
+  - structural
+  max_claims_per_chunk: 3
+  min_evidence_chars: 24
+  completeness_audit: true
+  require_exact_source_evidence: true
+  automated_question_screening: true
+  human_review_required: false
+retrieval:
+  path: context-pack
+  wiki_url: http://127.0.0.1:8010
+  max_pages: 7
+  timeout_seconds: 240
+models:
+  selector:
+    provider: lmstudio
+    model: foodex2-qwen3-14b-v2-mlx
+    base_url: http://127.0.0.1:1234/v1
+  answerer:
+    provider: lmstudio
+    model: foodex2-qwen3-14b-v2-mlx
+    base_url: http://127.0.0.1:1234/v1
+    temperature: 0
+    seed: 42
+    max_tokens: 2048
+  judge:
+    provider: lmstudio
+    model: gpt-oss-120b
+    base_url: http://127.0.0.1:1234/v1
+    temperature: 0
+    seed: 42
+    max_tokens: 512
+  escalation_judge:
+    provider: openai
+    model: env:COVERAGE_ESCALATION_MODEL
+    base_url: https://api.openai.com/v1
+    api_key_env: OPENAI_API_KEY
+    temperature: 0
+    max_tokens: 512
+question_audit:
+  provider: lmstudio
+  model: gemma-4-26b-a4b-it-qat-mlx
+  base_url: http://127.0.0.1:1234/v1
+  input_question_count: 90
+  accepted_question_count: 36
+  rejected_question_count: 54
+  independent_from_generator: true

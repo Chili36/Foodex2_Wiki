@@ -3,9 +3,9 @@ title: "Facet Coding Rules"
 select_when: >-
   The case needs to map a descriptive detail to the correct facet family and
   decide whether it is worth adding — origin, process, physical state,
-  packaging, qualitative, production-method, or fortification — keeping only
-  the few descriptors that add information not already carried by the base
-  term.
+  packaging, qualitative, production-method, intended-use, risky-ingredient,
+  or fortification — keeping only the few descriptors that add information
+  not already carried by the base term.
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
@@ -16,7 +16,7 @@ related:
   - "[[process-facets]]"
   - "[[ingredient-facets]]"
   - "[[packaging-facets]]"
-last_updated: "2026-06-12"
+last_updated: "2026-08-02"
 ---
 
 # Facet Coding Rules
@@ -29,7 +29,7 @@ last_updated: "2026-06-12"
 - `F13` to `F16` are largely deprecated; use `F28 process` instead, following [[process-facets]]. (EFSA guidance p46-47)
 - Use implicit facets as evidence. They should usually not be repeated, but they can show which facet family should be used to narrow a generic or insufficient base term. (ANSES guidance p36, p39-41)
 
-<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p35-36, p39-40, p46-47, p56; EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p33-36, p54-55 -->
+<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p35-36, p39-40, p46-47, p56; EFSA Supporting Publications - 2019 -  - FoodEx2 maintenance 2016‐2018.pdf p18; EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p33-36, p54-55 -->
 ## Facet Category Reference
 
 Use this table to map an explicit descriptor candidate to the correct `Fxx` family. It is a category guide, not a descriptor catalog; exact descriptor membership should still come from the candidate or validator data.
@@ -51,7 +51,8 @@ Use this table to map an explicit descriptor candidate to the correct `Fxx` fami
 | `F20` | Part consumed or analysed | Analysed or consumed part detail when downstream classification needs it. |
 | `F21` | Production method or growing condition | Production or husbandry method such as organic, wild, aquaculture, indoor, greenhouse, or under-glass growing. |
 | `F23` | Target consumer | Intended consumer group, including infant products and animal feed target categories. |
-| `F24-F25` | Microbiology-specific facets | Specialist microbiological reporting descriptors; use only in microbiology contexts. |
+| `F24` | Intended use | Intended-use distinction required for the selected term or product. It is single-cardinality and applicable to all food types. |
+| `F25` | Risky ingredient | Risk-relevant ingredient descriptor for composite foods. It is repeatable and applicable to composites. |
 | `F26` | Other or missing-detail marker | Add when the exact detailed term is missing and the generic base or origin facet needs an `other` marker. |
 | `F27` | Source commodity | Constitutive source commodity for derivatives or same-nature raw/derivative mixtures. |
 | `F28` | Process | Treatment or processing detail that is not already implicit in the selected base term. |
@@ -61,7 +62,8 @@ Use this table to map an explicit descriptor candidate to the correct `Fxx` fami
 
 - If a candidate is a facet descriptor, it still cannot be the base term. First choose the base term, then attach the descriptor under the correct `Fxx` family only if it adds non-implicit information.
 - A descriptor such as `Indoor/under glass growing condition` belongs under `F21` because it describes production or growing method. In a raw commodity case such as greenhouse cherry tomatoes, the base remains the raw commodity and the greenhouse detail is an optional explicit `F21` when that detail matters.
-- A descriptor such as `Powder`, `Fine powder`, `Coarse powder`, `Paste`, `Fine paste`, `coarse paste/minced`, or `Puree-type` belongs to the BR13 disintegration boundary when attached as `F03` to a raw commodity. Do not generalise that into a ban on every `F03` descriptor for raw commodities; verify the actual descriptor and rule result.
+- Use `F24 Intended-use` when the intended-use distinction must be represented for the selected term or product. EFSA documents a catalogue pattern in which the extended name identifies a physical state and the intended use still needs specification, such as an uncooked product intended to be eaten cooked. The physical-state wording alone is not a universal trigger: add or retain `F24` only when an intended-use distinction is actually required. Only one explicit `F24` value is allowed. (EFSA FoodEx2 maintenance 2016-2018 p18 Table 8; EFSA guidance p35-36)
+- A descriptor such as `Powder`, `Fine powder`, `Coarse powder`, `Paste`, `Fine paste`, `coarse paste/minced`, or `Puree-type` belongs to the BR13 disintegration boundary when attached as `F03` to a raw commodity. That blocks those `F03` descriptors; it does not discard evidence of a treatment. Check whether the wording instead denotes a Table-22 `F28` process such as grinding, mincing, slicing, dicing, or crushing, while still preferring a derivative base when the catalogue provides one. (EFSA guidance p43-44 Table 22, p52 section 5.9; Business Rules `BR13`)
 - Numeric content facets such as `F07` fat content and `F11` alcohol content are single-cardinality. When the source gives a range, do not attach both endpoints; choose the reporting-context convention for reducing the range to one descriptor or leave the range in text if no exact FoodEx2 descriptor is defensible. (ANSES guidance p58)
 - When similar information is available as both a process and a qualitative product claim, prefer the descriptor that matches the source meaning. For example, a labelled low/reduced-lactose product is normally better expressed as qualitative information than as a manufacturing-process fact. (ANSES guidance p45)
 
@@ -77,7 +79,7 @@ Use this table to map an explicit descriptor candidate to the correct `Fxx` fami
 | `F21` | Production method such as organic, aquaculture, wild. |
 | `F26` | Required when coding from a generic term because the exact detailed term is missing. |
 
-- Specialist facets are domain-bound: `F24-F25` for microbiology, `F29-F32` for animal-domain coding, `F33` for legislation-oriented reporting. When those domain overlays matter, continue with [[chemical-monitoring-foodex2]], the relevant reporting-domain page, and [[domain-specific-validation]]. (EFSA guidance p35-36)
+- Some facets have applicability boundaries rather than a reporting-domain restriction: `F24` can apply to all food types when intended use must be represented, while `F25` applies to composite foods. `F29-F32` remain animal-domain facets and `F33` remains legislation-oriented. When those domain overlays matter, continue with [[chemical-monitoring-foodex2]], the relevant reporting-domain page, and [[domain-specific-validation]]. (EFSA guidance p35-36; FoodEx2 maintenance 2016-2018 p18 Table 8)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p40, p47-48; EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p33-36 -->
 ## Worked Examples

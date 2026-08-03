@@ -13,7 +13,7 @@ related:
   - "[[base-term-selection]]"
   - "[[process-facets]]"
   - "[[implicit-vs-explicit-facets]]"
-last_updated: "2026-07-28"
+last_updated: "2026-08-01"
 ---
 
 # Policy Contract
@@ -83,7 +83,7 @@ Use the cited business rules and guidance pages as the controlling sources under
 - `R-PROC-002` when `the chosen base already implies a process`: must ensure any remaining explicit `F28` is at least as specific as the implicit process. {derived_from: process-facets.md; process-validation-rules.md; business-rules.md BR16}
 - `R-CARD-001` when `using F01, F02, F03, F07, F11, F22, F24, F26, F30, F32, or F34`: must keep only one value for that facet family. {derived_from: business-rules.md BR25; structural-validation.md}
 - `R-F27-001` when `an explicit F27 is used`: must make the `F27` refine or equal the implicit or source commodity chain. {derived_from: term-type-facet-constraints.md; business-rules.md BR01; business-rules.md BR05}
-- `R-F03-001` when `food_type=raw_primary_commodity and F03 descriptor is in the BR13 disintegration list`: must not add that `F03` to the final code; choose the appropriate derivative base instead. This is not a blanket ban on all `F03` descriptors for raw commodities. {derived_from: term-type-facet-constraints.md; business-rules.md BR13}
+- `R-F03-001` when `food_type=raw_primary_commodity and F03 descriptor is in the BR13 disintegration list`: must not add that `F03` to the final code; must separately decide whether a specific derivative base exists or whether the wording denotes a Table-22 `F28` treatment applied directly to the raw base. This is not a blanket ban on all `F03` descriptors or on allowed `F28` processes for raw commodities. {derived_from: term-type-facet-constraints.md; process-facets.md; business-rules.md BR13; EFSA guidance p43-44 Table 22, p52 section 5.9}
 - `R-F01-004` when `food_type=derivative and explicit F01 is present`: must use `F01` only when the derivative rules permit it, including the single-`F27` dependency. {derived_from: term-type-facet-constraints.md; business-rules.md BR06; business-rules.md BR07}
 - `R-SYNTAX-001` when `composing the final code`: must use the syntax `base#facetType.code($facetType2.code2...)`. {derived_from: code-string-format.md; business-rules.md BR29}
 - `R-LENGTH-001` when `composing the facet string`: must keep the full facet string at or below 256 characters. {derived_from: code-string-format.md}
@@ -122,6 +122,7 @@ These are the practical ground rules the solver should always keep in view:
 - Single-cardinality facet families allow only one value: `F01`, `F02`, `F03`, `F07`, `F11`, `F22`, `F24`, `F26`, `F30`, `F32`, and `F34`.
 - `F27` must refine or equal the implicit/source commodity chain.
 - On raw commodities, do not use the BR13 disintegration-family `F03` descriptors: `A06JD`, `A06JE`, `A06JF`, `A06JG`, `A07Y2`, `A07Y3`, or `A07Y4`. Non-disintegration physical-state descriptors are not blocked by BR13 merely because they are `F03`.
+- After rejecting a disintegration-family `F03` on a raw commodity, preserve any treatment information by checking for a specific derivative base or a directly applicable Table-22 `F28` process; physical-division wording such as ground, milled, crushed, minced, sliced, or diced may supply that process evidence. (EFSA guidance p43-44 Table 22, p52 section 5.9)
 - On raw commodities, use explicit `F01` only to narrow a generic implicit source; do not use it merely to restate the selected raw commodity. On derivatives, use `F01` only when the derivative rules permit it.
 - On raw or derivative terms, use `F04` only for minor later-added ingredients such as coatings, flavourings, or decorations; do not use it for the constitutive source.
 - Code syntax is `base#facetType.code($facetType2.code2...)`.

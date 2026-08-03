@@ -11,13 +11,14 @@ sources:
   - "BUSINESS-RULES-COMPACT.json"
   - "docs/VALIDATION_RULES_SUMMARY.md"
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+  - "EFSA IDATA reply - turmeric powder.txt"
 related:
   - "[[base-term-selection]]"
   - "[[business-rules]]"
   - "[[facet-coding-rules]]"
   - "[[validation-rules]]"
   - "[[process-validation-rules]]"
-last_updated: "2026-07-28"
+last_updated: "2026-08-01"
 ---
 
 # Term Type And Facet Constraints
@@ -46,7 +47,7 @@ last_updated: "2026-07-28"
 ## Worked Examples
 
 - Before: raw commodity + `F28.A07KQ` freezing. After: valid when the process is allowed for that raw term. (Compact JSON validation examples; `BR19`)
-- Before: raw commodity + `F03.A06JD` powder. After: invalid, `BR13`; use the appropriate powdered or otherwise derivative base term instead. (Business Rules `BR13`)
+- Before: raw commodity + `F03.A06JD` powder. After: invalid under `BR13`; then check separately whether a standard derivative exists or whether the underlying transformation is a Table-22 process applied directly to the raw commodity. For example, EFSA IDATA codes turmeric powder as `A01AC#F28.A07LA`, not with `F03 powder`. (Business Rules `BR13`; EFSA guidance p43-44 Table 22; EFSA IDATA reply: turmeric powder)
 - Before: raw commodity + `F03.A0C2M` solid. After: not a `BR13` problem by itself; solid is outside the disintegration-family list. (Business Rules `BR13`)
 - Before: `A02LS#F27.A0EZJ`. After: invalid, `BR04`. A composite such as pizza must use `F04 ingredient` instead. (Business Rules `BR04`)
 

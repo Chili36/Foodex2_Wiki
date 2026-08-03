@@ -7,11 +7,12 @@ select_when: >-
   fermentation, coating, milling, or similar transformations.
 sources:
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+  - "EFSA IDATA reply - turmeric powder.txt"
 related:
   - "[[facet-coding-rules]]"
   - "[[base-term-selection]]"
   - "[[code-string-format]]"
-last_updated: "2026-04-08"
+last_updated: "2026-08-01"
 ---
 
 # Process Facets
@@ -21,6 +22,15 @@ last_updated: "2026-04-08"
 
 - Add `F28` only when the treatment makes the difference. If the derivative base term already implies the process, do not restate it. Read this together with [[base-term-selection]] when deciding whether the process belongs in the base term or in an explicit facet. (EFSA guidance p44, p46-47, p58)
 - `F13-F16` are largely deprecated; use `F28`. The general "implicit vs explicit" boundary is summarized in [[implicit-vs-explicit-facets]], and the string syntax is in [[code-string-format]]. (EFSA guidance p46-47)
+
+<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p43-44 Table 22, p52 section 5.9 -->
+## Processes Applied Directly To Raw Commodities
+
+- A treatment that does not create a new nature can be added directly to a raw-commodity base as `F28`. Table 22 gives common examples and is explicitly non-exhaustive; first check that the catalogue does not instead provide a specific derivative group. (EFSA guidance p43-44, Table 22)
+- Table 22 includes physical division/dimension reduction (`A07KT` portioning, `A07KV` slicing, `A07KX` dicing/stripe-cutting, `A07KY` mincing/chopping/cutting, `A07KZ` grating, `A07LA` grinding/milling/crushing, and `A0C6N` pulping/mashing), physical decontamination, lowering temperature, non-nature-changing thermal preservation, cooking and thermal preparation, aseptic or vacuum filling, and breading, battering, glazing/icing, sugar, chocolate, or nut coating. (EFSA guidance p43-44, Table 22)
+- Apply Table 22's derivative exceptions before composing the code: some minced-meat groups exist; grain milling with separation creates grain derivatives; some mashing leads to plant purée derivatives; frying or roasting potatoes, cooking eggs, and caramelising/browning foods such as sugar or milk create derivative groups. (EFSA guidance p44, Table 22)
+- When wording can be represented either as a changed physical state or as the mechanical treatment that produced it, give priority to the treatment when in doubt. In the relatively few cases where both add information and are legal, the guidance suggests reporting both treatment and physical state. (EFSA guidance p52, section 5.9)
+- Transformation wording should therefore trigger an `F28` check: sliced maps to `A07KV`, diced to `A07KX`, minced/chopped/cut to `A07KY`, grated to `A07KZ`, and ground/milled/crushed to `A07LA`, subject to the derivative exceptions above. (EFSA guidance p43-44, Table 22)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p78-83 -->
 ## Appendix A2 Codes
@@ -56,6 +66,7 @@ last_updated: "2026-04-08"
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p42, p56 -->
 ## Worked Examples
 
+- Before: `turmeric powder`. After: `A01AC#F28.A07LA`. EFSA IDATA confirms that the available turmeric-roots term remains the base and that powder is added as grinding/milling/crushing; optional `sampMatText` may retain the full sample description. (EFSA IDATA reply: turmeric powder)
 - Before: `fresh sage`. After: `A00YH#F28.A0C0S`. Fresh spices can use `unprocessed` because dried is often default; this is the same "only add what is not implicit" rule described in [[implicit-vs-explicit-facets]]. (EFSA guidance p42)
 - Before: `candied citrus peel, chocolate-coated`. After: `A01PS#F04.A034G$F27.A01QE$F28.A07HP`. Add `F28.A07HP` for the coating. (EFSA guidance p56)
 - Before: `dried kangaroo meat`. After: `A04MP#F01.A0F2G$F26.A07XE`. Drying is implicit in `A04MP`, so no `F28.A07KG` is added; the derivative-base choice comes from [[base-term-selection]]. (EFSA guidance p49)
