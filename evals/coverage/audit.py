@@ -12,10 +12,10 @@ import yaml
 
 from evals.coverage.common import load_yaml, local_model_config, write_json
 from evals.coverage.generate import _non_operational_source_reason, screen_question
-from evals.coverage.local_model import LMStudioDeepEvalModel
+from evals.coverage.local_model import LMStudioModel
 
 
-def _auditor(config: dict[str, Any]) -> tuple[LMStudioDeepEvalModel, dict[str, Any]]:
+def _auditor(config: dict[str, Any]) -> tuple[LMStudioModel, dict[str, Any]]:
     configured = (config.get("models") or {}).get("auditor")
     if not isinstance(configured, dict):
         configured = {
@@ -28,7 +28,7 @@ def _auditor(config: dict[str, Any]) -> tuple[LMStudioDeepEvalModel, dict[str, A
         }
     resolved = local_model_config(configured)
     return (
-        LMStudioDeepEvalModel(
+        LMStudioModel(
             model=resolved["model"],
             base_url=resolved["base_url"],
             api_key_env=resolved.get("api_key_env"),
@@ -45,7 +45,7 @@ def _auditor(config: dict[str, Any]) -> tuple[LMStudioDeepEvalModel, dict[str, A
 def audit_testset_payload(
     testset: dict[str, Any],
     *,
-    auditor: LMStudioDeepEvalModel,
+    auditor: LMStudioModel,
     auditor_config: dict[str, Any],
 ) -> dict[str, Any]:
     cases = testset.get("cases")

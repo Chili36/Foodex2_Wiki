@@ -15,10 +15,8 @@ source_ids:
 generation:
   chunk_max_chars: 6000
   questions_per_chunk: 1
-  num_evolutions: 1
-  quality_threshold: 0.5
-  quality_retries: 2
-  evolutions:
+  styles_per_question: 1
+  question_styles:
     reasoning: 0.25
     multi-hop: 0.25
     concretising: 0.25

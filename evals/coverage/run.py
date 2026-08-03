@@ -22,7 +22,7 @@ from evals.coverage.common import (
     write_json,
 )
 from evals.coverage.coverage_index import load_manifest, sha256_file
-from evals.coverage.local_model import LMStudioDeepEvalModel, require_local_url
+from evals.coverage.local_model import LMStudioModel, require_local_url
 from wiki_api.wiki_store import PROMPT_CONTEXT_PAGE_CATEGORIES, WikiStore
 
 VERDICTS = {"covered", "partial", "missing"}
@@ -34,9 +34,9 @@ EVIDENCE_STOPWORDS = {
 }
 
 
-def _model(config: dict[str, Any], *, allow_remote: bool = False) -> LMStudioDeepEvalModel:
+def _model(config: dict[str, Any], *, allow_remote: bool = False) -> LMStudioModel:
     resolved = resolve_env(config) if allow_remote else local_model_config(config)
-    return LMStudioDeepEvalModel(
+    return LMStudioModel(
         model=str(resolved["model"]),
         base_url=str(resolved.get("base_url") or "https://api.openai.com/v1"),
         api_key_env=resolved.get("api_key_env"),
@@ -177,7 +177,7 @@ def answer_question(
     *,
     question: str,
     config: dict[str, Any],
-    answerer: LMStudioDeepEvalModel,
+    answerer: LMStudioModel,
 ) -> tuple[str, dict[str, Any]]:
     retrieval = config.get("retrieval") or {}
     wiki_url = require_local_url(str(retrieval.get("wiki_url") or "http://127.0.0.1:8000"))
@@ -235,7 +235,7 @@ def judge_once(
     qualified_claims: list[dict[str, Any]],
     wiki_evidence: str,
     retrieved_evidence: str,
-    judge: LMStudioDeepEvalModel,
+    judge: LMStudioModel,
 ) -> dict[str, str]:
     prompt = f"""You are judging three layers of source coverage, not writing the ideal answer.
 

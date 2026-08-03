@@ -25,7 +25,7 @@ last_updated: "2026-08-02"
 
 ## [2026-08-01] evaluation | Add source-driven coverage harness
 
-- Added a separate non-blocking coverage suite that chunks hash-verified EFSA sources, generates versioned DeepEval questions through local LM Studio, answers through the production context-pack path, and emits three-way source-grounded gap verdicts.
+- Added a separate non-blocking coverage suite that chunks hash-verified EFSA sources, generates versioned questions directly through local LM Studio, answers through the production context-pack path, and emits three-way source-grounded gap verdicts.
 - Added automated source-claim qualification, exact-evidence validation, a second completeness audit, and question screening so coverage measures transferable key facts rather than quotations, footnotes, or source-replication trivia without requiring human review.
 - Added no-model source-to-test coverage indexing and source-revision staleness analysis without changing existing witness-test schemas.
 - The first mechanical index found explicit page-level witness coverage on 5 of 257 authoritative pages (1.95%); local-model coverage generation remains deliberate and versioned rather than automatic in CI.

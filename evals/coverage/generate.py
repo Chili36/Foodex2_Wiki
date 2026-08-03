@@ -1,4 +1,4 @@
-"""Generate and commit-ready source-driven questions with DeepEval Synthesizer."""
+"""Generate commit-ready source-driven questions with a local model."""
 from __future__ import annotations
 
 import argparse
@@ -15,21 +15,24 @@ import yaml
 from evals.coverage.chunk import chunk_sources
 from evals.coverage.common import load_yaml, local_model_config, repo_path, write_json
 from evals.coverage.coverage_index import DEFAULT_MANIFEST, REPO_ROOT, load_manifest
-from evals.coverage.local_model import LMStudioDeepEvalModel
+from evals.coverage.local_model import LMStudioModel
 
-EVOLUTION_NAMES = {
-    "reasoning": "REASONING",
-    "multi-hop": "MULTICONTEXT",
-    "multicontext": "MULTICONTEXT",
-    "concretising": "CONCRETIZING",
-    "concretizing": "CONCRETIZING",
-    "comparative": "COMPARATIVE",
-    "constrained": "CONSTRAINED",
-    "hypothetical": "HYPOTHETICAL",
-    "in-breadth": "IN_BREADTH",
+QUESTION_STYLE_ALIASES = {
+    "reasoning": "reasoning",
+    "multi-hop": "multi-hop",
+    "multicontext": "multi-hop",
+    "concretising": "concretising",
+    "concretizing": "concretising",
+    "comparative": "comparative",
+}
+QUESTION_STYLE_GUIDANCE = {
+    "reasoning": "Require applying the supplied rule to choose a coding or reporting action.",
+    "multi-hop": "Combine two supplied claims that genuinely need to be applied together.",
+    "concretising": "Turn the rule into a concrete decision without inventing a catalogue term or code.",
+    "comparative": "Contrast two plausible coding actions and ask which one follows the supplied rule.",
 }
 DEFAULT_ELIGIBLE_CATEGORIES = {"operational", "structural", "exception"}
-GENERATION_PIPELINE_VERSION = 20
+GENERATION_PIPELINE_VERSION = 21
 CLAIM_STOPWORDS = {
     "a", "an", "and", "are", "as", "at", "be", "been", "being", "by", "can",
     "could", "for", "from", "in", "into", "is", "it", "its", "like", "may",
@@ -134,7 +137,7 @@ def _unsupported_claim_terms(claim: str, evidence: str) -> list[str]:
 
 
 def verify_claim_entailment(
-    model: LMStudioDeepEvalModel, claims: list[dict[str, str]]
+    model: LMStudioModel, claims: list[dict[str, str]]
 ) -> list[dict[str, Any]]:
     if not claims:
         return []
@@ -197,7 +200,7 @@ Pairs:
 
 
 def qualify_chunk(
-    model: LMStudioDeepEvalModel,
+    model: LMStudioModel,
     chunk: dict[str, Any],
     qualification: dict[str, Any],
 ) -> dict[str, Any]:
@@ -427,7 +430,7 @@ Unreviewed source sentences from chunk {chunk['chunk_id']}:
 
 
 def screen_question(
-    model: LMStudioDeepEvalModel,
+    model: LMStudioModel,
     *,
     question: str,
     claims: list[dict[str, str]],
@@ -654,6 +657,137 @@ def _question_id(chunk_id: str, question: str) -> str:
     return f"COV-{digest[:16].upper()}"
 
 
+def _weighted_style_plan(
+    configured: dict[str, Any],
+    *,
+    question_count: int,
+    styles_per_question: int,
+    claim_count: int,
+    seed: int,
+) -> list[list[str]]:
+    """Choose transparent prompt styles deterministically from configured weights."""
+    weights: dict[str, float] = {}
+    for raw_name, raw_weight in configured.items():
+        name = QUESTION_STYLE_ALIASES.get(str(raw_name).casefold())
+        if name is None:
+            raise ValueError(f"unsupported question style: {raw_name}")
+        weight = float(raw_weight)
+        if weight < 0:
+            raise ValueError("question style weights cannot be negative")
+        if weight == 0:
+            continue
+        if name == "multi-hop" and claim_count < 2:
+            continue
+        weights[name] = weights.get(name, 0.0) + weight
+    if not weights or sum(weights.values()) <= 0:
+        weights = {"reasoning": 1.0}
+    rng = random.Random(seed)
+    plan: list[list[str]] = []
+    for _ in range(question_count):
+        available = dict(weights)
+        selected: list[str] = []
+        for _ in range(min(max(0, styles_per_question), len(available))):
+            names = list(available)
+            choice = rng.choices(names, weights=[available[name] for name in names], k=1)[0]
+            selected.append(choice)
+            del available[choice]
+        plan.append(selected or ["reasoning"])
+    return plan
+
+
+def generate_questions(
+    model: LMStudioModel,
+    *,
+    claims: list[dict[str, str]],
+    question_count: int,
+    configured_styles: dict[str, Any],
+    styles_per_question: int,
+    seed: int,
+) -> list[dict[str, Any]]:
+    """Generate source-grounded questions directly through LM Studio structured JSON."""
+    if question_count < 1:
+        raise ValueError("questions_per_chunk must be at least one")
+    plan = _weighted_style_plan(
+        configured_styles,
+        question_count=question_count,
+        styles_per_question=styles_per_question,
+        claim_count=len(claims),
+        seed=seed,
+    )
+    requests = [
+        {
+            "index": index,
+            "styles": styles,
+            "style_guidance": [QUESTION_STYLE_GUIDANCE[style] for style in styles],
+        }
+        for index, styles in enumerate(plan)
+    ]
+    prompt = f"""Write exactly {question_count} source-driven FoodEx2 coverage questions.
+
+Return JSON only:
+{{"questions":[{{"index":0,"question":"one concise self-contained question"}}]}}
+
+Each question must test a practical choice that a compact operational wiki should enable:
+base-term selection, facet use, code construction, validation, reporting, or an ontology
+boundary. Use only the supplied claims. Do not invent food examples, catalogue terms, codes,
+exceptions, or facts. Do not ask for quotations, citations, page/table numbers, source history,
+publication facts, or what a document says. Do not mention EFSA, a guideline, source, chunk,
+claim, or page. Phrase the question as a real coding or reporting decision. If a requested
+style cannot be supported by the claims, use straightforward reasoning instead of fabricating
+details. Keep each question short and independently answerable.
+
+Qualified claims:
+{json.dumps([claim["claim"] for claim in claims], ensure_ascii=False)}
+
+Requested question styles:
+{json.dumps(requests, ensure_ascii=False)}
+"""
+    payload = model.generate_json(
+        prompt,
+        json_schema={
+            "type": "object",
+            "properties": {
+                "questions": {
+                    "type": "array",
+                    "minItems": question_count,
+                    "maxItems": question_count,
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "index": {"type": "integer", "minimum": 0},
+                            "question": {"type": "string", "minLength": 8, "maxLength": 500},
+                        },
+                        "required": ["index", "question"],
+                        "additionalProperties": False,
+                    },
+                }
+            },
+            "required": ["questions"],
+            "additionalProperties": False,
+        },
+    )
+    raw_questions = payload.get("questions")
+    if not isinstance(raw_questions, list) or len(raw_questions) != question_count:
+        raise ValueError("local generator did not return the requested number of questions")
+    by_index = {
+        item.get("index"): item
+        for item in raw_questions
+        if isinstance(item, dict) and isinstance(item.get("index"), int)
+    }
+    if set(by_index) != set(range(question_count)):
+        raise ValueError("local generator did not return every question index exactly once")
+    generated = []
+    seen: set[str] = set()
+    for index in range(question_count):
+        question = str(by_index[index].get("question") or "").strip()
+        normalized = _normalized_text(question)
+        if len(question) < 8 or normalized in seen:
+            raise ValueError("local generator returned an empty or duplicate question")
+        seen.add(normalized)
+        generated.append({"question": question, "question_styles": plan[index]})
+    return generated
+
+
 def _generation_checkpoint(
     *,
     testset_id: str,
@@ -732,21 +866,12 @@ def generate_testset(
     if not chunks:
         raise ValueError("no authoritative source chunks were selected")
 
-    try:
-        from deepeval.synthesizer import Synthesizer
-        from deepeval.synthesizer.config import EvolutionConfig, FiltrationConfig, StylingConfig
-        from deepeval.synthesizer.types import Evolution
-    except ImportError as exc:
-        raise RuntimeError(
-            "DeepEval is required for generation; install evals/coverage/requirements.txt"
-        ) from exc
-
     generator_config = local_model_config(config.get("models", {}).get("generator", {}))
     default_run_models = {
         role: local_model_config(config.get("models", {}).get(role, {}))
         for role in ("selector", "answerer", "judge")
     }
-    model = LMStudioDeepEvalModel(
+    model = LMStudioModel(
         model=generator_config["model"],
         base_url=generator_config["base_url"],
         api_key_env=generator_config.get("api_key_env"),
@@ -761,7 +886,7 @@ def generate_testset(
         config.get("models", {}).get("qualifier")
         or config.get("models", {}).get("generator", {})
     )
-    qualification_model = LMStudioDeepEvalModel(
+    qualification_model = LMStudioModel(
         model=qualification_model_config["model"],
         base_url=qualification_model_config["base_url"],
         api_key_env=qualification_model_config.get("api_key_env"),
@@ -799,44 +924,22 @@ def generate_testset(
     ]
     if not eligible_chunks:
         raise ValueError("automated qualification found no decision-relevant source claims")
-    configured_evolutions = generation.get("evolutions") or {
+    configured_styles = generation.get("question_styles") or generation.get("evolutions") or {
         "reasoning": 0.25,
         "multi-hop": 0.25,
         "concretising": 0.25,
         "comparative": 0.25,
     }
-    evolution_weights: dict[Any, float] = {}
-    for name, weight in configured_evolutions.items():
-        enum_name = EVOLUTION_NAMES.get(str(name).casefold())
-        if not enum_name:
-            raise ValueError(f"unsupported DeepEval evolution: {name}")
-        evolution_weights[getattr(Evolution, enum_name)] = float(weight)
-    total_weight = sum(evolution_weights.values())
-    if total_weight <= 0:
-        raise ValueError("evolution weights must sum to a positive value")
-    evolution_weights = {key: value / total_weight for key, value in evolution_weights.items()}
-    synthesizer = Synthesizer(
-        model=model,
-        async_mode=False,
-        max_concurrent=1,
-        filtration_config=FiltrationConfig(
-            synthetic_input_quality_threshold=float(generation.get("quality_threshold", 0.5)),
-            max_quality_retries=int(generation.get("quality_retries", 2)),
-            critic_model=model,
-        ),
-        evolution_config=EvolutionConfig(
-            num_evolutions=int(generation.get("num_evolutions", 1)),
-            evolutions=evolution_weights,
-        ),
-        styling_config=StylingConfig(
-            scenario="FoodEx2 coding and reporting guidance grounded in an authoritative EFSA source",
-            task="Ask a self-contained practical FoodEx2 coding or reporting decision",
-            input_format=(
-                "One concise scenario question naming a food or material and its relevant state; "
-                "ask which base-term, facet, code-construction, validation, or reporting choice "
-                "to make. Do not say according to EFSA, a guideline, a source, or a page."
-            ),
-        ),
+    styles_per_question = int(
+        generation.get("styles_per_question", generation.get("num_evolutions", 1))
+    )
+    # Validate style names and weights before making any generation calls.
+    _weighted_style_plan(
+        configured_styles,
+        question_count=1,
+        styles_per_question=styles_per_question,
+        claim_count=2,
+        seed=int(generator_config.get("seed", 42)),
     )
     cases: list[dict[str, Any]] = []
     rejected_questions: list[dict[str, Any]] = []
@@ -853,42 +956,40 @@ def generate_testset(
         chunk_seed = int(
             hashlib.sha256(f"{base_seed}:{parent_id}".encode("utf-8")).hexdigest()[:8], 16
         )
-        random.seed(chunk_seed)
-        goldens = synthesizer.generate_goldens_from_contexts(
-            contexts=[[claim["claim"] for claim in claims]],
-            include_expected_output=False,
-            max_goldens_per_context=int(generation.get("questions_per_chunk", 1)),
-            source_files=[parent_id],
-            _send_data=False,
+        generated_questions = generate_questions(
+            model,
+            claims=claims,
+            question_count=int(generation.get("questions_per_chunk", 1)),
+            configured_styles=configured_styles,
+            styles_per_question=styles_per_question,
+            seed=chunk_seed,
         )
         chunk_cases: list[dict[str, Any]] = []
         chunk_rejections: list[dict[str, Any]] = []
-        for golden in goldens:
-            if str(golden.source_file or "") != parent_id:
-                raise RuntimeError(f"DeepEval golden lost its parent chunk: {golden.source_file!r}")
-            metadata = golden.additional_metadata or {}
+        for generated in generated_questions:
+            question = generated["question"]
             screening = screen_question(
-                qualification_model, question=golden.input, claims=claims
+                qualification_model, question=question, claims=claims
             )
             if not screening["accepted"]:
                 chunk_rejections.append(
                     {
                         "chunk_id": parent_id,
-                        "question": golden.input.strip(),
+                        "question": question,
                         "screening": screening,
                     }
                 )
                 continue
             chunk_cases.append(
                 {
-                    "id": _question_id(parent_id, golden.input),
-                    "question": golden.input.strip(),
+                    "id": _question_id(parent_id, question),
+                    "question": question,
                     "source_id": parent["source_id"],
                     "chunk_id": parent_id,
                     "page_start": parent.get("page_start"),
                     "page_end": parent.get("page_end"),
                     "section": parent.get("section"),
-                    "evolutions": metadata.get("evolutions") or [],
+                    "question_styles": generated["question_styles"],
                     "qualified_claims": claims,
                     "automated_screening": screening,
                 }
@@ -919,6 +1020,7 @@ def generate_testset(
         ],
         "generator": {
             "provider": "lmstudio",
+            "backend": "direct_structured_json",
             "model": generator_config["model"],
             "base_url": generator_config["base_url"],
             "temperature": generator_config.get("temperature", 0.0),
@@ -927,8 +1029,8 @@ def generate_testset(
             "chunk_max_chars": max_chars,
             "chunk_ids": configured_chunk_ids,
             "max_chunks": limit,
-            "evolutions": configured_evolutions,
-            "num_evolutions": generation.get("num_evolutions", 1),
+            "question_styles": configured_styles,
+            "styles_per_question": styles_per_question,
         },
         "qualification": {
             "model": qualification_model_config["model"],

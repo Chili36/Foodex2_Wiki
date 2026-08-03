@@ -1,7 +1,6 @@
-"""DeepEval-compatible OpenAI chat wrapper with local-host enforcement."""
+"""Small OpenAI-compatible chat wrapper with local-host enforcement."""
 from __future__ import annotations
 
-import asyncio
 import ipaddress
 import json
 import os
@@ -10,16 +9,6 @@ import socket
 import time
 from typing import Any
 from urllib import error, parse, request
-
-# The default path promises no hosted calls. DeepEval telemetry is therefore
-# disabled before importing any DeepEval module.
-os.environ.setdefault("DEEPEVAL_TELEMETRY_OPT_OUT", "1")
-
-try:
-    from deepeval.models import DeepEvalBaseLLM
-except ImportError:  # Core index/chunk/staleness commands do not require DeepEval.
-    DeepEvalBaseLLM = object  # type: ignore[assignment,misc]
-
 
 def _is_private_host(url: str) -> bool:
     host = parse.urlparse(url).hostname
@@ -75,8 +64,8 @@ def _transient_http_error(status: int, body: str) -> bool:
     )
 
 
-class LMStudioDeepEvalModel(DeepEvalBaseLLM):  # type: ignore[misc]
-    """Custom DeepEval model backed by an LM Studio OpenAI-compatible server."""
+class LMStudioModel:
+    """OpenAI-compatible model backed by a local or private LM Studio server."""
 
     def __init__(
         self,
@@ -99,26 +88,7 @@ class LMStudioDeepEvalModel(DeepEvalBaseLLM):  # type: ignore[misc]
         self.max_tokens = max_tokens
         self.timeout = timeout
         self.max_retries = max(0, max_retries)
-        if DeepEvalBaseLLM is object:
-            self.name = model
-            self.model = self.load_model()
-        else:
-            super().__init__(model=model)
-
-    def load_model(self, *args: Any, **kwargs: Any) -> "LMStudioDeepEvalModel":
-        return self
-
-    def get_model_name(self, *args: Any, **kwargs: Any) -> str:
-        return self.model_name
-
-    def supports_temperature(self) -> bool:
-        return True
-
-    def supports_json_mode(self) -> bool:
-        return True
-
-    def supports_structured_outputs(self) -> bool:
-        return True
+        self.name = model
 
     def _completion(self, prompt: str, *, schema: Any = None) -> str:
         messages: list[dict[str, str]] = []
@@ -198,9 +168,6 @@ class LMStudioDeepEvalModel(DeepEvalBaseLLM):  # type: ignore[misc]
             return text
         payload = _extract_json(text)
         return schema.model_validate(payload) if hasattr(schema, "model_validate") else payload
-
-    async def a_generate(self, prompt: str, schema: Any = None, **kwargs: Any) -> Any:
-        return await asyncio.to_thread(self.generate, prompt, schema=schema, **kwargs)
 
     def generate_json(
         self, prompt: str, *, json_schema: dict[str, Any] | None = None

@@ -17,6 +17,7 @@ from evals.coverage.generate import (
     _non_operational_source_reason,
     _priority_rule_candidates,
     _unsupported_claim_terms,
+    generate_questions,
     qualify_chunk,
     screen_question,
 )
@@ -58,6 +59,16 @@ class _SequentialScreenModel:
 
     def generate_json(self, prompt: str, **kwargs: object) -> dict:
         return self.payloads.pop(0)
+
+
+class _PromptCaptureModel:
+    def __init__(self, payload: dict) -> None:
+        self.payload = payload
+        self.prompt = ""
+
+    def generate_json(self, prompt: str, **kwargs: object) -> dict:
+        self.prompt = prompt
+        return self.payload
 
 
 def _sha(path: Path) -> str:
@@ -159,6 +170,51 @@ def test_local_model_guard_rejects_public_endpoints() -> None:
     assert require_local_url("http://192.168.1.22:1234/v1").endswith("/v1")
     with pytest.raises(ValueError, match="rejects non-local"):
         require_local_url("https://api.openai.com/v1")
+
+
+def test_direct_question_generator_is_grounded_and_records_styles() -> None:
+    model = _PromptCaptureModel(
+        {
+            "questions": [
+                {
+                    "index": 0,
+                    "question": "Should this process be represented by a facet or a new base term?",
+                }
+            ]
+        }
+    )
+    generated = generate_questions(
+        model,  # type: ignore[arg-type]
+        claims=[
+            {
+                "claim": "A process that does not change the food's nature is represented by a facet."
+            }
+        ],
+        question_count=1,
+        configured_styles={"multi-hop": 1.0, "reasoning": 0.0},
+        styles_per_question=1,
+        seed=42,
+    )
+    assert generated == [
+        {
+            "question": "Should this process be represented by a facet or a new base term?",
+            "question_styles": ["reasoning"],
+        }
+    ]
+    assert "Do not invent food examples" in model.prompt
+    assert "A process that does not change" in model.prompt
+
+
+def test_direct_question_generator_rejects_unsupported_styles() -> None:
+    with pytest.raises(ValueError, match="unsupported question style"):
+        generate_questions(
+            _PromptCaptureModel({}),  # type: ignore[arg-type]
+            claims=[{"claim": "A rule."}],
+            question_count=1,
+            configured_styles={"mystery": 1.0},
+            styles_per_question=1,
+            seed=42,
+        )
 
 
 def test_judge_ties_resolve_conservatively_and_report_variance() -> None:

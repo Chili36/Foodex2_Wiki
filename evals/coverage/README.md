@@ -18,8 +18,8 @@ covered. The first run on 2026-08-01 found 5 explicitly covered pages out of 257
 
 ## Chunk and generate a versioned testset
 
-DeepEval is isolated because its pytest plugin dependencies conflict with the main
-repo's pytest 9 constraint:
+Question generation uses the same small, local OpenAI-compatible wrapper as qualification,
+auditing, answering, and judging. No evaluation framework or hosted service is required:
 
 ```bash
 python -m venv .venv-coverage
@@ -36,16 +36,18 @@ export COVERAGE_JUDGE_MODEL='<strongest local model that fits>'
 ```
 
 Generation refuses missing files and hash drift. It never falls back to wiki content.
-Before DeepEval sees a chunk, an automated qualifier extracts only facts whose omission
+Before question generation, an automated qualifier extracts only facts whose omission
 could change a concrete base-term, facet, code-construction, validation, reporting, or
 ontology-boundary decision. Administrative facts about maintenance and publication are
 excluded even when source-grounded. Eligible claims must
 be operational, structural, or exceptions and must include an exact evidence span that is
-verified against the source. DeepEval receives those claims—not the incidental remainder
-of the chunk. A second model gate rejects quotation, page-number, citation, footnote,
+verified against the source. The direct local generator receives those claims—not the
+incidental remainder of the chunk. Configured question styles (reasoning, multi-hop,
+concretising, and comparative) are plain prompt instructions recorded in the frozen
+manifest. A second model gate rejects quotation, page-number, citation, footnote,
 publication-metadata, and non-transferable example questions. Human review is not required.
 The configured local qualifier performs both gates; it can be set independently of the
-DeepEval generator when stronger separation is worth the added runtime.
+generator when stronger separation is worth the added runtime.
 The qualifier also performs a second completeness pass over the original chunk and the
 first-pass claims, so an empty or sparse extraction is not silently treated as proof that
 the source section contains nothing the wiki should preserve.
@@ -60,7 +62,7 @@ Each accepted question carries its stable parent `chunk_id`, source identity, pa
 qualified claims, and screening decision. Excluded claims/chunks and rejected questions
 remain in the testset audit metadata but do not enter the coverage denominator.
 Generation also writes `config/efsa-core-v1.yaml`: the frozen per-testset manifest with
-source versions/hashes, resolved generator and judge model IDs, parameters, evolution
+source versions/hashes, resolved generator and judge model IDs, parameters, question-style
 weights, and generation time. Commit that YAML with the testset. Regeneration requires
 `--force` and should only happen for a deliberate new version.
 
