@@ -222,8 +222,30 @@ def hydrate_qdrant_wiki_context(
     context_chars = 0
     context_page_trace: list[dict[str, Any]] = []
 
-    page_names_to_hydrate = [safety_page, *ordered_candidates]
-    for candidate_index, page_name in enumerate(page_names_to_hydrate):
+    try:
+        safety = store.read_page(safety_page)
+    except FileNotFoundError as exc:
+        raise QdrantAskError(
+            f"Required hybrid safety page {safety_page!r} is unavailable from the local wiki"
+        ) from exc
+    safety_content = store.prompt_content_for_context_pack(safety)
+    if safety_content is None:
+        safety_content = store.clean_content_for_model(safety)
+    if len(safety_content) > max_context_chars:
+        raise QdrantAskError(
+            f"Required hybrid safety page {safety_page!r} exceeds the context budget"
+        )
+    hydrated_pages.append((safety, safety_content))
+    context_chars = len(safety_content)
+    context_page_trace.append(
+        {
+            "page_name": safety.name,
+            "mode": "local_page",
+            "chars": len(safety_content),
+        }
+    )
+
+    for candidate_index, page_name in enumerate(ordered_candidates):
         if len(hydrated_pages) >= max_pages:
             break
         try:
@@ -238,11 +260,13 @@ def hydrate_qdrant_wiki_context(
 
         remaining_slots = min(
             max_pages - len(hydrated_pages),
-            len(page_names_to_hydrate) - candidate_index,
+            len(ordered_candidates) - candidate_index,
         )
         remaining_budget = max_context_chars - context_chars
+        if remaining_budget <= 0:
+            break
         page_budget = max(1, remaining_budget // remaining_slots)
-        if page_name != safety_page and len(content) > page_budget:
+        if len(content) > page_budget:
             matched_chunks = matched_chunks_by_page.get(page_name, [])
             if matched_chunks:
                 content = matched_chunks[0]
@@ -259,11 +283,6 @@ def hydrate_qdrant_wiki_context(
                 "mode": mode,
                 "chars": len(content),
             }
-        )
-
-    if not hydrated_pages or hydrated_pages[0][0].name != safety_page:
-        raise QdrantAskError(
-            f"Required hybrid safety page {safety_page!r} is unavailable from the local wiki"
         )
 
     selected_page_names = [page.name for page, _ in hydrated_pages]

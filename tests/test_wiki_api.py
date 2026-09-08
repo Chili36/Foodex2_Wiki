@@ -848,6 +848,48 @@ def test_ask_rag_hybrid_deduplicates_and_hydrates_parent_pages(monkeypatch) -> N
     assert all(page["content"] is None for page in payload["pages"])
 
 
+def test_hybrid_hydration_reserves_complete_safety_page_at_high_limit() -> None:
+    candidate_pages = [
+        page_name
+        for page_name in app_module.store.list_pages()
+        if page_name != RUNTIME_RULES_PAGE_NAME
+    ][:19]
+    context = {
+        "retrieval": {
+            "results": [
+                {"page_name": page_name, "score": 1.0}
+                for page_name in candidate_pages
+            ]
+        },
+        "answerer_pages": [
+            {"page_name": page_name, "content": "matched chunk"}
+            for page_name in candidate_pages
+        ],
+    }
+    safety_page = app_module.store.read_page(RUNTIME_RULES_PAGE_NAME)
+    expected_safety_content = app_module.store.prompt_content_for_context_pack(safety_page)
+    if expected_safety_content is None:
+        expected_safety_content = app_module.store.clean_content_for_model(safety_page)
+
+    hydrated = app_module.hydrate_qdrant_wiki_context(
+        context,
+        store=app_module.store,
+        max_pages=20,
+    )
+
+    assert len(hydrated["answerer_pages"]) == 20
+    assert hydrated["answerer_pages"][0] == {
+        "page_name": RUNTIME_RULES_PAGE_NAME,
+        "content": expected_safety_content,
+    }
+    assert hydrated["hydration"]["context_pages"][0] == {
+        "page_name": RUNTIME_RULES_PAGE_NAME,
+        "mode": "local_page",
+        "chars": len(expected_safety_content),
+    }
+    assert hydrated["hydration"]["context_chars"] <= 18_000
+
+
 def test_ask_rag_hybrid_rejects_a_stale_index_before_embedding(monkeypatch) -> None:
     retrieval_called = False
 
