@@ -13,7 +13,7 @@ related:
   - "[[base-term-selection]]"
   - "[[process-facets]]"
   - "[[implicit-vs-explicit-facets]]"
-last_updated: "2026-07-28"
+last_updated: "2026-09-08"
 ---
 
 # Policy Contract
@@ -44,7 +44,7 @@ Use the cited business rules and guidance pages as the controlling sources under
 
 ## Policy Version
 
-`2026-07-28-v0.7`
+`2026-09-08-v0.8`
 
 ## Constitution
 
@@ -79,7 +79,7 @@ Use the cited business rules and guidance pages as the controlling sources under
 - `R-FACET-001` when `an explicit facet only repeats an implicit property of the chosen base`: must not keep that explicit facet in the final code. {derived_from: implicit-vs-explicit-facets.md; facet-coding-rules.md}
 - `R-SCOPE-001` when `candidate wording or any available coverage text excludes the described product or narrows it away from the query`: must not select that candidate as the base term. {derived_from: base-term-selection.md}
 - `R-DESC-001` when `F10 or F21 information is present and not already implicit in a reportable base term`: may add the descriptive facet explicitly. {derived_from: facet-coding-rules.md}
-- `R-PROC-001` when `multiple explicit F28 processes are added`: should keep at most one process per ordinal group; note that BR26 may currently be silent in validators, so this is still a construction discipline even when validation does not flag it. {derived_from: process-validation-rules.md; business-rules.md BR26; business-rules.md BR27}
+- `R-PROC-001` when `the sample states multiple processes`: must preserve every stated process in the selected base term or explicit `F28`; must verify actual `ordCode`s from the catalogue or a catalogue-backed validator rather than infer groups from prose. If BR26's equality condition genuinely holds, flag the proposed code as illegal for recoding or review; do not rank the processes or drop one. BR26 is currently dormant and validator-silent. {derived_from: process-validation-rules.md; business-rules.md BR26; business-rules.md BR27}
 - `R-PROC-002` when `the chosen base already implies a process`: must ensure any remaining explicit `F28` is at least as specific as the implicit process. {derived_from: process-facets.md; process-validation-rules.md; business-rules.md BR16}
 - `R-CARD-001` when `using F01, F02, F03, F07, F11, F22, F24, F26, F30, F32, or F34`: must keep only one value for that facet family. {derived_from: business-rules.md BR25; structural-validation.md}
 - `R-F27-001` when `an explicit F27 is used`: must make the `F27` refine or equal the implicit or source commodity chain. {derived_from: term-type-facet-constraints.md; business-rules.md BR01; business-rules.md BR05}
@@ -118,7 +118,7 @@ These are the practical ground rules the solver should always keep in view:
   - `h` / `g`: do not use as coding base terms when a reportable term exists.
 - `F10 qualitative-info` and `F21 production-method` are descriptive facets and may be used on reportable base terms when the information is present and not already implicit.
 - Implicit facets are already present. Never duplicate them explicitly.
-- For `F28`, keep one process per ordinal group and do not add a process that is broader than the one already implicit in the base term. BR26 may currently be silent in validators, so do not use validator silence alone as approval for same-ordinal process stacking.
+- Preserve every process stated by the sample through the selected base term or explicit `F28`. Verify process `ordCode`s in the catalogue or a catalogue-backed validator; do not infer groups, rank processes, or drop one to resolve a collision. If BR26's equality condition holds, flag the code as illegal for recoding or review. BR26 is currently dormant and validator-silent, so its silence is not approval. Do not add a process broader than one already implicit in the base term.
 - Single-cardinality facet families allow only one value: `F01`, `F02`, `F03`, `F07`, `F11`, `F22`, `F24`, `F26`, `F30`, `F32`, and `F34`.
 - `F27` must refine or equal the implicit/source commodity chain.
 - On raw commodities, do not use the BR13 disintegration-family `F03` descriptors: `A06JD`, `A06JE`, `A06JF`, `A06JG`, `A07Y2`, `A07Y3`, or `A07Y4`. Non-disintegration physical-state descriptors are not blocked by BR13 merely because they are `F03`.

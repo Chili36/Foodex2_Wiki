@@ -17,7 +17,7 @@ related:
   - "[[term-type-facet-constraints]]"
   - "[[process-validation-rules]]"
   - "[[domain-specific-validation]]"
-last_updated: "2026-06-07"
+last_updated: "2026-09-08"
 ---
 
 # Business Rules
@@ -193,7 +193,7 @@ Use it for two jobs:
 - Applies to: derivatives with explicit `F28`
 - Rule: processes in the same ordinal group cannot be combined
 - Known divergence: in the observed stock ICT source, the `mutuallyExclusiveCheck` call appears to be inactive, so BR26 is effectively silent. The sibling validator is also effectively silent for BR26 at present because its process ordinal lookup resolves to `0` for the derivative cases where BR26 would apply. The outcome matches stock ICT silence, but the implementation cause differs.
-- Practical reading: do not rely on BR26 firing as evidence that same-ordinal process combinations are semantically good. Keep the process-composition guidance in [[process-validation-rules]], and treat a proper BR26 implementation as deferred validator work.
+- Practical reading: do not rely on BR26 firing as evidence that an equal-`ordCode` combination is valid. Verify `ordCode`s from catalogue data, not prose reasoning. BR26 supplies no ranking or tie-break for removing a process: preserve every process stated by the sample, and if the values genuinely collide, flag the proposed code as illegal for recoding or review. Treat proper BR26 implementation as deferred validator work; see [[process-validation-rules]].
 
 ## BR27: Decimal Ordcode Process Conflicts
 
