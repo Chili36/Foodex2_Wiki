@@ -73,7 +73,9 @@ def test_br26_guidance_cannot_be_used_to_drop_a_stated_process() -> None:
     assert "`BR26` defines no ranking or tie-break" in process_rules
     assert "Look up each process's actual `ordCode`" in process_rules
     assert "flag the proposed code as illegal" in process_rules
-    assert "BR26` is dormant and non-actionable" in process_rules
+    assert "The current sibling validator actively checks derivative bases" in process_rules
+    assert "Changing the sibling validator's derivative gate from `d` to `r`" in process_rules
+    assert "Stock ICT's BR26 invocation is dormant" in policy
     assert "should keep at most one process per ordinal group" not in policy
     assert "do not infer groups, rank processes, or drop one" in policy
 

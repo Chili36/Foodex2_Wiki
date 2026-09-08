@@ -28,7 +28,7 @@ last_updated: "2026-09-08"
 - Preserve every process stated by the sample in the code, whether it is represented by the selected base term or by an explicit `F28`. Never discard a stated process to make a combination pass an ordinal check. `BR26` defines no ranking or tie-break for choosing between colliding processes.
 - `BR26` defines an illegal construction: on a derivative base term, two explicit processes with the same `ordCode` cannot be combined. It does not define a repair that removes either process. If the catalogue values genuinely collide, flag the proposed code as illegal and retain all stated process information for recoding or review. (Business Rules `BR26`)
 - Treat ordinal compatibility as catalogue data, not as a prose classification task. Look up each process's actual `ordCode` in the catalogue or a validator backed by that catalogue; do not infer an "ordinal group" from the process label or meaning. (Compact JSON; Business Rules `BR26-BR27`)
-- `BR26` is dormant and non-actionable in current validation. The observed ICT source has its check inactive, and the sibling validator is also effectively silent because its derivative ordinal lookup resolves to `0` in the cases where BR26 would apply. Validator silence neither approves a combination nor authorises dropping a process; proper BR26 enforcement remains deferred validator work. (Business Rules `BR26`)
+- Enforcement differs by implementation. The observed stock ICT source has its BR26 call inactive. The current sibling validator actively checks derivative bases and emits BR26 when two processes resolve to the same non-zero `ordCode`; its lookup returns `0` where the forbidden-process data has no matching entry. A warning is therefore actionable, while silence neither approves a combination nor authorises dropping a process. Changing the sibling validator's derivative gate from `d` to `r` would invert the rule rather than fix it. (Business Rules `BR26`)
 
 <!-- Source: BUSINESS-RULES.md BR16, BR19, BR26, BR27, BR28; docs/VALIDATION_RULES_SUMMARY.md Quick Reference Table -->
 ## Main Process Rules
@@ -36,7 +36,7 @@ last_updated: "2026-09-08"
 - `BR16`: an explicit process should not be less specific than the process already implicit in the base term. Check the underlying implicit-process logic in [[process-facets]]. (Business Rules `BR16`)
 - `BR19`: raw commodities cannot take processes that create a derivative; pick the derivative base term instead, following [[base-term-selection]]. Official BR19 coverage comes from `BR_Data.csv`, but the sibling validator may emit transparent `BR19+` warnings from `BR_Data.extension.csv` for clear data-freshness gaps. (Business Rules `BR19`)
 - A `BR19` rejection proves that the explicit process is invalid on that raw base; it does not prove that every nearby derivative candidate covers the product. For marketed-dry spices and herbal infusion materials, the correct repair can be to keep the raw base and remove redundant drying. Read the candidate scope and the exception in [[base-term-selection]] before switching bases. (EFSA guidance p42-43; 2015 maintenance p15)
-- `BR26`: a derivative with two explicit processes whose catalogue `ordCode`s are equal is illegal. The rule is currently dormant and validator-silent, so record the conflict for review rather than resolving it by dropping a stated process. (Business Rules `BR26`)
+- `BR26`: a derivative with two explicit processes whose catalogue `ordCode`s are equal is illegal. Stock ICT may remain silent because its invocation is inactive; the sibling validator actively warns when its data-backed lookup finds the shared non-zero ordinal. In either case, record a verified conflict for review rather than resolving it by dropping a stated process. (Business Rules `BR26`)
 - `BR27`: decimal ordinals in the same process family also conflict; they represent alternative derivative paths. The term-type consequences of those choices are summarised in [[term-type-facet-constraints]]. (Business Rules `BR27`)
 - `BR28`: reconstitution or dilution cannot be added to already dehydrated, dried, powdered, or concentrated products; use the reconstituted product term instead. (Business Rules `BR28`)
 
@@ -45,7 +45,7 @@ last_updated: "2026-09-08"
 
 - Before: dried fruit base + a broader preserving facet. After: invalid, `BR16`, because the explicit process is less detailed than the implicit one. (Business Rules `BR16`)
 - Before: cereal grains + flaking process on a raw base. After: invalid, `BR19`; use the flaked cereal derivative. (Business Rules `BR19`)
-- Before: one derivative with two explicit `F28` codes. After: look up both catalogue `ordCode`s; if BR26's equality condition holds, flag the code as illegal without deleting either stated process. BR26 may remain silent until the validator divergence is fixed. Check BR27 separately for its decimal-ordCode condition. (Business Rules `BR26-BR27`)
+- Before: one derivative with two explicit `F28` codes. After: look up both catalogue `ordCode`s; if BR26's equality condition holds, flag the code as illegal without deleting either stated process. Do not treat a missing warning as approval, particularly where an implementation maps an unknown ordinal to `0`. Check BR27 separately for its decimal-ordCode condition. (Business Rules `BR26-BR27`)
 
 ## Relevant Policy
 
@@ -56,5 +56,5 @@ last_updated: "2026-09-08"
 
 - `BR16`: explicit process detail cannot be broader than the implicit process. See [[business-rules]].
 - `BR19`: forbidden derivative-creating processes on raw commodities, including transparent `BR19+` extension warnings where configured. See [[business-rules]].
-- `BR26` and `BR27`: catalogue-ordCode conflicts; BR26 is dormant and validator-silent, and supplies no process-ranking or process-removal rule. See [[business-rules]].
+- `BR26` and `BR27`: catalogue-ordCode conflicts; BR26 supplies no process-ranking or process-removal rule. Stock ICT and the sibling validator currently differ in enforcement, and a missing warning is not approval. See [[business-rules]].
 - `BR28`: reconstitution restrictions on dried, powdered, or concentrated products. See [[business-rules]].
