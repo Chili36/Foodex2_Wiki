@@ -74,8 +74,7 @@ def test_br26_guidance_cannot_be_used_to_drop_a_stated_process() -> None:
     assert "Resolve the base term's applicable `BR_Data.csv` warn group first" in process_rules
     assert "do not mix roots" in policy
     assert "flag the proposed code as illegal" in process_rules
-    assert "The sibling validator actively checks derivative bases" in process_rules
-    assert "Changing the derivative gate from `d` to `r`" in process_rules
+    assert "per-process lookup could mix ordinals from different root groups" in process_rules
     assert "pending PR #24" in process_rules
     assert "Stock ICT's BR26 invocation is dormant" in policy
     assert "should keep at most one process per ordinal group" not in policy
