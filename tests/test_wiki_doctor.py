@@ -71,6 +71,9 @@ def test_br26_guidance_cannot_be_used_to_drop_a_stated_process() -> None:
 
     assert "Preserve every process stated by the sample" in process_rules
     assert "`BR26` defines no ranking or tie-break" in process_rules
+    assert "when at least one explicit `F28` is present" in process_rules
+    assert "combined explicit and implicit process set" in policy
+    assert "Do not run BR26 on an implicit-only process set" in policy
     assert "Resolve the base term's applicable `BR_Data.csv` warn group first" in process_rules
     assert "do not mix roots" in policy
     assert "flag the proposed code as illegal" in process_rules

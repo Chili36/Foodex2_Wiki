@@ -190,8 +190,9 @@ Use it for two jobs:
 ## BR26: Mutually Exclusive Processes
 
 - Severity: `HIGH`
-- Applies to: derivatives with explicit `F28`
-- Rule: processes in the same ordinal group cannot be combined
+- Applies to: derivatives with at least one explicit `F28`
+- Rule: once an explicit process is present, explicit and implicit processes with the same non-zero `ordCode` cannot be combined. Implicit-only process sets are not checked.
+- Official scope: EFSA's [`mutuallyExclusiveCheck`](https://github.com/openefsa/catalogue-browser/blob/9a028ee0efe6a018e7f941ce0a4f7e6488b80e43/src/main/java/business_rules/TermRules.java#L559-L620) returns when there is no explicit process; otherwise it combines the explicit and implicit processes before checking duplicate ordinals.
 - Implementation status: in the observed stock ICT source, the `mutuallyExclusiveCheck` invocation is commented out, so that path is effectively silent. The sibling validator runs BR26, but [issue #23](https://github.com/Chili36/automatic-couscous/issues/23) identified an accuracy bug: resolving each process independently could mix `ordCode`s from different `BR_Data.csv` root groups and cause both false-positive and false-negative results.
 - Root-scoped fix: [automatic-couscous PR #24](https://github.com/Chili36/automatic-couscous/pull/24) resolves the base term's single warn group first (the term itself, otherwise its closest report-hierarchy ancestor represented in `BR_Data.csv`) and then reads every process ordinal only from that root's rows. A process absent from that warn group receives `0` and does not participate in BR26/BR27 grouping.
 - Deployment caveat: PR #24 is open and based on the pending MTX 17.2 branch at the time of this update. Before that fix is merged and deployed, sibling-validator warnings can still reflect cross-root ordinal leakage. After the fix, a BR26 warning represents a collision within the resolved warn group, but the absence of a warning still does not prove general compatibility because processes missing from that group's data resolve to `0`.
