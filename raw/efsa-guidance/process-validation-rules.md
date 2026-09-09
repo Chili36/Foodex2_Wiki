@@ -17,7 +17,7 @@ related:
   - "[[process-facets]]"
   - "[[term-type-facet-constraints]]"
   - "[[validation-rules]]"
-last_updated: "2026-09-08"
+last_updated: "2026-09-09"
 ---
 
 # Process Validation Rules
@@ -28,7 +28,7 @@ last_updated: "2026-09-08"
 - Preserve every process stated by the sample in the code, whether it is represented by the selected base term or by an explicit `F28`. Never discard a stated process to make a combination pass an ordinal check. `BR26` defines no ranking or tie-break for choosing between colliding processes.
 - `BR26` defines an illegal construction on a derivative base when at least one explicit `F28` is present: duplicate non-zero `ordCode`s in the combined explicit and implicit process set cannot be used together. Implicit processes alone are not checked. The rule does not define a repair that removes either process. If the catalogue values genuinely collide, flag the proposed code as illegal and retain all stated process information for recoding or review. (Business Rules `BR26`; EFSA `TermRules.mutuallyExclusiveCheck`)
 - Treat ordinal compatibility as catalogue data, not as a prose classification task. Resolve the base term's applicable `BR_Data.csv` warn group first, then look up every process's `ordCode` only within that root; do not infer an "ordinal group" from the process label or meaning or combine ordinals from different roots. (Compact JSON; Business Rules `BR26-BR27`)
-- Enforcement differs by implementation. The observed stock ICT source has its BR26 call inactive. The sibling validator runs BR26, but issue #23 showed that its per-process lookup could mix ordinals from different root groups. Its open PR #24 changes this to a single root-scoped warn-group lookup and intentionally maps processes absent from that group to `0`. Until that fix is deployed, a warning can be a cross-root false positive; in every version, silence neither approves a combination nor authorises dropping a process. (Business Rules `BR26`)
+- Enforcement differs by implementation. The observed stock ICT source has its BR26 call inactive. The sibling validator runs BR26, but issue #23 showed that its per-process lookup could mix ordinals from different root groups. Its open PR #24 changes this to a single root-scoped warn-group lookup and intentionally maps processes absent from that group to `0`. Until that fix is deployed, a warning can be a cross-root false positive. Treat a validator result as evidence only when it identifies root-scoped warn-group resolution; in every version, silence neither approves a combination nor authorises dropping a process. (Business Rules `BR26`)
 
 <!-- Source: BUSINESS-RULES.md BR16, BR19, BR26, BR27, BR28; docs/VALIDATION_RULES_SUMMARY.md Quick Reference Table -->
 ## Main Process Rules
@@ -37,7 +37,7 @@ last_updated: "2026-09-08"
 - `BR19`: raw commodities cannot take processes that create a derivative; pick the derivative base term instead, following [[base-term-selection]]. Official BR19 coverage comes from `BR_Data.csv`, but the sibling validator may emit transparent `BR19+` warnings from `BR_Data.extension.csv` for clear data-freshness gaps. (Business Rules `BR19`)
 - A `BR19` rejection proves that the explicit process is invalid on that raw base; it does not prove that every nearby derivative candidate covers the product. For marketed-dry spices and herbal infusion materials, the correct repair can be to keep the raw base and remove redundant drying. Read the candidate scope and the exception in [[base-term-selection]] before switching bases. (EFSA guidance p42-43; 2015 maintenance p15)
 - `BR26`: when a derivative has at least one explicit `F28`, equal non-zero `ordCode`s in its combined explicit and implicit process set are illegal. Stock ICT may remain silent because its invocation is inactive; the sibling validator actively warns, with root-resolution accuracy corrected by its pending PR #24. Confirm the root-scoped values before treating a warning as a verified conflict, and never resolve one by dropping a stated process. (Business Rules `BR26`)
-- `BR27`: decimal ordinals in the same process family also conflict; they represent alternative derivative paths. The term-type consequences of those choices are summarised in [[term-type-facet-constraints]]. (Business Rules `BR27`)
+- `BR27`: decimal ordinals in the same root-scoped process family also conflict; they represent alternative derivative paths. Verify this separately using the same root-scoped catalogue values as BR26. If those values or an attested root-scoped validator result are unavailable, leave BR27 unverified rather than infer the result. The term-type consequences of those choices are summarised in [[term-type-facet-constraints]]. (Business Rules `BR27`)
 - `BR28`: reconstitution or dilution cannot be added to already dehydrated, dried, powdered, or concentrated products; use the reconstituted product term instead. (Business Rules `BR28`)
 
 <!-- Source: BUSINESS-RULES.md BR16, BR19, BR26, BR27, BR28 -->
@@ -45,7 +45,7 @@ last_updated: "2026-09-08"
 
 - Before: dried fruit base + a broader preserving facet. After: invalid, `BR16`, because the explicit process is less detailed than the implicit one. (Business Rules `BR16`)
 - Before: cereal grains + flaking process on a raw base. After: invalid, `BR19`; use the flaked cereal derivative. (Business Rules `BR19`)
-- Before: one derivative with two explicit `F28` codes. After: resolve the derivative's warn group and look up both `ordCode`s within that same root; if BR26's equality condition holds, flag the code as illegal without deleting either stated process. Do not borrow an ordinal from another root or treat an unlisted process mapped to `0` as proof of compatibility. Check BR27 separately for its decimal-ordCode condition. (Business Rules `BR26-BR27`)
+- Before: one derivative with two explicit `F28` codes. After: resolve the derivative's warn group and look up both `ordCode`s within that same root; if BR26's equality condition holds, flag the code as illegal without deleting either stated process. Do not borrow an ordinal from another root or treat an unlisted process mapped to `0` as proof of compatibility. Check BR27 separately for its decimal-ordCode condition, and defer both checks if root-scoped evidence is unavailable. (Business Rules `BR26-BR27`)
 
 ## Relevant Policy
 

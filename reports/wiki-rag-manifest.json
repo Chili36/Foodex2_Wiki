@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-09-09T21:10:24.111771+00:00",
+  "generated_at": "2026-09-09T21:25:00.544297+00:00",
   "collection": "foodex2_wiki_markdown_v1",
   "embedding_provider": "voyage",
   "embedding_model": "voyage-context-3",
@@ -17,7 +17,7 @@
     ]
   },
   "page_count": 33,
-  "chunk_count": 270,
+  "chunk_count": 271,
   "pages": [
     {
       "page_name": "RUNTIME_RULES.md",
@@ -724,8 +724,8 @@
       "title": "Policy Contract",
       "category": "runtime",
       "source_path": "raw/efsa-guidance/policy-contract.md",
-      "chunk_count": 16,
-      "content_hash": "1e2536bd93885bea7a3061902a50193a01472ac9c10bd317a6713fc1f3b3f894",
+      "chunk_count": 17,
+      "content_hash": "5ef9ec993734ee0a4c1eaf545caa67683d73c04df9a764a7971b1eb0e2c959f0",
       "chunk_hashes": [
         "85be61cd179149f488f662b4694a9588781f1a95c9bd2f6aa91d30639fb5a694",
         "f65b0651e4ff32c93fde42295cbb35a8a3a738dc3020261bab64836d9f94a554",
@@ -734,13 +734,14 @@
         "f830d6029a15ae320b9bfaa8cdd5db3a35b8ead3ce15076cf8f7361105388862",
         "d7a14cda4850f47aeac6f0b8bacd5ff984b915cbe649c4579da7c817dc8386a9",
         "41023d309ad4d96251ff5867caa16ee79c1796de84cabc2c1d81af6b80732236",
-        "6b00af70261e02763f5ed44bc35c7376fa3befc40570cbe5515f0d451ed20521",
+        "7333ee62f3297c1f3d215c92f5be8e121a9e61be7ee6ab964921179344404818",
+        "59e8127fee1cbe2fb35d8b578a1df9d360a096330b5389324d25b2f2cd30cad7",
         "0169ef391e8066dc26df3f5cb76bce9bde5a445142e64e017b349920b801de5c",
         "869806f46e724b2fcde52dc8c840837cec2e8be23884cf6543acff78f38e909c",
         "eecf47f06527d1d2e438669855ef660102b92ef6e264e3ca2e26f4c5a7e2b8dc",
         "5294c8d37f33e8319fc77b7c07c74a883ec4163a46a071053a347d48dd08cfc7",
-        "4b9a1d1058416defd8bec9906c2881e8e861fd08025d46ebbc8a8ec34623b990",
-        "1c9b16bcc9ed06de9d07de359fce653fea82aa634f917ed9026bf09cf2482d3c",
+        "9f243f7e07a1b0b233c766c99b2851f9eeccc33b7454b66320e9ad69130754a1",
+        "c0b5f61e2e636bc10e0da976ad7121d0e06e2bc17dd0006a1693ccd3490b0f1f",
         "c5396721b418c294b69c1aca032b55f87877f5cd885dc100e8a065d5092812a9",
         "90cb281b4f03be2b5e3f5f83df331e201d2428235ae48ce9950236bfdabab4e6"
       ],
@@ -753,6 +754,7 @@
         "policy-contract.md#005-00-policy-contract-binding-rules",
         "policy-contract.md#005-01-policy-contract-binding-rules",
         "policy-contract.md#005-02-policy-contract-binding-rules",
+        "policy-contract.md#005-03-policy-contract-binding-rules",
         "policy-contract.md#006-00-policy-contract-tie-break-rules",
         "policy-contract.md#007-00-policy-contract-anti-patterns",
         "policy-contract.md#008-00-policy-contract-ground-rules",
@@ -799,12 +801,12 @@
       "category": "validation",
       "source_path": "raw/efsa-guidance/process-validation-rules.md",
       "chunk_count": 6,
-      "content_hash": "7b2ff48d64110a11022190b3491caa134f20186d85d8feb3b91ed66fa320b83a",
+      "content_hash": "dfb6c33f72065aef6259abed914b0c88e811c1a410567d0cf87bfa9c53ee6f6d",
       "chunk_hashes": [
         "e44adba32aacaee3c0dfb4128d5c68cbd439a68afc51bf4fd9393f43e335801e",
-        "016aff114bd619b6081c03cc1ca510208c643d1a3beac2842287bdcaf2de87d5",
-        "d14a3d18cbca12b8610b4a61fce0d4ca6af3b4977fd2b52fddb32b251eba99de",
-        "1bf0496e19c3d975d54ce93fd4b2d4575a52acc95911bd766a565497703d4675",
+        "8897dc3adce8d5f6a2344a236d03d60b700a40ad3a9f018914c32c489b599c89",
+        "82d70fb8ce3ddcd13d73bfa34f4e51e44cd9bb7c77d3de79c3b6de408d23e919",
+        "57ba747c25690bc6c371f7e31df2bd4ea821c4c1e92ecc673095ee2932580a71",
         "06b0f7c13ceab8cbd57477c5f6c0dfc179224c44375c768e4e1191473924db16",
         "f37b23bf7c40e3d20552712dc064db58c3aecbba8b6daa548825e2f8cc7dd812"
       ],

@@ -8,9 +8,9 @@ last_updated: "2026-09-09"
 ## [2026-09-09] correction | Align BR26 guidance with root-scoped validation
 
 - Corrected the sibling-validator status: BR26 runs there, while issue #23 identified cross-root `ordCode` resolution that could cause false-positive and false-negative results.
-- Documented the single-warn-group correction in automatic-couscous PR #24 and kept missing root-scoped ordinal evidence explicitly non-authoritative.
+- Documented the single-warn-group correction in automatic-couscous PR #24 and kept missing root-scoped ordinal evidence or an unattested validator result explicitly non-authoritative.
 - Aligned the operational rule with EFSA's method scope: once at least one explicit process is present, compare the combined explicit and implicit process set; do not check implicit-only sets.
-- Required the experimental solver to defer BR26 when root-scoped ordinals or a validator result are unavailable rather than guessing.
+- Required the experimental solver to defer BR26 and BR27 when root-scoped ordinals or an attested root-scoped validator result are unavailable rather than guessing.
 
 ## [2026-08-01] correction | Preserve the marketed-dry infusion exception
 

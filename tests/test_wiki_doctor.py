@@ -82,7 +82,9 @@ def test_br26_guidance_cannot_be_used_to_drop_a_stated_process() -> None:
     assert "Stock ICT's BR26 invocation is dormant" in policy
     assert "should keep at most one process per ordinal group" not in policy
     assert "do not mix roots, infer groups, rank processes, or drop one" in policy
-    assert "must mark BR26 as unverified and defer that validation rather than guess" in policy
+    assert "A validator result may stand in for those values only when it attests" in policy
+    assert "must mark BR26 and BR27 as unverified and defer both validations rather than guess" in policy
+    assert "leave BR27 unverified rather than infer the result" in process_rules
 
 
 def test_maintenance_workflow_is_registered_as_orientation() -> None:
