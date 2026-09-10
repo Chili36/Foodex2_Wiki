@@ -5,6 +5,7 @@ import shutil
 from pathlib import Path
 
 from wiki_api.doctor import _check_log_chronology, run_doctor
+from wiki_api.rag_index import build_wiki_rag_chunks
 from wiki_api.wiki_store import WikiStore
 
 
@@ -85,6 +86,22 @@ def test_br26_guidance_cannot_be_used_to_drop_a_stated_process() -> None:
     assert "A validator result may stand in for those values only when it attests" in policy
     assert "must mark BR26 and BR27 as unverified and defer both validations rather than guess" in policy
     assert "leave BR27 unverified rather than infer the result" in process_rules
+
+
+def test_binding_rules_remain_atomic_in_rag_chunks() -> None:
+    policy = (
+        REPO_ROOT / "raw" / "efsa-guidance" / "policy-contract.md"
+    ).read_text(encoding="utf-8")
+    rule_lines = [line for line in policy.splitlines() if line.startswith("- `R-")]
+    chunk_set = build_wiki_rag_chunks(store=WikiStore(REPO_ROOT))
+    policy_chunks = [
+        chunk["chunk_text"]
+        for chunk in chunk_set.chunks
+        if chunk["page_name"] == "policy-contract.md"
+    ]
+
+    assert rule_lines
+    assert all(any(rule in chunk for chunk in policy_chunks) for rule in rule_lines)
 
 
 def test_maintenance_workflow_is_registered_as_orientation() -> None:

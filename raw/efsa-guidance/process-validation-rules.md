@@ -50,7 +50,7 @@ last_updated: "2026-09-09"
 ## Relevant Policy
 
 - [[policy-contract]] `C03`, `C04`, and `C08` explain the policy side of these checks: do not rebuild derivative foods from raw plus `F28`, do not repeat implicit process, and keep only justified explicit process detail.
-- [[policy-contract]] `R-PROC-001`, `R-PROC-002`, and `AP-001` are the nearest policy rules: preserve every stated process, verify root-scoped catalogue ordCodes, respect implicit specificity, and do not reconstruct standard derivatives as raw-plus-`F28`.
+- [[policy-contract]] `R-PROC-001`, `R-PROC-002`, `R-PROC-003`, and `AP-001` are the nearest policy rules: preserve every stated process, trigger ordinal validation whenever a derivative carries an explicit process, verify root-scoped catalogue ordCodes, respect implicit specificity, and do not reconstruct standard derivatives as raw-plus-`F28`.
 
 ## Relevant Business Rules
 

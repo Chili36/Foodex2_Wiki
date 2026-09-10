@@ -1568,5 +1568,9 @@ def test_policy_contract_is_loaded_from_markdown_source() -> None:
     assert binding_rules_by_id["R-PROC-001"]["must"].startswith(
         "preserve every stated process"
     )
+    assert binding_rules_by_id["R-PROC-003"]["when"] == (
+        "the selected base is a derivative and at least one explicit F28 is present"
+    )
+    assert binding_rules_by_id["R-PROC-003"]["must"].startswith("apply BR26")
     assert "business-rules.md BR26" in binding_rules_by_id["R-PROC-001"]["derived_from"]
     assert "business-rules.md BR25" in binding_rules_by_id["R-CARD-001"]["derived_from"]

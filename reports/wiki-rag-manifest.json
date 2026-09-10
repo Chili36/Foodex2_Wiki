@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-09-09T21:25:00.544297+00:00",
+  "generated_at": "2026-09-10T05:11:58.455262+00:00",
   "collection": "foodex2_wiki_markdown_v1",
   "embedding_provider": "voyage",
   "embedding_model": "voyage-context-3",
@@ -17,7 +17,7 @@
     ]
   },
   "page_count": 33,
-  "chunk_count": 271,
+  "chunk_count": 270,
   "pages": [
     {
       "page_name": "RUNTIME_RULES.md",
@@ -724,18 +724,17 @@
       "title": "Policy Contract",
       "category": "runtime",
       "source_path": "raw/efsa-guidance/policy-contract.md",
-      "chunk_count": 17,
-      "content_hash": "5ef9ec993734ee0a4c1eaf545caa67683d73c04df9a764a7971b1eb0e2c959f0",
+      "chunk_count": 16,
+      "content_hash": "4e5a07b97f24f06e1d98c11a05fdd1eb01ed4c3f5bab5c6b77ef53e30c632297",
       "chunk_hashes": [
         "85be61cd179149f488f662b4694a9588781f1a95c9bd2f6aa91d30639fb5a694",
         "f65b0651e4ff32c93fde42295cbb35a8a3a738dc3020261bab64836d9f94a554",
         "ab04d5a2404425b7d3139fe650e34d26f8fdb22ddfd4da7b083995125a0ea7bb",
         "25445e5eeb70c31ff385e7ee2718c3b4be1d2e94ac6dabb6460e77ccb27a8d77",
         "f830d6029a15ae320b9bfaa8cdd5db3a35b8ead3ce15076cf8f7361105388862",
-        "d7a14cda4850f47aeac6f0b8bacd5ff984b915cbe649c4579da7c817dc8386a9",
-        "41023d309ad4d96251ff5867caa16ee79c1796de84cabc2c1d81af6b80732236",
-        "7333ee62f3297c1f3d215c92f5be8e121a9e61be7ee6ab964921179344404818",
-        "59e8127fee1cbe2fb35d8b578a1df9d360a096330b5389324d25b2f2cd30cad7",
+        "4b4372672d55ac1e4e3a22d8a5c6feed76a1e0d70292a4f0edfc0045bf33f2f2",
+        "f6cf659f4762386a032a7734f8c2304ae96aef3c465b2d0acf2fab462438a583",
+        "f80e1dfb36971256fddaa4510390c50ff6bd6a20015297fa23cef7d368cde8f5",
         "0169ef391e8066dc26df3f5cb76bce9bde5a445142e64e017b349920b801de5c",
         "869806f46e724b2fcde52dc8c840837cec2e8be23884cf6543acff78f38e909c",
         "eecf47f06527d1d2e438669855ef660102b92ef6e264e3ca2e26f4c5a7e2b8dc",
@@ -754,7 +753,6 @@
         "policy-contract.md#005-00-policy-contract-binding-rules",
         "policy-contract.md#005-01-policy-contract-binding-rules",
         "policy-contract.md#005-02-policy-contract-binding-rules",
-        "policy-contract.md#005-03-policy-contract-binding-rules",
         "policy-contract.md#006-00-policy-contract-tie-break-rules",
         "policy-contract.md#007-00-policy-contract-anti-patterns",
         "policy-contract.md#008-00-policy-contract-ground-rules",
@@ -771,7 +769,7 @@
       "category": "guidance",
       "source_path": "raw/efsa-guidance/process-facets.md",
       "chunk_count": 9,
-      "content_hash": "a57ae20320a32decee59f3f44f758534feddfebce34524b5522c53c7a3587d86",
+      "content_hash": "794d0e15907da7c94b5afda7de3a2fe3ed7075cb9367f05b4d99795502be4d6c",
       "chunk_hashes": [
         "6cce580045a18c65b002e84be869f0c97a89ee2a4272f8b2ea941d01b00697d1",
         "bfcc945b990291628f7679293e8af8f3bb43dc7699dfd0b0c4207e38cab73578",
@@ -780,7 +778,7 @@
         "2001bcd68f76219c0fdfec4ae2895620e53316dc4a7a4b3fd4bcf6791067bdab",
         "c388791205a23bb5d9c9a59784ce3f92780d6c3cfa15238741f3ea0ad626b4b0",
         "61a9a91aeeccd95a41d57696f966b1bcb1af3c2cdd9df4281fafc61eb4e58f3f",
-        "59334a1a2ffa73c7aab6c4589d868b77e426be9119eae4d951c0d1d35a2e2c27",
+        "c7d2e2f411d381a36643e84a16e96ec25ad0b122835c5804e4c6bae90610a58f",
         "21b1861359174fbb871d7a9e393160945ebde535cc6bcf829ca0d3f7d1a19b38"
       ],
       "chunk_ids": [
@@ -801,13 +799,13 @@
       "category": "validation",
       "source_path": "raw/efsa-guidance/process-validation-rules.md",
       "chunk_count": 6,
-      "content_hash": "dfb6c33f72065aef6259abed914b0c88e811c1a410567d0cf87bfa9c53ee6f6d",
+      "content_hash": "c50f776fac04f6da258bb475f5e6ff9f5b6171b4e670f33c1d0cfe5f2b21c735",
       "chunk_hashes": [
         "e44adba32aacaee3c0dfb4128d5c68cbd439a68afc51bf4fd9393f43e335801e",
         "8897dc3adce8d5f6a2344a236d03d60b700a40ad3a9f018914c32c489b599c89",
         "82d70fb8ce3ddcd13d73bfa34f4e51e44cd9bb7c77d3de79c3b6de408d23e919",
         "57ba747c25690bc6c371f7e31df2bd4ea821c4c1e92ecc673095ee2932580a71",
-        "06b0f7c13ceab8cbd57477c5f6c0dfc179224c44375c768e4e1191473924db16",
+        "82398d838f9a739d2a7e47ab27e7dbed198dab37c7d0d295081f58ba56ef8958",
         "f37b23bf7c40e3d20552712dc064db58c3aecbba8b6daa548825e2f8cc7dd812"
       ],
       "chunk_ids": [

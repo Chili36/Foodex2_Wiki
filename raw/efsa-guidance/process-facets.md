@@ -63,7 +63,7 @@ last_updated: "2026-04-08"
 ## Relevant Policy
 
 - [[policy-contract]] `C03`, `C04`, and `C08` govern this page directly: prefer derivative bases when a standard processed group exists, do not restate implicit processes, and add only process detail that contributes new information.
-- [[policy-contract]] `R-DERIV-001`, `R-PROC-001`, `R-PROC-002`, `TB-001`, and `AP-001` cover the main decision pattern here: raw plus `F28` is not an acceptable reconstruction when the derivative base already exists, and explicit processes must respect implicit/detail ordering.
+- [[policy-contract]] `R-DERIV-001`, `R-PROC-001`, `R-PROC-002`, `R-PROC-003`, `TB-001`, and `AP-001` cover the main decision pattern here: raw plus `F28` is not an acceptable reconstruction when the derivative base already exists, and explicit processes must respect implicit/detail ordering and root-scoped ordinal validation.
 
 ## Relevant Business Rules
 
