@@ -17,7 +17,7 @@ related:
   - "[[term-type-facet-constraints]]"
   - "[[process-validation-rules]]"
   - "[[domain-specific-validation]]"
-last_updated: "2026-06-07"
+last_updated: "2026-09-08"
 ---
 
 # Business Rules
@@ -190,10 +190,13 @@ Use it for two jobs:
 ## BR26: Mutually Exclusive Processes
 
 - Severity: `HIGH`
-- Applies to: derivatives with explicit `F28`
-- Rule: processes in the same ordinal group cannot be combined
-- Known divergence: in the observed stock ICT source, the `mutuallyExclusiveCheck` call appears to be inactive, so BR26 is effectively silent. The sibling validator is also effectively silent for BR26 at present because its process ordinal lookup resolves to `0` for the derivative cases where BR26 would apply. The outcome matches stock ICT silence, but the implementation cause differs.
-- Practical reading: do not rely on BR26 firing as evidence that same-ordinal process combinations are semantically good. Keep the process-composition guidance in [[process-validation-rules]], and treat a proper BR26 implementation as deferred validator work.
+- Applies to: derivatives with at least one explicit `F28`
+- Rule: once an explicit process is present, explicit and implicit processes with the same non-zero `ordCode` cannot be combined. Implicit-only process sets are not checked.
+- Official scope: EFSA's [`mutuallyExclusiveCheck`](https://github.com/openefsa/catalogue-browser/blob/9a028ee0efe6a018e7f941ce0a4f7e6488b80e43/src/main/java/business_rules/TermRules.java#L559-L620) returns when there is no explicit process; otherwise it combines the explicit and implicit processes before checking duplicate ordinals.
+- Implementation status: in the observed stock ICT source, the `mutuallyExclusiveCheck` invocation is commented out, so that path is effectively silent. The sibling validator runs BR26, but [issue #23](https://github.com/Chili36/automatic-couscous/issues/23) identified an accuracy bug: resolving each process independently could mix `ordCode`s from different `BR_Data.csv` root groups and cause both false-positive and false-negative results.
+- Root-scoped fix: [automatic-couscous PR #24](https://github.com/Chili36/automatic-couscous/pull/24) resolves the base term's single warn group first (the term itself, otherwise its closest report-hierarchy ancestor represented in `BR_Data.csv`) and then reads every process ordinal only from that root's rows. A process absent from that warn group receives `0` and does not participate in BR26/BR27 grouping.
+- Deployment caveat: PR #24 is open and based on the pending MTX 17.2 branch at the time of this update. Before that fix is merged and deployed, sibling-validator warnings can still reflect cross-root ordinal leakage. After the fix, a BR26 warning represents a collision within the resolved warn group, but the absence of a warning still does not prove general compatibility because processes missing from that group's data resolve to `0`.
+- Practical reading: verify `ordCode`s against the base term's applicable `BR_Data.csv` warn group, not prose reasoning or validator silence. BR26 supplies no ranking or tie-break for removing a process: preserve every process stated by the sample, and if the root-scoped values genuinely collide, flag the proposed code as illegal for recoding or review. See [[process-validation-rules]].
 
 ## BR27: Decimal Ordcode Process Conflicts
 

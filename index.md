@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-07-05"
+last_updated: "2026-09-09"
 ---
 
 # Index
@@ -50,11 +50,11 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 
 ## Validation Layer
 
-- [business-rules.md](raw/efsa-guidance/business-rules.md): Canonical wiki target for `BR01`-`BR31`, including MTX 17.1 validator status, BR13's seven-code disintegration boundary, BR19/BR19+ stale-data coverage, and BR26's known validator-silence divergence.
+- [business-rules.md](raw/efsa-guidance/business-rules.md): Canonical wiki target for `BR01`-`BR31`, including MTX 17.1 validator status, BR13's seven-code disintegration boundary, BR19/BR19+ stale-data coverage, and BR26's cross-root ordinal-resolution bug and root-scoped fix.
 - [validation-rules.md](raw/efsa-guidance/validation-rules.md): Overview of the validator's two-layer model, severities, and the most important blocking rules.
 - [structural-validation.md](raw/efsa-guidance/structural-validation.md): Syntax, descriptor existence, implicit-facet cleanup, duplicates, and single-cardinality checks.
 - [term-type-facet-constraints.md](raw/efsa-guidance/term-type-facet-constraints.md): Allowed and forbidden facets by FoodEx2 term type, including the distinction between BR13 disintegration `F03` values and permitted non-disintegration physical states on raw commodities.
-- [process-validation-rules.md](raw/efsa-guidance/process-validation-rules.md): Ordinal-group process conflicts, raw-vs-derivative process boundaries, BR19/BR19+ behaviour, and the BR26 known divergence.
+- [process-validation-rules.md](raw/efsa-guidance/process-validation-rules.md): Root-scoped process ordinal conflicts, raw-vs-derivative process boundaries, BR19/BR19+ behaviour, and BR26 validator accuracy caveats.
 - [domain-specific-validation.md](raw/efsa-guidance/domain-specific-validation.md): Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.
 
 ## Maintenance History

@@ -13,7 +13,7 @@ related:
   - "[[base-term-selection]]"
   - "[[process-facets]]"
   - "[[implicit-vs-explicit-facets]]"
-last_updated: "2026-07-28"
+last_updated: "2026-09-09"
 ---
 
 # Policy Contract
@@ -44,7 +44,7 @@ Use the cited business rules and guidance pages as the controlling sources under
 
 ## Policy Version
 
-`2026-07-28-v0.7`
+`2026-09-08-v0.8`
 
 ## Constitution
 
@@ -69,23 +69,43 @@ Use the cited business rules and guidance pages as the controlling sources under
 ## Binding Rules
 
 - `R-DERIV-001` when `food_type=derivative and derivative_base_exists=true`: must select the derivative base rather than reconstructing the food from a raw commodity base plus `F28`. {derived_from: base-term-selection.md; process-facets.md; business-rules.md BR19}
+
 - `R-IMPLICIT-001` when `chosen_base_already_implies_process=true`: must not add the same process again as explicit `F28`. {derived_from: implicit-vs-explicit-facets.md; process-facets.md; business-rules.md BR16}
+
 - `R-HIER-001` when `a reportable non-hierarchy candidate exists`: must not select a hierarchy term as the coding base. {derived_from: base-term-selection.md; business-rules.md BR08; business-rules.md BR23; business-rules.md BR24}
+
 - `R-ORIGIN-001` when `food_type=derivative`: must express origin with `F27` rather than `F04` or `F01`, unless a separate minor added ingredient rule explicitly applies. {derived_from: term-type-facet-constraints.md; implicit-vs-explicit-facets.md; ingredient-facets.md; business-rules.md BR05; business-rules.md BR06; business-rules.md BR07}
+
 - `R-ORIGIN-002` when `food_type=composite`: must express characterising origin with `F04` rather than `F27` or `F01`. {derived_from: ingredient-facets.md; term-type-facet-constraints.md; business-rules.md BR03; business-rules.md BR04}
+
 - `R-ORIGIN-003` when `food_type=raw_primary_commodity`: must not add explicit `F01` merely to restate the selected raw base commodity. {derived_from: implicit-vs-explicit-facets.md; term-type-facet-constraints.md}
+
 - `R-ORIGIN-004` when `food_type=raw_primary_commodity and the selected raw base has a generic implicit source and a narrower source is known`: may add explicit `F01` as a restriction to the more detailed source. {derived_from: implicit-vs-explicit-facets.md; base-term-selection.md; term-type-facet-constraints.md}
+
 - `R-INGREDIENT-001` when `food_type=raw_primary_commodity or food_type=derivative and explicit F04 is present`: must use `F04` only for a minor later-added ingredient, coating, flavouring, or decoration; it must not encode the constitutive source. {derived_from: ingredient-facets.md; term-type-facet-constraints.md; business-rules.md BR12}
+
 - `R-FACET-001` when `an explicit facet only repeats an implicit property of the chosen base`: must not keep that explicit facet in the final code. {derived_from: implicit-vs-explicit-facets.md; facet-coding-rules.md}
+
 - `R-SCOPE-001` when `candidate wording or any available coverage text excludes the described product or narrows it away from the query`: must not select that candidate as the base term. {derived_from: base-term-selection.md}
+
 - `R-DESC-001` when `F10 or F21 information is present and not already implicit in a reportable base term`: may add the descriptive facet explicitly. {derived_from: facet-coding-rules.md}
-- `R-PROC-001` when `multiple explicit F28 processes are added`: should keep at most one process per ordinal group; note that BR26 may currently be silent in validators, so this is still a construction discipline even when validation does not flag it. {derived_from: process-validation-rules.md; business-rules.md BR26; business-rules.md BR27}
+
+- `R-PROC-001` when `the sample states one or more processes`: must preserve every stated process in the selected base term or explicit `F28`; an ordinal conflict does not authorise ranking the processes or dropping one. {derived_from: process-validation-rules.md; business-rules.md BR26; business-rules.md BR27}
+
 - `R-PROC-002` when `the chosen base already implies a process`: must ensure any remaining explicit `F28` is at least as specific as the implicit process. {derived_from: process-facets.md; process-validation-rules.md; business-rules.md BR16}
+
+- `R-PROC-003` when `the selected base is a derivative and at least one explicit F28 is present`: must apply BR26 to non-zero `ordCode`s across the combined explicit and implicit process set and check BR27 separately. Do not run BR26 on an implicit-only process set. When root-scoped `ordCode`s are available, verify both rules within the base term's applicable `BR_Data.csv` warn group rather than infer groups from prose or mix values across roots. A validator result may stand in for those values only when it attests that it used the same root-scoped warn-group resolution; do not trust a result from a pre-fix or unspecified implementation. If neither source of root-scoped evidence is available, must mark BR26 and BR27 as unverified and defer both validations rather than guess. If BR26's root-scoped equality condition genuinely holds, flag the proposed code as illegal for recoding or review. Stock ICT's BR26 invocation is dormant, while the sibling validator actively checks derivatives and has a pending root-resolution fix; silence from either path is not approval. {derived_from: process-validation-rules.md; business-rules.md BR26; business-rules.md BR27}
+
 - `R-CARD-001` when `using F01, F02, F03, F07, F11, F22, F24, F26, F30, F32, or F34`: must keep only one value for that facet family. {derived_from: business-rules.md BR25; structural-validation.md}
+
 - `R-F27-001` when `an explicit F27 is used`: must make the `F27` refine or equal the implicit or source commodity chain. {derived_from: term-type-facet-constraints.md; business-rules.md BR01; business-rules.md BR05}
+
 - `R-F03-001` when `food_type=raw_primary_commodity and F03 descriptor is in the BR13 disintegration list`: must not add that `F03` to the final code; choose the appropriate derivative base instead. This is not a blanket ban on all `F03` descriptors for raw commodities. {derived_from: term-type-facet-constraints.md; business-rules.md BR13}
+
 - `R-F01-004` when `food_type=derivative and explicit F01 is present`: must use `F01` only when the derivative rules permit it, including the single-`F27` dependency. {derived_from: term-type-facet-constraints.md; business-rules.md BR06; business-rules.md BR07}
+
 - `R-SYNTAX-001` when `composing the final code`: must use the syntax `base#facetType.code($facetType2.code2...)`. {derived_from: code-string-format.md; business-rules.md BR29}
+
 - `R-LENGTH-001` when `composing the facet string`: must keep the full facet string at or below 256 characters. {derived_from: code-string-format.md}
 
 ## Tie-Break Rules
@@ -118,7 +138,7 @@ These are the practical ground rules the solver should always keep in view:
   - `h` / `g`: do not use as coding base terms when a reportable term exists.
 - `F10 qualitative-info` and `F21 production-method` are descriptive facets and may be used on reportable base terms when the information is present and not already implicit.
 - Implicit facets are already present. Never duplicate them explicitly.
-- For `F28`, keep one process per ordinal group and do not add a process that is broader than the one already implicit in the base term. BR26 may currently be silent in validators, so do not use validator silence alone as approval for same-ordinal process stacking.
+- Preserve every process stated by the sample through the selected base term or explicit `F28`. Apply BR26 only to a derivative carrying at least one explicit `F28`, and then compare the combined explicit and implicit process set; do not check an implicit-only set. When root-scoped ordinal data is available, resolve one applicable `BR_Data.csv` warn group for the base term and verify BR26 and BR27 using all relevant process `ordCode`s within that root; do not mix roots, infer groups, rank processes, or drop one to resolve a collision. Accept a validator result as evidence only when it attests that it used that root-scoped resolution; a pre-fix or unspecified result is not authoritative. If neither source of root-scoped evidence is available, report BR26 and BR27 as unverified and defer both checks rather than guess. If BR26's root-scoped equality condition holds, flag the code as illegal for recoding or review. Stock ICT's BR26 call is dormant; the sibling validator actively checks derivatives, has a pending root-resolution fix, and maps processes unlisted under the selected root to `0`. In all implementations, silence is not approval. Do not add a process broader than one already implicit in the base term.
 - Single-cardinality facet families allow only one value: `F01`, `F02`, `F03`, `F07`, `F11`, `F22`, `F24`, `F26`, `F30`, `F32`, and `F34`.
 - `F27` must refine or equal the implicit/source commodity chain.
 - On raw commodities, do not use the BR13 disintegration-family `F03` descriptors: `A06JD`, `A06JE`, `A06JF`, `A06JG`, `A07Y2`, `A07Y3`, or `A07Y4`. Non-disintegration physical-state descriptors are not blocked by BR13 merely because they are `F03`.
