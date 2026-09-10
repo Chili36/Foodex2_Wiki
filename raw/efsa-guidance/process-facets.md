@@ -11,7 +11,7 @@ related:
   - "[[facet-coding-rules]]"
   - "[[base-term-selection]]"
   - "[[code-string-format]]"
-last_updated: "2026-04-08"
+last_updated: "2026-09-09"
 ---
 
 # Process Facets

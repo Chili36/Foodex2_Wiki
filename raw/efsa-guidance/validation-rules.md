@@ -18,7 +18,7 @@ related:
   - "[[process-validation-rules]]"
   - "[[domain-specific-validation]]"
   - "[[code-string-format]]"
-last_updated: "2026-07-06"
+last_updated: "2026-09-09"
 ---
 
 # Validation Rules Overview

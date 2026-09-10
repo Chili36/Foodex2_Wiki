@@ -90,7 +90,7 @@ Use the cited business rules and guidance pages as the controlling sources under
 
 - `R-DESC-001` when `F10 or F21 information is present and not already implicit in a reportable base term`: may add the descriptive facet explicitly. {derived_from: facet-coding-rules.md}
 
-- `R-PROC-001` when `the sample states multiple processes`: must preserve every stated process in the selected base term or explicit `F28`; an ordinal conflict does not authorise ranking the processes or dropping one. {derived_from: process-validation-rules.md; business-rules.md BR26; business-rules.md BR27}
+- `R-PROC-001` when `the sample states one or more processes`: must preserve every stated process in the selected base term or explicit `F28`; an ordinal conflict does not authorise ranking the processes or dropping one. {derived_from: process-validation-rules.md; business-rules.md BR26; business-rules.md BR27}
 
 - `R-PROC-002` when `the chosen base already implies a process`: must ensure any remaining explicit `F28` is at least as specific as the implicit process. {derived_from: process-facets.md; process-validation-rules.md; business-rules.md BR16}
 

@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-09-10T05:11:58.455262+00:00",
+  "generated_at": "2026-09-10T06:24:17.037409+00:00",
   "collection": "foodex2_wiki_markdown_v1",
   "embedding_provider": "voyage",
   "embedding_model": "voyage-context-3",
@@ -725,7 +725,7 @@
       "category": "runtime",
       "source_path": "raw/efsa-guidance/policy-contract.md",
       "chunk_count": 16,
-      "content_hash": "4e5a07b97f24f06e1d98c11a05fdd1eb01ed4c3f5bab5c6b77ef53e30c632297",
+      "content_hash": "aa7b590ea0bcd3fabfa5a4ab5c4bffce5fe8cd95d608d422c758a1149a79b676",
       "chunk_hashes": [
         "85be61cd179149f488f662b4694a9588781f1a95c9bd2f6aa91d30639fb5a694",
         "f65b0651e4ff32c93fde42295cbb35a8a3a738dc3020261bab64836d9f94a554",
@@ -733,7 +733,7 @@
         "25445e5eeb70c31ff385e7ee2718c3b4be1d2e94ac6dabb6460e77ccb27a8d77",
         "f830d6029a15ae320b9bfaa8cdd5db3a35b8ead3ce15076cf8f7361105388862",
         "4b4372672d55ac1e4e3a22d8a5c6feed76a1e0d70292a4f0edfc0045bf33f2f2",
-        "f6cf659f4762386a032a7734f8c2304ae96aef3c465b2d0acf2fab462438a583",
+        "f1a535410a72e9a70b15bb18aab2c72b03ad4a888be3670667f0b2edb7e385aa",
         "f80e1dfb36971256fddaa4510390c50ff6bd6a20015297fa23cef7d368cde8f5",
         "0169ef391e8066dc26df3f5cb76bce9bde5a445142e64e017b349920b801de5c",
         "869806f46e724b2fcde52dc8c840837cec2e8be23884cf6543acff78f38e909c",
