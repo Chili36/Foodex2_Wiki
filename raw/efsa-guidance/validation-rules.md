@@ -18,7 +18,7 @@ related:
   - "[[process-validation-rules]]"
   - "[[domain-specific-validation]]"
   - "[[code-string-format]]"
-last_updated: "2026-09-09"
+last_updated: "2026-09-11"
 ---
 
 # Validation Rules Overview
@@ -44,7 +44,7 @@ last_updated: "2026-09-09"
 - `BR02`, `BR09`, and `BR18` are placeholders and are not currently implemented. (Business Rules Overview; Compact JSON)
 - `BR13` is precise: it blocks seven disintegration-family `F03` descriptors on raw commodities, not all `F03` descriptors. (Business Rules `BR13`)
 - `BR19+` warnings can appear in the sibling validator when transparent local extension rows cover BR19 root/process gaps left by the stale upstream `BR_Data.csv`. (Business Rules `BR19`)
-- `BR26` runs in the sibling validator, but its pending root-scoped ordinal-resolution fix is needed to prevent cross-root false positives and false negatives. A missing warning is not proof that a process combination is valid. (Business Rules `BR26`)
+- `BR26` has declared severity `HIGH` but is inactive in the observed ICT call path. The sibling validator's active BR26 check is a local implementation difference, not a default wiki requirement. BR27 remains active. See [[business-rules]].
 
 <!-- Source: docs/VALIDATION_RULES_SUMMARY.md Quick Reference Table; BUSINESS-RULES.md BR03, BR04, BR17, BR19, BR20, BR21, BR29, BR30, BR31 -->
 ## High-Impact Blocking Rules

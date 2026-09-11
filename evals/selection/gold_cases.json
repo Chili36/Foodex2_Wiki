@@ -1063,7 +1063,7 @@
           "additives-flavourings-foodex2.md",
           "chemical-monitoring-foodex2.md"
         ],
-        "notes": "Rubric 1+5: a processed derivative where frying is the explicit added treatment (official DMT code A026B#F28.A07GR). process-facets must_have to pick the specific dry-heat frying descriptor rather than a generic process label (BR11). process-validation-rules is the validation must_have: frying is a heating-group (ordinal 1.x) process, so a coder must confirm it neither duplicates an implicit process on the sausage base (BR16) nor collides with another same-ordinal heating step (BR26). term-type validation must_have for F28 legality on a derivative. Rubric 2: no domain -> all overlays must_not."
+        "notes": "Rubric 1+5: a processed derivative where frying is the explicit added treatment (official DMT code A026B#F28.A07GR). process-facets must_have to pick the specific dry-heat frying descriptor rather than a generic process label (BR11). process-validation-rules is the validation must_have for checking explicit process detail against the process already implicit in the sausage base (BR16). BR26 is inactive in the observed ICT call path and is not a default coding requirement; do not infer process ordinals from the frying label. term-type validation must_have for F28 legality on a derivative. Rubric 2: no domain -> all overlays must_not."
       }
     },
     {

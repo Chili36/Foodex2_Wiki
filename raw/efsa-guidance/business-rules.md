@@ -17,7 +17,7 @@ related:
   - "[[term-type-facet-constraints]]"
   - "[[process-validation-rules]]"
   - "[[domain-specific-validation]]"
-last_updated: "2026-09-08"
+last_updated: "2026-09-11"
 ---
 
 # Business Rules
@@ -38,7 +38,7 @@ Use it for two jobs:
 | `LOW` | Soft warning, validation passes | `BR10`, `BR11`, `BR12`, `BR15`, `BR23` |
 | `NONE` | Informational only | `BR22` |
 
-`BR02`, `BR09`, and `BR18` are placeholders and are not implemented.
+`BR02`, `BR09`, and `BR18` are placeholders and are not implemented. Severity describes the declared warning when a rule runs; it does not imply that the rule is enabled. BR26 is inactive in the observed ICT call path.
 
 ## Validator Data Status
 
@@ -147,7 +147,7 @@ Use it for two jobs:
 - Severity: `ERROR`
 - Applies to: raw terms (`r`)
 - Rule: processes that create derivatives cannot be applied to raw commodities
-- Data-source note: official BR19 coverage comes from `BR_Data.csv`, which is frozen upstream at 2020-05-20. Because MTX is now at `17.1`, some clear-pattern root groups can be absent from the official BR19 table.
+- Data-source note: official BR19 coverage comes from `BR_Data.csv`, which is frozen upstream at 2020-05-20. As catalogue releases have advanced beyond that table, some clear-pattern root groups can be absent from the official BR19 table.
 - Local-extension note: the sibling validator can add transparent `BR19+` rows from `data/BR_Data.extension.csv`. The extension uses the same five official columns plus `RATIONALE` and `ADDED`; official rows take precedence when the same root/process pair exists.
 - Workflow impact: stock ICT can be silent where local validation flags a derivative-creating process on a raw commodity. This is expected when the local warning is `BR19+`, and can be disabled with `STRICT_ICT_PARITY=1` for strict stock-ICT parity checks.
 
@@ -187,22 +187,20 @@ Use it for two jobs:
 - Applies to: single-cardinality facet families
 - Rule: only one explicit value is allowed for `F01`, `F02`, `F03`, `F07`, `F11`, `F22`, `F24`, `F26`, `F30`, `F32`, `F34`
 
-## BR26: Mutually Exclusive Processes
+## BR26: Mutually Exclusive Processes (inactive in observed ICT)
 
-- Severity: `HIGH`
-- Applies to: derivatives with at least one explicit `F28`
-- Rule: once an explicit process is present, explicit and implicit processes with the same non-zero `ordCode` cannot be combined. Implicit-only process sets are not checked.
-- Official scope: EFSA's [`mutuallyExclusiveCheck`](https://github.com/openefsa/catalogue-browser/blob/9a028ee0efe6a018e7f941ce0a4f7e6488b80e43/src/main/java/business_rules/TermRules.java#L559-L620) returns when there is no explicit process; otherwise it combines the explicit and implicit processes before checking duplicate ordinals.
-- Implementation status: in the observed stock ICT source, the `mutuallyExclusiveCheck` invocation is commented out, so that path is effectively silent. The sibling validator runs BR26, but [issue #23](https://github.com/Chili36/automatic-couscous/issues/23) identified an accuracy bug: resolving each process independently could mix `ordCode`s from different `BR_Data.csv` root groups and cause both false-positive and false-negative results.
-- Root-scoped fix: [automatic-couscous PR #24](https://github.com/Chili36/automatic-couscous/pull/24) resolves the base term's single warn group first (the term itself, otherwise its closest report-hierarchy ancestor represented in `BR_Data.csv`) and then reads every process ordinal only from that root's rows. A process absent from that warn group receives `0` and does not participate in BR26/BR27 grouping.
-- Deployment caveat: PR #24 is open and based on the pending MTX 17.2 branch at the time of this update. Before that fix is merged and deployed, sibling-validator warnings can still reflect cross-root ordinal leakage. After the fix, a BR26 warning represents a collision within the resolved warn group, but the absence of a warning still does not prove general compatibility because processes missing from that group's data resolve to `0`.
-- Practical reading: verify `ordCode`s against the base term's applicable `BR_Data.csv` warn group, not prose reasoning or validator silence. BR26 supplies no ranking or tie-break for removing a process: preserve every process stated by the sample, and if the root-scoped values genuinely collide, flag the proposed code as illegal for recoding or review. See [[process-validation-rules]].
+- Runtime status: the [observed ICT call site](https://github.com/openefsa/catalogue-browser/blob/9a028ee0efe6a018e7f941ce0a4f7e6488b80e43/src/main/java/business_rules/TermRules.java#L1656-L1663) calls BR27 but comments out BR26. Do not promote BR26 into a mandatory coding check or reject a code on that basis in the default wiki workflow.
+- Historical definition: the dormant `mutuallyExclusiveCheck` method compares duplicate non-zero ordinals across implicit and explicit processes for a derivative with at least one explicit process. Its declared severity is `HIGH`; that metadata does not establish active enforcement. The source does not establish why it was disabled.
+- Implementation status (2026-09-11): the sibling validator at `014b294` actively invokes BR26, unlike observed ICT. [PR #27](https://github.com/Chili36/automatic-couscous/pull/27) removes that invocation and corrects active BR27 checks; it is proposed, not deployed. The earlier root-scoped lookup fix in [PR #24](https://github.com/Chili36/automatic-couscous/pull/24) merged on 2026-09-08.
+- Coding consequence: preserve the sample's processing information. Do not rank or remove a stated process, demand BR26 ordinal evidence, or require a routine BR26 deferral merely because this rule exists. If a workflow explicitly requires the sibling check, interpret its output as that workflow's local validation result and investigate conflicts in that context.
 
 ## BR27: Decimal Ordcode Process Conflicts
 
 - Severity: `HIGH`
 - Applies to: derivative terms (`d`)
-- Rule: decimal ordcodes in the same integer family conflict and represent alternative derivative paths
+- Rule: within one root-scoped integer family (`1`, `2`, ...), consider only non-integer ordinals. BR27 requires at least two distinct decimal ordinal values and at least one explicit process in that family. An implicit-only family is excluded; equal decimal values alone belong to BR26, not BR27.
+- Official scope: EFSA's [`decimalOrderCheck`](https://github.com/openefsa/catalogue-browser/blob/9a028ee0efe6a018e7f941ce0a4f7e6488b80e43/src/main/java/business_rules/TermRules.java#L650-L780) compares distinct fractional parts within each integer family and excludes implicit-only families. These choices represent alternative derivative paths.
+- Implementation caveat (2026-09-11): the sibling implementation at `014b294` counts processes rather than distinct ordinal values and can emit BR27 for equal decimal ordinals. PR #27 corrects this distinct-value condition. Until the running implementation is verified, check that condition as well as root-scoped resolution before accepting its BR27 result.
 
 ## BR28: Reconstitution Restrictions
 

@@ -71,21 +71,12 @@ def test_br26_guidance_cannot_be_used_to_drop_a_stated_process() -> None:
     ).read_text(encoding="utf-8")
 
     assert "Preserve every process stated by the sample" in process_rules
-    assert "`BR26` defines no ranking or tie-break" in process_rules
-    assert "when at least one explicit `F28` is present" in process_rules
-    assert "combined explicit and implicit process set" in policy
-    assert "Do not run BR26 on an implicit-only process set" in policy
-    assert "Resolve the base term's applicable `BR_Data.csv` warn group first" in process_rules
-    assert "do not mix roots" in policy
-    assert "flag the proposed code as illegal" in process_rules
-    assert "per-process lookup could mix ordinals from different root groups" in process_rules
-    assert "pending PR #24" in process_rules
-    assert "Stock ICT's BR26 invocation is dormant" in policy
-    assert "should keep at most one process per ordinal group" not in policy
-    assert "do not mix roots, infer groups, rank processes, or drop one" in policy
-    assert "A validator result may stand in for those values only when it attests" in policy
-    assert "must mark BR26 and BR27 as unverified and defer both validations rather than guess" in policy
-    assert "leave BR27 unverified rather than infer the result" in process_rules
+    assert "BR26 is inactive in the observed ICT call path" in policy
+    assert "do not require it, reject a code solely on its dormant definition" in policy
+    assert "Only consider BR26 when the workflow explicitly requires" in policy
+    assert "must apply BR26" not in policy
+    assert "must mark BR26 and BR27 as unverified" not in policy
+    assert "leave BR27 unverified rather than infer the result" in policy
 
 
 def test_binding_rules_remain_atomic_in_rag_chunks() -> None:

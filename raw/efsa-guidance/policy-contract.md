@@ -13,7 +13,7 @@ related:
   - "[[base-term-selection]]"
   - "[[process-facets]]"
   - "[[implicit-vs-explicit-facets]]"
-last_updated: "2026-09-09"
+last_updated: "2026-09-11"
 ---
 
 # Policy Contract
@@ -44,7 +44,7 @@ Use the cited business rules and guidance pages as the controlling sources under
 
 ## Policy Version
 
-`2026-09-08-v0.8`
+`2026-09-11-v0.10`
 
 ## Constitution
 
@@ -90,11 +90,11 @@ Use the cited business rules and guidance pages as the controlling sources under
 
 - `R-DESC-001` when `F10 or F21 information is present and not already implicit in a reportable base term`: may add the descriptive facet explicitly. {derived_from: facet-coding-rules.md}
 
-- `R-PROC-001` when `the sample states one or more processes`: must preserve every stated process in the selected base term or explicit `F28`; an ordinal conflict does not authorise ranking the processes or dropping one. {derived_from: process-validation-rules.md; business-rules.md BR26; business-rules.md BR27}
+- `R-PROC-001` when `the sample states one or more processes`: must preserve every stated process in the selected base term or explicit `F28`; an ordinal conflict does not authorise ranking the processes or dropping one. {derived_from: process-validation-rules.md; process-facets.md}
 
 - `R-PROC-002` when `the chosen base already implies a process`: must ensure any remaining explicit `F28` is at least as specific as the implicit process. {derived_from: process-facets.md; process-validation-rules.md; business-rules.md BR16}
 
-- `R-PROC-003` when `the selected base is a derivative and at least one explicit F28 is present`: must apply BR26 to non-zero `ordCode`s across the combined explicit and implicit process set and check BR27 separately. Do not run BR26 on an implicit-only process set. When root-scoped `ordCode`s are available, verify both rules within the base term's applicable `BR_Data.csv` warn group rather than infer groups from prose or mix values across roots. A validator result may stand in for those values only when it attests that it used the same root-scoped warn-group resolution; do not trust a result from a pre-fix or unspecified implementation. If neither source of root-scoped evidence is available, must mark BR26 and BR27 as unverified and defer both validations rather than guess. If BR26's root-scoped equality condition genuinely holds, flag the proposed code as illegal for recoding or review. Stock ICT's BR26 invocation is dormant, while the sibling validator actively checks derivatives and has a pending root-resolution fix; silence from either path is not approval. {derived_from: process-validation-rules.md; business-rules.md BR26; business-rules.md BR27}
+- `R-PROC-003` when `process validation is needed`: must distinguish active validation from dormant rule definitions. BR26 is inactive in the observed ICT call path: do not require it, reject a code solely on its dormant definition, or report a routine BR26 deferral. Only consider BR26 when the workflow explicitly requires the sibling validator's local check. For applicable BR27 validation, use root-scoped catalogue evidence or a verified validator result; if unavailable, leave BR27 unverified rather than infer the result. {derived_from: business-rules.md BR26; business-rules.md BR27; process-validation-rules.md}
 
 - `R-CARD-001` when `using F01, F02, F03, F07, F11, F22, F24, F26, F30, F32, or F34`: must keep only one value for that facet family. {derived_from: business-rules.md BR25; structural-validation.md}
 
@@ -138,7 +138,7 @@ These are the practical ground rules the solver should always keep in view:
   - `h` / `g`: do not use as coding base terms when a reportable term exists.
 - `F10 qualitative-info` and `F21 production-method` are descriptive facets and may be used on reportable base terms when the information is present and not already implicit.
 - Implicit facets are already present. Never duplicate them explicitly.
-- Preserve every process stated by the sample through the selected base term or explicit `F28`. Apply BR26 only to a derivative carrying at least one explicit `F28`, and then compare the combined explicit and implicit process set; do not check an implicit-only set. When root-scoped ordinal data is available, resolve one applicable `BR_Data.csv` warn group for the base term and verify BR26 and BR27 using all relevant process `ordCode`s within that root; do not mix roots, infer groups, rank processes, or drop one to resolve a collision. Accept a validator result as evidence only when it attests that it used that root-scoped resolution; a pre-fix or unspecified result is not authoritative. If neither source of root-scoped evidence is available, report BR26 and BR27 as unverified and defer both checks rather than guess. If BR26's root-scoped equality condition holds, flag the code as illegal for recoding or review. Stock ICT's BR26 call is dormant; the sibling validator actively checks derivatives, has a pending root-resolution fix, and maps processes unlisted under the selected root to `0`. In all implementations, silence is not approval. Do not add a process broader than one already implicit in the base term.
+- Preserve every process stated by the sample through the base term or justified explicit facets. Do not invent ordinal groups or discard sample information to satisfy an assumed conflict. Apply the active process rules described in [[process-validation-rules]]; BR26 is not a default coding requirement because its observed ICT invocation is inactive.
 - Single-cardinality facet families allow only one value: `F01`, `F02`, `F03`, `F07`, `F11`, `F22`, `F24`, `F26`, `F30`, `F32`, and `F34`.
 - `F27` must refine or equal the implicit/source commodity chain.
 - On raw commodities, do not use the BR13 disintegration-family `F03` descriptors: `A06JD`, `A06JE`, `A06JF`, `A06JG`, `A07Y2`, `A07Y3`, or `A07Y4`. Non-disintegration physical-state descriptors are not blocked by BR13 merely because they are `F03`.
