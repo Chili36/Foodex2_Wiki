@@ -10,6 +10,7 @@ last_updated: "2026-09-11"
 - Removed mandatory BR26 validation, ordinal-evidence demands, rejection and routine deferral from policy; kept a concise distinction between the dormant ICT method and the sibling implementation.
 - Kept active BR27 separate and clarified its distinct-decimal and per-family explicit-process conditions. Policy version: `2026-09-11-v0.10`.
 - Corrected the status of sibling PR #24 to merged. Sibling PR #27 proposes disabling the normal BR26 invocation and fixing BR27; it is not deployed.
+- Corrected the reviewed `SEL-0019` selection rubric to retain BR16 coverage without requiring BR26 or inventing frying ordinals.
 - Updated index summaries, regression tests and the RAG manifest. The final audit and pinned-source reproduction are in `reports/audits/2026-09-11-br26/`.
 
 ## [2026-09-09] correction | Align BR26 guidance with root-scoped validation
