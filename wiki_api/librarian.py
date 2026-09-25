@@ -21,6 +21,7 @@ from .wiki_store import WikiStore
 REPO_ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(REPO_ROOT / ".env")
 logger = logging.getLogger("wiki_api.prompts")
+DEFAULT_SELECTOR_MODEL = "jev-1.13.0"
 
 try:
     import certifi
@@ -518,6 +519,8 @@ def infer_model_provider(model: str | None) -> str:
     if not model:
         return "anthropic"
     normalized = model.lower().strip()
+    if normalized.startswith("jev-"):
+        return "typesafe"
     if (
         normalized.startswith("lmstudio:")
         or normalized.startswith("lm-studio:")
@@ -927,6 +930,14 @@ def resolve_answerer_model(model: str | None = None) -> str:
         "WIKI_ANSWERER_MODEL",
         "WIKI_LIBRARIAN_MODEL",
         default="gpt-5.6-terra",
+    )
+
+
+def resolve_selector_model(model: str | None = None) -> str:
+    return model or _resolve_model(
+        "WIKI_CONTEXT_MODEL",
+        "WIKI_LIBRARIAN_MODEL",
+        default=DEFAULT_SELECTOR_MODEL,
     )
 
 

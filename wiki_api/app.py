@@ -22,7 +22,9 @@ from .librarian import (
     PageSelectionResult,
     infer_model_provider,
     resolve_answerer_model,
+    resolve_selector_model,
 )
+from .jev_selector import JevWikiPageSelector
 from .policy import build_policy_contract
 from .qdrant_ask import QdrantAskError, retrieve_qdrant_ask_context
 from .rag_index import (
@@ -76,36 +78,34 @@ def get_selector_runner(
     /wiki/ask can never cross-contaminate each other's catalog even though
     both may share the no-override code path in the same running process.
     """
-    if model is not None or reasoning_effort is not None:
-        if _uses_messages_client(model):
-            kwargs: dict[str, Any] = {
-                "store": store,
-                "model": model,
-                "max_pages": max_pages or 7,
-                "catalog_scope": scope,
-            }
-            if reasoning_effort is not None:
-                kwargs["reasoning_effort"] = reasoning_effort
-            return AnthropicWikiPageSelector(**kwargs)
-        kwargs = {
+    def build_selector() -> Any:
+        resolved_model = resolve_selector_model(model)
+        kwargs: dict[str, Any] = {
             "store": store,
-            "model": model,
+            "model": resolved_model,
             "max_pages": max_pages or 7,
             "catalog_scope": scope,
         }
+        if infer_model_provider(resolved_model) == "typesafe":
+            return JevWikiPageSelector(**kwargs)
         if reasoning_effort is not None:
             kwargs["reasoning_effort"] = reasoning_effort
+        if _uses_messages_client(resolved_model):
+            return AnthropicWikiPageSelector(**kwargs)
         return JsonWikiPageSelector(**kwargs)
+
+    if model is not None or reasoning_effort is not None:
+        return build_selector()
 
     if scope == "ask":
         global ask_selector_runner
         if ask_selector_runner is None:
-            ask_selector_runner = AnthropicWikiPageSelector(store=store, catalog_scope="ask")
+            ask_selector_runner = build_selector()
         return ask_selector_runner
 
     global selector_runner
     if selector_runner is None:
-        selector_runner = AnthropicWikiPageSelector(store=store, catalog_scope="coding")
+        selector_runner = build_selector()
     return selector_runner
 
 
@@ -320,9 +320,9 @@ class AskSelectionRequest(BaseModel):
         default=None,
         description=(
             "Optional per-request model override for wiki page selection. "
-            "Use claude* for Anthropic, lmstudio:<model> for LM Studio, "
+            "Use jev-* for TypeSafe, claude* for Anthropic, lmstudio:<model> for LM Studio, "
             "or gpt*/gemini* for JSON-only hosted overrides. If omitted, "
-            "the service uses WIKI_CONTEXT_MODEL, then WIKI_LIBRARIAN_MODEL."
+            "the service uses WIKI_CONTEXT_MODEL, then WIKI_LIBRARIAN_MODEL, then jev-1.13.0."
         ),
     )
     selector_reasoning_effort: Literal["low", "medium", "high"] | None = Field(

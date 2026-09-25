@@ -498,7 +498,7 @@ def main() -> int:
         required=True,
         help="Comma-separated answerer model overrides.",
     )
-    parser.add_argument("--selector-model", default="claude-sonnet-5")
+    parser.add_argument("--selector-model", default="jev-1.13.0")
     parser.add_argument("--max-pages", type=int, default=7)
     parser.add_argument("--rag-limit", type=int, default=7)
     parser.add_argument(
