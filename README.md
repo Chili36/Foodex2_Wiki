@@ -36,7 +36,7 @@ Markdown is the authored source of truth. Qdrant collections, graph views, and A
 
 ## Current Runtime Defaults
 
-- Page selector: `claude-sonnet-5`
+- Page selector: `jev-1.13.0` (TypeSafe)
 - Answerer for `/wiki/ask` and `/wiki/ask-rag`: `gpt-5.6-terra`
 - Default page budget: 7 pages
 - `/wiki/ask` graph expansion: off
@@ -60,11 +60,24 @@ cp .env.example .env
 For the default selector and answerer, configure:
 
 ```bash
-ANTHROPIC_API_KEY=...
+TYPESAFE_API_KEY=...
 OPENAI_API_KEY=...
-WIKI_CONTEXT_MODEL=claude-sonnet-5
+WIKI_CONTEXT_MODEL=jev-1.13.0
 WIKI_ANSWERER_MODEL=gpt-5.6-terra
 ```
+
+Bring your own API keys and models. `WIKI_CONTEXT_MODEL` sets the page picker;
+`WIKI_ANSWERER_MODEL` sets the answerer. For example, set
+`WIKI_CONTEXT_MODEL=claude-sonnet-5` and provide `ANTHROPIC_API_KEY` to use
+Sonnet for page selection. Existing Anthropic, OpenAI, Gemini and LM Studio
+overrides remain supported. Model resolution uses the endpoint setting, then
+`WIKI_LIBRARIAN_MODEL`, then the built-in default; the explicit context setting
+in `.env.example` selects Jev independently of the shared librarian model.
+Jev requires `TYPESAFE_API_KEY`; missing credentials or invalid provider responses
+return an actionable error. It only selects pages.
+
+The [page-picker decision](docs/jev-page-picker.md) records the speed and quality
+comparison behind this default.
 
 Start the API:
 
@@ -150,7 +163,7 @@ Compare answer models while holding the question constant:
 ```bash
 .venv/bin/python scripts/wiki_ask_model_sweep.py \
   --question "What should I think about when reporting chicken plasma in VMPR?" \
-  --selector-model claude-sonnet-5 \
+  --selector-model jev-1.13.0 \
   --answerer-models claude-sonnet-5,claude-haiku-4-5,gpt-5.6-terra,gpt-5.6-luna \
   --max-pages 7
 ```
