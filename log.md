@@ -1,9 +1,23 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-09-11"
+last_updated: "2026-09-30"
 ---
 
 # Log
+
+## [2026-09-30] correction | Resolve the 11 scoped coverage findings
+
+- Added VMPR sheep/goat-feed refinement and edible-casing guidance; checked codes and hierarchy membership in the local MTX 17.2 snapshot. Corrected the duplicated goat-feed code in the source: dairy/reproductive goats use A18EY, not the kid-feed code A18EX.
+- Added the exact additive/flavouring F03 category scope and the arsenic/rice/algae, chlorate/perchlorate, PAH, acrylamide-ingredient, and mycotoxin recommendations, keeping domain and recommendation strength explicit.
+- Distinguished hierarchy-specific dismissal from global deprecation without bypassing blocking BR21 validator results; documented the inspected status-Boolean implementation.
+- Added Corex H/C/E/M/P definitions and the missing F08/F12/F22 facet meanings. Updated selector summaries and cross-links, reviewed resolution evidence, and retained the audit's limited scope.
+
+## [2026-09-30] maintenance | Report actual source-to-wiki audit findings
+
+- Replaced blanket missing-review, uncited-source and one-page warnings with evidence-backed semantic audit findings. Missing audits produce one informational status.
+- Compared selected ChemMon 2026, foundational FoodEx2 and maintenance sections with the wiki and recorded 11 omissions/scope ambiguities with source passages, page locations, target wiki pages and proposed corrections.
+- Classified the two 2018 presentations as historical supporting training with no mandatory ingestion. Recorded sparse-extraction and uninspected-source limitations; no full-corpus completeness claim or operational knowledge edits.
+- Added source/wiki freshness checks: changed evidence yields one stale-audit warning instead of stale gap claims. Added an explicit local review-preparation command and documented the semantic review workflow.
 
 ## [2026-09-11] correction | Remove dormant BR26 from the default coding workflow
 

@@ -8,6 +8,7 @@ select_when: >-
   define them, including limits on adding a step the product's state already
   embodies.
 sources:
+  - "EFSA Supporting Publications - 2021 -  - FoodEx2 maintenance 2020.pdf"
   - "BUSINESS-RULES.md"
   - "BUSINESS-RULES-COMPACT.json"
   - "foodex2_docs/business_rules.md"
@@ -17,7 +18,7 @@ related:
   - "[[term-type-facet-constraints]]"
   - "[[process-validation-rules]]"
   - "[[domain-specific-validation]]"
-last_updated: "2026-09-11"
+last_updated: "2026-09-30"
 ---
 
 # Business Rules
@@ -155,13 +156,14 @@ Use it for two jobs:
 
 - Severity: `ERROR`
 - Applies to: deprecated terms
-- Rule: deprecated terms cannot be used
+- Rule: deprecated terms cannot be used; deprecation makes a term non-reportable across all hierarchies. (Maintenance 2020 p3, footnote 2)
 
 ## BR21: Dismissed Terms
 
 - Severity: `ERROR`
-- Applies to: dismissed terms
-- Rule: dismissed terms cannot be used
+- Applies to: terms identified as dismissed by the validator in its coding context
+- Rule: a `BR21` dismissal result remains a blocking error. EFSA distinguishes dismissal in one or more hierarchies from deprecation in all hierarchies: a term dismissed in one hierarchy can remain reportable in another. Always check the intended reporting hierarchy rather than interpreting dismissal as universal catalogue deletion. (Maintenance 2020 p3, footnotes 1-2)
+- Implementation boundary: the inspected sibling validator maps `dismissed` from term status `DISMISSED`, and BR21 checks that Boolean; it does not select a hierarchy inside this rule. This implementation must not be bypassed merely because another hierarchy permits the term. A disagreement requires checking the imported term status and hierarchy data. Inspection evidence is recorded in [the catalogue/validator check](../../reports/source-coverage/2026-09-30-catalogue-check.json).
 
 ## BR22: Success Message
 

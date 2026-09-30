@@ -15,7 +15,7 @@ related:
   - "[[implicit-vs-explicit-facets]]"
   - "[[ingredient-facets]]"
   - "[[process-facets]]"
-last_updated: "2026-08-01"
+last_updated: "2026-09-30"
 ---
 
 # Base Term Selection
@@ -48,7 +48,7 @@ last_updated: "2026-08-01"
 - Follow the documented priority order, not the visual order in the catalogue browser; browser order can reflect term creation history rather than coding precedence. (ANSES guidance p30, p33)
 - If a composite has no clear dominant ingredient, use this priority: meat, fish, cheese/dairy, egg, legume, potato, cereal, fruit, vegetable. (EFSA guidance p18-19)
 - If the exact term is missing, choose the nearest generic non-hierarchy base term, add the correct origin facet, and add `F26.A07XE` (`other`). If even the origin term is missing, keep the generic base term and record the detail in text. Use [[implicit-vs-explicit-facets]] and [[term-type-facet-constraints]] to pick the correct origin facet for the chosen term type. (EFSA guidance p47-49)
-- For detail level within a suitable food type, prefer extended or core terms when they fit; use non-specific or generic terms as fallbacks only when the detailed term is missing or source detail is unavailable. (ANSES guidance p35)
+- For detail level within a suitable food type, use the `Corex` roles in [[foodex2-overview]] and prefer extended or core terms when they fit; use non-specific or generic terms as fallbacks only when the detailed term is missing or source detail is unavailable. (ANSES guidance p35)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p48-50; EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf p6 -->
 ## Worked Examples

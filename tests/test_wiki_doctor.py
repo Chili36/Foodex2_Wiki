@@ -46,6 +46,19 @@ def test_wiki_doctor_passes_with_no_errors() -> None:
     assert report.errors == []
 
 
+def test_doctor_checks_source_coverage_by_default(tmp_path: Path) -> None:
+    root = _copy_wiki_root(tmp_path)
+    sources = root / "foodex2_docs"
+    sources.mkdir()
+    (sources / "new-source.md").write_text("A source not yet ingested.")
+
+    report = run_doctor(root)
+
+    assert report.source_coverage["source_count"] == 1
+    assert report.source_coverage["audit_status"] == "not_run"
+    assert not any(issue.check == "source_coverage" for issue in report.warnings)
+
+
 def test_raw_facet_guidance_preserves_f01_and_f04_exceptions() -> None:
     constraints = (
         REPO_ROOT / "raw" / "efsa-guidance" / "term-type-facet-constraints.md"

@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-09-11"
+last_updated: "2026-09-30"
 ---
 
 # Index
@@ -31,7 +31,7 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 
 ## FoodEx2 Guidance
 
-- [foodex2-overview.md](raw/efsa-guidance/foodex2-overview.md): High-level explanation of FoodEx2 purpose, hierarchy model, and coding philosophy.
+- [foodex2-overview.md](raw/efsa-guidance/foodex2-overview.md): FoodEx2 purpose, hierarchy model, Corex H/C/E/M/P roles, and coding philosophy.
 - [base-term-selection.md](raw/efsa-guidance/base-term-selection.md): Rules for choosing the right base term, including tie-breaks and missing-term handling.
 - [facet-coding-rules.md](raw/efsa-guidance/facet-coding-rules.md): Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.
 - [implicit-vs-explicit-facets.md](raw/efsa-guidance/implicit-vs-explicit-facets.md): Distinguishes inherited facet information from coder-supplied facet detail.
@@ -42,11 +42,11 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 - [anses-codification-guidance.md](raw/efsa-guidance/anses-codification-guidance.md): Extracted `expert_guidance` from the ANSES FoodEx2 codification guidance v3, covering workflow, missing-term conventions, mixed-product handling, range values, and dataset QC checks without overriding authoritative EFSA or validator sources.
 - [chemical-monitoring-foodex2.md](raw/efsa-guidance/chemical-monitoring-foodex2.md): Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.
 - [pesticides-foodex2.md](raw/efsa-guidance/pesticides-foodex2.md): Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.
-- [contaminants-foodex2.md](raw/efsa-guidance/contaminants-foodex2.md): Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.
+- [contaminants-foodex2.md](raw/efsa-guidance/contaminants-foodex2.md): Contaminants overlay for OCC/chemAnalysis: acrylamide F33/F04, arsenic rice/algae, chlorate F28, PAH packaging, mycotoxin F21, and preparation assumptions.
 - [domoic-acid-scallops.md](raw/efsa-guidance/domoic-acid-scallops.md): Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.
-- [vmpr-foodex2.md](raw/efsa-guidance/vmpr-foodex2.md): VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.
+- [vmpr-foodex2.md](raw/efsa-guidance/vmpr-foodex2.md): VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, sheep/goat-feed F23 refinement, edible-casing F27, and Plan 3 F33.
 - [vmpr-legislative-mapping.md](raw/efsa-guidance/vmpr-legislative-mapping.md): Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.
-- [additives-flavourings-foodex2.md](raw/efsa-guidance/additives-flavourings-foodex2.md): Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.
+- [additives-flavourings-foodex2.md](raw/efsa-guidance/additives-flavourings-foodex2.md): Additives/flavourings overlay for mandatory or implicit F33, category-scoped physical-state recommendations, infant target-consumer, and non-reportable additive substance matrices.
 
 ## Validation Layer
 

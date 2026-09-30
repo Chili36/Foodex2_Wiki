@@ -1,0 +1,385 @@
+{
+  "version": 2,
+  "reviewed_at": "2026-09-30",
+  "reviewed_by": "Codex source-to-wiki semantic review; not human-approved",
+  "scope": "Targeted comparison of ChemMon 2026 FoodEx2 sections and Table 8, plus selected foundational and maintenance definitions.",
+  "limitations": "This is a scoped audit, not an exhaustive review of all 19 sources. Uninspected material is not counted as a gap or as covered.",
+  "report": "reports/source-coverage/2026-09-30.md",
+  "source_roles": {
+    "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf": "Foundational formal guidance; interpret with subsequent maintenance and reporting-domain exceptions.",
+    "foodex2_docs/EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf": "Formal historical change record; useful for definitions and changes, not a current catalogue snapshot.",
+    "foodex2_docs/EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf": "Supporting training report (2018); corroborate rules with formal guidance; examples are edition-bound.",
+    "foodex2_docs/EFSA Supporting Publications - 2019 -  - FoodEx2 maintenance 2016‐2018.pdf": "Formal historical change record; useful for definitions and changes, not a current catalogue snapshot.",
+    "foodex2_docs/EFSA Supporting Publications - 2020 -  - FoodEx2 maintenance 2019.pdf": "Formal historical change record; useful for definitions and changes, not a current catalogue snapshot.",
+    "foodex2_docs/EFSA Supporting Publications - 2021 -  - FoodEx2 maintenance 2020.pdf": "Formal historical change record; useful for definitions and changes, not a current catalogue snapshot.",
+    "foodex2_docs/EFSA Supporting Publications - 2022 -  - FoodEx2 maintenance 2021.pdf": "Formal historical change record; useful for definitions and changes, not a current catalogue snapshot.",
+    "foodex2_docs/EFSA Supporting Publications - 2023 -  - FoodEx2 maintenance 2022.pdf": "Formal historical change record; useful for definitions and changes, not a current catalogue snapshot.",
+    "foodex2_docs/EFSA Supporting Publications - 2024 -  - FoodEx2 maintenance 2023.pdf": "Formal historical change record; useful for definitions and changes, not a current catalogue snapshot.",
+    "foodex2_docs/EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf": "Formal historical change record; useful for definitions and changes, not a current catalogue snapshot.",
+    "foodex2_docs/EFSA Supporting Publications - 2025 - Chemical monitoring reporting guidance  2025 data collection.pdf": "Historical annual reporting edition; consult for 2025 context, use the supplied 2026 edition for this audit.",
+    "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf": "Primary reporting guidance for the supplied 2026 edition; only FoodEx2-relevant sections are in this audit.",
+    "foodex2_docs/FoodEx2 codification guidance_2025_12_v3.pdf": "Supporting expert guidance (ANSES); sparse text layer requires rendered-page/OCR review; not independently audited here.",
+    "foodex2_docs/FoodEx2-presentation-1-180926.pdf": "Historical supporting training (2018); no mandatory ingestion and no uncorroborated operational rules.",
+    "foodex2_docs/FoodEx2-presentation-2-181003.pdf": "Historical supporting training (2018); no mandatory ingestion and no uncorroborated operational rules.",
+    "foodex2_docs/Guidance VMPR mapping to legislative products.pdf": "Domain mapping reference; retained, not independently audited in this pass.",
+    "foodex2_docs/Reportable Scallops list of FoodEx2 codes - MTX.xlsx": "Source scallop lookup; not independently audited here.",
+    "foodex2_docs/business_rules.md": "Validator rule reference; version-specific; not independently audited here.",
+    "foodex2_docs/domoic_acid_scallops_mtx.csv": "Derived scallop lookup; no obligation to create multiple wiki pages; not independently audited here."
+  },
+  "source_snapshot": {
+    "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf": "26fb6badf3855c8fa885b527b896250a86d7c305ad782adedd446a7af1ce49d5",
+    "foodex2_docs/EFSA Supporting Publications - 2019 -  - FoodEx2 maintenance 2016‐2018.pdf": "4803f77332f109eef1e858aa327e997628fa40869d52898d017b8357d2d40879",
+    "foodex2_docs/EFSA Supporting Publications - 2021 -  - FoodEx2 maintenance 2020.pdf": "4a4f3954fc7b31bebfe89bf0da60b1767794b44c88ce8417a2044944126ebee7",
+    "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf": "136110a309f6c8d1fffd340c3e50b025bdf0909b0627c8c9d87ed94b57433f71",
+    "foodex2_docs/FoodEx2-presentation-1-180926.pdf": "4654b5018de5650f9b28257e60b478ceb3f45f766c2632cd20d32c5608d85d38",
+    "foodex2_docs/FoodEx2-presentation-2-181003.pdf": "fe40b28ef6fe6820f6c07c84e4ef5bd51f76e8e88a5e143683f3f806f922df49"
+  },
+  "wiki_snapshot": {
+    "RUNTIME_RULES.md": "86521c0ca9059b5f92878bb7a7512d11cd959e366fe365f800d27b9614f2f858",
+    "additives-flavourings-foodex2.md": "87f96385aef89692c8783253d6bd41d4f88d16fee1815a00859642a7affd3ce4",
+    "anses-codification-guidance.md": "3c9a89627be36af795edbaf386eb144f58cfc198ab163debecf8fefd04305b6e",
+    "base-term-selection.md": "86a5617f74f645a502d048d5b616e6ddd3acf56be47a9711351fc11fb20f4d99",
+    "business-rules.md": "b4c05865473d0b241e4f003f1efb397513015db3bceac31468ab8c7a8167767f",
+    "chemical-monitoring-foodex2.md": "fdde5a1691e4217e9808dbd3deb70e544609beb3791ca01fda9d91bd79063157",
+    "code-string-format.md": "1d1539777aaf3680dbba4fdcc14361a247ddd6518f7a656d66df9120aa95d6e4",
+    "contaminants-foodex2.md": "ea537838d187f6abddbaff592f5de88d80eb06f3e26eef397ce92ef39b1a61bf",
+    "domain-specific-validation.md": "568d873099b4a148f412cb299f308a57cbf702e250f63c4d255901490beda1e3",
+    "domoic-acid-scallops.md": "7f8bb5e52581b8739ec879008f74131d40985ac2b83d09cb631fb2538b4c19c7",
+    "facet-coding-rules.md": "d273a735ac742e487dfeada59d8aaea8e0b94b11f9ac3997982a923bc762d35f",
+    "foodex2-overview.md": "84b77e10356df195dbfe5a6b6a2cd97e098286a87fd40a323c13e663c2151c34",
+    "implicit-vs-explicit-facets.md": "4828559402e46656f3fbe427ae4ce939efbe81ab057f53d1f9821084f124673a",
+    "ingredient-facets.md": "983755619a6eeb4ff3104e7150c52b127a62f78fdf5334e8285f3b70e7b726aa",
+    "maintenance-2015.md": "155654e49ca75f24eb8ad59950212a26372e7302eec5f93ff82381a9743ea430",
+    "maintenance-2016-2018.md": "2827533b6ae46c24dd9469a4cf6e772e8bffe268cd70399dc462ee3a527fec02",
+    "maintenance-2019.md": "bf8278215863e2e01564572ceebe3db88d074bd96d7b8e1dc2cf3a46f698b099",
+    "maintenance-2020.md": "81d5cdd2a32fd758d62dfd89f7897e109082139c157de7661e82c68afc9a2774",
+    "maintenance-2021.md": "694f722b7861d43fe81e451160a73b9062bb26d291ee3b53d2bc7310890bc54e",
+    "maintenance-2022.md": "e5ccaa3bcc1e10d239d932401ab774172d0036d1f017fcc5a7ce44601bd4a122",
+    "maintenance-2023.md": "077d0bca0db91867ef170a8be63d424b72300b3e0551d637355fdb8dbd55daa1",
+    "maintenance-2024.md": "8cb2b32f16e6fb3e5bbd3d3472057639559c7b052b4055d550de278b9af8e4f4",
+    "maintenance-history.md": "f561eb92ea6f0b13a5bfadc259ff87b32d6ff6cbf3b2df59d8fc3f0ed55b7faa",
+    "packaging-facets.md": "2cfd5490fb1bedfc64cdb12be2063e92e4ffc7cb6d0401a6b58ad7f5cf3111ae",
+    "pesticides-foodex2.md": "acdac6d6bb3a3dbbf4497d1c2415bc6fc5536edd8a21d3085fef7796d7b5c637",
+    "policy-contract.md": "6417445d9999bf201f2cf03b3d68e30e3b6e5da12abe1d872d8dc06815f6fc69",
+    "process-facets.md": "b93d22a0cf62f2011d3a2f04b3d0eb58ceed5e768d5c77aaf9e58f4bfcccbf2f",
+    "process-validation-rules.md": "e80e55cbe3faab8e1941b9152c6d224c7a50c37ad40d4a455cd61f39aa515894",
+    "structural-validation.md": "2c344a23d25a9c6dda20cf36098713a909a52dc21e62907e03ed4a8ab0332e77",
+    "term-type-facet-constraints.md": "6fd1f73ed7ab27cbea8ba6678c94c23ea9686b628f79b8880ed15b4d71d3888d",
+    "validation-rules.md": "7474643538a26df0bb446cd073584739e1c2c24a3eabeab5716f7b16b8560078",
+    "vmpr-foodex2.md": "4262f51de74fd4f84548b2856a693579eed94c6a4d7aa7bc22cf150bd210eb86",
+    "vmpr-legislative-mapping.md": "718ca98dd9edb614557a3a796dde9cead49b7d29f51134a176e176528caf9d30"
+  },
+  "inspected_source_ranges": [
+    {
+      "source": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "pages": "32-41 and 87-98",
+      "method": "Source-text comparison; visual verification of pages 36, 38, 93 and 96, including table row boundaries."
+    },
+    {
+      "source": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+      "pages": "21-25 and 47-52",
+      "method": "Source-text comparison of definitions, facet table and coding guidance."
+    },
+    {
+      "source": "foodex2_docs/EFSA Supporting Publications - 2019 -  - FoodEx2 maintenance 2016‐2018.pdf",
+      "pages": "18",
+      "method": "Implicit-facet revision and Table 8."
+    },
+    {
+      "source": "foodex2_docs/EFSA Supporting Publications - 2021 -  - FoodEx2 maintenance 2020.pdf",
+      "pages": "3",
+      "method": "Source-text and rendered-page verification of dismissal/deprecation footnotes."
+    },
+    {
+      "source": "foodex2_docs/FoodEx2-presentation-1-180926.pdf",
+      "pages": "1",
+      "method": "Rendered title page confirms training provenance and date; no substantive claims ingested."
+    },
+    {
+      "source": "foodex2_docs/FoodEx2-presentation-2-181003.pdf",
+      "pages": "1",
+      "method": "Rendered title page confirms training provenance and date; no substantive claims ingested."
+    }
+  ],
+  "findings": [
+    {
+      "id": "COV-001",
+      "status": "resolved",
+      "title": "VMPR sheep/goat-feed exception is absent",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "locator": "PDF/printed page 36",
+      "source_excerpt": "it is always necessary to add one of the four codes grouped under the A07VF code.",
+      "wiki_pages": [
+        "vmpr-foodex2.md",
+        "domain-specific-validation.md"
+      ],
+      "observation": "The feed guidance allows implicit F23 but omits the specific requirement to refine implicit Sheep and goat feed (A07VF) with a child descriptor.",
+      "action": "Add the scoped exception. Verify child codes against the catalogue: the source prints A18EX for two different goat labels, so do not copy that list blindly.",
+      "resolved_at": "2026-09-30",
+      "resolution": "Added the explicit child requirement; all four targcon children verified in local MTX 17.2. A18EY corrects the duplicated goat label in the PDF.",
+      "resolution_evidence": [
+        {
+          "page": "vmpr-foodex2.md",
+          "quote": "A feed term with implicit `F23.A07VF Sheep and goat feed` needs an explicit child descriptor: `A18ET` lambs reared for reproduction or meat production, `A18EV` dairy/reproductive sheep, `A18EX` kids reared for reproduction or meat production, or `A18EY` dairy/reproductive goats, according to the known target. The broader implicit sheep/goat facet alone is insufficient for this specific VMPR case. Do not guess the species or production purpose. (ChemMon 2026 p36; child labels and `targcon` membership checked in local MTX 17.2)"
+        }
+      ]
+    },
+    {
+      "id": "COV-002",
+      "status": "resolved",
+      "title": "VMPR edible-casing instructions are absent",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "locator": "PDF/printed page 36",
+      "source_excerpt": "For edible casings, the base term to be used is A0F1J. When including the source, the source commodity (F27 facet) must be manually inserted.",
+      "wiki_pages": [
+        "vmpr-foodex2.md",
+        "vmpr-legislative-mapping.md"
+      ],
+      "observation": "The mapping page mentions Casings as an output but the coding overlay does not explain the A0F1J base and explicit F27 source-commodity instruction.",
+      "action": "Add the coding boundary and a catalogue-checked example, using the adult-sheep example on page 37 as source evidence.",
+      "resolved_at": "2026-09-30",
+      "resolution": "Added casing base/F27 guidance and the adult-sheep example; code identities and memberships checked in MTX 17.2.",
+      "resolution_evidence": [
+        {
+          "page": "vmpr-foodex2.md",
+          "quote": "In VMPR reporting, use `A0F1J Edible casings` for edible casings. When including the source commodity, insert the appropriate `F27` explicitly; the generic casing base does not supply that source commodity. Keep this food matrix separate from the non-food `A0C60` convention. (ChemMon 2026 p36)"
+        }
+      ]
+    },
+    {
+      "id": "COV-003",
+      "status": "resolved",
+      "title": "Additives F03 recommendation has lost its category scope",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "locator": "PDF/printed page 38",
+      "source_excerpt": "The physical-state facet (F03) should be considered for samples belonging to the following legislative food categories/subcategories:",
+      "wiki_pages": [
+        "additives-flavourings-foodex2.md",
+        "domain-specific-validation.md"
+      ],
+      "observation": "The wiki says F03 is highly recommended in several categories but never identifies those categories; the source lists 1, 6.3, 12.5, 12.6, 13, 14.1.2-14.1.5 and 17.",
+      "action": "Include the category list from page 38 and the page-39 condition that F03 is added when not implicit. Preserve recommendation strength rather than making it a universal requirement.",
+      "resolved_at": "2026-09-30",
+      "resolution": "Added all ten source-listed category rows and retained highly recommended/when-not-implicit scope; corrected the validation summary.",
+      "resolution_evidence": [
+        {
+          "page": "additives-flavourings-foodex2.md",
+          "quote": "`F03 Physical-state` should be considered for the following legislative categories and is highly recommended when not already implicit. This is a scoped recommendation, not a universal mandatory facet. (ChemMon 2026 p38-39)"
+        }
+      ]
+    },
+    {
+      "id": "COV-004",
+      "status": "resolved",
+      "title": "Arsenic-specific rice and algae guidance is absent",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "locator": "PDF/printed page 96",
+      "source_excerpt": "Reporting of rice-based products. If a product contains rice (e.g. a ready-to-eat meal for children, cereal-based; rice cake) it should be specified in this field.",
+      "wiki_pages": [
+        "contaminants-foodex2.md",
+        "domain-specific-validation.md"
+      ],
+      "observation": "The contaminants overlay omits Table 8 recommendations for rice processing/dehydration (F28, CHEMON18), rice ingredients (F04), and algae identification; generic process and ingredient guidance does not explain these triggers.",
+      "action": "Add a conditional arsenic entry using pages 95-96, including rice type and Hijiki detail. Keep these as recommendations for this domain.",
+      "resolved_at": "2026-09-30",
+      "resolution": "Added rice processing/dehydration, ingredient, rice-type and algae/Hijiki recommendations under an arsenic-specific scope.",
+      "resolution_evidence": [
+        {
+          "page": "contaminants-foodex2.md",
+          "quote": "| Arsenic and derivatives: rice grains for human consumption | `F28` should distinguish unprocessed from processed rice; describe known treatment and whether the sample is dehydrated. Preserve the type of rice. | ChemMon 2026 Table 8 p95-96, CHEMON18 |"
+        }
+      ]
+    },
+    {
+      "id": "COV-005",
+      "status": "resolved",
+      "title": "Chlorate/perchlorate process recommendation is absent",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "locator": "PDF/printed page 97",
+      "source_excerpt": "Therefore, it is recommended to report facet F28 (Process) and select at least the code for ‘processed’ or ‘unprocessed’; if possible, specify the most appropriate code describing the process from the SSD2 catalogue",
+      "wiki_pages": [
+        "contaminants-foodex2.md",
+        "domain-specific-validation.md"
+      ],
+      "observation": "No wiki page explains the CHEMON19 recommendation to report F28 processed/unprocessed, or a more specific known treatment, for chlorates and perchlorates.",
+      "action": "Add the Table 8 conditional F28 recommendation without inventing processing details or applying it to unrelated contaminant cases.",
+      "resolved_at": "2026-09-30",
+      "resolution": "Added CHEMON19 process recommendation with known-information and facet-legality constraints.",
+      "resolution_evidence": [
+        {
+          "page": "contaminants-foodex2.md",
+          "quote": "| Chlorates and perchlorates | Report `F28` with at least processed/unprocessed information, or the most appropriate known treatment, such as blanching or deep-freezing. | ChemMon 2026 Table 8 p97, CHEMON19 |"
+        }
+      ]
+    },
+    {
+      "id": "COV-006",
+      "status": "resolved",
+      "title": "PAH packaging-material recommendation is absent",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "locator": "PDF/printed page 93",
+      "source_excerpt": "It is recommended to describe the container or wrapper that holds the product as marketed.",
+      "wiki_pages": [
+        "contaminants-foodex2.md",
+        "packaging-facets.md",
+        "domain-specific-validation.md"
+      ],
+      "observation": "The wiki covers F19 for bisphenols/phthalates and general packaging but omits polycyclic aromatic hydrocarbons (PAH), the CHEMON15 recommendation, and its marketed-package scope.",
+      "action": "Add the PAH-specific F19 recommendation. Distinguish marketed packaging from the sample container used during analysis.",
+      "resolved_at": "2026-09-30",
+      "resolution": "Added CHEMON15 marketed-package F19 recommendation and a matching packaging-page explanation separating lab containers.",
+      "resolution_evidence": [
+        {
+          "page": "contaminants-foodex2.md",
+          "quote": "| Polycyclic aromatic hydrocarbons (PAH) | Report `F19` for the material of the container or wrapper holding the product as marketed. The laboratory sample container is a separate matter. See [[packaging-facets]]. | ChemMon 2026 Table 8 p93, CHEMON15 |"
+        }
+      ]
+    },
+    {
+      "id": "COV-007",
+      "status": "resolved",
+      "title": "Acrylamide ingredient recommendation is absent",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "locator": "PDF/printed page 91",
+      "source_excerpt": "It is recommended that the list of ingredients is provided in the ‘Ingredients’ facet for the following food items:",
+      "wiki_pages": [
+        "contaminants-foodex2.md",
+        "ingredient-facets.md"
+      ],
+      "observation": "The wiki retains mandatory acrylamide F33 but omits the separate recommended F04 detail for potato crisps, pre-cooked fries/home potato products, breakfast cereals excluding muesli/porridge, dry substitute coffee and specified baby foods.",
+      "action": "Add the source-listed product groups and recommended ingredient detail as a scoped overlay; reconcile with normal ingredient rules rather than generalising it to every food.",
+      "resolved_at": "2026-09-30",
+      "resolution": "Added the exact product-group ingredient recommendation and ingredient-page explanation; mandatory F33 and normal source/ingredient legality retained.",
+      "resolution_evidence": [
+        {
+          "page": "contaminants-foodex2.md",
+          "quote": "| Acrylamide: potato crisps; pre-cooked French fries/potato products for home cooking; breakfast cereals excluding muesli and porridge; dry substitute coffee; baby foods other than processed cereal-based foods | Provide ingredient detail in `F04` for these listed groups, in addition to the required `F33`. See [[ingredient-facets]] for ingredient-versus-source legality. | ChemMon 2026 Table 8 p91 |"
+        }
+      ]
+    },
+    {
+      "id": "COV-008",
+      "status": "resolved",
+      "title": "Mycotoxin production-method recommendation is absent",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf",
+      "locator": "PDF/printed page 95",
+      "source_excerpt": "It is recommended that it is reported whether the sample was obtained from the produce of traditional (non-organic) or organic farming",
+      "wiki_pages": [
+        "contaminants-foodex2.md",
+        "domain-specific-validation.md"
+      ],
+      "observation": "General F21 guidance exists, but the mycotoxin-specific organic/non-organic reporting recommendation (CHEMON17) is absent.",
+      "action": "Add the conditional F21 recommendation from Table 8 and preserve the distinction between recommended detail and mandatory checks.",
+      "resolved_at": "2026-09-30",
+      "resolution": "Added CHEMON17 organic/non-organic F21 recommendation for known information; retained recommended rather than mandatory status.",
+      "resolution_evidence": [
+        {
+          "page": "contaminants-foodex2.md",
+          "quote": "| Mycotoxins | Report whether the product comes from traditional (non-organic) or organic farming using `F21`, when known. | ChemMon 2026 Table 8 p95, CHEMON17 |"
+        }
+      ]
+    },
+    {
+      "id": "COV-009",
+      "status": "resolved",
+      "title": "Dismissed and deprecated terms are not distinguished accurately",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2021 -  - FoodEx2 maintenance 2020.pdf",
+      "locator": "PDF/printed page 3",
+      "source_excerpt": "Dismissed terms are made not reportable in one or more hierarchies of the FoodEx2 catalogue, but they continue to be reportable in others",
+      "wiki_pages": [
+        "validation-rules.md",
+        "business-rules.md",
+        "maintenance-2020.md"
+      ],
+      "observation": "The maintenance page mentions dismissal in some hierarchies, while validation guidance says deprecated and dismissed terms are always invalid without explaining the hierarchy scope. The source distinguishes dismissal from all-hierarchy deprecation.",
+      "action": "Explain the distinction and reconcile BR21 wording with the validator reporting hierarchy. Do not weaken validation based on this historical definition alone.",
+      "resolved_at": "2026-09-30",
+      "resolution": "Clarified dismissal versus deprecation across rule, validation, ChemMon and maintenance pages; inspected sibling mapping and BR21 implementation, retaining blocking results.",
+      "resolution_evidence": [
+        {
+          "page": "business-rules.md",
+          "quote": "Rule: a `BR21` dismissal result remains a blocking error. EFSA distinguishes dismissal in one or more hierarchies from deprecation in all hierarchies: a term dismissed in one hierarchy can remain reportable in another. Always check the intended reporting hierarchy rather than interpreting dismissal as universal catalogue deletion. (Maintenance 2020 p3, footnotes 1-2)"
+        }
+      ]
+    },
+    {
+      "id": "COV-010",
+      "status": "resolved",
+      "title": "Corex vocabulary is missing from the overview",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+      "locator": "PDF/printed page 24",
+      "source_excerpt": "The type of term in the basic food list is recorded by the ‘Corex’ attribute.",
+      "wiki_pages": [
+        "foodex2-overview.md",
+        "base-term-selection.md"
+      ],
+      "observation": "The wiki mentions core/extended/generic terms but does not define Corex or map H/C/E/M/P to their meanings and coding roles (Table 12, pages 24-25).",
+      "action": "Add a compact attribute reference, separate from food-nature/type terminology, with the source meanings and the recommended core-or-more-specific coding level.",
+      "resolved_at": "2026-09-30",
+      "resolution": "Added H/C/E/M/P roles, core-or-more-specific recommendation, food-nature distinction and hierarchy reportability caveat; linked selection guidance.",
+      "resolution_evidence": [
+        {
+          "page": "foodex2-overview.md",
+          "quote": "`Corex` records the role/detail class of a food-list term. It is distinct from the food's nature (raw commodity, derivative or composite); a detailed term can still describe any of those natures."
+        }
+      ]
+    },
+    {
+      "id": "COV-011",
+      "status": "resolved",
+      "title": "Facet reference omits F08, F12 and F22",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2019 -  - FoodEx2 maintenance 2016‐2018.pdf",
+      "locator": "PDF/printed page 18",
+      "source_excerpt": "Sweetening-agent (F08)",
+      "wiki_pages": [
+        "facet-coding-rules.md"
+      ],
+      "observation": "The facet-category reference omits sweetening agent (F08), dough/mass (F12), and preparation/production place (F22), although source Table 8 lists them; F22 appears only in cardinality rules elsewhere.",
+      "action": "Add the three category meanings using revision-2 Table 25 (page 47) and maintenance Table 8. Check current catalogue membership before adding descriptor-code examples.",
+      "resolved_at": "2026-09-30",
+      "resolution": "Added F08 sweetening agent, F12 dough/mass and F22 preparation/production place meanings; no unverified descriptor codes introduced.",
+      "resolution_evidence": [
+        {
+          "page": "facet-coding-rules.md",
+          "quote": "| `F08` | Sweetening agent | Non-sugar sweetener used in a sweetened product, when known and relevant. |"
+        }
+      ]
+    }
+  ],
+  "previous_wiki_snapshot": {
+    "RUNTIME_RULES.md": "86521c0ca9059b5f92878bb7a7512d11cd959e366fe365f800d27b9614f2f858",
+    "additives-flavourings-foodex2.md": "26488dd858e3bc86ce594eaf95735d7bf9b0703d28d58467ad9c39ce6f5a913e",
+    "anses-codification-guidance.md": "3c9a89627be36af795edbaf386eb144f58cfc198ab163debecf8fefd04305b6e",
+    "base-term-selection.md": "a6446ae5ae6a4970aa41c18a02c485dbb4da2ac3f1b9b36a58975b7261792a34",
+    "business-rules.md": "5037871f59a6b1e5aa8b54097e4998a2474349b187009e754408f05ef3a69214",
+    "chemical-monitoring-foodex2.md": "b704ac957d64ec8d51dfd3038e8d2650edc06eedc0774587a65ec72f4eae8cf0",
+    "code-string-format.md": "1d1539777aaf3680dbba4fdcc14361a247ddd6518f7a656d66df9120aa95d6e4",
+    "contaminants-foodex2.md": "68afaf7c427daec80e3b38f19f504f5a57013c947a85e672b8c1c7f5db1dbaa2",
+    "domain-specific-validation.md": "dbac77f41dffc67850672eee93e7fe847cf9d0b43285b16715057535ca93aaf7",
+    "domoic-acid-scallops.md": "7f8bb5e52581b8739ec879008f74131d40985ac2b83d09cb631fb2538b4c19c7",
+    "facet-coding-rules.md": "d43a44465c4c8c913be580e1e68ed697e058f4f60db5a4c282dcb30530810542",
+    "foodex2-overview.md": "2ada1d08bda8c0bf3a472f1dcc9f8d47c2dbb2ffa75cd09c9b9e1ee878c13ebb",
+    "implicit-vs-explicit-facets.md": "4828559402e46656f3fbe427ae4ce939efbe81ab057f53d1f9821084f124673a",
+    "ingredient-facets.md": "103e032428a8ae05999c561b7dbdc000bc66e9f23138efebf7d1a26b1391183f",
+    "maintenance-2015.md": "155654e49ca75f24eb8ad59950212a26372e7302eec5f93ff82381a9743ea430",
+    "maintenance-2016-2018.md": "2827533b6ae46c24dd9469a4cf6e772e8bffe268cd70399dc462ee3a527fec02",
+    "maintenance-2019.md": "bf8278215863e2e01564572ceebe3db88d074bd96d7b8e1dc2cf3a46f698b099",
+    "maintenance-2020.md": "f5509fa83c53cce85cf7839b4f7acc32a538e8a4c756931b5d9a63b15f6c14d5",
+    "maintenance-2021.md": "694f722b7861d43fe81e451160a73b9062bb26d291ee3b53d2bc7310890bc54e",
+    "maintenance-2022.md": "e5ccaa3bcc1e10d239d932401ab774172d0036d1f017fcc5a7ce44601bd4a122",
+    "maintenance-2023.md": "077d0bca0db91867ef170a8be63d424b72300b3e0551d637355fdb8dbd55daa1",
+    "maintenance-2024.md": "8cb2b32f16e6fb3e5bbd3d3472057639559c7b052b4055d550de278b9af8e4f4",
+    "maintenance-history.md": "f561eb92ea6f0b13a5bfadc259ff87b32d6ff6cbf3b2df59d8fc3f0ed55b7faa",
+    "packaging-facets.md": "a6bae3691c8fc58dc849741e1c6ab25f11fe66b253dc3b0409f83952a8d50a0c",
+    "pesticides-foodex2.md": "acdac6d6bb3a3dbbf4497d1c2415bc6fc5536edd8a21d3085fef7796d7b5c637",
+    "policy-contract.md": "6417445d9999bf201f2cf03b3d68e30e3b6e5da12abe1d872d8dc06815f6fc69",
+    "process-facets.md": "b93d22a0cf62f2011d3a2f04b3d0eb58ceed5e768d5c77aaf9e58f4bfcccbf2f",
+    "process-validation-rules.md": "e80e55cbe3faab8e1941b9152c6d224c7a50c37ad40d4a455cd61f39aa515894",
+    "structural-validation.md": "2c344a23d25a9c6dda20cf36098713a909a52dc21e62907e03ed4a8ab0332e77",
+    "term-type-facet-constraints.md": "6fd1f73ed7ab27cbea8ba6678c94c23ea9686b628f79b8880ed15b4d71d3888d",
+    "validation-rules.md": "04642331de24ee3a80dc16f0622a2e297e5656cb1927582e0e56628d1f7a0eca",
+    "vmpr-foodex2.md": "fc6f76da608aaf416ecf6f3108c8eefb164f7d3a283e39c122bd1b3556b5cd6d",
+    "vmpr-legislative-mapping.md": "718ca98dd9edb614557a3a796dde9cead49b7d29f51134a176e176528caf9d30"
+  },
+  "resolution_review": "All 11 scoped findings checked against the revised wiki and the cited source passages; local catalogue/validator checks in reports/source-coverage/2026-09-30-catalogue-check.json. No exhaustive corpus claim."
+}

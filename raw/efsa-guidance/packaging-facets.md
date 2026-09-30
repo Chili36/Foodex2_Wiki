@@ -13,7 +13,7 @@ related:
   - "[[code-string-format]]"
   - "[[process-facets]]"
   - "[[chemical-monitoring-foodex2]]"
-last_updated: "2026-04-05"
+last_updated: "2026-09-30"
 ---
 
 # Packaging Facets
@@ -34,6 +34,12 @@ last_updated: "2026-04-05"
 
 - If the query says `glass jar`, the natural split is `F18 jar` plus `F19 glass`. (ChemMon 2026 p54-55)
 - If the query gives only the container shape, add only `F18`; if it gives only the material, add only `F19`. (Inference from ChemMon 2026 p54-55)
+
+<!-- Source: ChemMon 2026 Table 8 p93, CHEMON15 -->
+## PAH Monitoring
+
+- For polycyclic aromatic hydrocarbons (PAH), ChemMon recommends `F19 Packaging-material` to describe the container or wrapper holding the product as marketed (Table 8 p93, CHEMON15). This is a substance-specific reporting recommendation; it does not require packaging facets in unrelated cases.
+- Do not substitute the laboratory sample container for the marketed package. The source separately discusses inert sample containers to avoid contamination during sampling and analysis. See [[contaminants-foodex2]] for the reporting context.
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p17-18; EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf p55 -->
 ## Packaging Is Not The Same As Process
