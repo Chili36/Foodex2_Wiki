@@ -1,0 +1,81 @@
+{
+  "checked_at": "2026-09-30",
+  "catalogue": [
+    {
+      "code": "MTX",
+      "version": "17.2"
+    }
+  ],
+  "database_sha256": "5a40b1b6b289ff16f4bce2b2a68e8efbadcd1e78cb262cf2ebc1e2972c87e10a",
+  "provenance": "Read-only query of the sibling validator data/mtx.db; MTX 17.2 local snapshot, not a claim about the latest upstream release.",
+  "query": "select t.term_code,t.extended_name,t.deprecated,h.hierarchy_code,h.parent_code,h.reportable from terms t join term_hierarchies h using(term_code) where (h.parent_code='A07VF' and h.hierarchy_code='targcon') or (t.term_code='A0F1J' and h.hierarchy_code='report') or (t.term_code='A0CDD' and h.hierarchy_code='source') or (t.term_code='A01ZQ' and h.hierarchy_code='racsource') order by t.term_code",
+  "terms": [
+    {
+      "term_code": "A01ZQ",
+      "extended_name": "Sheep edible offal, non-muscle, other than liver and kidney",
+      "deprecated": 0,
+      "hierarchy_code": "racsource",
+      "parent_code": "A0F3L",
+      "reportable": 1
+    },
+    {
+      "term_code": "A0CDD",
+      "extended_name": "Sheep over 1 year (as animal)",
+      "deprecated": 0,
+      "hierarchy_code": "source",
+      "parent_code": "A057G",
+      "reportable": 1
+    },
+    {
+      "term_code": "A0F1J",
+      "extended_name": "Edible casings",
+      "deprecated": 0,
+      "hierarchy_code": "report",
+      "parent_code": "A0EYM",
+      "reportable": 1
+    },
+    {
+      "term_code": "A18ET",
+      "extended_name": "Lambs reared for reproduction or meat production feed",
+      "deprecated": 0,
+      "hierarchy_code": "targcon",
+      "parent_code": "A07VF",
+      "reportable": 1
+    },
+    {
+      "term_code": "A18EV",
+      "extended_name": "Dairy/reproductive sheep feed",
+      "deprecated": 0,
+      "hierarchy_code": "targcon",
+      "parent_code": "A07VF",
+      "reportable": 1
+    },
+    {
+      "term_code": "A18EX",
+      "extended_name": "Kids reared for reproduction or meat production feed",
+      "deprecated": 0,
+      "hierarchy_code": "targcon",
+      "parent_code": "A07VF",
+      "reportable": 1
+    },
+    {
+      "term_code": "A18EY",
+      "extended_name": "Dairy/reproductive goat feed",
+      "deprecated": 0,
+      "hierarchy_code": "targcon",
+      "parent_code": "A07VF",
+      "reportable": 1
+    }
+  ],
+  "validator_commit": "55eeecc75c2b9b20d682c319e427ae71aa615d01",
+  "inspected_working_files": {
+    "server/foodex2-service.js": "deab4766571765abbdfe32fea3f1e44723692f3307e5b17cf6bd33c1e2653f06",
+    "server/validators/business-rules-validator.js": "5f5132fe37cf2a4be91fa060ea5dff66d58f525e72bae97cd170ac59c396278c"
+  },
+  "br21_evidence": {
+    "mapper": "dismissed: term.status === 'DISMISSED'",
+    "rule": "if (baseTerm.dismissed) { warnings.push(this.createWarning('BR21', baseTerm.code)); }",
+    "conclusion": "The inspected implementation uses a term-level status Boolean, not a hierarchy parameter inside BR21. Keep returned BR21 errors blocking; distinguish that implementation from EFSA's hierarchy-specific definition."
+  },
+  "limitations": "Code identity and membership checks only; no claim of full end-to-end validation of every example."
+}

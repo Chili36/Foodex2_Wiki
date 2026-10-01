@@ -7,6 +7,7 @@ select_when: >-
   similar contexts — supplementing, never replacing, the core structural and
   business-rule validation of the construction itself.
 sources:
+  - "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "docs/DOMAIN_SPECIFIC_RULES.md"
   - "docs/CONTEXT_SPECIFIC_RULES.md"
   - "BUSINESS-RULES-COMPACT.json"
@@ -23,7 +24,7 @@ related:
   - "[[facet-coding-rules]]"
   - "[[validation-rules]]"
   - "[[vmpr-legislative-mapping]]"
-last_updated: "2026-05-19"
+last_updated: "2026-09-30"
 ---
 
 # Domain-Specific Validation
@@ -46,13 +47,18 @@ last_updated: "2026-05-19"
 | VMPR wild or hunted samples | explicit `F21.A07RY` needed to trigger the `Wild` mapping |
 | Base term `A0C60` non-food animal matrices | `F01` and `F02` mandatory |
 | VMPR Plan 3 processed imports | one `F33` mandatory |
-| Food additives monitoring | `F33` mandatory, `F03` highly recommended |
+| VMPR feed with implicit `F23.A07VF` | select the appropriate explicit sheep/goat child in [[vmpr-foodex2]]; the broad implicit facet is insufficient (ChemMon 2026 p36) |
+| VMPR edible casings | use `A0F1J`; explicitly supply `F27` when including the source commodity; see [[vmpr-foodex2]] (ChemMon 2026 p36-37) |
+| Food additives/flavourings monitoring | relevant `F33` required unless implicit; `F03` highly recommended when not implicit in the specific categories listed in [[additives-flavourings-foodex2]] (ChemMon 2026 p38-39) |
 | Acrylamide monitoring (paramCode `RF-00000410-ORG`) | `F33` mandatory per CHEMMON12, even if the base term already carries an implicit `F33`. Legal basis: Commission Regulation (EU) 2017/2158 and Recommendation (EU) 2019/1888 |
 | Domoic acid in scallops | select `sampMatCode` and `sampMatText` from the source-provided [[domoic-acid-scallops]] lookup; include `origFishAreaCode` from FAREA wherever possible |
 | Furans or acrylamide heat-treatment reporting | `F17` should be present |
 | Bisphenol or phthalates analysis | `F19` packaging should be present |
 | Fat-weight expression | `F07` should be present |
 | Infant products | `F23` target-consumer recommended |
+
+<!-- Source: ChemMon 2026 Table 8 p91, p93, p95-97 -->
+The substance-specific `F04` (selected acrylamide product groups), `F28` (arsenic in rice and chlorates/perchlorates), `F19` (PAH marketed packaging), and `F21` (mycotoxins) recommendations are detailed in [[contaminants-foodex2]]. Preserve their recommended status and their matrix/domain scope; the guidance does not make every omitted recommendation a blocking FoodEx2 error. Ordinary descriptor membership, term-type and cardinality checks still apply.
 
 <!-- Source: docs/DOMAIN_SPECIFIC_RULES.md VMPR Non-food, VMPR Plan 3, Food Additives Domain; docs/CONTEXT_SPECIFIC_RULES.md F01-NONFOOD, F02-NONFOOD, F33-ADDITIVES -->
 ## Worked Examples

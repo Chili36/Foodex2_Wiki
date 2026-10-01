@@ -3,7 +3,8 @@ title: "Facet Coding Rules"
 select_when: >-
   The case needs to map a descriptive detail to the correct facet family and
   decide whether it is worth adding — origin, process, physical state,
-  packaging, qualitative, production-method, or fortification — keeping only
+  packaging, sweetening agent, dough/mass, preparation place, qualitative,
+  production-method, or fortification — keeping only
   the few descriptors that add information not already carried by the base
   term.
 sources:
@@ -16,7 +17,7 @@ related:
   - "[[process-facets]]"
   - "[[ingredient-facets]]"
   - "[[packaging-facets]]"
-last_updated: "2026-06-12"
+last_updated: "2026-09-30"
 ---
 
 # Facet Coding Rules
@@ -42,14 +43,17 @@ Use this table to map an explicit descriptor candidate to the correct `Fxx` fami
 | `F04` | Ingredient | Characterising recipe ingredient for composites, or a minor later-added ingredient on otherwise raw or derivative foods. |
 | `F06` | Surrounding medium | Packing or surrounding medium such as liquid, brine, oil, or sauce when it matters separately from packaging. |
 | `F07` | Fat content | Fat-content expression when the reporting context or result basis needs it. |
+| `F08` | Sweetening agent | Non-sugar sweetener used in a sweetened product, when known and relevant. |
 | `F09` | Fortification component | Added enrichment or fortification component, such as calcium in a fortified product. |
 | `F10` | Qualitative information | Qualitative descriptors such as light, sugar-free, lactose-free, or similar non-process attributes. |
 | `F11` | Alcohol content | Alcohol-content expression for alcoholic beverages when the exact or labelled alcohol percentage matters. |
+| `F12` | Dough/mass | Dough or mass characteristics of bakery products when not already implicit. |
 | `F17` | Cooking extent | Heat-treatment or cooking-extent detail when a domain rule asks for it, for example furans or acrylamide reporting. |
 | `F18` | Packaging format | Container or presentation format such as jar, bottle, can, box, or wrapper. |
 | `F19` | Packaging material | Contact material such as glass, plastic, paper, or metal. |
 | `F20` | Part consumed or analysed | Analysed or consumed part detail when downstream classification needs it. |
 | `F21` | Production method or growing condition | Production or husbandry method such as organic, wild, aquaculture, indoor, greenhouse, or under-glass growing. |
+| `F22` | Preparation/production place | Where the food was prepared or produced, when relevant to the collection; respect its single cardinality. |
 | `F23` | Target consumer | Intended consumer group, including infant products and animal feed target categories. |
 | `F24-F25` | Microbiology-specific facets | Specialist microbiological reporting descriptors; use only in microbiology contexts. |
 | `F26` | Other or missing-detail marker | Add when the exact detailed term is missing and the generic base or origin facet needs an `other` marker. |

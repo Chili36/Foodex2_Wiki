@@ -22,7 +22,7 @@ related:
   - "[[maintenance-2024]]"
   - "[[domain-specific-validation]]"
   - "[[vmpr-legislative-mapping]]"
-last_updated: "2026-06-10"
+last_updated: "2026-09-30"
 ---
 
 # FoodEx2 In Chemical Monitoring
@@ -77,4 +77,4 @@ last_updated: "2026-06-10"
 
 - `BR14` and `BR15`: contextual validation paths activate only in the relevant reporting workflows. See [[business-rules]].
 - `BR25`: domain-mandated explicit facets still have to respect single-cardinality limits. See [[business-rules]].
-- `BR20` and `BR21`: deprecated or dismissed terms remain invalid even in ChemMon workflows. See [[business-rules]].
+- `BR20` and `BR21` remain blocking in ChemMon workflows when returned by the validator. Deprecation is global; dismissal can be hierarchy-specific. Check the reporting context and implementation boundary in [[business-rules]].

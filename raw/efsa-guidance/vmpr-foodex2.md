@@ -5,7 +5,7 @@ select_when: >-
   where source and part-nature facets become mandatory, non-food biological
   matrices use a generic animal-matrix base, wild samples need an explicit
   production method, and feed, water, and processed products follow special
-  facet rules.
+  facet rules, including sheep/goat-feed refinement and edible casings.
 sources:
   - "EFSA Supporting Publications - 2026 -  - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2025 -  - Chemical monitoring reporting guidance  2025 data collection.pdf"
@@ -17,7 +17,7 @@ related:
   - "[[term-type-facet-constraints]]"
   - "[[implicit-vs-explicit-facets]]"
   - "[[maintenance-2024]]"
-last_updated: "2026-06-10"
+last_updated: "2026-09-30"
 ---
 
 # FoodEx2 In VMPR Monitoring
@@ -43,13 +43,22 @@ last_updated: "2026-06-10"
 - `A0C60` is an intentional VMPR non-food exception to the ordinary preference for the most specific food base term. The specificity comes from the explicit facets: `F01` identifies the animal source and `F02` identifies the biological matrix.
 - The ChemMon examples do not enumerate every species/blood wording. Treat bare `blood`, `serum`, or `plasma` in an active VMPR biological-sample row as non-food sampling language, not as evidence for an edible-blood food base term. Use the normal FoodEx2 base-term workflow when food-chain use is explicit, when a source flag such as `is_food=true` identifies the row as food, or when VMPR biological-sample context is absent.
 
+<!-- Source: ChemMon 2026 p33-36; MTX 17.2 catalogue verification in reports/source-coverage/2026-09-30-catalogue-check.json -->
 ## Feed And Water
 
 - VMPR feed and water cases are exceptions to the ordinary animal-product pattern.
 - Feed should use terms from the feed section and must contain implicit or explicit `F23 Target-consumer` for the relevant animal category where VMPR mapping needs it.
 - Generic `F23.A07TV Animal feed` can classify to `Other`; a species-specific `F23` can map to a specific VMPR category.
+- A feed term with implicit `F23.A07VF Sheep and goat feed` needs an explicit child descriptor: `A18ET` lambs reared for reproduction or meat production, `A18EV` dairy/reproductive sheep, `A18EX` kids reared for reproduction or meat production, or `A18EY` dairy/reproductive goats, according to the known target. The broader implicit sheep/goat facet alone is insufficient for this specific VMPR case. Do not guess the species or production purpose. (ChemMon 2026 p36; child labels and `targcon` membership checked in local MTX 17.2)
+- Source correction: ChemMon p36 prints `A18EX` for both goat labels. The catalogue distinguishes kid feed (`A18EX`) from dairy/reproductive goat feed (`A18EY`); use the catalogue-confirmed code.
 - Conflicting target-consumer facets can force classification to `Other`.
 - Water intended for farmed animals should use the relevant non-food environmental matrix with `F23 Target-consumer`.
+
+<!-- Source: ChemMon 2026 p36-37; MTX 17.2 catalogue verification in reports/source-coverage/2026-09-30-catalogue-check.json -->
+## Edible Casings
+
+- In VMPR reporting, use `A0F1J Edible casings` for edible casings. When including the source commodity, insert the appropriate `F27` explicitly; the generic casing base does not supply that source commodity. Keep this food matrix separate from the non-food `A0C60` convention. (ChemMon 2026 p36)
+- Source example: casings from adult sheep are `A0F1J#F01.A0CDD$F27.A01ZQ`, where `A0CDD` is sheep over one year and `A01ZQ` is sheep edible offal, non-muscle, other than liver and kidney. These term identities and source/source-commodity memberships were checked in local MTX 17.2. Apply the example only when the sample supports those details and still run the validator. (ChemMon 2026 p37)
 
 ## Processed Products And F33
 

@@ -16,7 +16,7 @@ related:
   - "[[implicit-vs-explicit-facets]]"
   - "[[maintenance-2023]]"
   - "[[maintenance-2024]]"
-last_updated: "2026-05-09"
+last_updated: "2026-09-30"
 ---
 
 # FoodEx2 In Additives And Flavourings Monitoring
@@ -37,7 +37,21 @@ last_updated: "2026-05-09"
 
 ## Additional Facets
 
-- `F03 Physical-state` should be considered, and is highly recommended in several additive/flavouring categories when not implicit.
+- `F03 Physical-state` should be considered for the following legislative categories and is highly recommended when not already implicit. This is a scoped recommendation, not a universal mandatory facet. (ChemMon 2026 p38-39)
+
+| Legislative category | Scope |
+| --- | --- |
+| 1 | Dairy products and analogues |
+| 6.3 | Breakfast cereals |
+| 12.5 | Soups and broths |
+| 12.6 | Sauces |
+| 13 | Foods intended for specific groups under Regulation (EU) No 609/2013 |
+| 14.1.2 | Fruit juices and vegetable juices |
+| 14.1.3 | Fruit nectars, vegetable nectars and similar products |
+| 14.1.4 | Flavoured drinks |
+| 14.1.5 | Coffee/extracts, tea, herbal/fruit infusions, coffee substitutes and hot-beverage mixes |
+| 17 | Food supplements, excluding supplements for infants and young children |
+
 - `F23 Target-consumer` should be added for products formulated for infants under 12 months when the target consumer is not implicit.
 - These extra facets are domain overlays. They do not change the ordinary rule that facets must refine the chosen FoodEx2 base term and respect syntax and cardinality constraints.
 

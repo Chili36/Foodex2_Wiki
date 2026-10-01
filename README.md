@@ -221,7 +221,14 @@ log.md                 Chronological knowledge-base changes
 .venv/bin/pytest -q
 ```
 
-The doctor checks catalogue registration, links, page categories, prompt projections, graph connectivity, and source references. Semantic changes should remain human-reviewed; maintenance automation reports drift but does not rewrite or merge knowledge.
+The doctor checks catalogue registration, links, page categories, prompt projections,
+graph connectivity, source references, and source-coverage review status. Every run
+reports specific findings from the saved semantic audit and flags stale evidence.
+Missing reviews and citation/page counts do not produce coverage warnings. See
+[Maintenance Workflow](MAINTENANCE_WORKFLOW.md) for the explicit deeper-audit workflow
+and [the initial scoped audit](reports/source-coverage/2026-09-30.md) for concrete gaps;
+`--format json` includes the recorded findings and source roles. Semantic changes should remain
+human-reviewed; maintenance automation reports drift but does not rewrite or merge knowledge.
 
 ## Operations
 
