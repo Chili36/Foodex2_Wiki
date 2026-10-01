@@ -18,6 +18,7 @@ last_updated: "2026-09-30"
 - Compared selected ChemMon 2026, foundational FoodEx2 and maintenance sections with the wiki and recorded 11 omissions/scope ambiguities with source passages, page locations, target wiki pages and proposed corrections.
 - Classified the two 2018 presentations as historical supporting training with no mandatory ingestion. Recorded sparse-extraction and uninspected-source limitations; no full-corpus completeness claim or operational knowledge edits.
 - Added source/wiki freshness checks: changed evidence yields one stale-audit warning instead of stale gap claims. Added an explicit local review-preparation command and documented the semantic review workflow.
+- Follow-up on 2026-10-01: coverage warnings now resolve root-level targets such as `RUNTIME_RULES.md` through the store's page mapping instead of incorrectly prefixing the guidance directory. Added a regression check for the actual file and GitHub annotation path.
 
 ## [2026-09-11] correction | Remove dormant BR26 from the default coding workflow
 
