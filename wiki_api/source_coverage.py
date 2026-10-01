@@ -202,11 +202,13 @@ def audit_source_coverage(store: WikiStore) -> dict:
         for finding in data["findings"]:
             if finding["status"] != "open":
                 continue
+            page_name = finding["wiki_pages"][0]
+            page_path = store.root_docs.get(page_name, store.guidance_dir / page_name)
             report["findings"].append(
                 {
                     "severity": "warning",
                     "check": "source_coverage",
-                    "location": "raw/efsa-guidance/" + finding["wiki_pages"][0],
+                    "location": page_path.relative_to(store.root).as_posix(),
                     "message": f"{finding['id']} — {finding['title']}. {finding['observation']} "
                     f"Source: {Path(finding['source']).name}, {finding['locator']}. "
                     f"Action: {finding['action']}",

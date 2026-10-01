@@ -24,6 +24,8 @@ from wiki_api.wiki_store import WikiPage, WikiStore
 class Store:
     def __init__(self, root):
         self.root = root
+        self.root_docs = WikiStore(root).root_docs
+        self.guidance_dir = root / "raw" / "efsa-guidance"
         self.page = WikiPage(
             "topic.md",
             "Topic",
@@ -111,6 +113,23 @@ def test_only_specific_audited_gaps_are_warnings(corpus):
         t in warning["message"]
         for t in ["COV-001", "Section 2, p. 3", "Add the exception"]
     )
+
+
+def test_root_page_finding_points_to_the_actual_file(corpus):
+    store, _, data = corpus
+    store.page = replace(store.page, name="RUNTIME_RULES.md")
+    store.root_docs[store.page.name].write_text(store.page.content)
+    data["wiki_snapshot"] = wiki_snapshot(store)
+    data["findings"][0]["wiki_pages"] = [store.page.name]
+    save(store, data)
+
+    report = audit_source_coverage(store)
+    assert report["audit_status"] == "current"
+    warning = report["findings"][0]
+    assert warning["location"] == "RUNTIME_RULES.md"
+    assert (store.root / warning["location"]).is_file()
+    rendered = _render_github(DoctorReport([DoctorIssue(**warning)], report))
+    assert "file=RUNTIME_RULES.md" in rendered
 
 
 @pytest.mark.parametrize("change", ["source", "wiki", "removed_source", "added_page"])
