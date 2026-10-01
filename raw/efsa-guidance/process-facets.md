@@ -4,14 +4,16 @@ select_when: >-
   The case involves a treatment or processing step and must decide whether it
   belongs in the base-term choice or as an explicit process facet, and which
   specific process descriptor applies — heating, preservation, drying,
-  fermentation, coating, milling, or similar transformations.
+  fermentation, coating, milling, draining after boiling, popping, or similar transformations.
 sources:
+  - "EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf"
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
 related:
   - "[[facet-coding-rules]]"
   - "[[base-term-selection]]"
   - "[[code-string-format]]"
-last_updated: "2026-09-09"
+  - "[[maintenance-2025]]"
+last_updated: "2026-10-01"
 ---
 
 # Process Facets
@@ -22,8 +24,23 @@ last_updated: "2026-09-09"
 - Add `F28` only when the treatment makes the difference. If the derivative base term already implies the process, do not restate it. Read this together with [[base-term-selection]] when deciding whether the process belongs in the base term or in an explicit facet. (EFSA guidance p44, p46-47, p58)
 - `F13-F16` are largely deprecated; use `F28`. The general "implicit vs explicit" boundary is summarized in [[implicit-vs-explicit-facets]], and the string syntax is in [[code-string-format]]. (EFSA guidance p46-47)
 
+<!-- Source: EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf p14, Tables 3-4 -->
+## Cooking Detail Added Or Revised In Maintenance 2025
+
+| Descriptor | Interpretation |
+| --- | --- |
+| `F28.A1B1L Boiling and draining` | Boiling followed by draining; a child of `A07GL Boiling`. |
+| `F28.A1B1M Boiling and undraining` | Boiling without draining; a child of `A07GL Boiling`. |
+| `F28.A1B1K Popping` | Dry high-heat agitation that bursts the grain's outer skin and changes its shape. |
+| `F28.A07GK Scalding` | Revised to a core term directly under `A0BA1 Cooking and similar thermal preparation processes`. |
+| `F28.A07GQ Pressure cooking` | Revised to a core term directly under `A0BA1`; do not restrict its meaning to the old steaming grouping. |
+
+Use the specific descriptor only when the treatment is known, relevant and not already implicit. These changes do not permit rebuilding a standard derivative from a raw base plus F28. Current catalogue scope and [[process-validation-rules]] govern the finished code. `A07GP` is named `Steaming without pressure`; its LanguaL attribute is `G0023`, while `A07HH Reheating in the pack` uses `G0040`. (2025 maintenance p14)
+
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p78-83 -->
 ## Appendix A2 Codes
+
+This is a historical reference to the 2015 Appendix A2. Later name and hierarchy changes, including scalding and pressure cooking above, take precedence when interpreting current candidates. Use the current catalogue for exact membership and scope.
 
 - Generic: `A07HS raw`, `A0C0S unprocessed`, `A0C0R processed`, `A0CHR batch`, `A0CHS continuous`, `A0CHV preserved`, `A066E semi-preserved`.
 - Physical division: `A07KT portioning`, `A07KV slicing`, `A07KX dicing`, `A07KY mincing/chopping/cutting`, `A07KZ grating`, `A07LA grinding/milling/crushing`, `A0C6N pulping/mashing`, `A0C0K maceration`.

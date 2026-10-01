@@ -1,6 +1,6 @@
 ---
 title: "Wiki Architecture For Models"
-last_updated: "2026-07-04"
+last_updated: "2026-10-01"
 sources:
   - "README.md"
   - "PROJECT_CONTEXT.md"
@@ -374,7 +374,7 @@ Domain overlays are conditional. Do not apply them unless the request, caller co
 Examples:
 
 - `maintenance-history.md`
-- `maintenance-2015.md` through `maintenance-2024.md`
+- `maintenance-2015.md` through `maintenance-2025.md`
 - `log.md`
 
 Use:

@@ -2,10 +2,11 @@
 title: "Base Term Selection Rules"
 select_when: >-
   The case turns on picking the anchoring base term: deciding raw versus
-  derivative versus composite, ranking competing candidate terms within that
-  type, resolving preservation or dominant-ingredient precedence, and choosing
+  derivative versus composite, ranking reportable candidates within that
+  type and hierarchy, resolving preservation or dominant-ingredient precedence, and choosing
   a generic fallback plus origin facet when the exact term is missing.
 sources:
+  - "EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf"
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf"
   - "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
@@ -15,7 +16,8 @@ related:
   - "[[implicit-vs-explicit-facets]]"
   - "[[ingredient-facets]]"
   - "[[process-facets]]"
-last_updated: "2026-09-30"
+  - "[[maintenance-2025]]"
+last_updated: "2026-10-01"
 ---
 
 # Base Term Selection
@@ -27,6 +29,9 @@ last_updated: "2026-09-30"
 - Do not confuse food type with origin. `What type of food is this?` is a different question from `what is it made from?`; answer the type question before choosing `F01`, `F27`, or `F04`. (ANSES guidance p25)
 - Never start from a hierarchy term if a reportable non-hierarchy term exists. If poor source data makes that unavoidable, prefer an exposure-hierarchy term. (EFSA guidance p41, p47)
 - Know the reporting or exposure hierarchy before coding. Stopping at the first search hit can lead to the wrong branch. (EFSA guidance p42)
+
+<!-- Source: EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf p17, Table 6 -->
+- Check the selected term's reportability in the intended hierarchy. For example, maintenance 2025 made `A03PX Food for infants and young children` non-reportable in Reporting because it was too generic. Choose an applicable reportable child or other suitable reportable food base supported by the sample, rather than trying to make that generic base reportable by adding facets. This is hierarchy-specific dismissal, not global deprecation. See [[maintenance-2025]] and [[business-rules]]. (2025 maintenance p17)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p14-20, p42-46, p58 -->
 ## Choose The Base-Term Class
@@ -67,4 +72,5 @@ last_updated: "2026-09-30"
 - `BR08`: the selected base term must be reportable. See [[business-rules]].
 - `BR10`: non-specific base terms are only weak fallbacks when a more precise reportable term exists. See [[business-rules]].
 - `BR19`: derivative-creating processes on raw bases are not an acceptable fallback when the derivative group exists. See [[business-rules]].
+- `BR20` and `BR21`: respect deprecation and returned dismissal errors; reportability must be checked in the intended hierarchy. See [[business-rules]].
 - `BR23` and `BR24`: hierarchy terms are discouraged or invalid as coding bases, depending on hierarchy/reporting status. See [[business-rules]].

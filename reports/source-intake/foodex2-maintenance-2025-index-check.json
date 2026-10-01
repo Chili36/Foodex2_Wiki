@@ -1,0 +1,54 @@
+{
+  "source_file": "EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf",
+  "collection": "foodex2_source_docs_v1",
+  "checked_at": "2026-10-01T08:53:54.371043+00:00",
+  "source_chunks": 34,
+  "indexed_pages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21
+  ],
+  "content_hashes_match": true,
+  "embedding_model": "voyage-context-3",
+  "dimension": 1024,
+  "wiki_index": {
+    "collection": "foodex2_wiki_markdown_v1",
+    "pages": 34,
+    "chunks": 287,
+    "drift": {
+      "missing_pages": [],
+      "stale_pages": [],
+      "orphaned_pages": [],
+      "missing_chunk_ids": [],
+      "stale_chunk_ids": [],
+      "orphaned_chunk_ids": [],
+      "embedding_model_mismatch_chunk_ids": [],
+      "embedding_dimension_mismatch_chunk_ids": []
+    },
+    "ok": true
+  },
+  "live_service": {
+    "health": "ok",
+    "page": "maintenance-2025.md",
+    "category": "maintenance",
+    "summary_matches_markdown": true
+  }
+}
