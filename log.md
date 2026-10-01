@@ -1,9 +1,19 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-09-30"
+last_updated: "2026-10-01"
 ---
 
 # Log
+
+## [2026-10-01] ingest | Add FoodEx2 maintenance 2025 (EN-10069)
+
+- Preserved the 21-page EFSA PDF unchanged and wrote a source impact report before operational edits. The report covers MTX 16.1-16.3 and MTX 17.0, with 79 new terms, 358 revised scope notes and five hierarchy-specific dismissals, not global deprecations.
+- Added `maintenance-2025.md`, extended the maintenance timeline and registered the new page for retrieval. Updated index summaries and the architecture's maintenance range.
+- Patched base selection, facet selection, processes, additives/flavourings and pesticides with the report's durable changes. Kept the pig farm-type F21-to-F29 distinction, PRIMo versus Reporting flags, implicit F33 mapping and domain/recommendation boundaries explicit.
+- Verified promoted descriptor identities, memberships and pesticide matrix mappings against the local MTX 17.2 snapshot; retained release scope and current-validator precedence. Appendix A/B spreadsheets are separate source artifacts and were not imported as part of this PDF ingest.
+- Rechecked the earlier coverage resolutions, added five resolved source-specific findings with wiki evidence, and made the evidence regression test retain the original finding IDs while allowing later ingests.
+- Synced curated RAG (34 pages, 287 chunks, no drift) and added the PDF to raw-source RAG (34 chunks covering all 21 pages). Restarted the local service and verified the new maintenance page and index through the live API. Validation: 254 tests passed; doctor with RAG and strict warnings passed with zero errors/warnings.
+
 
 ## [2026-09-30] correction | Resolve the 11 scoped coverage findings
 

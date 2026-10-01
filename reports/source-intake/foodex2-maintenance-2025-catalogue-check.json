@@ -1,0 +1,393 @@
+{
+  "checked_at": "2026-10-01",
+  "catalogue": [
+    {
+      "code": "MTX",
+      "version": "17.2"
+    }
+  ],
+  "database_sha256": "5a40b1b6b289ff16f4bce2b2a68e8efbadcd1e78cb262cf2ebc1e2972c87e10a",
+  "provenance": "Read-only query of the sibling validator data/mtx.db; local MTX 17.2 snapshot, not a claim about the latest upstream release.",
+  "source_pdf_sha256": "15e19e0769232b6a51e81c67b40db68496b4af3f70402c3c518b57e5361260de",
+  "query": "select t.term_code,t.extended_name,t.deprecated,h.hierarchy_code,h.parent_code,h.reportable from terms t join term_hierarchies h using(term_code) where t.term_code in (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) and h.hierarchy_code in ('report','expo','PRIMo','prod','fpurpose','process','state','targcon','part','legis') order by t.term_code,h.hierarchy_code",
+  "parameters": [
+    "A1B1O",
+    "A1B1N",
+    "A1B1X",
+    "A1B1Y",
+    "A1B1P",
+    "A1B1Q",
+    "A1B1L",
+    "A1B1M",
+    "A1B1K",
+    "A1B1W",
+    "A1B1E",
+    "A03PX",
+    "A0C5V",
+    "A1A9M",
+    "A1A9N",
+    "A1A9P",
+    "A1B3H",
+    "A00MB",
+    "A07GK",
+    "A07GQ",
+    "A07GP",
+    "A07HH",
+    "A1B3Y",
+    "A1B1J"
+  ],
+  "terms": [
+    {
+      "term_code": "A00MB",
+      "extended_name": "Large radish leaves",
+      "deprecated": 0,
+      "hierarchy_code": "PRIMo",
+      "parent_code": "A00GL",
+      "reportable": 0
+    },
+    {
+      "term_code": "A00MB",
+      "extended_name": "Large radish leaves",
+      "deprecated": 0,
+      "hierarchy_code": "expo",
+      "parent_code": "A00GL",
+      "reportable": 1
+    },
+    {
+      "term_code": "A00MB",
+      "extended_name": "Large radish leaves",
+      "deprecated": 0,
+      "hierarchy_code": "report",
+      "parent_code": "A00GL",
+      "reportable": 1
+    },
+    {
+      "term_code": "A03PX",
+      "extended_name": "Food for infants and young children",
+      "deprecated": 0,
+      "hierarchy_code": "PRIMo",
+      "parent_code": "root",
+      "reportable": 1
+    },
+    {
+      "term_code": "A03PX",
+      "extended_name": "Food for infants and young children",
+      "deprecated": 0,
+      "hierarchy_code": "report",
+      "parent_code": "A03PV",
+      "reportable": 0
+    },
+    {
+      "term_code": "A07GK",
+      "extended_name": "Scalding",
+      "deprecated": 0,
+      "hierarchy_code": "process",
+      "parent_code": "A0BA1",
+      "reportable": 1
+    },
+    {
+      "term_code": "A07GP",
+      "extended_name": "Steaming without pressure",
+      "deprecated": 0,
+      "hierarchy_code": "process",
+      "parent_code": "A0BA1",
+      "reportable": 1
+    },
+    {
+      "term_code": "A07GQ",
+      "extended_name": "Pressure cooking",
+      "deprecated": 0,
+      "hierarchy_code": "process",
+      "parent_code": "A0BA1",
+      "reportable": 1
+    },
+    {
+      "term_code": "A07HH",
+      "extended_name": "Reheating in the pack",
+      "deprecated": 0,
+      "hierarchy_code": "process",
+      "parent_code": "A07HD",
+      "reportable": 1
+    },
+    {
+      "term_code": "A0C5V",
+      "extended_name": "FA-0.   All categories of foods",
+      "deprecated": 0,
+      "hierarchy_code": "legis",
+      "parent_code": "A163R",
+      "reportable": 0
+    },
+    {
+      "term_code": "A1A9M",
+      "extended_name": "Farrow-to-finish",
+      "deprecated": 0,
+      "hierarchy_code": "fpurpose",
+      "parent_code": "A0C7G",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1A9M",
+      "extended_name": "Farrow-to-finish",
+      "deprecated": 0,
+      "hierarchy_code": "prod",
+      "parent_code": "A0CAG",
+      "reportable": 0
+    },
+    {
+      "term_code": "A1A9N",
+      "extended_name": "Weaner-to-finish",
+      "deprecated": 0,
+      "hierarchy_code": "fpurpose",
+      "parent_code": "A0C7G",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1A9N",
+      "extended_name": "Weaner-to-finish",
+      "deprecated": 0,
+      "hierarchy_code": "prod",
+      "parent_code": "A0CAG",
+      "reportable": 0
+    },
+    {
+      "term_code": "A1A9P",
+      "extended_name": "Finisher",
+      "deprecated": 0,
+      "hierarchy_code": "fpurpose",
+      "parent_code": "A0C7G",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1A9P",
+      "extended_name": "Finisher",
+      "deprecated": 0,
+      "hierarchy_code": "prod",
+      "parent_code": "A0CAG",
+      "reportable": 0
+    },
+    {
+      "term_code": "A1B1E",
+      "extended_name": "Multiple organs/tissues (as part-nature)",
+      "deprecated": 0,
+      "hierarchy_code": "part",
+      "parent_code": "A0CEG",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B1J",
+      "extended_name": "Bitter liqueur",
+      "deprecated": 0,
+      "hierarchy_code": "expo",
+      "parent_code": "A03NV",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B1J",
+      "extended_name": "Bitter liqueur",
+      "deprecated": 0,
+      "hierarchy_code": "report",
+      "parent_code": "A03NV",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B1K",
+      "extended_name": "Popping",
+      "deprecated": 0,
+      "hierarchy_code": "process",
+      "parent_code": "A0BA1",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B1L",
+      "extended_name": "Boiling and draining",
+      "deprecated": 0,
+      "hierarchy_code": "process",
+      "parent_code": "A07GL",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B1M",
+      "extended_name": "Boiling and undraining",
+      "deprecated": 0,
+      "hierarchy_code": "process",
+      "parent_code": "A07GL",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B1N",
+      "extended_name": "Effervescent tablets",
+      "deprecated": 0,
+      "hierarchy_code": "state",
+      "parent_code": "A06JH",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B1O",
+      "extended_name": "Drops",
+      "deprecated": 0,
+      "hierarchy_code": "state",
+      "parent_code": "A06JL",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B1P",
+      "extended_name": "Vegetarian",
+      "deprecated": 0,
+      "hierarchy_code": "targcon",
+      "parent_code": "A07TP",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B1Q",
+      "extended_name": "Vegan",
+      "deprecated": 0,
+      "hierarchy_code": "targcon",
+      "parent_code": "A07TP",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B1W",
+      "extended_name": "Domesticated",
+      "deprecated": 0,
+      "hierarchy_code": "prod",
+      "parent_code": "root",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B1X",
+      "extended_name": "Chewable tablets",
+      "deprecated": 0,
+      "hierarchy_code": "state",
+      "parent_code": "A06JH",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B1Y",
+      "extended_name": "Syrup-type",
+      "deprecated": 0,
+      "hierarchy_code": "state",
+      "parent_code": "A06JL",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B3H",
+      "extended_name": "Small radish leaves",
+      "deprecated": 0,
+      "hierarchy_code": "PRIMo",
+      "parent_code": "A00LM",
+      "reportable": 0
+    },
+    {
+      "term_code": "A1B3H",
+      "extended_name": "Small radish leaves",
+      "deprecated": 0,
+      "hierarchy_code": "expo",
+      "parent_code": "A00LM",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B3H",
+      "extended_name": "Small radish leaves",
+      "deprecated": 0,
+      "hierarchy_code": "report",
+      "parent_code": "A00LM",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B3Y",
+      "extended_name": "Iced tea",
+      "deprecated": 0,
+      "hierarchy_code": "expo",
+      "parent_code": "A03LB",
+      "reportable": 1
+    },
+    {
+      "term_code": "A1B3Y",
+      "extended_name": "Iced tea",
+      "deprecated": 0,
+      "hierarchy_code": "report",
+      "parent_code": "A03LB",
+      "reportable": 1
+    }
+  ],
+  "attributes": [
+    {
+      "term_code": "A016V",
+      "extended_name": "Angelica, dry",
+      "matrix_code": "P0632010-095",
+      "implicit_facets": "F27.A00VR$F28.A07KG$F33.A0C2M",
+      "langual_code": null
+    },
+    {
+      "term_code": "A017E",
+      "extended_name": "Lavender, dry",
+      "matrix_code": "P0631030-021",
+      "implicit_facets": "F27.A00XP$F28.A07KG$F33.A0C2M",
+      "langual_code": null
+    },
+    {
+      "term_code": "A017G",
+      "extended_name": "Marjoram, dry",
+      "matrix_code": "P0820040-001",
+      "implicit_facets": "F27.A0CYM$F28.A07KG$F33.A0C2M",
+      "langual_code": null
+    },
+    {
+      "term_code": "A017P",
+      "extended_name": "Tansy and related species, dry",
+      "matrix_code": "P0632010-089",
+      "implicit_facets": "F27.A00YN$F28.A07KG$F33.A0C2M",
+      "langual_code": null
+    },
+    {
+      "term_code": "A017S",
+      "extended_name": "Woodruff, dry",
+      "matrix_code": "P0632010-088",
+      "implicit_facets": "F27.A00YX$F28.A07KG$F33.A0C2M",
+      "langual_code": null
+    },
+    {
+      "term_code": "A017T",
+      "extended_name": "Wormwoods, dry",
+      "matrix_code": "P0632010-001",
+      "implicit_facets": "F27.A00YY$F28.A07KG$F33.A0C2M",
+      "langual_code": null
+    },
+    {
+      "term_code": "A01XB",
+      "extended_name": "Bovine and pig, fresh fat tissue",
+      "matrix_code": null,
+      "implicit_facets": "F27.A01TX$F27.A01VA$F33.A0C3M",
+      "langual_code": null
+    },
+    {
+      "term_code": "A07GP",
+      "extended_name": "Steaming without pressure",
+      "matrix_code": null,
+      "implicit_facets": null,
+      "langual_code": "G0023"
+    },
+    {
+      "term_code": "A07HH",
+      "extended_name": "Reheating in the pack",
+      "matrix_code": null,
+      "implicit_facets": null,
+      "langual_code": "G0040"
+    },
+    {
+      "term_code": "A1B3H",
+      "extended_name": "Small radish leaves",
+      "matrix_code": "P0251060-002",
+      "implicit_facets": "F01.A0EAQ$F27.A1B3H$F33.A0C51",
+      "langual_code": null
+    },
+    {
+      "term_code": "A1B3Y",
+      "extended_name": "Iced tea",
+      "matrix_code": null,
+      "implicit_facets": "F04.A03HQ$F04.A03DK$F28.A07MK$F33.A0C1T",
+      "langual_code": null
+    }
+  ],
+  "limitations": "Identity, attributes and hierarchy membership only; no claim of full end-to-end code validation or exhaustive Appendix A/B review."
+}

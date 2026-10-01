@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "reviewed_at": "2026-09-30",
+  "reviewed_at": "2026-10-01",
   "reviewed_by": "Codex source-to-wiki semantic review; not human-approved",
-  "scope": "Targeted comparison of ChemMon 2026 FoodEx2 sections and Table 8, plus selected foundational and maintenance definitions.",
-  "limitations": "This is a scoped audit, not an exhaustive review of all 19 sources. Uninspected material is not counted as a gap or as covered.",
-  "report": "reports/source-coverage/2026-09-30.md",
+  "scope": "Targeted comparison of ChemMon 2026 FoodEx2 sections and Table 8, selected foundational and maintenance definitions, plus the maintenance 2025 PDF and its operational coding changes.",
+  "limitations": "Scoped audit, not an exhaustive review of all 20 sources. Maintenance 2025 Appendix A/B spreadsheets are outside the PDF ingest. Other uninspected material is not counted as a gap or as covered.",
+  "report": "reports/source-coverage/2026-10-01-maintenance-2025.md",
   "source_roles": {
     "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf": "Foundational formal guidance; interpret with subsequent maintenance and reporting-domain exceptions.",
     "foodex2_docs/EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf": "Formal historical change record; useful for definitions and changes, not a current catalogue snapshot.",
@@ -24,7 +24,8 @@
     "foodex2_docs/Guidance VMPR mapping to legislative products.pdf": "Domain mapping reference; retained, not independently audited in this pass.",
     "foodex2_docs/Reportable Scallops list of FoodEx2 codes - MTX.xlsx": "Source scallop lookup; not independently audited here.",
     "foodex2_docs/business_rules.md": "Validator rule reference; version-specific; not independently audited here.",
-    "foodex2_docs/domoic_acid_scallops_mtx.csv": "Derived scallop lookup; no obligation to create multiple wiki pages; not independently audited here."
+    "foodex2_docs/domoic_acid_scallops_mtx.csv": "Derived scallop lookup; no obligation to create multiple wiki pages; not independently audited here.",
+    "foodex2_docs/EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf": "Formal release-specific catalogue change record for MTX 16.1-17.0; interpret current coding with current catalogue and validator evidence."
   },
   "source_snapshot": {
     "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf": "26fb6badf3855c8fa885b527b896250a86d7c305ad782adedd446a7af1ce49d5",
@@ -32,20 +33,21 @@
     "foodex2_docs/EFSA Supporting Publications - 2021 -  - FoodEx2 maintenance 2020.pdf": "4a4f3954fc7b31bebfe89bf0da60b1767794b44c88ce8417a2044944126ebee7",
     "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf": "136110a309f6c8d1fffd340c3e50b025bdf0909b0627c8c9d87ed94b57433f71",
     "foodex2_docs/FoodEx2-presentation-1-180926.pdf": "4654b5018de5650f9b28257e60b478ceb3f45f766c2632cd20d32c5608d85d38",
-    "foodex2_docs/FoodEx2-presentation-2-181003.pdf": "fe40b28ef6fe6820f6c07c84e4ef5bd51f76e8e88a5e143683f3f806f922df49"
+    "foodex2_docs/FoodEx2-presentation-2-181003.pdf": "fe40b28ef6fe6820f6c07c84e4ef5bd51f76e8e88a5e143683f3f806f922df49",
+    "foodex2_docs/EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf": "15e19e0769232b6a51e81c67b40db68496b4af3f70402c3c518b57e5361260de"
   },
   "wiki_snapshot": {
     "RUNTIME_RULES.md": "86521c0ca9059b5f92878bb7a7512d11cd959e366fe365f800d27b9614f2f858",
-    "additives-flavourings-foodex2.md": "87f96385aef89692c8783253d6bd41d4f88d16fee1815a00859642a7affd3ce4",
+    "additives-flavourings-foodex2.md": "afc66659a0e3f9c60e1d4d83fea7f71c6c0da0ac37f35f090d24bfcd0b0f97d3",
     "anses-codification-guidance.md": "3c9a89627be36af795edbaf386eb144f58cfc198ab163debecf8fefd04305b6e",
-    "base-term-selection.md": "86a5617f74f645a502d048d5b616e6ddd3acf56be47a9711351fc11fb20f4d99",
+    "base-term-selection.md": "fde89d7c4ea41d0f18dbe3a460b50ad8706e1576c2591b331eb98e136d6f583c",
     "business-rules.md": "b4c05865473d0b241e4f003f1efb397513015db3bceac31468ab8c7a8167767f",
     "chemical-monitoring-foodex2.md": "fdde5a1691e4217e9808dbd3deb70e544609beb3791ca01fda9d91bd79063157",
     "code-string-format.md": "1d1539777aaf3680dbba4fdcc14361a247ddd6518f7a656d66df9120aa95d6e4",
     "contaminants-foodex2.md": "ea537838d187f6abddbaff592f5de88d80eb06f3e26eef397ce92ef39b1a61bf",
     "domain-specific-validation.md": "568d873099b4a148f412cb299f308a57cbf702e250f63c4d255901490beda1e3",
     "domoic-acid-scallops.md": "7f8bb5e52581b8739ec879008f74131d40985ac2b83d09cb631fb2538b4c19c7",
-    "facet-coding-rules.md": "d273a735ac742e487dfeada59d8aaea8e0b94b11f9ac3997982a923bc762d35f",
+    "facet-coding-rules.md": "770e0bef2acf2e7688a147cdb09f609c23d3ac3c4b1552577dd7e4a08f1475e0",
     "foodex2-overview.md": "84b77e10356df195dbfe5a6b6a2cd97e098286a87fd40a323c13e663c2151c34",
     "implicit-vs-explicit-facets.md": "4828559402e46656f3fbe427ae4ce939efbe81ab057f53d1f9821084f124673a",
     "ingredient-facets.md": "983755619a6eeb4ff3104e7150c52b127a62f78fdf5334e8285f3b70e7b726aa",
@@ -57,11 +59,12 @@
     "maintenance-2022.md": "e5ccaa3bcc1e10d239d932401ab774172d0036d1f017fcc5a7ce44601bd4a122",
     "maintenance-2023.md": "077d0bca0db91867ef170a8be63d424b72300b3e0551d637355fdb8dbd55daa1",
     "maintenance-2024.md": "8cb2b32f16e6fb3e5bbd3d3472057639559c7b052b4055d550de278b9af8e4f4",
-    "maintenance-history.md": "f561eb92ea6f0b13a5bfadc259ff87b32d6ff6cbf3b2df59d8fc3f0ed55b7faa",
+    "maintenance-2025.md": "f9e823ef8626cd6f9c531b4cabca1f3e57d3bbe9e57ede5e9c97e6746de07529",
+    "maintenance-history.md": "933a73ea8dbdebd807c675308bbecb4cd620e8bbf7dc79599d6b88aab49e6d75",
     "packaging-facets.md": "2cfd5490fb1bedfc64cdb12be2063e92e4ffc7cb6d0401a6b58ad7f5cf3111ae",
-    "pesticides-foodex2.md": "acdac6d6bb3a3dbbf4497d1c2415bc6fc5536edd8a21d3085fef7796d7b5c637",
+    "pesticides-foodex2.md": "ac0eb4ce9651ed88bc8f65b06fb181db04ecee0fb5dd30031eb2b056ce988045",
     "policy-contract.md": "6417445d9999bf201f2cf03b3d68e30e3b6e5da12abe1d872d8dc06815f6fc69",
-    "process-facets.md": "b93d22a0cf62f2011d3a2f04b3d0eb58ceed5e768d5c77aaf9e58f4bfcccbf2f",
+    "process-facets.md": "442fba72d7cf1030dbbc0dc6e62329eaff1d41825e1a1471d5b931bf8dfca4c0",
     "process-validation-rules.md": "e80e55cbe3faab8e1941b9152c6d224c7a50c37ad40d4a455cd61f39aa515894",
     "structural-validation.md": "2c344a23d25a9c6dda20cf36098713a909a52dc21e62907e03ed4a8ab0332e77",
     "term-type-facet-constraints.md": "6fd1f73ed7ab27cbea8ba6678c94c23ea9686b628f79b8880ed15b4d71d3888d",
@@ -99,6 +102,11 @@
       "source": "foodex2_docs/FoodEx2-presentation-2-181003.pdf",
       "pages": "1",
       "method": "Rendered title page confirms training provenance and date; no substantive claims ingested."
+    },
+    {
+      "source": "foodex2_docs/EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf",
+      "pages": "1-21",
+      "method": "Complete PDF text review; visual verification of pages 11 and 13-17; promoted codes, hierarchy memberships and matrix attributes corroborated in local MTX 17.2."
     }
   ],
   "findings": [
@@ -344,6 +352,115 @@
           "quote": "| `F08` | Sweetening agent | Non-sugar sweetener used in a sweetened product, when known and relevant. |"
         }
       ]
+    },
+    {
+      "id": "M25-001",
+      "status": "resolved",
+      "title": "Maintenance 2025 was absent",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf",
+      "locator": "PDF pages 3-6 and 17-18",
+      "source_excerpt": "In total, 79 new terms have been added to the catalogue since the last major release",
+      "wiki_pages": [
+        "maintenance-2025.md",
+        "maintenance-history.md"
+      ],
+      "observation": "The annual page and timeline previously ended at 2024.",
+      "action": "Add the report with bounded release context, counts and coverage limitations.",
+      "resolved_at": "2026-10-01",
+      "resolution": "Added the annual page, timeline, source and retrieval registration.",
+      "resolution_evidence": [
+        {
+          "page": "maintenance-2025.md",
+          "quote": "The cycle added 79 new catalogue terms and updated 358 scope notes."
+        }
+      ]
+    },
+    {
+      "id": "M25-002",
+      "status": "resolved",
+      "title": "Hierarchy-specific 2025 reportability changes were absent",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf",
+      "locator": "PDF pages 15 and 17, Table 6",
+      "source_excerpt": "three terms were made reportable in the F29 - Purpose",
+      "wiki_pages": [
+        "maintenance-2025.md",
+        "facet-coding-rules.md",
+        "base-term-selection.md"
+      ],
+      "observation": "The F21-to-F29 change and A03PX Reporting restriction were not represented.",
+      "action": "Add scoped dismissal examples without overriding returned BR21 errors.",
+      "resolved_at": "2026-10-01",
+      "resolution": "Added all five dismissals and operational F29/base-selection consequences; catalogue checked.",
+      "resolution_evidence": [
+        {
+          "page": "facet-coding-rules.md",
+          "quote": "They became non-reportable in `F21 Production-method` while remaining reportable in F29."
+        }
+      ]
+    },
+    {
+      "id": "M25-003",
+      "status": "resolved",
+      "title": "New diet and cooking descriptors were absent",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf",
+      "locator": "PDF pages 13-14, Tables 3-4",
+      "source_excerpt": "A1B1L Boiling and draining",
+      "wiki_pages": [
+        "facet-coding-rules.md",
+        "process-facets.md"
+      ],
+      "observation": "The wiki lacked the new F23/F28 distinctions and its 2015 process list needed historical qualification.",
+      "action": "Add prompt-visible descriptors, revised process placement and source-supported interpretation.",
+      "resolved_at": "2026-10-01",
+      "resolution": "Added diet/cooking guidance and marked the old Appendix A2 list as historical.",
+      "resolution_evidence": [
+        {
+          "page": "process-facets.md",
+          "quote": "| `F28.A1B1L Boiling and draining` | Boiling followed by draining; a child of `A07GL Boiling`. |"
+        }
+      ]
+    },
+    {
+      "id": "M25-004",
+      "status": "resolved",
+      "title": "Additive mapping and supplement form changes were absent",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf",
+      "locator": "PDF pages 10-13 and 16",
+      "source_excerpt": "the implicit facets in terms of the F33 facet was revised for twenty-one base terms",
+      "wiki_pages": [
+        "additives-flavourings-foodex2.md"
+      ],
+      "observation": "The overlay did not capture changed mapping, iced tea or the new supplement forms.",
+      "action": "Patch the conditional overlay while retaining recommendation scope and implicit-facet deduplication.",
+      "resolved_at": "2026-10-01",
+      "resolution": "Added mapping and form changes; prior F03 category table and scoped recommendation retained.",
+      "resolution_evidence": [
+        {
+          "page": "additives-flavourings-foodex2.md",
+          "quote": "The dedicated `Iced tea` base was introduced to avoid inconsistent classification and maps to `A0C1T FA-14.1.4 Flavoured drinks`."
+        }
+      ]
+    },
+    {
+      "id": "M25-005",
+      "status": "resolved",
+      "title": "Pesticide radish-leaf and matrix changes were absent",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf",
+      "locator": "PDF pages 11-12, Table 1",
+      "source_excerpt": "A1B3H Small radish leaves",
+      "wiki_pages": [
+        "pesticides-foodex2.md"
+      ],
+      "observation": "The overlay lacked the small/large leaf distinction, changed matrix attributes and PRIMo flag caveat.",
+      "action": "Add release-specific changes, with current-catalogue and hierarchy boundaries.",
+      "resolved_at": "2026-10-01",
+      "resolution": "Added distinctions and matrix table; local MTX 17.2 confirms the cited mappings and hierarchy flags.",
+      "resolution_evidence": [
+        {
+          "page": "pesticides-foodex2.md",
+          "quote": "Small radish leaves were also added to PRIMo but marked non-reportable there."
+        }
+      ]
     }
   ],
   "previous_wiki_snapshot": {
@@ -381,5 +498,29 @@
     "vmpr-foodex2.md": "fc6f76da608aaf416ecf6f3108c8eefb164f7d3a283e39c122bd1b3556b5cd6d",
     "vmpr-legislative-mapping.md": "718ca98dd9edb614557a3a796dde9cead49b7d29f51134a176e176528caf9d30"
   },
-  "resolution_review": "All 11 scoped findings checked against the revised wiki and the cited source passages; local catalogue/validator checks in reports/source-coverage/2026-09-30-catalogue-check.json. No exhaustive corpus claim."
+  "resolution_review": "All 11 scoped findings checked against the revised wiki and the cited source passages; local catalogue/validator checks in reports/source-coverage/2026-09-30-catalogue-check.json. No exhaustive corpus claim.",
+  "followup_reviews": [
+    {
+      "reviewed_at": "2026-10-01",
+      "report": "reports/source-coverage/2026-10-01-maintenance-2025.md",
+      "previous_reviewed_at": "2026-09-30",
+      "previous_report": "reports/source-coverage/2026-09-30.md",
+      "changed_pages_reviewed": [
+        "additives-flavourings-foodex2.md",
+        "base-term-selection.md",
+        "facet-coding-rules.md",
+        "maintenance-2025.md",
+        "maintenance-history.md",
+        "pesticides-foodex2.md",
+        "process-facets.md"
+      ],
+      "earlier_findings_rechecked": [
+        "COV-003",
+        "COV-009",
+        "COV-010",
+        "COV-011"
+      ],
+      "unchanged_resolution_evidence_verified": true
+    }
+  ]
 }

@@ -59,8 +59,12 @@ def test_reference_definitions_reach_prompt_context():
 def test_resolution_evidence_still_exists_in_the_wiki():
     store = WikiStore(ROOT)
     audit = json.loads((ROOT / 'docs/source-coverage.json').read_text())
-    assert len(audit['findings']) == 11
+    # Preserve the original corrections while allowing later source ingests.
+    assert {f'COV-{number:03d}' for number in range(1, 12)} <= {
+        finding['id'] for finding in audit['findings']
+    }
     for finding in audit['findings']:
         assert finding['status'] == 'resolved'
+        assert finding['resolution_evidence']
         for evidence in finding['resolution_evidence']:
             assert evidence['quote'] in store.read_page(evidence['page']).body
