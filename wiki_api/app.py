@@ -366,7 +366,7 @@ class AskRequest(AskSelectionRequest):
     answerer_reasoning_effort: Literal["low", "medium", "high"] | None = Field(
         default=None,
         description=(
-            "Optional reasoning effort for LM Studio/OpenAI-compatible answerer calls. "
+            "Optional reasoning effort for supported Anthropic, OpenAI and LM Studio answerer calls. "
             "Ignored by providers that do not support it."
         ),
     )

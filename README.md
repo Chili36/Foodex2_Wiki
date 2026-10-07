@@ -76,6 +76,13 @@ in `.env.example` selects Jev independently of the shared librarian model.
 Jev requires `TYPESAFE_API_KEY`; missing credentials or invalid provider responses
 return an actionable error. It only selects pages.
 
+Sonnet 5.5 answers allow 8,192 output tokens for thinking plus the final JSON.
+A token-limited response is retried once with up to 16,384 tokens; request
+usage and timing include both attempts. A second truncation returns a clear
+service error. `/wiki/ask` forwards `answerer_reasoning_effort` to Anthropic
+as well as supported OpenAI and LM Studio models. Omitting it retains the
+provider default.
+
 The [page-picker decision](docs/jev-page-picker.md) records the speed and quality
 comparison behind this default.
 
