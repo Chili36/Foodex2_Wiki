@@ -929,7 +929,7 @@ def resolve_answerer_model(model: str | None = None) -> str:
     return model or _resolve_model(
         "WIKI_ANSWERER_MODEL",
         "WIKI_LIBRARIAN_MODEL",
-        default="gpt-5.6-terra",
+        default="claude-sonnet-5-5",
     )
 
 

@@ -37,7 +37,7 @@ Markdown is the authored source of truth. Qdrant collections, graph views, and A
 ## Current Runtime Defaults
 
 - Page selector: `jev-1.13.0` (TypeSafe)
-- Answerer for `/wiki/ask` and `/wiki/ask-rag`: `gpt-5.6-terra`
+- Answerer for `/wiki/ask` and `/wiki/ask-rag`: `claude-sonnet-5-5`
 - Default page budget: 7 pages
 - `/wiki/ask` graph expansion: off
 - `/wiki/context-pack`: strict final page cap, including `RUNTIME_RULES.md`
@@ -61,9 +61,9 @@ For the default selector and answerer, configure:
 
 ```bash
 TYPESAFE_API_KEY=...
-OPENAI_API_KEY=...
+ANTHROPIC_API_KEY=...
 WIKI_CONTEXT_MODEL=jev-1.13.0
-WIKI_ANSWERER_MODEL=gpt-5.6-terra
+WIKI_ANSWERER_MODEL=claude-sonnet-5-5
 ```
 
 Bring your own API keys and models. `WIKI_CONTEXT_MODEL` sets the page picker;
