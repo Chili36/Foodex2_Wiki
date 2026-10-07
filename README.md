@@ -37,7 +37,7 @@ Markdown is the authored source of truth. Qdrant collections, graph views, and A
 ## Current Runtime Defaults
 
 - Page selector: `jev-1.13.0` (TypeSafe)
-- Answerer for `/wiki/ask` and `/wiki/ask-rag`: `gpt-5.6-terra`
+- Answerer for `/wiki/ask` and `/wiki/ask-rag`: `claude-sonnet-5-5`
 - Default page budget: 7 pages
 - `/wiki/ask` graph expansion: off
 - `/wiki/context-pack`: strict final page cap, including `RUNTIME_RULES.md`
@@ -61,9 +61,9 @@ For the default selector and answerer, configure:
 
 ```bash
 TYPESAFE_API_KEY=...
-OPENAI_API_KEY=...
+ANTHROPIC_API_KEY=...
 WIKI_CONTEXT_MODEL=jev-1.13.0
-WIKI_ANSWERER_MODEL=gpt-5.6-terra
+WIKI_ANSWERER_MODEL=claude-sonnet-5-5
 ```
 
 Bring your own API keys and models. `WIKI_CONTEXT_MODEL` sets the page picker;
@@ -75,6 +75,13 @@ overrides remain supported. Model resolution uses the endpoint setting, then
 in `.env.example` selects Jev independently of the shared librarian model.
 Jev requires `TYPESAFE_API_KEY`; missing credentials or invalid provider responses
 return an actionable error. It only selects pages.
+
+Sonnet 5.5 answers allow 8,192 output tokens for thinking plus the final JSON.
+A token-limited response is retried once with up to 16,384 tokens; request
+usage and timing include both attempts. A second truncation returns a clear
+service error. `/wiki/ask` forwards `answerer_reasoning_effort` to Anthropic
+as well as supported OpenAI and LM Studio models. Omitting it retains the
+provider default.
 
 The [page-picker decision](docs/jev-page-picker.md) records the speed and quality
 comparison behind this default.

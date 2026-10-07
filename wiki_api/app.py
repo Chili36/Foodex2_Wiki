@@ -360,13 +360,13 @@ class AskRequest(AskSelectionRequest):
             "Optional per-request model override for the synthesized answer. "
             "Use claude* for Anthropic, lmstudio:<model> for LM Studio, "
             "or gpt*/gemini* for JSON-only hosted overrides. If omitted, the "
-            "service uses WIKI_ANSWERER_MODEL; the built-in default is gpt-5.6-terra."
+            "service uses WIKI_ANSWERER_MODEL; the built-in default is claude-sonnet-5-5."
         ),
     )
     answerer_reasoning_effort: Literal["low", "medium", "high"] | None = Field(
         default=None,
         description=(
-            "Optional reasoning effort for LM Studio/OpenAI-compatible answerer calls. "
+            "Optional reasoning effort for supported Anthropic, OpenAI and LM Studio answerer calls. "
             "Ignored by providers that do not support it."
         ),
     )
@@ -409,7 +409,7 @@ class AskRagRequest(BaseModel):
         description=(
             "Optional per-request model override for the synthesized answer. "
             "If omitted, the service uses WIKI_ANSWERER_MODEL; the built-in "
-            "default is gpt-5.6-terra."
+            "default is claude-sonnet-5-5."
         ),
     )
     collection: str | None = Field(
