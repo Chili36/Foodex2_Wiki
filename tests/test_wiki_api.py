@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 
 import httpx
+import pytest
 
 import wiki_api.app as app_module
 from wiki_api.librarian import AnswerResult, LibrarianResult, PageSelectionResult, SolverResult
@@ -1165,7 +1166,7 @@ def test_policy_pack_uses_librarian_response() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
-    assert payload["policy_contract"]["policy_version"] == "2026-09-11-v0.10"
+    assert payload["policy_contract"]["policy_version"] == "2026-10-09-v0.11"
     assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["policy_contract"]["anti_patterns"][0]["id"] == "AP-001"
     assert "business-rules.md BR19" in payload["policy_contract"]["binding_rules"][0]["derived_from"]
@@ -1224,7 +1225,7 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
-    assert payload["policy_contract"]["policy_version"] == "2026-09-11-v0.10"
+    assert payload["policy_contract"]["policy_version"] == "2026-10-09-v0.11"
     assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["guiding_principles"][2].startswith("FoodEx2 prefers modular description")
     assert payload["pages_used"] == [
@@ -1457,7 +1458,7 @@ def test_solve_returns_final_code_and_stage_traces() -> None:
     )
     assert response.status_code == 200
     payload = response.json()
-    assert payload["policy_contract"]["policy_version"] == "2026-09-11-v0.10"
+    assert payload["policy_contract"]["policy_version"] == "2026-10-09-v0.11"
     assert payload["solution"]["constructedCode"] == "A044C#F04.A00VV$F04.A00GZ$F18.A07NN$F19.A07PF"
     assert payload["solution"]["validationCheck"]["passes"] is True
     assert payload["solution"]["confidence"] == 5
@@ -1469,6 +1470,49 @@ def test_solve_returns_final_code_and_stage_traces() -> None:
     assert len(payload["guiding_principles"]) >= 4
     assert app_module.solver_runner.calls[0]["policy_contract"]["constitution"][0]["id"] == "C01"
     assert app_module.solver_runner.calls[0]["policy_contract"]["binding_rules"][0]["id"] == "R-DERIV-001"
+
+
+@pytest.mark.parametrize("endpoint", ["context-pack", "policy-pack", "solve"])
+def test_structured_policy_preserves_br13_reassessment_boundary(endpoint) -> None:
+    """Check actual consumer evidence, not the canned model stubs' decisions."""
+    response = request(
+        "POST",
+        f"/wiki/{endpoint}",
+        json={
+            "search_term": "Ground turmeric; repair rejected F03.A06JD",
+            "deconstructed_query": {},
+            "candidates": [{"code": "A01AC", "name": "Turmeric roots", "termType": "r"}],
+            "context": {},
+        },
+    )
+    assert response.status_code == 200
+    contract = response.json()["policy_contract"]
+    rules = {rule["id"]: rule for rule in contract["binding_rules"]}
+    rule = rules["R-F03-001"]
+    assert rule["when"] == (
+        "food_type=raw_primary_commodity and F03 descriptor is in the BR13 disintegration list"
+    )
+    assert rule["must_not"].startswith("add that `F03` to the final code.")
+    for boundary in (
+        "BR13 rejection alone does not determine the base-term class",
+        "use an applicable derivative base, including a suitable generic derivative",
+        "retain a raw base that covers the product",
+        "known permitted grinding as `F28.A07LA`",
+        "Do not infer grinding from powder alone",
+        "infer catalogue absence from missing search results",
+    ):
+        assert boundary in rule["must_not"]
+    assert "choose the appropriate derivative base instead" not in rule["must_not"]
+    assert {"process-facets.md", "base-term-selection.md", "business-rules.md BR13"} <= set(rule["derived_from"])
+    assert rules["R-DERIV-001"]["when"] == "food_type=derivative and derivative_base_exists=true"
+    assert rules["R-DERIV-001"]["must"].startswith("select the derivative base")
+
+    if endpoint == "solve":
+        delivered = app_module.solver_runner.calls[0]
+        assert delivered["policy_contract"] == contract
+        policy_page = next(page for page in delivered["pages"] if page["page_name"] == "policy-contract.md")
+        assert rule["must_not"] in policy_page["content"]
+        assert "choose the appropriate derivative base instead" not in policy_page["content"]
 
 
 def test_solve_requires_candidates() -> None:
@@ -1560,7 +1604,7 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
 
 def test_policy_contract_is_loaded_from_markdown_source() -> None:
     contract = build_policy_contract()
-    assert contract["policy_version"] == "2026-09-11-v0.10"
+    assert contract["policy_version"] == "2026-10-09-v0.11"
     assert contract["constitution"][0]["id"] == "C01"
     assert contract["decision_procedure"][0]["name"] == "determine_food_type"
     assert contract["anti_patterns"][0]["id"] == "AP-001"

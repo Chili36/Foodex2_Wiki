@@ -64,7 +64,7 @@
     "maintenance-history.md": "933a73ea8dbdebd807c675308bbecb4cd620e8bbf7dc79599d6b88aab49e6d75",
     "packaging-facets.md": "2cfd5490fb1bedfc64cdb12be2063e92e4ffc7cb6d0401a6b58ad7f5cf3111ae",
     "pesticides-foodex2.md": "ac0eb4ce9651ed88bc8f65b06fb181db04ecee0fb5dd30031eb2b056ce988045",
-    "policy-contract.md": "6417445d9999bf201f2cf03b3d68e30e3b6e5da12abe1d872d8dc06815f6fc69",
+    "policy-contract.md": "10ff555bff7f8af2ab291ca3dbf5dddc42e7ed8a7a308e7e9b5b33468b30cc5a",
     "process-facets.md": "35cadc4d2b64bc0344861bf466a8f6168dc068e0714083d0827cd0564779846c",
     "process-validation-rules.md": "e80e55cbe3faab8e1941b9152c6d224c7a50c37ad40d4a455cd61f39aa515894",
     "structural-validation.md": "2c344a23d25a9c6dda20cf36098713a909a52dc21e62907e03ed4a8ab0332e77",
@@ -517,6 +517,31 @@
           "quote": "A `BR13` rejection identifies an invalid raw-base/F03 combination; it does not determine the correct base-term class."
         }
       ]
+    },
+    {
+      "id": "DIV-003",
+      "status": "resolved",
+      "title": "Binding BR13 policy retained a derivative-only repair",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+      "locator": "p43-44 Table 22, read with official Catalogue Browser BR13",
+      "source_excerpt": "grinding/milling/crushing",
+      "wiki_pages": [
+        "policy-contract.md"
+      ],
+      "observation": "PR #60 review found that the first physical-division repair left R-F03-001 requiring a derivative after rejection. Structured policy consumers still received this contradictory instruction.",
+      "action": "Align the binding rule and operational summary with the reassessment boundary, and verify delivery through context-pack, policy-pack and solve.",
+      "resolved_at": "2026-10-09",
+      "resolution": "Policy v0.11 retains the F03 restriction and requires reassessment of actual processing and catalogue scope. Applicable generic derivatives still take precedence; supported raw bases can carry known permitted grinding. The review report records the missed layer and follow-up evidence.",
+      "resolution_evidence": [
+        {
+          "page": "policy-contract.md",
+          "quote": "BR13 rejection alone does not determine the base-term class."
+        },
+        {
+          "page": "policy-contract.md",
+          "quote": "Do not infer grinding from powder alone or infer catalogue absence from missing search results."
+        }
+      ]
     }
   ],
   "previous_wiki_snapshot": {
@@ -578,6 +603,18 @@
         "COV-011"
       ],
       "unchanged_resolution_evidence_verified": true
+    },
+    {
+      "reviewed_at": "2026-10-09",
+      "report": "reports/guidance-repair/2026-10-09/review.md#review-follow-up-binding-br13-policy",
+      "review_comment": "https://github.com/Chili36/Foodex2_Wiki/pull/60#discussion_r4228739847",
+      "changed_pages_reviewed": [
+        "policy-contract.md"
+      ],
+      "prior_resolution_excerpts_verified": 18,
+      "source_files_unchanged": true,
+      "previous_policy_fingerprint": "6417445d9999bf201f2cf03b3d68e30e3b6e5da12abe1d872d8dc06815f6fc69",
+      "new_finding": "DIV-003"
     }
   ]
 }

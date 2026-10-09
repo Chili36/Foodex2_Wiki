@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-10-09T09:29:32.813250+00:00",
+  "generated_at": "2026-10-09T20:18:39.342804+00:00",
   "collection": "foodex2_wiki_markdown_v1",
   "embedding_provider": "voyage",
   "embedding_model": "voyage-context-3",
@@ -17,7 +17,7 @@
     ]
   },
   "page_count": 34,
-  "chunk_count": 288,
+  "chunk_count": 289,
   "pages": [
     {
       "page_name": "RUNTIME_RULES.md",
@@ -772,20 +772,21 @@
       "title": "Policy Contract",
       "category": "runtime",
       "source_path": "raw/efsa-guidance/policy-contract.md",
-      "chunk_count": 13,
-      "content_hash": "739105e3c4010f6893c805cc8b2dd4501b52ce30d968c8040b9a1166ae07e30e",
+      "chunk_count": 14,
+      "content_hash": "cb0c93075f0fc2ec42cc19981fb9bec34a535de88bc38abba910e2e9e1a1ba0c",
       "chunk_hashes": [
         "85be61cd179149f488f662b4694a9588781f1a95c9bd2f6aa91d30639fb5a694",
         "f65b0651e4ff32c93fde42295cbb35a8a3a738dc3020261bab64836d9f94a554",
-        "a8f35efe110e539dc9a140a5431ae6e830a944ece1a08fe8f79261159b89b2e0",
+        "61d6684a44f897eca133c308b4552a3ce2ef4383025b9134ef233613694cff67",
         "25445e5eeb70c31ff385e7ee2718c3b4be1d2e94ac6dabb6460e77ccb27a8d77",
         "f830d6029a15ae320b9bfaa8cdd5db3a35b8ead3ce15076cf8f7361105388862",
         "4b4372672d55ac1e4e3a22d8a5c6feed76a1e0d70292a4f0edfc0045bf33f2f2",
-        "81d3b617cc0687a14d918940a43ffdb6f13a2e0ff9172246eb804634af48b468",
+        "27ece408b95ed7efc7d50344ef280511f183c7e561331a6efe5017022308d93a",
+        "e085d73247f38564e5f3989250393be5bd49c49141e00165cfcd18feacbc802a",
         "0169ef391e8066dc26df3f5cb76bce9bde5a445142e64e017b349920b801de5c",
         "869806f46e724b2fcde52dc8c840837cec2e8be23884cf6543acff78f38e909c",
         "eecf47f06527d1d2e438669855ef660102b92ef6e264e3ca2e26f4c5a7e2b8dc",
-        "c4215a10b1d9a86377b82bdac4fa3aefe85d24d03ab0c5866b81277987ab07ca",
+        "0b1e1f5d172a063d32513c10fcc8d3fe7785e4d770e1fd7b5db63576d4869f89",
         "c5396721b418c294b69c1aca032b55f87877f5cd885dc100e8a065d5092812a9",
         "90cb281b4f03be2b5e3f5f83df331e201d2428235ae48ce9950236bfdabab4e6"
       ],
@@ -797,6 +798,7 @@
         "policy-contract.md#004-00-policy-contract-decision-procedure",
         "policy-contract.md#005-00-policy-contract-binding-rules",
         "policy-contract.md#005-01-policy-contract-binding-rules",
+        "policy-contract.md#005-02-policy-contract-binding-rules",
         "policy-contract.md#006-00-policy-contract-tie-break-rules",
         "policy-contract.md#007-00-policy-contract-anti-patterns",
         "policy-contract.md#008-00-policy-contract-ground-rules",

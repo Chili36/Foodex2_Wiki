@@ -5,6 +5,12 @@ last_updated: "2026-10-09"
 
 # Log
 
+## [2026-10-09] review correction | Align the binding BR13 policy
+
+- PR #60 review identified a missed execution-layer rule: `R-F03-001` still prescribed a derivative after BR13 rejection, despite the repaired guidance. The first repair was incomplete for structured consumers; the earlier answer checks did not exercise this binding rule.
+- Updated the canonical policy to `2026-10-09-v0.11`. Keep the forbidden F03 out, reassess processing and catalogue scope, prefer an applicable specific or generic derivative, and otherwise retain a supported raw base with known permitted grinding. Powder alone and missing search results remain insufficient evidence.
+- Added regression checks on the policy actually delivered through coding context, policy packs and the solver, including the solver's full policy page. Follow-up validation and index-refresh evidence are recorded in [the repair review](reports/guidance-repair/2026-10-09/review.md#review-follow-up-binding-br13-policy).
+
 ## [2026-10-09] correction | Separate physical division from derivative production
 
 - Reproduced the ground-turmeric failure: the answer retrieved the spice drying exception but followed a BR13 worked example that overprescribed a derivative base. Preserved the baseline, source interpretation and diagnosis in [the repair review](reports/guidance-repair/2026-10-09/review.md).

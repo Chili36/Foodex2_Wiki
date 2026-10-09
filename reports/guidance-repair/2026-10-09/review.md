@@ -135,3 +135,41 @@ the syntax page. The test now retains syntax-first ranking and checks the actual
 contract (two distinct eligible neighbors appended within the seven-page cap),
 without fixing an incidental secondary page identity. Both complete local test
 suites were rerun after this correction; production retrieval code is unchanged.
+
+## Review follow-up: binding BR13 policy
+
+[PR review comment](https://github.com/Chili36/Foodex2_Wiki/pull/60#discussion_r4228739847)
+correctly identified an incomplete repair: `policy-contract.md` still told the
+solver to choose a derivative after BR13 rejection. `/wiki/solve` passes both
+this full page and its parsed binding rule to the solver; `/wiki/context-pack`
+and `/wiki/policy-pack` also return the structured rule. Corrected ordinary
+pages and passing page-selection answers did not establish that this separate
+execution layer was consistent. The initial projection regression tests did
+not cover the structured policy. This omission belongs to the first repair,
+not to the August drying correction.
+
+Policy version `2026-10-09-v0.11` retains the F03 prohibition while separating
+rejection from base-class selection. It requires reassessing actual processing
+and catalogue scope, preserves applicable specific/generic derivative priority,
+and permits a supported raw base with known permitted grinding. It explicitly
+rejects inferring grinding from powder alone or catalogue absence from missing
+search results. The operational summary and source references are aligned.
+The other derivative-priority rules remain conditional and unchanged.
+
+New endpoint regressions inspect the structured rule returned by all three
+consumers and the exact policy/page supplied to the solver. Their model stubs
+only test evidence delivery; they are not evidence of correct model decisions.
+Follow-up live results and the policy-page re-embedding are recorded in
+[policy-review-check.json](policy-review-check.json). Earlier answer captures
+retain their original revisions and the documented vector-only limitations.
+
+Follow-up verification: 235 tests pass in the clean PR checkout and 303 in the
+active checkout; strict doctor reports zero errors/warnings. The curated index
+now has 34 pages and 289 chunks with zero drift after re-embedding the policy's
+14 chunks. The real MCP returns v0.11. The structured solver (existing Sonnet
+4.6 librarian/solver configuration) returns `A01AC#F28.A07LA` for the supplied
+raw-spice repair and `A04KS#F26.A07XE$F27.A000R` for the generic flour control.
+These establish the two primary decisions, not complete solver correctness:
+the captured solutions also include unsupplied implicit-facet placeholders or
+combined values and unverified ancillary validation claims. Those limitations
+are retained in the follow-up evidence. No model settings or prompts changed.

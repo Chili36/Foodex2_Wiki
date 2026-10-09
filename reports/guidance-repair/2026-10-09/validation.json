@@ -7,19 +7,20 @@
     "base-term-selection.md",
     "business-rules.md",
     "process-facets.md",
-    "term-type-facet-constraints.md"
+    "term-type-facet-constraints.md",
+    "policy-contract.md"
   ],
-  "knowledge_revision": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+  "knowledge_revision": "sha256:198d354613beb70c0d1619e448681e1aa55b825fb698c7d55fcb7a3dc3f9d2e8",
   "automated_checks": {
     "active_checkout_full_suite": {
-      "passed": 300,
-      "seconds": 28.27,
-      "note": "Rerun after final wording and graph-expansion test-contract corrections; includes pre-existing local work."
+      "passed": 303,
+      "seconds": 27.54,
+      "note": "Rerun after the binding BR13 policy review correction; includes pre-existing local work."
     },
     "clean_main_based_pr_full_suite": {
-      "passed": 232,
-      "seconds": 12.41,
-      "note": "Rerun after final wording and graph-expansion test-contract corrections."
+      "passed": 235,
+      "seconds": 11.83,
+      "note": "Rerun after the binding BR13 policy review correction, including three new structured-policy delivery regressions."
     },
     "affected_checks_after_final_wording_refinement": {
       "passed": 11
@@ -48,18 +49,28 @@
       "unrequested_domain_page_cases": 6,
       "notes": "Corrected grinding rule retrieved, but section coverage and domain filtering remain limited. See answer-review.json; keyword passes are not semantic success."
     },
-    "mcp": "Real stdio discovery, projected evidence, original turmeric/pepper briefs, corrected SEL-0036 routing and supplied turmeric catalogue case. See mcp-check.json and selection-check.json."
+    "mcp": "Real stdio discovery, projected evidence, original turmeric/pepper briefs, corrected SEL-0036 routing and supplied turmeric catalogue case. See mcp-check.json and selection-check.json.",
+    "knowledge_revision": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a"
   },
   "index_refresh": {
     "ok": true,
     "pages": 34,
-    "chunks": 288,
+    "chunks": 289,
     "embedding_model": "voyage-context-3",
     "dimension": 1024,
     "obsolete_chunks_deleted": 9,
-    "recovery": "Standard refresh timed out after 89 chunks; resumed complete stale pages with identical embedding/chunking settings and verified zero drift."
+    "recovery": "Standard refresh timed out after 89 chunks; resumed complete stale pages with identical embedding/chunking settings and verified zero drift.",
+    "policy_review_followup": "Re-embedded all 14 chunks of the policy page with unchanged settings; zero obsolete chunks and zero whole-collection drift. See policy-review-check.json."
   },
   "service": "Local API restarted to refresh selector/catalogue metadata; live MCP tools use this API.",
   "source_index": "Unchanged source files retain their existing raw-source embeddings.",
-  "pr_scope": "Guidance, selection/evaluation expectations, projection regression tests, audit/log evidence and derived wiki manifest. Pre-existing MCP and answer-model work is excluded."
+  "pr_scope": "Guidance, selection/evaluation expectations, projection regression tests, audit/log evidence and derived wiki manifest. Pre-existing MCP and answer-model work is excluded.",
+  "initial_repair_knowledge_revision": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+  "review_followup": {
+    "review_comment": "https://github.com/Chili36/Foodex2_Wiki/pull/60#discussion_r4228739847",
+    "policy_version": "2026-10-09-v0.11",
+    "evidence": "policy-review-check.json",
+    "prior_resolution_excerpts_verified": 18,
+    "initial_answer_captures_preserved": true
+  }
 }
