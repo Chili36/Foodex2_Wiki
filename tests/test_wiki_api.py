@@ -668,10 +668,16 @@ def test_ask_graph_expansion_uses_only_slots_inside_max_pages() -> None:
     assert len(payload["pages_used"]) == 7
     assert expansion["remaining_slots"] == 2
     assert expansion["neighbors_count"] == 2
-    assert expansion["neighbors_added"] == [
-        "code-string-format.md",
-        "business-rules.md",
-    ]
+    # The secondary neighbor can change when real guidance wording changes.
+    # Keep the relevant syntax page first and verify the expansion contract.
+    assert expansion["neighbors_added"][0] == "code-string-format.md"
+    assert len(set(expansion["neighbors_added"])) == 2
+    assert payload["pages_used"][-2:] == expansion["neighbors_added"]
+    assert len(set(payload["pages_used"])) == 7
+    assert all(
+        app_module.store.page_category(name) in {"runtime", "guidance", "validation"}
+        for name in expansion["neighbors_added"]
+    )
     assert len(app_module.answerer_runner.calls[0]["pages"]) == 7
 
 

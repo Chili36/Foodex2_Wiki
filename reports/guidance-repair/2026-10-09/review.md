@@ -128,3 +128,10 @@ The PR is isolated on a clean checkout of main. Local live checks use the
 already-installed MCP pilot and the existing Jev/Sonnet 5.5 runtime; their
 implementation and answer-model changes belong to separate work. Raw-source
 documents and their existing index were not changed by this repair.
+
+The first CI run caught a corpus-coupled assertion in the graph-expansion budget
+test: the final wording refinement changed which secondary page ranked next to
+the syntax page. The test now retains syntax-first ranking and checks the actual
+contract (two distinct eligible neighbors appended within the seven-page cap),
+without fixing an incidental secondary page identity. Both complete local test
+suites were rerun after this correction; production retrieval code is unchanged.

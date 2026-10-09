@@ -13,12 +13,13 @@
   "automated_checks": {
     "active_checkout_full_suite": {
       "passed": 300,
-      "seconds": 27.4,
-      "note": "Includes pre-existing MCP and other local work; run before the final process-evidence wording refinement."
+      "seconds": 28.27,
+      "note": "Rerun after final wording and graph-expansion test-contract corrections; includes pre-existing local work."
     },
     "clean_main_based_pr_full_suite": {
       "passed": 232,
-      "seconds": 11.4
+      "seconds": 12.41,
+      "note": "Rerun after final wording and graph-expansion test-contract corrections."
     },
     "affected_checks_after_final_wording_refinement": {
       "passed": 11
@@ -27,7 +28,8 @@
       "errors": 0,
       "warnings": 0
     },
-    "git_diff_check": "passed"
+    "git_diff_check": "passed",
+    "initial_ci_finding": "Final guidance wording changed secondary related-page ranking. Replaced the incidental fixed neighbor assertion with the budget/uniqueness/category contract, preserving syntax-first ranking. Production retrieval code is unchanged."
   },
   "live_checks": {
     "page_selection_physical_division_cases": {
