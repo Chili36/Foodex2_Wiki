@@ -1,0 +1,24 @@
+{
+  "answer": "- Food type: the wiki treats spices as raw commodities even when dried, because the dried form is their market default (base-term-selection.md). Turmeric is not named in the pages, so this is an inference from the spice rule. The pages give no turmeric or ground-spice code, so I cannot supply one without inventing it.\n- Powder is an F03 physical-state descriptor, not an F28 process. The wiki lists `Powder` and `Fine powder` under the F03 disintegration boundary (facet-coding-rules.md). Grinding is a separate process, `A07LA grinding/milling/crushing`, listed among the F28 physical-division processes (process-facets.md).\n- Do not attach F03 powder to a raw commodity base. BR13 blocks the disintegration-family F03 descriptors (powder, paste, puree) on raw terms. The wiki says to use an appropriate powdered or otherwise derivative base term instead (term-type-facet-constraints.md, RUNTIME_RULES.md).\n- Look for an existing ground or powdered derivative base for turmeric before reconstructing it from a raw base plus F28. The wiki says not to rebuild a standard derivative from a raw base plus a process (process-facets.md, base-term-selection.md). The pages do not say whether such a base exists for turmeric, so check the catalogue candidates.\n- If no suitable derivative base exists, the wiki says to mark the candidate set incomplete rather than force a near-match (RUNTIME_RULES.md). Whether grinding on a raw base is blocked by BR19 is not stated in these pages, so validate any F28 against process-validation-rules and the validator.\n- Validation: check the F03 and F28 facets against BR13 and BR19, and check that the base term is reportable (BR08).",
+  "citations": [
+    "base-term-selection.md",
+    "facet-coding-rules.md",
+    "process-facets.md",
+    "term-type-facet-constraints.md",
+    "RUNTIME_RULES.md"
+  ],
+  "pages_used": [
+    "facet-coding-rules.md",
+    "process-facets.md",
+    "term-type-facet-constraints.md",
+    "RUNTIME_RULES.md",
+    "base-term-selection.md",
+    "implicit-vs-explicit-facets.md"
+  ],
+  "knowledge_revision": "sha256:8c03a062830c15d629ec71e10897a9ec83bb9f6971e342488208edf568e77bdb",
+  "question": "How should I code \"Gurkmeja, malen\" (ground turmeric powder) in FoodEx2? Is \"powder\" a physical state facet or a process?",
+  "max_pages": 6,
+  "selector_model": "jev-1.13.0",
+  "answerer_model": "claude-sonnet-5-5",
+  "observed_failure": "Requires a powdered derivative or declares the candidate set incomplete even though the raw-plus-grinding path can be valid."
+}

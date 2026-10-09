@@ -1,0 +1,63 @@
+{
+  "status": "completed_with_documented_vector_retrieval_limitations",
+  "source_files_unchanged": true,
+  "previous_resolution_excerpts_verified": 16,
+  "changed_guidance_pages": [
+    "RUNTIME_RULES.md",
+    "base-term-selection.md",
+    "business-rules.md",
+    "process-facets.md",
+    "term-type-facet-constraints.md"
+  ],
+  "knowledge_revision": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+  "automated_checks": {
+    "active_checkout_full_suite": {
+      "passed": 300,
+      "seconds": 27.4,
+      "note": "Includes pre-existing MCP and other local work; run before the final process-evidence wording refinement."
+    },
+    "clean_main_based_pr_full_suite": {
+      "passed": 232,
+      "seconds": 11.4
+    },
+    "affected_checks_after_final_wording_refinement": {
+      "passed": 11
+    },
+    "wiki_doctor_with_live_rag_and_strict_warnings": {
+      "errors": 0,
+      "warnings": 0
+    },
+    "git_diff_check": "passed"
+  },
+  "live_checks": {
+    "page_selection_physical_division_cases": {
+      "reviewed": 8,
+      "core_decision_pass": 8
+    },
+    "page_selection_drying_controls": {
+      "reviewed": 2,
+      "core_decision_pass": 2
+    },
+    "vector_physical_division_and_drying_cases": {
+      "reviewed": 10,
+      "semantic_partial": [
+        "DIV-001"
+      ],
+      "unrequested_domain_page_cases": 6,
+      "notes": "Corrected grinding rule retrieved, but section coverage and domain filtering remain limited. See answer-review.json; keyword passes are not semantic success."
+    },
+    "mcp": "Real stdio discovery, projected evidence, original turmeric/pepper briefs, corrected SEL-0036 routing and supplied turmeric catalogue case. See mcp-check.json and selection-check.json."
+  },
+  "index_refresh": {
+    "ok": true,
+    "pages": 34,
+    "chunks": 288,
+    "embedding_model": "voyage-context-3",
+    "dimension": 1024,
+    "obsolete_chunks_deleted": 9,
+    "recovery": "Standard refresh timed out after 89 chunks; resumed complete stale pages with identical embedding/chunking settings and verified zero drift."
+  },
+  "service": "Local API restarted to refresh selector/catalogue metadata; live MCP tools use this API.",
+  "source_index": "Unchanged source files retain their existing raw-source embeddings.",
+  "pr_scope": "Guidance, selection/evaluation expectations, projection regression tests, audit/log evidence and derived wiki manifest. Pre-existing MCP and answer-model work is excluded."
+}

@@ -1,9 +1,16 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-10-01"
+last_updated: "2026-10-09"
 ---
 
 # Log
+
+## [2026-10-09] correction | Separate physical division from derivative production
+
+- Reproduced the ground-turmeric failure: the answer retrieved the spice drying exception but followed a BR13 worked example that overprescribed a derivative base. Preserved the baseline, source interpretation and diagnosis in [the repair review](reports/guidance-repair/2026-10-09/review.md).
+- Restored EFSA Table 22's general physical-division rule in prompt-visible guidance, distinguished simple grinding from grain-derivative production, and corrected BR13 advice without changing its forbidden facets or severity. Kept the valid August drying/tea correction; this repairs an incompletely captured grinding lesson rather than reversing that correction.
+- Distinguished a missing specific derivative, a missing search result and absence of an applicable catalogue group. Corrected SEL-0036 and added source-backed answer cases and evidence-projection checks. Food-specific examples stay in evaluations, outside runtime prompts.
+- Reconciled prior coverage findings and recorded the new resolutions. Deployment and validation evidence, including the curated vector-index refresh and live answer review, is retained with the repair report.
 
 ## [2026-10-01] ingest | Add FoodEx2 maintenance 2025 (EN-10069)
 

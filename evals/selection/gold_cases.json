@@ -2008,6 +2008,7 @@
           "base-term-selection.md",
           "business-rules.md",
           "term-type-facet-constraints.md",
+          "process-facets.md",
           "pesticides-foodex2.md"
         ],
         "acceptable": [
@@ -2038,7 +2039,7 @@
           "vmpr-legislative-mapping.md",
           "additives-flavourings-foodex2.md"
         ],
-        "notes": "Rubric 1+5: the case turns on whether a powder physical state can sit on a raw commodity. business-rules is must_have because the outcome is a specific rule with a specific severity — BR13 (HIGH) blocks the seven disintegration-family F03 descriptors (A06JD powder among them) on raw commodities and forces a step to a powdered/derivative base. term-type-facet-constraints is also must_have: its core matrix and worked example (raw + F03.A06JD invalid, BR13) give the legality boundary, so both the severity and the matrix are needed to avoid a wrong code. Rubric 2: explicit pesticides domain -> pesticides overlay must_have, other overlays must_not, chemical-monitoring acceptable. A00YH / A06JD cited verbatim in process-facets.md / term-type-facet-constraints.md."
+        "notes": "Rubric 1+5: BR13 (HIGH) rejects the seven disintegration-family F03 descriptors, including A06JD powder, on raw commodities. It does not force a derivative base. The answer must distinguish facet legality from food classification: known, permitted grinding can be F28.A07LA on an appropriate raw base when no applicable derivative group covers the resulting product. process-facets is must_have for EFSA Table 22 physical division versus grain-derivative production; term-type-facet-constraints supplies the BR13 repair boundary. Do not infer catalogue absence from the candidate list alone. Rubric 2: explicit pesticides domain -> pesticides overlay must_have, other overlays must_not, chemical-monitoring acceptable. A00YH / A06JD are source-backed illustrative candidates, not an exhaustive catalogue search."
       }
     },
     {

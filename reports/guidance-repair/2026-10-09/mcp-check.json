@@ -1,0 +1,124 @@
+{
+  "tools": [
+    "search_guidance",
+    "get_guidance_page",
+    "get_coding_context",
+    "ask_guidance"
+  ],
+  "calls": [
+    {
+      "tool": "get_coding_context",
+      "arguments": {
+        "search_term": "How should I code \"Gurkmeja, malen\" (ground turmeric powder) in FoodEx2? Is \"powder\" a physical state facet or a process?",
+        "max_pages": 7
+      },
+      "elapsed_ms": 755,
+      "knowledge_revision": "sha256:b5c160a1e25fbd1264ce8192195e2e90d3e1abd453ac421d19a2bb28ab557f7a",
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "process-facets.md",
+        "facet-coding-rules.md",
+        "term-type-facet-constraints.md",
+        "process-validation-rules.md",
+        "base-term-selection.md",
+        "implicit-vs-explicit-facets.md"
+      ],
+      "process_evidence": "## Rule Of Use\n\n- Add `F28` only when the treatment makes the difference. If the derivative base term already implies the process, do not restate it. Read this together with base-term-selection when deciding whether the process belongs in the base term or in an explicit facet.\n- `F13-F16` are largely deprecated; use `F28`. The general \"implicit vs explicit\" boundary is summarized in implicit-vs-explicit-facets, and the string syntax is in code-string-format.\n\n## Physical Division And Derivative Production\n\n- Physical division or size reduction does not automatically require a derivative base. EFSA lists grinding/milling/crushing (`F28.A07LA`) among processes normally applied directly to raw commodities. Where the raw base covers the food and no applicable derivative group covers the resulting product, retain the raw base and add the known, permitted process if it is not already implicit. Some physical-division products have their own groups; check the actual catalogue scope rather than inferring food type from the word \"ground\" or \"powder\".\n- Distinguish simple grinding from grain milling associated with separation and production of recognised derivatives such as flours, bran or groats. Those products use an applicable derivative base; the specific grain-milling descriptors (`A0C03`, `A0C09`, `A0C0A`) are distinct from physical division `A07LA`. A missing species-specific derivative does not justify raw plus grinding when a suitable generic derivative covers the product; use the appropriate origin facets.\n- `F03` powder describes a physical state; `F28.A07LA` describes a process. A BR13 rejection of F03 powder on a raw base does not itself require a derivative base. Known grinding may be represented by the permitted F28 process while retaining the appropriate raw base. Do not automatically replace F03 with F28, infer grinding from \"powder\" alone, or use A07LA to evade a required derivative group. Read term-type-facet-constraints and base-term-selection together.\n\n## Cooking Detail Added Or Revised In Maintenance 2025\n\n| Descriptor | Interpretation |\n| --- | --- |\n| `F28.A1B1L Boiling and draining` | Boiling followed by draining; a child of `A07GL Boiling`. |\n| `F28.A1B1M Boiling and undraining` | Boiling without draining; a child of `A07GL Boiling`. |\n| `F28.A1B1K Popping` | Dry high-heat agitation that bursts the grain's outer skin and changes its shape. |\n| `F28.A07GK Scalding` | Revised to a core term directly under `A0BA1 Cooking and similar thermal preparation processes`. |\n| `F28.A07GQ Pressure cooking` | Revised to a core term directly under `A0BA1`; do not restrict its meaning to the old steaming grouping. |\n\nUse the specific descriptor only when the treatment is known, relevant and not already implicit. These changes do not permit rebuilding a standard derivative from a raw base plus F28. Current catalogue scope and process-validation-rules govern the finished code. `A07GP` is named `Steaming without pressure`; its LanguaL attribute is `G0023`, while `A07HH Reheating in the pack` uses `G0040`."
+    },
+    {
+      "tool": "ask_guidance",
+      "arguments": {
+        "question": "How should I code \"Gurkmeja, malen\" (ground turmeric powder) in FoodEx2? Is \"powder\" a physical state facet or a process?",
+        "max_pages": 6
+      },
+      "elapsed_ms": 6105,
+      "knowledge_revision": "sha256:b5c160a1e25fbd1264ce8192195e2e90d3e1abd453ac421d19a2bb28ab557f7a",
+      "pages_used": [
+        "process-facets.md",
+        "facet-coding-rules.md",
+        "term-type-facet-constraints.md",
+        "RUNTIME_RULES.md",
+        "base-term-selection.md",
+        "process-validation-rules.md"
+      ],
+      "answer": "- Powder vs process: `F03` powder is a physical state facet, while grinding is a process (`F28.A07LA`). They are different descriptors, and powder alone should not be read as proof of grinding (process-facets.md, term-type-facet-constraints.md).\n- Food type: turmeric is a spice. Spices stay raw commodities even when dried, because the dried form is their market default, so don't add drying (base-term-selection.md). The pages do not give the actual turmeric base-term code, so I can't name one without catalogue or candidate evidence.\n- Facet choice: don't attach `F03` powder to a raw base. BR13 blocks disintegration-family `F03` descriptors, including powder, on raw commodities (facet-coding-rules.md, term-type-facet-constraints.md). A BR13 rejection doesn't by itself force a derivative base (process-facets.md).\n- Grinding: \"malen\" means ground, so the source states grinding. If no derivative group covers ground turmeric, keep the raw base and add `F28.A07LA` (grinding/milling/crushing). This is a physical-division process normally applied to raw commodities, and it is not implicit in the base (process-facets.md). Check the catalogue for a derivative group first, since a missing search result doesn't prove none exists (base-term-selection.md).\n- Validation: confirm the base is reportable and non-hierarchy, that the process isn't redundant with an implicit one (BR16), and that `A07LA` isn't being used to evade a required derivative group (process-facets.md, process-validation-rules.md). The pages don't give the final code string for this food.",
+      "citations": [],
+      "selector_model": "jev-1.13.0",
+      "answerer_model": "claude-sonnet-5-5"
+    },
+    {
+      "tool": "ask_guidance",
+      "arguments": {
+        "question": "I need to code ground black pepper in FoodEx2. Should I use a raw base with a grinding process facet, or a derivative base?",
+        "max_pages": 6
+      },
+      "elapsed_ms": 6786,
+      "knowledge_revision": "sha256:b5c160a1e25fbd1264ce8192195e2e90d3e1abd453ac421d19a2bb28ab557f7a",
+      "pages_used": [
+        "base-term-selection.md",
+        "process-facets.md",
+        "process-validation-rules.md",
+        "implicit-vs-explicit-facets.md",
+        "RUNTIME_RULES.md",
+        "term-type-facet-constraints.md"
+      ],
+      "answer": "- Food type: pepper is a spice, and spices stay raw commodities even when dried, because dried is their market default. Don't add drying (base-term-selection.md).\n- Raw or derivative: simple grinding can sit on a raw base. EFSA lists grinding/milling/crushing (`F28.A07LA`) among processes normally applied directly to raw commodities. Grain-milling derivatives such as flours are a different case (process-facets.md, base-term-selection.md).\n- Check first: look at the processed/preserved branch for a derivative group that actually covers ground pepper. A derivative missing from search results doesn't prove none exists, and the word \"ground\" alone doesn't settle the food type (base-term-selection.md, process-facets.md).\n- Default if no derivative covers it: keep the raw pepper base and add `F28.A07LA` when grinding is known and not already implicit in the base. Don't use `F03` powder, since `BR13` blocks it on raw bases. Don't use `A07LA` to avoid a derivative group that is required (process-facets.md, term-type-facet-constraints.md).\n- Limits of the wiki: these pages give no code for black pepper or ground pepper, so I can't name the base-term code. Take it from the catalogue and mark the candidate set incomplete if none fits (RUNTIME_RULES.md).",
+      "citations": [
+        "base-term-selection.md",
+        "process-facets.md",
+        "term-type-facet-constraints.md",
+        "RUNTIME_RULES.md"
+      ],
+      "selector_model": "jev-1.13.0",
+      "answerer_model": "claude-sonnet-5-5"
+    },
+    {
+      "phase": "final_after_index_refresh",
+      "tool": "get_coding_context",
+      "arguments": {
+        "search_term": "How should I code \"Gurkmeja, malen\" (ground turmeric powder) in FoodEx2? Is \"powder\" a physical state facet or a process?",
+        "max_pages": 7
+      },
+      "elapsed_ms": 621,
+      "knowledge_revision": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "pages_used": [
+        "RUNTIME_RULES.md",
+        "process-facets.md",
+        "facet-coding-rules.md",
+        "term-type-facet-constraints.md",
+        "process-validation-rules.md",
+        "base-term-selection.md",
+        "implicit-vs-explicit-facets.md"
+      ],
+      "process_evidence": "## Rule Of Use\n\n- Add `F28` only when the treatment makes the difference. If the derivative base term already implies the process, do not restate it. Read this together with base-term-selection when deciding whether the process belongs in the base term or in an explicit facet.\n- `F13-F16` are largely deprecated; use `F28`. The general \"implicit vs explicit\" boundary is summarized in implicit-vs-explicit-facets, and the string syntax is in code-string-format.\n\n## Physical Division And Derivative Production\n\n- Physical division or size reduction does not automatically require a derivative base. EFSA lists grinding/milling/crushing (`F28.A07LA`) among processes normally applied directly to raw commodities. Where the raw base covers the food and no applicable derivative group covers the resulting product, retain the raw base and add the known, permitted process if it is not already implicit. Some physical-division products have their own groups; check the actual catalogue scope rather than inferring food type from the word \"ground\" or \"powder\".\n- Distinguish simple grinding from grain milling associated with separation and production of recognised derivatives such as flours, bran or groats. Those products use an applicable derivative base; the specific grain-milling descriptors (`A0C03`, `A0C09`, `A0C0A`) are distinct from physical division `A07LA`. A missing species-specific derivative does not justify raw plus grinding when a suitable generic derivative covers the product; use the appropriate origin facets.\n- `F03` powder describes a physical state; `F28.A07LA` describes a process. A BR13 rejection of F03 powder on a raw base does not itself require a derivative base. Known grinding may be represented by the permitted F28 process while retaining the appropriate raw base. A description explicitly stating \"ground\" supplies grinding evidence; \"powder\" alone does not establish how the powder was produced. Neither word alone settles the base-term class. Do not automatically replace F03 with F28 or use A07LA to evade a required derivative group. Read term-type-facet-constraints and base-term-selection together.\n\n## Cooking Detail Added Or Revised In Maintenance 2025\n\n| Descriptor | Interpretation |\n| --- | --- |\n| `F28.A1B1L Boiling and draining` | Boiling followed by draining; a child of `A07GL Boiling`. |\n| `F28.A1B1M Boiling and undraining` | Boiling without draining; a child of `A07GL Boiling`. |\n| `F28.A1B1K Popping` | Dry high-heat agitation that bursts the grain's outer skin and changes its shape. |\n| `F28.A07GK Scalding` | Revised to a core term directly under `A0BA1 Cooking and similar thermal preparation processes`. |\n| `F28.A07GQ Pressure cooking` | Revised to a core term directly under `A0BA1`; do not restrict its meaning to the old steaming grouping. |\n\nUse the specific descriptor only when the treatment is known, relevant and not already implicit. These changes do not permit rebuilding a standard derivative from a raw base plus F28. Current catalogue scope and process-validation-rules govern the finished code. `A07GP` is named `Steaming without pressure`; its LanguaL attribute is `G0023`, while `A07HH Reheating in the pack` uses `G0040`."
+    },
+    {
+      "phase": "final_after_index_refresh",
+      "tool": "ask_guidance",
+      "arguments": {
+        "question": "Catalogue evidence for this case: A01AC is the reportable raw Turmeric roots term, it covers this ground turmeric, and catalogue inspection found no applicable powdered or ground derivative group. The product is dried and ground. How should I code it, and should I add F03 powder or F28 drying?",
+        "max_pages": 6
+      },
+      "elapsed_ms": 8178,
+      "knowledge_revision": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "pages_used": [
+        "process-facets.md",
+        "term-type-facet-constraints.md",
+        "process-validation-rules.md",
+        "business-rules.md",
+        "base-term-selection.md",
+        "RUNTIME_RULES.md"
+      ],
+      "answer": "- Food type: A01AC is a raw commodity. Spices stay raw even when dried, because the dried form is their market default. The catalogue check found no applicable powdered or ground derivative group, so keep the raw base (base-term-selection.md; process-facets.md).\n- Do not add F28 drying. The marketed-dry exception means drying is not restated, and the raw base already covers it (base-term-selection.md; process-validation-rules.md).\n- Do not add F03 powder. BR13 blocks `F03.A06JD` powder on a raw base. Also, \"powder\" alone does not show how the product was made (business-rules.md; process-facets.md; term-type-facet-constraints.md).\n- Do add the grinding. The description says \"ground\", which is evidence of grinding. EFSA lists grinding/milling/crushing (`F28.A07LA`) among processes normally applied directly to raw commodities. With no applicable derivative group, keep the raw base and add it (process-facets.md).\n- Resulting code: `A01AC#F28.A07LA`. F28 is the process facet used for explicit processes (process-facets.md; term-type-facet-constraints.md).\n- Validation: no F03 is present, so BR13 is not triggered. I can only say that A07LA is a process normally applied directly to raw commodities. I cannot confirm a BR19 result from these pages, so run it in your validator (process-facets.md; process-validation-rules.md; business-rules.md).",
+      "citations": [
+        "process-facets.md",
+        "base-term-selection.md",
+        "term-type-facet-constraints.md",
+        "business-rules.md",
+        "process-validation-rules.md"
+      ],
+      "selector_model": "jev-1.13.0",
+      "answerer_model": "claude-sonnet-5-5"
+    }
+  ]
+}

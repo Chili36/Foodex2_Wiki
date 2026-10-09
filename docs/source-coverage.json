@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "reviewed_at": "2026-10-01",
+  "reviewed_at": "2026-10-09",
   "reviewed_by": "Codex source-to-wiki semantic review; not human-approved",
-  "scope": "Targeted comparison of ChemMon 2026 FoodEx2 sections and Table 8, selected foundational and maintenance definitions, plus the maintenance 2025 PDF and its operational coding changes.",
-  "limitations": "Scoped audit, not an exhaustive review of all 20 sources. Maintenance 2025 Appendix A/B spreadsheets are outside the PDF ingest. Other uninspected material is not counted as a gap or as covered.",
-  "report": "reports/source-coverage/2026-10-01-maintenance-2025.md",
+  "scope": "Targeted comparison of ChemMon 2026 FoodEx2 sections and Table 8, selected foundational and maintenance definitions, plus the maintenance 2025 PDF and its operational coding changes. Targeted physical-division versus derivative-production and BR13 repair review, retaining prior resolved findings after inspecting the changed pages.",
+  "limitations": "Scoped audit, not an exhaustive review of all 20 sources. Maintenance 2025 Appendix A/B spreadsheets are outside the PDF ingest. Other uninspected material is not counted as a gap or as covered. The 2026-10-09 review does not inspect the full current MTX catalogue or authenticate the complete user-reported EFSA correspondence.",
+  "report": "reports/guidance-repair/2026-10-09/review.md",
   "source_roles": {
     "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf": "Foundational formal guidance; interpret with subsequent maintenance and reporting-domain exceptions.",
     "foodex2_docs/EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf": "Formal historical change record; useful for definitions and changes, not a current catalogue snapshot.",
@@ -34,14 +34,15 @@
     "foodex2_docs/EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf": "136110a309f6c8d1fffd340c3e50b025bdf0909b0627c8c9d87ed94b57433f71",
     "foodex2_docs/FoodEx2-presentation-1-180926.pdf": "4654b5018de5650f9b28257e60b478ceb3f45f766c2632cd20d32c5608d85d38",
     "foodex2_docs/FoodEx2-presentation-2-181003.pdf": "fe40b28ef6fe6820f6c07c84e4ef5bd51f76e8e88a5e143683f3f806f922df49",
-    "foodex2_docs/EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf": "15e19e0769232b6a51e81c67b40db68496b4af3f70402c3c518b57e5361260de"
+    "foodex2_docs/EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf": "15e19e0769232b6a51e81c67b40db68496b4af3f70402c3c518b57e5361260de",
+    "foodex2_docs/EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf": "bafaf3776dfb17e3532a016d00c687c56710ac13214fa4227a9448ca285cad10"
   },
   "wiki_snapshot": {
-    "RUNTIME_RULES.md": "86521c0ca9059b5f92878bb7a7512d11cd959e366fe365f800d27b9614f2f858",
+    "RUNTIME_RULES.md": "c580f166f1df4ea2f0fb41692dfc3edee832a664792144e7e7b6023052a143b4",
     "additives-flavourings-foodex2.md": "afc66659a0e3f9c60e1d4d83fea7f71c6c0da0ac37f35f090d24bfcd0b0f97d3",
     "anses-codification-guidance.md": "3c9a89627be36af795edbaf386eb144f58cfc198ab163debecf8fefd04305b6e",
-    "base-term-selection.md": "fde89d7c4ea41d0f18dbe3a460b50ad8706e1576c2591b331eb98e136d6f583c",
-    "business-rules.md": "b4c05865473d0b241e4f003f1efb397513015db3bceac31468ab8c7a8167767f",
+    "base-term-selection.md": "68784ee335643a66b33e1e9629c2ce74b047e43d90c08500cbf9cc742027f919",
+    "business-rules.md": "c3514b390e9bb411a8bc5a2c1cc163df8a5a63654ea1cdf6014b393ee292d20d",
     "chemical-monitoring-foodex2.md": "fdde5a1691e4217e9808dbd3deb70e544609beb3791ca01fda9d91bd79063157",
     "code-string-format.md": "1d1539777aaf3680dbba4fdcc14361a247ddd6518f7a656d66df9120aa95d6e4",
     "contaminants-foodex2.md": "ea537838d187f6abddbaff592f5de88d80eb06f3e26eef397ce92ef39b1a61bf",
@@ -64,10 +65,10 @@
     "packaging-facets.md": "2cfd5490fb1bedfc64cdb12be2063e92e4ffc7cb6d0401a6b58ad7f5cf3111ae",
     "pesticides-foodex2.md": "ac0eb4ce9651ed88bc8f65b06fb181db04ecee0fb5dd30031eb2b056ce988045",
     "policy-contract.md": "6417445d9999bf201f2cf03b3d68e30e3b6e5da12abe1d872d8dc06815f6fc69",
-    "process-facets.md": "442fba72d7cf1030dbbc0dc6e62329eaff1d41825e1a1471d5b931bf8dfca4c0",
+    "process-facets.md": "35cadc4d2b64bc0344861bf466a8f6168dc068e0714083d0827cd0564779846c",
     "process-validation-rules.md": "e80e55cbe3faab8e1941b9152c6d224c7a50c37ad40d4a455cd61f39aa515894",
     "structural-validation.md": "2c344a23d25a9c6dda20cf36098713a909a52dc21e62907e03ed4a8ab0332e77",
-    "term-type-facet-constraints.md": "6fd1f73ed7ab27cbea8ba6678c94c23ea9686b628f79b8880ed15b4d71d3888d",
+    "term-type-facet-constraints.md": "f23ec4f19216e8777f368c5c5febe5e402421eb783c3d2a342d804000777a8b8",
     "validation-rules.md": "7474643538a26df0bb446cd073584739e1c2c24a3eabeab5716f7b16b8560078",
     "vmpr-foodex2.md": "4262f51de74fd4f84548b2856a693579eed94c6a4d7aa7bc22cf150bd210eb86",
     "vmpr-legislative-mapping.md": "718ca98dd9edb614557a3a796dde9cead49b7d29f51134a176e176528caf9d30"
@@ -107,6 +108,16 @@
       "source": "foodex2_docs/EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf",
       "pages": "1-21",
       "method": "Complete PDF text review; visual verification of pages 11 and 13-17; promoted codes, hierarchy memberships and matrix attributes corroborated in local MTX 17.2."
+    },
+    {
+      "source": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+      "pages": "15-16, 42-44, 48, 58-59",
+      "method": "Text review; complete rendered pages 43 and 44 checked for physical-division and exception table alignment. Compared general rule, BR13 repair and both full/projection evidence paths."
+    },
+    {
+      "source": "foodex2_docs/EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf",
+      "pages": "15",
+      "method": "Text review to preserve the marketed-dry exception and Camellia split."
     }
   ],
   "findings": [
@@ -461,41 +472,87 @@
           "quote": "Small radish leaves were also added to PRIMo but marked non-reportable there."
         }
       ]
+    },
+    {
+      "id": "DIV-001",
+      "status": "resolved",
+      "title": "Physical-division rule was reduced to a process code list",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+      "locator": "p43-44, Table 22",
+      "source_excerpt": "Examples of processes normally directly applied to the raw commodity; specific derivative groups have generally not been created for them",
+      "wiki_pages": [
+        "process-facets.md",
+        "base-term-selection.md"
+      ],
+      "observation": "The wiki listed A07LA but did not clearly retain its ordinary application to raw commodities or distinguish grain milling with separation. The coding-context projection removed the appendix containing the code.",
+      "action": "Restore the general rule and derivative exceptions in a normal prompt-visible section.",
+      "resolved_at": "2026-10-09",
+      "resolution": "Restore the general rule and derivative exceptions in a normal prompt-visible section. Source interpretation and limits are recorded in the repair review.",
+      "resolution_evidence": [
+        {
+          "page": "process-facets.md",
+          "quote": "Physical division or size reduction does not automatically require a derivative base."
+        }
+      ]
+    },
+    {
+      "id": "DIV-002",
+      "status": "resolved",
+      "title": "BR13 rejection incorrectly prescribed a derivative base",
+      "source": "foodex2_docs/EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf",
+      "locator": "p43-44 Table 22, read with official Catalogue Browser BR13",
+      "source_excerpt": "grinding/milling/crushing",
+      "wiki_pages": [
+        "term-type-facet-constraints.md",
+        "business-rules.md",
+        "RUNTIME_RULES.md"
+      ],
+      "observation": "The worked example and related BR13 summary treated F03 rejection as requiring a derivative; SEL-0036 repeated the inference.",
+      "action": "Separate facet legality from food classification, preserve the known-permitted-grinding path and repair the evaluation rubric.",
+      "resolved_at": "2026-10-09",
+      "resolution": "Separate facet legality from food classification, preserve the known-permitted-grinding path and repair the evaluation rubric. Source interpretation and limits are recorded in the repair review.",
+      "resolution_evidence": [
+        {
+          "page": "term-type-facet-constraints.md",
+          "quote": "A `BR13` rejection identifies an invalid raw-base/F03 combination; it does not determine the correct base-term class."
+        }
+      ]
     }
   ],
   "previous_wiki_snapshot": {
     "RUNTIME_RULES.md": "86521c0ca9059b5f92878bb7a7512d11cd959e366fe365f800d27b9614f2f858",
-    "additives-flavourings-foodex2.md": "26488dd858e3bc86ce594eaf95735d7bf9b0703d28d58467ad9c39ce6f5a913e",
+    "additives-flavourings-foodex2.md": "afc66659a0e3f9c60e1d4d83fea7f71c6c0da0ac37f35f090d24bfcd0b0f97d3",
     "anses-codification-guidance.md": "3c9a89627be36af795edbaf386eb144f58cfc198ab163debecf8fefd04305b6e",
-    "base-term-selection.md": "a6446ae5ae6a4970aa41c18a02c485dbb4da2ac3f1b9b36a58975b7261792a34",
-    "business-rules.md": "5037871f59a6b1e5aa8b54097e4998a2474349b187009e754408f05ef3a69214",
-    "chemical-monitoring-foodex2.md": "b704ac957d64ec8d51dfd3038e8d2650edc06eedc0774587a65ec72f4eae8cf0",
+    "base-term-selection.md": "fde89d7c4ea41d0f18dbe3a460b50ad8706e1576c2591b331eb98e136d6f583c",
+    "business-rules.md": "b4c05865473d0b241e4f003f1efb397513015db3bceac31468ab8c7a8167767f",
+    "chemical-monitoring-foodex2.md": "fdde5a1691e4217e9808dbd3deb70e544609beb3791ca01fda9d91bd79063157",
     "code-string-format.md": "1d1539777aaf3680dbba4fdcc14361a247ddd6518f7a656d66df9120aa95d6e4",
-    "contaminants-foodex2.md": "68afaf7c427daec80e3b38f19f504f5a57013c947a85e672b8c1c7f5db1dbaa2",
-    "domain-specific-validation.md": "dbac77f41dffc67850672eee93e7fe847cf9d0b43285b16715057535ca93aaf7",
+    "contaminants-foodex2.md": "ea537838d187f6abddbaff592f5de88d80eb06f3e26eef397ce92ef39b1a61bf",
+    "domain-specific-validation.md": "568d873099b4a148f412cb299f308a57cbf702e250f63c4d255901490beda1e3",
     "domoic-acid-scallops.md": "7f8bb5e52581b8739ec879008f74131d40985ac2b83d09cb631fb2538b4c19c7",
-    "facet-coding-rules.md": "d43a44465c4c8c913be580e1e68ed697e058f4f60db5a4c282dcb30530810542",
-    "foodex2-overview.md": "2ada1d08bda8c0bf3a472f1dcc9f8d47c2dbb2ffa75cd09c9b9e1ee878c13ebb",
+    "facet-coding-rules.md": "770e0bef2acf2e7688a147cdb09f609c23d3ac3c4b1552577dd7e4a08f1475e0",
+    "foodex2-overview.md": "84b77e10356df195dbfe5a6b6a2cd97e098286a87fd40a323c13e663c2151c34",
     "implicit-vs-explicit-facets.md": "4828559402e46656f3fbe427ae4ce939efbe81ab057f53d1f9821084f124673a",
-    "ingredient-facets.md": "103e032428a8ae05999c561b7dbdc000bc66e9f23138efebf7d1a26b1391183f",
+    "ingredient-facets.md": "983755619a6eeb4ff3104e7150c52b127a62f78fdf5334e8285f3b70e7b726aa",
     "maintenance-2015.md": "155654e49ca75f24eb8ad59950212a26372e7302eec5f93ff82381a9743ea430",
     "maintenance-2016-2018.md": "2827533b6ae46c24dd9469a4cf6e772e8bffe268cd70399dc462ee3a527fec02",
     "maintenance-2019.md": "bf8278215863e2e01564572ceebe3db88d074bd96d7b8e1dc2cf3a46f698b099",
-    "maintenance-2020.md": "f5509fa83c53cce85cf7839b4f7acc32a538e8a4c756931b5d9a63b15f6c14d5",
+    "maintenance-2020.md": "81d5cdd2a32fd758d62dfd89f7897e109082139c157de7661e82c68afc9a2774",
     "maintenance-2021.md": "694f722b7861d43fe81e451160a73b9062bb26d291ee3b53d2bc7310890bc54e",
     "maintenance-2022.md": "e5ccaa3bcc1e10d239d932401ab774172d0036d1f017fcc5a7ce44601bd4a122",
     "maintenance-2023.md": "077d0bca0db91867ef170a8be63d424b72300b3e0551d637355fdb8dbd55daa1",
     "maintenance-2024.md": "8cb2b32f16e6fb3e5bbd3d3472057639559c7b052b4055d550de278b9af8e4f4",
-    "maintenance-history.md": "f561eb92ea6f0b13a5bfadc259ff87b32d6ff6cbf3b2df59d8fc3f0ed55b7faa",
-    "packaging-facets.md": "a6bae3691c8fc58dc849741e1c6ab25f11fe66b253dc3b0409f83952a8d50a0c",
-    "pesticides-foodex2.md": "acdac6d6bb3a3dbbf4497d1c2415bc6fc5536edd8a21d3085fef7796d7b5c637",
+    "maintenance-2025.md": "f9e823ef8626cd6f9c531b4cabca1f3e57d3bbe9e57ede5e9c97e6746de07529",
+    "maintenance-history.md": "933a73ea8dbdebd807c675308bbecb4cd620e8bbf7dc79599d6b88aab49e6d75",
+    "packaging-facets.md": "2cfd5490fb1bedfc64cdb12be2063e92e4ffc7cb6d0401a6b58ad7f5cf3111ae",
+    "pesticides-foodex2.md": "ac0eb4ce9651ed88bc8f65b06fb181db04ecee0fb5dd30031eb2b056ce988045",
     "policy-contract.md": "6417445d9999bf201f2cf03b3d68e30e3b6e5da12abe1d872d8dc06815f6fc69",
-    "process-facets.md": "b93d22a0cf62f2011d3a2f04b3d0eb58ceed5e768d5c77aaf9e58f4bfcccbf2f",
+    "process-facets.md": "442fba72d7cf1030dbbc0dc6e62329eaff1d41825e1a1471d5b931bf8dfca4c0",
     "process-validation-rules.md": "e80e55cbe3faab8e1941b9152c6d224c7a50c37ad40d4a455cd61f39aa515894",
     "structural-validation.md": "2c344a23d25a9c6dda20cf36098713a909a52dc21e62907e03ed4a8ab0332e77",
     "term-type-facet-constraints.md": "6fd1f73ed7ab27cbea8ba6678c94c23ea9686b628f79b8880ed15b4d71d3888d",
-    "validation-rules.md": "04642331de24ee3a80dc16f0622a2e297e5656cb1927582e0e56628d1f7a0eca",
-    "vmpr-foodex2.md": "fc6f76da608aaf416ecf6f3108c8eefb164f7d3a283e39c122bd1b3556b5cd6d",
+    "validation-rules.md": "7474643538a26df0bb446cd073584739e1c2c24a3eabeab5716f7b16b8560078",
+    "vmpr-foodex2.md": "4262f51de74fd4f84548b2856a693579eed94c6a4d7aa7bc22cf150bd210eb86",
     "vmpr-legislative-mapping.md": "718ca98dd9edb614557a3a796dde9cead49b7d29f51134a176e176528caf9d30"
   },
   "resolution_review": "All 11 scoped findings checked against the revised wiki and the cited source passages; local catalogue/validator checks in reports/source-coverage/2026-09-30-catalogue-check.json. No exhaustive corpus claim.",

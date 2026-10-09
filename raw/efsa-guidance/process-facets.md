@@ -4,7 +4,8 @@ select_when: >-
   The case involves a treatment or processing step and must decide whether it
   belongs in the base-term choice or as an explicit process facet, and which
   specific process descriptor applies — heating, preservation, drying,
-  fermentation, coating, milling, draining after boiling, popping, or similar transformations.
+  fermentation, coating, grinding or milling, powder described by a process
+  rather than F03, draining after boiling, popping, or similar transformations.
 sources:
   - "EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf"
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
@@ -13,7 +14,7 @@ related:
   - "[[base-term-selection]]"
   - "[[code-string-format]]"
   - "[[maintenance-2025]]"
-last_updated: "2026-10-01"
+last_updated: "2026-10-09"
 ---
 
 # Process Facets
@@ -23,6 +24,13 @@ last_updated: "2026-10-01"
 
 - Add `F28` only when the treatment makes the difference. If the derivative base term already implies the process, do not restate it. Read this together with [[base-term-selection]] when deciding whether the process belongs in the base term or in an explicit facet. (EFSA guidance p44, p46-47, p58)
 - `F13-F16` are largely deprecated; use `F28`. The general "implicit vs explicit" boundary is summarized in [[implicit-vs-explicit-facets]], and the string syntax is in [[code-string-format]]. (EFSA guidance p46-47)
+
+<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p15-16, p43-44 Table 22, p48, p58-59 -->
+## Physical Division And Derivative Production
+
+- Physical division or size reduction does not automatically require a derivative base. EFSA lists grinding/milling/crushing (`F28.A07LA`) among processes normally applied directly to raw commodities. Where the raw base covers the food and no applicable derivative group covers the resulting product, retain the raw base and add the known, permitted process if it is not already implicit. Some physical-division products have their own groups; check the actual catalogue scope rather than inferring food type from the word "ground" or "powder". (EFSA guidance p43-44, Table 22)
+- Distinguish simple grinding from grain milling associated with separation and production of recognised derivatives such as flours, bran or groats. Those products use an applicable derivative base; the specific grain-milling descriptors (`A0C03`, `A0C09`, `A0C0A`) are distinct from physical division `A07LA`. A missing species-specific derivative does not justify raw plus grinding when a suitable generic derivative covers the product; use the appropriate origin facets. (EFSA guidance p15-16, p44, p48, p58-59)
+- `F03` powder describes a physical state; `F28.A07LA` describes a process. A BR13 rejection of F03 powder on a raw base does not itself require a derivative base. Known grinding may be represented by the permitted F28 process while retaining the appropriate raw base. A description explicitly stating "ground" supplies grinding evidence; "powder" alone does not establish how the powder was produced. Neither word alone settles the base-term class. Do not automatically replace F03 with F28 or use A07LA to evade a required derivative group. Read [[term-type-facet-constraints]] and [[base-term-selection]] together. (EFSA guidance p43-44; Business Rules `BR13`, `BR19`)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf p14, Tables 3-4 -->
 ## Cooking Detail Added Or Revised In Maintenance 2025

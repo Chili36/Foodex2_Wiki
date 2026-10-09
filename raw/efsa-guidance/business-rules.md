@@ -8,6 +8,7 @@ select_when: >-
   define them, including limits on adding a step the product's state already
   embodies.
 sources:
+  - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "EFSA Supporting Publications - 2021 -  - FoodEx2 maintenance 2020.pdf"
   - "BUSINESS-RULES.md"
   - "BUSINESS-RULES-COMPACT.json"
@@ -18,7 +19,7 @@ related:
   - "[[term-type-facet-constraints]]"
   - "[[process-validation-rules]]"
   - "[[domain-specific-validation]]"
-last_updated: "2026-09-30"
+last_updated: "2026-10-09"
 ---
 
 # Business Rules
@@ -110,14 +111,14 @@ Use it for two jobs:
 - Applies to: raw (`r`) and derivative (`d`) terms
 - Rule: `F04` should be used only for minor ingredients in those term types
 
-## BR13: Physical State Creates Derivatives
+## BR13: Restricted Physical-State Facets On Raw Commodities
 
 - Severity: `HIGH`
 - Applies to: raw terms (`r`)
 - Rule: `BR13` fires on raw commodities only when explicit `F03` is one of the seven ICT disintegration descriptors below. It does not mean that every `F03` physical-state descriptor is forbidden on raw commodities.
 - Forbidden `F03` descriptors: `A06JD` powder, `A06JE` coarse paste/minced, `A06JF` paste, `A06JG` puree-type, `A07Y2` fine powder, `A07Y3` coarse powder, `A07Y4` fine paste.
 - Boundary: non-disintegration physical states such as `A0C2M` solid or `A0C3M` liquid can be valid on a raw commodity if all other rules pass.
-- Operational reading for DMT/LLM consumers: "powder/paste/puree-style disintegration cannot be added to a raw base" is correct; "no `F03` on raw" is too broad.
+- Operational reading for DMT/LLM consumers: these seven descriptors cannot be added **as F03** to a raw base; "no `F03` on raw" is too broad. BR13 does not itself classify every physically powdered food as a derivative or prescribe a replacement base. For known grinding, assess the raw-plus-F28 path and applicable derivative groups using [[process-facets]] and [[term-type-facet-constraints]]. (EFSA guidance p43-44; Business Rules `BR13`, `BR19`)
 
 ## BR14: ICT/DCF Only Rule
 

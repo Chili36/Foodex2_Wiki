@@ -1,6 +1,6 @@
 {
   "manifest_version": 1,
-  "generated_at": "2026-10-01T08:52:43.086407+00:00",
+  "generated_at": "2026-10-09T09:29:32.813250+00:00",
   "collection": "foodex2_wiki_markdown_v1",
   "embedding_provider": "voyage",
   "embedding_model": "voyage-context-3",
@@ -17,7 +17,7 @@
     ]
   },
   "page_count": 34,
-  "chunk_count": 287,
+  "chunk_count": 288,
   "pages": [
     {
       "page_name": "RUNTIME_RULES.md",
@@ -25,11 +25,11 @@
       "category": "runtime",
       "source_path": "RUNTIME_RULES.md",
       "chunk_count": 5,
-      "content_hash": "b1c3548fbe2ad8986f19e369331dd7a7682cccf9c2aca836b9b6925d842c87be",
+      "content_hash": "e8238d75a413c593ab760228618eb89c1662e26aa8b1720365b38b6a92630f06",
       "chunk_hashes": [
         "119aca22c12b020794ad3186ace3781f52d19b793f40822b40f1fa5a47e1081a",
         "5396ce23002e4816ce6130f91c4a6082ad388c41c6a694dbbf6de22e18273364",
-        "de107d91f7a539cde0e8b58da8464640c3069fc918e10641920be5819c611b8b",
+        "6c014369e72bafdcfe7b1f6d753064e9b894f1e16f59bbdcfb740d72fb6d4b44",
         "dec951f51d7fe0ca86c2f4f3947e8a6b9559c2b9e9cd6878543c9db162e967d2",
         "501e8d0ec1ff6cfdbad3e75b44e434868a0ad984f0edbf5d20da43ac4af835e2"
       ],
@@ -113,16 +113,16 @@
       "category": "guidance",
       "source_path": "raw/efsa-guidance/base-term-selection.md",
       "chunk_count": 8,
-      "content_hash": "dafbf17029e210e6e24361bb3f2d32764597a553ba363b26b6f20bfa7872e781",
+      "content_hash": "37ad79d495e86e63f674c9a3807ba1e353c4bfbf9d3ca118f03b088558645bba",
       "chunk_hashes": [
-        "3ab4bf77b7b861d8ec2c38cfee5c34d4b3c2cebff26c2eed221b13b1a0ec9e48",
-        "b188ced38590a9d98d2925d02f8d28372eea7bd840c8341efcd4ce03ddd8f2c3",
-        "b8bd02ed12109d78ecac7536284f8c9415eebba74341250e6ab496fb94183de4",
-        "be6f1133da604d8119b9acebf148c28050693617d58a3992ca11a6029a99f6e0",
-        "3fda59264fea46655bae4511674c6afc62d7c197c0b4df3c490bb2414af6ad50",
-        "3a9527b526b3e4cef0ab7c02be0f5d3a7f0f774d359eeb172ff374463fc33b58",
-        "12e5369eafdd3dac94d3fe1d8111f4b43f8a86dc37f42fc232111ec39ae79d6a",
-        "9278dedcb326a025774d4186564f7740648e36a4c30673ef3ebc6cad3319eed2"
+        "46cbd31d00cd8cf3c5fe8cc2ed94c46703f674ed2e65e78e27a6bc8e0829d10d",
+        "8d0c5ece08ebe21dd121c29b59b75b53ec478399563d8e59afe1d458aa7a7f68",
+        "dcea5cc7ecf367c4de26a4b933e42b66fe574c211f1c2448400ad7f576101b0d",
+        "2690fc0404e19f6499a1e978898c3ef031d461ec3a928597ff50d7f2da915fc9",
+        "b9a694d13ee517d4a2fb4143cf81a28b2369ac12113bbbd888b257c53bb3a9bc",
+        "375459db4ebe68cdbc6cd22e94bef84811e518b26aa0a857a99737b9967ce383",
+        "eb0159f78fb8ea93cc93b5cb3e80509f8b68d95574990dd7fc67e327a3bc8125",
+        "64c2882c14ef12eddf254be06578e982d3ed6564b6e5f1f2acc27f238ac8fd21"
       ],
       "chunk_ids": [
         "base-term-selection.md#000-00-base-term-selection",
@@ -141,7 +141,7 @@
       "category": "validation",
       "source_path": "raw/efsa-guidance/business-rules.md",
       "chunk_count": 34,
-      "content_hash": "5173a744b2f6406421212f9aaa666d430b443a143d0f4b990c0930acfb756528",
+      "content_hash": "2707aaa4405fb8943139ac9cd85fa2d862b0423a370b96042ba136504e750d63",
       "chunk_hashes": [
         "73aa25327c1e400df09aafb01160bb21153e77fa848e7e66233ba56d7746be84",
         "1647cb98650abce9a5c070c2010a662cde4a2b7c4ce3ea0c18b50051c756ef10",
@@ -156,7 +156,7 @@
         "bc9a2e78bc4fdc1046c4693333ba66f3c8ce395960c7daf8d74373ed92029a54",
         "1c1b2a6d376851e82fcb6cf2a9ff1d12cf16b130df5981f568e33294b04fceb7",
         "31e8ad893b78dc2000447e3b58a7cbd8c8f0473db9f5165dcd297336668ea4cf",
-        "d7caa22f3797ef975b2fd72a282ec974b7aa112a0446fd9cb497722df59fab63",
+        "0d98d7c26e5c5969d8f7bf15813323c5776cc72675943ad7492bc5451e9e0f7d",
         "cf7b8bbcda4dc2f1316dd070d78cfd3cbc82a7c5d9162d89539146784a12a1af",
         "7f5de8de64941a5ef3ec5e9fc336ced68e1ca86e1826df7677ff54c778210da5",
         "cbd04f4d1fd18bf2d32fc34e51e87d21969b35f52737cdb7ca8c23697473c980",
@@ -192,7 +192,7 @@
         "business-rules.md#010-00-business-rules-br10-non-specific-terms-discouraged",
         "business-rules.md#011-00-business-rules-br11-generic-process-terms-discouraged",
         "business-rules.md#012-00-business-rules-br12-ingredient-facet-restrictions",
-        "business-rules.md#013-00-business-rules-br13-physical-state-creates-derivatives",
+        "business-rules.md#013-00-business-rules-br13-restricted-physical-state-facets-on-raw-commodities",
         "business-rules.md#014-00-business-rules-br14-ict-dcf-only-rule",
         "business-rules.md#015-00-business-rules-br15-dcf-only-rule",
         "business-rules.md#016-00-business-rules-br16-process-detail-level-check",
@@ -810,31 +810,33 @@
       "title": "Process Facets",
       "category": "guidance",
       "source_path": "raw/efsa-guidance/process-facets.md",
-      "chunk_count": 10,
-      "content_hash": "e821dcb09ea6e876c70621904491ac6e3ebf2825edab42f2c040a6febd2c2155",
+      "chunk_count": 11,
+      "content_hash": "a8141ac1f1bbebfa10bfa2640ecc94f5e59f310840965a4e900f659e1deb5ee0",
       "chunk_hashes": [
-        "f7531538cff5449faef4cc4c46525d800d6c7a6eab967459d291500d2b2a0a95",
-        "c23d87c48828235e2bbc5cbcc3c4ef7e86149fd194742e1907d15f7c956ebcd6",
-        "6c654bd1a8e74b313c0464681134f897185e064068b1f0012bcf1e6ee4aacb71",
-        "e57bf9fcb54ec8b6dfdd3af44553055b72f87eba86bd9dc62e8c52f61d9b5713",
-        "6c6ae6c828cd6fd7f0191fefab64aca23d143f3fb8870349b9e042e0fd1587b3",
-        "3f99abfbbea98c3c42d28c87ba06bcf64b30005d98b4451c91878aa76fa74fe8",
-        "73d7e62be5c3e64a4081a3afcb81c1c0602e89955c54d7b7efb401dff8b80e74",
-        "4fdfbe0d09f7cbdfb43098e4f9c7b6197f173076a4203639f0af60dba47528a1",
-        "d814c8a2a4d18396953530095224c8a23e1e3ee789fc9599d9856361c16cc77d",
-        "32017fd2c5f0705a7664a8f287842997485eeacb9d2737c429def82ff15e5c06"
+        "acfb68dcc7c545a3877d0fe788ba89f6ee2724d7a690b1dacf8796abbbde90d9",
+        "26dead166e54a7273d8a83828c3bc82aaf326eb9ad07eb7f40a18176760c1abe",
+        "fdbc98f0f3d7ee0f9c64aec9d85c436caebe167f0ca25188e497e341b179e3ec",
+        "0fc3faa2ec5ce208e52c865fd4b11c9b0a6c15667f25abe9780f34807a3c8859",
+        "487266ccace7bc553e72e681e97cdad4b9cb16caf5d200d2db4e70d8201126db",
+        "ed6fd8d2db46354da681ce27eeac475d5905579d144347a93c55a1a222b20f9d",
+        "2cb7c6d64df2d38ef636cb82b3770965167ee731e4c057335d2c3cbc3b6c00cd",
+        "77220951290c63c338b03a05dbaa08d7cf72d4f5235f7c64f7dea0943db43350",
+        "d100d84b06d8009be35a330fd195f35a696c884d701ef901fee63a3702cb94ca",
+        "ca67eaf980246e412d97731a1b59b5e6670fd52d078d82bc948d4971753c6e4b",
+        "6ca6d9bdc6f0ca1941eed2bae9643d9842db1f3020e804f48efdbdb33b8ed51e"
       ],
       "chunk_ids": [
         "process-facets.md#000-00-process-facets",
         "process-facets.md#001-00-process-facets-rule-of-use",
-        "process-facets.md#002-00-process-facets-cooking-detail-added-or-revised-in-maintenance-2025",
-        "process-facets.md#003-00-process-facets-appendix-a2-codes",
-        "process-facets.md#003-01-process-facets-appendix-a2-codes",
-        "process-facets.md#003-02-process-facets-appendix-a2-codes",
-        "process-facets.md#003-03-process-facets-appendix-a2-codes",
-        "process-facets.md#004-00-process-facets-worked-examples",
-        "process-facets.md#005-00-process-facets-relevant-policy",
-        "process-facets.md#006-00-process-facets-relevant-business-rules"
+        "process-facets.md#002-00-process-facets-physical-division-and-derivative-production",
+        "process-facets.md#003-00-process-facets-cooking-detail-added-or-revised-in-maintenance-2025",
+        "process-facets.md#004-00-process-facets-appendix-a2-codes",
+        "process-facets.md#004-01-process-facets-appendix-a2-codes",
+        "process-facets.md#004-02-process-facets-appendix-a2-codes",
+        "process-facets.md#004-03-process-facets-appendix-a2-codes",
+        "process-facets.md#005-00-process-facets-worked-examples",
+        "process-facets.md#006-00-process-facets-relevant-policy",
+        "process-facets.md#007-00-process-facets-relevant-business-rules"
       ]
     },
     {
@@ -893,14 +895,14 @@
       "category": "validation",
       "source_path": "raw/efsa-guidance/term-type-facet-constraints.md",
       "chunk_count": 6,
-      "content_hash": "d8bee4472be159f5f138371497c0c29365d0362254e0f380d8ffe5660b7b1c17",
+      "content_hash": "6b05a8d08fdd0dc58b00912fc4057b06cf289b8e6bf42d615e2a7523f07e3e90",
       "chunk_hashes": [
-        "26a3d61a1c2259736f1ccc80930ea334c5e17ea09e9b44959c90d0a30cbee03f",
-        "fe065449645645cb8229235affcce8cd9bce2da95ef91a53b2ca0bd99aa4aae9",
-        "37582b9c8b50d081eef526468175a8b3642f76602e3c362b793e7ae7d5895aea",
-        "d4ff5b53d78e4e294038b8194084e338c73c9ba2187a04ef9d3f5b1b5c6ef308",
-        "e9ac401e8d86daa609bf1b55253dcc5592d141d455fd017c6384210c190dab21",
-        "e74b1ecd03bd19b44995763fdbd125ed7ac14dbe067d2a020878376e73cf3833"
+        "5438ba37417a84be63aa42de571460746d5c71ea7c47e95bd5539b97d47719f3",
+        "390185c6779eab270e994756ae384b3c7759e990620e6488091df82ca918ff4f",
+        "edc5a11bd74c61289308e2eba9d26ea8ead9fecd8598a22f43069f2a547d9da4",
+        "d08ae2e8c6c262e8ac9bb85e29211852a4bc4157e014c6ed72ed9265e8d848fd",
+        "97ec8458a5f6864c5c8611f7112081095faa4d4539bb2e743d49ea98dcf326b7",
+        "993046c39e781caedd9ebc6edda1d028b2ea33299d4160c1824a8b771404c58e"
       ],
       "chunk_ids": [
         "term-type-facet-constraints.md#000-00-term-type-and-facet-constraints",
