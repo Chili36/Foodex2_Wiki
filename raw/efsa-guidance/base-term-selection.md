@@ -17,7 +17,7 @@ related:
   - "[[ingredient-facets]]"
   - "[[process-facets]]"
   - "[[maintenance-2025]]"
-last_updated: "2026-10-01"
+last_updated: "2026-10-09"
 ---
 
 # Base Term Selection
@@ -37,8 +37,8 @@ last_updated: "2026-10-01"
 ## Choose The Base-Term Class
 
 - Use a raw-commodity base term for primary plant or animal products. Add only treatments that do not create a new nature; if the treatment question becomes ambiguous, read this together with [[process-facets]] and [[process-validation-rules]]. (EFSA guidance p42-44)
-- Use a derivative base term when a nature-changing process already defines a standard group. The process list here is illustrative, not exhaustive: this includes cases such as milling, drying, curing, fermentation, pickling/marinating, canning/jarring or smoking whenever FoodEx2 already has the processed group. Do not rebuild these from a raw term plus `F28` if the derivative group exists. The origin chain that follows from that choice is explained in [[implicit-vs-explicit-facets]]. (EFSA guidance p15-17, p44, p58)
-- When raw-versus-derivative status is unclear, inspect the processed or preserved branch for the commodity before accepting a raw base plus `F28`. The existence of a derivative branch is evidence that the process belongs in the base-term choice. (ANSES guidance p27-30)
+- Use a derivative base term when a nature-changing process already defines a standard group. The process list here is illustrative, not exhaustive: this includes grain milling that produces recognised derivatives, drying, curing, fermentation, pickling/marinating, canning/jarring or smoking whenever FoodEx2 already has an applicable processed group. Do not rebuild these from a raw term plus `F28` if that derivative group covers the product. Simple physical division, including grinding, can instead be represented on a raw base; use the distinction in [[process-facets]]. The origin chain that follows from a derivative choice is explained in [[implicit-vs-explicit-facets]]. (EFSA guidance p15-17, p43-44, p58)
+- When raw-versus-derivative status is unclear, inspect the processed or preserved branch and its scope before accepting a raw base plus `F28`. A nearby derivative branch is relevant only if it covers the actual product. A derivative missing from retrieved candidates is not evidence that none exists in the catalogue. Conversely, do not declare the candidate set incomplete solely because it lacks a derivative when the supported coding path is raw plus a permitted process. A missing species-specific term can still be covered by a generic derivative; see the missing-term rules below. (ANSES guidance p27-30; EFSA guidance p43-44, p47-49)
 - Use a composite base term for foods made by combining ingredients in a recipe. For same-nature mixtures, stay on a generic raw/derivative base term and add multiple `F27`. For balanced mixed natures, move to a composite base term, then describe the characterising recipe components with [[ingredient-facets]]. (EFSA guidance p45, p49-50; Training p6)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p42-43; EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf p15 -->

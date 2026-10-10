@@ -17,7 +17,8 @@ related:
   - "[[facet-coding-rules]]"
   - "[[validation-rules]]"
   - "[[process-validation-rules]]"
-last_updated: "2026-07-28"
+  - "[[process-facets]]"
+last_updated: "2026-10-09"
 ---
 
 # Term Type And Facet Constraints
@@ -39,6 +40,7 @@ last_updated: "2026-07-28"
 
 - Raw terms are anchored on the commodity itself and normally carry their `F01 Source` implicitly. Add explicit `F01` only as a restriction when a generic raw base must be narrowed to a known, more detailed source; never add it merely to repeat the selected commodity. A raw term may also carry `F04` for a genuinely minor added ingredient, coating, or flavouring under `BR12`; `F04` must not replace source logic. `BR13` does not block all `F03 physical state` descriptors on raw commodities; it blocks the seven disintegration-family descriptors that turn the raw structure into powder, paste, or puree. Non-disintegration physical states can be valid on raw terms when the descriptor is otherwise legal. Some `F28` processes are also blocked because they create derivatives; see [[process-validation-rules]]. (EFSA guidance p19-20, p54-56; Business Rules `BR01`, `BR12`, `BR13`)
 - Derivatives use the source-commodity model. Read `F27` as "from what primary commodity was this derivative obtained?" If `F01 source` is needed, the derivative must already resolve to exactly one `F27`. Later-added flavouring or characterising ingredients belong in `F04`, not `F27`; the origin-chain explanation is in [[implicit-vs-explicit-facets]] and the operational use of `F04` is in [[ingredient-facets]]. (EFSA guidance p19-20, p56; Business Rules `BR05-BR07`)
+- A `BR13` rejection identifies an invalid raw-base/F03 combination; it does not determine the correct base-term class. Reassess the product and processing: use an applicable derivative base where required, or retain the appropriate raw base and describe known, permitted grinding through `F28.A07LA`. Do not infer grinding solely from "powder", or assume that a missing derivative search result establishes catalogue absence. See [[process-facets]] for physical division versus derivative production. (EFSA guidance p43-44, Table 22; Business Rules `BR13`, `BR19`)
 - Composites use ingredient logic, not source logic. Reach for `F04`, not `F01` or `F27`, after [[base-term-selection]] has already established that the food is composite. (Business Rules `BR03-BR04`, `BR12`)
 - Facet terms and most hierarchy/group terms may appear in search results, but they should not win base-term selection. For the blocking and advisory effects of those mistakes, see [[validation-rules]]. (Business Rules `BR17`, `BR23-BR24`)
 
@@ -46,7 +48,7 @@ last_updated: "2026-07-28"
 ## Worked Examples
 
 - Before: raw commodity + `F28.A07KQ` freezing. After: valid when the process is allowed for that raw term. (Compact JSON validation examples; `BR19`)
-- Before: raw commodity + `F03.A06JD` powder. After: invalid, `BR13`; use the appropriate powdered or otherwise derivative base term instead. (Business Rules `BR13`)
+- Before: raw commodity + `F03.A06JD` powder. After: invalid, `BR13`; reassess the product before choosing the repair. Use an applicable derivative base where required, or retain a suitable raw base with known, permitted grinding `F28.A07LA`. The rejected F03 combination alone does not decide between these paths. (EFSA guidance p43-44; Business Rules `BR13`, `BR19`)
 - Before: raw commodity + `F03.A0C2M` solid. After: not a `BR13` problem by itself; solid is outside the disintegration-family list. (Business Rules `BR13`)
 - Before: `A02LS#F27.A0EZJ`. After: invalid, `BR04`. A composite such as pizza must use `F04 ingredient` instead. (Business Rules `BR04`)
 
@@ -61,5 +63,5 @@ last_updated: "2026-07-28"
 - `BR03` and `BR04`: composites cannot use `F01` or `F27`. See [[business-rules]].
 - `BR05`, `BR06`, and `BR07`: derivative source and `F01` restrictions. See [[business-rules]].
 - `BR12`: `F04` on raw or derivative terms is minor-ingredient only. See [[business-rules]].
-- `BR13`: seven disintegration-family `F03` descriptors create derivatives and are not allowed on raw commodities; this is not a blanket ban on all `F03`. See [[business-rules]].
+- `BR13`: seven disintegration-family `F03` descriptors are not allowed on raw commodities; this is neither a blanket ban on all `F03` nor a rule that every physically powdered food needs a derivative base. See [[business-rules]] and [[process-facets]].
 - `BR17`, `BR23`, and `BR24`: facet terms and hierarchy terms should not win as base terms. See [[business-rules]].

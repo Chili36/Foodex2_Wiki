@@ -13,7 +13,7 @@ related:
   - "[[base-term-selection]]"
   - "[[process-facets]]"
   - "[[implicit-vs-explicit-facets]]"
-last_updated: "2026-09-11"
+last_updated: "2026-10-09"
 ---
 
 # Policy Contract
@@ -44,7 +44,7 @@ Use the cited business rules and guidance pages as the controlling sources under
 
 ## Policy Version
 
-`2026-09-11-v0.10`
+`2026-10-09-v0.11`
 
 ## Constitution
 
@@ -100,7 +100,7 @@ Use the cited business rules and guidance pages as the controlling sources under
 
 - `R-F27-001` when `an explicit F27 is used`: must make the `F27` refine or equal the implicit or source commodity chain. {derived_from: term-type-facet-constraints.md; business-rules.md BR01; business-rules.md BR05}
 
-- `R-F03-001` when `food_type=raw_primary_commodity and F03 descriptor is in the BR13 disintegration list`: must not add that `F03` to the final code; choose the appropriate derivative base instead. This is not a blanket ban on all `F03` descriptors for raw commodities. {derived_from: term-type-facet-constraints.md; business-rules.md BR13}
+- `R-F03-001` when `food_type=raw_primary_commodity and F03 descriptor is in the BR13 disintegration list`: must not add that `F03` to the final code. BR13 rejection alone does not determine the base-term class. Reassess the actual processing and catalogue scope: use an applicable derivative base, including a suitable generic derivative; otherwise retain a raw base that covers the product and record known permitted grinding as `F28.A07LA` when it is not already implicit. Do not infer grinding from powder alone or infer catalogue absence from missing search results. This is not a blanket ban on all `F03` descriptors for raw commodities. {derived_from: term-type-facet-constraints.md; process-facets.md; base-term-selection.md; business-rules.md BR13}
 
 - `R-F01-004` when `food_type=derivative and explicit F01 is present`: must use `F01` only when the derivative rules permit it, including the single-`F27` dependency. {derived_from: term-type-facet-constraints.md; business-rules.md BR06; business-rules.md BR07}
 
@@ -141,7 +141,7 @@ These are the practical ground rules the solver should always keep in view:
 - Preserve every process stated by the sample through the base term or justified explicit facets. Do not invent ordinal groups or discard sample information to satisfy an assumed conflict. Apply the active process rules described in [[process-validation-rules]]; BR26 is not a default coding requirement because its observed ICT invocation is inactive.
 - Single-cardinality facet families allow only one value: `F01`, `F02`, `F03`, `F07`, `F11`, `F22`, `F24`, `F26`, `F30`, `F32`, and `F34`.
 - `F27` must refine or equal the implicit/source commodity chain.
-- On raw commodities, do not use the BR13 disintegration-family `F03` descriptors: `A06JD`, `A06JE`, `A06JF`, `A06JG`, `A07Y2`, `A07Y3`, or `A07Y4`. Non-disintegration physical-state descriptors are not blocked by BR13 merely because they are `F03`.
+- On raw commodities, do not use the BR13 disintegration-family `F03` descriptors: `A06JD`, `A06JE`, `A06JF`, `A06JG`, `A07Y2`, `A07Y3`, or `A07Y4`. Non-disintegration physical-state descriptors are not blocked by BR13 merely because they are `F03`. Reassess the base and known processing under `R-F03-001`; a BR13 rejection does not by itself require a derivative or justify adding grinding.
 - On raw commodities, use explicit `F01` only to narrow a generic implicit source; do not use it merely to restate the selected raw commodity. On derivatives, use `F01` only when the derivative rules permit it.
 - On raw or derivative terms, use `F04` only for minor later-added ingredients such as coatings, flavourings, or decorations; do not use it for the constitutive source.
 - Code syntax is `base#facetType.code($facetType2.code2...)`.

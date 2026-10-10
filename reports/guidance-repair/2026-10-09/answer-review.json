@@ -1,0 +1,885 @@
+{
+  "review_method": "Compared captured answers with source-backed references and case-specific rubrics; keyword scores alone do not establish correctness. Corpus revision was captured by MCP checks during unchanged-corpus runs; the general evaluation harness does not retain each HTTP response revision.",
+  "initial_review_finding": "An initial DIV-008 answer conflated explicit ground with powder-only evidence. Clarified the main process rule and reran all eight physical-division cases. Drying controls were run before that wording-only refinement.",
+  "scope_limit": "Pass means the scoped coding distinction is correct, not that every incidental validation suggestion or caveat is ideal. No actual catalogue or final-validator run is claimed.",
+  "rows": [
+    {
+      "case_id": "DIV-001",
+      "question": "How should I code \"Gurkmeja, malen\" (ground turmeric powder) in FoodEx2? Is \"powder\" a physical state facet or a process?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": "jev-1.13.0",
+      "status_code": 200,
+      "elapsed_ms": 6033,
+      "answer": "- The pages give no specific FoodEx2 code for turmeric, so I can't name a base term or code. I can only describe the decision path.\n- Powder is a physical state (F03), not a process. Grinding is the process (F28.A07LA). \"Gurkmeja, malen\" explicitly says ground, which is evidence of grinding. \"Powder\" alone would not show how the powder was made. (process-facets.md)\n- Food type: spices remain raw commodities even when dried, because the dried form is their market default. So turmeric would normally take a raw base, and you should not add drying. (base-term-selection.md)\n- Facets: on a raw base, an F03 powder is rejected by BR13. Instead, keep the raw base and add the permitted process F28.A07LA, unless it is already implicit. (term-type-facet-constraints.md, process-validation-rules.md)\n- Check first that no applicable derivative group covers ground turmeric. A derivative missing from the candidates does not prove none exists in the catalogue. Do not use A07LA to evade a required derivative group. (process-facets.md, base-term-selection.md)\n- Don't add F01 just to restate the commodity. Then validate with BR13, BR19 and BR16, and confirm the base is reportable. (RUNTIME_RULES.md, process-validation-rules.md)",
+      "citations": [
+        "process-facets.md",
+        "base-term-selection.md",
+        "term-type-facet-constraints.md",
+        "process-validation-rules.md",
+        "RUNTIME_RULES.md"
+      ],
+      "pages_used": [
+        "process-facets.md",
+        "facet-coding-rules.md",
+        "term-type-facet-constraints.md",
+        "RUNTIME_RULES.md",
+        "base-term-selection.md",
+        "implicit-vs-explicit-facets.md",
+        "process-validation-rules.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": true,
+        "reference_page_precision": 1.0,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass",
+        "rationale": "Pass: distinguishes F03 state from F28 grinding, treats explicitly ground turmeric as grinding evidence, permits the raw path and retains catalogue scope. No invented turmeric code."
+      }
+    },
+    {
+      "case_id": "DIV-002",
+      "question": "Catalogue evidence for this case: A01AC is the reportable raw Turmeric roots term, it covers this ground turmeric, and catalogue inspection found no applicable powdered or ground derivative group. The product is dried and ground. How should I code it, and should I add F03 powder or F28 drying?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": "jev-1.13.0",
+      "status_code": 200,
+      "elapsed_ms": 9402,
+      "answer": "- Food type: ground turmeric stays a raw commodity. Catalogue inspection found no applicable powdered or ground derivative group, so keep A01AC as the base. Simple grinding does not by itself require a derivative base (process-facets.md, base-term-selection.md).\n- Do not add F03 powder. F03 describes physical state, not process, and BR13 blocks the powder descriptor (A06JD) on a raw base. \"Powder\" alone also does not show how the product was made (process-facets.md, business-rules.md, term-type-facet-constraints.md).\n- Do add the grinding process. The description says \"ground\", which is evidence of grinding, so use F28.A07LA (grinding/milling/crushing), which EFSA lists among processes normally applied directly to raw commodities. Candidate code: A01AC#F28.A07LA. Confirm that A07LA is permitted on A01AC in the catalogue or validator, because the pages do not confirm that for this term (process-facets.md, term-type-facet-constraints.md).\n- Do not add F28 drying. Spices remain raw commodities when dried because dried is their market default, so drying adds nothing. Adding it would also invite a BR19 problem, because drying normally creates a derivative (base-term-selection.md, process-validation-rules.md).\n- Validation: check BR19 and BR11 for A07LA, and confirm A01AC is reportable (BR08). BR26 is not a default gate (process-validation-rules.md, business-rules.md).",
+      "citations": [
+        "process-facets.md",
+        "base-term-selection.md",
+        "term-type-facet-constraints.md",
+        "process-validation-rules.md",
+        "business-rules.md"
+      ],
+      "pages_used": [
+        "process-facets.md",
+        "process-validation-rules.md",
+        "term-type-facet-constraints.md",
+        "business-rules.md",
+        "base-term-selection.md",
+        "RUNTIME_RULES.md",
+        "facet-coding-rules.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": true,
+        "reference_page_precision": 1.0,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass",
+        "rationale": "Pass: gives A01AC#F28.A07LA using the supplied catalogue fixture, rejects F03 powder and redundant drying. Final validator check remains explicitly outstanding."
+      }
+    },
+    {
+      "case_id": "DIV-003",
+      "question": "I need to code ground black pepper in FoodEx2. Should I use a raw base with a grinding process facet, or a derivative base?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": "jev-1.13.0",
+      "status_code": 200,
+      "elapsed_ms": 6619,
+      "answer": "- Food type first: the pages say black pepper is a spice, and spices remain raw commodities regardless of drying because the dried form is their market default (base-term-selection.md). So the starting point is a raw base, not a derivative. I can't confirm from these pages that this applies to the ground form or give a specific black pepper code, so check the catalogue candidates.\n- Grinding: simple physical division does not automatically require a derivative. EFSA lists grinding/milling/crushing (F28.A07LA) among processes normally applied directly to raw commodities (process-facets.md). Grain milling that yields flours, bran or groats is the case that needs a derivative base, and that does not apply to pepper (process-facets.md).\n- Before settling on raw plus grinding, check whether the catalogue has a derivative group that actually covers ground pepper. Absence from retrieved candidates does not prove none exists (base-term-selection.md). Do not infer food type from the word \"ground\" or \"powder\" (process-facets.md).\n- If no applicable derivative covers it, keep the raw base and add F28.A07LA. This is supported because the description explicitly says \"ground\", which is grinding evidence, and A07LA is only added if it is not already implicit in the base (process-facets.md).\n- Do not use F03 powder on the raw base. BR13 blocks the disintegration-family F03 descriptors (powder, paste, puree) on raw commodities. That rejection alone does not force a derivative base, and \"powder\" by itself does not show how it was produced (process-facets.md, term-type-facet-constraints.md).\n- Validation: do not add drying merely to restate the marketed-dry default (base-term-selection.md). Do not use A07LA to evade a derivative group that does exist (process-facets.md). The base must be a reportable, non-hierarchy term, and the raw base should not carry an explicit F01 that merely repeats the commodity (RUNTIME_RULES.md).",
+      "citations": [
+        "base-term-selection.md",
+        "process-facets.md",
+        "term-type-facet-constraints.md",
+        "RUNTIME_RULES.md"
+      ],
+      "pages_used": [
+        "base-term-selection.md",
+        "process-facets.md",
+        "process-validation-rules.md",
+        "implicit-vs-explicit-facets.md",
+        "RUNTIME_RULES.md",
+        "term-type-facet-constraints.md",
+        "facet-coding-rules.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": true,
+        "reference_page_precision": 1.0,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass",
+        "rationale": "Pass with conservative wording: provides raw pepper plus F28.A07LA subject to catalogue scope. Its opening caveat about the ground form is less direct than ideal, but the subsequent decision path is correct; no mandatory derivative."
+      }
+    },
+    {
+      "case_id": "DIV-004",
+      "question": "Wheat grain has been milled into white wheat flour with separation of bran. The catalogue supplies a reportable wheat-flour derivative covering the product. Should I use wheat grain plus F28.A07LA instead?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": "jev-1.13.0",
+      "status_code": 200,
+      "elapsed_ms": 5406,
+      "answer": "No. Use the catalogue's reportable wheat-flour derivative as the base term instead of wheat grain plus F28.A07LA.\n- Food type: milling with bran separation yields a recognised derivative (flour), so this is a derivative, not a raw commodity (base-term-selection.md, process-facets.md).\n- Base term: a derivative base is used when a nature-changing process, including grain milling, already defines a standard group. Do not rebuild it from a raw term plus F28 when that group covers the product (base-term-selection.md, RUNTIME_RULES.md).\n- Why A07LA is wrong: F28.A07LA is simple physical division (grinding/milling/crushing). Grain milling with separation uses the distinct descriptors A0C03, A0C09, A0C0A, and A07LA must not be used to evade a required derivative group (process-facets.md).\n- Implicit facets: the derivative already carries an implicit F27 source commodity, so do not restate wheat. Add an explicit F27 only if it narrows a broad implicit source (implicit-vs-explicit-facets.md).\n- Validation: raw plus a derivative-creating process conflicts with BR19, and the chosen base must be reportable (BR08). Do not use F01 merely to restate the source (process-validation-rules.md, business-rules.md, term-type-facet-constraints.md).",
+      "citations": [
+        "base-term-selection.md",
+        "process-facets.md",
+        "RUNTIME_RULES.md",
+        "implicit-vs-explicit-facets.md",
+        "process-validation-rules.md",
+        "business-rules.md",
+        "term-type-facet-constraints.md"
+      ],
+      "pages_used": [
+        "base-term-selection.md",
+        "RUNTIME_RULES.md",
+        "implicit-vs-explicit-facets.md",
+        "business-rules.md",
+        "process-facets.md",
+        "process-validation-rules.md",
+        "term-type-facet-constraints.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": true,
+        "reference_page_precision": 1.0,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass",
+        "rationale": "Pass: selects the applicable wheat-flour derivative and rejects raw grain plus grinding."
+      }
+    },
+    {
+      "case_id": "DIV-005",
+      "question": "There is no species-specific quinoa-flour term in my candidates. I have raw quinoa and a generic flour derivative whose scope covers quinoa flour. Is raw quinoa plus grinding preferable because the exact derivative is missing?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": "jev-1.13.0",
+      "status_code": 200,
+      "elapsed_ms": 5908,
+      "answer": "No. Use the generic derivative, not raw quinoa plus grinding, as long as its scope covers quinoa flour.\n- Food type: flour from grain milling is a recognised derivative, so the base should be a derivative term (base-term-selection.md).\n- Missing species term: a species-specific derivative that is absent can still be covered by a generic derivative. process-facets.md says a missing species-specific derivative does not justify raw plus grinding when a suitable generic derivative covers the product.\n- Why not raw plus grinding: simple grinding (`F28.A07LA`) is for physical division on a raw base. Flours, bran and groats from grain milling are distinct derivatives (process-facets.md). Do not use `A07LA` to evade a required derivative group, and raw plus `F28` is not an acceptable fallback when the derivative group exists (BR19, AP-001).\n- Facets: add `F27` for the quinoa source commodity and `F26.A07XE` to mark the missing detailed term. The wiki example is `A04KS#F26.A07XE$F27.A000R` for 'quinoa flour' (base-term-selection.md, implicit-vs-explicit-facets.md). Use that exact code only if that base and the quinoa `F27` descriptor are actually in your candidates.\n- Checks: confirm the generic derivative is reportable and that its scope really covers quinoa flour. Also confirm `F27` is more specific than the implicit source (BR05) (term-type-facet-constraints.md). If no suitable `F27` exists, `F01` is a narrow tolerated fallback only for a single source commodity (implicit-vs-explicit-facets.md).",
+      "citations": [
+        "base-term-selection.md",
+        "process-facets.md",
+        "implicit-vs-explicit-facets.md",
+        "term-type-facet-constraints.md",
+        "RUNTIME_RULES.md"
+      ],
+      "pages_used": [
+        "base-term-selection.md",
+        "process-facets.md",
+        "RUNTIME_RULES.md",
+        "implicit-vs-explicit-facets.md",
+        "anses-codification-guidance.md",
+        "process-validation-rules.md",
+        "term-type-facet-constraints.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": true,
+        "reference_page_precision": 0.8571428571428571,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass",
+        "rationale": "Pass: retains a suitable generic flour derivative and F27 despite the missing exact quinoa-flour term. Its extra candidate-only qualification is conservative; it does not choose the wrong base class."
+      }
+    },
+    {
+      "case_id": "DIV-006",
+      "question": "A sample is described only as \"plant powder\". The plant identity and production method are unknown. May I assume it is a raw plant that was ground and add F28.A07LA?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": "jev-1.13.0",
+      "status_code": 200,
+      "elapsed_ms": 5875,
+      "answer": "No, not on this evidence. The pages do not support assuming raw plus grinding for \"plant powder\".\n- \"Powder\" alone does not establish how the powder was produced; only an explicit \"ground\" supplies grinding evidence. F03 powder is a physical state, whereas F28.A07LA is a process (process-facets.md).\n- Food type comes first: the raw/derivative/composite decision is the main coding decision. Neither \"ground\" nor \"powder\" alone settles the base-term class (base-term-selection.md, process-facets.md).\n- Because the plant identity and production method are unknown, you cannot confirm a raw base, and the pages say not to use A07LA to evade a required derivative group. Grain-milling products such as flours or bran use a derivative base, with separate descriptors (A0C03, A0C09, A0C0A) (process-facets.md).\n- A missing species-specific term can still be covered by a generic derivative; otherwise choose the nearest generic non-hierarchy base, add F26.A07XE, and record the detail in text. A derivative missing from the candidates is not evidence that none exists (base-term-selection.md).\n- Adding F03 powder on a raw base would trigger BR13, so do not use it as a workaround (business-rules.md).\n- Only if the sample is shown to be a raw plant that was simply ground, with no applicable derivative group, can you keep the raw base and add F28.A07LA. The pages do not give a base term for an unidentified plant powder, so the candidate set is incomplete and no code can be given (process-facets.md, RUNTIME_RULES.md).",
+      "citations": [
+        "process-facets.md",
+        "base-term-selection.md",
+        "business-rules.md",
+        "RUNTIME_RULES.md"
+      ],
+      "pages_used": [
+        "process-facets.md",
+        "base-term-selection.md",
+        "business-rules.md",
+        "RUNTIME_RULES.md",
+        "process-validation-rules.md",
+        "term-type-facet-constraints.md",
+        "facet-coding-rules.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "prohibited_page_pass": true,
+        "reference_page_precision": 1.0,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass",
+        "rationale": "Pass for the scoped question: does not invent grinding or raw status for unidentified plant powder. The wording about only explicit ground is narrower than necessary; other reliable process evidence would also suffice."
+      }
+    },
+    {
+      "case_id": "DIV-007",
+      "question": "A raw spice base with F03.A06JD powder fails BR13. The spice was ground; catalogue inspection confirms that the raw base covers it and no derivative group is applicable. Must I change the base to a derivative to repair BR13?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": "jev-1.13.0",
+      "status_code": 200,
+      "elapsed_ms": 6563,
+      "answer": "No. A BR13 failure does not by itself force a derivative base.\n- BR13 only blocks seven disintegration-type F03 descriptors (including A06JD powder) on raw terms. It does not classify powdered foods as derivatives or prescribe a replacement base (business-rules.md, term-type-facet-constraints.md).\n- Your catalogue check shows the raw base covers the spice and no derivative group applies. Simple grinding can then stay on the raw base (process-facets.md, base-term-selection.md).\n- Repair: remove F03.A06JD and keep the raw base. Because the spice was ground, add the permitted process F28.A07LA (grinding/milling/crushing) if it is not already implicit (process-facets.md, term-type-facet-constraints.md).\n- Do not just swap F03 for F28 automatically, and do not use A07LA to avoid a derivative group that is actually required. Your inspection says none applies (process-facets.md).\n- Spices stay raw commodities even when dried, so do not add drying (base-term-selection.md).\n- After the repair, re-validate. Check BR19 on the added process and BR25 single-cardinality, with BR19 as the process check (process-validation-rules.md, business-rules.md). The pages do not give the exact validator output for this case.",
+      "citations": [
+        "business-rules.md",
+        "term-type-facet-constraints.md",
+        "process-facets.md",
+        "base-term-selection.md",
+        "process-validation-rules.md",
+        "RUNTIME_RULES.md"
+      ],
+      "pages_used": [
+        "business-rules.md",
+        "process-validation-rules.md",
+        "base-term-selection.md",
+        "process-facets.md",
+        "RUNTIME_RULES.md",
+        "term-type-facet-constraints.md",
+        "facet-coding-rules.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": true,
+        "reference_page_precision": 1.0,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass",
+        "rationale": "Pass: removes the invalid F03 descriptor while retaining the supported raw base and known permitted grinding; not an automatic F03-to-F28 substitution."
+      }
+    },
+    {
+      "case_id": "DIV-008",
+      "question": "My search returned only a raw commodity for a ground food. Does the absence of derivative candidates prove that no derivative exists and permit me to use raw plus F28.A07LA?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": "jev-1.13.0",
+      "status_code": 200,
+      "elapsed_ms": 6078,
+      "answer": "- No. A derivative missing from retrieved candidates is not evidence that none exists in the catalogue; the candidate list is retrieval evidence and can be incomplete (base-term-selection.md, RUNTIME_RULES.md, term-type-facet-constraints.md).\n- Before using raw plus F28.A07LA, inspect the processed/preserved branch and its scope. A derivative that covers the product must be used instead of raw plus F28 (base-term-selection.md, process-facets.md).\n- Raw plus F28.A07LA is allowed only if the raw base covers the food, no applicable derivative group covers the ground product, and grinding is known and not already implicit. EFSA lists grinding/milling/crushing among processes normally applied directly to raw commodities (process-facets.md).\n- Do not infer the food type from the word \"ground\" or \"powder\". The word \"ground\" supplies grinding evidence; \"powder\" alone does not. Grain milling that yields flours, bran or groats uses a derivative base, not A07LA (process-facets.md).\n- A suitable generic derivative can cover the product even when the species-specific derivative is missing, so raw plus grinding is not justified in that case (process-facets.md, base-term-selection.md).\n- Validate afterwards: BR19 and BR19+ flag derivative-creating processes on raw bases, BR13 blocks F03 powder/paste/puree on raw, and BR19 data may be outdated (business-rules.md, process-validation-rules.md).\n- So absence alone proves nothing. Check the derivative branch's scope first, and mark the candidate set incomplete if you can't confirm the coding path (RUNTIME_RULES.md).",
+      "citations": [
+        "base-term-selection.md",
+        "process-facets.md",
+        "term-type-facet-constraints.md",
+        "RUNTIME_RULES.md",
+        "business-rules.md",
+        "process-validation-rules.md"
+      ],
+      "pages_used": [
+        "base-term-selection.md",
+        "business-rules.md",
+        "RUNTIME_RULES.md",
+        "term-type-facet-constraints.md",
+        "process-validation-rules.md",
+        "process-facets.md",
+        "anses-codification-guidance.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "prohibited_page_pass": true,
+        "reference_page_precision": 0.8571428571428571,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass",
+        "rationale": "Pass: search absence does not establish catalogue absence; a generic derivative may fit; explicitly ground is now correctly recognised as grinding evidence."
+      }
+    },
+    {
+      "case_id": "ONTOLOGY-DRY-002",
+      "question": "Does ordinary drying turn a marketed dried spice into a FoodEx2 derivative?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": "jev-1.13.0",
+      "status_code": 200,
+      "elapsed_ms": 5186,
+      "answer": "No. Drying normally creates a derivative, but spices (and herbal infusion materials) are an exception: they stay raw commodities regardless of drying, because the dried form is their market default (base-term-selection.md). Coding path:\n- Food type: treat a marketed dried spice as a raw commodity, not a derivative (base-term-selection.md).\n- Base term: keep the raw base and do not add drying just to restate the default (base-term-selection.md).\n- Facets: the wiki example codes fresh sage as `A00YH#F28.A0C0S` (unprocessed), since dried is often the default. Dried spices need no drying facet (process-facets.md).\n- Validation: if BR19 rejects an explicit drying process on a raw spice base, the repair can be to keep the raw base and remove the redundant drying, rather than switching to a nearby derivative whose scope may not cover the product (process-validation-rules.md; business-rules.md).\n- Limit: this does not apply to Camellia sinensis. Dried or fermented tea leaves are derivatives (base-term-selection.md).",
+      "citations": [
+        "base-term-selection.md",
+        "process-facets.md",
+        "process-validation-rules.md",
+        "business-rules.md"
+      ],
+      "pages_used": [
+        "base-term-selection.md",
+        "process-facets.md",
+        "process-validation-rules.md",
+        "implicit-vs-explicit-facets.md",
+        "RUNTIME_RULES.md",
+        "business-rules.md",
+        "facet-coding-rules.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": true,
+        "reference_page_precision": 0.7142857142857143,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:b5c160a1e25fbd1264ce8192195e2e90d3e1abd453ac421d19a2bb28ab557f7a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass",
+        "rationale": "Pass: preserves marketed-dry raw status and omits redundant drying, distinguishing Camellia."
+      }
+    },
+    {
+      "case_id": "ONTOLOGY-DRY-003",
+      "question": "Should dried or fermented Camellia sinensis tea leaves use the same raw-by-default treatment as herbal infusion materials?",
+      "endpoint": "ask",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": "jev-1.13.0",
+      "status_code": 200,
+      "elapsed_ms": 5246,
+      "answer": "No. Camellia sinensis is explicitly excluded from the raw-by-default treatment.\n- Food type: spices and herbal infusion materials stay raw commodities even when dried, because the dried form is their market default. Drying normally makes a derivative, so this is an exception (base-term-selection.md, maintenance-2015.md).\n- Camellia sinensis: the 2015 maintenance removed it from that exception. Fresh leaves are raw commodity `A16GV`; dried or fermented tea leaves follow the standard derivative path (maintenance-2015.md, base-term-selection.md).\n- Base term: `A04KK` is scoped to dried or fermented Camellia sinensis tea leaves. It is not a derivative base for non-tea herbal infusion materials (maintenance-2015.md, base-term-selection.md).\n- Facets: for herbal infusion materials, keep the raw base and do not add drying just to restate the default. For tea, the derivative base already implies the process, so don't rebuild it as a raw base plus `F28` (base-term-selection.md, process-validation-rules.md, process-facets.md).\n- Boundary: this concerns dry material only. A brewed infusion beverage and an herbal extract are separate product types (maintenance-2015.md).\n- The pages do not give the implicit facets of `A04KK` beyond this scope, nor codes for other tea forms.",
+      "citations": [
+        "maintenance-2015.md",
+        "base-term-selection.md",
+        "process-validation-rules.md",
+        "process-facets.md"
+      ],
+      "pages_used": [
+        "maintenance-2015.md",
+        "base-term-selection.md",
+        "process-facets.md",
+        "implicit-vs-explicit-facets.md",
+        "process-validation-rules.md",
+        "RUNTIME_RULES.md",
+        "facet-coding-rules.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": true,
+        "reference_page_precision": 0.8571428571428571,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:b5c160a1e25fbd1264ce8192195e2e90d3e1abd453ac421d19a2bb28ab557f7a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass",
+        "rationale": "Pass: fresh Camellia leaves are raw; dried/fermented leaves use a derivative, distinct from herbal infusion materials."
+      }
+    },
+    {
+      "case_id": "DIV-001",
+      "question": "How should I code \"Gurkmeja, malen\" (ground turmeric powder) in FoodEx2? Is \"powder\" a physical state facet or a process?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": null,
+      "status_code": 200,
+      "elapsed_ms": 6337,
+      "answer": "- Powder vs process: F03 powder (A06JD) is a physical state facet; grinding is a process, F28.A07LA. \"Malen\" (ground) is explicit evidence of grinding, whereas \"powder\" alone does not show how the powder was made (process-facets.md).\n- Food type/base term: neither \"ground\" nor \"powder\" alone settles the base-term class. Check whether an applicable derivative group covers ground turmeric; if so, use that derivative and do not rebuild it from a raw base plus F28 (process-facets.md, base-term-selection.md, policy-contract.md). A derivative missing from retrieved candidates does not prove that none exists (base-term-selection.md).\n- If no derivative group covers it: keep the raw turmeric base and add the process F28.A07LA (grinding/milling/crushing), unless it is already implicit (process-facets.md, term-type-facet-constraints.md).\n- Do not add F03 powder (A06JD) to a raw base: BR13 rejects it. Do not swap F03 for F28 automatically, and do not use A07LA to evade a required derivative group (business-rules.md, process-facets.md).\n- Facets: for a raw base, add explicit F01 only to narrow a generic source, not to restate turmeric (RUNTIME_RULES.md). For a derivative, origin is F27 (term-type-facet-constraints.md).\n- The pages do not give the actual turmeric code or say whether a turmeric derivative group exists, so I can't name a code. If none is found in the candidates, mark the candidate set incomplete rather than force a near-match (RUNTIME_RULES.md).",
+      "citations": [
+        "process-facets.md",
+        "term-type-facet-constraints.md",
+        "base-term-selection.md",
+        "business-rules.md",
+        "policy-contract.md",
+        "RUNTIME_RULES.md"
+      ],
+      "pages_used": [
+        "process-facets.md",
+        "facet-coding-rules.md",
+        "term-type-facet-constraints.md",
+        "business-rules.md",
+        "RUNTIME_RULES.md",
+        "base-term-selection.md",
+        "policy-contract.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": true,
+        "reference_page_precision": 0.8571428571428571,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "partial",
+        "rationale": "Gives the valid raw-plus-grinding path and rejects F03 powder, but does not retrieve/explain the drying exception. The final missing-candidate sentence is ambiguous about a missing base versus missing derivative. Do not treat the keyword pass as a complete brief."
+      }
+    },
+    {
+      "case_id": "DIV-002",
+      "question": "Catalogue evidence for this case: A01AC is the reportable raw Turmeric roots term, it covers this ground turmeric, and catalogue inspection found no applicable powdered or ground derivative group. The product is dried and ground. How should I code it, and should I add F03 powder or F28 drying?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": null,
+      "status_code": 200,
+      "elapsed_ms": 4859,
+      "answer": "- Food type: keep it raw. Spices remain raw commodities regardless of drying, and the catalogue found no applicable powdered/ground derivative group, so there is no reason to switch to a derivative (base-term-selection.md; process-facets.md).\n- Base term: use A01AC (Turmeric roots), which you say covers this product. Add no explicit F01, since the raw base already carries its source implicitly (term-type-facet-constraints.md; RUNTIME_RULES.md).\n- Drying: do not add it. Dried is the market default for spices, and drying should not be added just to restate that (base-term-selection.md).\n- Powder: do not add F03 powder. BR13 blocks the disintegration-family F03 descriptors on raw commodities, and F03 describes a physical state, not a process (process-facets.md; policy-contract.md).\n- Grinding: \"ground\" is explicit grinding evidence, so add the process facet F28.A07LA (grinding/milling/crushing) unless it is already implicit. This is a permitted raw-commodity process and not a substitute for a missing derivative group, because none applies here (process-facets.md).\n- Result: A01AC#F28.A07LA. Then run validation, checking that BR13 does not fire and that F28.A07LA is not already implicit in the base (process-facets.md; term-type-facet-constraints.md).",
+      "citations": [
+        "process-facets.md",
+        "base-term-selection.md",
+        "term-type-facet-constraints.md",
+        "RUNTIME_RULES.md",
+        "policy-contract.md"
+      ],
+      "pages_used": [
+        "process-facets.md",
+        "term-type-facet-constraints.md",
+        "base-term-selection.md",
+        "facet-coding-rules.md",
+        "anses-codification-guidance.md",
+        "RUNTIME_RULES.md",
+        "policy-contract.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": true,
+        "reference_page_precision": 0.7142857142857143,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass",
+        "rationale": "Gives A01AC#F28.A07LA from the supplied catalogue fixture, rejects F03 powder and redundant drying, and preserves validation."
+      }
+    },
+    {
+      "case_id": "DIV-003",
+      "question": "I need to code ground black pepper in FoodEx2. Should I use a raw base with a grinding process facet, or a derivative base?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": null,
+      "status_code": 200,
+      "elapsed_ms": 7311,
+      "answer": "The pages do not settle this on the word \"ground\" alone, and they give no specific code for black pepper, so I can't name one. What they support:\n- Food type comes first. Grinding does not automatically require a derivative base. EFSA lists grinding (`F28.A07LA`) among processes normally applied directly to raw commodities. If the raw base covers the food and no applicable derivative group covers ground pepper, keep the raw base and add `F28.A07LA` (if not already implicit). (process-facets.md, base-term-selection.md)\n- Check for a derivative first. If the catalogue has a processed or preserved derivative group that actually covers ground pepper, use it instead of raw plus `F28`. A derivative missing from the candidate list is not proof that none exists. (base-term-selection.md, anses-codification-guidance.md, RUNTIME_RULES.md)\n- If you use a derivative, origin goes in `F27` (source commodity). If you use a raw base, `F01` is only a restriction to a more detailed source, never a restatement of the commodity. (implicit-vs-explicit-facets.md, term-type-facet-constraints.md)\n- \"Ground\" in the description is evidence of grinding. \"Powder\" alone is not. `F03` powder is a physical state, not a process. On a raw base, a BR13 rejection of `F03` powder does not by itself mean a derivative is needed, and you should not swap in `A07LA` just to dodge a required derivative group. (process-facets.md, term-type-facet-constraints.md)\n- Validation: if the retrieved candidates show neither a suitable derivative nor a raw base, mark the candidate set incomplete instead of forcing a near-match. (RUNTIME_RULES.md)",
+      "citations": [
+        "process-facets.md",
+        "base-term-selection.md",
+        "anses-codification-guidance.md",
+        "term-type-facet-constraints.md",
+        "implicit-vs-explicit-facets.md",
+        "RUNTIME_RULES.md"
+      ],
+      "pages_used": [
+        "process-facets.md",
+        "base-term-selection.md",
+        "term-type-facet-constraints.md",
+        "anses-codification-guidance.md",
+        "pesticides-foodex2.md",
+        "RUNTIME_RULES.md",
+        "implicit-vs-explicit-facets.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [
+          "pesticides-foodex2.md"
+        ],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": false,
+        "reference_page_precision": 0.7142857142857143,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass_with_limitations",
+        "rationale": "Correctly permits raw pepper plus grinding subject to scope, but omits the drying rule and retrieves an unrequested pesticides overlay."
+      }
+    },
+    {
+      "case_id": "DIV-004",
+      "question": "Wheat grain has been milled into white wheat flour with separation of bran. The catalogue supplies a reportable wheat-flour derivative covering the product. Should I use wheat grain plus F28.A07LA instead?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": null,
+      "status_code": 200,
+      "elapsed_ms": 5526,
+      "answer": "No. Don't use wheat grain plus F28.A07LA here.\n- Food type: white wheat flour made by milling with bran separation is a recognised grain-milling derivative, not simple physical division. Simple grinding (F28.A07LA) is for raw commodities where no applicable derivative group covers the product (process-facets.md).\n- Base term: since the catalogue supplies a reportable wheat-flour derivative, use it. Do not rebuild a standard derivative from a raw base plus F28 (RUNTIME_RULES.md, process-facets.md). Using A07LA to dodge a required derivative group is explicitly discouraged (process-facets.md).\n- Facets: the grain-milling descriptors (A0C03, A0C09, A0C0A) are distinct from A07LA, which is a further sign that milling is not coded as raw plus grinding (process-facets.md).\n- Implicit facets: a derivative's origin normally uses F27, which is usually implicit. If the derivative group is broad, narrow it with an explicit F27 for the specific source commodity rather than falling back to raw plus F28 (implicit-vs-explicit-facets.md, RUNTIME_RULES.md).\n- Validation: raw plus F28 on a food that should be a derivative risks process-validation conflicts like BR19, which pushes you to the derivative term (process-validation-rules.md). The pages don't give the specific flour code, so take it from the catalogue.",
+      "citations": [
+        "process-facets.md",
+        "RUNTIME_RULES.md",
+        "implicit-vs-explicit-facets.md",
+        "process-validation-rules.md"
+      ],
+      "pages_used": [
+        "process-facets.md",
+        "term-type-facet-constraints.md",
+        "ingredient-facets.md",
+        "base-term-selection.md",
+        "process-validation-rules.md",
+        "implicit-vs-explicit-facets.md",
+        "RUNTIME_RULES.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": true,
+        "reference_page_precision": 0.8571428571428571,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass",
+        "rationale": "Selects the applicable flour derivative and rejects raw grain plus grinding."
+      }
+    },
+    {
+      "case_id": "DIV-005",
+      "question": "There is no species-specific quinoa-flour term in my candidates. I have raw quinoa and a generic flour derivative whose scope covers quinoa flour. Is raw quinoa plus grinding preferable because the exact derivative is missing?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": null,
+      "status_code": 200,
+      "elapsed_ms": 5654,
+      "answer": "No. A missing species-specific derivative does not justify raw quinoa plus grinding when a suitable generic derivative covers the product.\n- Food type: quinoa flour is a recognised grain-milling derivative (flour), so it belongs with derivative bases, not raw plus F28.A07LA (process-facets.md). Simple grinding on a raw base applies only where no applicable derivative group covers the product (process-facets.md).\n- Base term: use the generic flour derivative whose scope covers quinoa flour. RUNTIME_RULES.md says not to rebuild an existing derivative group from a raw base plus F28 (RUNTIME_RULES.md).\n- Explicit facets: add F27 for the source commodity (quinoa) and F26.A07XE (other) because the detailed derivative is missing. The wiki example is `quinoa flour`: `A04KS#F26.A07XE$F27.A000R` (base-term-selection.md; anses-codification-guidance.md).\n- Validation: F27 is the origin facet for derivatives. Do not add F01 unless the single-source missing-F27 fallback applies (term-type-facet-constraints.md; anses-codification-guidance.md).\n- Domain overlays: none are implied unless context identifies one. If a pesticide domain applies, processed cereals should not be recoded as raw, and F27 identifies the source (RUNTIME_RULES.md; pesticides-foodex2.md).",
+      "citations": [
+        "process-facets.md",
+        "RUNTIME_RULES.md",
+        "base-term-selection.md",
+        "anses-codification-guidance.md",
+        "term-type-facet-constraints.md",
+        "pesticides-foodex2.md"
+      ],
+      "pages_used": [
+        "process-facets.md",
+        "base-term-selection.md",
+        "term-type-facet-constraints.md",
+        "RUNTIME_RULES.md",
+        "process-validation-rules.md",
+        "pesticides-foodex2.md",
+        "anses-codification-guidance.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [
+          "pesticides-foodex2.md"
+        ],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": false,
+        "reference_page_precision": 0.7142857142857143,
+        "reference_page_recall": 0.6666666666666666,
+        "missing_reference_pages": [
+          "implicit-vs-explicit-facets.md"
+        ]
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass_with_limitations",
+        "rationale": "Selects generic flour plus F27; misses one labelled reference page but obtains the needed evidence elsewhere. Unrequested pesticide context adds unnecessary conditional domain advice."
+      }
+    },
+    {
+      "case_id": "DIV-006",
+      "question": "A sample is described only as \"plant powder\". The plant identity and production method are unknown. May I assume it is a raw plant that was ground and add F28.A07LA?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": null,
+      "status_code": 200,
+      "elapsed_ms": 6059,
+      "answer": "No. \"Plant powder\" alone does not support that assumption, so do not add F28.A07LA yet.\n- \"Powder\" alone does not show how the powder was produced. Only an explicit \"ground\" supplies grinding evidence, and neither word alone settles the base-term class (process-facets.md; term-type-facet-constraints.md).\n- F03 powder is a physical state and F28.A07LA is a process. Do not swap one for the other automatically, and do not use A07LA to avoid a required derivative group (process-facets.md).\n- Raw plus A07LA is only valid when the raw base covers the food, no applicable derivative group covers the product, and the grinding is known and permitted. The plant identity is unknown here, so that cannot be established (process-facets.md).\n- Grain-milled products such as flours, bran or groats need an applicable derivative base, not raw plus A07LA. Spices and herbal infusion materials stay raw when dried, but tea leaves do not (process-facets.md; base-term-selection.md).\n- Adding F03 powder to a raw base triggers BR13, which only flags an invalid combination and does not choose the correct base (business-rules.md; term-type-facet-constraints.md).\n- The wiki does not say which base to use when the plant is unknown. Identify the plant and the production method first, then choose the base term. If the plant name is missing from the candidate set, the wiki only says to use the nearest valid generic candidate for pesticide-domain coding, not an invented code (pesticides-foodex2.md).",
+      "citations": [
+        "process-facets.md",
+        "term-type-facet-constraints.md",
+        "business-rules.md",
+        "base-term-selection.md",
+        "pesticides-foodex2.md"
+      ],
+      "pages_used": [
+        "process-facets.md",
+        "term-type-facet-constraints.md",
+        "facet-coding-rules.md",
+        "base-term-selection.md",
+        "business-rules.md",
+        "pesticides-foodex2.md",
+        "anses-codification-guidance.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [
+          "pesticides-foodex2.md"
+        ],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "prohibited_page_pass": false,
+        "reference_page_precision": 0.7142857142857143,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass_with_limitations",
+        "rationale": "Does not assume grinding or raw status for unknown plant powder. Unrequested pesticide context adds irrelevant domain guidance, and only explicit ground is narrower than the broader notion of reliable process evidence."
+      }
+    },
+    {
+      "case_id": "DIV-007",
+      "question": "A raw spice base with F03.A06JD powder fails BR13. The spice was ground; catalogue inspection confirms that the raw base covers it and no derivative group is applicable. Must I change the base to a derivative to repair BR13?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": null,
+      "status_code": 200,
+      "elapsed_ms": 5470,
+      "answer": "- No, not necessarily. BR13 only flags an invalid raw-base/F03 combination: F03 `A06JD` powder is one of the seven forbidden disintegration descriptors on raw terms. It does not decide the base-term class and does not itself require a derivative base (business-rules.md, term-type-facet-constraints.md).\n- Your catalogue check is the deciding factor. Physical division is not automatically a derivative, and grinding is normally applied directly to raw commodities. Where the raw base covers the food and no derivative group applies, keep the raw base (process-facets.md).\n- Repair: remove the explicit F03 `A06JD` and, because the food is known to be ground, add `F28.A07LA` (grinding/milling/crushing) unless it is already implicit (process-facets.md, term-type-facet-constraints.md).\n- The wording \"ground\" is what supports the F28 step; \"powder\" alone would not establish how it was produced. Do not use A07LA to evade a required derivative group, but you have already ruled that out (process-facets.md).\n- Afterwards, recheck other rules. BR19 can reject processes that create derivatives on raw bases, and BR16 flags an explicit process that is less specific than one already implicit in the base. This wiki does not state whether A07LA triggers either rule for your base, so validate the result (process-validation-rules.md).",
+      "citations": [
+        "business-rules.md",
+        "term-type-facet-constraints.md",
+        "process-facets.md",
+        "process-validation-rules.md"
+      ],
+      "pages_used": [
+        "term-type-facet-constraints.md",
+        "business-rules.md",
+        "process-facets.md",
+        "process-validation-rules.md",
+        "RUNTIME_RULES.md",
+        "base-term-selection.md",
+        "pesticides-foodex2.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [
+          "pesticides-foodex2.md"
+        ],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": false,
+        "reference_page_precision": 0.8571428571428571,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass_with_limitations",
+        "rationale": "Repairs F03 while retaining the supported raw base and known grinding. Unrequested pesticide page is retrieved but does not change the coding decision."
+      }
+    },
+    {
+      "case_id": "DIV-008",
+      "question": "My search returned only a raw commodity for a ground food. Does the absence of derivative candidates prove that no derivative exists and permit me to use raw plus F28.A07LA?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": null,
+      "status_code": 200,
+      "elapsed_ms": 5470,
+      "answer": "No. A derivative missing from your search results does not prove none exists, and it does not by itself permit raw plus F28.A07LA.\n- Absence from retrieved candidates is not evidence of catalogue absence; inspect the processed/preserved branch and its scope before accepting raw plus F28 (base-term-selection.md, term-type-facet-constraints.md).\n- Raw plus F28.A07LA is valid only when simple grinding is the process, the raw base covers the food, and no applicable derivative group covers the resulting product (process-facets.md).\n- Check whether the product is simple grinding or grain milling that yields recognised derivatives like flours, bran or groats; those need a derivative base, not A07LA. A missing species-specific derivative may still be covered by a generic derivative (process-facets.md, base-term-selection.md).\n- Don't infer food type from the word \"ground\"; check the actual catalogue scope. An explicit \"ground\" supplies grinding evidence, but \"powder\" alone does not (process-facets.md).\n- Don't use A07LA to evade a required derivative group or rebuild an existing derivative from raw plus F28 (process-facets.md, RUNTIME_RULES.md).\n- If the derivative group turns out to be applicable, use it and narrow with explicit F27 rather than falling back to raw plus F28 (implicit-vs-explicit-facets.md).\n- So: verify the derivative scope first. Use raw plus F28.A07LA only if the product is genuinely simply ground and no applicable derivative group covers it.",
+      "citations": [
+        "process-facets.md",
+        "base-term-selection.md",
+        "term-type-facet-constraints.md",
+        "RUNTIME_RULES.md",
+        "implicit-vs-explicit-facets.md"
+      ],
+      "pages_used": [
+        "process-facets.md",
+        "term-type-facet-constraints.md",
+        "base-term-selection.md",
+        "RUNTIME_RULES.md",
+        "implicit-vs-explicit-facets.md",
+        "anses-codification-guidance.md",
+        "policy-contract.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "prohibited_page_pass": true,
+        "reference_page_precision": 0.7142857142857143,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass",
+        "rationale": "Distinguishes catalogue absence from missing search results and recognises explicit ground as process evidence."
+      }
+    },
+    {
+      "case_id": "ONTOLOGY-DRY-002",
+      "question": "Does ordinary drying turn a marketed dried spice into a FoodEx2 derivative?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": null,
+      "status_code": 200,
+      "elapsed_ms": 5258,
+      "answer": "No. Drying normally creates a derivative, but spices (and non-tea herbal infusion materials) are an exception: they stay raw commodities regardless of drying because the dried form is their market default.\n- Do not add drying just to restate that default; if a BR19 rejection occurs on a marketed-dry spice, the repair can be to keep the raw base and remove the redundant drying (base-term-selection.md, process-validation-rules.md).\n- Fresh spices can use `unprocessed` because dried is often the default, as in `fresh sage` coded `A00YH#F28.A0C0S` (process-facets.md).\n- The exception does not cover Camellia sinensis: fresh leaves are raw (`A16GV`), while dried or fermented tea leaves are derivatives, and `A04KK` is scoped to tea, not other herbal infusion materials (base-term-selection.md, maintenance-2015.md, anses-codification-guidance.md).",
+      "citations": [
+        "base-term-selection.md",
+        "maintenance-2015.md",
+        "process-facets.md",
+        "process-validation-rules.md",
+        "anses-codification-guidance.md"
+      ],
+      "pages_used": [
+        "base-term-selection.md",
+        "maintenance-2015.md",
+        "process-facets.md",
+        "anses-codification-guidance.md",
+        "process-validation-rules.md",
+        "pesticides-foodex2.md",
+        "term-type-facet-constraints.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [
+          "pesticides-foodex2.md"
+        ],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": false,
+        "reference_page_precision": 0.5714285714285714,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass_with_limitations",
+        "rationale": "Correct dried-spice rule and Camellia boundary; unrequested pesticide page in retrieval."
+      }
+    },
+    {
+      "case_id": "ONTOLOGY-DRY-003",
+      "question": "Should dried or fermented Camellia sinensis tea leaves use the same raw-by-default treatment as herbal infusion materials?",
+      "endpoint": "ask-rag",
+      "answerer_model": "claude-sonnet-5-5",
+      "selector_model": null,
+      "status_code": 200,
+      "elapsed_ms": 4534,
+      "answer": "No. Camellia sinensis is excluded from the marketed-dry raw exception.\n- Spices and herbal infusion materials stay raw even when dried, because their dried form is the market default (base-term-selection.md, maintenance-2015.md).\n- The 2015 maintenance removed Camellia sinensis from that exception. Fresh leaves are a raw commodity, `A16GV`. Dried or fermented tea leaves follow the standard derivative path (maintenance-2015.md, base-term-selection.md).\n- `A04KK` is for dried or fermented Camellia sinensis tea leaves only. It is not a derivative base for non-tea herbal infusion materials (maintenance-2015.md, base-term-selection.md).\n- Do not carry the dried-by-default convention over to tea. It applies to spices and non-tea herbal infusion materials (anses-codification-guidance.md).\n- Validation: BR19 stops raw commodities taking derivative-creating processes. For non-tea herbal materials the fix may be to keep the raw base and drop the redundant drying. For dried tea, use the derivative base (process-validation-rules.md).\n- A brewed infusion beverage and an herbal extract are separate product types, so do not collapse them into the dry-material base (maintenance-2015.md).",
+      "citations": [
+        "maintenance-2015.md",
+        "base-term-selection.md",
+        "anses-codification-guidance.md",
+        "process-validation-rules.md"
+      ],
+      "pages_used": [
+        "maintenance-2015.md",
+        "base-term-selection.md",
+        "anses-codification-guidance.md",
+        "process-facets.md",
+        "process-validation-rules.md",
+        "validation-rules.md",
+        "additives-flavourings-foodex2.md"
+      ],
+      "deterministic": {
+        "page_count": 7,
+        "prohibited_page_hits": [
+          "additives-flavourings-foodex2.md"
+        ],
+        "required_answer_terms_missing": [],
+        "forbidden_answer_terms_present": [],
+        "deterministic_answer_pass": true,
+        "prohibited_page_pass": false,
+        "reference_page_precision": 0.5714285714285714,
+        "reference_page_recall": 1.0,
+        "missing_reference_pages": []
+      },
+      "corpus_revision_at_run": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+      "semantic_review": {
+        "reviewer": "Codex primary-source review; not an independent human or automated judge",
+        "result": "pass_with_limitations",
+        "rationale": "Correct Camellia derivative path; unrequested additive-domain page in retrieval."
+      }
+    }
+  ],
+  "rag_retrieval_limitations": {
+    "unexpected_domain_pages": 6,
+    "cases_checked": 10,
+    "partial_briefs": [
+      "DIV-001"
+    ],
+    "assessment": "The scoped BR13/raw-plus-grinding correction is present. Vector-only unique-page retrieval still selects unrequested domain overlays and can select a different section of an otherwise relevant page, omitting an exception. These failures are retained, not removed from evaluation expectations. Further retrieval-scope/section-coverage work is separate from this guidance correction."
+  }
+}

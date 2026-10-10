@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-09-30"
+last_updated: "2026-10-09"
 ---
 
 # Index
@@ -32,11 +32,11 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 ## FoodEx2 Guidance
 
 - [foodex2-overview.md](raw/efsa-guidance/foodex2-overview.md): FoodEx2 purpose, hierarchy model, Corex H/C/E/M/P roles, and coding philosophy.
-- [base-term-selection.md](raw/efsa-guidance/base-term-selection.md): Base-term choice, tie-breaks, missing-term handling and hierarchy-specific reportability, including the generic infant-food restriction.
+- [base-term-selection.md](raw/efsa-guidance/base-term-selection.md): Base-term choice, raw plus permitted processing versus applicable derivatives, missing-term scope, tie-breaks and hierarchy-specific reportability, including the generic infant-food restriction.
 - [facet-coding-rules.md](raw/efsa-guidance/facet-coding-rules.md): Facet-family choice, implicit-detail boundaries, vegan/vegetarian diets, animal sampling and the F21-to-F29 pig farm-type change.
 - [implicit-vs-explicit-facets.md](raw/efsa-guidance/implicit-vs-explicit-facets.md): Distinguishes inherited facet information from coder-supplied facet detail.
 - [code-string-format.md](raw/efsa-guidance/code-string-format.md): Exact FoodEx2 code syntax, separators, and ordering conventions.
-- [process-facets.md](raw/efsa-guidance/process-facets.md): Process-facet use, boiling/draining and popping, revised scalding/pressure cooking, and the historical Appendix A2 reference.
+- [process-facets.md](raw/efsa-guidance/process-facets.md): Physical division and grinding on raw commodities versus grain-derivative production, F28 versus F03 powder, boiling/draining and popping, revised scalding/pressure cooking, and the historical Appendix A2 reference.
 - [ingredient-facets.md](raw/efsa-guidance/ingredient-facets.md): Rules for characterising ingredients, mixed foods, composite coding, and minor flavouring/added-ingredient use on derivatives.
 - [packaging-facets.md](raw/efsa-guidance/packaging-facets.md): When to use `F18` packaging-format and `F19` packaging-material, and how they differ from `F28` process.
 - [anses-codification-guidance.md](raw/efsa-guidance/anses-codification-guidance.md): Extracted `expert_guidance` from the ANSES FoodEx2 codification guidance v3, covering workflow, missing-term conventions, mixed-product handling, range values, and dataset QC checks without overriding authoritative EFSA or validator sources.
@@ -53,7 +53,7 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 - [business-rules.md](raw/efsa-guidance/business-rules.md): Canonical wiki target for `BR01`-`BR31`, including historical MTX 17.1 import status, BR13's seven-code disintegration boundary, BR19/BR19+ stale-data coverage, and the distinction between inactive ICT BR26 and active BR27.
 - [validation-rules.md](raw/efsa-guidance/validation-rules.md): Overview of the validator's two-layer model, severities, and the most important blocking rules.
 - [structural-validation.md](raw/efsa-guidance/structural-validation.md): Syntax, descriptor existence, implicit-facet cleanup, duplicates, and single-cardinality checks.
-- [term-type-facet-constraints.md](raw/efsa-guidance/term-type-facet-constraints.md): Allowed and forbidden facets by FoodEx2 term type, including the distinction between BR13 disintegration `F03` values and permitted non-disintegration physical states on raw commodities.
+- [term-type-facet-constraints.md](raw/efsa-guidance/term-type-facet-constraints.md): Allowed and forbidden facets by term type; BR13 restrictions and repairs without assuming every powder requires a derivative base.
 - [process-validation-rules.md](raw/efsa-guidance/process-validation-rules.md): Active process checks, raw-vs-derivative boundaries, BR19/BR19+ behaviour, and the inactive ICT status of BR26.
 - [domain-specific-validation.md](raw/efsa-guidance/domain-specific-validation.md): Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.
 

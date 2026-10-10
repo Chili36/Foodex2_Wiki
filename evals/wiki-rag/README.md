@@ -139,6 +139,29 @@ judge reasons before choosing an endpoint or model.
 
 ## Ontology-exception regressions
 
+[`physical-division-cases.json`](physical-division-cases.json) tests grinding
+versus derivative production and the BR13 repair boundary. It includes the
+original turmeric question, a case with explicit catalogue evidence, pepper
+transfer, wheat and generic quinoa flour, unknown powder production, and
+incomplete search results. Its source-backed reference answers and case-specific
+rubrics assess the decision, not mere mentions of "raw" or "derivative". The
+keyword assertions are smoke checks only. `reviewed` means agent source review;
+it does not claim human approval or a complete current catalogue inspection.
+
+Run both answer paths after refreshing the curated index, and review the captured
+answers against the rubrics:
+
+```bash
+.venv/bin/python scripts/wiki_ragas_eval.py \
+  --cases evals/wiki-rag/physical-division-cases.json \
+  --label physical-division --answerer-models claude-sonnet-5-5 \
+  --only-reviewed --metrics "" --max-estimated-endpoint-calls 16
+```
+
+Also rerun the drying/tea controls below, and inspect MCP coding-context output
+to ensure the physical-division rule survives projection. Catalogue facts stated
+in an evaluation question are fixtures, not new operational wiki knowledge.
+
 [`ontology_exception_cases.json`](ontology_exception_cases.json) contains
 reviewed transfer cases and negative controls for source-defined FoodEx2
 exceptions. Keep these examples in evaluation data rather than runtime prompts.
