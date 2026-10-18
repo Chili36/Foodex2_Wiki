@@ -330,7 +330,7 @@ def main() -> int:
         args.answerer_model
         or os.getenv("WIKI_ANSWERER_MODEL")
         or os.getenv("WIKI_LIBRARIAN_MODEL")
-        or "claude-sonnet-4-6"
+        or "claude-sonnet-5-5"
     )
     args.output_dir.mkdir(parents=True, exist_ok=True)
 

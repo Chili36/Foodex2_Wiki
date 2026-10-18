@@ -929,7 +929,7 @@ def resolve_answerer_model(model: str | None = None) -> str:
     return model or _resolve_model(
         "WIKI_ANSWERER_MODEL",
         "WIKI_LIBRARIAN_MODEL",
-        default="gpt-5.6-terra",
+        default="claude-sonnet-5-5",
     )
 
 
@@ -1347,17 +1347,18 @@ class AnthropicFoodEx2Answerer:
         *,
         client: AnthropicClientProtocol | None = None,
         model: str | None = None,
-        max_tokens: int = 2500,
+        max_tokens: int | None = None,
         reasoning_effort: str | None = None,
     ):
         self.model = resolve_answerer_model(model)
         self.client = client or build_messages_client(self.model)
-        self.max_tokens = max_tokens
+        self._sonnet55 = self.model == "claude-sonnet-5-5" and infer_model_provider(self.model) == "anthropic"
+        # Adaptive thinking and the final JSON share the output allowance.
+        self.max_tokens = max_tokens if max_tokens is not None else (8192 if self._sonnet55 else 2500)
         self.reasoning_effort = reasoning_effort
 
     def run(self, *, question: str, pages: list[dict[str, Any]]) -> AnswerResult:
         answerer_started = time.perf_counter()
-        llm_started = time.perf_counter()
         messages = [
             {
                 "role": "user",
@@ -1370,13 +1371,6 @@ class AnthropicFoodEx2Answerer:
                 ),
             }
         ]
-        _log_prompt(
-            "ask",
-            model=self.model,
-            system=ANSWERER_SYSTEM_PROMPT,
-            messages=messages,
-            max_tokens=self.max_tokens,
-        )
         create_kwargs: dict[str, Any] = {
             "model": self.model,
             "max_tokens": self.max_tokens,
@@ -1390,14 +1384,33 @@ class AnthropicFoodEx2Answerer:
                     "schema": ANSWERER_OUTPUT_SCHEMA,
                 }
             }
+            if self.reasoning_effort:
+                create_kwargs["output_config"]["effort"] = self.reasoning_effort
         if self.reasoning_effort and infer_model_provider(self.model) == "lmstudio":
             create_kwargs["reasoning_effort"] = self.reasoning_effort
-        response = self.client.messages.create(**create_kwargs)
-        llm_duration_ms = int((time.perf_counter() - llm_started) * 1000)
-        usage = _usage_dict(
-            _get_block_value(response, "usage"),
-            stop_reason=_get_block_value(response, "stop_reason"),
-        )
+        usages, timings = [], []
+        for attempt in range(2):
+            _log_prompt(
+                "ask", model=self.model, system=ANSWERER_SYSTEM_PROMPT,
+                messages=messages, max_tokens=create_kwargs["max_tokens"],
+            )
+            llm_started = time.perf_counter()
+            response = self.client.messages.create(**create_kwargs)
+            stop_reason = _get_block_value(response, "stop_reason")
+            usages.append(_usage_dict(_get_block_value(response, "usage"), stop_reason=stop_reason))
+            timings.append({
+                "call_number": attempt + 1,
+                "duration_ms": int((time.perf_counter() - llm_started) * 1000),
+                "stop_reason": stop_reason,
+            })
+            if stop_reason != "max_tokens":
+                break
+            budget = create_kwargs["max_tokens"]
+            retry_budget = min(budget * 2, 16384)
+            if not self._sonnet55 or attempt or retry_budget <= budget:
+                raise RuntimeError("The answer exceeded its output limit. Please try a narrower question.")
+            # Discard the partial response and retry the same evidence once.
+            create_kwargs["max_tokens"] = retry_budget
         final_text = _response_text(_get_block_value(response, "content", []))
         data = _extract_json_payload(final_text)
         citations = data.get("citations", [])
@@ -1406,17 +1419,9 @@ class AnthropicFoodEx2Answerer:
         return AnswerResult(
             answer=str(data.get("answer", "")).strip(),
             citations=[str(citation) for citation in citations],
-            token_summary=_aggregate_usage([usage], self.model),
+            token_summary=_aggregate_usage(usages, self.model),
             timing_summary={
-                **_aggregate_timing(
-                    [
-                        {
-                            "call_number": 1,
-                            "duration_ms": llm_duration_ms,
-                            "stop_reason": _get_block_value(response, "stop_reason"),
-                        }
-                    ]
-                ),
+                **_aggregate_timing(timings),
                 "answerer_wall_time_ms": int((time.perf_counter() - answerer_started) * 1000),
             },
         )

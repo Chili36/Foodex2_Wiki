@@ -67,14 +67,14 @@ def test_infer_model_provider_for_ask_overrides() -> None:
     assert infer_model_provider(None) == "anthropic"
 
 
-def test_answerer_builtin_default_is_terra(monkeypatch) -> None:
+def test_answerer_builtin_default_is_sonnet_55(monkeypatch) -> None:
     monkeypatch.delenv("WIKI_ANSWERER_MODEL", raising=False)
     monkeypatch.delenv("WIKI_LIBRARIAN_MODEL", raising=False)
     monkeypatch.delenv("WIKI_LLM_PROVIDER", raising=False)
     monkeypatch.delenv("WIKI_LMSTUDIO_MODEL", raising=False)
     monkeypatch.delenv("LMSTUDIO_MODEL", raising=False)
 
-    assert resolve_answerer_model() == "gpt-5.6-terra"
+    assert resolve_answerer_model() == "claude-sonnet-5-5"
 
 
 def test_anthropic_answerer_enforces_structured_output() -> None:
@@ -773,7 +773,7 @@ def test_runtime_components_use_role_specific_defaults(monkeypatch) -> None:
     answerer = AnthropicFoodEx2Answerer(client=client)
 
     assert selector.model == "claude-sonnet-5"
-    assert answerer.model == "gpt-5.6-terra"
+    assert answerer.model == "claude-sonnet-5-5"
 
 
 def test_store_extracts_guiding_principles_from_index() -> None:
