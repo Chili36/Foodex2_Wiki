@@ -200,8 +200,8 @@ Locations:
 
 Default collections:
 
-- `foodex2_wiki_markdown_v1`: chunks derived from curated markdown pages
-- `foodex2_source_docs_v1`: chunks derived from raw source documents
+- `foodex2_wiki_markdown_v2`: chunks derived from curated markdown pages
+- `foodex2_source_docs_v2`: chunks derived from raw source documents
 
 Purpose:
 

@@ -141,7 +141,7 @@ Build or refresh the curated wiki collection:
 
 ```bash
 .venv/bin/python scripts/index_wiki_qdrant.py \
-  --collection foodex2_wiki_markdown_v1 \
+  --collection foodex2_wiki_markdown_v2 \
   --delete-orphans
 ```
 
@@ -149,7 +149,7 @@ Build the separate raw-source collection when source-level comparison is needed:
 
 ```bash
 .venv/bin/python scripts/index_source_qdrant.py \
-  --collection foodex2_source_docs_v1 \
+  --collection foodex2_source_docs_v2 \
   --recreate
 ```
 

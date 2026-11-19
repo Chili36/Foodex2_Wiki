@@ -1,9 +1,16 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-10-09"
+last_updated: "2026-11-19"
 ---
 
 # Log
+
+## [2026-11-19] maintenance | Move RAG embeddings to voyage-context-4
+
+- Changed the default Voyage embedding model for `/wiki/ask-rag`, the indexers and the RAG status check from `voyage-context-3` to `voyage-context-4`. Query and document vectors from different models are not comparable, so the defaults now point to new collections, `foodex2_wiki_markdown_v2` and `foodex2_source_docs_v2`, instead of re-embedding the v1 collections in place.
+- Retrieval-only check on 61 labelled cases (no answerer calls): mean must-have page recall went from 0.41 to 0.47 with `legacy_topk` and from 0.52 to 0.61 with `diverse_pages`, and leak-free rate went from 0.59 to 0.84 with `legacy_topk`. A 2048-dimension variant did not beat 1024 (0.42 and 0.58 recall), so the dimension stays at 1024.
+- Chunking is unchanged: the indexers still send their own chunks and leave Voyage auto-chunking off. Dimension stays at 1024.
+- The v1 collections are left as they were, so an existing deployment can keep serving them, or roll back, by setting `WIKI_EMBED_MODEL`, `WIKI_QDRANT_COLLECTION`, `SOURCE_EMBED_MODEL` and `SOURCE_QDRANT_COLLECTION`.
 
 ## [2026-10-09] review correction | Align the binding BR13 policy
 

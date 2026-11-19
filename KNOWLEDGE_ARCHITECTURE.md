@@ -113,8 +113,8 @@ The API surface is `POST /wiki/ask-rag`.
 
 Retrieval modes:
 
-- `retrieval_mode: "wiki"` searches `foodex2_wiki_markdown_v1`, the Qdrant collection built from curated markdown pages.
-- `retrieval_mode: "source"` searches `foodex2_source_docs_v1`, the Qdrant collection built from immutable source files under `foodex2_docs/`.
+- `retrieval_mode: "wiki"` searches `foodex2_wiki_markdown_v2`, the Qdrant collection built from curated markdown pages.
+- `retrieval_mode: "source"` searches `foodex2_source_docs_v2`, the Qdrant collection built from immutable source files under `foodex2_docs/`.
 
 This mode exists for retrieval A/B testing and source-audit experiments. It should not change the durable knowledge stance: curated markdown remains the maintained source of operational guidance, and raw-source retrieval should feed page updates when it exposes missing or ambiguous guidance.
 
@@ -195,7 +195,7 @@ Do not enable watch-mode auto-ingest by default. Automatic file watching is usef
 
 ## When To Add Infrastructure
 
-Use a vector index only as a derived experiment unless selector failures show that keyword, index, and graph selection cannot find the right page. The current local Qdrant collection, `foodex2_wiki_markdown_v1`, is built from the curated markdown pages for A/B testing; it is not an independent source of FoodEx2 truth. The companion collection, `foodex2_source_docs_v1`, is built from immutable source documents for source-audit and hybrid-retrieval tests. Keep these collections separate so evaluation can distinguish curated guidance from raw evidence.
+Use a vector index only as a derived experiment unless selector failures show that keyword, index, and graph selection cannot find the right page. The current local Qdrant collection, `foodex2_wiki_markdown_v2`, is built from the curated markdown pages for A/B testing; it is not an independent source of FoodEx2 truth. The companion collection, `foodex2_source_docs_v2`, is built from immutable source documents for source-audit and hybrid-retrieval tests. Keep these collections separate so evaluation can distinguish curated guidance from raw evidence.
 
 Add a graph database only if markdown-derived adjacency is no longer enough for traversal, filtering, or explanation.
 
