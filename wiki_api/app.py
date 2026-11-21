@@ -27,7 +27,11 @@ from .librarian import (
 from .jev_selector import JevWikiPageSelector
 from .policy import build_policy_contract
 from .qdrant_ask import QdrantAskError, retrieve_qdrant_ask_context
-from .rag_skeleton import apply_rag_skeleton, question_with_reporting_domain
+from .rag_skeleton import (
+    apply_rag_skeleton,
+    detect_reporting_domain,
+    question_with_reporting_domain,
+)
 from .rag_index import (
     DEFAULT_WIKI_CATEGORIES,
     DEFAULT_WIKI_CHUNK_MAX_CHARS,
@@ -419,7 +423,8 @@ class AskRagRequest(BaseModel):
         default=None,
         description=(
             "Optional reporting domain (for example `contaminants`). If omitted, "
-            "a `Reporting domain: <name>` phrase in the question is used."
+            "a `Reporting domain: <name>` phrase in the question is used. A value "
+            "that conflicts with the question's phrase is rejected with 422."
         ),
     )
     answerer_model: str | None = Field(
@@ -1509,6 +1514,21 @@ def ask_question_rag(request: AskRagRequest) -> AskResponse:
             ensure_ascii=False,
         ),
     )
+
+    question_domain = detect_reporting_domain(request.question)
+    if (
+        request.reporting_domain
+        and question_domain
+        and request.reporting_domain.strip().lower() != question_domain
+    ):
+        # One resolved domain must drive both overlay filtering and the answer.
+        raise HTTPException(
+            status_code=422,
+            detail=(
+                f"reporting_domain {request.reporting_domain!r} conflicts with "
+                f"'Reporting domain: {question_domain}' in the question"
+            ),
+        )
 
     retrieval_start = time.perf_counter()
     try:

@@ -1823,3 +1823,18 @@ def test_ask_rag_forwards_request_reporting_domain_to_answerer(monkeypatch) -> N
         json={"question": "Reporting domain: VMPR. Beef?", "reporting_domain": "vmpr"},
     )
     assert app_module.answerer_runner.calls[-1]["question"] == "Reporting domain: VMPR. Beef?"
+
+
+def test_ask_rag_rejects_conflicting_reporting_domains(monkeypatch) -> None:
+    calls: list[object] = []
+    monkeypatch.setattr(
+        app_module, "retrieve_qdrant_ask_context", lambda **kwargs: calls.append(kwargs)
+    )
+    response = request(
+        "POST",
+        "/wiki/ask-rag",
+        json={"question": "Reporting domain: pesticides. Beef?", "reporting_domain": "VMPR"},
+    )
+    assert response.status_code == 422
+    assert "conflicts" in response.json()["detail"]
+    assert calls == []
