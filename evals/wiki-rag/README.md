@@ -193,6 +193,7 @@ with embedding calls only and no answerer calls:
 
 Baseline (2026-11-21, `reports/wiki-rag-evals/2026-11-21-ask-rag-skeleton/`):
 must-have recall 0.71 → 0.96 (`legacy_topk`) and 0.76 → 0.97
-(`diverse_pages`) over 17 reviewed cases, at a cost of about 11–15k extra
-answerer input characters per request. Overlay leaks on questions that name
+(`diverse_pages`) over 17 reviewed cases. The four pinned pages are always
+hydrated in full from the store (about 19k characters, roughly 5k tokens),
+replacing any retrieved chunks of those pages. Overlay leaks on questions that name
 no domain are expected; the skeleton only filters when a domain is named.

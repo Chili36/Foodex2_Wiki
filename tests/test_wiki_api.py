@@ -1776,3 +1776,29 @@ def test_policy_contract_is_loaded_from_markdown_source() -> None:
     assert binding_rules_by_id["R-PROC-003"]["must"].startswith("distinguish active validation from dormant rule definitions")
     assert "process-facets.md" in binding_rules_by_id["R-PROC-001"]["derived_from"]
     assert "business-rules.md BR25" in binding_rules_by_id["R-CARD-001"]["derived_from"]
+
+
+def test_ask_rag_hydrates_required_pages_retrieved_as_a_single_chunk(monkeypatch) -> None:
+    """A retrieved section of a pinned page must not stand in for the whole page."""
+    retrieved = _fake_wiki_context(
+        [
+            ("facet-coding-rules.md", "High-Value Facets section without the family table."),
+            ("RUNTIME_RULES.md", "One runtime section."),
+            ("process-facets.md", "Process facets."),
+        ]
+    )
+    monkeypatch.setattr(app_module, "retrieve_qdrant_ask_context", lambda **_: retrieved)
+
+    payload = request("POST", "/wiki/ask-rag", json={"question": "How do I code sweetened tea?"}).json()
+
+    answerer_pages = app_module.answerer_runner.calls[0]["pages"]
+    names = [page["page_name"] for page in answerer_pages]
+    assert names.count("facet-coding-rules.md") == 1
+    assert names.count("RUNTIME_RULES.md") == 1 and names[0] == "RUNTIME_RULES.md"
+    facet_page = next(page for page in answerer_pages if page["page_name"] == "facet-coding-rules.md")
+    assert "F08" in facet_page["content"]
+    runtime_page = answerer_pages[0]
+    assert "One runtime section." not in runtime_page["content"]
+    skeleton = payload["trace"]["selection_skeleton"]
+    assert skeleton["hydrated_retrieved_pages"] == ["facet-coding-rules.md", "RUNTIME_RULES.md"]
+    assert skeleton["runtime_rules_added"] is False

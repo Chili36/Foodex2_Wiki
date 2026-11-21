@@ -126,6 +126,20 @@ def apply_rag_skeleton(
     )
     trimmed = set(skeleton.trimmed)
     items = [item for item in items if item["answerer_page"]["page_name"] not in trimmed]
+
+    # Pinned pages are always hydrated from the store: a retrieved chunk of a
+    # required page is one section, not coverage of the page.
+    pinned = {RUNTIME_RULES_PAGE_NAME, *(role.default for role in policy.required_roles)}
+    hydrated_retrieved: list[str] = []
+    rebuilt: list[dict[str, Any]] = []
+    for item in items:
+        page_name = item["answerer_page"]["page_name"]
+        if page_name not in pinned:
+            rebuilt.append(item)
+        elif page_name not in hydrated_retrieved:
+            hydrated_retrieved.append(page_name)
+            rebuilt.append(_backfill_item(store, page_name))
+    items = rebuilt
     items.extend(_backfill_item(store, entry["page"]) for entry in skeleton.backfilled)
 
     runtime_added = RUNTIME_RULES_PAGE_NAME not in retrieved_pages
@@ -139,10 +153,11 @@ def apply_rag_skeleton(
     added_pages = [entry["page"] for entry in skeleton.backfilled]
     if runtime_added:
         added_pages.insert(0, RUNTIME_RULES_PAGE_NAME)
+    # Characters of store-hydrated pinned pages sent to the answerer.
     added_chars = sum(
         len(item["answerer_page"]["content"])
         for item in items
-        if item["answerer_page"]["page_name"] in added_pages
+        if item["answerer_page"]["page_name"] in pinned
     )
     updated = {
         **context,
@@ -162,6 +177,7 @@ def apply_rag_skeleton(
         "trimmed": skeleton.trimmed,
         "runtime_rules_added": runtime_added,
         "added_pages": added_pages,
+        "hydrated_retrieved_pages": hydrated_retrieved,
         "added_chars": added_chars,
         "retrieval_covered_roles": skeleton.selector_covered_roles,
     }
