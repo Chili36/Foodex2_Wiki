@@ -503,17 +503,21 @@ def run_coverage(
         except Exception as exc:
             result = {
                 **case,
-                "verdict": "missing",
+                "verdict": "error",
                 "rationale": f"Evaluation error: {type(exc).__name__}: {exc}",
                 "error": True,
                 "elapsed_ms": int((time.perf_counter() - case_started) * 1000),
             }
         results.append(result)
 
-    counts = collections.Counter(result["verdict"] for result in results)
+    # Evaluation errors (timeouts, unavailable models, invalid judge output) say
+    # nothing about the wiki, so they stay out of every coverage statistic.
+    evaluated = [result for result in results if not result.get("error")]
+    error_count = len(results) - len(evaluated)
+    counts = collections.Counter(result["verdict"] for result in evaluated)
     per_source = []
     for source_id in sorted(source_ids):
-        source_results = [item for item in results if item["source_id"] == source_id]
+        source_results = [item for item in evaluated if item["source_id"] == source_id]
         source_counts = collections.Counter(item["verdict"] for item in source_results)
         total = len(source_results)
         per_source.append(
@@ -539,10 +543,14 @@ def run_coverage(
         "started_at": started.isoformat(),
         "completed_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "case_count": len(results),
+        "evaluated_count": len(evaluated),
+        "error_count": error_count,
         "covered": counts["covered"],
         "partial": counts["partial"],
         "missing": counts["missing"],
-        "coverage_percent": round(100 * counts["covered"] / len(results), 2),
+        "coverage_percent": (
+            round(100 * counts["covered"] / len(evaluated), 2) if evaluated else 0.0
+        ),
         "root_cause_counts": dict(sorted(root_cause_counts.items())),
         "per_source": per_source,
         "judge": {
@@ -573,7 +581,8 @@ def run_coverage(
             "summary_path", "evals/coverage/reports/summary.json"
         )
     )
-    if max_cases is None and not case_ids:
+    # Only a complete, error-free full-suite run may replace the published summary.
+    if max_cases is None and not case_ids and error_count == 0:
         write_json(summary_path, summary)
     return summary
 

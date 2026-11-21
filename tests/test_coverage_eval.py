@@ -727,3 +727,93 @@ def test_generation_checkpoint_signature_changes_with_qualifier_model() -> None:
     _, first = _generation_checkpoint(qualification_model={"model": "small"}, **common)
     _, second = _generation_checkpoint(qualification_model={"model": "large"}, **common)
     assert first["signature"] != second["signature"]
+
+
+def test_qualification_applies_claim_cap_after_validation() -> None:
+    model = _FakeQualificationModel(
+        {
+            "claims": [
+                {
+                    "claim": "The heading uses the word fixture.",
+                    "category": "incidental",
+                    "decision_axis": "none",
+                    "coverage_expectation": "exclude",
+                    "source_evidence": "Authoritative fixture",
+                    "rationale": "Publication wording is not operational.",
+                },
+                {
+                    "claim": "Herbal infusion materials remain raw.",
+                    "category": "exception",
+                    "decision_axis": "base_term",
+                    "coverage_expectation": "required",
+                    "source_evidence": "Herbal infusion materials remain raw",
+                    "rationale": "This changes base-term selection.",
+                },
+            ]
+        }
+    )
+    result = qualify_chunk(
+        model,  # type: ignore[arg-type]
+        {
+            "chunk_id": "fixture:p0001:01",
+            "text": "Authoritative fixture. Herbal infusion materials remain raw.",
+        },
+        {"max_claims_per_chunk": 1},
+    )
+    assert [claim["category"] for claim in result["eligible_claims"]] == ["exception"]
+
+
+def test_coverage_run_keeps_evaluation_errors_out_of_coverage(tmp_path: Path) -> None:
+    import socket
+
+    with socket.socket() as probe:
+        probe.bind(("127.0.0.1", 0))
+        dead_port = probe.getsockname()[1]
+    manifest = tmp_path / "manifest.yaml"
+    _write_manifest(manifest, FIXTURES / "source-current.md")
+    chunk = chunk_sources(manifest, max_chars=6000)["chunks"][0]
+    testset = tmp_path / "testset.json"
+    testset.write_text(
+        json.dumps(
+            {
+                "version": 1,
+                "testset_id": "fixture-v1",
+                "sources": [
+                    {"id": "fixture-source", "version": "1", "sha256": _sha(FIXTURES / "source-current.md")}
+                ],
+                "generator": {"chunk_max_chars": 6000},
+                "cases": [
+                    {
+                        "id": "COV-DOWN",
+                        "question": "How is normally dried herbal infusion material classified?",
+                        "source_id": "fixture-source",
+                        "chunk_id": chunk["chunk_id"],
+                        "section": chunk["section"],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    model = {"provider": "lmstudio", "model": "fixture-model", "base_url": f"http://127.0.0.1:{dead_port}/v1"}
+    summary_path = tmp_path / "summary.json"
+    config = tmp_path / "config.yaml"
+    config.write_text(
+        yaml.safe_dump(
+            {
+                "source_manifest": str(manifest),
+                "retrieval": {"path": "context-pack", "wiki_url": f"http://127.0.0.1:{dead_port}", "max_pages": 7},
+                "models": {"selector": model, "answerer": model, "judge": model},
+                "reporting": {"summary_path": str(summary_path)},
+            },
+            sort_keys=False,
+        ),
+        encoding="utf-8",
+    )
+    summary = run_coverage(testset_path=testset, config_path=config, output_dir=tmp_path / "run")
+    assert summary["error_count"] == 1
+    assert summary["evaluated_count"] == 0
+    assert summary["missing"] == 0
+    gaps = json.loads((tmp_path / "run" / "gaps.json").read_text())
+    assert gaps["gap_count"] == 0
+    assert not summary_path.exists()

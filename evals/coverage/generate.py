@@ -360,7 +360,9 @@ Unreviewed source sentences from chunk {chunk['chunk_id']}:
     normalized_source = _normalized_text(chunk["text"])
     eligible: list[dict[str, str]] = []
     excluded: list[dict[str, str]] = []
-    for raw in raw_claims[:max_claims]:
+    # Validate every first-pass and completeness-audit claim before applying the
+    # eligibility cap, so rejected first-pass claims cannot crowd out audit finds.
+    for raw in raw_claims:
         if not isinstance(raw, dict):
             continue
         claim = str(raw.get("claim") or "").strip()
@@ -395,6 +397,8 @@ Unreviewed source sentences from chunk {chunk['chunk_id']}:
             reasons.append(non_operational_reason)
         if reasons:
             excluded.append({**item, "exclusion_reason": ",".join(reasons)})
+        elif len(eligible) >= max_claims:
+            excluded.append({**item, "exclusion_reason": "over_claim_limit"})
         else:
             eligible.append(item)
     entailments = verify_claim_entailment(model, eligible)
