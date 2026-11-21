@@ -48,7 +48,7 @@
     "contaminants-foodex2.md": "ea537838d187f6abddbaff592f5de88d80eb06f3e26eef397ce92ef39b1a61bf",
     "domain-specific-validation.md": "568d873099b4a148f412cb299f308a57cbf702e250f63c4d255901490beda1e3",
     "domoic-acid-scallops.md": "7f8bb5e52581b8739ec879008f74131d40985ac2b83d09cb631fb2538b4c19c7",
-    "facet-coding-rules.md": "770e0bef2acf2e7688a147cdb09f609c23d3ac3c4b1552577dd7e4a08f1475e0",
+    "facet-coding-rules.md": "533f21547528ce74fadf309cbe675a2ebf075bfb361a7060184a68ef94bfe1f2",
     "foodex2-overview.md": "84b77e10356df195dbfe5a6b6a2cd97e098286a87fd40a323c13e663c2151c34",
     "implicit-vs-explicit-facets.md": "4828559402e46656f3fbe427ae4ce939efbe81ab057f53d1f9821084f124673a",
     "ingredient-facets.md": "983755619a6eeb4ff3104e7150c52b127a62f78fdf5334e8285f3b70e7b726aa",
@@ -65,7 +65,7 @@
     "packaging-facets.md": "2cfd5490fb1bedfc64cdb12be2063e92e4ffc7cb6d0401a6b58ad7f5cf3111ae",
     "pesticides-foodex2.md": "ac0eb4ce9651ed88bc8f65b06fb181db04ecee0fb5dd30031eb2b056ce988045",
     "policy-contract.md": "10ff555bff7f8af2ab291ca3dbf5dddc42e7ed8a7a308e7e9b5b33468b30cc5a",
-    "process-facets.md": "35cadc4d2b64bc0344861bf466a8f6168dc068e0714083d0827cd0564779846c",
+    "process-facets.md": "a27eb2b9609291ac27ebd78a032fe71f93489efeaa4e2302e22717175385f467",
     "process-validation-rules.md": "e80e55cbe3faab8e1941b9152c6d224c7a50c37ad40d4a455cd61f39aa515894",
     "structural-validation.md": "2c344a23d25a9c6dda20cf36098713a909a52dc21e62907e03ed4a8ab0332e77",
     "term-type-facet-constraints.md": "f23ec4f19216e8777f368c5c5febe5e402421eb783c3d2a342d804000777a8b8",
@@ -615,6 +615,17 @@
       "source_files_unchanged": true,
       "previous_policy_fingerprint": "6417445d9999bf201f2cf03b3d68e30e3b6e5da12abe1d872d8dc06815f6fc69",
       "new_finding": "DIV-003"
+    },
+    {
+      "reviewed_at": "2026-11-21",
+      "report": "log.md",
+      "review_comment": "https://github.com/Chili36/Foodex2_Wiki/pull/52",
+      "changed_pages_reviewed": [
+        "facet-coding-rules.md",
+        "process-facets.md"
+      ],
+      "source_files_unchanged": true,
+      "summary": "Re-applied the F24/F25 applicability correction (revision 2 p35-36; maintenance 2016-2018 p18) and the Table 22 direct-on-raw rule including cooking and its derivative exceptions (revision 2 p43-44, p52) on top of the 2026-10-09 guidance; both checked against the source PDFs. No prior resolution text was removed."
     }
   ]
 }

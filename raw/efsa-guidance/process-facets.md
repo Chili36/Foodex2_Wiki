@@ -14,7 +14,7 @@ related:
   - "[[base-term-selection]]"
   - "[[code-string-format]]"
   - "[[maintenance-2025]]"
-last_updated: "2026-10-09"
+last_updated: "2026-11-21"
 ---
 
 # Process Facets
@@ -24,6 +24,14 @@ last_updated: "2026-10-09"
 
 - Add `F28` only when the treatment makes the difference. If the derivative base term already implies the process, do not restate it. Read this together with [[base-term-selection]] when deciding whether the process belongs in the base term or in an explicit facet. (EFSA guidance p44, p46-47, p58)
 - `F13-F16` are largely deprecated; use `F28`. The general "implicit vs explicit" boundary is summarized in [[implicit-vs-explicit-facets]], and the string syntax is in [[code-string-format]]. (EFSA guidance p46-47)
+
+<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p43-44 Table 22, p52 section 5.9 -->
+## Processes Applied Directly To Raw Commodities
+
+- A treatment that does not create a new derivative nature is added to a raw-commodity base as an explicit `F28`; the base stays a raw primary commodity. Table 22 lists the processes normally applied this way. It is explicitly non-exhaustive, and only in rare, mostly legacy cases does a specific group for one of these processes exist (for example boiled potato and baked potato). The generic descriptors processed, preserved and semi-preserved name no specific process and are outside this rule. (EFSA guidance p43-44, Table 22)
+- Table 22 covers physical division and dimension reduction (`A07KT` portioning, `A07KV` slicing, `A07KX` dicing/stripe-cutting, `A07KY` mincing/chopping/cutting, `A07KZ` grating, `A07LA` grinding/milling/crushing, `A0C6N` pulping/mashing), physical decontamination, lowering temperature, thermal preservation, **cooking and similar thermal preparation (`A0BA1` and its children: blanching, boiling, steaming, stewing, frying, baking, roasting, grilling, toasting)**, aseptic filling, vacuum-packing, and breading, battering, glazing/icing, sugar, chocolate or nut coating. Cooking is therefore not a derivative-creating process by default: a roasted, boiled or baked raw commodity keeps its raw base with the cooking descriptor in `F28`. (EFSA guidance p44, Table 22)
+- Use a derivative group instead only for Table 22's listed exceptions, after checking the catalogue: some minced-meat groups; grain milling with separation, which creates grain derivatives with their own milling descriptors; mashing with separation and cooking, which leads to purée groups in some plant derivatives; frying or roasting potatoes; cooking eggs; and caramelisation/browning, e.g. in sugar and milk. (EFSA guidance p44, Table 22)
+- When wording can be represented either as a changed physical state or as the treatment that produced it, give priority to the treatment when in doubt. Where both add information and are legal, the guidance suggests reporting both. (EFSA guidance p52, section 5.9)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p15-16, p43-44 Table 22, p48, p58-59 -->
 ## Physical Division And Derivative Production
@@ -58,7 +66,7 @@ This is a historical reference to the 2015 Appendix A2. Later name and hierarchy
   - Irradiation: `A07JJ irradiation`
   - Cold: `A07KP chilling`, `A07KQ freezing`, `A07KR IQF`
   - Thermal: `A07HT thermisation`, `A07HV pasteurisation`, `A07HX high pasteurisation`, `A07HY UHT`, `A07HZ sterilisation`, `A07JA hot fill`
-- Cooking and thermal prep:
+- Cooking and thermal prep (normally applied directly to the raw commodity; see Processes Applied Directly To Raw Commodities):
   - Water: `A07GF blanching`, `A07GG/GH/GJ/GK/GL` water-cooking, `A07GM stewing`, `A07GP/GQ` steaming
   - Dry heat: `A07GR/GS/GT/GV` frying, `A07GX baking`, `A07GY roasting`, `A0EJY/A07GZ/A07HA` grilling, `A07HC toasting`
   - Other: `A07HB microwave-cooking`, `A0CRA infra-red micronisation`, `A07HD-A07HH` reheating, `A07HJ caramelization/browning`

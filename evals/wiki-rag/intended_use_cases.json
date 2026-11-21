@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "description": "Reviewed cases for F24 Intended-use applicability and its physical-state boundary.",
+  "cases": [
+    {
+      "id": "FACET-F24-001",
+      "reviewed": true,
+      "source": "EFSA FoodEx2 revision 2 p35-36; FoodEx2 maintenance 2016-2018 p18 Table 8",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "A selected FoodEx2 term describes an uncooked physical state, and reporting must distinguish that the product is intended to be eaten cooked. Which facet family represents that intended-use distinction?",
+      "reference_answer": "Use F24 Intended-use for the intended-use distinction. F24 is single-cardinality and is applicable to all food types; it is not restricted to microbiology. The physical-state wording helps identify the documented catalogue pattern, but the reason to use F24 is that intended use must be represented.",
+      "reference_pages": [
+        "facet-coding-rules.md"
+      ],
+      "acceptable_pages": [
+        "implicit-vs-explicit-facets.md",
+        "structural-validation.md",
+        "business-rules.md",
+        "RUNTIME_RULES.md"
+      ],
+      "must_not_pages": [
+        "index.md"
+      ],
+      "required_answer_terms": [
+        "F24",
+        "intended use",
+        "single"
+      ],
+      "forbidden_answer_terms": [
+        "microbiology only",
+        "F03 instead"
+      ]
+    },
+    {
+      "id": "FACET-F24-002",
+      "reviewed": true,
+      "source": "FoodEx2 maintenance 2016-2018 p18 Table 8",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "A product description states only that the food is liquid and gives no intended-use distinction. Does that physical-state wording by itself require F24 Intended-use?",
+      "reference_answer": "No. Physical-state wording alone does not require F24. Use F24 only when an intended-use distinction actually needs to be represented for the selected term or product; physical state belongs to its own coding decision.",
+      "reference_pages": [
+        "facet-coding-rules.md"
+      ],
+      "acceptable_pages": [
+        "implicit-vs-explicit-facets.md",
+        "structural-validation.md",
+        "RUNTIME_RULES.md"
+      ],
+      "must_not_pages": [
+        "index.md"
+      ],
+      "required_answer_terms": [
+        "F24",
+        "intended use"
+      ],
+      "forbidden_answer_terms": [
+        "always required",
+        "physical state automatically requires F24"
+      ]
+    }
+  ]
+}

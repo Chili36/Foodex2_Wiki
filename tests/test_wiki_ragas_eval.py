@@ -73,6 +73,46 @@ def test_ontology_exception_cases_are_reviewed_and_loadable() -> None:
     assert all(case.get("reference_answer") for case in cases)
 
 
+def test_additives_collection_year_cases_are_reviewed_and_loadable() -> None:
+    cases = load_cases(
+        REPO_ROOT / "evals" / "wiki-rag" / "additives_collection_year_cases.json",
+        only_reviewed=True,
+    )
+
+    assert [case["id"] for case in cases] == [
+        "ADDITIVES-F03-2026-001",
+        "ADDITIVES-F03-2026-002",
+    ]
+    assert all(case.get("reference_answer") for case in cases)
+
+
+def test_process_applicability_cases_are_reviewed_and_loadable() -> None:
+    cases = load_cases(
+        REPO_ROOT / "evals" / "wiki-rag" / "process_applicability_cases.json",
+        only_reviewed=True,
+    )
+
+    assert [case["id"] for case in cases] == [
+        "PROCESS-DIRECT-RAW-001",
+        "PROCESS-DIRECT-RAW-002",
+        "PROCESS-DIRECT-RAW-003",
+    ]
+    assert all(case.get("reference_answer") for case in cases)
+
+
+def test_intended_use_cases_are_reviewed_and_loadable() -> None:
+    cases = load_cases(
+        REPO_ROOT / "evals" / "wiki-rag" / "intended_use_cases.json",
+        only_reviewed=True,
+    )
+
+    assert [case["id"] for case in cases] == [
+        "FACET-F24-001",
+        "FACET-F24-002",
+    ]
+    assert all(case.get("reference_answer") for case in cases)
+
+
 def test_build_ask_payload_holds_selector_fixed() -> None:
     payload = build_endpoint_payload(
         endpoint="ask",

@@ -1,0 +1,107 @@
+{
+  "testset_id": "efsa-core-v1-audited",
+  "testset": "/Users/davidfoster/Dev/LLM Knowledge Base/evals/coverage/testsets/efsa-core-v1-audited.json",
+  "started_at": "2026-08-02T08:33:26.154098+00:00",
+  "completed_at": "2026-08-02T08:48:06.726654+00:00",
+  "case_count": 36,
+  "covered": 9,
+  "partial": 16,
+  "missing": 11,
+  "coverage_percent": 25.0,
+  "root_cause_counts": {
+    "answerer": 23,
+    "likely_knowledge": 7,
+    "retrieval": 4
+  },
+  "per_source": [
+    {
+      "source_id": "efsa-foodex2-maintenance-2015",
+      "question_count": 3,
+      "covered": 0,
+      "partial": 3,
+      "missing": 0,
+      "coverage_percent": 0.0,
+      "covered_or_partial_percent": 100.0
+    },
+    {
+      "source_id": "efsa-foodex2-maintenance-2016-2018",
+      "question_count": 2,
+      "covered": 0,
+      "partial": 0,
+      "missing": 2,
+      "coverage_percent": 0.0,
+      "covered_or_partial_percent": 0.0
+    },
+    {
+      "source_id": "efsa-foodex2-maintenance-2019",
+      "question_count": 1,
+      "covered": 0,
+      "partial": 1,
+      "missing": 0,
+      "coverage_percent": 0.0,
+      "covered_or_partial_percent": 100.0
+    },
+    {
+      "source_id": "efsa-foodex2-maintenance-2020",
+      "question_count": 2,
+      "covered": 0,
+      "partial": 1,
+      "missing": 1,
+      "coverage_percent": 0.0,
+      "covered_or_partial_percent": 50.0
+    },
+    {
+      "source_id": "efsa-foodex2-maintenance-2021",
+      "question_count": 0,
+      "covered": 0,
+      "partial": 0,
+      "missing": 0,
+      "coverage_percent": 0.0,
+      "covered_or_partial_percent": 0.0
+    },
+    {
+      "source_id": "efsa-foodex2-maintenance-2022",
+      "question_count": 0,
+      "covered": 0,
+      "partial": 0,
+      "missing": 0,
+      "coverage_percent": 0.0,
+      "covered_or_partial_percent": 0.0
+    },
+    {
+      "source_id": "efsa-foodex2-maintenance-2023",
+      "question_count": 1,
+      "covered": 1,
+      "partial": 0,
+      "missing": 0,
+      "coverage_percent": 100.0,
+      "covered_or_partial_percent": 100.0
+    },
+    {
+      "source_id": "efsa-foodex2-maintenance-2024",
+      "question_count": 0,
+      "covered": 0,
+      "partial": 0,
+      "missing": 0,
+      "coverage_percent": 0.0,
+      "covered_or_partial_percent": 0.0
+    },
+    {
+      "source_id": "efsa-foodex2-revision-2",
+      "question_count": 27,
+      "covered": 8,
+      "partial": 11,
+      "missing": 8,
+      "coverage_percent": 29.63,
+      "covered_or_partial_percent": 70.37
+    }
+  ],
+  "judge": {
+    "model": "gpt-oss-120b",
+    "repeats": 1,
+    "mean_agreement_percent": 100.0,
+    "cases_with_variance": 0
+  },
+  "frontier_escalation_enabled": false,
+  "network_egress_default": false
+}

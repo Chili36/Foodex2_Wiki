@@ -5,6 +5,13 @@ last_updated: "2026-11-21"
 
 # Log
 
+## [2026-11-21] correction | Merge source-driven coverage evals with F24 and Table 22 corrections (#51, #46)
+
+- Merged PR #52's source-driven coverage suite (`evals/coverage/`, non-blocking workflow) and its reviewed regression cases for intended use, process applicability and the additives collection-year boundary.
+- Its guidance edits were written before the 2026-09-30 coverage resolutions and the 2026-10-09 BR13/physical-division repair. Where they conflicted, the newer reviewed guidance and the `2026-10-09-v0.11` policy were kept.
+- Corrected `F24`/`F25`: EFSA defines `F24 Intended-use` as single-cardinality and applicable to all food types, and `F25 Risky-ingredient` as repeatable for composites. They are not microbiology-only. The F24 boundary comes from the 2016-2018 maintenance: use it when an intended-use distinction is required. Physical-state wording alone does not trigger it. (Revision 2 p35-36; maintenance 2016-2018 p18) Closes #51.
+- Added Table 22's general rule to `process-facets.md`: cooking and similar thermal preparation (`A0BA1`), like the other listed treatments, is normally applied directly to the raw commodity as `F28`. Derivative groups exist only for the listed exceptions: some minced meat, grain milling with separation, purée mashing, frying/roasting potatoes, cooking eggs, and caramelisation/browning. Relabelled the cooking list so it no longer reads as the opposite of "non-nature-changing". (Revision 2 p43-44, p52) Addresses #46.
+
 ## [2026-11-21] maintenance | Apply the selection skeleton to /wiki/ask-rag (#63)
 
 - Chunk retrieval for "sweetened tea, contaminants" returned additives and maintenance chunks and never `facet-coding-rules.md`, so answers left out `F08`. Named reporting domains were also ignored.

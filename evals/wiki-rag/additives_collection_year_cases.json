@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "description": "Reviewed additives/flavourings cases for the ChemMon 2025-to-2026 physical-state rule boundary.",
+  "cases": [
+    {
+      "id": "ADDITIVES-F03-2026-001",
+      "reviewed": true,
+      "source": "Chemical Monitoring Reporting Guidance 2026 p38-39",
+      "domain": "additives",
+      "shape": "agent_specific",
+      "question": "For 2026 additives reporting, red wine uses base A03MX and already has implicit F33 category 14.2.2. Must I add explicit F03 liquid?",
+      "reference_answer": "No. ChemMon 2026 makes F33 mandatory but limits the highly recommended missing-F03 guidance to a named category list that does not include category 14.2.2 wine. Its official red-wine example gives bare A03MX as the correct code. Do not carry the broader 2025 A03MX#F03.A06JL example forward as a universal 2026 requirement.",
+      "reference_pages": [
+        "additives-flavourings-foodex2.md"
+      ],
+      "acceptable_pages": [
+        "domain-specific-validation.md",
+        "implicit-vs-explicit-facets.md",
+        "facet-coding-rules.md",
+        "RUNTIME_RULES.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "vmpr-foodex2.md"
+      ],
+      "required_answer_terms": [
+        "A03MX",
+        "14.2.2",
+        "2026"
+      ],
+      "forbidden_answer_terms": [
+        "F03 is mandatory"
+      ]
+    },
+    {
+      "id": "ADDITIVES-F03-2026-002",
+      "reviewed": true,
+      "source": "Chemical Monitoring Reporting Guidance 2026 p38-39; CHEMON86",
+      "domain": "additives",
+      "shape": "agent_specific",
+      "question": "In 2026 additives reporting, how should I handle physical state when a sample belongs to legislative category 1 and F03 is not implicit?",
+      "reference_answer": "Category 1 is on the ChemMon 2026 physical-state list. If F03 is not implicit, adding the appropriate explicit F03 is highly recommended, not universally mandatory. The relevant F33 legislative category remains mandatory and may be implicit or explicit.",
+      "reference_pages": [
+        "additives-flavourings-foodex2.md"
+      ],
+      "acceptable_pages": [
+        "domain-specific-validation.md",
+        "facet-coding-rules.md",
+        "implicit-vs-explicit-facets.md",
+        "RUNTIME_RULES.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "vmpr-foodex2.md"
+      ],
+      "required_answer_terms": [
+        "F03",
+        "highly recommended",
+        "F33"
+      ],
+      "forbidden_answer_terms": [
+        "F03 is mandatory"
+      ]
+    }
+  ]
+}

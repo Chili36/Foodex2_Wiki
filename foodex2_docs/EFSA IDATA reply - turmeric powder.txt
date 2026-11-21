@@ -1,0 +1,9 @@
+EFSA IDATA reply: turmeric powder
+
+Provenance: Direct EFSA IDATA response supplied by the repository maintainer on 2026-08-01.
+
+In MTX Catalogue it is available the term for turmeric roots not powder. However, it is possible to add the "powder" as a grinding process. Please find below the sampMatCode, as well as the full description of the term code:
+
+A01AC#F28.A07LA    Turmeric roots, [F28] PROCESS = Grinding / milling / crushing.
+
+In addition, kindly be informed that you may include additional information on the matrix of the sample within the optional element of sampMatText, reporting in this way a full textual description of the product sampled.

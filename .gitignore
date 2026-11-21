@@ -1,6 +1,7 @@
 .DS_Store
 .pytest_cache/
 .venv/
+.venv-coverage/
 .env
 .codex/config.toml
 __pycache__/
@@ -13,3 +14,5 @@ reports/wiki-lint-*.md
 reports/dmt-foodex2-paper/
 reports/wiki-ask-evals/
 reports/wiki-judge-evals/
+evals/coverage/reports/*
+!evals/coverage/reports/summary.json
