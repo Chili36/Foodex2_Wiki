@@ -794,6 +794,7 @@ def _generation_checkpoint(
     chunks: list[dict[str, Any]],
     generation: dict[str, Any],
     qualification: dict[str, Any],
+    qualification_model: dict[str, Any],
     generator_model: dict[str, Any],
     run_models: dict[str, dict[str, Any]],
 ) -> tuple[Path, dict[str, Any]]:
@@ -809,6 +810,7 @@ def _generation_checkpoint(
         ],
         "generation": generation,
         "qualification": qualification,
+        "qualification_model": qualification_model,
         "generator_model": generator_model,
         "run_models": run_models,
     }
@@ -901,6 +903,7 @@ def generate_testset(
         chunks=chunks,
         generation=generation,
         qualification=qualification_config,
+        qualification_model=qualification_model_config,
         generator_model=generator_config,
         run_models=default_run_models,
     )

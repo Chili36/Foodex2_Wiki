@@ -149,18 +149,28 @@ def source_aliases(source: dict[str, Any]) -> list[str]:
 
 
 def citation_pages(citation: str, source: dict[str, Any]) -> set[int] | None:
+    """Return pages cited for ``source`` across every citation segment.
+
+    A whole wiki page can cite the same source many times; each mention's
+    segment (up to the next ``;``) contributes its page references.
+    """
     folded = citation.casefold()
-    positions = [folded.find(alias) for alias in source_aliases(source) if alias in folded]
-    if not positions:
+    starts: set[int] = set()
+    for alias in source_aliases(source):
+        position = folded.find(alias)
+        while position >= 0:
+            starts.add(position)
+            position = folded.find(alias, position + 1)
+    if not starts:
         return None
-    start = min(positions)
-    segment_end = citation.find(";", start)
-    segment = citation[start : segment_end if segment_end >= 0 else len(citation)]
     pages: set[int] = set()
-    for match in PAGE_RE.finditer(segment):
-        first = int(match.group(1))
-        last = int(match.group(2) or first)
-        pages.update(range(min(first, last), max(first, last) + 1))
+    for start in sorted(starts):
+        segment_end = citation.find(";", start)
+        segment = citation[start : segment_end if segment_end >= 0 else len(citation)]
+        for match in PAGE_RE.finditer(segment):
+            first = int(match.group(1))
+            last = int(match.group(2) or first)
+            pages.update(range(min(first, last), max(first, last) + 1))
     return pages
 
 

@@ -698,3 +698,32 @@ def test_staleness_flags_changed_source_revision(tmp_path: Path) -> None:
     assert report["model_calls"] == 0
     assert report["changed_sources"][0]["source_id"] == "fixture-source"
     assert report["changed_sources"][0]["changed_pages"] == [1]
+
+
+def test_citation_pages_reads_every_segment_for_the_same_source() -> None:
+    from evals.coverage.coverage_index import citation_pages
+
+    source = {"id": "rev2", "title": "FoodEx2 revision 2", "path": "docs/rev2.pdf"}
+    text = (
+        "<!-- Source: FoodEx2 revision 2 p43-44 Table 22; other.pdf p9 -->\n"
+        "later text\n"
+        "<!-- Source: FoodEx2 revision 2 p52 section 5.9 -->"
+    )
+    assert citation_pages(text, source) == {43, 44, 52}
+    assert citation_pages("other.pdf p9", source) is None
+
+
+def test_generation_checkpoint_signature_changes_with_qualifier_model() -> None:
+    from evals.coverage.generate import _generation_checkpoint
+
+    common = dict(
+        testset_id="sig-test-nonexistent",
+        chunks=[{"chunk_id": "c1", "text": "t"}],
+        generation={},
+        qualification={},
+        generator_model={"model": "g"},
+        run_models={},
+    )
+    _, first = _generation_checkpoint(qualification_model={"model": "small"}, **common)
+    _, second = _generation_checkpoint(qualification_model={"model": "large"}, **common)
+    assert first["signature"] != second["signature"]
