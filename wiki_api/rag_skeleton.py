@@ -40,6 +40,14 @@ def detect_reporting_domain(question: str) -> str | None:
     return domain or None
 
 
+def question_with_reporting_domain(question: str, reporting_domain: str | None) -> str:
+    """Prefix an explicit request-level domain unless the question already names one."""
+    domain = (reporting_domain or "").strip()
+    if not domain or detect_reporting_domain(question):
+        return question
+    return f"Reporting domain: {domain}. {question}"
+
+
 def _backfill_item(store: WikiStore, page_name: str) -> dict[str, Any]:
     page = store.read_page(page_name)
     category = store.page_category(page.name)

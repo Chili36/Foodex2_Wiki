@@ -27,7 +27,7 @@ from .librarian import (
 from .jev_selector import JevWikiPageSelector
 from .policy import build_policy_contract
 from .qdrant_ask import QdrantAskError, retrieve_qdrant_ask_context
-from .rag_skeleton import apply_rag_skeleton
+from .rag_skeleton import apply_rag_skeleton, question_with_reporting_domain
 from .rag_index import (
     DEFAULT_WIKI_CATEGORIES,
     DEFAULT_WIKI_CHUNK_MAX_CHARS,
@@ -1565,10 +1565,15 @@ def ask_question_rag(request: AskRagRequest) -> AskResponse:
     ]
     pages_used = context["pages_used"]
 
+    # A request-level reporting domain must reach the answerer too: the runtime
+    # rules forbid inferring a domain the question does not state.
+    answerer_question = question_with_reporting_domain(
+        request.question, request.reporting_domain
+    )
     answerer = get_answerer_runner(model=request.answerer_model)
     answerer_start = time.perf_counter()
     try:
-        answer_result = answerer.run(question=request.question, pages=context["answerer_pages"])
+        answer_result = answerer.run(question=answerer_question, pages=context["answerer_pages"])
     except (RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     answerer_total_ms = int((time.perf_counter() - answerer_start) * 1000)

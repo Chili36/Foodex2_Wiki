@@ -1802,3 +1802,24 @@ def test_ask_rag_hydrates_required_pages_retrieved_as_a_single_chunk(monkeypatch
     skeleton = payload["trace"]["selection_skeleton"]
     assert skeleton["hydrated_retrieved_pages"] == ["facet-coding-rules.md", "RUNTIME_RULES.md"]
     assert skeleton["runtime_rules_added"] is False
+
+
+def test_ask_rag_forwards_request_reporting_domain_to_answerer(monkeypatch) -> None:
+    retrieved = _fake_wiki_context([("vmpr-foodex2.md", "VMPR rules.")])
+    monkeypatch.setattr(app_module, "retrieve_qdrant_ask_context", lambda **_: retrieved)
+
+    request(
+        "POST",
+        "/wiki/ask-rag",
+        json={"question": "How do I code processed beef?", "reporting_domain": "VMPR"},
+    )
+    assert app_module.answerer_runner.calls[-1]["question"] == (
+        "Reporting domain: VMPR. How do I code processed beef?"
+    )
+
+    request(
+        "POST",
+        "/wiki/ask-rag",
+        json={"question": "Reporting domain: VMPR. Beef?", "reporting_domain": "vmpr"},
+    )
+    assert app_module.answerer_runner.calls[-1]["question"] == "Reporting domain: VMPR. Beef?"
