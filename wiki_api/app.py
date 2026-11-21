@@ -27,6 +27,7 @@ from .librarian import (
 from .jev_selector import JevWikiPageSelector
 from .policy import build_policy_contract
 from .qdrant_ask import QdrantAskError, retrieve_qdrant_ask_context
+from .rag_skeleton import apply_rag_skeleton
 from .rag_index import (
     DEFAULT_WIKI_CATEGORIES,
     DEFAULT_WIKI_CHUNK_MAX_CHARS,
@@ -404,6 +405,23 @@ class AskRagRequest(BaseModel):
         ),
     )
     include_page_content: bool = False
+    apply_selection_skeleton: bool = Field(
+        default=True,
+        description=(
+            "Wiki mode only. Apply the selection-policy skeleton to retrieved "
+            "pages: put RUNTIME_RULES.md first, backfill any missing base-term, "
+            "facet or validation role default, and drop overlays owned by other "
+            "domains when a reporting domain is named. `limit` stays the cap on "
+            "non-runtime pages."
+        ),
+    )
+    reporting_domain: str | None = Field(
+        default=None,
+        description=(
+            "Optional reporting domain (for example `contaminants`). If omitted, "
+            "a `Reporting domain: <name>` phrase in the question is used."
+        ),
+    )
     answerer_model: str | None = Field(
         default=None,
         description=(
@@ -1507,6 +1525,33 @@ def ask_question_rag(request: AskRagRequest) -> AskResponse:
         )
     except QdrantAskError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
+    skeleton_trace: dict[str, Any] | None = None
+    if request.retrieval_mode == "wiki" and request.apply_selection_skeleton:
+        try:
+            selection_policy = load_selection_policy(store)
+        except ValueError as exc:
+            raise HTTPException(status_code=500, detail=str(exc)) from exc
+        context, skeleton_trace = apply_rag_skeleton(
+            question=request.question,
+            context=context,
+            limit=request.limit,
+            store=store,
+            policy=selection_policy,
+            reporting_domain=request.reporting_domain,
+        )
+        for backfill in skeleton_trace["backfilled"]:
+            logger.info(
+                "selector_miss %s",
+                json.dumps(
+                    {
+                        "surface": "ask-rag",
+                        "question": request.question,
+                        "role": backfill["role"],
+                        "page": backfill["page"],
+                    },
+                    ensure_ascii=False,
+                ),
+            )
     retrieval_total_ms = int((time.perf_counter() - retrieval_start) * 1000)
 
     pages = [
@@ -1544,6 +1589,7 @@ def ask_question_rag(request: AskRagRequest) -> AskResponse:
             "max_pages": request.limit,
             "selection_method": f"qdrant {request.retrieval_mode} retrieval + answerer",
             "retrieval": context["retrieval"],
+            "selection_skeleton": skeleton_trace,
             "embedding": context["embedding"],
             "answerer": {
                 "model": answerer.model,

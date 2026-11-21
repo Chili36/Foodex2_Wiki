@@ -178,3 +178,21 @@ Run the set through the same harness:
   --only-reviewed \
   --dry-run
 ```
+
+## Ask-rag selection skeleton
+
+`/wiki/ask-rag` applies the `selection-policy.md` skeleton in wiki mode:
+`RUNTIME_RULES.md` first, each required role's default page backfilled, and
+overlays owned by other domains dropped when the question names a reporting
+domain (`domain_overlays`). Measure page recall and leaks before and after it,
+with embedding calls only and no answerer calls:
+
+```bash
+.venv/bin/python scripts/wiki_rag_skeleton_eval.py
+```
+
+Baseline (2026-11-21, `reports/wiki-rag-evals/2026-11-21-ask-rag-skeleton/`):
+must-have recall 0.71 → 0.96 (`legacy_topk`) and 0.76 → 0.97
+(`diverse_pages`) over 17 reviewed cases, at a cost of about 11–15k extra
+answerer input characters per request. Overlay leaks on questions that name
+no domain are expected; the skeleton only filters when a domain is named.

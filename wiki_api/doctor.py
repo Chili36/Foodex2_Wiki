@@ -638,6 +638,17 @@ def _check_selection_policy(store: WikiStore) -> Iterable[DoctorIssue]:
                         message=f"role {role.name!r} member {member!r} is not prompt-facing",
                     )
                 )
+    for domain, pages in policy.domain_overlays:
+        for page in pages:
+            if page not in served:
+                issues.append(
+                    DoctorIssue(
+                        severity="error",
+                        check="selection_policy",
+                        location=POLICY_PAGE_NAME,
+                        message=f"domain_overlays {domain!r} page {page!r} is not a served page",
+                    )
+                )
     for pattern in policy.drop_pages:
         if "*" not in pattern and pattern not in served:
             issues.append(

@@ -1,0 +1,36 @@
+DMT-ASK-001           legacy_topk   recall 0.33->1.00  leaks 0->0 []  +19321ch
+DMT-ASK-001           diverse_pages recall 0.33->1.00  leaks 4->1 ['maintenance-2025.md']  +19321ch
+DMT-ASK-002           legacy_topk   recall 0.33->1.00  leaks 0->0 []  +19321ch
+DMT-ASK-002           diverse_pages recall 0.33->1.00  leaks 3->1 ['domoic-acid-scallops.md']  +19321ch
+DMT-ASK-003           legacy_topk   recall 0.25->1.00  leaks 0->0 []  +19321ch
+DMT-ASK-003           diverse_pages recall 0.25->1.00  leaks 3->0 []  +19321ch
+DMT-ASK-004           legacy_topk   recall 0.25->0.75  leaks 0->0 []  +19321ch
+DMT-ASK-004           diverse_pages recall 0.50->1.00  leaks 0->0 []  +19321ch
+DMT-ASK-011           legacy_topk   recall 0.00->1.00  leaks 1->0 []  +19321ch
+DMT-ASK-011           diverse_pages recall 0.00->1.00  leaks 2->0 []  +19321ch
+ONTOLOGY-DRY-001      legacy_topk   recall 1.00->1.00  leaks 0->0 []  +14029ch
+ONTOLOGY-DRY-001      diverse_pages recall 1.00->1.00  leaks 1->1 ['pesticides-foodex2.md']  +5823ch
+ONTOLOGY-DRY-002      legacy_topk   recall 1.00->1.00  leaks 0->0 []  +14029ch
+ONTOLOGY-DRY-002      diverse_pages recall 1.00->1.00  leaks 1->0 []  +14029ch
+ONTOLOGY-DRY-003      legacy_topk   recall 1.00->1.00  leaks 0->0 []  +14029ch
+ONTOLOGY-DRY-003      diverse_pages recall 1.00->1.00  leaks 2->2 ['pesticides-foodex2.md', 'additives-flavourings-foodex2.md']  +10424ch
+ONTOLOGY-DRY-004      legacy_topk   recall 0.50->0.50  leaks 1->1 ['pesticides-foodex2.md']  +14029ch
+ONTOLOGY-DRY-004      diverse_pages recall 0.50->0.50  leaks 2->1 ['pesticides-foodex2.md']  +14029ch
+DIV-001               legacy_topk   recall 0.67->1.00  leaks 0->0 []  +15716ch
+DIV-001               diverse_pages recall 1.00->1.00  leaks 0->0 []  +0ch
+DIV-002               legacy_topk   recall 0.67->1.00  leaks 0->0 []  +15716ch
+DIV-002               diverse_pages recall 1.00->1.00  leaks 1->1 ['pesticides-foodex2.md']  +8206ch
+DIV-003               legacy_topk   recall 1.00->1.00  leaks 0->0 []  +8206ch
+DIV-003               diverse_pages recall 1.00->1.00  leaks 0->0 []  +8206ch
+DIV-004               legacy_topk   recall 1.00->1.00  leaks 0->0 []  +14029ch
+DIV-004               diverse_pages recall 1.00->1.00  leaks 0->0 []  +8206ch
+DIV-005               legacy_topk   recall 1.00->1.00  leaks 0->0 []  +10424ch
+DIV-005               diverse_pages recall 1.00->1.00  leaks 0->0 []  +8206ch
+DIV-006               legacy_topk   recall 1.00->1.00  leaks 0->0 []  +10424ch
+DIV-006               diverse_pages recall 1.00->1.00  leaks 1->1 ['pesticides-foodex2.md']  +0ch
+DIV-007               legacy_topk   recall 1.00->1.00  leaks 0->0 []  +15716ch
+DIV-007               diverse_pages recall 1.00->1.00  leaks 0->0 []  +8206ch
+DIV-008               legacy_topk   recall 1.00->1.00  leaks 0->0 []  +8206ch
+DIV-008               diverse_pages recall 1.00->1.00  leaks 0->0 []  +8206ch
+legacy_topk n 17 mean recall 0.706 -> 0.956 leak-free 0.88 -> 0.94 mean added chars 14774
+diverse_pages n 17 mean recall 0.760 -> 0.971 leak-free 0.41 -> 0.59 mean added chars 11185
