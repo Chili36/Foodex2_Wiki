@@ -84,8 +84,9 @@ def compare_manifests(
                 if old_pages.get(page) != new_pages.get(page)
             }
             status = "changed"
-        reference_source = new or old
-        assert reference_source is not None
+        # Match citations against both revisions: a revision may rename the
+        # title, file or aliases while old references still need migration.
+        reference_sources = [source for source in (old, new) if source is not None]
         changed_sources.append(
             {
                 "source_id": source_id,
@@ -98,10 +99,16 @@ def compare_manifests(
             }
         )
         for item in wiki_references:
-            if _reference_is_impacted(item["reference"], reference_source, changed_pages):
+            if any(
+                _reference_is_impacted(item["reference"], source, changed_pages)
+                for source in reference_sources
+            ):
                 impacted_wiki.setdefault(item["page"], set()).add(source_id)
         for case in witness_cases:
-            if _reference_is_impacted(case["source"], reference_source, changed_pages):
+            if any(
+                _reference_is_impacted(case["source"], source, changed_pages)
+                for source in reference_sources
+            ):
                 impacted_cases[case["id"]] = {
                     **case,
                     "changed_source_ids": sorted(

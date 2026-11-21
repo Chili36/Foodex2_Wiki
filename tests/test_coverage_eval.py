@@ -817,3 +817,46 @@ def test_coverage_run_keeps_evaluation_errors_out_of_coverage(tmp_path: Path) ->
     gaps = json.loads((tmp_path / "run" / "gaps.json").read_text())
     assert gaps["gap_count"] == 0
     assert not summary_path.exists()
+
+
+def test_staleness_matches_citations_to_a_renamed_source(tmp_path: Path, monkeypatch) -> None:
+    from evals.coverage import staleness
+
+    def manifest(path: Path, source: Path, title: str, aliases: list[str]) -> None:
+        path.write_text(
+            yaml.safe_dump(
+                {
+                    "version": 1,
+                    "sources": [
+                        {
+                            "id": "fixture-source",
+                            "title": title,
+                            "version": title,
+                            "sha256": _sha(source),
+                            "path": str(source.relative_to(ROOT)),
+                            "aliases": aliases,
+                        }
+                    ],
+                },
+                sort_keys=False,
+            ),
+            encoding="utf-8",
+        )
+
+    old_manifest = tmp_path / "old.yaml"
+    new_manifest = tmp_path / "new.yaml"
+    manifest(old_manifest, FIXTURES / "source-old.md", "FoodEx2 revision 1", [])
+    manifest(new_manifest, FIXTURES / "source-new.md", "FoodEx2 revision 2", [])
+    monkeypatch.setattr(
+        staleness,
+        "_wiki_references",
+        lambda: [{"page": "old-cite.md", "reference": "Source: FoodEx2 revision 1 p1"}],
+    )
+    monkeypatch.setattr(
+        staleness,
+        "iter_cases",
+        lambda _root: iter([{"id": "OLD-CASE", "source": "FoodEx2 revision 1 p1", "file": "x"}]),
+    )
+    report = staleness.compare_manifests(old_manifest, new_manifest)
+    assert [item["page"] for item in report["wiki_pages_for_review"]] == ["old-cite.md"]
+    assert [item["id"] for item in report["regression_cases_for_review"]] == ["OLD-CASE"]
