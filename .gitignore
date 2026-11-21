@@ -3,6 +3,7 @@
 .venv/
 .venv-coverage/
 .env
+.codex/config.toml
 __pycache__/
 *.pyc
 ~$*

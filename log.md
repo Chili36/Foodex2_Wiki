@@ -12,6 +12,12 @@ last_updated: "2026-11-21"
 - Corrected `F24`/`F25`: EFSA defines `F24 Intended-use` as single-cardinality and applicable to all food types, and `F25 Risky-ingredient` as repeatable for composites. They are not microbiology-only. The F24 boundary comes from the 2016-2018 maintenance: use it when an intended-use distinction is required. Physical-state wording alone does not trigger it. (Revision 2 p35-36; maintenance 2016-2018 p18) Closes #51.
 - Added Table 22's general rule to `process-facets.md`: cooking and similar thermal preparation (`A0BA1`), like the other listed treatments, is normally applied directly to the raw commodity as `F28`. Derivative groups exist only for the listed exceptions: some minced meat, grain milling with separation, purée mashing, frying/roasting potatoes, cooking eggs, and caramelisation/browning. Relabelled the cooking list so it no longer reads as the opposite of "non-nature-changing". (Revision 2 p43-44, p52) Addresses #46.
 
+## [2026-11-21] maintenance | Apply the selection skeleton to /wiki/ask-rag (#63)
+
+- Chunk retrieval for "sweetened tea, contaminants" returned additives and maintenance chunks and never `facet-coding-rules.md`, so answers left out `F08`. Named reporting domains were also ignored.
+- `/wiki/ask-rag` (wiki mode) now puts `RUNTIME_RULES.md` first, always includes each required role's default page from `selection-policy.md` in full, and drops overlays owned by other domains when the question names a reporting domain. The new `domain_overlays` map in the policy block is an exclusion invariant only. `limit` still caps non-runtime pages. Opt out with `apply_selection_skeleton: false`.
+- Retrieval-only check over 17 reviewed cases: must-have recall 0.71 → 0.96 (`legacy_topk`) and 0.76 → 0.97 (`diverse_pages`), with the four pinned pages always hydrated in full (about 19k characters per request, replacing any retrieved chunks of them). Added DMT-ASK-011 as the regression case.
+
 ## [2026-11-19] maintenance | Move RAG embeddings to voyage-context-4
 
 - Changed the default Voyage embedding model for `/wiki/ask-rag`, the indexers and the RAG status check from `voyage-context-3` to `voyage-context-4`. Query and document vectors from different models are not comparable, so the defaults now point to new collections, `foodex2_wiki_markdown_v2` and `foodex2_source_docs_v2`, instead of re-embedding the v1 collections in place.

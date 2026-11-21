@@ -41,6 +41,14 @@ carry the three roles" is allowed. "When the query says scallop, add the
 domoic-acid page" is forbidden — that is selector judgment, forever.
 Domain overlays are deliberately not a required role for the same reason.
 
+`domain_overlays` is an exclusion invariant, not a selection rule: when a
+case names its reporting domain explicitly, an overlay owned by a different
+domain is never correct evidence. Retrieval surfaces without a selector
+(`/wiki/ask-rag`) use the map to drop those overlays. Nothing is ever added
+because of it. Umbrella pages that span domains
+(`chemical-monitoring-foodex2.md`, `domain-specific-validation.md`) are left
+out of the map on purpose.
+
 ## Policy Block
 
 The service parses the following block. The doctor validates that every
@@ -71,6 +79,17 @@ required_roles:
       - business-rules.md
       - process-validation-rules.md
     default: term-type-facet-constraints.md
+domain_overlays:
+  contaminants:
+    - contaminants-foodex2.md
+    - domoic-acid-scallops.md
+  pesticides:
+    - pesticides-foodex2.md
+  additives:
+    - additives-flavourings-foodex2.md
+  vmpr:
+    - vmpr-foodex2.md
+    - vmpr-legislative-mapping.md
 drop_pages:
   - "index.md"
   - "maintenance-*"

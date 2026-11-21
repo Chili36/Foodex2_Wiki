@@ -336,3 +336,21 @@ def test_summarize_keeps_endpoint_and_model_separate() -> None:
     assert ask["mean_ragas_faithfulness"] == 0.8
     assert ask_rag["mean_reference_page_recall"] == 0.5
     assert ask_rag["mean_deterministic_answer_pass"] == 0.0
+
+
+def test_noskeleton_variant_posts_to_ask_rag_with_skeleton_disabled() -> None:
+    from scripts import wiki_ragas_eval as module
+
+    payload = module.build_endpoint_payload(
+        endpoint="ask-rag-noskeleton",
+        case={"id": "X", "question": "Q?"},
+        answerer_model="m",
+        selector_model="s",
+        max_pages=7,
+        rag_limit=7,
+        rag_strategy="legacy_topk",
+        use_graph_expansion=False,
+    )
+    assert payload["apply_selection_skeleton"] is False
+    assert payload["retrieval_strategy"] == "legacy_topk"
+    assert module.endpoint_path("ask-rag-noskeleton") == "ask-rag"

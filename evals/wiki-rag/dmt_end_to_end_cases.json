@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "description": "Ten DMT questions supplied 2026-07-30 for /wiki/ask versus /wiki/ask-rag evaluation. The first four reuse reviewed page gold from evals/selection/gold_cases.json. Cases 5-10 are intentionally unreviewed until independent reference answers and page labels are added.",
+  "description": "Ten DMT questions supplied 2026-07-30 for /wiki/ask versus /wiki/ask-rag evaluation. The first four reuse reviewed page gold from evals/selection/gold_cases.json. Cases 5-10 are intentionally unreviewed until independent reference answers and page labels are added. DMT-ASK-011 (2026-11-21) is a reviewed regression case for GH-63.",
   "cases": [
     {
       "id": "DMT-ASK-001",
@@ -246,6 +246,46 @@
       "required_answer_terms": [],
       "forbidden_answer_terms": [],
       "notes": "Agent-authored open coding question. Paired with DMT-ASK-009 to test domain-context sensitivity; independent answer and retrieval gold are pending."
+    },
+    {
+      "id": "DMT-ASK-011",
+      "reviewed": true,
+      "source": "GH-63",
+      "domain": "contaminants",
+      "shape": "dmt_standard",
+      "question": "How do I code this food for FoodEx2: Soft drinks Sugar-sweetened and artificially-sweetened tea beverages?",
+      "request_question": "Reporting domain: contaminants. How do I code this food for FoodEx2: Soft drinks Sugar-sweetened and artificially-sweetened tea beverages?",
+      "reference_pages": [
+        "base-term-selection.md",
+        "facet-coding-rules.md",
+        "term-type-facet-constraints.md"
+      ],
+      "acceptable_pages": [
+        "RUNTIME_RULES.md",
+        "contaminants-foodex2.md",
+        "chemical-monitoring-foodex2.md",
+        "domain-specific-validation.md",
+        "implicit-vs-explicit-facets.md",
+        "ingredient-facets.md",
+        "code-string-format.md",
+        "validation-rules.md",
+        "structural-validation.md",
+        "business-rules.md",
+        "foodex2-overview.md",
+        "maintenance-2015.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "vmpr-foodex2.md",
+        "vmpr-legislative-mapping.md",
+        "additives-flavourings-foodex2.md"
+      ],
+      "required_answer_terms": [
+        "F08"
+      ],
+      "forbidden_answer_terms": [],
+      "notes": "Regression for #63: chunk retrieval returned additives and maintenance chunks, never facet-coding-rules.md, so answers omitted F08 for the sweetener. The reporting domain is named, so other domains' overlays must not appear. maintenance-2015.md is acceptable here because the 2015 maintenance revised the tea sections."
     }
   ]
 }

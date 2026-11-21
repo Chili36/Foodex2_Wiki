@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import logging
+from copy import copy
 from pathlib import Path
 import re
 import time
@@ -27,6 +28,11 @@ from .librarian import (
 from .jev_selector import JevWikiPageSelector
 from .policy import build_policy_contract
 from .qdrant_ask import QdrantAskError, retrieve_qdrant_ask_context
+from .rag_skeleton import (
+    apply_rag_skeleton,
+    detect_reporting_domain,
+    question_with_reporting_domain,
+)
 from .rag_index import (
     DEFAULT_WIKI_CATEGORIES,
     DEFAULT_WIKI_CHUNK_MAX_CHARS,
@@ -330,6 +336,7 @@ class WikiSearchResponse(BaseModel):
     terms: list[str] = Field(default_factory=list)
     result_count: int
     results: list[WikiSearchResult] = Field(default_factory=list)
+    knowledge_revision: str | None = None
 
 
 class AskSelectionRequest(BaseModel):
@@ -424,6 +431,24 @@ class AskRagRequest(BaseModel):
         ),
     )
     include_page_content: bool = False
+    apply_selection_skeleton: bool = Field(
+        default=True,
+        description=(
+            "Wiki mode only. Apply the selection-policy skeleton to retrieved "
+            "pages: put RUNTIME_RULES.md first, backfill any missing base-term, "
+            "facet or validation role default, and drop overlays owned by other "
+            "domains when a reporting domain is named. `limit` stays the cap on "
+            "non-runtime pages."
+        ),
+    )
+    reporting_domain: str | None = Field(
+        default=None,
+        description=(
+            "Optional reporting domain (for example `contaminants`). If omitted, "
+            "a `Reporting domain: <name>` phrase in the question is used. A value "
+            "that conflicts with the question's phrase is rejected with 422."
+        ),
+    )
     answerer_model: str | None = Field(
         default=None,
         description=(
@@ -494,6 +519,7 @@ class AskResponse(BaseModel):
     pages_used: list[str] = Field(default_factory=list)
     pages: list[PageSummary] = Field(default_factory=list)
     trace: dict[str, Any]
+    knowledge_revision: str | None = None
 
 
 class AskSelectionResponse(BaseModel):
@@ -662,6 +688,7 @@ class ContextPackResponse(BaseModel):
     pages_used: list[str]
     pages: list[PageSummary]
     trace: dict[str, Any]
+    knowledge_revision: str | None = None
 
 
 class FacetSelection(BaseModel):
@@ -842,7 +869,10 @@ def _search_wiki(query: str, *, limit: int) -> WikiSearchResponse:
     normalized_query = query.strip()
     terms = _parse_search_terms(normalized_query)
     if not terms:
-        return WikiSearchResponse(query=normalized_query, terms=[], result_count=0, results=[])
+        return WikiSearchResponse(
+            query=normalized_query, terms=[], result_count=0, results=[],
+            knowledge_revision=store.knowledge_revision(),
+        )
 
     results: list[WikiSearchResult] = []
     for page_name in sorted(store.allowed_page_names()):
@@ -873,6 +903,7 @@ def _search_wiki(query: str, *, limit: int) -> WikiSearchResponse:
         terms=terms,
         result_count=len(results),
         results=results[:limit],
+        knowledge_revision=store.knowledge_revision(),
     )
 
 
@@ -1168,6 +1199,7 @@ def get_page(page_name: str, include_content: bool = Query(default=True)) -> dic
         "sources": page.sources,
         "related": page.related,
         "content": page.content if include_content else None,
+        "knowledge_revision": store.knowledge_revision(),
     }
 
 
@@ -1182,6 +1214,8 @@ def _run_ask_page_selection(
         scope="ask",
     )
     if request.max_pages != selector.max_pages:
+        # Page budgets belong to a request, not the shared cached selector.
+        selector = copy(selector)
         selector.max_pages = request.max_pages
     selector_payload = {
         "search_term": request.question,
@@ -1422,6 +1456,7 @@ def ask_question(request: AskRequest) -> AskResponse:
     request_wall_time_ms = int((time.perf_counter() - request_started) * 1000)
     response = AskResponse(
         answer=answer_result.answer,
+        knowledge_revision=store.knowledge_revision(),
         citations=_normalize_ask_citations(answer_result.citations, set(pages_used)),
         pages_used=pages_used,
         pages=pages,
@@ -1512,6 +1547,21 @@ def ask_question_rag(request: AskRagRequest) -> AskResponse:
         ),
     )
 
+    question_domain = detect_reporting_domain(request.question)
+    if (
+        request.reporting_domain
+        and question_domain
+        and request.reporting_domain.strip().lower() != question_domain
+    ):
+        # One resolved domain must drive both overlay filtering and the answer.
+        raise HTTPException(
+            status_code=422,
+            detail=(
+                f"reporting_domain {request.reporting_domain!r} conflicts with "
+                f"'Reporting domain: {question_domain}' in the question"
+            ),
+        )
+
     retrieval_start = time.perf_counter()
     try:
         context = retrieve_qdrant_ask_context(
@@ -1527,6 +1577,33 @@ def ask_question_rag(request: AskRagRequest) -> AskResponse:
         )
     except QdrantAskError as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
+    skeleton_trace: dict[str, Any] | None = None
+    if request.retrieval_mode == "wiki" and request.apply_selection_skeleton:
+        try:
+            selection_policy = load_selection_policy(store)
+        except ValueError as exc:
+            raise HTTPException(status_code=500, detail=str(exc)) from exc
+        context, skeleton_trace = apply_rag_skeleton(
+            question=request.question,
+            context=context,
+            limit=request.limit,
+            store=store,
+            policy=selection_policy,
+            reporting_domain=request.reporting_domain,
+        )
+        for backfill in skeleton_trace["backfilled"]:
+            logger.info(
+                "selector_miss %s",
+                json.dumps(
+                    {
+                        "surface": "ask-rag",
+                        "question": request.question,
+                        "role": backfill["role"],
+                        "page": backfill["page"],
+                    },
+                    ensure_ascii=False,
+                ),
+            )
     retrieval_total_ms = int((time.perf_counter() - retrieval_start) * 1000)
 
     pages = [
@@ -1540,10 +1617,15 @@ def ask_question_rag(request: AskRagRequest) -> AskResponse:
     ]
     pages_used = context["pages_used"]
 
+    # A request-level reporting domain must reach the answerer too: the runtime
+    # rules forbid inferring a domain the question does not state.
+    answerer_question = question_with_reporting_domain(
+        request.question, request.reporting_domain
+    )
     answerer = get_answerer_runner(model=request.answerer_model)
     answerer_start = time.perf_counter()
     try:
-        answer_result = answerer.run(question=request.question, pages=context["answerer_pages"])
+        answer_result = answerer.run(question=answerer_question, pages=context["answerer_pages"])
     except (RuntimeError, ValueError) as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc
     answerer_total_ms = int((time.perf_counter() - answerer_start) * 1000)
@@ -1564,6 +1646,7 @@ def ask_question_rag(request: AskRagRequest) -> AskResponse:
             "max_pages": request.limit,
             "selection_method": f"qdrant {request.retrieval_mode} retrieval + answerer",
             "retrieval": context["retrieval"],
+            "selection_skeleton": skeleton_trace,
             "embedding": context["embedding"],
             "answerer": {
                 "model": answerer.model,
@@ -1794,6 +1877,7 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
         scope="coding",
     )
     if request.max_pages != runner.max_pages:
+        runner = copy(runner)
         runner.max_pages = request.max_pages
     payload = {
         "search_term": request.search_term,
@@ -1852,6 +1936,7 @@ def create_context_pack(request: ContextPackRequest) -> ContextPackResponse:
         content_for_page=store.prompt_content_for_context_pack,
     )
     response = ContextPackResponse(
+        knowledge_revision=store.knowledge_revision(),
         guiding_principles=store.guiding_principles(),
         policy_contract=policy_contract,
         pages_used=final_pages_used,

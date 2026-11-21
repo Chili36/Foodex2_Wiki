@@ -31,6 +31,16 @@ class SelectionPolicy:
     skeleton_version: int
     required_roles: tuple[RequiredRole, ...]
     drop_pages: tuple[str, ...]
+    domain_overlays: tuple[tuple[str, tuple[str, ...]], ...] = ()
+
+    def overlays_for(self, domain: str) -> tuple[str, ...] | None:
+        for name, pages in self.domain_overlays:
+            if name == domain:
+                return pages
+        return None
+
+    def all_domain_overlay_pages(self) -> set[str]:
+        return {page for _, pages in self.domain_overlays for page in pages}
 
 
 @dataclass(frozen=True)
@@ -78,10 +88,21 @@ def load_selection_policy(store: WikiStore) -> SelectionPolicy:
                 f"{POLICY_PAGE_NAME} role {role_name!r} default {default!r} is not among its members"
             )
         roles.append(RequiredRole(name=str(role_name), members=member_names, default=default))
+    raw_overlays = data.get("domain_overlays") or {}
+    if not isinstance(raw_overlays, dict):
+        raise ValueError(f"{POLICY_PAGE_NAME} domain_overlays must be a mapping")
+    overlays: list[tuple[str, tuple[str, ...]]] = []
+    for domain_name, pages in raw_overlays.items():
+        if not isinstance(pages, list) or not pages:
+            raise ValueError(
+                f"{POLICY_PAGE_NAME} domain_overlays {domain_name!r} needs a non-empty page list"
+            )
+        overlays.append((str(domain_name).strip().lower(), tuple(str(page) for page in pages)))
     return SelectionPolicy(
         skeleton_version=int(data["skeleton_version"]),
         required_roles=tuple(roles),
         drop_pages=tuple(str(pattern) for pattern in raw_drop),
+        domain_overlays=tuple(overlays),
     )
 
 
