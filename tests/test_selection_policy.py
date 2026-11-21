@@ -197,3 +197,27 @@ def test_load_selector_guidance_missing_section_raises(tmp_path):
     store = WikiStore(root)
     with pytest.raises(ValueError, match="Selector Guidance"):
         load_selector_guidance(store)
+
+
+def test_policy_loads_domain_overlays_from_wiki_page() -> None:
+    from pathlib import Path
+
+    from wiki_api.selection_policy import load_selection_policy
+    from wiki_api.wiki_store import WikiStore
+
+    policy = load_selection_policy(WikiStore(Path(__file__).resolve().parents[1]))
+    assert policy.overlays_for("contaminants") == (
+        "contaminants-foodex2.md",
+        "domoic-acid-scallops.md",
+    )
+    assert policy.overlays_for("microbiology") is None
+    assert "chemical-monitoring-foodex2.md" not in policy.all_domain_overlay_pages()
+
+
+def test_detect_reporting_domain_reads_dmt_question_shape() -> None:
+    from wiki_api.rag_skeleton import detect_reporting_domain
+
+    assert detect_reporting_domain("Reporting domain: VMPR. Code beef") == "vmpr"
+    assert detect_reporting_domain("Anything? reporting domain: pesticides.") == "pesticides"
+    assert detect_reporting_domain("Reporting domain: ") is None
+    assert detect_reporting_domain("How do I code tea?") is None

@@ -1,9 +1,15 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-11-19"
+last_updated: "2026-11-21"
 ---
 
 # Log
+
+## [2026-11-21] maintenance | Apply the selection skeleton to /wiki/ask-rag (#63)
+
+- Chunk retrieval for "sweetened tea, contaminants" returned additives and maintenance chunks and never `facet-coding-rules.md`, so answers left out `F08`. Named reporting domains were also ignored.
+- `/wiki/ask-rag` (wiki mode) now puts `RUNTIME_RULES.md` first, always includes each required role's default page from `selection-policy.md` in full, and drops overlays owned by other domains when the question names a reporting domain. The new `domain_overlays` map in the policy block is an exclusion invariant only. `limit` still caps non-runtime pages. Opt out with `apply_selection_skeleton: false`.
+- Retrieval-only check over 17 reviewed cases: must-have recall 0.71 → 0.96 (`legacy_topk`) and 0.76 → 0.97 (`diverse_pages`), with the four pinned pages always hydrated in full (about 19k characters per request, replacing any retrieved chunks of them). Added DMT-ASK-011 as the regression case.
 
 ## [2026-11-19] maintenance | Move RAG embeddings to voyage-context-4
 

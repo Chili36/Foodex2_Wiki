@@ -811,7 +811,7 @@ def test_ask_rag_uses_qdrant_context_and_answerer(monkeypatch) -> None:
             "question": "What should I think about when coding dried chili?",
             "retrieval_mode": "wiki",
             "retrieval_strategy": "diverse_pages",
-            "limit": 3,
+            "limit": 4,
         },
     )
 
@@ -827,8 +827,157 @@ def test_ask_rag_uses_qdrant_context_and_answerer(monkeypatch) -> None:
     assert payload["pages"][0]["content"] is None
     assert calls[0]["retrieval_mode"] == "wiki"
     assert calls[0]["retrieval_strategy"] == "diverse_pages"
-    assert calls[0]["limit"] == 3
-    assert app_module.answerer_runner.calls[0]["pages"][0]["page_name"] == "base-term-selection.md"
+    assert calls[0]["limit"] == 4
+    answerer_pages = [page["page_name"] for page in app_module.answerer_runner.calls[0]["pages"]]
+    assert answerer_pages == [
+        "RUNTIME_RULES.md",
+        "base-term-selection.md",
+        "implicit-vs-explicit-facets.md",
+        "facet-coding-rules.md",
+        "term-type-facet-constraints.md",
+    ]
+    skeleton = payload["trace"]["selection_skeleton"]
+    assert skeleton["backfilled"] == [
+        {"role": "facet", "page": "facet-coding-rules.md"},
+        {"role": "validation", "page": "term-type-facet-constraints.md"},
+    ]
+    assert skeleton["runtime_rules_added"] is True
+
+
+def _wiki_chunk(page_name: str, content: str) -> tuple[dict[str, object], dict[str, object]]:
+    return (
+        {"page_name": page_name, "content": content},
+        {
+            "page_name": page_name,
+            "title": page_name,
+            "summary": "",
+            "category": "guidance",
+            "sources": [],
+            "related": [],
+            "content": content,
+        },
+    )
+
+
+def _fake_wiki_context(chunks: list[tuple[str, str]]) -> dict[str, object]:
+    formatted = [_wiki_chunk(page_name, content) for page_name, content in chunks]
+    return {
+        "answerer_pages": [answerer for answerer, _ in formatted],
+        "page_summaries": [summary for _, summary in formatted],
+        "pages_used": list(dict.fromkeys(page_name for page_name, _ in chunks)),
+        "embedding": {"provider": "voyage", "tracked_tokens": 10},
+        "retrieval": {"provider": "qdrant", "retrieval_mode": "wiki", "results": []},
+    }
+
+
+def test_ask_rag_sweetened_tea_gets_core_pages_and_only_its_domain_overlay(monkeypatch) -> None:
+    """Regression for #63: chunk retrieval missed facet-coding-rules (F08)."""
+    retrieved = _fake_wiki_context(
+        [
+            ("additives-flavourings-foodex2.md", "Iced tea with sweeteners."),
+            ("maintenance-2015.md", "Tea beverages were restructured."),
+            ("additives-flavourings-foodex2.md", "Flavoured drinks."),
+            ("pesticides-foodex2.md", "Tea leaves residue reporting."),
+            ("contaminants-foodex2.md", "Contaminant sample matrices."),
+        ]
+    )
+    monkeypatch.setattr(app_module, "retrieve_qdrant_ask_context", lambda **_: retrieved)
+
+    response = request(
+        "POST",
+        "/wiki/ask-rag",
+        json={
+            "question": (
+                "Reporting domain: contaminants. How do I code this food for FoodEx2: "
+                "Soft drinks Sugar-sweetened and artificially-sweetened tea beverages?"
+            ),
+            "limit": 7,
+        },
+    )
+
+    assert response.status_code == 200
+    payload = response.json()
+    pages = payload["pages_used"]
+    assert pages[0] == "RUNTIME_RULES.md"
+    for page_name in (
+        "base-term-selection.md",
+        "facet-coding-rules.md",
+        "term-type-facet-constraints.md",
+        "contaminants-foodex2.md",
+        "maintenance-2015.md",
+    ):
+        assert page_name in pages
+    assert "additives-flavourings-foodex2.md" not in pages
+    assert "pesticides-foodex2.md" not in pages
+    skeleton = payload["trace"]["selection_skeleton"]
+    assert skeleton["reporting_domain"] == "contaminants"
+    assert skeleton["reporting_domain_source"] == "question"
+    assert skeleton["dropped_domain_overlays"] == [
+        "additives-flavourings-foodex2.md",
+        "pesticides-foodex2.md",
+    ]
+    answerer_pages = app_module.answerer_runner.calls[0]["pages"]
+    facet_page = next(page for page in answerer_pages if page["page_name"] == "facet-coding-rules.md")
+    assert "F08" in facet_page["content"]
+
+
+def test_ask_rag_skeleton_keeps_limit_by_trimming_lowest_ranked_optional_pages(monkeypatch) -> None:
+    retrieved = _fake_wiki_context(
+        [
+            ("process-facets.md", "Process facets."),
+            ("maintenance-2015.md", "History."),
+            ("foodex2-overview.md", "Overview."),
+            ("code-string-format.md", "Facet string syntax."),
+        ]
+    )
+    monkeypatch.setattr(app_module, "retrieve_qdrant_ask_context", lambda **_: retrieved)
+
+    response = request("POST", "/wiki/ask-rag", json={"question": "How do I code dried tea?", "limit": 3})
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert payload["pages_used"] == [
+        "RUNTIME_RULES.md",
+        "base-term-selection.md",
+        "facet-coding-rules.md",
+        "term-type-facet-constraints.md",
+    ]
+    skeleton = payload["trace"]["selection_skeleton"]
+    # Lowest-ranked optional pages go first; a non-default facet member is optional.
+    assert skeleton["trimmed"] == [
+        "code-string-format.md",
+        "foodex2-overview.md",
+        "maintenance-2015.md",
+        "process-facets.md",
+    ]
+    assert skeleton["reporting_domain"] is None
+    assert skeleton["dropped_domain_overlays"] == []
+
+
+def test_ask_rag_skeleton_can_be_disabled_and_unknown_domain_filters_nothing(monkeypatch) -> None:
+    retrieved = _fake_wiki_context(
+        [
+            ("additives-flavourings-foodex2.md", "Iced tea."),
+            ("maintenance-2015.md", "History."),
+        ]
+    )
+    monkeypatch.setattr(app_module, "retrieve_qdrant_ask_context", lambda **_: retrieved)
+
+    disabled = request(
+        "POST",
+        "/wiki/ask-rag",
+        json={"question": "Reporting domain: contaminants. Tea?", "apply_selection_skeleton": False},
+    ).json()
+    assert disabled["pages_used"] == ["additives-flavourings-foodex2.md", "maintenance-2015.md"]
+    assert disabled["trace"]["selection_skeleton"] is None
+
+    unknown = request(
+        "POST",
+        "/wiki/ask-rag",
+        json={"question": "Tea?", "reporting_domain": "microbiology"},
+    ).json()
+    assert "additives-flavourings-foodex2.md" in unknown["pages_used"]
+    assert unknown["trace"]["selection_skeleton"]["reporting_domain_known"] is False
 
 
 def test_ask_rag_can_return_source_rag_with_page_content(monkeypatch) -> None:
@@ -1627,3 +1776,65 @@ def test_policy_contract_is_loaded_from_markdown_source() -> None:
     assert binding_rules_by_id["R-PROC-003"]["must"].startswith("distinguish active validation from dormant rule definitions")
     assert "process-facets.md" in binding_rules_by_id["R-PROC-001"]["derived_from"]
     assert "business-rules.md BR25" in binding_rules_by_id["R-CARD-001"]["derived_from"]
+
+
+def test_ask_rag_hydrates_required_pages_retrieved_as_a_single_chunk(monkeypatch) -> None:
+    """A retrieved section of a pinned page must not stand in for the whole page."""
+    retrieved = _fake_wiki_context(
+        [
+            ("facet-coding-rules.md", "High-Value Facets section without the family table."),
+            ("RUNTIME_RULES.md", "One runtime section."),
+            ("process-facets.md", "Process facets."),
+        ]
+    )
+    monkeypatch.setattr(app_module, "retrieve_qdrant_ask_context", lambda **_: retrieved)
+
+    payload = request("POST", "/wiki/ask-rag", json={"question": "How do I code sweetened tea?"}).json()
+
+    answerer_pages = app_module.answerer_runner.calls[0]["pages"]
+    names = [page["page_name"] for page in answerer_pages]
+    assert names.count("facet-coding-rules.md") == 1
+    assert names.count("RUNTIME_RULES.md") == 1 and names[0] == "RUNTIME_RULES.md"
+    facet_page = next(page for page in answerer_pages if page["page_name"] == "facet-coding-rules.md")
+    assert "F08" in facet_page["content"]
+    runtime_page = answerer_pages[0]
+    assert "One runtime section." not in runtime_page["content"]
+    skeleton = payload["trace"]["selection_skeleton"]
+    assert skeleton["hydrated_retrieved_pages"] == ["facet-coding-rules.md", "RUNTIME_RULES.md"]
+    assert skeleton["runtime_rules_added"] is False
+
+
+def test_ask_rag_forwards_request_reporting_domain_to_answerer(monkeypatch) -> None:
+    retrieved = _fake_wiki_context([("vmpr-foodex2.md", "VMPR rules.")])
+    monkeypatch.setattr(app_module, "retrieve_qdrant_ask_context", lambda **_: retrieved)
+
+    request(
+        "POST",
+        "/wiki/ask-rag",
+        json={"question": "How do I code processed beef?", "reporting_domain": "VMPR"},
+    )
+    assert app_module.answerer_runner.calls[-1]["question"] == (
+        "Reporting domain: VMPR. How do I code processed beef?"
+    )
+
+    request(
+        "POST",
+        "/wiki/ask-rag",
+        json={"question": "Reporting domain: VMPR. Beef?", "reporting_domain": "vmpr"},
+    )
+    assert app_module.answerer_runner.calls[-1]["question"] == "Reporting domain: VMPR. Beef?"
+
+
+def test_ask_rag_rejects_conflicting_reporting_domains(monkeypatch) -> None:
+    calls: list[object] = []
+    monkeypatch.setattr(
+        app_module, "retrieve_qdrant_ask_context", lambda **kwargs: calls.append(kwargs)
+    )
+    response = request(
+        "POST",
+        "/wiki/ask-rag",
+        json={"question": "Reporting domain: pesticides. Beef?", "reporting_domain": "VMPR"},
+    )
+    assert response.status_code == 422
+    assert "conflicts" in response.json()["detail"]
+    assert calls == []

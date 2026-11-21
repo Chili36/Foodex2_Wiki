@@ -25,6 +25,15 @@ from dotenv import load_dotenv
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_ENDPOINTS = ("ask", "ask-rag")
+# Variants map to a real endpoint path plus payload overrides.
+ENDPOINT_VARIANTS = {
+    "ask-rag-noskeleton": ("ask-rag", {"apply_selection_skeleton": False}),
+}
+SUPPORTED_ENDPOINTS = (*DEFAULT_ENDPOINTS, *ENDPOINT_VARIANTS)
+
+
+def endpoint_path(endpoint: str) -> str:
+    return ENDPOINT_VARIANTS.get(endpoint, (endpoint, {}))[0]
 DEFAULT_METRICS = ("answer_accuracy", "faithfulness")
 SUPPORTED_METRICS = {
     "answer_accuracy",
@@ -130,6 +139,21 @@ def build_endpoint_payload(
             "selector_model": selector_model,
             "max_pages": max_pages,
             "use_graph_expansion": use_graph_expansion,
+        }
+    if endpoint in ENDPOINT_VARIANTS:
+        base_endpoint, overrides = ENDPOINT_VARIANTS[endpoint]
+        return {
+            **build_endpoint_payload(
+                endpoint=base_endpoint,
+                case=case,
+                answerer_model=answerer_model,
+                selector_model=selector_model,
+                max_pages=max_pages,
+                rag_limit=rag_limit,
+                rag_strategy=rag_strategy,
+                use_graph_expansion=use_graph_expansion,
+            ),
+            **overrides,
         }
     if endpoint == "ask-rag":
         return {
@@ -491,7 +515,7 @@ def main() -> int:
     parser.add_argument(
         "--endpoints",
         default=",".join(DEFAULT_ENDPOINTS),
-        help="Comma-separated endpoint names: ask,ask-rag.",
+        help="Comma-separated endpoint names: ask,ask-rag,ask-rag-noskeleton.",
     )
     parser.add_argument(
         "--answerer-models",
@@ -563,7 +587,7 @@ def main() -> int:
         cases = [by_id[case_id] for case_id in requested_case_ids]
 
     endpoints = split_csv(args.endpoints)
-    invalid_endpoints = sorted(set(endpoints) - set(DEFAULT_ENDPOINTS))
+    invalid_endpoints = sorted(set(endpoints) - set(SUPPORTED_ENDPOINTS))
     if invalid_endpoints or not endpoints:
         parser.error(f"unsupported endpoints: {invalid_endpoints or endpoints}")
     models = split_csv(args.answerer_models)
@@ -618,7 +642,7 @@ def main() -> int:
                     )
                     started = time.perf_counter()
                     status_code, response = post_json(
-                        f"{args.base_url.rstrip('/')}/wiki/{endpoint}",
+                        f"{args.base_url.rstrip('/')}/wiki/{endpoint_path(endpoint)}",
                         payload,
                         args.timeout,
                     )
