@@ -860,3 +860,17 @@ def test_staleness_matches_citations_to_a_renamed_source(tmp_path: Path, monkeyp
     report = staleness.compare_manifests(old_manifest, new_manifest)
     assert [item["page"] for item in report["wiki_pages_for_review"]] == ["old-cite.md"]
     assert [item["id"] for item in report["regression_cases_for_review"]] == ["OLD-CASE"]
+
+
+def test_citation_pages_stop_at_the_end_of_each_citation() -> None:
+    from evals.coverage.coverage_index import citation_pages
+
+    source = {"id": "m2015", "title": "FoodEx2 maintenance 2015", "path": "docs/m2015.pdf"}
+    text = (
+        "sources:\n"
+        '  - "FoodEx2 maintenance 2015"\n'
+        "  - \"FoodEx2 revision 2\"\n"
+        "<!-- Source: FoodEx2 revision 2 p41-46 -->\n"
+        "<!-- Source: FoodEx2 maintenance 2015 p15 -->"
+    )
+    assert citation_pages(text, source) == {15}

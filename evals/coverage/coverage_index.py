@@ -152,7 +152,8 @@ def citation_pages(citation: str, source: dict[str, Any]) -> set[int] | None:
     """Return pages cited for ``source`` across every citation segment.
 
     A whole wiki page can cite the same source many times; each mention's
-    segment (up to the next ``;``) contributes its page references.
+    segment (up to the next ``;``, line break or ``-->``) contributes its
+    page references.
     """
     folded = citation.casefold()
     starts: set[int] = set()
@@ -165,8 +166,18 @@ def citation_pages(citation: str, source: dict[str, Any]) -> set[int] | None:
         return None
     pages: set[int] = set()
     for start in sorted(starts):
-        segment_end = citation.find(";", start)
-        segment = citation[start : segment_end if segment_end >= 0 else len(citation)]
+        # A citation ends at the next ";", line break or comment close, so one
+        # mention never absorbs page numbers from an unrelated later reference.
+        ends = [
+            position
+            for position in (
+                citation.find(";", start),
+                citation.find("\n", start),
+                citation.find("-->", start),
+            )
+            if position >= 0
+        ]
+        segment = citation[start : min(ends) if ends else len(citation)]
         for match in PAGE_RE.finditer(segment):
             first = int(match.group(1))
             last = int(match.group(2) or first)
