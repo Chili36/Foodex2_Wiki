@@ -194,6 +194,9 @@ with embedding calls only and no answerer calls:
 Baseline (2026-11-21, `reports/wiki-rag-evals/2026-11-21-ask-rag-skeleton/`):
 must-have recall 0.71 → 0.96 (`legacy_topk`) and 0.76 → 0.97
 (`diverse_pages`) over 17 reviewed cases. The four pinned pages are always
-hydrated in full from the store (about 19k characters, roughly 5k tokens),
-replacing any retrieved chunks of those pages. Overlay leaks on questions that name
+hydrated in full from the store (about 19k characters), replacing any
+retrieved chunks of those pages. End-to-end, mean tracked tokens per request
+rose from 5.1–6.0k to 11.0–11.1k; see `answer-ab.md` in the same report
+directory. Rerun the A/B with `scripts/wiki_ragas_eval.py --endpoints
+ask-rag,ask-rag-noskeleton`. Overlay leaks on questions that name
 no domain are expected; the skeleton only filters when a domain is named.
