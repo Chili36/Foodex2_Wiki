@@ -113,6 +113,21 @@ curl -s http://127.0.0.1:8010/wiki/ask \
 
 The canonical request and response contracts are published at `GET /openapi.json`.
 
+## Local MCP Pilot
+
+The optional read-only MCP adapter exposes search, page retrieval, coding context,
+and cited guidance to stdio-capable AI assistants. It forwards requests to the
+existing local API and preserves its evidence, page limits, and model settings.
+
+```bash
+.venv/bin/python -m pip install -r requirements-mcp.txt
+.venv/bin/python scripts/check_wiki_mcp.py
+```
+
+The check requires the API running on port 8010 and makes no model calls. See
+[the MCP pilot guide](docs/mcp-pilot.md) for host configuration, tool contracts,
+revision metadata, and the optional live check with model calls.
+
 ## Choosing an Endpoint
 
 Use `/wiki/ask` when a compact strategy brief should guide candidate search or downstream reasoning. It selects curated pages, synthesizes an answer, and returns direct citations.

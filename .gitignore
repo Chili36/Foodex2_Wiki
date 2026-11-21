@@ -2,6 +2,7 @@
 .pytest_cache/
 .venv/
 .env
+.codex/config.toml
 __pycache__/
 *.pyc
 ~$*
