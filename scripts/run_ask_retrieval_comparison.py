@@ -28,8 +28,8 @@ from scripts.index_wiki_qdrant import (  # noqa: E402
 from wiki_api.librarian import AnthropicFoodEx2Answerer  # noqa: E402
 
 
-WIKI_COLLECTION = "foodex2_wiki_markdown_v1"
-SOURCE_COLLECTION = "foodex2_source_docs_v1"
+WIKI_COLLECTION = "foodex2_wiki_markdown_v2"
+SOURCE_COLLECTION = "foodex2_source_docs_v2"
 
 
 def _ssl_context() -> ssl.SSLContext | None:
@@ -330,7 +330,7 @@ def main() -> int:
         args.answerer_model
         or os.getenv("WIKI_ANSWERER_MODEL")
         or os.getenv("WIKI_LIBRARIAN_MODEL")
-        or "claude-sonnet-4-6"
+        or "claude-sonnet-5-5"
     )
     args.output_dir.mkdir(parents=True, exist_ok=True)
 

@@ -36,8 +36,8 @@ Markdown is the authored source of truth. Qdrant collections, graph views, and A
 
 ## Current Runtime Defaults
 
-- Page selector: `claude-sonnet-5`
-- Answerer for `/wiki/ask` and `/wiki/ask-rag`: `gpt-5.6-terra`
+- Page selector: `jev-1.13.0` (TypeSafe)
+- Answerer for `/wiki/ask` and `/wiki/ask-rag`: `claude-sonnet-5-5`
 - Default page budget: 7 pages
 - `/wiki/ask` graph expansion: off
 - `/wiki/context-pack`: strict final page cap, including `RUNTIME_RULES.md`
@@ -60,11 +60,31 @@ cp .env.example .env
 For the default selector and answerer, configure:
 
 ```bash
+TYPESAFE_API_KEY=...
 ANTHROPIC_API_KEY=...
-OPENAI_API_KEY=...
-WIKI_CONTEXT_MODEL=claude-sonnet-5
-WIKI_ANSWERER_MODEL=gpt-5.6-terra
+WIKI_CONTEXT_MODEL=jev-1.13.0
+WIKI_ANSWERER_MODEL=claude-sonnet-5-5
 ```
+
+Bring your own API keys and models. `WIKI_CONTEXT_MODEL` sets the page picker;
+`WIKI_ANSWERER_MODEL` sets the answerer. For example, set
+`WIKI_CONTEXT_MODEL=claude-sonnet-5` and provide `ANTHROPIC_API_KEY` to use
+Sonnet for page selection. Existing Anthropic, OpenAI, Gemini and LM Studio
+overrides remain supported. Model resolution uses the endpoint setting, then
+`WIKI_LIBRARIAN_MODEL`, then the built-in default; the explicit context setting
+in `.env.example` selects Jev independently of the shared librarian model.
+Jev requires `TYPESAFE_API_KEY`; missing credentials or invalid provider responses
+return an actionable error. It only selects pages.
+
+Sonnet 5.5 answers allow 8,192 output tokens for thinking plus the final JSON.
+A token-limited response is retried once with up to 16,384 tokens; request
+usage and timing include both attempts. A second truncation returns a clear
+service error. `/wiki/ask` forwards `answerer_reasoning_effort` to Anthropic
+as well as supported OpenAI and LM Studio models. Omitting it retains the
+provider default.
+
+The [page-picker decision](docs/jev-page-picker.md) records the speed and quality
+comparison behind this default.
 
 Start the API:
 
@@ -121,7 +141,7 @@ Build or refresh the curated wiki collection:
 
 ```bash
 .venv/bin/python scripts/index_wiki_qdrant.py \
-  --collection foodex2_wiki_markdown_v1 \
+  --collection foodex2_wiki_markdown_v2 \
   --delete-orphans
 ```
 
@@ -129,7 +149,7 @@ Build the separate raw-source collection when source-level comparison is needed:
 
 ```bash
 .venv/bin/python scripts/index_source_qdrant.py \
-  --collection foodex2_source_docs_v1 \
+  --collection foodex2_source_docs_v2 \
   --recreate
 ```
 
@@ -150,7 +170,7 @@ Compare answer models while holding the question constant:
 ```bash
 .venv/bin/python scripts/wiki_ask_model_sweep.py \
   --question "What should I think about when reporting chicken plasma in VMPR?" \
-  --selector-model claude-sonnet-5 \
+  --selector-model jev-1.13.0 \
   --answerer-models claude-sonnet-5,claude-haiku-4-5,gpt-5.6-terra,gpt-5.6-luna \
   --max-pages 7
 ```
@@ -213,7 +233,14 @@ log.md                 Chronological knowledge-base changes
 .venv/bin/pytest -q
 ```
 
-The doctor checks catalogue registration, links, page categories, prompt projections, graph connectivity, and source references. Semantic changes should remain human-reviewed; maintenance automation reports drift but does not rewrite or merge knowledge.
+The doctor checks catalogue registration, links, page categories, prompt projections,
+graph connectivity, source references, and source-coverage review status. Every run
+reports specific findings from the saved semantic audit and flags stale evidence.
+Missing reviews and citation/page counts do not produce coverage warnings. See
+[Maintenance Workflow](MAINTENANCE_WORKFLOW.md) for the explicit deeper-audit workflow
+and [the initial scoped audit](reports/source-coverage/2026-09-30.md) for concrete gaps;
+`--format json` includes the recorded findings and source roles. Semantic changes should remain
+human-reviewed; maintenance automation reports drift but does not rewrite or merge knowledge.
 
 ## Operations
 

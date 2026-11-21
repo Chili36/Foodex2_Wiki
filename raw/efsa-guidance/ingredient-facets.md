@@ -6,6 +6,7 @@ select_when: >-
   decide which ingredient descriptors to state and when ingredient facets
   apply rather than constitutive-source ones.
 sources:
+  - "EFSA Supporting Publications - 2026 - Chemical monitoring reporting guidance  2026 data collection.pdf"
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
   - "FoodEx2 codification guidance_2025_12_v3.pdf"
@@ -13,7 +14,7 @@ related:
   - "[[facet-coding-rules]]"
   - "[[base-term-selection]]"
   - "[[implicit-vs-explicit-facets]]"
-last_updated: "2026-06-12"
+last_updated: "2026-09-30"
 ---
 
 # Ingredient Facets
@@ -38,6 +39,11 @@ last_updated: "2026-06-12"
 | Balanced mixed natures | Composite base term | Multiple `F04` ingredients |
 
 - `F04` can also be used outside composites for minor ingredients such as flavourings or coatings on an otherwise raw or derivative product. In those cases `F27` still answers what the derivative was obtained from, while `F04` records what was added to characterise it. Use [[implicit-vs-explicit-facets]] to keep that distinction straight. (EFSA guidance p56)
+
+<!-- Source: ChemMon 2026 Table 8 p91 -->
+## Acrylamide Reporting Recommendation
+
+In acrylamide monitoring, ChemMon recommends `F04` ingredient detail for potato crisps; pre-cooked French fries/potato products for home cooking; breakfast cereals excluding muesli and porridge; dry substitute coffee; and baby foods other than processed cereal-based foods. This supplements the mandatory `F33` legislative class; it is not a general requirement to list every recipe ingredient for all foods. See [[contaminants-foodex2]] for the scoped overlay. Keep the correct base term and ingredient/source distinction: do not substitute `F04` for a derivative's constitutive `F27`, or invent ingredients to satisfy a recommendation.
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p50, p56 -->
 ## Worked Examples

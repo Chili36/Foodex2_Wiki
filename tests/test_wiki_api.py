@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 
 import httpx
+import pytest
 
 import wiki_api.app as app_module
 from wiki_api.librarian import AnswerResult, LibrarianResult, PageSelectionResult, SolverResult
@@ -484,10 +485,10 @@ def test_wiki_rag_status_reports_deterministic_index_drift(monkeypatch) -> None:
     def fake_get_wiki_rag_status(**kwargs: object) -> dict[str, object]:
         return {
             "ok": False,
-            "collection": kwargs["collection"] or "foodex2_wiki_markdown_v1",
+            "collection": kwargs["collection"] or "foodex2_wiki_markdown_v2",
             "qdrant_url": kwargs["qdrant_url"] or "http://127.0.0.1:6333",
             "embedding_provider": "voyage",
-            "embedding_model": kwargs["embedding_model"] or "voyage-context-3",
+            "embedding_model": kwargs["embedding_model"] or "voyage-context-4",
             "embedding_dimension": kwargs["embedding_dimension"] or 1024,
             "chunking": {
                 "max_chars": kwargs["max_chars"],
@@ -527,7 +528,7 @@ def test_wiki_rag_status_reports_deterministic_index_drift(monkeypatch) -> None:
     payload = response.json()
 
     assert payload["ok"] is False
-    assert payload["collection"] == "foodex2_wiki_markdown_v1"
+    assert payload["collection"] == "foodex2_wiki_markdown_v2"
     assert payload["drift"]["missing_pages"] == ["base-term-selection.md"]
     assert payload["drift"]["orphaned_pages"] == ["old-page.md"]
 
@@ -668,10 +669,16 @@ def test_ask_graph_expansion_uses_only_slots_inside_max_pages() -> None:
     assert len(payload["pages_used"]) == 7
     assert expansion["remaining_slots"] == 2
     assert expansion["neighbors_count"] == 2
-    assert expansion["neighbors_added"] == [
-        "code-string-format.md",
-        "business-rules.md",
-    ]
+    # The secondary neighbor can change when real guidance wording changes.
+    # Keep the relevant syntax page first and verify the expansion contract.
+    assert expansion["neighbors_added"][0] == "code-string-format.md"
+    assert len(set(expansion["neighbors_added"])) == 2
+    assert payload["pages_used"][-2:] == expansion["neighbors_added"]
+    assert len(set(payload["pages_used"])) == 7
+    assert all(
+        app_module.store.page_category(name) in {"runtime", "guidance", "validation"}
+        for name in expansion["neighbors_added"]
+    )
     assert len(app_module.answerer_runner.calls[0]["pages"]) == 7
 
 
@@ -774,7 +781,7 @@ def test_ask_rag_uses_qdrant_context_and_answerer(monkeypatch) -> None:
             "pages_used": ["base-term-selection.md", "implicit-vs-explicit-facets.md"],
             "embedding": {
                 "provider": "voyage",
-                "model": "voyage-context-3",
+                "model": "voyage-context-4",
                 "dimension": 1024,
                 "elapsed_ms": 20,
                 "usage": {"total_tokens": 12},
@@ -783,7 +790,7 @@ def test_ask_rag_uses_qdrant_context_and_answerer(monkeypatch) -> None:
             "retrieval": {
                 "provider": "qdrant",
                 "retrieval_mode": "wiki",
-                "collection": "foodex2_wiki_markdown_v1",
+                "collection": "foodex2_wiki_markdown_v2",
                 "qdrant_url": "http://127.0.0.1:6333",
                 "elapsed_ms": 5,
                 "limit": 3,
@@ -811,7 +818,7 @@ def test_ask_rag_uses_qdrant_context_and_answerer(monkeypatch) -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["trace"]["selection_method"] == "qdrant wiki retrieval + answerer"
-    assert payload["trace"]["retrieval"]["collection"] == "foodex2_wiki_markdown_v1"
+    assert payload["trace"]["retrieval"]["collection"] == "foodex2_wiki_markdown_v2"
     assert payload["trace"]["embedding"]["tracked_tokens"] == 12
     assert payload["trace"]["total"]["total_llm_calls"] == 1
     assert payload["trace"]["total"]["total_embedding_calls"] == 1
@@ -863,7 +870,7 @@ def test_ask_rag_can_return_source_rag_with_page_content(monkeypatch) -> None:
             "pages_used": ["guidance.pdf"],
             "embedding": {
                 "provider": "voyage",
-                "model": "voyage-context-3",
+                "model": "voyage-context-4",
                 "dimension": 1024,
                 "elapsed_ms": 25,
                 "usage": {},
@@ -872,7 +879,7 @@ def test_ask_rag_can_return_source_rag_with_page_content(monkeypatch) -> None:
             "retrieval": {
                 "provider": "qdrant",
                 "retrieval_mode": "source",
-                "collection": "foodex2_source_docs_v1",
+                "collection": "foodex2_source_docs_v2",
                 "qdrant_url": "http://127.0.0.1:6333",
                 "elapsed_ms": 6,
                 "limit": 2,
@@ -898,7 +905,7 @@ def test_ask_rag_can_return_source_rag_with_page_content(monkeypatch) -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["trace"]["selection_method"] == "qdrant source retrieval + answerer"
-    assert payload["trace"]["retrieval"]["collection"] == "foodex2_source_docs_v1"
+    assert payload["trace"]["retrieval"]["collection"] == "foodex2_source_docs_v2"
     assert payload["trace"]["total"]["total_tracked_tokens"] == 140
     assert payload["citations"] == ["guidance.pdf"]
     assert "Source file" in payload["pages"][0]["content"]
@@ -1159,7 +1166,7 @@ def test_policy_pack_uses_librarian_response() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
-    assert payload["policy_contract"]["policy_version"] == "2026-07-28-v0.7"
+    assert payload["policy_contract"]["policy_version"] == "2026-10-09-v0.11"
     assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["policy_contract"]["anti_patterns"][0]["id"] == "AP-001"
     assert "business-rules.md BR19" in payload["policy_contract"]["binding_rules"][0]["derived_from"]
@@ -1218,7 +1225,7 @@ def test_context_pack_returns_only_pages_and_trace() -> None:
     assert response.status_code == 200
     payload = response.json()
     assert len(payload["guiding_principles"]) >= 4
-    assert payload["policy_contract"]["policy_version"] == "2026-07-28-v0.7"
+    assert payload["policy_contract"]["policy_version"] == "2026-10-09-v0.11"
     assert payload["policy_contract"]["constitution"][0]["id"] == "C01"
     assert payload["guiding_principles"][2].startswith("FoodEx2 prefers modular description")
     assert payload["pages_used"] == [
@@ -1480,7 +1487,7 @@ def test_solve_returns_final_code_and_stage_traces() -> None:
     )
     assert response.status_code == 200
     payload = response.json()
-    assert payload["policy_contract"]["policy_version"] == "2026-07-28-v0.7"
+    assert payload["policy_contract"]["policy_version"] == "2026-10-09-v0.11"
     assert payload["solution"]["constructedCode"] == "A044C#F04.A00VV$F04.A00GZ$F18.A07NN$F19.A07PF"
     assert payload["solution"]["validationCheck"]["passes"] is True
     assert payload["solution"]["confidence"] == 5
@@ -1492,6 +1499,49 @@ def test_solve_returns_final_code_and_stage_traces() -> None:
     assert len(payload["guiding_principles"]) >= 4
     assert app_module.solver_runner.calls[0]["policy_contract"]["constitution"][0]["id"] == "C01"
     assert app_module.solver_runner.calls[0]["policy_contract"]["binding_rules"][0]["id"] == "R-DERIV-001"
+
+
+@pytest.mark.parametrize("endpoint", ["context-pack", "policy-pack", "solve"])
+def test_structured_policy_preserves_br13_reassessment_boundary(endpoint) -> None:
+    """Check actual consumer evidence, not the canned model stubs' decisions."""
+    response = request(
+        "POST",
+        f"/wiki/{endpoint}",
+        json={
+            "search_term": "Ground turmeric; repair rejected F03.A06JD",
+            "deconstructed_query": {},
+            "candidates": [{"code": "A01AC", "name": "Turmeric roots", "termType": "r"}],
+            "context": {},
+        },
+    )
+    assert response.status_code == 200
+    contract = response.json()["policy_contract"]
+    rules = {rule["id"]: rule for rule in contract["binding_rules"]}
+    rule = rules["R-F03-001"]
+    assert rule["when"] == (
+        "food_type=raw_primary_commodity and F03 descriptor is in the BR13 disintegration list"
+    )
+    assert rule["must_not"].startswith("add that `F03` to the final code.")
+    for boundary in (
+        "BR13 rejection alone does not determine the base-term class",
+        "use an applicable derivative base, including a suitable generic derivative",
+        "retain a raw base that covers the product",
+        "known permitted grinding as `F28.A07LA`",
+        "Do not infer grinding from powder alone",
+        "infer catalogue absence from missing search results",
+    ):
+        assert boundary in rule["must_not"]
+    assert "choose the appropriate derivative base instead" not in rule["must_not"]
+    assert {"process-facets.md", "base-term-selection.md", "business-rules.md BR13"} <= set(rule["derived_from"])
+    assert rules["R-DERIV-001"]["when"] == "food_type=derivative and derivative_base_exists=true"
+    assert rules["R-DERIV-001"]["must"].startswith("select the derivative base")
+
+    if endpoint == "solve":
+        delivered = app_module.solver_runner.calls[0]
+        assert delivered["policy_contract"] == contract
+        policy_page = next(page for page in delivered["pages"] if page["page_name"] == "policy-contract.md")
+        assert rule["must_not"] in policy_page["content"]
+        assert "choose the appropriate derivative base instead" not in policy_page["content"]
 
 
 def test_solve_requires_candidates() -> None:
@@ -1583,7 +1633,7 @@ def test_openapi_exposes_endpoint_specific_candidate_contracts() -> None:
 
 def test_policy_contract_is_loaded_from_markdown_source() -> None:
     contract = build_policy_contract()
-    assert contract["policy_version"] == "2026-07-28-v0.7"
+    assert contract["policy_version"] == "2026-10-09-v0.11"
     assert contract["constitution"][0]["id"] == "C01"
     assert contract["decision_procedure"][0]["name"] == "determine_food_type"
     assert contract["anti_patterns"][0]["id"] == "AP-001"
@@ -1594,8 +1644,15 @@ def test_policy_contract_is_loaded_from_markdown_source() -> None:
     assert "R-DESC-001" in binding_rules_by_id
     assert "R-ORIGIN-004" in binding_rules_by_id
     assert "R-INGREDIENT-001" in binding_rules_by_id
-    assert binding_rules_by_id["R-PROC-001"]["should"].startswith(
-        "keep at most one process per ordinal group"
+    assert binding_rules_by_id["R-PROC-001"]["must"].startswith(
+        "preserve every stated process"
     )
-    assert "business-rules.md BR26" in binding_rules_by_id["R-PROC-001"]["derived_from"]
+    assert binding_rules_by_id["R-PROC-001"]["when"] == (
+        "the sample states one or more processes"
+    )
+    assert binding_rules_by_id["R-PROC-003"]["when"] == (
+        "process validation is needed"
+    )
+    assert binding_rules_by_id["R-PROC-003"]["must"].startswith("distinguish active validation from dormant rule definitions")
+    assert "process-facets.md" in binding_rules_by_id["R-PROC-001"]["derived_from"]
     assert "business-rules.md BR25" in binding_rules_by_id["R-CARD-001"]["derived_from"]

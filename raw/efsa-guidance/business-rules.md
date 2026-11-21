@@ -8,6 +8,8 @@ select_when: >-
   define them, including limits on adding a step the product's state already
   embodies.
 sources:
+  - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
+  - "EFSA Supporting Publications - 2021 -  - FoodEx2 maintenance 2020.pdf"
   - "BUSINESS-RULES.md"
   - "BUSINESS-RULES-COMPACT.json"
   - "foodex2_docs/business_rules.md"
@@ -17,7 +19,7 @@ related:
   - "[[term-type-facet-constraints]]"
   - "[[process-validation-rules]]"
   - "[[domain-specific-validation]]"
-last_updated: "2026-06-07"
+last_updated: "2026-10-09"
 ---
 
 # Business Rules
@@ -38,7 +40,7 @@ Use it for two jobs:
 | `LOW` | Soft warning, validation passes | `BR10`, `BR11`, `BR12`, `BR15`, `BR23` |
 | `NONE` | Informational only | `BR22` |
 
-`BR02`, `BR09`, and `BR18` are placeholders and are not implemented.
+`BR02`, `BR09`, and `BR18` are placeholders and are not implemented. Severity describes the declared warning when a rule runs; it does not imply that the rule is enabled. BR26 is inactive in the observed ICT call path.
 
 ## Validator Data Status
 
@@ -109,14 +111,14 @@ Use it for two jobs:
 - Applies to: raw (`r`) and derivative (`d`) terms
 - Rule: `F04` should be used only for minor ingredients in those term types
 
-## BR13: Physical State Creates Derivatives
+## BR13: Restricted Physical-State Facets On Raw Commodities
 
 - Severity: `HIGH`
 - Applies to: raw terms (`r`)
 - Rule: `BR13` fires on raw commodities only when explicit `F03` is one of the seven ICT disintegration descriptors below. It does not mean that every `F03` physical-state descriptor is forbidden on raw commodities.
 - Forbidden `F03` descriptors: `A06JD` powder, `A06JE` coarse paste/minced, `A06JF` paste, `A06JG` puree-type, `A07Y2` fine powder, `A07Y3` coarse powder, `A07Y4` fine paste.
 - Boundary: non-disintegration physical states such as `A0C2M` solid or `A0C3M` liquid can be valid on a raw commodity if all other rules pass.
-- Operational reading for DMT/LLM consumers: "powder/paste/puree-style disintegration cannot be added to a raw base" is correct; "no `F03` on raw" is too broad.
+- Operational reading for DMT/LLM consumers: these seven descriptors cannot be added **as F03** to a raw base; "no `F03` on raw" is too broad. BR13 does not itself classify every physically powdered food as a derivative or prescribe a replacement base. For known grinding, assess the raw-plus-F28 path and applicable derivative groups using [[process-facets]] and [[term-type-facet-constraints]]. (EFSA guidance p43-44; Business Rules `BR13`, `BR19`)
 
 ## BR14: ICT/DCF Only Rule
 
@@ -147,7 +149,7 @@ Use it for two jobs:
 - Severity: `ERROR`
 - Applies to: raw terms (`r`)
 - Rule: processes that create derivatives cannot be applied to raw commodities
-- Data-source note: official BR19 coverage comes from `BR_Data.csv`, which is frozen upstream at 2020-05-20. Because MTX is now at `17.1`, some clear-pattern root groups can be absent from the official BR19 table.
+- Data-source note: official BR19 coverage comes from `BR_Data.csv`, which is frozen upstream at 2020-05-20. As catalogue releases have advanced beyond that table, some clear-pattern root groups can be absent from the official BR19 table.
 - Local-extension note: the sibling validator can add transparent `BR19+` rows from `data/BR_Data.extension.csv`. The extension uses the same five official columns plus `RATIONALE` and `ADDED`; official rows take precedence when the same root/process pair exists.
 - Workflow impact: stock ICT can be silent where local validation flags a derivative-creating process on a raw commodity. This is expected when the local warning is `BR19+`, and can be disabled with `STRICT_ICT_PARITY=1` for strict stock-ICT parity checks.
 
@@ -155,13 +157,14 @@ Use it for two jobs:
 
 - Severity: `ERROR`
 - Applies to: deprecated terms
-- Rule: deprecated terms cannot be used
+- Rule: deprecated terms cannot be used; deprecation makes a term non-reportable across all hierarchies. (Maintenance 2020 p3, footnote 2)
 
 ## BR21: Dismissed Terms
 
 - Severity: `ERROR`
-- Applies to: dismissed terms
-- Rule: dismissed terms cannot be used
+- Applies to: terms identified as dismissed by the validator in its coding context
+- Rule: a `BR21` dismissal result remains a blocking error. EFSA distinguishes dismissal in one or more hierarchies from deprecation in all hierarchies: a term dismissed in one hierarchy can remain reportable in another. Always check the intended reporting hierarchy rather than interpreting dismissal as universal catalogue deletion. (Maintenance 2020 p3, footnotes 1-2)
+- Implementation boundary: the inspected sibling validator maps `dismissed` from term status `DISMISSED`, and BR21 checks that Boolean; it does not select a hierarchy inside this rule. This implementation must not be bypassed merely because another hierarchy permits the term. A disagreement requires checking the imported term status and hierarchy data. Inspection evidence is recorded in [the catalogue/validator check](../../reports/source-coverage/2026-09-30-catalogue-check.json).
 
 ## BR22: Success Message
 
@@ -187,19 +190,20 @@ Use it for two jobs:
 - Applies to: single-cardinality facet families
 - Rule: only one explicit value is allowed for `F01`, `F02`, `F03`, `F07`, `F11`, `F22`, `F24`, `F26`, `F30`, `F32`, `F34`
 
-## BR26: Mutually Exclusive Processes
+## BR26: Mutually Exclusive Processes (inactive in observed ICT)
 
-- Severity: `HIGH`
-- Applies to: derivatives with explicit `F28`
-- Rule: processes in the same ordinal group cannot be combined
-- Known divergence: in the observed stock ICT source, the `mutuallyExclusiveCheck` call appears to be inactive, so BR26 is effectively silent. The sibling validator is also effectively silent for BR26 at present because its process ordinal lookup resolves to `0` for the derivative cases where BR26 would apply. The outcome matches stock ICT silence, but the implementation cause differs.
-- Practical reading: do not rely on BR26 firing as evidence that same-ordinal process combinations are semantically good. Keep the process-composition guidance in [[process-validation-rules]], and treat a proper BR26 implementation as deferred validator work.
+- Runtime status: the [observed ICT call site](https://github.com/openefsa/catalogue-browser/blob/9a028ee0efe6a018e7f941ce0a4f7e6488b80e43/src/main/java/business_rules/TermRules.java#L1656-L1663) calls BR27 but comments out BR26. Do not promote BR26 into a mandatory coding check or reject a code on that basis in the default wiki workflow.
+- Historical definition: the dormant `mutuallyExclusiveCheck` method compares duplicate non-zero ordinals across implicit and explicit processes for a derivative with at least one explicit process. Its declared severity is `HIGH`; that metadata does not establish active enforcement. The source does not establish why it was disabled.
+- Implementation status (2026-09-11): the sibling validator at `014b294` actively invokes BR26, unlike observed ICT. [PR #27](https://github.com/Chili36/automatic-couscous/pull/27) removes that invocation and corrects active BR27 checks; it is proposed, not deployed. The earlier root-scoped lookup fix in [PR #24](https://github.com/Chili36/automatic-couscous/pull/24) merged on 2026-09-08.
+- Coding consequence: preserve the sample's processing information. Do not rank or remove a stated process, demand BR26 ordinal evidence, or require a routine BR26 deferral merely because this rule exists. If a workflow explicitly requires the sibling check, interpret its output as that workflow's local validation result and investigate conflicts in that context.
 
 ## BR27: Decimal Ordcode Process Conflicts
 
 - Severity: `HIGH`
 - Applies to: derivative terms (`d`)
-- Rule: decimal ordcodes in the same integer family conflict and represent alternative derivative paths
+- Rule: within one root-scoped integer family (`1`, `2`, ...), consider only non-integer ordinals. BR27 requires at least two distinct decimal ordinal values and at least one explicit process in that family. An implicit-only family is excluded; equal decimal values alone belong to BR26, not BR27.
+- Official scope: EFSA's [`decimalOrderCheck`](https://github.com/openefsa/catalogue-browser/blob/9a028ee0efe6a018e7f941ce0a4f7e6488b80e43/src/main/java/business_rules/TermRules.java#L650-L780) compares distinct fractional parts within each integer family and excludes implicit-only families. These choices represent alternative derivative paths.
+- Implementation caveat (2026-09-11): the sibling implementation at `014b294` counts processes rather than distinct ordinal values and can emit BR27 for equal decimal ordinals. PR #27 corrects this distinct-value condition. Until the running implementation is verified, check that condition as well as root-scoped resolution before accepting its BR27 result.
 
 ## BR28: Reconstitution Restrictions
 

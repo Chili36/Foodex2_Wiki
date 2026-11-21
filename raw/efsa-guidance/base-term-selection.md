@@ -2,10 +2,11 @@
 title: "Base Term Selection Rules"
 select_when: >-
   The case turns on picking the anchoring base term: deciding raw versus
-  derivative versus composite, ranking competing candidate terms within that
-  type, resolving preservation or dominant-ingredient precedence, and choosing
+  derivative versus composite, ranking reportable candidates within that
+  type and hierarchy, resolving preservation or dominant-ingredient precedence, and choosing
   a generic fallback plus origin facet when the exact term is missing.
 sources:
+  - "EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf"
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf"
   - "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
@@ -15,7 +16,8 @@ related:
   - "[[implicit-vs-explicit-facets]]"
   - "[[ingredient-facets]]"
   - "[[process-facets]]"
-last_updated: "2026-08-01"
+  - "[[maintenance-2025]]"
+last_updated: "2026-10-09"
 ---
 
 # Base Term Selection
@@ -28,12 +30,15 @@ last_updated: "2026-08-01"
 - Never start from a hierarchy term if a reportable non-hierarchy term exists. If poor source data makes that unavoidable, prefer an exposure-hierarchy term. (EFSA guidance p41, p47)
 - Know the reporting or exposure hierarchy before coding. Stopping at the first search hit can lead to the wrong branch. (EFSA guidance p42)
 
+<!-- Source: EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf p17, Table 6 -->
+- Check the selected term's reportability in the intended hierarchy. For example, maintenance 2025 made `A03PX Food for infants and young children` non-reportable in Reporting because it was too generic. Choose an applicable reportable child or other suitable reportable food base supported by the sample, rather than trying to make that generic base reportable by adding facets. This is hierarchy-specific dismissal, not global deprecation. See [[maintenance-2025]] and [[business-rules]]. (2025 maintenance p17)
+
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p14-20, p42-46, p58 -->
 ## Choose The Base-Term Class
 
 - Use a raw-commodity base term for primary plant or animal products. Add only treatments that do not create a new nature; if the treatment question becomes ambiguous, read this together with [[process-facets]] and [[process-validation-rules]]. (EFSA guidance p42-44)
-- Use a derivative base term when a nature-changing process already defines a standard group. The process list here is illustrative, not exhaustive: this includes cases such as milling, drying, curing, fermentation, pickling/marinating, canning/jarring or smoking whenever FoodEx2 already has the processed group. Do not rebuild these from a raw term plus `F28` if the derivative group exists. The origin chain that follows from that choice is explained in [[implicit-vs-explicit-facets]]. (EFSA guidance p15-17, p44, p58)
-- When raw-versus-derivative status is unclear, inspect the processed or preserved branch for the commodity before accepting a raw base plus `F28`. The existence of a derivative branch is evidence that the process belongs in the base-term choice. (ANSES guidance p27-30)
+- Use a derivative base term when a nature-changing process already defines a standard group. The process list here is illustrative, not exhaustive: this includes grain milling that produces recognised derivatives, drying, curing, fermentation, pickling/marinating, canning/jarring or smoking whenever FoodEx2 already has an applicable processed group. Do not rebuild these from a raw term plus `F28` if that derivative group covers the product. Simple physical division, including grinding, can instead be represented on a raw base; use the distinction in [[process-facets]]. The origin chain that follows from a derivative choice is explained in [[implicit-vs-explicit-facets]]. (EFSA guidance p15-17, p43-44, p58)
+- When raw-versus-derivative status is unclear, inspect the processed or preserved branch and its scope before accepting a raw base plus `F28`. A nearby derivative branch is relevant only if it covers the actual product. A derivative missing from retrieved candidates is not evidence that none exists in the catalogue. Conversely, do not declare the candidate set incomplete solely because it lacks a derivative when the supported coding path is raw plus a permitted process. A missing species-specific term can still be covered by a generic derivative; see the missing-term rules below. (ANSES guidance p27-30; EFSA guidance p43-44, p47-49)
 - Use a composite base term for foods made by combining ingredients in a recipe. For same-nature mixtures, stay on a generic raw/derivative base term and add multiple `F27`. For balanced mixed natures, move to a composite base term, then describe the characterising recipe components with [[ingredient-facets]]. (EFSA guidance p45, p49-50; Training p6)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p42-43; EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf p15 -->
@@ -48,7 +53,7 @@ last_updated: "2026-08-01"
 - Follow the documented priority order, not the visual order in the catalogue browser; browser order can reflect term creation history rather than coding precedence. (ANSES guidance p30, p33)
 - If a composite has no clear dominant ingredient, use this priority: meat, fish, cheese/dairy, egg, legume, potato, cereal, fruit, vegetable. (EFSA guidance p18-19)
 - If the exact term is missing, choose the nearest generic non-hierarchy base term, add the correct origin facet, and add `F26.A07XE` (`other`). If even the origin term is missing, keep the generic base term and record the detail in text. Use [[implicit-vs-explicit-facets]] and [[term-type-facet-constraints]] to pick the correct origin facet for the chosen term type. (EFSA guidance p47-49)
-- For detail level within a suitable food type, prefer extended or core terms when they fit; use non-specific or generic terms as fallbacks only when the detailed term is missing or source detail is unavailable. (ANSES guidance p35)
+- For detail level within a suitable food type, use the `Corex` roles in [[foodex2-overview]] and prefer extended or core terms when they fit; use non-specific or generic terms as fallbacks only when the detailed term is missing or source detail is unavailable. (ANSES guidance p35)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p48-50; EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf p6 -->
 ## Worked Examples
@@ -67,4 +72,5 @@ last_updated: "2026-08-01"
 - `BR08`: the selected base term must be reportable. See [[business-rules]].
 - `BR10`: non-specific base terms are only weak fallbacks when a more precise reportable term exists. See [[business-rules]].
 - `BR19`: derivative-creating processes on raw bases are not an acceptable fallback when the derivative group exists. See [[business-rules]].
+- `BR20` and `BR21`: respect deprecation and returned dismissal errors; reportability must be checked in the intended hierarchy. See [[business-rules]].
 - `BR23` and `BR24`: hierarchy terms are discouraged or invalid as coding bases, depending on hierarchy/reporting status. See [[business-rules]].

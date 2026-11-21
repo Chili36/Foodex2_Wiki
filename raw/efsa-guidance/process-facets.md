@@ -4,15 +4,17 @@ select_when: >-
   The case involves a treatment or processing step and must decide whether it
   belongs in the base-term choice or as an explicit process facet, and which
   specific process descriptor applies — heating, preservation, drying,
-  fermentation, coating, milling, or similar transformations.
+  fermentation, coating, grinding or milling, powder described by a process
+  rather than F03, draining after boiling, popping, or similar transformations.
 sources:
+  - "EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf"
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
-  - "EFSA IDATA reply - turmeric powder.txt"
 related:
   - "[[facet-coding-rules]]"
   - "[[base-term-selection]]"
   - "[[code-string-format]]"
-last_updated: "2026-08-01"
+  - "[[maintenance-2025]]"
+last_updated: "2026-11-21"
 ---
 
 # Process Facets
@@ -26,14 +28,35 @@ last_updated: "2026-08-01"
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p43-44 Table 22, p52 section 5.9 -->
 ## Processes Applied Directly To Raw Commodities
 
-- A treatment that does not create a new nature can be added directly to a raw-commodity base as `F28`. Table 22 gives common examples and is explicitly non-exhaustive; first check that the catalogue does not instead provide a specific derivative group. (EFSA guidance p43-44, Table 22)
-- Table 22 includes physical division/dimension reduction (`A07KT` portioning, `A07KV` slicing, `A07KX` dicing/stripe-cutting, `A07KY` mincing/chopping/cutting, `A07KZ` grating, `A07LA` grinding/milling/crushing, and `A0C6N` pulping/mashing), physical decontamination, lowering temperature, non-nature-changing thermal preservation, cooking and thermal preparation, aseptic or vacuum filling, and breading, battering, glazing/icing, sugar, chocolate, or nut coating. (EFSA guidance p43-44, Table 22)
-- Apply Table 22's derivative exceptions before composing the code: some minced-meat groups exist; grain milling with separation creates grain derivatives; some mashing leads to plant purée derivatives; frying or roasting potatoes, cooking eggs, and caramelising/browning foods such as sugar or milk create derivative groups. (EFSA guidance p44, Table 22)
-- When wording can be represented either as a changed physical state or as the mechanical treatment that produced it, give priority to the treatment when in doubt. In the relatively few cases where both add information and are legal, the guidance suggests reporting both treatment and physical state. (EFSA guidance p52, section 5.9)
-- Transformation wording should therefore trigger an `F28` check: sliced maps to `A07KV`, diced to `A07KX`, minced/chopped/cut to `A07KY`, grated to `A07KZ`, and ground/milled/crushed to `A07LA`, subject to the derivative exceptions above. (EFSA guidance p43-44, Table 22)
+- A treatment that does not create a new derivative nature is added to a raw-commodity base as an explicit `F28`; the base stays a raw primary commodity. Table 22 lists the processes normally applied this way. It is explicitly non-exhaustive, and only in rare, mostly legacy cases does a specific group for one of these processes exist (for example boiled potato and baked potato). The generic descriptors processed, preserved and semi-preserved name no specific process and are outside this rule. (EFSA guidance p43-44, Table 22)
+- Table 22 covers physical division and dimension reduction (`A07KT` portioning, `A07KV` slicing, `A07KX` dicing/stripe-cutting, `A07KY` mincing/chopping/cutting, `A07KZ` grating, `A07LA` grinding/milling/crushing, `A0C6N` pulping/mashing), physical decontamination, lowering temperature, thermal preservation, **cooking and similar thermal preparation (`A0BA1` and its children: blanching, boiling, steaming, stewing, frying, baking, roasting, grilling, toasting)**, aseptic filling, vacuum-packing, and breading, battering, glazing/icing, sugar, chocolate or nut coating. Cooking is therefore not a derivative-creating process by default: a roasted, boiled or baked raw commodity keeps its raw base with the cooking descriptor in `F28`. (EFSA guidance p44, Table 22)
+- Use a derivative group instead only for Table 22's listed exceptions, after checking the catalogue: some minced-meat groups; grain milling with separation, which creates grain derivatives with their own milling descriptors; mashing with separation and cooking, which leads to purée groups in some plant derivatives; frying or roasting potatoes; cooking eggs; and caramelisation/browning, e.g. in sugar and milk. (EFSA guidance p44, Table 22)
+- When wording can be represented either as a changed physical state or as the treatment that produced it, give priority to the treatment when in doubt. Where both add information and are legal, the guidance suggests reporting both. (EFSA guidance p52, section 5.9)
+
+<!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p15-16, p43-44 Table 22, p48, p58-59 -->
+## Physical Division And Derivative Production
+
+- Physical division or size reduction does not automatically require a derivative base. EFSA lists grinding/milling/crushing (`F28.A07LA`) among processes normally applied directly to raw commodities. Where the raw base covers the food and no applicable derivative group covers the resulting product, retain the raw base and add the known, permitted process if it is not already implicit. Some physical-division products have their own groups; check the actual catalogue scope rather than inferring food type from the word "ground" or "powder". (EFSA guidance p43-44, Table 22)
+- Distinguish simple grinding from grain milling associated with separation and production of recognised derivatives such as flours, bran or groats. Those products use an applicable derivative base; the specific grain-milling descriptors (`A0C03`, `A0C09`, `A0C0A`) are distinct from physical division `A07LA`. A missing species-specific derivative does not justify raw plus grinding when a suitable generic derivative covers the product; use the appropriate origin facets. (EFSA guidance p15-16, p44, p48, p58-59)
+- `F03` powder describes a physical state; `F28.A07LA` describes a process. A BR13 rejection of F03 powder on a raw base does not itself require a derivative base. Known grinding may be represented by the permitted F28 process while retaining the appropriate raw base. A description explicitly stating "ground" supplies grinding evidence; "powder" alone does not establish how the powder was produced. Neither word alone settles the base-term class. Do not automatically replace F03 with F28 or use A07LA to evade a required derivative group. Read [[term-type-facet-constraints]] and [[base-term-selection]] together. (EFSA guidance p43-44; Business Rules `BR13`, `BR19`)
+
+<!-- Source: EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf p14, Tables 3-4 -->
+## Cooking Detail Added Or Revised In Maintenance 2025
+
+| Descriptor | Interpretation |
+| --- | --- |
+| `F28.A1B1L Boiling and draining` | Boiling followed by draining; a child of `A07GL Boiling`. |
+| `F28.A1B1M Boiling and undraining` | Boiling without draining; a child of `A07GL Boiling`. |
+| `F28.A1B1K Popping` | Dry high-heat agitation that bursts the grain's outer skin and changes its shape. |
+| `F28.A07GK Scalding` | Revised to a core term directly under `A0BA1 Cooking and similar thermal preparation processes`. |
+| `F28.A07GQ Pressure cooking` | Revised to a core term directly under `A0BA1`; do not restrict its meaning to the old steaming grouping. |
+
+Use the specific descriptor only when the treatment is known, relevant and not already implicit. These changes do not permit rebuilding a standard derivative from a raw base plus F28. Current catalogue scope and [[process-validation-rules]] govern the finished code. `A07GP` is named `Steaming without pressure`; its LanguaL attribute is `G0023`, while `A07HH Reheating in the pack` uses `G0040`. (2025 maintenance p14)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p78-83 -->
 ## Appendix A2 Codes
+
+This is a historical reference to the 2015 Appendix A2. Later name and hierarchy changes, including scalding and pressure cooking above, take precedence when interpreting current candidates. Use the current catalogue for exact membership and scope.
 
 - Generic: `A07HS raw`, `A0C0S unprocessed`, `A0C0R processed`, `A0CHR batch`, `A0CHS continuous`, `A0CHV preserved`, `A066E semi-preserved`.
 - Physical division: `A07KT portioning`, `A07KV slicing`, `A07KX dicing`, `A07KY mincing/chopping/cutting`, `A07KZ grating`, `A07LA grinding/milling/crushing`, `A0C6N pulping/mashing`, `A0C0K maceration`.
@@ -43,7 +66,7 @@ last_updated: "2026-08-01"
   - Irradiation: `A07JJ irradiation`
   - Cold: `A07KP chilling`, `A07KQ freezing`, `A07KR IQF`
   - Thermal: `A07HT thermisation`, `A07HV pasteurisation`, `A07HX high pasteurisation`, `A07HY UHT`, `A07HZ sterilisation`, `A07JA hot fill`
-- Cooking and thermal prep:
+- Cooking and thermal prep (normally applied directly to the raw commodity; see Processes Applied Directly To Raw Commodities):
   - Water: `A07GF blanching`, `A07GG/GH/GJ/GK/GL` water-cooking, `A07GM stewing`, `A07GP/GQ` steaming
   - Dry heat: `A07GR/GS/GT/GV` frying, `A07GX baking`, `A07GY roasting`, `A0EJY/A07GZ/A07HA` grilling, `A07HC toasting`
   - Other: `A07HB microwave-cooking`, `A0CRA infra-red micronisation`, `A07HD-A07HH` reheating, `A07HJ caramelization/browning`
@@ -66,7 +89,6 @@ last_updated: "2026-08-01"
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p42, p56 -->
 ## Worked Examples
 
-- Before: `turmeric powder`. After: `A01AC#F28.A07LA`. EFSA IDATA confirms that the available turmeric-roots term remains the base and that powder is added as grinding/milling/crushing; optional `sampMatText` may retain the full sample description. (EFSA IDATA reply: turmeric powder)
 - Before: `fresh sage`. After: `A00YH#F28.A0C0S`. Fresh spices can use `unprocessed` because dried is often default; this is the same "only add what is not implicit" rule described in [[implicit-vs-explicit-facets]]. (EFSA guidance p42)
 - Before: `candied citrus peel, chocolate-coated`. After: `A01PS#F04.A034G$F27.A01QE$F28.A07HP`. Add `F28.A07HP` for the coating. (EFSA guidance p56)
 - Before: `dried kangaroo meat`. After: `A04MP#F01.A0F2G$F26.A07XE`. Drying is implicit in `A04MP`, so no `F28.A07KG` is added; the derivative-base choice comes from [[base-term-selection]]. (EFSA guidance p49)
@@ -74,7 +96,7 @@ last_updated: "2026-08-01"
 ## Relevant Policy
 
 - [[policy-contract]] `C03`, `C04`, and `C08` govern this page directly: prefer derivative bases when a standard processed group exists, do not restate implicit processes, and add only process detail that contributes new information.
-- [[policy-contract]] `R-DERIV-001`, `R-PROC-001`, `R-PROC-002`, `TB-001`, and `AP-001` cover the main decision pattern here: raw plus `F28` is not an acceptable reconstruction when the derivative base already exists, and explicit processes must respect implicit/detail ordering.
+- [[policy-contract]] `R-DERIV-001`, `R-PROC-001`, `R-PROC-002`, `R-PROC-003`, `TB-001`, and `AP-001` cover the main decision pattern here: raw plus `F28` is not an acceptable reconstruction when the derivative base already exists, and explicit processes must respect implicit/detail ordering and root-scoped ordinal validation.
 
 ## Relevant Business Rules
 

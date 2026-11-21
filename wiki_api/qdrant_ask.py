@@ -14,9 +14,9 @@ except ImportError:  # pragma: no cover - certifi is installed with common HTTP 
 
 
 DEFAULT_EMBEDDING_DIMENSION = 1024
-DEFAULT_EMBEDDING_MODEL = "voyage-context-3"
-DEFAULT_SOURCE_COLLECTION = "foodex2_source_docs_v1"
-DEFAULT_WIKI_COLLECTION = "foodex2_wiki_markdown_v1"
+DEFAULT_EMBEDDING_MODEL = "voyage-context-4"
+DEFAULT_SOURCE_COLLECTION = "foodex2_source_docs_v2"
+DEFAULT_WIKI_COLLECTION = "foodex2_wiki_markdown_v2"
 DEFAULT_WIKI_CANDIDATE_FLOOR = 30
 DEFAULT_WIKI_CANDIDATE_MULTIPLIER = 5
 MAX_WIKI_CANDIDATES = 100

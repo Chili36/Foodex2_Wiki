@@ -1,0 +1,41 @@
+{
+  "case_id": "SEL-0036",
+  "request": {
+    "search_term": "Rå krydda malen till pulver — är F03 pulver tillåtet på den råa basen? (raw spice ground to a powder — is an F03 powder state allowed on the raw base?)",
+    "deconstructed_query": {
+      "food": "raw spice",
+      "state": "ground to powder"
+    },
+    "context": {
+      "reporting_domain": "pesticides"
+    },
+    "candidate_hints": [
+      {
+        "code": "A00YH",
+        "name": "Sage, raw spice commodity",
+        "termType": "r"
+      },
+      {
+        "code": "A06JD",
+        "name": "Powder physical-state descriptor (F03)",
+        "termType": "f"
+      }
+    ],
+    "max_pages": 7
+  },
+  "knowledge_revision": "sha256:47039df2dbf2731b0d9c7d4e2847ed32a98e0299252c266cf607d9f6fbcf4a3a",
+  "pages_used": [
+    "RUNTIME_RULES.md",
+    "term-type-facet-constraints.md",
+    "business-rules.md",
+    "process-facets.md",
+    "pesticides-foodex2.md",
+    "facet-coding-rules.md",
+    "base-term-selection.md"
+  ],
+  "missing_reference_pages": [],
+  "projection_checks": {
+    "explicit_ground_evidence": true,
+    "general_raw_grinding_rule": true
+  }
+}

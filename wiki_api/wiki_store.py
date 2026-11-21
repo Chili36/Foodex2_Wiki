@@ -147,6 +147,7 @@ class WikiStore:
             "maintenance-2022.md": "maintenance",
             "maintenance-2023.md": "maintenance",
             "maintenance-2024.md": "maintenance",
+            "maintenance-2025.md": "maintenance",
         }
 
     @cached_property

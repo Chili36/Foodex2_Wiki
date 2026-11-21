@@ -1,6 +1,6 @@
 ---
 title: "Maintenance Workflow"
-last_updated: "2026-05-23"
+last_updated: "2026-09-30"
 sources:
   - "PROJECT_CONTEXT.md"
   - "KNOWLEDGE_ARCHITECTURE.md"
@@ -30,6 +30,7 @@ The maintenance layer exists to catch problems that accumulate even when new sou
 - prompt-facing pages that project to empty model context
 - orphan pages in the markdown-derived graph
 - source references that no longer resolve to committed source artifacts
+- specific source-to-wiki omissions or ambiguities established by a semantic audit
 
 These checks keep the wiki useful as a compiled knowledge base instead of letting it decay into disconnected notes.
 
@@ -68,6 +69,73 @@ The doctor treats these as hard errors:
 The doctor treats unresolved source references as warnings by default. Some source names are historical aliases or virtual references to validator and documentation layers, so warnings should be reviewed but should not block every maintenance pass unless a maintainer explicitly runs with `--strict-warnings`.
 
 External `http` and `https` markdown links are optional warnings because remote sites can throttle or block automated checks. They are useful for maintenance reports, but they should not block normal PR work.
+
+## Source Coverage: Semantic Audit Findings
+
+Every doctor run reads the saved source-to-wiki audit in `docs/source-coverage.json`.
+Warnings identify specific omissions or scope ambiguities, with a source location,
+affected wiki page, and proposed action. Missing review records, uncited sources,
+and single-page citations do **not** create warnings. Without a saved audit, one
+informational status says that semantic coverage has not been assessed.
+
+The first scoped audit and its evidence are in
+[the 30 September 2026 report](reports/source-coverage/2026-09-30.md). It records
+11 concrete findings from selected formal guidance sections, all now resolved with
+documented corrections and evidence. It does not certify
+the complete corpus. Its limitations and the role of historical/supporting material
+are explicit. Old training presentations have no automatic ingestion requirement.
+
+```bash
+python -m wiki_api.doctor
+python -m wiki_api.doctor --format json
+```
+
+The normal doctor run makes no model or network calls. It validates the saved
+findings and compares source and wiki fingerprints. If evidence changes, it emits
+one stale-audit warning and suppresses the old gap warnings until re-review. It
+retains the previous findings in JSON for inspection. `--strict-warnings` fails for
+actual open findings, stale audits, or invalid audit data, not absent reviews.
+
+### Performing A Deeper Audit
+
+Prepare a fresh review input directory explicitly:
+
+```bash
+python -m wiki_api.source_coverage --prepare-review /tmp/foodex2-next-review
+```
+
+This extracts local PDF text with page boundaries, flags sparse extraction, and
+copies the wiki pages and runtime policy with fingerprints. It is **preparation**,
+not automated semantic judgment. It requires Poppler's `pdftotext` for PDF text;
+extraction failures are recorded and must be handled by visual review/OCR. Use a
+new output directory to preserve prior review inputs.
+
+A maintainer or agent then:
+
+1. Chooses and records a source scope, edition, and authority. Prioritise current
+   formal guidance; use training selectively and corroborate its operational claims.
+2. Reads the relevant sections, tables, exceptions and examples. Inspect rendered
+   pages when layout matters or the text layer is sparse.
+3. Compares each candidate omission with the entire curated wiki and runtime
+   policy, then reads the likely target pages. A keyword miss is not sufficient
+   evidence of a semantic gap.
+4. Records only concrete in-scope findings, including a source excerpt, page or
+   section locator, what the wiki currently says, and what needs adding or clarifying.
+   Keep recommendations distinct from mandatory requirements. Do not silently
+   override current validator rules with historical source definitions.
+5. Writes the human-readable report and version-2 JSON audit. Snapshot all inspected
+   source files and the complete wiki/runtime comparison corpus. Record limitations;
+   uninspected material is neither assumed covered nor flagged as missing.
+6. Rechecks open findings after changes. Mark a finding resolved only after reading
+   the revised content, recording a resolution note, and updating evidence. Never
+   refresh hashes merely to silence stale warnings.
+
+The checked-in JSON audit provides the concrete schema: review date/reviewer,
+scope/limitations, report path, source roles, `source_snapshot`, `wiki_snapshot`,
+and `findings`. Each finding has an ID, `open`/`resolved` status, title, source,
+locator, source excerpt, target `wiki_pages`, observation, and proposed action.
+Fingerprints establish which versions were compared; the semantic verdict comes
+from the documented review, not the fingerprints.
 
 ## Deterministic Wiki RAG Index Checks
 

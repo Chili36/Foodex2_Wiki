@@ -18,6 +18,7 @@ from .rag_index import (
     get_wiki_rag_status,
 )
 from .selection_policy import POLICY_PAGE_NAME, load_selection_policy, load_selector_guidance
+from .source_coverage import audit_source_coverage
 from .wiki_store import (
     MARKDOWN_LINK_RE,
     PROMPT_CONTEXT_PAGE_CATEGORIES,
@@ -66,6 +67,7 @@ class DoctorIssue:
 @dataclass(frozen=True)
 class DoctorReport:
     issues: list[DoctorIssue]
+    source_coverage: dict | None = None
 
     @property
     def errors(self) -> list[DoctorIssue]:
@@ -80,6 +82,7 @@ class DoctorReport:
             "error_count": len(self.errors),
             "warning_count": len(self.warnings),
             "issues": [issue.as_dict() for issue in self.issues],
+            "source_coverage": self.source_coverage,
         }
 
 
@@ -111,6 +114,8 @@ def run_doctor(
     issues.extend(_check_graph_connectivity(store))
     issues.extend(_check_source_tiers(pages.values()))
     issues.extend(_check_source_references(store, pages.values()))
+    coverage = audit_source_coverage(store)
+    issues.extend(DoctorIssue(**finding) for finding in coverage.pop("findings"))
     issues.extend(_check_log_chronology(store))
     issues.extend(_check_selection_policy(store))
     issues.extend(_check_selection_metadata(store))
@@ -140,7 +145,7 @@ def run_doctor(
                 )
             )
 
-    return DoctorReport(sorted(issues, key=lambda item: (item.severity, item.check, item.location)))
+    return DoctorReport(sorted(issues, key=lambda item: (item.severity, item.check, item.location)), coverage)
 
 
 def _check_log_chronology(store: WikiStore) -> Iterable[DoctorIssue]:
@@ -723,6 +728,15 @@ def _render_text(report: DoctorReport) -> str:
     lines = [
         f"Wiki doctor: {len(report.errors)} error(s), {len(report.warnings)} warning(s)",
     ]
+    if report.source_coverage is not None:
+        coverage = report.source_coverage
+        lines.extend([
+            f"Source coverage: {coverage['source_count']} source(s), "
+            f"{coverage['topic_page_count']} topic page(s), {coverage['topic_word_count']:,} topic words.",
+            f"Saved audit: {coverage['audit_status']}; "
+            f"{coverage['open_finding_count']} recorded open finding(s).",
+            coverage['information'],
+        ])
     if not report.issues:
         lines.append("All deterministic wiki maintenance checks passed.")
         return "\n".join(lines)

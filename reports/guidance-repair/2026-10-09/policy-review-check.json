@@ -1,0 +1,515 @@
+{
+  "review_comment": "https://github.com/Chili36/Foodex2_Wiki/pull/60#discussion_r4228739847",
+  "checked_at": "2026-10-09T20:21:46.505512+00:00",
+  "knowledge_revision": "sha256:198d354613beb70c0d1619e448681e1aa55b825fb698c7d55fcb7a3dc3f9d2e8",
+  "policy_version": "2026-10-09-v0.11",
+  "scope": "Binding-policy consistency and delivery, plus two structured-solver decision checks against supplied catalogue fixtures. Not a current catalogue audit or full structured-output validation.",
+  "automated_checks": {
+    "pr_tests_passed": 235,
+    "active_checkout_tests_passed": 303,
+    "new_policy_surface_regressions": 3,
+    "wiki_doctor_errors": 0,
+    "wiki_doctor_warnings": 0,
+    "preexisting_files_preserved": 19
+  },
+  "index_refresh": {
+    "method": "Re-embed the complete changed policy page with the existing contextual embedding/chunking functions; verify whole-collection drift.",
+    "initial_stale_pages": [
+      "policy-contract.md"
+    ],
+    "pages": [
+      {
+        "page": "policy-contract.md",
+        "chunks": 14,
+        "elapsed_seconds": 5.27
+      }
+    ],
+    "orphan_delete": {
+      "deleted_count": 0,
+      "deleted_chunk_ids": []
+    },
+    "final_status": {
+      "ok": true,
+      "collection": "foodex2_wiki_markdown_v1",
+      "qdrant_url": "http://127.0.0.1:6333",
+      "embedding_provider": "voyage",
+      "embedding_model": "voyage-context-3",
+      "embedding_dimension": 1024,
+      "chunking": {
+        "max_chars": 2800,
+        "categories": [
+          "domain_overlay",
+          "guidance",
+          "maintenance",
+          "runtime",
+          "validation"
+        ]
+      },
+      "expected": {
+        "page_count": 34,
+        "chunk_count": 289,
+        "pages": [
+          "RUNTIME_RULES.md",
+          "additives-flavourings-foodex2.md",
+          "anses-codification-guidance.md",
+          "base-term-selection.md",
+          "business-rules.md",
+          "chemical-monitoring-foodex2.md",
+          "code-string-format.md",
+          "contaminants-foodex2.md",
+          "domain-specific-validation.md",
+          "domoic-acid-scallops.md",
+          "facet-coding-rules.md",
+          "foodex2-overview.md",
+          "implicit-vs-explicit-facets.md",
+          "ingredient-facets.md",
+          "maintenance-2015.md",
+          "maintenance-2016-2018.md",
+          "maintenance-2019.md",
+          "maintenance-2020.md",
+          "maintenance-2021.md",
+          "maintenance-2022.md",
+          "maintenance-2023.md",
+          "maintenance-2024.md",
+          "maintenance-2025.md",
+          "maintenance-history.md",
+          "packaging-facets.md",
+          "pesticides-foodex2.md",
+          "policy-contract.md",
+          "process-facets.md",
+          "process-validation-rules.md",
+          "structural-validation.md",
+          "term-type-facet-constraints.md",
+          "validation-rules.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md"
+        ]
+      },
+      "indexed": {
+        "collection_exists": true,
+        "points_count": 289,
+        "chunk_count": 289,
+        "page_count": 34,
+        "pages": [
+          "RUNTIME_RULES.md",
+          "additives-flavourings-foodex2.md",
+          "anses-codification-guidance.md",
+          "base-term-selection.md",
+          "business-rules.md",
+          "chemical-monitoring-foodex2.md",
+          "code-string-format.md",
+          "contaminants-foodex2.md",
+          "domain-specific-validation.md",
+          "domoic-acid-scallops.md",
+          "facet-coding-rules.md",
+          "foodex2-overview.md",
+          "implicit-vs-explicit-facets.md",
+          "ingredient-facets.md",
+          "maintenance-2015.md",
+          "maintenance-2016-2018.md",
+          "maintenance-2019.md",
+          "maintenance-2020.md",
+          "maintenance-2021.md",
+          "maintenance-2022.md",
+          "maintenance-2023.md",
+          "maintenance-2024.md",
+          "maintenance-2025.md",
+          "maintenance-history.md",
+          "packaging-facets.md",
+          "pesticides-foodex2.md",
+          "policy-contract.md",
+          "process-facets.md",
+          "process-validation-rules.md",
+          "structural-validation.md",
+          "term-type-facet-constraints.md",
+          "validation-rules.md",
+          "vmpr-foodex2.md",
+          "vmpr-legislative-mapping.md"
+        ],
+        "payloadless_points": 0,
+        "duplicate_chunk_ids": []
+      },
+      "drift": {
+        "missing_pages": [],
+        "stale_pages": [],
+        "orphaned_pages": [],
+        "missing_chunk_ids": [],
+        "stale_chunk_ids": [],
+        "orphaned_chunk_ids": [],
+        "embedding_model_mismatch_chunk_ids": [],
+        "embedding_dimension_mismatch_chunk_ids": []
+      },
+      "errors": []
+    }
+  },
+  "mcp": {
+    "tool": "get_coding_context",
+    "policy_contract": {
+      "policy_version": "2026-10-09-v0.11",
+      "binding_rules": [
+        {
+          "id": "R-DERIV-001",
+          "when": "food_type=derivative and derivative_base_exists=true",
+          "must": "select the derivative base rather than reconstructing the food from a raw commodity base plus `F28`.",
+          "must_not": null,
+          "may": null,
+          "should": null,
+          "derived_from": [
+            "base-term-selection.md",
+            "process-facets.md",
+            "business-rules.md BR19"
+          ]
+        },
+        {
+          "id": "R-F03-001",
+          "when": "food_type=raw_primary_commodity and F03 descriptor is in the BR13 disintegration list",
+          "must": null,
+          "must_not": "add that `F03` to the final code. BR13 rejection alone does not determine the base-term class. Reassess the actual processing and catalogue scope: use an applicable derivative base, including a suitable generic derivative; otherwise retain a raw base that covers the product and record known permitted grinding as `F28.A07LA` when it is not already implicit. Do not infer grinding from powder alone or infer catalogue absence from missing search results. This is not a blanket ban on all `F03` descriptors for raw commodities.",
+          "may": null,
+          "should": null,
+          "derived_from": [
+            "term-type-facet-constraints.md",
+            "process-facets.md",
+            "base-term-selection.md",
+            "business-rules.md BR13"
+          ]
+        }
+      ]
+    },
+    "pages_used": [
+      "RUNTIME_RULES.md",
+      "business-rules.md",
+      "process-facets.md",
+      "implicit-vs-explicit-facets.md",
+      "process-validation-rules.md",
+      "term-type-facet-constraints.md",
+      "base-term-selection.md"
+    ],
+    "knowledge_revision": "sha256:198d354613beb70c0d1619e448681e1aa55b825fb698c7d55fcb7a3dc3f9d2e8",
+    "elapsed_seconds": 1.03,
+    "status": "Updated binding rule delivered through real MCP stdio."
+  },
+  "solver_cases": [
+    {
+      "id": "raw-grinding",
+      "endpoint": "/wiki/solve",
+      "request": {
+        "search_term": "Gurkmeja, malen (ground turmeric powder). Repair the rejected A01AC#F03.A06JD code.",
+        "deconstructed_query": {},
+        "candidates": [
+          {
+            "code": "A01AC",
+            "name": "Turmeric roots",
+            "termType": "r",
+            "coverageText": "Test fixture: this reportable raw commodity covers the dried, ground spice."
+          },
+          {
+            "code": "A07LA",
+            "name": "Grinding/milling/crushing",
+            "termType": "f"
+          },
+          {
+            "code": "A06JD",
+            "name": "Powder",
+            "termType": "f"
+          }
+        ],
+        "context": {
+          "catalogue_evidence": "Test fixture: catalogue scope confirms A01AC covers this dried, ground spice and no derivative group is applicable. Grinding is explicitly known and permitted; it is not implicit in the base. BR13 rejects the attempted F03.A06JD. No reporting domain is specified."
+        },
+        "max_pages": 7
+      },
+      "elapsed_seconds": 78.77,
+      "response": {
+        "query_classification": {
+          "food_type": "raw",
+          "domain": "general_food",
+          "signals": [
+            "Base term A01AC is termType 'r' (raw commodity)",
+            "Product is 'ground turmeric powder' — physical division by grinding is explicit",
+            "Rejected code was A01AC#F03.A06JD (raw + F03 powder facet)",
+            "BR13 blocks F03.A06JD (powder) on raw commodities",
+            "Catalogue context confirms A01AC covers dried ground spice; no derivative group applicable",
+            "Grinding (A07LA) is explicitly known and permitted",
+            "No reporting domain specified"
+          ],
+          "candidate_term_types": []
+        },
+        "solution": {
+          "selectedCode": "A01AC",
+          "selectedName": "Turmeric roots",
+          "selectedTermType": "r",
+          "constructedCode": "A01AC#F28.A07LA",
+          "reasoning": "Step 1 – Food type: Ground turmeric powder (gurkmeja, malen) is a raw commodity that has been physically reduced by grinding. The base term A01AC (Turmeric roots, termType 'r') is confirmed by catalogue evidence to cover the dried, ground spice. No applicable derivative group exists per catalogue context, so no derivative base is available or required.\n\nStep 2 – Base term selection: A01AC is the only raw-commodity candidate and its coverage text explicitly includes this product. It is retained as the base term. A07LA and A06JD are facet terms (termType 'f') and cannot serve as base terms (R-HIER-001, BR17).\n\nStep 3 – Root cause of rejection: The original code A01AC#F03.A06JD used F03 (physical state) with descriptor A06JD (powder), which is one of BR13's seven forbidden disintegration descriptors on raw commodity bases. BR13 (severity HIGH) fires and blocks this construction.\n\nStep 4 – Repair path under R-F03-001: BR13 rejection does not itself require a derivative base. The catalogue confirms no derivative group is applicable. The product description explicitly states 'malen/ground', which constitutes direct evidence of grinding. The policy pack and process-facets.md confirm that F28.A07LA (grinding/milling/crushing) is the permitted alternative: it encodes the known process rather than the blocked physical-state descriptor. Grinding is confirmed NOT implicit in A01AC per catalogue context ('Grinding is explicitly known and permitted; it is not implicit in the base'), so F28.A07LA adds non-redundant information (C08, R-FACET-001 satisfied).\n\nStep 5 – Process legality: A07LA is a physical-division process (not a derivative-creating process), so BR19 does not fire. BR11 is a LOW advisory; A07LA is sufficiently specific for grinding/milling/crushing and no more specific grinding descriptor is indicated. BR16 applies only to derivative terms and is not relevant here.\n\nStep 6 – Anti-pattern check: AP-001 (raw base + F28 recreating a standard derivative group) does not apply because no applicable derivative group exists for ground turmeric per catalogue evidence.\n\nStep 7 – Final code: A01AC#F28.A07LA. The F03.A06JD facet is completely removed and replaced with F28.A07LA. No other facets (F01, F27, F04) are warranted by the case details.\n\nStep 8 – Syntax and length: 'A01AC#F28.A07LA' follows the required base#facetFamily.descriptorCode syntax (R-SYNTAX-001, BR29). Length is well within 256 characters (R-LENGTH-001).",
+          "implicitFacets": [
+            {
+              "facetType": "F01",
+              "facetCode": "(implicit in A01AC)",
+              "facetMeaning": "Source: turmeric plant — already implicit in the raw base term; not added explicitly"
+            }
+          ],
+          "suggestedExplicitFacets": [
+            {
+              "facetType": "F28",
+              "facetCode": "A07LA",
+              "facetMeaning": "Grinding/milling/crushing — encodes the known, explicit grinding process; not implicit in A01AC; permitted on raw commodity bases; replaces the BR13-blocked F03.A06JD"
+            }
+          ],
+          "validationCheck": {
+            "passes": true,
+            "rulesConsulted": [
+              "BR13 (HIGH): F03.A06JD on raw A01AC — BLOCKED; this was the root cause of the original rejection. Repair removes F03.A06JD entirely.",
+              "BR19 (ERROR): A07LA is a physical-division process, not a derivative-creating process — does NOT fire.",
+              "BR17 (ERROR): A07LA and A06JD are facet terms; neither is used as a base term — SATISFIED.",
+              "BR29 (ERROR): syntax 'A01AC#F28.A07LA' is valid FoodEx2 code format — PASSES.",
+              "BR11 (LOW): A07LA (grinding/milling/crushing) is sufficiently specific — no generic-process warning triggered.",
+              "BR16 (HIGH): applies to derivative terms only; A01AC is raw — NOT APPLICABLE.",
+              "BR25 (ERROR): F28 is not a single-cardinality family; one F28 value used — PASSES.",
+              "R-F03-001: BR13 rejection does not require derivative base; no applicable derivative group; raw base retained with F28.A07LA — SATISFIED.",
+              "R-FACET-001: grinding is not implicit in A01AC per catalogue evidence; F28.A07LA is non-redundant — SATISFIED.",
+              "R-PROC-001: explicit grinding process preserved via F28.A07LA — SATISFIED.",
+              "AP-001: no standard derivative group for ground turmeric exists; F28 on raw is not reconstructing a derivative — NOT triggered.",
+              "R-SYNTAX-001: code uses correct separator and facet prefix — PASSES.",
+              "R-LENGTH-001: facet string is 9 characters, well within 256-character limit — PASSES."
+            ],
+            "warnings": [
+              "OPEN QUESTION (low risk): Whether drying is implicit in A01AC or requires F28.A07KG. Catalogue context states A01AC covers 'dried, ground spice', suggesting drying is implicit. If live catalogue implicit-facet data shows drying is NOT implicit, F28.A07KG should be added alongside F28.A07LA. This cannot be confirmed from the available evidence alone.",
+              "BR27: not applicable — A01AC is a raw term (r), not a derivative (d); BR27 only applies to derivative terms."
+            ]
+          },
+          "alternativeCodes": [
+            {
+              "code": "A01AC",
+              "name": "Turmeric roots (base only, no process facet)",
+              "reason": "Acceptable if grinding were implicit in A01AC, but catalogue context explicitly states it is not implicit — so the bare base term without F28.A07LA would lose process information. Rejected in favour of A01AC#F28.A07LA."
+            }
+          ],
+          "confidence": 5,
+          "regulatoryNotes": "No reporting domain is specified. No domain-specific overlays (VMPR, contaminants, pesticides, additives) apply. The repair is straightforward: remove the BR13-blocked F03.A06JD descriptor and substitute the permitted F28.A07LA process facet, retaining A01AC as the raw commodity base term. The minor residual uncertainty (confidence 0.97 rather than 1.0) reflects the unverified question of whether drying is already implicit in A01AC in the live catalogue."
+        },
+        "pages_used": [
+          "policy-contract.md",
+          "index.md",
+          "term-type-facet-constraints.md",
+          "process-facets.md",
+          "business-rules.md"
+        ],
+        "policy_version": "2026-10-09-v0.11",
+        "binding_rules": [
+          {
+            "id": "R-DERIV-001",
+            "when": "food_type=derivative and derivative_base_exists=true",
+            "must": "select the derivative base rather than reconstructing the food from a raw commodity base plus `F28`.",
+            "must_not": null,
+            "may": null,
+            "should": null,
+            "derived_from": [
+              "base-term-selection.md",
+              "process-facets.md",
+              "business-rules.md BR19"
+            ]
+          },
+          {
+            "id": "R-F03-001",
+            "when": "food_type=raw_primary_commodity and F03 descriptor is in the BR13 disintegration list",
+            "must": null,
+            "must_not": "add that `F03` to the final code. BR13 rejection alone does not determine the base-term class. Reassess the actual processing and catalogue scope: use an applicable derivative base, including a suitable generic derivative; otherwise retain a raw base that covers the product and record known permitted grinding as `F28.A07LA` when it is not already implicit. Do not infer grinding from powder alone or infer catalogue absence from missing search results. This is not a blanket ban on all `F03` descriptors for raw commodities.",
+            "may": null,
+            "should": null,
+            "derived_from": [
+              "term-type-facet-constraints.md",
+              "process-facets.md",
+              "base-term-selection.md",
+              "business-rules.md BR13"
+            ]
+          }
+        ],
+        "models": {
+          "retrieval": "claude-sonnet-4-6",
+          "solver": "claude-sonnet-4-6"
+        }
+      },
+      "semantic_review": {
+        "core_decision": "pass",
+        "expected": "Retain A01AC, remove F03.A06JD, add known permitted grinding F28.A07LA.",
+        "observed": "A01AC#F28.A07LA; reasoning explicitly applies corrected R-F03-001 and the supplied catalogue boundary.",
+        "limitations": [
+          "implicitFacets includes a descriptive placeholder rather than a supplied catalogue descriptor.",
+          "Ancillary drying and validation claims were not verified against a live catalogue/validator."
+        ]
+      }
+    },
+    {
+      "id": "generic-derivative",
+      "endpoint": "/wiki/solve",
+      "request": {
+        "search_term": "Quinoa flour, no species-specific flour term available. Choose between the supplied raw quinoa and the applicable generic flour derivative.",
+        "deconstructed_query": {},
+        "candidates": [
+          {
+            "code": "A04KS",
+            "name": "Cereal flours and similar",
+            "termType": "d",
+            "coverageText": "Test fixture based on the EFSA missing-specific-term example: this reportable generic derivative covers quinoa flour; flour production is implicit."
+          },
+          {
+            "code": "A000R",
+            "name": "Quinoa grain",
+            "termType": "r"
+          },
+          {
+            "code": "A07XE",
+            "name": "Other",
+            "termType": "f"
+          },
+          {
+            "code": "A07LA",
+            "name": "Grinding/milling/crushing",
+            "termType": "f"
+          }
+        ],
+        "context": {
+          "catalogue_evidence": "Test fixture: A04KS is the applicable reportable generic flour derivative when the specific quinoa-flour term is absent. A000R is available as source commodity for F27; F26.A07XE marks the missing specific term. An applicable derivative exists; do not infer its absence from the missing specific term. No reporting domain is specified."
+        },
+        "max_pages": 7
+      },
+      "elapsed_seconds": 75.99,
+      "response": {
+        "query_classification": {
+          "food_type": "derivative",
+          "domain": "general_food",
+          "signals": [
+            "Search term is 'quinoa flour' — a milled grain product",
+            "No species-specific flour derivative exists in the catalogue",
+            "A generic derivative (A04KS) is explicitly available",
+            "Raw quinoa grain (A000R) is present as source commodity",
+            "F26.A07XE is provided to flag the missing specific term",
+            "F27.A000R is the source-origin link from derivative to raw commodity"
+          ],
+          "candidate_term_types": []
+        },
+        "solution": {
+          "selectedCode": "A04KS",
+          "selectedName": "Cereal flours and similar",
+          "selectedTermType": "d",
+          "constructedCode": "A04KS#F26.A07XE$F27.A000R",
+          "reasoning": "Step 1 – Food type: Quinoa flour is a milled grain product. Grain milling is a nature-changing process that produces a recognised derivative category (flour). The food type is therefore 'derivative', not raw commodity.\n\nStep 2 – Candidate selection within food type: Only one derivative candidate exists in the supplied list: A04KS ('Cereal flours and similar', termType 'd'). Its coverage text explicitly confirms it is the applicable reportable generic derivative covering quinoa flour when the species-specific flour term is absent. The raw candidate A000R (Quinoa grain, termType 'r') is a raw commodity and the wrong class for flour. The facet-type candidates A07XE and A07LA (both termType 'f') cannot serve as base terms. A04KS is the only valid derivative base term.\n\nStep 3 – Anti-pattern rejection: Constructing A000R#F28.A07LA would be raw base + derivative-creating process, explicitly forbidden by AP-001, R-DERIV-001, and BR19, because A04KS (an applicable derivative group) exists.\n\nStep 4 – Process implicit check (C04, R-IMPLICIT-001): A04KS as a flour derivative base already implies grain milling. Adding F28.A07LA would restate an implicit process — forbidden.\n\nStep 5 – Missing-term flag (F26.A07XE): No species-specific quinoa flour term exists. Policy and the EFSA worked example (base-term-selection.md §Worked Examples) require adding F26.A07XE to flag this absence.\n\nStep 6 – Source origin (R-ORIGIN-001, C07): Food type is derivative, so origin must be expressed via F27, not F01 or F04. The source raw commodity is Quinoa grain (A000R). R-F27-001 is satisfied: F27.A000R refines and equals the source commodity chain for a cereal/grain flour.\n\nStep 7 – No other explicit facets are justified. Milling is implicit; no packaging, descriptive, or additional process information is present.\n\nStep 8 – Syntax and cardinality: Code string A04KS#F26.A07XE$F27.A000R follows R-SYNTAX-001. F26 is single-cardinality (one value: A07XE — compliant with R-CARD-001). Length is well within 256 characters. This exactly matches the EFSA canonical worked example for quinoa flour.",
+          "implicitFacets": [
+            {
+              "facetType": "F28",
+              "facetCode": "A0C03/A0C09/A0C0A",
+              "facetMeaning": "Grain milling — already implied by the derivative base A04KS ('Cereal flours and similar'); must not be added explicitly"
+            }
+          ],
+          "suggestedExplicitFacets": [
+            {
+              "facetType": "F26",
+              "facetCode": "A07XE",
+              "facetMeaning": "Other / missing specific term flag — signals that no species-specific quinoa flour term exists in the catalogue"
+            },
+            {
+              "facetType": "F27",
+              "facetCode": "A000R",
+              "facetMeaning": "Source raw commodity: Quinoa grain — records the constitutive source of the derivative flour per R-ORIGIN-001 and C07"
+            }
+          ],
+          "validationCheck": {
+            "passes": true,
+            "rulesConsulted": [
+              "C01 — food type determined first (derivative)",
+              "C02 — specificity evaluated within derivative type only",
+              "C03 — existing derivative base A04KS preferred over raw + F28 reconstruction",
+              "C04 — milling process not restated (already implicit in A04KS)",
+              "C06 — A04KS is a reportable non-hierarchy derivative term",
+              "C07 — origin expressed via F27 (derivative rule)",
+              "C08 — no redundant or unjustified facets added",
+              "C09 — coverage text of A04KS verified as applicable",
+              "R-DERIV-001 — derivative base selected, not raw + F28",
+              "R-IMPLICIT-001 — F28.A07LA not added (milling implicit)",
+              "R-HIER-001 — A04KS is reportable; no hierarchy-only term used as base",
+              "R-ORIGIN-001 — F27 used for derivative source, not F01 or F04",
+              "R-FACET-001 — no redundant facets retained",
+              "R-F27-001 — F27.A000R refines the source commodity chain correctly",
+              "R-CARD-001 — F26 carries exactly one value (A07XE)",
+              "R-SYNTAX-001 — code string syntax base#F26.code$F27.code is correct",
+              "R-LENGTH-001 — facet string length well within 256 characters",
+              "AP-001 — raw base + F28 anti-pattern rejected",
+              "TB-001 — derivative candidate A04KS preferred over raw + F28 alternative",
+              "BR08 — A04KS confirmed reportable per coverage text",
+              "BR10 — generic fallback A04KS used only because specific quinoa flour term is absent",
+              "BR13 — not applicable (no F03 powder descriptor involved)",
+              "BR16 — no explicit F28 added that could conflict with implicit process",
+              "BR19 — derivative-creating process not placed on raw base",
+              "BR25 — single-cardinality F26 respected",
+              "BR29 — code string syntax validated"
+            ],
+            "warnings": [
+              "BR08 reportability of A04KS in the specific target reporting hierarchy should be confirmed at ingest time; the coverage text asserts reportability but a live catalogue check is recommended.",
+              "No reporting domain (pesticides, contaminants, VMPR, additives) was specified; general food coding rules applied. If a domain-specific overlay applies, re-validate facet requirements against that domain's rules.",
+              "F26 is a single-cardinality facet family (R-CARD-001); only A07XE has been added — compliant."
+            ]
+          },
+          "alternativeCodes": [
+            {
+              "code": "A000R#F28.A07LA",
+              "name": "Quinoa grain + grinding/milling process facet",
+              "reason": "REJECTED — anti-pattern AP-001 / R-DERIV-001 / BR19: reconstructing a derivative from raw commodity plus F28 is forbidden when an applicable derivative group (A04KS) exists in the catalogue."
+            }
+          ],
+          "confidence": 5,
+          "regulatoryNotes": "The constructed code A04KS#F26.A07XE$F27.A000R is the verbatim EFSA canonical worked example for quinoa flour as documented in base-term-selection.md §Worked Examples. It uses the generic flour derivative base A04KS because no species-specific quinoa flour term is present in the FoodEx2 catalogue, flags the missing specific term with F26.A07XE per EFSA missing-term convention, and records the constitutive source raw commodity (Quinoa grain, A000R) via F27 as required for derivative coding. No reporting domain overlay was indicated; if a domain-specific hierarchy is targeted, reportability of A04KS must be confirmed in that hierarchy (BR08)."
+        },
+        "pages_used": [
+          "policy-contract.md",
+          "index.md",
+          "base-term-selection.md",
+          "process-facets.md"
+        ],
+        "policy_version": "2026-10-09-v0.11",
+        "binding_rules": [
+          {
+            "id": "R-DERIV-001",
+            "when": "food_type=derivative and derivative_base_exists=true",
+            "must": "select the derivative base rather than reconstructing the food from a raw commodity base plus `F28`.",
+            "must_not": null,
+            "may": null,
+            "should": null,
+            "derived_from": [
+              "base-term-selection.md",
+              "process-facets.md",
+              "business-rules.md BR19"
+            ]
+          },
+          {
+            "id": "R-F03-001",
+            "when": "food_type=raw_primary_commodity and F03 descriptor is in the BR13 disintegration list",
+            "must": null,
+            "must_not": "add that `F03` to the final code. BR13 rejection alone does not determine the base-term class. Reassess the actual processing and catalogue scope: use an applicable derivative base, including a suitable generic derivative; otherwise retain a raw base that covers the product and record known permitted grinding as `F28.A07LA` when it is not already implicit. Do not infer grinding from powder alone or infer catalogue absence from missing search results. This is not a blanket ban on all `F03` descriptors for raw commodities.",
+            "may": null,
+            "should": null,
+            "derived_from": [
+              "term-type-facet-constraints.md",
+              "process-facets.md",
+              "base-term-selection.md",
+              "business-rules.md BR13"
+            ]
+          }
+        ],
+        "models": {
+          "retrieval": "claude-sonnet-4-6",
+          "solver": "claude-sonnet-4-6"
+        }
+      },
+      "semantic_review": {
+        "core_decision": "pass",
+        "expected": "Keep the applicable generic flour derivative A04KS with F27.A000R and the missing-specific-term marker; reject raw plus A07LA.",
+        "observed": "A04KS#F26.A07XE$F27.A000R; derivative priority preserved.",
+        "limitations": [
+          "implicitFacets fabricates a combined A0C03/A0C09/A0C0A value from the guidance examples rather than a supplied catalogue descriptor.",
+          "Model-reported validationCheck.passes is not evidence of an executed validator."
+        ]
+      }
+    }
+  ],
+  "remaining_limitations": "Both primary coding decisions pass. The solver also emits unsupplied implicit-facet placeholders/combined values and unverified ancillary validation claims; the full captured solutions are retained here. Earlier vector-retrieval limitations remain unchanged. No runtime model or solver prompt change is included."
+}

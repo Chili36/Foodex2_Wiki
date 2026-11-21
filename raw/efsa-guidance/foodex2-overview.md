@@ -14,7 +14,7 @@ related:
   - "[[facet-coding-rules]]"
   - "[[code-string-format]]"
   - "[[implicit-vs-explicit-facets]]"
-last_updated: "2026-04-05"
+last_updated: "2026-09-30"
 ---
 
 # FoodEx2 Overview
@@ -36,6 +36,21 @@ last_updated: "2026-04-05"
 
 - Start from the question "What type of food is this?" and separate foods into raw primary commodities, derivatives, and composite foods. (EFSA guidance p14-15, p40-41; Training p5)
 - The internal building logic is `part-nature -> origin facet -> further process`. For raw foods the origin is `source`, for derivatives it is `source-commodities`, and for composites it is `ingredient`. (EFSA guidance p19-20)
+
+<!-- Source: FoodEx2 revision 2, section 3.1.11, Table 12 p24-25 -->
+## Corex: Detail And Role In The Food List
+
+`Corex` records the role/detail class of a food-list term. It is distinct from the food's nature (raw commodity, derivative or composite); a detailed term can still describe any of those natures.
+
+| Corex | Meaning | Coding role |
+| --- | --- | --- |
+| `H` | Hierarchy term | Aggregates for navigation and analysis; not a normal reporting base. |
+| `C` | Core term | Minimum recommended detail for data collection; aim for this level or more specific when supported. |
+| `E` | Extended term | More detail than a core term. |
+| `M` | Generic term | Usually describes a nature without a defined origin; fallback when the detail is unknown or a detailed term is unavailable. |
+| `P` | Non-specific term | Intermediate aggregate; can give more detail than a generic term when a core term cannot be reached. |
+
+Read these roles with [[base-term-selection]]: choose the correct food type first, then the best supported detail. Distinguish unknown detail from a known food missing in the catalogue; the latter uses the missing-term workflow. Corex alone does not establish reportability in a particular hierarchy.
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p14, 27-35 -->
 ## Hierarchies

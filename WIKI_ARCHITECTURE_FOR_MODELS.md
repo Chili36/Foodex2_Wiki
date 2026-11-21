@@ -1,6 +1,6 @@
 ---
 title: "Wiki Architecture For Models"
-last_updated: "2026-07-04"
+last_updated: "2026-10-01"
 sources:
   - "README.md"
   - "PROJECT_CONTEXT.md"
@@ -200,8 +200,8 @@ Locations:
 
 Default collections:
 
-- `foodex2_wiki_markdown_v1`: chunks derived from curated markdown pages
-- `foodex2_source_docs_v1`: chunks derived from raw source documents
+- `foodex2_wiki_markdown_v2`: chunks derived from curated markdown pages
+- `foodex2_source_docs_v2`: chunks derived from raw source documents
 
 Purpose:
 
@@ -374,7 +374,7 @@ Domain overlays are conditional. Do not apply them unless the request, caller co
 Examples:
 
 - `maintenance-history.md`
-- `maintenance-2015.md` through `maintenance-2024.md`
+- `maintenance-2015.md` through `maintenance-2025.md`
 - `log.md`
 
 Use:

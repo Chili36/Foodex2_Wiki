@@ -1,0 +1,330 @@
+{
+  "version": 1,
+  "description": "Source-backed physical division versus derivative production cases, including the original turmeric reproduction, transfer cases and negative controls. Use semantic review as well as keyword smoke checks.",
+  "cases": [
+    {
+      "id": "DIV-001",
+      "reviewed": true,
+      "source": "EFSA FoodEx2 revision 2 (2015), p15-16, p43-44 Table 22, p48 and p58-59; official Catalogue Browser BR13 physicalStateRawCheck.",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "How should I code \"Gurkmeja, malen\" (ground turmeric powder) in FoodEx2? Is \"powder\" a physical state facet or a process?",
+      "reference_answer": "Powder is an F03 physical state; known grinding is F28.A07LA. Spices retain raw status despite normal drying, and physical division can be applied to an appropriate raw base. Explain the raw-plus-grinding path, without requiring an unestablished powdered derivative or declaring missing candidates solely because no derivative was returned. Use an applicable derivative if catalogue scope actually requires it. Do not invent a turmeric base code absent returned or supplied evidence.",
+      "reference_pages": [
+        "process-facets.md",
+        "base-term-selection.md",
+        "term-type-facet-constraints.md"
+      ],
+      "acceptable_pages": [
+        "RUNTIME_RULES.md",
+        "facet-coding-rules.md",
+        "business-rules.md",
+        "process-validation-rules.md",
+        "implicit-vs-explicit-facets.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "vmpr-foodex2.md",
+        "contaminants-foodex2.md",
+        "additives-flavourings-foodex2.md"
+      ],
+      "required_answer_terms": [
+        "F28",
+        "A07LA",
+        "BR13"
+      ],
+      "forbidden_answer_terms": [],
+      "rubric": {
+        "score1_description": "Gives a wrong coding path or invents essential catalogue/process facts, contradicting the source-backed reference.",
+        "score2_description": "Recognises a relevant rule but reaches a wrong repair or leaves contradictory instructions that could cause miscoding.",
+        "score3_description": "Avoids an outright wrong code but fails to resolve the principal distinction or merely lists possible paths despite sufficient evidence.",
+        "score4_description": "Resolves the principal distinction correctly with minor omissions; no unsupported base, process, or blanket exception.",
+        "score5_description": "Retains the valid raw-plus-grinding path; rejects F03 powder on raw; distinguishes drying and physical division; does not demand a derivative without evidence or invent a base code."
+      },
+      "notes": "Agent-reviewed against the cited primary sources, not model-generated answer gold. Catalogue facts explicitly stated in a question are test fixtures, not a complete current catalogue snapshot. Keywords are smoke assertions only; review the decision and qualification against the rubric. Cases stay outside runtime prompts."
+    },
+    {
+      "id": "DIV-002",
+      "reviewed": true,
+      "source": "EFSA FoodEx2 revision 2 (2015), p15-16, p43-44 Table 22, p48 and p58-59; official Catalogue Browser BR13 physicalStateRawCheck.",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "Catalogue evidence for this case: A01AC is the reportable raw Turmeric roots term, it covers this ground turmeric, and catalogue inspection found no applicable powdered or ground derivative group. The product is dried and ground. How should I code it, and should I add F03 powder or F28 drying?",
+      "reference_answer": "Use A01AC#F28.A07LA for the supplied catalogue facts and known grinding. Do not add F03 powder, which BR13 rejects on the raw base. Do not add drying merely to restate the normal marketed-dry spice state. This is general physical-division guidance plus the separate drying exception, not a blanket permission for all powders or all processes.",
+      "reference_pages": [
+        "process-facets.md",
+        "base-term-selection.md",
+        "term-type-facet-constraints.md"
+      ],
+      "acceptable_pages": [
+        "RUNTIME_RULES.md",
+        "facet-coding-rules.md",
+        "business-rules.md",
+        "process-validation-rules.md",
+        "implicit-vs-explicit-facets.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "vmpr-foodex2.md",
+        "contaminants-foodex2.md",
+        "additives-flavourings-foodex2.md"
+      ],
+      "required_answer_terms": [
+        "A01AC",
+        "F28.A07LA",
+        "BR13"
+      ],
+      "forbidden_answer_terms": [],
+      "rubric": {
+        "score1_description": "Gives a wrong coding path or invents essential catalogue/process facts, contradicting the source-backed reference.",
+        "score2_description": "Recognises a relevant rule but reaches a wrong repair or leaves contradictory instructions that could cause miscoding.",
+        "score3_description": "Avoids an outright wrong code but fails to resolve the principal distinction or merely lists possible paths despite sufficient evidence.",
+        "score4_description": "Resolves the principal distinction correctly with minor omissions; no unsupported base, process, or blanket exception.",
+        "score5_description": "Uses the supplied raw turmeric base with grinding, rejects F03 powder and redundant ordinary drying, and does not insist on a missing derivative."
+      },
+      "notes": "Agent-reviewed against the cited primary sources, not model-generated answer gold. Catalogue facts explicitly stated in a question are test fixtures, not a complete current catalogue snapshot. Keywords are smoke assertions only; review the decision and qualification against the rubric. Cases stay outside runtime prompts."
+    },
+    {
+      "id": "DIV-003",
+      "reviewed": true,
+      "source": "EFSA FoodEx2 revision 2 (2015), p15-16, p43-44 Table 22, p48 and p58-59; official Catalogue Browser BR13 physicalStateRawCheck.",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "I need to code ground black pepper in FoodEx2. Should I use a raw base with a grinding process facet, or a derivative base?",
+      "reference_answer": "Ordinary ground black pepper can use the appropriate raw spice base with F28.A07LA for known grinding, subject to applicable catalogue scope. Normal drying does not change the spice to a derivative. A suitable derivative group takes precedence if it actually covers the product; do not infer that one is required merely from ground or powder. Do not invent a pepper code absent evidence.",
+      "reference_pages": [
+        "process-facets.md",
+        "base-term-selection.md"
+      ],
+      "acceptable_pages": [
+        "RUNTIME_RULES.md",
+        "facet-coding-rules.md",
+        "business-rules.md",
+        "process-validation-rules.md",
+        "term-type-facet-constraints.md",
+        "implicit-vs-explicit-facets.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "vmpr-foodex2.md",
+        "contaminants-foodex2.md",
+        "additives-flavourings-foodex2.md"
+      ],
+      "required_answer_terms": [
+        "F28",
+        "A07LA",
+        "raw"
+      ],
+      "forbidden_answer_terms": [],
+      "rubric": {
+        "score1_description": "Gives a wrong coding path or invents essential catalogue/process facts, contradicting the source-backed reference.",
+        "score2_description": "Recognises a relevant rule but reaches a wrong repair or leaves contradictory instructions that could cause miscoding.",
+        "score3_description": "Avoids an outright wrong code but fails to resolve the principal distinction or merely lists possible paths despite sufficient evidence.",
+        "score4_description": "Resolves the principal distinction correctly with minor omissions; no unsupported base, process, or blanket exception.",
+        "score5_description": "Transfers the physical-division rule to pepper, gives the raw-plus-grinding path and the applicable-derivative boundary, and does not invent codes."
+      },
+      "notes": "Agent-reviewed against the cited primary sources, not model-generated answer gold. Catalogue facts explicitly stated in a question are test fixtures, not a complete current catalogue snapshot. Keywords are smoke assertions only; review the decision and qualification against the rubric. Cases stay outside runtime prompts."
+    },
+    {
+      "id": "DIV-004",
+      "reviewed": true,
+      "source": "EFSA FoodEx2 revision 2 (2015), p15-16, p43-44 Table 22, p48 and p58-59; official Catalogue Browser BR13 physicalStateRawCheck.",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "Wheat grain has been milled into white wheat flour with separation of bran. The catalogue supplies a reportable wheat-flour derivative covering the product. Should I use wheat grain plus F28.A07LA instead?",
+      "reference_answer": "Use the applicable white-wheat-flour derivative. Grain milling with separation into recognised derivatives is distinct from simple physical division. Do not rebuild this flour from raw grain plus grinding, and do not repeat a milling process already implicit in the derivative base.",
+      "reference_pages": [
+        "base-term-selection.md",
+        "process-facets.md"
+      ],
+      "acceptable_pages": [
+        "RUNTIME_RULES.md",
+        "facet-coding-rules.md",
+        "business-rules.md",
+        "process-validation-rules.md",
+        "term-type-facet-constraints.md",
+        "implicit-vs-explicit-facets.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "vmpr-foodex2.md",
+        "contaminants-foodex2.md",
+        "additives-flavourings-foodex2.md"
+      ],
+      "required_answer_terms": [
+        "derivative"
+      ],
+      "forbidden_answer_terms": [],
+      "rubric": {
+        "score1_description": "Gives a wrong coding path or invents essential catalogue/process facts, contradicting the source-backed reference.",
+        "score2_description": "Recognises a relevant rule but reaches a wrong repair or leaves contradictory instructions that could cause miscoding.",
+        "score3_description": "Avoids an outright wrong code but fails to resolve the principal distinction or merely lists possible paths despite sufficient evidence.",
+        "score4_description": "Resolves the principal distinction correctly with minor omissions; no unsupported base, process, or blanket exception.",
+        "score5_description": "Selects the supplied flour derivative, rejects raw grain plus A07LA for this product, and avoids redundant implicit-process coding."
+      },
+      "notes": "Agent-reviewed against the cited primary sources, not model-generated answer gold. Catalogue facts explicitly stated in a question are test fixtures, not a complete current catalogue snapshot. Keywords are smoke assertions only; review the decision and qualification against the rubric. Cases stay outside runtime prompts."
+    },
+    {
+      "id": "DIV-005",
+      "reviewed": true,
+      "source": "EFSA FoodEx2 revision 2 (2015), p15-16, p43-44 Table 22, p48 and p58-59; official Catalogue Browser BR13 physicalStateRawCheck.",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "There is no species-specific quinoa-flour term in my candidates. I have raw quinoa and a generic flour derivative whose scope covers quinoa flour. Is raw quinoa plus grinding preferable because the exact derivative is missing?",
+      "reference_answer": "No. Use the suitable generic flour derivative with the appropriate source-commodity F27 and missing-specific-term handling supported by the catalogue and guidance. Absence of a species-specific derivative does not establish absence of an applicable derivative group and does not justify raw quinoa plus A07LA.",
+      "reference_pages": [
+        "base-term-selection.md",
+        "process-facets.md",
+        "implicit-vs-explicit-facets.md"
+      ],
+      "acceptable_pages": [
+        "RUNTIME_RULES.md",
+        "facet-coding-rules.md",
+        "business-rules.md",
+        "process-validation-rules.md",
+        "term-type-facet-constraints.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "vmpr-foodex2.md",
+        "contaminants-foodex2.md",
+        "additives-flavourings-foodex2.md"
+      ],
+      "required_answer_terms": [
+        "F27",
+        "derivative"
+      ],
+      "forbidden_answer_terms": [],
+      "rubric": {
+        "score1_description": "Gives a wrong coding path or invents essential catalogue/process facts, contradicting the source-backed reference.",
+        "score2_description": "Recognises a relevant rule but reaches a wrong repair or leaves contradictory instructions that could cause miscoding.",
+        "score3_description": "Avoids an outright wrong code but fails to resolve the principal distinction or merely lists possible paths despite sufficient evidence.",
+        "score4_description": "Resolves the principal distinction correctly with minor omissions; no unsupported base, process, or blanket exception.",
+        "score5_description": "Chooses the applicable generic flour derivative and its source-commodity path; does not equate missing exact term with permission to use raw plus grinding."
+      },
+      "notes": "Agent-reviewed against the cited primary sources, not model-generated answer gold. Catalogue facts explicitly stated in a question are test fixtures, not a complete current catalogue snapshot. Keywords are smoke assertions only; review the decision and qualification against the rubric. Cases stay outside runtime prompts."
+    },
+    {
+      "id": "DIV-006",
+      "reviewed": true,
+      "source": "EFSA FoodEx2 revision 2 (2015), p15-16, p43-44 Table 22, p48 and p58-59; official Catalogue Browser BR13 physicalStateRawCheck.",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "A sample is described only as \"plant powder\". The plant identity and production method are unknown. May I assume it is a raw plant that was ground and add F28.A07LA?",
+      "reference_answer": "No. Powder alone establishes neither grinding nor raw-commodity status. Obtain the identity and processing information needed to determine an appropriate base and permitted facets. Do not invent a plant code, grinding, or a derivative classification solely from the physical form. BR13 still restricts F03 powder on raw bases.",
+      "reference_pages": [
+        "process-facets.md",
+        "term-type-facet-constraints.md"
+      ],
+      "acceptable_pages": [
+        "RUNTIME_RULES.md",
+        "facet-coding-rules.md",
+        "business-rules.md",
+        "process-validation-rules.md",
+        "implicit-vs-explicit-facets.md",
+        "base-term-selection.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "vmpr-foodex2.md",
+        "contaminants-foodex2.md",
+        "additives-flavourings-foodex2.md"
+      ],
+      "required_answer_terms": [],
+      "forbidden_answer_terms": [],
+      "rubric": {
+        "score1_description": "Gives a wrong coding path or invents essential catalogue/process facts, contradicting the source-backed reference.",
+        "score2_description": "Recognises a relevant rule but reaches a wrong repair or leaves contradictory instructions that could cause miscoding.",
+        "score3_description": "Avoids an outright wrong code but fails to resolve the principal distinction or merely lists possible paths despite sufficient evidence.",
+        "score4_description": "Resolves the principal distinction correctly with minor omissions; no unsupported base, process, or blanket exception.",
+        "score5_description": "Explicitly withholds the grinding inference and unsupported food classification; identifies missing food/process facts without asserting all powders are derivatives."
+      },
+      "notes": "Agent-reviewed against the cited primary sources, not model-generated answer gold. Catalogue facts explicitly stated in a question are test fixtures, not a complete current catalogue snapshot. Keywords are smoke assertions only; review the decision and qualification against the rubric. Cases stay outside runtime prompts."
+    },
+    {
+      "id": "DIV-007",
+      "reviewed": true,
+      "source": "EFSA FoodEx2 revision 2 (2015), p15-16, p43-44 Table 22, p48 and p58-59; official Catalogue Browser BR13 physicalStateRawCheck.",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "A raw spice base with F03.A06JD powder fails BR13. The spice was ground; catalogue inspection confirms that the raw base covers it and no derivative group is applicable. Must I change the base to a derivative to repair BR13?",
+      "reference_answer": "No. BR13 rejects the F03 combination, not the raw classification itself. With the supplied catalogue facts and known permitted grinding, retain the raw base, remove F03.A06JD and describe grinding using F28.A07LA. Do not describe this as a universal F03-to-F28 substitution.",
+      "reference_pages": [
+        "term-type-facet-constraints.md",
+        "business-rules.md",
+        "process-facets.md"
+      ],
+      "acceptable_pages": [
+        "RUNTIME_RULES.md",
+        "facet-coding-rules.md",
+        "process-validation-rules.md",
+        "implicit-vs-explicit-facets.md",
+        "base-term-selection.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "vmpr-foodex2.md",
+        "contaminants-foodex2.md",
+        "additives-flavourings-foodex2.md"
+      ],
+      "required_answer_terms": [
+        "BR13",
+        "F28.A07LA"
+      ],
+      "forbidden_answer_terms": [],
+      "rubric": {
+        "score1_description": "Gives a wrong coding path or invents essential catalogue/process facts, contradicting the source-backed reference.",
+        "score2_description": "Recognises a relevant rule but reaches a wrong repair or leaves contradictory instructions that could cause miscoding.",
+        "score3_description": "Avoids an outright wrong code but fails to resolve the principal distinction or merely lists possible paths despite sufficient evidence.",
+        "score4_description": "Resolves the principal distinction correctly with minor omissions; no unsupported base, process, or blanket exception.",
+        "score5_description": "Repairs the invalid facet while retaining the supported raw base; does not mandate a derivative or universally swap F03 for F28."
+      },
+      "notes": "Agent-reviewed against the cited primary sources, not model-generated answer gold. Catalogue facts explicitly stated in a question are test fixtures, not a complete current catalogue snapshot. Keywords are smoke assertions only; review the decision and qualification against the rubric. Cases stay outside runtime prompts."
+    },
+    {
+      "id": "DIV-008",
+      "reviewed": true,
+      "source": "EFSA FoodEx2 revision 2 (2015), p15-16, p43-44 Table 22, p48 and p58-59; official Catalogue Browser BR13 physicalStateRawCheck.",
+      "domain": "none",
+      "shape": "agent_specific",
+      "question": "My search returned only a raw commodity for a ground food. Does the absence of derivative candidates prove that no derivative exists and permit me to use raw plus F28.A07LA?",
+      "reference_answer": "No. Search results can be incomplete and do not establish catalogue absence. Determine the food and actual processing and inspect the scope of applicable specific or generic derivatives. Raw plus known permitted grinding remains a valid path when the raw base covers the product and no applicable derivative group covers it. Conversely, absence of a derivative alone does not prove the candidate set incomplete if that raw path is supported.",
+      "reference_pages": [
+        "base-term-selection.md",
+        "process-facets.md"
+      ],
+      "acceptable_pages": [
+        "RUNTIME_RULES.md",
+        "facet-coding-rules.md",
+        "business-rules.md",
+        "process-validation-rules.md",
+        "term-type-facet-constraints.md",
+        "implicit-vs-explicit-facets.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "vmpr-foodex2.md",
+        "contaminants-foodex2.md",
+        "additives-flavourings-foodex2.md"
+      ],
+      "required_answer_terms": [],
+      "forbidden_answer_terms": [],
+      "rubric": {
+        "score1_description": "Gives a wrong coding path or invents essential catalogue/process facts, contradicting the source-backed reference.",
+        "score2_description": "Recognises a relevant rule but reaches a wrong repair or leaves contradictory instructions that could cause miscoding.",
+        "score3_description": "Avoids an outright wrong code but fails to resolve the principal distinction or merely lists possible paths despite sufficient evidence.",
+        "score4_description": "Resolves the principal distinction correctly with minor omissions; no unsupported base, process, or blanket exception.",
+        "score5_description": "Rejects catalogue-absence inference from retrieval alone while preserving the valid raw-plus-grinding path; does not automatically demand a missing derivative."
+      },
+      "notes": "Agent-reviewed against the cited primary sources, not model-generated answer gold. Catalogue facts explicitly stated in a question are test fixtures, not a complete current catalogue snapshot. Keywords are smoke assertions only; review the decision and qualification against the rubric. Cases stay outside runtime prompts."
+    }
+  ]
+}

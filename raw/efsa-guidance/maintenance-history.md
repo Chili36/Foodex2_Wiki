@@ -9,20 +9,22 @@ sources:
   - "EFSA Supporting Publications - 2023 -  - FoodEx2 maintenance 2022.pdf"
   - "EFSA Supporting Publications - 2024 -  - FoodEx2 maintenance 2023.pdf"
   - "EFSA Supporting Publications - 2025 -  - FoodEx2 maintenance 2024.pdf"
+  - "EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf"
 related:
   - "[[foodex2-overview]]"
   - "[[maintenance-2015]]"
   - "[[maintenance-2024]]"
-last_updated: "2026-04-05"
+  - "[[maintenance-2025]]"
+last_updated: "2026-10-01"
 ---
 
 # Maintenance History
 
-<!-- Source: annual maintenance reports 2015-2024, summary sections -->
+<!-- Source: annual maintenance reports 2015-2025, summary sections -->
 ## Why It Matters
 
-- FoodEx2 did not freeze in 2015. It has been maintained every year since revision 2, with changes to terms, hierarchies, implicit facets, reportability, and regulatory mappings. (Maintenance reports 2015-2024 summaries)
-- The maintenance reports are part of the coding knowledge base, not peripheral documentation. They explain how the catalogue evolved between MTX releases. (Maintenance reports 2015-2024 summaries)
+- FoodEx2 did not freeze in 2015. It has been maintained every year since revision 2, with changes to terms, hierarchies, implicit facets, reportability, and regulatory mappings. (Maintenance reports 2015-2025 summaries)
+- The maintenance reports are part of the coding knowledge base, not peripheral documentation. They explain how the catalogue evolved between MTX releases. (Maintenance reports 2015-2025 summaries)
 
 ## Timeline
 
@@ -36,6 +38,9 @@ last_updated: "2026-04-05"
 | 2022 | PRIMo hierarchy added with 1901 assigned terms; feed revision; WFO-linked plants update. |
 | 2023 | 306 new terms; `F34 Host-sampled`, new implicit attributes, exposure-hierarchy redesign, additives/flavourings mapping. |
 | 2024 | 1094 new terms; VetDrugRes hierarchy overhaul; new F33 category for VMPR reporting. |
+| 2025 | 79 new terms; 358 revised scope notes; bird/mammal taxonomy, EU FCDB cooking/diet descriptors, additive mapping and five hierarchy-specific dismissals; MTX 16.1-16.3 through MTX 17.0. |
+
+Maintenance year and publication year differ: [[maintenance-2025]] was published in April 2026 and covers the January 2026 MTX 17.0 major release. (2025 maintenance p3-6)
 
 ## Read These Pages With
 

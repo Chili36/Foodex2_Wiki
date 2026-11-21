@@ -1,34 +1,76 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-08-02"
+last_updated: "2026-11-21"
 ---
 
 # Log
 
-## [2026-08-02] correction | Restore F24 intended-use applicability
+## [2026-11-21] correction | Merge source-driven coverage evals with F24 and Table 22 corrections (#51, #46)
 
-- Corrected the overbroad statement that grouped `F24` and `F25` as microbiology-only: EFSA defines `F24 Intended-use` as single-cardinality and applicable to all food types, while `F25 Risky-ingredient` is repeatable and applies to composites.
-- Added the operational F24 boundary from the 2016-2018 maintenance: represent intended use when the distinction is required; a physical-state phrase in an extended name can accompany that need but does not independently trigger F24.
-- Added positive and negative reviewed regression cases around the general decision boundary rather than encoding a pasta-specific rule. Tracked as GitHub issue #51.
+- Merged PR #52's source-driven coverage suite (`evals/coverage/`, non-blocking workflow) and its reviewed regression cases for intended use, process applicability and the additives collection-year boundary.
+- Its guidance edits were written before the 2026-09-30 coverage resolutions and the 2026-10-09 BR13/physical-division repair. Where they conflicted, the newer reviewed guidance and the `2026-10-09-v0.11` policy were kept.
+- Corrected `F24`/`F25`: EFSA defines `F24 Intended-use` as single-cardinality and applicable to all food types, and `F25 Risky-ingredient` as repeatable for composites. They are not microbiology-only. The F24 boundary comes from the 2016-2018 maintenance: use it when an intended-use distinction is required. Physical-state wording alone does not trigger it. (Revision 2 p35-36; maintenance 2016-2018 p18) Closes #51.
+- Added Table 22's general rule to `process-facets.md`: cooking and similar thermal preparation (`A0BA1`), like the other listed treatments, is normally applied directly to the raw commodity as `F28`. Derivative groups exist only for the listed exceptions: some minced meat, grain milling with separation, purée mashing, frying/roasting potatoes, cooking eggs, and caramelisation/browning. Relabelled the cooking list so it no longer reads as the opposite of "non-nature-changing". (Revision 2 p43-44, p52) Addresses #46.
 
-## [2026-08-01] correction | Restore direct-on-raw process applicability
+## [2026-11-19] maintenance | Move RAG embeddings to voyage-context-4
 
-- Added the FoodEx2 revision 2 Table 22 rule that non-nature-changing treatments, including physical division and dimension reduction, can be applied directly to raw commodities as `F28`, subject to the table's derivative exceptions.
-- Clarified the physical-state/process boundary from section 5.9: rejecting a disintegration-family `F03` under BR13 does not discard the treatment evidence; the coder must still choose between a specific derivative and a permitted direct-on-raw process.
-- Recorded the primary EFSA IDATA answer for turmeric powder, `A01AC#F28.A07LA`, as traceable source material and regression evidence.
+- Changed the default Voyage embedding model for `/wiki/ask-rag`, the indexers and the RAG status check from `voyage-context-3` to `voyage-context-4`. Query and document vectors from different models are not comparable, so the defaults now point to new collections, `foodex2_wiki_markdown_v2` and `foodex2_source_docs_v2`, instead of re-embedding the v1 collections in place.
+- Retrieval-only check on 61 labelled cases (no answerer calls): mean must-have page recall went from 0.41 to 0.47 with `legacy_topk` and from 0.52 to 0.61 with `diverse_pages`, and leak-free rate went from 0.59 to 0.84 with `legacy_topk`. A 2048-dimension variant did not beat 1024 (0.42 and 0.58 recall), so the dimension stays at 1024.
+- Chunking is unchanged: the indexers still send their own chunks and leave Voyage auto-chunking off. Dimension stays at 1024.
+- The v1 collections are left as they were, so an existing deployment can keep serving them, or roll back, by setting `WIKI_EMBED_MODEL`, `WIKI_QDRANT_COLLECTION`, `SOURCE_EMBED_MODEL` and `SOURCE_QDRANT_COLLECTION`.
 
-## [2026-08-01] correction | Preserve the additives physical-state collection-year boundary
+## [2026-10-09] review correction | Align the binding BR13 policy
 
-- Clarified that ChemMon 2026 requires an additives/flavourings `F33` category but recommends missing `F03` only for its named legislative categories; it does not make physical state universal.
-- Recorded the collection-year change: ChemMon 2025 illustrated red wine as `A03MX#F03.A06JL`, whereas the official 2026 red-wine example is bare `A03MX` with implicit category `14.2.2` `F33`.
-- Added reviewed positive and negative regression cases so future guidance does not incorrectly promote the obsolete 2025 wine illustration into a universal rule.
+- PR #60 review identified a missed execution-layer rule: `R-F03-001` still prescribed a derivative after BR13 rejection, despite the repaired guidance. The first repair was incomplete for structured consumers; the earlier answer checks did not exercise this binding rule.
+- Updated the canonical policy to `2026-10-09-v0.11`. Keep the forbidden F03 out, reassess processing and catalogue scope, prefer an applicable specific or generic derivative, and otherwise retain a supported raw base with known permitted grinding. Powder alone and missing search results remain insufficient evidence.
+- Added regression checks on the policy actually delivered through coding context, policy packs and the solver, including the solver's full policy page. Follow-up validation and index-refresh evidence are recorded in [the repair review](reports/guidance-repair/2026-10-09/review.md#review-follow-up-binding-br13-policy).
 
-## [2026-08-01] evaluation | Add source-driven coverage harness
+## [2026-10-09] correction | Separate physical division from derivative production
 
-- Added a separate non-blocking coverage suite that chunks hash-verified EFSA sources, generates versioned questions directly through local LM Studio, answers through the production context-pack path, and emits three-way source-grounded gap verdicts.
-- Added automated source-claim qualification, exact-evidence validation, a second completeness audit, and question screening so coverage measures transferable key facts rather than quotations, footnotes, or source-replication trivia without requiring human review.
-- Added no-model source-to-test coverage indexing and source-revision staleness analysis without changing existing witness-test schemas.
-- The first mechanical index found explicit page-level witness coverage on 5 of 257 authoritative pages (1.95%); local-model coverage generation remains deliberate and versioned rather than automatic in CI.
+- Reproduced the ground-turmeric failure: the answer retrieved the spice drying exception but followed a BR13 worked example that overprescribed a derivative base. Preserved the baseline, source interpretation and diagnosis in [the repair review](reports/guidance-repair/2026-10-09/review.md).
+- Restored EFSA Table 22's general physical-division rule in prompt-visible guidance, distinguished simple grinding from grain-derivative production, and corrected BR13 advice without changing its forbidden facets or severity. Kept the valid August drying/tea correction; this repairs an incompletely captured grinding lesson rather than reversing that correction.
+- Distinguished a missing specific derivative, a missing search result and absence of an applicable catalogue group. Corrected SEL-0036 and added source-backed answer cases and evidence-projection checks. Food-specific examples stay in evaluations, outside runtime prompts.
+- Reconciled prior coverage findings and recorded the new resolutions. Deployment and validation evidence, including the curated vector-index refresh and live answer review, is retained with the repair report.
+
+## [2026-10-01] ingest | Add FoodEx2 maintenance 2025 (EN-10069)
+
+- Preserved the 21-page EFSA PDF unchanged and wrote a source impact report before operational edits. The report covers MTX 16.1-16.3 and MTX 17.0, with 79 new terms, 358 revised scope notes and five hierarchy-specific dismissals, not global deprecations.
+- Added `maintenance-2025.md`, extended the maintenance timeline and registered the new page for retrieval. Updated index summaries and the architecture's maintenance range.
+- Patched base selection, facet selection, processes, additives/flavourings and pesticides with the report's durable changes. Kept the pig farm-type F21-to-F29 distinction, PRIMo versus Reporting flags, implicit F33 mapping and domain/recommendation boundaries explicit.
+- Verified promoted descriptor identities, memberships and pesticide matrix mappings against the local MTX 17.2 snapshot; retained release scope and current-validator precedence. Appendix A/B spreadsheets are separate source artifacts and were not imported as part of this PDF ingest.
+- Rechecked the earlier coverage resolutions, added five resolved source-specific findings with wiki evidence, and made the evidence regression test retain the original finding IDs while allowing later ingests.
+- Synced curated RAG (34 pages, 287 chunks, no drift) and added the PDF to raw-source RAG (34 chunks covering all 21 pages). Restarted the local service and verified the new maintenance page and index through the live API. Validation: 254 tests passed; doctor with RAG and strict warnings passed with zero errors/warnings.
+
+
+## [2026-09-30] correction | Resolve the 11 scoped coverage findings
+
+- Added VMPR sheep/goat-feed refinement and edible-casing guidance; checked codes and hierarchy membership in the local MTX 17.2 snapshot. Corrected the duplicated goat-feed code in the source: dairy/reproductive goats use A18EY, not the kid-feed code A18EX.
+- Added the exact additive/flavouring F03 category scope and the arsenic/rice/algae, chlorate/perchlorate, PAH, acrylamide-ingredient, and mycotoxin recommendations, keeping domain and recommendation strength explicit.
+- Distinguished hierarchy-specific dismissal from global deprecation without bypassing blocking BR21 validator results; documented the inspected status-Boolean implementation.
+- Added Corex H/C/E/M/P definitions and the missing F08/F12/F22 facet meanings. Updated selector summaries and cross-links, reviewed resolution evidence, and retained the audit's limited scope.
+
+## [2026-09-30] maintenance | Report actual source-to-wiki audit findings
+
+- Replaced blanket missing-review, uncited-source and one-page warnings with evidence-backed semantic audit findings. Missing audits produce one informational status.
+- Compared selected ChemMon 2026, foundational FoodEx2 and maintenance sections with the wiki and recorded 11 omissions/scope ambiguities with source passages, page locations, target wiki pages and proposed corrections.
+- Classified the two 2018 presentations as historical supporting training with no mandatory ingestion. Recorded sparse-extraction and uninspected-source limitations; no full-corpus completeness claim or operational knowledge edits.
+- Added source/wiki freshness checks: changed evidence yields one stale-audit warning instead of stale gap claims. Added an explicit local review-preparation command and documented the semantic review workflow.
+- Follow-up on 2026-10-01: coverage warnings now resolve root-level targets such as `RUNTIME_RULES.md` through the store's page mapping instead of incorrectly prefixing the guidance directory. Added a regression check for the actual file and GitHub annotation path.
+
+## [2026-09-11] correction | Remove dormant BR26 from the default coding workflow
+
+- Removed mandatory BR26 validation, ordinal-evidence demands, rejection and routine deferral from policy; kept a concise distinction between the dormant ICT method and the sibling implementation.
+- Kept active BR27 separate and clarified its distinct-decimal and per-family explicit-process conditions. Policy version: `2026-09-11-v0.10`.
+- Corrected the status of sibling PR #24 to merged. Sibling PR #27 proposes disabling the normal BR26 invocation and fixing BR27; it is not deployed.
+- Corrected the reviewed `SEL-0019` selection rubric to retain BR16 coverage without requiring BR26 or inventing frying ordinals.
+- Updated index summaries, regression tests and the RAG manifest. The final audit and pinned-source reproduction are in `reports/audits/2026-09-11-br26/`.
+
+## [2026-09-09] correction | Align BR26 guidance with root-scoped validation
+
+- Corrected the sibling-validator status: BR26 runs there, while issue #23 identified cross-root `ordCode` resolution that could cause false-positive and false-negative results.
+- Documented the single-warn-group correction in automatic-couscous PR #24 and kept missing root-scoped ordinal evidence or an unattested validator result explicitly non-authoritative.
+- Aligned the operational rule with EFSA's method scope: once at least one explicit process is present, compare the combined explicit and implicit process set; do not check implicit-only sets.
+- Required the experimental solver to defer BR26 and BR27 when root-scoped ordinals or an attested root-scoped validator result are unavailable rather than guessing.
 
 ## [2026-08-01] correction | Preserve the marketed-dry infusion exception
 

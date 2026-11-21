@@ -5,6 +5,7 @@ import shutil
 from pathlib import Path
 
 from wiki_api.doctor import _check_log_chronology, run_doctor
+from wiki_api.rag_index import build_wiki_rag_chunks
 from wiki_api.wiki_store import WikiStore
 
 
@@ -45,6 +46,19 @@ def test_wiki_doctor_passes_with_no_errors() -> None:
     assert report.errors == []
 
 
+def test_doctor_checks_source_coverage_by_default(tmp_path: Path) -> None:
+    root = _copy_wiki_root(tmp_path)
+    sources = root / "foodex2_docs"
+    sources.mkdir()
+    (sources / "new-source.md").write_text("A source not yet ingested.")
+
+    report = run_doctor(root)
+
+    assert report.source_coverage["source_count"] == 1
+    assert report.source_coverage["audit_status"] == "not_run"
+    assert not any(issue.check == "source_coverage" for issue in report.warnings)
+
+
 def test_raw_facet_guidance_preserves_f01_and_f04_exceptions() -> None:
     constraints = (
         REPO_ROOT / "raw" / "efsa-guidance" / "term-type-facet-constraints.md"
@@ -59,6 +73,39 @@ def test_raw_facet_guidance_preserves_f01_and_f04_exceptions() -> None:
     assert "`F04` is only for minor added ingredients (`BR12`)" in constraints
     assert "may add explicit `F01` as a restriction" in policy
     assert "must use `F04` only for a minor later-added ingredient" in policy
+
+
+def test_br26_guidance_cannot_be_used_to_drop_a_stated_process() -> None:
+    process_rules = (
+        REPO_ROOT / "raw" / "efsa-guidance" / "process-validation-rules.md"
+    ).read_text(encoding="utf-8")
+    policy = (
+        REPO_ROOT / "raw" / "efsa-guidance" / "policy-contract.md"
+    ).read_text(encoding="utf-8")
+
+    assert "Preserve every process stated by the sample" in process_rules
+    assert "BR26 is inactive in the observed ICT call path" in policy
+    assert "do not require it, reject a code solely on its dormant definition" in policy
+    assert "Only consider BR26 when the workflow explicitly requires" in policy
+    assert "must apply BR26" not in policy
+    assert "must mark BR26 and BR27 as unverified" not in policy
+    assert "leave BR27 unverified rather than infer the result" in policy
+
+
+def test_binding_rules_remain_atomic_in_rag_chunks() -> None:
+    policy = (
+        REPO_ROOT / "raw" / "efsa-guidance" / "policy-contract.md"
+    ).read_text(encoding="utf-8")
+    rule_lines = [line for line in policy.splitlines() if line.startswith("- `R-")]
+    chunk_set = build_wiki_rag_chunks(store=WikiStore(REPO_ROOT))
+    policy_chunks = [
+        chunk["chunk_text"]
+        for chunk in chunk_set.chunks
+        if chunk["page_name"] == "policy-contract.md"
+    ]
+
+    assert rule_lines
+    assert all(any(rule in chunk for chunk in policy_chunks) for rule in rule_lines)
 
 
 def test_maintenance_workflow_is_registered_as_orientation() -> None:

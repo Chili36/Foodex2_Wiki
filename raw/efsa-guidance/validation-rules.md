@@ -7,6 +7,7 @@ select_when: >-
   dry infusion material or the final reconstituted beverage, or how a
   same-nature mixture of raw commodities should carry its source descriptors.
 sources:
+  - "EFSA Supporting Publications - 2021 -  - FoodEx2 maintenance 2020.pdf"
   - "BUSINESS-RULES.md"
   - "BUSINESS-RULES-COMPACT.json"
   - "docs/VALIDATION_RULES_SUMMARY.md"
@@ -18,7 +19,7 @@ related:
   - "[[process-validation-rules]]"
   - "[[domain-specific-validation]]"
   - "[[code-string-format]]"
-last_updated: "2026-07-06"
+last_updated: "2026-09-30"
 ---
 
 # Validation Rules Overview
@@ -44,7 +45,7 @@ last_updated: "2026-07-06"
 - `BR02`, `BR09`, and `BR18` are placeholders and are not currently implemented. (Business Rules Overview; Compact JSON)
 - `BR13` is precise: it blocks seven disintegration-family `F03` descriptors on raw commodities, not all `F03` descriptors. (Business Rules `BR13`)
 - `BR19+` warnings can appear in the sibling validator when transparent local extension rows cover BR19 root/process gaps left by the stale upstream `BR_Data.csv`. (Business Rules `BR19`)
-- `BR26` has a known validator-silence divergence; process ordinal conflicts remain coding risks even when current validators do not emit BR26. (Business Rules `BR26`)
+- `BR26` has declared severity `HIGH` but is inactive in the observed ICT call path. The sibling validator's active BR26 check is a local implementation difference, not a default wiki requirement. BR27 remains active. See [[business-rules]].
 
 <!-- Source: docs/VALIDATION_RULES_SUMMARY.md Quick Reference Table; BUSINESS-RULES.md BR03, BR04, BR17, BR19, BR20, BR21, BR29, BR30, BR31 -->
 ## High-Impact Blocking Rules
@@ -52,7 +53,7 @@ last_updated: "2026-07-06"
 - `BR03` and `BR04`: composite foods cannot use `F01` or `F27`; use `F04 ingredient` instead. See [[term-type-facet-constraints]]. (Business Rules `BR03-BR04`)
 - `BR17`: a facet term can never be the base term. (Business Rules `BR17`)
 - `BR19`: processes that create a new derivative nature cannot be applied to a raw commodity base term; use the existing derivative instead. See [[process-validation-rules]]. (Business Rules `BR19`)
-- `BR20` and `BR21`: deprecated and dismissed terms are always invalid, even if the code string is well formed. (Business Rules `BR20-BR21`)
+- `BR20` blocks deprecated terms across all hierarchies. `BR21` blocks terms the validator identifies as dismissed; dismissal can be hierarchy-specific, so check the intended reporting hierarchy and the implementation boundary in [[business-rules]]. A well-formed string does not override either blocking result. (Business Rules `BR20-BR21`; Maintenance 2020 p3)
 - `BR29-BR31`: the code must use valid syntax, a real facet category, and a descriptor that belongs to that category. See [[structural-validation]]. (Business Rules `BR29-BR31`)
 
 <!-- Source: FoodEx2 codification guidance_2025_12_v3.pdf p89-92 -->
@@ -77,7 +78,7 @@ These checks come from ANSES expert guidance and are useful for batch review. Th
 
 - `BR03` and `BR04`: composites cannot use `F01` or `F27`. See [[business-rules]].
 - `BR17`: facet terms cannot be coding bases. See [[business-rules]].
-- `BR20` and `BR21`: deprecated or dismissed terms are invalid. See [[business-rules]].
+- `BR20` and `BR21`: deprecation is global; dismissal can be hierarchy-specific. Both remain blocking when returned by the validator. See [[business-rules]].
 - `BR29`, `BR30`, and `BR31`: syntax, facet-category, and descriptor-membership checks. See [[business-rules]].
 
 <!-- Source: docs/VALIDATION_RULES_SUMMARY.md Quick Reference Table; BUSINESS-RULES.md Validation Examples -->

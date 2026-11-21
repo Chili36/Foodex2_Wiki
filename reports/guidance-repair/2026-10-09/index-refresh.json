@@ -1,0 +1,147 @@
+{
+  "method": "Resume from verified content drift; re-embed each complete stale page with existing indexer functions, then remove obsolete chunk IDs.",
+  "initial_stale_pages": [
+    "process-facets.md",
+    "term-type-facet-constraints.md"
+  ],
+  "pages": [
+    {
+      "page": "process-facets.md",
+      "chunks": 11,
+      "elapsed_seconds": 1.79
+    },
+    {
+      "page": "term-type-facet-constraints.md",
+      "chunks": 6,
+      "elapsed_seconds": 1.47
+    }
+  ],
+  "original_indexer": "Timed out after two successful batches (89 chunks); no source index changed.",
+  "orphan_delete": {
+    "deleted_count": 9,
+    "deleted_chunk_ids": [
+      "business-rules.md#013-00-business-rules-br13-physical-state-creates-derivatives",
+      "process-facets.md#002-00-process-facets-cooking-detail-added-or-revised-in-maintenance-2025",
+      "process-facets.md#003-00-process-facets-appendix-a2-codes",
+      "process-facets.md#003-01-process-facets-appendix-a2-codes",
+      "process-facets.md#003-02-process-facets-appendix-a2-codes",
+      "process-facets.md#003-03-process-facets-appendix-a2-codes",
+      "process-facets.md#004-00-process-facets-worked-examples",
+      "process-facets.md#005-00-process-facets-relevant-policy",
+      "process-facets.md#006-00-process-facets-relevant-business-rules"
+    ]
+  },
+  "final_status": {
+    "ok": true,
+    "collection": "foodex2_wiki_markdown_v1",
+    "qdrant_url": "http://127.0.0.1:6333",
+    "embedding_provider": "voyage",
+    "embedding_model": "voyage-context-3",
+    "embedding_dimension": 1024,
+    "chunking": {
+      "max_chars": 2800,
+      "categories": [
+        "domain_overlay",
+        "guidance",
+        "maintenance",
+        "runtime",
+        "validation"
+      ]
+    },
+    "expected": {
+      "page_count": 34,
+      "chunk_count": 288,
+      "pages": [
+        "RUNTIME_RULES.md",
+        "additives-flavourings-foodex2.md",
+        "anses-codification-guidance.md",
+        "base-term-selection.md",
+        "business-rules.md",
+        "chemical-monitoring-foodex2.md",
+        "code-string-format.md",
+        "contaminants-foodex2.md",
+        "domain-specific-validation.md",
+        "domoic-acid-scallops.md",
+        "facet-coding-rules.md",
+        "foodex2-overview.md",
+        "implicit-vs-explicit-facets.md",
+        "ingredient-facets.md",
+        "maintenance-2015.md",
+        "maintenance-2016-2018.md",
+        "maintenance-2019.md",
+        "maintenance-2020.md",
+        "maintenance-2021.md",
+        "maintenance-2022.md",
+        "maintenance-2023.md",
+        "maintenance-2024.md",
+        "maintenance-2025.md",
+        "maintenance-history.md",
+        "packaging-facets.md",
+        "pesticides-foodex2.md",
+        "policy-contract.md",
+        "process-facets.md",
+        "process-validation-rules.md",
+        "structural-validation.md",
+        "term-type-facet-constraints.md",
+        "validation-rules.md",
+        "vmpr-foodex2.md",
+        "vmpr-legislative-mapping.md"
+      ]
+    },
+    "indexed": {
+      "collection_exists": true,
+      "points_count": 288,
+      "chunk_count": 288,
+      "page_count": 34,
+      "pages": [
+        "RUNTIME_RULES.md",
+        "additives-flavourings-foodex2.md",
+        "anses-codification-guidance.md",
+        "base-term-selection.md",
+        "business-rules.md",
+        "chemical-monitoring-foodex2.md",
+        "code-string-format.md",
+        "contaminants-foodex2.md",
+        "domain-specific-validation.md",
+        "domoic-acid-scallops.md",
+        "facet-coding-rules.md",
+        "foodex2-overview.md",
+        "implicit-vs-explicit-facets.md",
+        "ingredient-facets.md",
+        "maintenance-2015.md",
+        "maintenance-2016-2018.md",
+        "maintenance-2019.md",
+        "maintenance-2020.md",
+        "maintenance-2021.md",
+        "maintenance-2022.md",
+        "maintenance-2023.md",
+        "maintenance-2024.md",
+        "maintenance-2025.md",
+        "maintenance-history.md",
+        "packaging-facets.md",
+        "pesticides-foodex2.md",
+        "policy-contract.md",
+        "process-facets.md",
+        "process-validation-rules.md",
+        "structural-validation.md",
+        "term-type-facet-constraints.md",
+        "validation-rules.md",
+        "vmpr-foodex2.md",
+        "vmpr-legislative-mapping.md"
+      ],
+      "payloadless_points": 0,
+      "duplicate_chunk_ids": []
+    },
+    "drift": {
+      "missing_pages": [],
+      "stale_pages": [],
+      "orphaned_pages": [],
+      "missing_chunk_ids": [],
+      "stale_chunk_ids": [],
+      "orphaned_chunk_ids": [],
+      "embedding_model_mismatch_chunk_ids": [],
+      "embedding_dimension_mismatch_chunk_ids": []
+    },
+    "errors": []
+  }
+}

@@ -6,7 +6,7 @@ related:
   - "[[maintenance-history]]"
   - "[[maintenance-2019]]"
   - "[[maintenance-2021]]"
-last_updated: "2026-04-05"
+last_updated: "2026-09-30"
 ---
 
 # Maintenance 2020
@@ -17,6 +17,10 @@ last_updated: "2026-04-05"
 - EFSA added 108 new terms in 2020. Major additions served MUST-B honey bees, avian-influenza birds, SIGMA age classes, scallop-part coding, botanicals, and OpenFoodTox. (2020 maintenance p3)
 - 80 terms were dismissed in some hierarchies, and 40 were deprecated in total. Term type changed for 6 codes and detail level changed for 10 codes. (2020 maintenance p3)
 - Implicit facets and hierarchy relationships were updated to stay consistent with FoodEx2 logic. (2020 maintenance p3)
+
+## Dismissal Versus Deprecation
+
+The source distinguishes dismissal (non-reportable in one or more hierarchies but still reportable in others) from deprecation (non-reportable in all hierarchies). These definitions are in the page-3 footnotes. Use current hierarchy/reportability data when coding, and retain the blocking validator behavior explained in [[business-rules]]; a historical definition is not permission to bypass BR21.
 
 ## Project-Driven Changes
 

@@ -31,8 +31,8 @@ from wiki_api.rag_index import (  # noqa: E402
 )
 
 
-DEFAULT_COLLECTION = "foodex2_wiki_markdown_v1"
-DEFAULT_MODEL = "voyage-context-3"
+DEFAULT_COLLECTION = "foodex2_wiki_markdown_v2"
+DEFAULT_MODEL = "voyage-context-4"
 DEFAULT_DIMENSION = 1024
 DEFAULT_CATEGORIES = "runtime,guidance,validation,domain_overlay,maintenance"
 POINT_NAMESPACE = uuid.UUID("9a9c5167-6d68-47b4-b845-36e658e28c11")

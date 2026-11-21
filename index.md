@@ -1,6 +1,6 @@
 ---
 title: "Wiki Index"
-last_updated: "2026-07-05"
+last_updated: "2026-10-09"
 ---
 
 # Index
@@ -31,30 +31,30 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 
 ## FoodEx2 Guidance
 
-- [foodex2-overview.md](raw/efsa-guidance/foodex2-overview.md): High-level explanation of FoodEx2 purpose, hierarchy model, and coding philosophy.
-- [base-term-selection.md](raw/efsa-guidance/base-term-selection.md): Rules for choosing the right base term, including tie-breaks and missing-term handling.
-- [facet-coding-rules.md](raw/efsa-guidance/facet-coding-rules.md): Facet category reference, when to add facets, which facets matter most, and domain-specific exceptions.
+- [foodex2-overview.md](raw/efsa-guidance/foodex2-overview.md): FoodEx2 purpose, hierarchy model, Corex H/C/E/M/P roles, and coding philosophy.
+- [base-term-selection.md](raw/efsa-guidance/base-term-selection.md): Base-term choice, raw plus permitted processing versus applicable derivatives, missing-term scope, tie-breaks and hierarchy-specific reportability, including the generic infant-food restriction.
+- [facet-coding-rules.md](raw/efsa-guidance/facet-coding-rules.md): Facet-family choice, implicit-detail boundaries, vegan/vegetarian diets, animal sampling and the F21-to-F29 pig farm-type change.
 - [implicit-vs-explicit-facets.md](raw/efsa-guidance/implicit-vs-explicit-facets.md): Distinguishes inherited facet information from coder-supplied facet detail.
 - [code-string-format.md](raw/efsa-guidance/code-string-format.md): Exact FoodEx2 code syntax, separators, and ordering conventions.
-- [process-facets.md](raw/efsa-guidance/process-facets.md): Compact reference for Appendix A2 process facet codes and when to use them.
+- [process-facets.md](raw/efsa-guidance/process-facets.md): Physical division and grinding on raw commodities versus grain-derivative production, F28 versus F03 powder, boiling/draining and popping, revised scalding/pressure cooking, and the historical Appendix A2 reference.
 - [ingredient-facets.md](raw/efsa-guidance/ingredient-facets.md): Rules for characterising ingredients, mixed foods, composite coding, and minor flavouring/added-ingredient use on derivatives.
 - [packaging-facets.md](raw/efsa-guidance/packaging-facets.md): When to use `F18` packaging-format and `F19` packaging-material, and how they differ from `F28` process.
 - [anses-codification-guidance.md](raw/efsa-guidance/anses-codification-guidance.md): Extracted `expert_guidance` from the ANSES FoodEx2 codification guidance v3, covering workflow, missing-term conventions, mixed-product handling, range values, and dataset QC checks without overriding authoritative EFSA or validator sources.
 - [chemical-monitoring-foodex2.md](raw/efsa-guidance/chemical-monitoring-foodex2.md): Entry point for conditional chemical-monitoring overlays and routing to reporting-domain pages.
-- [pesticides-foodex2.md](raw/efsa-guidance/pesticides-foodex2.md): Pesticide-residue overlay for Regulation (EC) No 396/2005, MATRIX mapping, MRL context, and pesticide-specific preparation assumptions.
-- [contaminants-foodex2.md](raw/efsa-guidance/contaminants-foodex2.md): Contaminants overlay for OCC/chemAnalysis contexts, acrylamide F33, substance-specific reporting details, and contaminant-specific preparation assumptions.
+- [pesticides-foodex2.md](raw/efsa-guidance/pesticides-foodex2.md): Pesticide-residue overlay for MATRIX/MRL context, preparation assumptions, small/large radish leaves and PRIMo versus Reporting reportability.
+- [contaminants-foodex2.md](raw/efsa-guidance/contaminants-foodex2.md): Contaminants overlay for OCC/chemAnalysis: acrylamide F33/F04, arsenic rice/algae, chlorate F28, PAH packaging, mycotoxin F21, and preparation assumptions.
 - [domoic-acid-scallops.md](raw/efsa-guidance/domoic-acid-scallops.md): Domoic acid scallop overlay with source-provided `sampMatCode` / `sampMatText` matrix lookup and FAREA `origFishAreaCode` recommendation.
-- [vmpr-foodex2.md](raw/efsa-guidance/vmpr-foodex2.md): VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, and Plan 3 F33.
+- [vmpr-foodex2.md](raw/efsa-guidance/vmpr-foodex2.md): VMPR/VETDRUG overlay for explicit F01/F02, wild status, feed/water F23, non-food animal matrices including blood, serum, plasma, urine, hair, and retina, sheep/goat-feed F23 refinement, edible-casing F27, and Plan 3 F33.
 - [vmpr-legislative-mapping.md](raw/efsa-guidance/vmpr-legislative-mapping.md): Downstream VMPR ETL/LLDB mapping from `sampMatCode` into `Game`, `Wild`, `FoodClassVMPR`, and final legislative commodity groups.
-- [additives-flavourings-foodex2.md](raw/efsa-guidance/additives-flavourings-foodex2.md): Additives/flavourings overlay for mandatory or implicit F33, physical-state guidance, infant target-consumer, and non-reportable additive substance matrices.
+- [additives-flavourings-foodex2.md](raw/efsa-guidance/additives-flavourings-foodex2.md): Additive/flavouring F33 requirements and remapping, iced-tea classification, supplement forms, scoped F03 recommendations, infant target-consumer and excluded substance matrices.
 
 ## Validation Layer
 
-- [business-rules.md](raw/efsa-guidance/business-rules.md): Canonical wiki target for `BR01`-`BR31`, including MTX 17.1 validator status, BR13's seven-code disintegration boundary, BR19/BR19+ stale-data coverage, and BR26's known validator-silence divergence.
+- [business-rules.md](raw/efsa-guidance/business-rules.md): Canonical wiki target for `BR01`-`BR31`, including historical MTX 17.1 import status, BR13's seven-code disintegration boundary, BR19/BR19+ stale-data coverage, and the distinction between inactive ICT BR26 and active BR27.
 - [validation-rules.md](raw/efsa-guidance/validation-rules.md): Overview of the validator's two-layer model, severities, and the most important blocking rules.
 - [structural-validation.md](raw/efsa-guidance/structural-validation.md): Syntax, descriptor existence, implicit-facet cleanup, duplicates, and single-cardinality checks.
-- [term-type-facet-constraints.md](raw/efsa-guidance/term-type-facet-constraints.md): Allowed and forbidden facets by FoodEx2 term type, including the distinction between BR13 disintegration `F03` values and permitted non-disintegration physical states on raw commodities.
-- [process-validation-rules.md](raw/efsa-guidance/process-validation-rules.md): Ordinal-group process conflicts, raw-vs-derivative process boundaries, BR19/BR19+ behaviour, and the BR26 known divergence.
+- [term-type-facet-constraints.md](raw/efsa-guidance/term-type-facet-constraints.md): Allowed and forbidden facets by term type; BR13 restrictions and repairs without assuming every powder requires a derivative base.
+- [process-validation-rules.md](raw/efsa-guidance/process-validation-rules.md): Active process checks, raw-vs-derivative boundaries, BR19/BR19+ behaviour, and the inactive ICT status of BR26.
 - [domain-specific-validation.md](raw/efsa-guidance/domain-specific-validation.md): Context-activated validation constraints for VMPR/VETDRUG, additives/flavourings, contaminants substance rules, packaging, infant, and other reporting overlays.
 
 ## Maintenance History
@@ -68,6 +68,7 @@ This is the content-oriented catalog for the FoodEx2 markdown wiki layer.
 - [maintenance-2022.md](raw/efsa-guidance/maintenance-2022.md): PRIMo introduction and major feed/plant revisions.
 - [maintenance-2023.md](raw/efsa-guidance/maintenance-2023.md): F34 Host-sampled, exposure-hierarchy redesign, and additives/flavourings mapping.
 - [maintenance-2024.md](raw/efsa-guidance/maintenance-2024.md): VetDrugRes overhaul and expanded legislative mapping.
+- [maintenance-2025.md](raw/efsa-guidance/maintenance-2025.md): MTX 16.1-17.0 changes, 79 new terms, F21-to-F29 reportability, diet/cooking descriptors, additive classes and radish-leaf mapping.
 
 ## Source Layer
 
