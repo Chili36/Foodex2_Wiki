@@ -34,7 +34,7 @@ from scripts.index_wiki_qdrant import (  # noqa: E402
 )
 
 
-DEFAULT_COLLECTION = "foodex2_source_docs_v1"
+DEFAULT_COLLECTION = "foodex2_source_docs_v2"
 POINT_NAMESPACE = uuid.UUID("f25f9a85-2d6e-4fcb-9c3d-6ea2b65d68cc")
 SUPPORTED_SUFFIXES = {".pdf", ".md", ".csv", ".xlsx"}
 

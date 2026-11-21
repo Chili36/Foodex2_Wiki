@@ -485,10 +485,10 @@ def test_wiki_rag_status_reports_deterministic_index_drift(monkeypatch) -> None:
     def fake_get_wiki_rag_status(**kwargs: object) -> dict[str, object]:
         return {
             "ok": False,
-            "collection": kwargs["collection"] or "foodex2_wiki_markdown_v1",
+            "collection": kwargs["collection"] or "foodex2_wiki_markdown_v2",
             "qdrant_url": kwargs["qdrant_url"] or "http://127.0.0.1:6333",
             "embedding_provider": "voyage",
-            "embedding_model": kwargs["embedding_model"] or "voyage-context-3",
+            "embedding_model": kwargs["embedding_model"] or "voyage-context-4",
             "embedding_dimension": kwargs["embedding_dimension"] or 1024,
             "chunking": {
                 "max_chars": kwargs["max_chars"],
@@ -528,7 +528,7 @@ def test_wiki_rag_status_reports_deterministic_index_drift(monkeypatch) -> None:
     payload = response.json()
 
     assert payload["ok"] is False
-    assert payload["collection"] == "foodex2_wiki_markdown_v1"
+    assert payload["collection"] == "foodex2_wiki_markdown_v2"
     assert payload["drift"]["missing_pages"] == ["base-term-selection.md"]
     assert payload["drift"]["orphaned_pages"] == ["old-page.md"]
 
@@ -781,7 +781,7 @@ def test_ask_rag_uses_qdrant_context_and_answerer(monkeypatch) -> None:
             "pages_used": ["base-term-selection.md", "implicit-vs-explicit-facets.md"],
             "embedding": {
                 "provider": "voyage",
-                "model": "voyage-context-3",
+                "model": "voyage-context-4",
                 "dimension": 1024,
                 "elapsed_ms": 20,
                 "usage": {"total_tokens": 12},
@@ -790,7 +790,7 @@ def test_ask_rag_uses_qdrant_context_and_answerer(monkeypatch) -> None:
             "retrieval": {
                 "provider": "qdrant",
                 "retrieval_mode": "wiki",
-                "collection": "foodex2_wiki_markdown_v1",
+                "collection": "foodex2_wiki_markdown_v2",
                 "qdrant_url": "http://127.0.0.1:6333",
                 "elapsed_ms": 5,
                 "limit": 3,
@@ -818,7 +818,7 @@ def test_ask_rag_uses_qdrant_context_and_answerer(monkeypatch) -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["trace"]["selection_method"] == "qdrant wiki retrieval + answerer"
-    assert payload["trace"]["retrieval"]["collection"] == "foodex2_wiki_markdown_v1"
+    assert payload["trace"]["retrieval"]["collection"] == "foodex2_wiki_markdown_v2"
     assert payload["trace"]["embedding"]["tracked_tokens"] == 12
     assert payload["trace"]["total"]["total_llm_calls"] == 1
     assert payload["trace"]["total"]["total_embedding_calls"] == 1
@@ -870,7 +870,7 @@ def test_ask_rag_can_return_source_rag_with_page_content(monkeypatch) -> None:
             "pages_used": ["guidance.pdf"],
             "embedding": {
                 "provider": "voyage",
-                "model": "voyage-context-3",
+                "model": "voyage-context-4",
                 "dimension": 1024,
                 "elapsed_ms": 25,
                 "usage": {},
@@ -879,7 +879,7 @@ def test_ask_rag_can_return_source_rag_with_page_content(monkeypatch) -> None:
             "retrieval": {
                 "provider": "qdrant",
                 "retrieval_mode": "source",
-                "collection": "foodex2_source_docs_v1",
+                "collection": "foodex2_source_docs_v2",
                 "qdrant_url": "http://127.0.0.1:6333",
                 "elapsed_ms": 6,
                 "limit": 2,
@@ -905,7 +905,7 @@ def test_ask_rag_can_return_source_rag_with_page_content(monkeypatch) -> None:
     assert response.status_code == 200
     payload = response.json()
     assert payload["trace"]["selection_method"] == "qdrant source retrieval + answerer"
-    assert payload["trace"]["retrieval"]["collection"] == "foodex2_source_docs_v1"
+    assert payload["trace"]["retrieval"]["collection"] == "foodex2_source_docs_v2"
     assert payload["trace"]["total"]["total_tracked_tokens"] == 140
     assert payload["citations"] == ["guidance.pdf"]
     assert "Source file" in payload["pages"][0]["content"]

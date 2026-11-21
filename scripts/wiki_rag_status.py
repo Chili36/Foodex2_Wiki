@@ -55,8 +55,8 @@ def main() -> int:
             json.dumps(
                 build_wiki_rag_manifest(
                     store=WikiStore(REPO_ROOT),
-                    collection=args.collection or os.getenv("WIKI_QDRANT_COLLECTION") or "foodex2_wiki_markdown_v1",
-                    embedding_model=args.embedding_model or os.getenv("WIKI_EMBED_MODEL") or "voyage-context-3",
+                    collection=args.collection or os.getenv("WIKI_QDRANT_COLLECTION") or "foodex2_wiki_markdown_v2",
+                    embedding_model=args.embedding_model or os.getenv("WIKI_EMBED_MODEL") or "voyage-context-4",
                     embedding_dimension=embedding_dimension,
                     categories=args.categories,
                     max_chars=args.max_chars,
