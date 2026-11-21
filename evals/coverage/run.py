@@ -481,6 +481,12 @@ def run_coverage(
                     judge=escalation_model,
                 )
                 decision = {**decision, "local_verdict": decision["verdict"], **escalation}
+                # Reconcile the escalation's wiki verdict with retrieved evidence too.
+                wiki_candidate_verdict = decision["wiki_verdict"]
+                decision["wiki_verdict"] = effective_wiki_verdict(
+                    candidate_verdict=wiki_candidate_verdict,
+                    context_verdict=decision["context_verdict"],
+                )
             result = {
                 **case,
                 "answer": answer,
