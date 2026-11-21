@@ -14,6 +14,21 @@ def test_read_page_select_when_absent_is_none(tmp_path):
     assert store.read_page("plain.md").select_when is None
 
 
+def test_knowledge_revision_tracks_served_content_not_unrelated_files(tmp_path):
+    store = _make_store(tmp_path)
+    original = store.knowledge_revision()
+    assert original.startswith("sha256:")
+    assert store.knowledge_revision() == original
+    (tmp_path / "unrelated.txt").write_text("not served")
+    assert store.knowledge_revision() == original
+    page = tmp_path / "raw" / "efsa-guidance" / "plain.md"
+    content = page.read_text()
+    page.write_text(content + "\nA changed rule.\n")
+    assert store.knowledge_revision() != original
+    page.write_text(content)
+    assert store.knowledge_revision() == original
+
+
 def test_selector_catalog_prefers_select_when_and_falls_back_to_summary(tmp_path):
     store = _make_store(tmp_path)
     catalog = store.selector_catalog("coding")

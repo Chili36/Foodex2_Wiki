@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from functools import cached_property
+import hashlib
+import json
 from pathlib import Path
 import re
 from typing import Any
@@ -209,6 +211,19 @@ class WikiStore:
 
     def allowed_page_names(self) -> set[str]:
         return {"index.md", "log.md", *self.list_pages()}
+
+    def knowledge_revision(self) -> str:
+        """Fingerprint the served Markdown at response assembly, including uncommitted edits.
+
+        This identifies content, not a frozen request snapshot or model configuration.
+        It deliberately excludes raw PDFs, derived indexes and unrelated repository files.
+        """
+        pages = [
+            (name, self.read_page(name).content)
+            for name in sorted(self.allowed_page_names())
+        ]
+        encoded = json.dumps(pages, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+        return "sha256:" + hashlib.sha256(encoded).hexdigest()
 
     def normalize_page_name(self, page_name: str) -> str:
         cleaned = page_name.strip().replace("\\", "/")
