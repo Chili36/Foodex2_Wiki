@@ -41,7 +41,7 @@
     "RUNTIME_RULES.md": "c580f166f1df4ea2f0fb41692dfc3edee832a664792144e7e7b6023052a143b4",
     "additives-flavourings-foodex2.md": "afc66659a0e3f9c60e1d4d83fea7f71c6c0da0ac37f35f090d24bfcd0b0f97d3",
     "anses-codification-guidance.md": "3c9a89627be36af795edbaf386eb144f58cfc198ab163debecf8fefd04305b6e",
-    "base-term-selection.md": "68784ee335643a66b33e1e9629c2ce74b047e43d90c08500cbf9cc742027f919",
+    "base-term-selection.md": "e9886591a309f6a1a23d8b9dc3203d95e90c8dc0faf182a34ee088a40916ab9b",
     "business-rules.md": "c3514b390e9bb411a8bc5a2c1cc163df8a5a63654ea1cdf6014b393ee292d20d",
     "chemical-monitoring-foodex2.md": "fdde5a1691e4217e9808dbd3deb70e544609beb3791ca01fda9d91bd79063157",
     "code-string-format.md": "1d1539777aaf3680dbba4fdcc14361a247ddd6518f7a656d66df9120aa95d6e4",
@@ -49,7 +49,7 @@
     "domain-specific-validation.md": "568d873099b4a148f412cb299f308a57cbf702e250f63c4d255901490beda1e3",
     "domoic-acid-scallops.md": "7f8bb5e52581b8739ec879008f74131d40985ac2b83d09cb631fb2538b4c19c7",
     "facet-coding-rules.md": "533f21547528ce74fadf309cbe675a2ebf075bfb361a7060184a68ef94bfe1f2",
-    "foodex2-overview.md": "84b77e10356df195dbfe5a6b6a2cd97e098286a87fd40a323c13e663c2151c34",
+    "foodex2-overview.md": "ce8634b96ce7cf5bb8d79e77af1abbf57637141084b76615b68701f2ee6bc203",
     "implicit-vs-explicit-facets.md": "4828559402e46656f3fbe427ae4ce939efbe81ab057f53d1f9821084f124673a",
     "ingredient-facets.md": "983755619a6eeb4ff3104e7150c52b127a62f78fdf5334e8285f3b70e7b726aa",
     "maintenance-2015.md": "155654e49ca75f24eb8ad59950212a26372e7302eec5f93ff82381a9743ea430",
@@ -626,6 +626,17 @@
       ],
       "source_files_unchanged": true,
       "summary": "Re-applied the F24/F25 applicability correction (revision 2 p35-36; maintenance 2016-2018 p18) and the Table 22 direct-on-raw rule including cooking and its derivative exceptions (revision 2 p43-44, p52) on top of the 2026-10-09 guidance; both checked against the source PDFs. No prior resolution text was removed."
+    },
+    {
+      "reviewed_at": "2026-11-23",
+      "report": "log.md",
+      "review_comment": "https://github.com/Chili36/Foodex2_Wiki/issues/45",
+      "changed_pages_reviewed": [
+        "base-term-selection.md",
+        "foodex2-overview.md"
+      ],
+      "source_files_unchanged": true,
+      "summary": "Replaced the 'reporting or exposure hierarchy' hedge with an explicit target-hierarchy rule: Exposure is the preferred hierarchy for consumption data and intake-assessment occurrence data must use terms present in it (revision 2 p9, p29); checked against the source PDF. The 2015 statement that Reporting and Exposure reportable terms are identical was not carried over, since the current catalogue diverges (#45)."
     }
   ]
 }

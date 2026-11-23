@@ -14,7 +14,7 @@ related:
   - "[[facet-coding-rules]]"
   - "[[code-string-format]]"
   - "[[implicit-vs-explicit-facets]]"
-last_updated: "2026-09-30"
+last_updated: "2026-11-23"
 ---
 
 # FoodEx2 Overview
@@ -57,7 +57,7 @@ Read these roles with [[base-term-selection]]: choose the correct food type firs
 
 - `Master hierarchy`: full terminology plus implicit-facet inheritance. Technical role only; do not use it for coding. (EFSA guidance p27)
 - `Reporting hierarchy`: input-oriented hierarchy for choosing reportable terms with consistent detail. (EFSA guidance p14, p28)
-- `Exposure hierarchy`: output-oriented hierarchy for food-consumption and exposure work. Other domain hierarchies support pesticides, biological monitoring, veterinary residues, and botanicals. (EFSA guidance p28-35)
+- `Exposure hierarchy`: output-oriented hierarchy for food-consumption and exposure work, and the preferred hierarchy for reporting consumption data; occurrence data for intake assessment must use terms present in it. Other domain hierarchies support pesticides, biological monitoring, veterinary residues, and botanicals. (EFSA guidance p28-35)
 
 <!-- Source: EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf p9-10, 21, 41 -->
 ## Coding Philosophy
