@@ -6,7 +6,8 @@ related:
   - "[[maintenance-history]]"
   - "[[maintenance-2019]]"
   - "[[maintenance-2021]]"
-last_updated: "2026-09-30"
+  - "[[base-term-selection]]"
+last_updated: "2026-11-23"
 ---
 
 # Maintenance 2020
@@ -27,6 +28,7 @@ The source distinguishes dismissal (non-reportable in one or more hierarchies bu
 - `F31 Animal-age-class` grew for SIGMA. (2020 maintenance p3, p10)
 - `F20 Part-consumed-analysed` gained scallop descriptors for marine-biotoxin work. (2020 maintenance p3)
 - The Exposure hierarchy was revised for Regulation (EU) 609/2013 alignment. (2020 maintenance p4, p10-11)
+- Reporting and Exposure reportability diverged in this maintenance: 74 terms were dismissed from Exposure and 6 from Reporting (mostly sweetening and fortifying agents, which became facet-only in Exposure), and `A01QD` was set non-reportable in Exposure only. Revision 2's statement that the two hierarchies share the same reportable terms no longer holds; see [[base-term-selection]]. (2020 maintenance p13)
 
 ## Release Context
 

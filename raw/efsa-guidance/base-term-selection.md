@@ -7,6 +7,7 @@ select_when: >-
   a generic fallback plus origin facet when the exact term is missing.
 sources:
   - "EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf"
+  - "EFSA Supporting Publications - 2021 -  - FoodEx2 maintenance 2020.pdf"
   - "EFSA Supporting Publications - 2015 -  - The food classification and description system FoodEx 2  revision 2.pdf"
   - "EFSA Supporting Publications - 2016 -  - FoodEx2 annual maintenance 2015.pdf"
   - "EFSA Supporting Publications - 2018 -  - Training on FoodEx2.pdf"
@@ -30,6 +31,9 @@ last_updated: "2026-11-23"
 - Never start from a hierarchy term if a reportable non-hierarchy term exists. If poor source data makes that unavoidable, prefer an exposure-hierarchy term. (EFSA guidance p41, p47)
 - Know the target hierarchy before coding, and search within it. Stopping at the first search hit can lead to the wrong branch. (EFSA guidance p42)
 - For food-consumption data and dietary-intake assessment, the target is the Exposure hierarchy, not "Reporting or Exposure": it is the preferred hierarchy for reporting consumption data, and occurrence data used for intake assessment must be coded with terms present in it. A term reportable in Reporting or a monitoring hierarchy is not valid for consumption data unless it is also present in Exposure; choose the Exposure term instead. Monitoring domains use their own reporting hierarchy. (EFSA guidance p9, p29)
+
+<!-- Source: EFSA Supporting Publications - 2021 -  - FoodEx2 maintenance 2020.pdf p10-13; EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf p17, Table 6 -->
+- Do not rely on revision 2's statement that Reporting and Exposure share the same reportable terms (EFSA guidance p29): it described the 2015 catalogue. Later maintenance dismissed terms from one hierarchy but not the other. In 2020, 74 terms were dismissed from Exposure and 6 from Reporting, and `A01QD` was made non-reportable in Exposure only; in 2025, `A03PX` was dismissed from Reporting only. Check reportability in the target hierarchy itself. (2020 maintenance p10-13; 2025 maintenance p17)
 
 <!-- Source: EFSA Supporting Publications - 2026 -  - FoodEx2 maintenance 2025.pdf p17, Table 6 -->
 - Check the selected term's reportability in the intended hierarchy. For example, maintenance 2025 made `A03PX Food for infants and young children` non-reportable in Reporting because it was too generic. Choose an applicable reportable child or other suitable reportable food base supported by the sample, rather than trying to make that generic base reportable by adding facets. This is hierarchy-specific dismissal, not global deprecation. See [[maintenance-2025]] and [[business-rules]]. (2025 maintenance p17)
