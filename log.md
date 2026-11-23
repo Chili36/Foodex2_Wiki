@@ -5,6 +5,11 @@ last_updated: "2026-11-23"
 
 # Log
 
+## [2026-11-23] correction | Source the Reporting/Exposure divergence (#45 follow-up)
+
+- The #45 fix cites revision 2 p29, which also says Reporting and Exposure share the same reportable terms. That described the 2015 catalogue. The consumption rule itself (Exposure for consumption and intake work, p9 and p29) is unaffected.
+- `base-term-selection.md` now says not to rely on that 2015 statement and cites the maintenance reports that broke it: in 2020, 74 terms were dismissed from Exposure and 6 from Reporting, and `A01QD` became non-reportable in Exposure only (2020 maintenance p10-13); in 2025, `A03PX` was dismissed from Reporting only (2025 maintenance p17). `maintenance-2020.md` records the same divergence.
+
 ## [2026-11-23] correction | Name the Exposure hierarchy for consumption data (#45)
 
 - `/wiki/ask` told consumption questions to pick a term "in the reporting or exposure hierarchy". The two are not interchangeable: EFSA names Exposure as the preferred hierarchy for reporting consumption data, and occurrence data for intake assessment must be coded with terms present in it (revision 2 p9, p29). Lentils show the risk: `A00QD` "Lentils, fresh" is reportable in Reporting but absent from Exposure.
