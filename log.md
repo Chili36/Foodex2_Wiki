@@ -1,9 +1,15 @@
 ---
 title: "Wiki Log"
-last_updated: "2026-11-21"
+last_updated: "2026-11-23"
 ---
 
 # Log
+
+## [2026-11-23] correction | Name the Exposure hierarchy for consumption data (#45)
+
+- `/wiki/ask` told consumption questions to pick a term "in the reporting or exposure hierarchy". The two are not interchangeable: EFSA names Exposure as the preferred hierarchy for reporting consumption data, and occurrence data for intake assessment must be coded with terms present in it (revision 2 p9, p29). Lentils show the risk: `A00QD` "Lentils, fresh" is reportable in Reporting but absent from Exposure.
+- `base-term-selection.md` now says to search within the target hierarchy and names Exposure for consumption and intake work. `foodex2-overview.md` adds the same preference to its Exposure entry.
+- Added DMT-ASK-012 (lentils, consumption) as the regression case: the answer must name Exposure and must not use the "reporting or exposure" hedge.
 
 ## [2026-11-21] correction | Merge source-driven coverage evals with F24 and Table 22 corrections (#51, #46)
 

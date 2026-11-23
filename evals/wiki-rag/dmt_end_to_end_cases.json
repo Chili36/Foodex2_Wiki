@@ -286,6 +286,48 @@
       ],
       "forbidden_answer_terms": [],
       "notes": "Regression for #63: chunk retrieval returned additives and maintenance chunks, never facet-coding-rules.md, so answers omitted F08 for the sweetener. The reporting domain is named, so other domains' overlays must not appear. maintenance-2015.md is acceptable here because the 2015 maintenance revised the tea sections."
+    },
+    {
+      "id": "DMT-ASK-012",
+      "reviewed": true,
+      "source": "GH-45",
+      "domain": "none",
+      "shape": "dmt_standard",
+      "question": "How do I code lentils for consumption data reporting?",
+      "reference_pages": [
+        "base-term-selection.md",
+        "foodex2-overview.md"
+      ],
+      "acceptable_pages": [
+        "RUNTIME_RULES.md",
+        "facet-coding-rules.md",
+        "validation-rules.md",
+        "term-type-facet-constraints.md",
+        "implicit-vs-explicit-facets.md",
+        "business-rules.md",
+        "code-string-format.md",
+        "structural-validation.md",
+        "maintenance-2020.md",
+        "maintenance-2023.md"
+      ],
+      "must_not_pages": [
+        "index.md",
+        "pesticides-foodex2.md",
+        "vmpr-foodex2.md",
+        "vmpr-legislative-mapping.md",
+        "contaminants-foodex2.md",
+        "additives-flavourings-foodex2.md"
+      ],
+      "required_answer_terms": [
+        "Exposure"
+      ],
+      "forbidden_answer_terms": [
+        "reporting or exposure",
+        "exposure or reporting",
+        "reporting or the exposure",
+        "exposure or the reporting"
+      ],
+      "notes": "Regression for #45: consumption answers hedged between the Reporting and Exposure hierarchies. EFSA names Exposure as the preferred hierarchy for consumption data, and intake-assessment occurrence data must use terms present in it (revision 2 p9, p29). Lentils diverge: A00QD 'Lentils, fresh' is reportable in Reporting but absent from Exposure, where the terms are A013Q, A012L and A01BD. Answers do not see the catalogue, so the check targets the hedge wording rather than codes."
     }
   ]
 }
